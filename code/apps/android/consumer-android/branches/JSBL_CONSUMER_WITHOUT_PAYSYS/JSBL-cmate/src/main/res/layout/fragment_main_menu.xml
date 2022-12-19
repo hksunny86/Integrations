@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_dash_board"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:weightSum="3"
+
+    android:layout_height="wrap_content"
+    >
+
+   <LinearLayout
+       android:layout_width="0dp"
+       android:layout_weight="1"
+       android:orientation="vertical"
+       android:layout_height="wrap_content">
+
+       <androidx.appcompat.widget.AppCompatImageView
+           android:layout_width="wrap_content"
+           android:id="@+id/ivFirst"
+           android:layout_gravity="center"
+
+           android:layout_height="wrap_content" />
+       <TextView
+           android:id="@+id/tvFirst"
+           android:layout_width="wrap_content"
+           android:layout_gravity="center"
+           android:textColor="@color/black"
+           android:textSize="@dimen/textViewTextSizeSmall"
+           android:layout_height="wrap_content"
+
+           />
+   </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/ivSecond"
+
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/tvSecond"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textViewTextSizeSmall"
+            android:layout_height="wrap_content"
+
+            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:id="@+id/ivThird"
+
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/tvThird"
+            android:textSize="@dimen/textViewTextSizeSmall"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"
+
+            />
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

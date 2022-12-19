@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<bean id="olaVeriflyFinancialInstitution"
+		class="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl">
+	</bean>
+	<bean id="olaManager" parent="baseTransactionProxy" >
+		<property name="target">
+			<bean
+				class="com.inov8.microbank.server.service.olamodule.OLAManagerImpl">
+				<property name="olaVeriflyFinancialInstitution"
+					ref="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl" />
+				<property name="actionLogManager">
+					<ref bean="actionLogManager" />
+				</property>
+				<property name="accountManager" ref="accountManager"/>
+			</bean>
+		</property>
+	</bean>
+	  <bean id="olaFacade" class="com.inov8.microbank.server.facade.olamodule.OLAFacadeImpl">
+    <property name="frameworkExceptionTranslator">
+      <ref bean="frameworkExceptionTranslator"/>
+    </property>
+    <property name="olaManager">
+      <ref local="olaManager"/>
+    </property>
+  </bean>
+  
+  <!-- Bringing OLA inside i8Microbank -->
+  
+   <bean id="accountHolderDAO" class="com.inov8.ola.server.dao.accountholder.hibernate.AccountHolderHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="accountDAO" class="com.inov8.ola.server.dao.account.hibernate.AccountHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  	<property name="dataSource" ref="dataSource"/>    
+  </bean>
+    <bean id="scheduleBillPaymentDao" class="com.inov8.microbank.server.dao.schedulemodule.hibernate.ScheduleBillPaymentHibernateDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+  <bean id="ledgerDAO" class="com.inov8.ola.server.dao.ledger.hibernate.LedgerHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  	<property name="dataSource" ref="dataSource"/>    
+  </bean>
+   <bean id="limitDAO" class="com.inov8.ola.server.dao.limit.hibernate.LimitHibernateDAO">
+       <property name="sessionFactory" ref="sessionFactory"/>
+       <property name="dataSource" ref="dataSource"/>
+  </bean>
+
+    <bean id="blinkDefaultLimitDAO" class="com.inov8.ola.server.dao.limit.hibernate.BlinkDefaultLimitHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="blinkCustomerDAO" class="com.inov8.ola.server.dao.blinkcustomerlimit.hibernate.BlinkCustomerHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+  <bean id="authCodeSequenceGenerator" class="com.inov8.framework.server.dao.framework.jdbc.OracleSequenceGeneratorJdbcDAO" init-method="initDao">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="sequenceName" value="AUTH_CODE_SEQ"/>
+  </bean>
+  
+  
+ 	<bean id="authCodeGenerator" class="com.inov8.ola.util.AuthCodeGenerator" >
+	    <property name="sequenceGen" ref="authCodeSequenceGenerator"/>    
+  	</bean>
+  	
+  	<bean id="accountNoSequenceGenerator" class="com.inov8.framework.server.dao.framework.jdbc.OracleSequenceGeneratorJdbcDAO" init-method="initDao">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="sequenceName" value="ACCOUNT_NO_SEQ"/>
+  </bean>
+  
+  
+ 	<bean id="accountNumberGenerator" class="com.inov8.ola.util.AccountNumberGenerator" >
+	    <property name="sequenceGen" ref="accountNoSequenceGenerator"/>    
+  	</bean>
+  
+  
+
+<!-- Service -->
+
+  <bean id="accountHolderManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.ola.server.service.accountholder.AccountHolderManagerImpl">
+        <property name="accountHolderDAO">
+          <ref local="accountHolderDAO"/>
+        </property>        
+      </bean>
+    </property>
+  </bean>
+  
+  <bean id="accountManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.ola.server.service.account.AccountManagerImpl" autowire="byName">
+        <property name="genericDAO">
+          <ref bean="genericDAOV2"/>
+        </property>
+        <property name="creditAccountQueueSender">
+          <ref bean="creditAccountQueueSender"/>
+        </property>
+         <property name="safRepoDao">
+          <ref bean="safRepoDao"/>
+        </property>
+          <property name="ledgerFacade">
+              <ref bean="ledgerFacade"/>
+          </property>
+      </bean>
+    </property>
+  </bean>
+  
+  
+  
+  <bean id="ledgerManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.ola.server.service.ledger.LedgerManagerImpl">
+        <property name="ledgerDAO">
+          <ref local="ledgerDAO"/>
+        </property>        
+      </bean>
+    </property>
+  </bean>
+
+
+<bean id="limitManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.ola.server.service.limit.LimitManagerImpl">
+        <property name="limitDAO">
+          <ref local="limitDAO"/>
+        </property>  
+        <property name="limitRuleDAO">
+          <ref local="limitRuleDAO"/>
+        </property>
+        <property name="actionLogManager"> 
+          <ref bean="actionLogManager"/>
+        </property>
+          <property name="blinkCustomerDAO">
+              <ref bean="blinkCustomerDAO"/>
+          </property>
+          <property name="blinkDefaultLimitDAO">
+              <ref bean="blinkDefaultLimitDAO"/>
+          </property>
+
+        <property name="productManager" ref="productFacade" />      
+      </bean>
+    </property>
+  </bean>
+
+<!-- Facade -->
+
+  <bean id="accountFacade" class="com.inov8.ola.server.facade.AccountFacadeImpl">
+    <property name="frameworkExceptionTranslator">
+      <ref bean="frameworkExceptionTranslator"/>
+    </property>
+    <property name="accountHolderManager">
+      <ref local="accountHolderManager"/>
+    </property>
+    <property name="accountManager">
+      <ref local="accountManager"/>
+    </property>
+  </bean>
+  
+  
+  <bean id="ledgerFacade" class="com.inov8.ola.server.facade.LedgerFacadeImpl">
+    <property name="frameworkExceptionTranslator">
+      <ref bean="frameworkExceptionTranslator"/>
+    </property>
+    <property name="ledgerManager">
+      <ref local="ledgerManager"/>
+    </property>    
+  </bean>
+  
+  <bean id="limitFacade" class="com.inov8.ola.server.facade.LimitFacadeImpl">
+    <property name="frameworkExceptionTranslator">
+      <ref bean="frameworkExceptionTranslator"/>
+    </property>
+    <property name="limitManager">
+      <ref local="limitManager"/>
+    </property>    
+  </bean>
+  
+  <bean id="olaManagerService" class="com.inov8.ola.integration.service.OLAServiceImpl" init-method="check">
+		<property name="accountFacade">
+	      <ref bean="accountFacade"/>
+	    </property>
+	    <property name="ledgerFacade">
+	      <ref bean="ledgerFacade"/>
+	    </property>
+	    <property name="limitFacade">
+	      <ref bean="limitFacade"/>
+	    </property>
+	</bean>
+  
+   
+  	<bean id="genericDAOV2" class="com.inov8.framework.server.dao.framework.v2.hibernate.GenericHibernateDao">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+    	<property name="transacted" value="true"/>
+	</bean>
+	
+
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+		<constructor-arg index="0" ref="dataSource"/>
+	</bean>
+  
+  
+  
+  <!-- End Bringing OLA inside i8Microbank -->
+  
+  
+  
+  <!-- (Portal)Customer Transaction Limits starts -->
+	<bean id="olaCustomerTxLimitViewDao" class="com.inov8.microbank.server.dao.portal.ola.hibernate.OlaCustomerTxLimitViewHibernateDao" autowire="byName"/>
+
+	<bean id="portalOlaManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.inov8.microbank.server.service.portal.ola.PortalOlaManagerImpl" autowire="byName">
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="agentBBStatementViewDAO" class="com.inov8.microbank.server.dao.portal.ola.hibernate.AgentBBStatementViewHibernateDAO" autowire="byName"/>
+
+	<bean id="portalOlaFacade" class="com.inov8.microbank.server.facade.portal.ola.PortalOlaFacadeImpl" autowire="byName"/>
+  <!-- (Portal)Customer Transaction Limits ends -->
+
+	<bean id="customerBbStatementViewDao" class="com.inov8.microbank.server.dao.portal.ola.hibernate.CustomerBbStatementViewHibernateDao" autowire="byName"/>
+
+	<bean id="settlementBbStatementViewDao" class="com.inov8.microbank.server.dao.portal.ola.hibernate.SettlementBbStatementViewHibernateDao" autowire="byName"/>
+	
+	<bean id="bbStatementAllViewDao" class="com.inov8.microbank.server.dao.portal.ola.hibernate.BbStatementAllViewHibernateDao" autowire="byName"/>
+	
+	<bean id="olaCustomerAccountTypeDao" class="com.inov8.microbank.server.dao.portal.ola.hibernate.OlaCustomerAccountTypeHibernateDao" autowire="byName"/>
+	
+	<bean id="accountTypeViewDao" class="com.inov8.microbank.server.dao.portal.ola.hibernate.AccountTypeViewHibernateDao" autowire="byName"/>
+	
+    <bean id="limitRuleDAO" class="com.inov8.ola.server.dao.limit.hibernate.LimitRuleHibernateDAO" autowire="byName">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+</beans>
+
+

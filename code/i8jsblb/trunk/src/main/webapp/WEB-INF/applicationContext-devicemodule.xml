@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+
+<!-- DAO -->
+
+
+  <bean id="deviceTypeCommandDAO" class="com.inov8.microbank.server.dao.devicemodule.hibernate.DeviceTypeCommandHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="deviceTypeDAO" class="com.inov8.microbank.server.dao.devicemodule.hibernate.DeviceTypeHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="deviceTypeListViewDAO" class="com.inov8.microbank.server.dao.devicemodule.hibernate.DeviceTypeListViewHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  
+
+<!-- Service -->
+
+  <bean id="deviceTypeManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.devicemodule.DeviceTypeManagerImpl">
+        <property name="deviceTypeDAO">
+          <ref local="deviceTypeDAO"/>
+        </property>
+        <property name="deviceTypeListViewDAO">
+          <ref local="deviceTypeListViewDAO"/>
+        </property>
+      </bean>
+    </property>
+
+  </bean>
+  <bean id="deviceTypeCommandManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.devicemodule.DeviceTypeCommandManagerImpl">
+        <property name="deviceTypeCommandDAO">
+          <ref local="deviceTypeCommandDAO"/>
+        </property>
+      </bean>
+    </property>
+
+  </bean>
+  
+
+
+<!-- Facade -->
+
+  <bean id="deviceFacade" class="com.inov8.microbank.server.facade.DeviceFacadeImpl">
+    <property name="frameworkExceptionTranslator">
+      <ref bean="frameworkExceptionTranslator"/>
+    </property>
+    <property name="deviceTypeManager">
+      <ref local="deviceTypeManager"/>
+    </property>
+  </bean>
+
+</beans>

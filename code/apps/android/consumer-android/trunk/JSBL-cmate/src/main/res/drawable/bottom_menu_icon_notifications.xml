@@ -1,0 +1,7 @@
+<vector
+    android:width="@dimen/bottomBarIconWidth"
+    android:height="@dimen/bottomBarIconHeight"
+    android:viewportHeight="80.0"
+    android:viewportWidth="90.0"  xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#333" android:fillType="evenOdd" android:pathData="M5,14L5,66.01h80L85,14ZM45,46.12L12.19,17.86L77.81,17.86ZM31.93,40l-23,19.81L8.93,20.19ZM34.91,42.56 L45,51.26L55.09,42.56 77.83,62.16L12.17,62.16ZM58.07,40l23,-19.81L81.07,59.8Z"/>
+</vector>

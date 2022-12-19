@@ -1,0 +1,49 @@
+<!-- Money Transfer Response BBToCore -->
+<!-- BB to Core -->
+<!--<msg id="192" reqTime="1470154188315">-->
+<!--    <params>-->
+<!--        <param name="DTID">5</param>-->
+<!--        <param name="PID">50051</param>-->
+<!--        <param name="PIN">6tBH5Et3C3b9p7Xzr1YVIQ==</param>-->
+<!--        <param name="ENCT">1</param>-->
+<!--        <param name="CMOB">03554225342</param>-->
+<!--        <param name="COREACID">10000000099</param>-->
+<!--        <param name="COREACTL">Humayun&amp;Naveed 085</param>-->
+<!--        <param name="TXAM">100.0</param>-->
+<!--        <param name="CAMT">20.0</param>-->
+<!--        <param name="TPAM">0.0</param>-->
+<!--        <param name="TAMT">100.0</param>-->
+<!--    </params>-->
+<!--</msg>-->
+
+
+ 
+<!-- BB to IBFT
+<msg id="192" reqTime="1428146145100">
+    <params>
+        <param name="DTID">5</param>
+        <param name="PID">50054</param>
+        <param name="PIN">6tBH5Et3C3b9p7Xzr1YVIQ==</param>
+        <param name="ENCT">1</param>
+        <param name="RWMOB">03698578958</param>
+        <param name="COREACID">432100000000444</param>
+        <param name="COREACTL">XXXXXXX</param>
+        <param name="BAIMD">639530</param>
+        <param name="PMTTYPE">0</param>
+        <param name="CAMT">0.0</param>
+        <param name="CAMTF">0.00</param>
+        <param name="TPAM">0.0</param>
+        <param name="TPAMF">0.00</param>
+        <param name="TAMT">100.0</param>
+        <param name="TAMTF">100.00</param>
+        <param name="TXAM">100.0</param>
+        <param name="TXAMF">100.00</param>
+    </params>
+</msg>
+-->
+
+<msg id="192">
+    <trans>
+        <trn TXAM="50.0" TXAMF="50.00" CAMT="20.0" CAMTF="20.00" TPAM="0.0" TPAMF="0.00" TAMT="50.0" TAMTF="50.00" PROD="Customer BB To Core" TRXID="672460687110" DATEF="02/08/2016 16:08 PM" DATE="Tue Aug 02 16:08:45 PKT 2016" TIMEF="04:08 PM" COREACID="10000000099" COREACTL="Humayun&amp;Naveed 085" BALF="0.00" ></trn>
+    </trans>
+</msg>

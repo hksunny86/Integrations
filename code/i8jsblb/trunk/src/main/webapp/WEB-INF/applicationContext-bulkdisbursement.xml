@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+	<!-- DAO -->
+	<bean id="orphanTransactionDAO"
+		class="com.inov8.microbank.server.dao.dailyjob.OrphanTransactionDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="topupSchedulerExecDAO"
+		class="com.inov8.microbank.server.dao.dailyjob.TopupSchedulerExecHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="settlementSchedulerDAO"
+		class="com.inov8.microbank.server.dao.dailyjob.SettlementSchedulerHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="topupManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.inov8.microbank.server.service.topupmodule.TopupManagerImpl">
+				<property name="topupSchedulerExecDAO">
+					<ref local="topupSchedulerExecDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="orphanTransactionManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.inov8.microbank.server.service.orphantransaction.OrphanTransactionManagerImpl">
+				<property name="switchController" ref="switchController"></property>
+				<property name="olaVeriflyFinancialInstitution" ref="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"></property>
+				<property name="appUserManager" ref="userManager"></property>
+				<property name="smartMoneyAccountManager" ref="smartMoneyAccountManager"></property>
+				<property name="orphanTransactionDAO" ref="orphanTransactionDAO" />
+				<property name="actionLogManager" ref="actionLogManager"></property>
+				<property name="messageSource" ref="messageSource"></property>
+				<property name="settlementManager" ref="settlementFacade"></property>
+				<property name="smsSender" ref="smsSender"></property>
+				<property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"></property>
+				<property name="commissionManager" ref="commissionManager"></property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="orphanTransactionReversalScheduler" class="com.inov8.microbank.server.service.dailyjob.OrphanTransactionReversalScheduler">
+		<property name="orphanTransactionDAO" ref="orphanTransactionDAO" />
+		<property name="stakeholderBankInfoManager" ref="stakeholderBankInfoManager"></property>
+		<property name="olaVeriflyFinancialInstitution"
+			ref="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"></property>
+		<property name="appUserManager" ref="userManager"></property>
+		<property name="smartMoneyAccountManager" ref="smartMoneyAccountManager"></property>
+		<property name="transactionCodeGenerator" ref="transactionCodeGenerator"></property>
+		<property name="transactionManager" ref="transactionModuleManager"></property>
+		<property name="actionLogManager" ref="actionLogManager"></property>
+		<property name="switchController" ref="switchController"></property>
+		<property name="messageSource" ref="messageSource"></property>
+		<property name="smsSender" ref="smsSender"></property>
+		<property name="commissionManager" ref="commissionManager"></property>
+		<property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"></property>
+		<property name="settlementManager" ref="settlementFacade"></property>
+		<property name="orphanTransactionManager" ref="orphanTransactionManager"></property>
+		<property name="creditAccountQueingPreProcessor" ref="creditAccountQueingPreProcessor"></property>
+	</bean>
+	
+	<bean id="cash2CashOrphanTransactionReversalScheduler" 
+	class="com.inov8.microbank.server.service.dailyjob.Cash2CashOrphanTransactionReversalScheduler">
+		<property name="orphanTransactionDAO" ref="orphanTransactionDAO" />
+		<property name="stakeholderBankInfoManager" ref="stakeholderBankInfoManager"></property>
+		<property name="olaVeriflyFinancialInstitution"
+			ref="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"></property>
+		<property name="appUserManager" ref="userManager"></property>
+		<property name="smartMoneyAccountManager" ref="smartMoneyAccountManager"></property>
+		<property name="transactionCodeGenerator" ref="transactionCodeGenerator"></property>
+		<property name="transactionManager" ref="transactionModuleManager"></property>
+		<property name="actionLogManager" ref="actionLogManager"></property>
+		<property name="switchController" ref="switchController"></property>
+		<property name="messageSource" ref="messageSource"></property>
+		<property name="smsSender" ref="smsSender"></property>
+		<property name="commissionManager" ref="commissionManager"></property>
+		<property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"></property>
+		<property name="orphanTransactionManager" ref="orphanTransactionManager"></property>
+		<property name="creditAccountQueingPreProcessor" ref="creditAccountQueingPreProcessor"></property>
+	</bean>
+	
+	<bean id="bulkPaymentOrphanTransactionReversalScheduler" 
+	class="com.inov8.microbank.server.service.dailyjob.BulkPaymentReversalScheduler">
+		<property name="orphanTransactionDAO" ref="orphanTransactionDAO" />
+		<property name="stakeholderBankInfoManager" ref="stakeholderBankInfoManager"></property>
+		<property name="olaVeriflyFinancialInstitution"
+			ref="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"></property>
+		<property name="appUserManager" ref="userManager"></property>
+		<property name="smartMoneyAccountManager" ref="smartMoneyAccountManager"></property>
+		<property name="transactionCodeGenerator" ref="transactionCodeGenerator"></property>
+		<property name="transactionManager" ref="transactionModuleManager"></property>
+		<property name="actionLogManager" ref="actionLogManager"></property>
+		<property name="switchController" ref="switchController"></property>
+		<property name="messageSource" ref="messageSource"></property>
+		<property name="smsSender" ref="smsSender"></property>
+		<property name="commissionManager" ref="commissionManager"></property>
+		<property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"></property>
+		<property name="orphanTransactionManager" ref="orphanTransactionManager"></property>
+		<property name="creditAccountQueingPreProcessor" ref="creditAccountQueingPreProcessor"></property>
+	</bean>
+	
+	<bean id="agentDailyTxStatsScheduler" class="com.inov8.microbank.server.service.dailyjob.AgentDailyTxStatsScheduler">
+		<property name="genericDao" ref="genericDAO"/>
+		<property name="smsSender" ref="nonTransactedSmsSender"/>
+	</bean>
+
+	<bean id="agentDailyTxStatsJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="agentDailyTxStatsScheduler"/>
+		<property name="targetMethod" value="init"/>
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="agentDailyTxStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="agentDailyTxStatsJob"/>
+		<property name="cronExpression" value="0 0 8 1/1 * ? *"/>
+	</bean>
+
+	<bean id="agentMonthlyTxStatsScheduler" class="com.inov8.microbank.server.service.dailyjob.AgentMonthlyTxStatsScheduler">
+		<property name="genericDao" ref="genericDAO"/>
+		<property name="smsSender" ref="nonTransactedSmsSender"/>
+	</bean>
+
+	<bean id="agentMonthlyTxStatsJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="agentMonthlyTxStatsScheduler"/>
+		<property name="targetMethod" value="init"/>
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="agentMonthlyTxStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="agentMonthlyTxStatsJob"/>
+		<property name="cronExpression" value="0 0/2 * 1/1 * ? *"/>
+	</bean>
+		
+	<bean id="customerBalanceReportDecryptionScheduler"  class="com.inov8.microbank.server.service.dailyjob.CustomerBalanceReportDecryptionScheduler" autowire="byName">	 	
+	</bean>
+	<bean id="customerBalanceDecryptionJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="customerBalanceReportDecryptionScheduler"/>
+		<property name="targetMethod" value="init"/>
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="customerBalanceDecryptionCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="customerBalanceDecryptionJob"/>
+		<property name="cronExpression" value= "0 10 0 1/1 * ? *"/>
+	</bean>
+	
+	<bean id="C2C_OrphanTxJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="cash2CashOrphanTransactionReversalScheduler" />
+		<property name="targetMethod" value="init" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="C2C_OrphanTxCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="C2C_OrphanTxJob" />
+		<!-- CRON FOR Mon, Wed, Fri -->
+		<property name="cronExpression" value="0 0 12 1 1 ? *" />
+	</bean>
+
+	<bean id="orphanTxJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orphanTransactionReversalScheduler" />
+		<property name="targetMethod" value="init" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="orphanTxCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="orphanTxJob" />
+		<!-- CRON FOR Mon, Wed, Fri -->
+		<property name="cronExpression" value="0 0/2 * 1/1 * ? *" />
+	</bean>
+
+	<bean id="bulkPayment_OrphanTxJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="bulkPaymentOrphanTransactionReversalScheduler" />
+		<property name="targetMethod" value="init" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="bulkPayment_OrphanTxCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="bulkPayment_OrphanTxJob" />
+		<!-- CRON FOR Mon, Wed, Fri -->
+		<property name="cronExpression" value="0 0/2 * 1/1 * ? *" />
+	</bean>
+	
+<!-- 	<bean id="bulkDisbursementHibernateDAO"
+		class="com.inov8.microbank.server.dao.disbursementmodule.BulkDisbursementHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="bulkDisbursementViewHibernateDAO"
+		class="com.inov8.microbank.server.dao.disbursementmodule.BulkDisbursementViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="bulkPaymentViewHibernateDAO"
+		class="com.inov8.microbank.server.dao.disbursementmodule.BulkPaymentViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="bulkDisbursementsScheduler" parent="baseTransactionProxy">
+		<property name="target">
+			<bean
+				class="com.inov8.microbank.server.service.dailyjob.BulkDisbursementsScheduler">
+				<property name="bulkDisbursementDao" ref="bulkDisbursementHibernateDAO" />
+				<property name="bulkDisbursementsManager" ref="bulkDisbursementsFacade"/>
+				<property name="stakeholderBankInfoManager" ref="stakeholderBankInfoManager"/>
+				<property name="smsSender" ref="smsSender"/>
+				<property name="messageSource" ref="messageSource"/>
+			</bean>
+		</property>
+	</bean>
+
+
+	<bean id="bulkPaymentsScheduler" parent="baseTransactionProxy">
+		<property name="target">
+			<bean
+				class="com.inov8.microbank.server.service.dailyjob.BulkPaymentsScheduler">
+				<property name="bulkDisbursementDao" ref="bulkDisbursementHibernateDAO" />
+				<property name="bulkDisbursementsManager" ref="bulkDisbursementsFacade"/>
+				<property name="commandManager"  ref="cmdManager"/>
+				<property name="stakeholderBankInfoManager" ref="stakeholderBankInfoManager"/>
+				<property name="smsSender" ref="smsSender"/>
+				<property name="messageSource" ref="messageSource"/>
+				<property name="paymentTypeDAO" ref="paymentTypeDAO"/>
+				<property name="transactionManager" ref="transactionModuleManager"/>				
+				<property name="transactionChunk" value="${bulkPaymentsScheduler.transactionChunk}"/>
+		    	<property name="phoenixFinancialInstitution">
+		    		<ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+		    	</property>
+				<property name="olaVeriflyFinancialInstitution"
+					ref="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"/>
+				<property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"/>						
+				<property name="productManager" ref="productManager"/>		
+				<property name="creditAccountQueingPreProcessor" ref="creditAccountQueingPreProcessor"/>
+				
+			</bean>
+		</property>
+	</bean>
+ -->	
+
+	<bean id="commissionJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="dayEndCommission" />
+		<property name="targetMethod" value="init" />
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="redemptionReversalScheduler" 
+	class="com.inov8.microbank.server.service.dailyjob.RedemptionReversalScheduler">
+		<property name="orphanTransactionDAO" ref="orphanTransactionDAO" />
+		<property name="stakeholderBankInfoManager" ref="stakeholderBankInfoManager"></property>
+		<property name="olaVeriflyFinancialInstitution"
+			ref="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"></property>
+		<property name="appUserManager" ref="userManager"></property>
+		<property name="smartMoneyAccountManager" ref="smartMoneyAccountManager"></property>
+		<property name="transactionCodeGenerator" ref="transactionCodeGenerator"></property>
+		<property name="transactionManager" ref="transactionModuleManager"></property>
+		<property name="actionLogManager" ref="actionLogManager"></property>
+		<property name="switchController" ref="switchController"></property>
+		<property name="messageSource" ref="messageSource"></property>
+		<property name="smsSender" ref="smsSender"></property>
+		<property name="commissionManager" ref="commissionManager"></property>
+		<property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"></property>
+		<property name="orphanTransactionManager" ref="orphanTransactionManager"></property>
+		<property name="creditAccountQueingPreProcessor" ref="creditAccountQueingPreProcessor"></property>
+	</bean>
+	
+	<bean id="redemptinReversalTxJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="redemptionReversalScheduler" />
+		<property name="targetMethod" value="init" />
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<bean id="redemptinReversalCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="redemptinReversalTxJob" />
+		<!-- CRON FOR Mon, Wed, Fri -->
+		<property name="cronExpression" value="0 0/2 * 1/1 * ? *" />
+	</bean>
+	
+	<bean id="commissionCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="commissionJob" />
+		<!-- CRON FOR Mon, Wed, Fri -->
+		<property name="cronExpression" value="0 0 12 1 1 ? *" />
+
+	</bean>
+
+<!--	Franchise Commission Job-->
+	<bean id="franchiseCommissionJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="franchiseCommission" />
+		<property name="targetMethod" value="init" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="franchiseCommissionCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="franchiseCommissionJob" />
+		<!-- CRON FOR Mon, Wed, Fri -->
+		<property name="cronExpression" value="0 0/2 * 1/1 * ? *" />
+
+	</bean>
+	
+	<bean id="topupJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="zongTopup" />
+		<property name="targetMethod" value="init" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="topupCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="topupJob" />
+		<!-- Every Two Minutes For testing purposes -->
+		<property name="cronExpression" value="0 0/2 * 1/1 * ? *" />
+
+	</bean>
+
+<!-- 	<bean id="disbursementJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="bulkDisbursementsScheduler" />
+		<property name="targetMethod" value="init" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="bulkPaymentsJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="bulkPaymentsScheduler" />
+		<property name="targetMethod" value="init" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+
+
+	<bean id="disbursementCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="disbursementJob" />
+		CRON FOR Sun, Tue, Thu, Sat
+		<property name="cronExpression" value="0 0 12 1 1 ? *" />		
+	</bean>
+	<bean id="bulkPaymentsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="bulkPaymentsJob" />
+		CRON FOR Sun, Tue, Thu, Sat
+		<property name="cronExpression" value="0 0/1 * 1/1 * ? *" />		
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> 
+		<property name="triggers"> <list> <ref bean="commissionCronTrigger" /> <ref 
+		bean="disbursementCronTrigger" /> </list> </property> </bean>
+	<bean id="bulkDisbursementsManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean
+				class="com.inov8.microbank.server.service.bulkdisbursements.BulkDisbursementsManagerImpl" autowire="byName">
+				<property name="bulkDisbursementHibernateDAO" ref="bulkDisbursementHibernateDAO"/>
+				<property name="bulkDisbursementViewHibernateDAO" ref="bulkDisbursementViewHibernateDAO"/>
+				<property name="bulkPaymentViewHibernateDAO" ref="bulkPaymentViewHibernateDAO"/>
+				<property name="olaVeriflyFinancialInstitution"
+					ref="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"/>
+				<property name="appUserManager" ref="userManager"/>
+				<property name="smartMoneyAccountManager" ref="smartMoneyAccountManager"/>
+				<property name="transactionManager" ref="transactionModuleManager"/>
+				<property name="actionLogManager" ref="actionLogManager"/>
+				<property name="switchController" ref="switchController"/>
+				<property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"></property>
+				<property name="productManager" ref="productManager"></property>
+				<property name="settlementManager" ref="settlementManager"></property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="bulkDisbursementsFacade"
+		class="com.inov8.microbank.server.facade.BulkDisbursementsFacadeImpl">
+		<property name="bulkDisbursementsManager" ref="bulkDisbursementsManager" />
+		<property name="frameworkExceptionTranslator" ref="frameworkExceptionTranslator" />
+		<property name="coreAdviceQueingPreProcessor" ref="coreAdviceQueingPreProcessor"/>
+		<property name="creditAccountQueingPreProcessor" ref="creditAccountQueingPreProcessor"/>
+	</bean>
+ -->
+	<!-- Account password change required, account expire scheduler by turab -->
+	<bean id="appUserAccountCheckScheduler" class="com.inov8.microbank.server.service.dailyjob.AppUserAccountCheckScheduler">
+		<property name="appUserManager" ref="userManager"></property>
+		<property name="ledgerManager" ref="ledgerManager"></property>
+		<property name="accountManager" ref="accountManager"></property>
+	</bean>
+
+	<bean id="appUserAccountCheckJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="appUserAccountCheckScheduler"/>
+		<property name="targetMethod" value="init"/>
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="appUserAccountCheckCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="appUserAccountCheckJob"/>
+		<property name="cronExpression" value="0 0/10 * 1/1 * ? *"/>
+	</bean>
+	<!-- end by turab -->
+
+	<!-- No need to support TX Mgmt currently -->
+	<bean id="dayEndSettlementManager" class="com.inov8.microbank.server.service.portal.dayendsettlement.DayEndSettlementManagerImpl" autowire="byName">
+		<property name="dirPath" value="${fundTranFilepath}" />
+	</bean>
+	
+	<!-- onetime hsm pin scheduler to route ivr calls -->
+	<bean id="oneTimeHsmPinGenerator" class="com.inov8.microbank.server.service.dailyjob.OneTimeHsmPinGenerator">
+		<property name="appUserManager" ref="userManager"></property>
+	</bean>
+
+	<bean id="oneTimeHsmPinJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="oneTimeHsmPinGenerator"/>
+		<property name="targetMethod" value="init"/>
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="oneTimeHsmPinCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="oneTimeHsmPinJob"/>
+		<property name="cronExpression" value="0 0/2 * 1/1 * ? *"/>
+	</bean>
+	<!-- end of hsm pin scheduler by turab -->
+	
+	<!-- Failed SMS Sender -->
+	<bean id="failedSmsSender" class="com.inov8.microbank.server.service.dailyjob.FailedSmsSender" autowire="byName">
+	</bean>
+	
+	<bean id="failedSmsJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="failedSmsSender"/>
+		<property name="targetMethod" value="init"/>
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="failedSmsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="failedSmsJob"/>
+		<property name="cronExpression" value="0 0/30 * 1/1 * ? *"/>
+	</bean>
+	<!-- End of Failed SMS Sender -->
+	
+</beans>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+
+    <!-- DAO -->
+
+
+    <bean id="transactionDetailListViewDAO" class="com.inov8.microbank.server.dao.portal.transactiondetail.hibernate.TransactionDetailListViewHibernateDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="salesDAO" class="com.inov8.microbank.server.dao.portal.sales.hibernate.SalesHibernateDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="transactionDAO" class="com.inov8.microbank.server.dao.transactionmodule.hibernate.TransactionHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="miniTransactionViewDAO" class="com.inov8.microbank.server.dao.minitransactionmodule.hibernate.MiniTransactionViewHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="transactionPurposeDAO" class="com.inov8.microbank.server.dao.transactionmodule.hibernate.TransactionPurposeHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="miniTransactionDAO" class="com.inov8.microbank.server.dao.transactionmodule.hibernate.MiniTransactionHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="transactionCodeHistoryDAO" class="com.inov8.microbank.server.dao.transactionmodule.hibernate.TransactionCodeHistoryHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="transactionReversalDAO" class="com.inov8.microbank.server.dao.transactionmodule.hibernate.TransactionReversalHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="transactionAllViewDao" class="com.inov8.microbank.server.dao.portal.transactiondetail.hibernate.TransactionAllViewDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="transactionCashReversalViewDao" class="com.inov8.microbank.server.dao.portal.transactiondetail.hibernate.TransactionCashReversalViewDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="senderRedeemViewDAO" class="com.inov8.microbank.server.dao.portal.transactiondetail.hibernate.SenderRedeemViewHibernateDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="cashTransactionViewDAO" class="com.inov8.microbank.server.dao.portal.transactiondetail.hibernate.CashTransactionViewHibernateDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <!-- Service -->
+
+    <bean id="transactionDetailManager" parent="baseTransactionProxy">
+        <property name="target">
+            <bean class="com.inov8.microbank.server.service.portal.transactiondetail.TransactionDetailManagerImpl">
+
+                <property name="transactionDetailListViewDAO">
+                    <ref local="transactionDetailListViewDAO"/>
+                </property>
+                <property name="salesDAO">
+                    <ref local="salesDAO"/>
+                </property>
+                <property name="transactionDAO">
+                    <ref local="transactionDAO"/>
+                </property>
+                <property name="genericDAO" ref="genericHibernateDAO"/>
+                <property name="miniTransactionViewDAO"><ref local="miniTransactionViewDAO"/></property>
+                <property name="miniTransactionDAO"><ref local="miniTransactionDAO"/></property>
+                <property name="transactionCodeHistoryDAO"><ref local="transactionCodeHistoryDAO"/></property>
+                <property name="transactionAllViewDao">
+                    <ref local="transactionAllViewDao"/>
+                </property>
+                <property name="transactionCashReversalViewDao">
+                    <ref local="transactionCashReversalViewDao"/>
+                </property>
+                <property name="senderRedeemViewDAO">
+                    <ref local="senderRedeemViewDAO"/>
+                </property>
+                <property name="cashTransactionViewDAO">
+                    <ref local="cashTransactionViewDAO"/>
+                </property>
+                <property name="actionLogManager" ref="actionLogManager"/>
+            </bean>
+        </property>
+
+    </bean>
+
+
+    <!-- Facade -->
+
+    <bean id="transactionDetailFacade" class="com.inov8.microbank.server.facade.portal.transactiondetail.TransactionDetailFacadeImpl">
+        <property name="frameworkExceptionTranslator">
+            <ref bean="frameworkExceptionTranslator"/>
+        </property>
+        <property name="transactionDetailManager">
+            <ref local="transactionDetailManager"/>
+        </property>
+
+    </bean>
+
+</beans>

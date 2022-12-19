@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:splitMotionEvents="false">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layoutFooter"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/container_header"
+        android:layout_marginLeft="@dimen/activitySideMarginNormal"
+        android:layout_marginRight="@dimen/activitySideMarginNormal"
+        android:layout_marginTop="@dimen/textViewMarginXXXLarge"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+
+            android:id="@+id/layout_login_inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/layoutPaddingNormal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/customer_mobile_number" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etMobileId"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:ellipsize="start"
+                    android:hint="03XX"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:minEms="4"
+                    android:text=""
+                    android:textSize="@dimen/textViewTextSizeMedium"
+                    app:backgroundTint="@color/golden" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etMobileNo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:hint="XXXXXXX"
+                    android:imeOptions="actionNext"
+
+                    android:inputType="number"
+                    android:maxLength="7"
+                    android:minEms="11"
+                    android:text=""
+                    android:textSize="@dimen/textViewTextSizeMedium"
+                    app:backgroundTint="@color/golden" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/mobile_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/textViewMarginXLarge"
+                android:text="@string/mobile_hint"
+                android:textStyle="italic" />
+
+            <include
+                android:id="@+id/layoutPassword"
+                layout="@layout/layout_password_login" />
+
+
+            <Button
+                android:id="@+id/btnForgot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="@dimen/buttonInnerMarginNormal"
+                android:background="@color/transparent"
+                android:text="Forgot Log In Pin"
+                android:textAllCaps="false"
+                android:textColor="@color/golden"
+                android:textSize="@dimen/textViewTextSizeSmall"
+                android:textStyle="normal"
+                android:visibility="visible" />
+            <LinearLayout
+                android:id="@+id/termsAndConditions"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/textViewMarginNormal">
+
+                <CheckBox
+                    android:id="@+id/checkTermsAndConditions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/textViewMarginXLarge"
+                    android:text="I agree to the "
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textViewTextSizeSmall" />
+
+                <TextView
+                    android:id="@+id/termsHyperText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/textViewMarginXLarge"
+                    android:visibility="visible"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textViewTextSizeSmall" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ivLoginLogo"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"></LinearLayout>
+
+            <TextView
+                android:id="@+id/tvIVRHint"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/layoutMarginLarge"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:text="You will also receive an IVR call from 042-38348880 to set your M-PIN.This M-PIN will be used to perform financial transactions."
+                android:layout_marginLeft="@dimen/margin_extra_short"
+                android:textStyle="italic"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/layoutFooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/layoutMarginLarge"
+        android:layout_marginLeft="@dimen/activitySideMarginNormal"
+        android:layout_marginRight="@dimen/activitySideMarginNormal"
+
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/buttonInnerMarginNormal"
+            android:background="@drawable/button_yellow_selector"
+            android:text="@string/login"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textViewTextSizeLarge"
+            android:textStyle="normal" />
+
+
+        <TextView
+            android:id="@+id/tvContactUs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/buttonInnerMarginNormal"
+            android:layout_marginTop="@dimen/textViewMarginNormal"
+            android:background="@color/transparent"
+            android:padding="@dimen/textViewMarginNormal"
+            android:text="@string/contact_us"
+            android:textAllCaps="false"
+            android:textColor="@color/color_primary_dark"
+            android:textSize="@dimen/textViewTextSizeLarge"
+            android:textStyle="normal" />
+
+
+        <include
+            android:id="@+id/layout_bottom"
+            layout="@layout/layout_bottom_bar"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</RelativeLayout>

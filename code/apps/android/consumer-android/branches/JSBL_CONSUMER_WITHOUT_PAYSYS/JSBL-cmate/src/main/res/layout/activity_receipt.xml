@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+
+    <include
+        android:id="@+id/layoutTopBar"
+        layout="@layout/header_layout" />
+
+    <RelativeLayout
+        android:id="@+id/innerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutTopBar">
+
+        <LinearLayout
+            android:id="@+id/layoutHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layoutMarginSmall"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivIconTick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvHeading"
+                android:layout_marginRight="@dimen/layoutMarginSmall"
+                app:srcCompat="@drawable/success_receipt_icon" />
+
+            <TextView
+                android:id="@+id/tvHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/qr_payment_successful"
+                android:textColor="@color/text_green"
+                android:textSize="@dimen/textViewTextSizeLarge" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutHeading"
+            android:layout_marginBottom="@dimen/textViewMarginNormal"
+            android:layout_marginTop="@dimen/textViewMarginNormal"
+            android:gravity="center_horizontal"
+            android:text="PKR 9,500.00"
+            android:textColor="@color/accent_color"
+            android:textSize="@dimen/textViewTextSizeXXXLarge" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottomBarQR"
+
+            android:layout_below="@+id/lblAmount"
+            android:orientation="vertical">
+
+
+            <ScrollView
+                android:id="@+id/scView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/bottomBarQR"
+                android:layout_below="@+id/lblAmount"
+                android:layout_weight="1"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/layout_inputs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activitySideMarginNormal"
+                    android:layout_marginRight="@dimen/activitySideMarginNormal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lblDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/textViewMarginSmall"
+                        android:layout_marginLeft="@dimen/activitySideMarginSmall"
+                        android:layout_marginRight="@dimen/activitySideMarginNormal"
+                        android:layout_marginTop="@dimen/textViewMarginNormal"
+                        android:text="@string/confirm"
+                        android:textColor="@color/text_gray_light"
+                        android:textSize="@dimen/textViewTextSizeSmall"
+                        android:visibility="gone" />
+
+                    <com.inov8.jsblconsumer.ui.components.ListViewExpanded
+                        android:id="@+id/listDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/list_background"
+                        android:divider="@color/line_light_grey"
+                        android:dividerHeight="1dp"
+                        android:footerDividersEnabled="false"
+                        android:padding="2dp"
+                        android:scrollbars="none" />
+
+                    <TextView
+                        android:id="@+id/lblSecond"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/textViewMarginSmall"
+                        android:layout_marginLeft="@dimen/activitySideMarginSmall"
+                        android:layout_marginRight="@dimen/activitySideMarginNormal"
+                        android:layout_marginTop="@dimen/textViewMarginNormal"
+                        android:text="@string/confirm"
+                        android:textColor="@color/text_gray_light"
+                        android:textSize="@dimen/textViewTextSizeSmall"
+                        android:visibility="gone" />
+
+                    <com.inov8.jsblconsumer.ui.components.ListViewExpanded
+                        android:id="@+id/listSecond"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/list_background"
+                        android:divider="@color/line_light_grey"
+                        android:dividerHeight="1dp"
+                        android:footerDividersEnabled="false"
+                        android:padding="2dp"
+                        android:scrollbars="none"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/lblThird"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/textViewMarginSmall"
+                        android:layout_marginLeft="@dimen/activitySideMarginSmall"
+                        android:layout_marginRight="@dimen/activitySideMarginNormal"
+                        android:layout_marginTop="@dimen/textViewMarginNormal"
+                        android:text="@string/confirm"
+                        android:textColor="@color/text_gray_light"
+                        android:textSize="@dimen/textViewTextSizeSmall"
+                        android:visibility="gone" />
+
+                    <com.inov8.jsblconsumer.ui.components.ListViewExpanded
+                        android:id="@+id/listThird"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/list_background"
+                        android:divider="@color/line_light_grey"
+                        android:dividerHeight="1dp"
+                        android:footerDividersEnabled="false"
+                        android:padding="2dp"
+                        android:scrollbars="none"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/lblForth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/textViewMarginSmall"
+                        android:layout_marginLeft="@dimen/activitySideMarginSmall"
+                        android:layout_marginRight="@dimen/activitySideMarginNormal"
+                        android:layout_marginTop="@dimen/textViewMarginNormal"
+                        android:text="@string/confirm"
+                        android:textColor="@color/text_gray_light"
+                        android:textSize="@dimen/textViewTextSizeSmall"
+                        android:visibility="gone" />
+
+                    <com.inov8.jsblconsumer.ui.components.ListViewExpanded
+                        android:id="@+id/listForth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/list_background"
+                        android:divider="@color/line_light_grey"
+                        android:dividerHeight="1dp"
+                        android:footerDividersEnabled="false"
+                        android:padding="2dp"
+                        android:scrollbars="none"
+                        android:visibility="gone" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/layoutPaddingNormal" />
+
+
+                </LinearLayout>
+            </ScrollView>
+
+            <Button
+                android:id="@+id/btnOk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/button_ok"
+                android:gravity="center"
+                android:text="@string/ok"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/bottomBar"
+            layout="@layout/layout_bottom_bar" />
+
+        <include
+            android:id="@+id/bottomBarQR"
+            layout="@layout/layout_qr_code" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,6 @@
+<!-- Customer Money Transfer Response AccToAcc -->
+<msg id="181">
+    <trans>
+        <trn TRXID="028856223687" CMOB="03204140392" RCMOB="03204140392" DATE="Fri Jul 25 08:03:49 PKT 2014" DATEF="25/07/14" TIMEF="08:03:49 am" PROD="Funds Transfer" CAMT="204.0" CAMTF="204.01" TPAM="0.0" TPAMF="0.00" TAMT="500.0" TAMTF="500.00" TXAM="500.0" TXAMF="500.00" BALF="0.00"></trn>
+    </trans>
+</msg>

@@ -1,0 +1,205 @@
+CREATE OR REPLACE FORCE VIEW "I8_MICROBANK_JS_PROD"."DIGI_DORMANCY_ACCOUNTS" ("ACCOUNT_ID", "CITY", "ACCOUNT_OPENING_DATE", "CARD_NO", "DORMANCY_REMOVED_ON", "DORMANT_MARKED_ON", "ACCOUNT_NUMBER", "BALANCE", "REGISTRATION_STATE", "NAME", "CNIC", "LAST_TRANSACTION_DATE", "CURRENT_DATE", "DAYS", "IS_DORMANT_REQUIRED", "AREA_NAME", "MOBILE_NUMBER", "DOB", "CUSTOMER_ACCOUNT_TYPE", "IS_ACCOUNT_CLOSED", "TAX_REGIME", "SEGMENT", "SEGMENT_ID", "USER_ID", "CUSTOMER_ACCOUNT_TYPE_ID") AS 
+  WITH LEDGER_INFO
+           AS (  SELECT ACCOUNT_ID,
+                        MAX (TRANSACTION_TIME) LAST_TRANSACTION_DATE
+                   FROM LEDGER A, ACCOUNT B
+                  WHERE (A.FROM_ACCOUNT_ID = B.ACCOUNT_ID
+                         OR A.TO_ACCOUNT_ID = B.ACCOUNT_ID)
+                        AND CUSTOMER_ACCOUNT_TYPE_ID <> 9
+               GROUP BY B.ACCOUNT_ID),
+        AREA_INFO
+           AS (SELECT A.AREA_ID,
+                      A.NAME AREA,
+                      A.AREA_LEVEL_ID,
+                      AREA_LEVEL_NAME,
+                      A.REGION_ID,
+                      REGION_NAME
+                 FROM AREA A, AREA_LEVEL B, REGION C
+                WHERE     A.AREA_LEVEL_ID = B.AREA_LEVEL_ID
+                      AND A.REGION_ID = B.REGION_ID
+                      AND A.REGION_ID = C.REGION_ID)
+   SELECT B.ACCOUNT_ID,
+   AU.CITY,
+   RC.ACCOUNT_OPENING_DATE,
+   DC.CARD_NO,
+   AU.DORMANCY_REMOVED_ON,
+   AU.DORMANT_MARKED_ON,
+          TRIM
+          (
+             REGEXP_REPLACE
+             (
+                ' ' || TRIM (TRANSLATE (B.ACCOUNT_NUMBER, 'DEL', ' ')),
+                '(.).',
+                '\1'
+             )
+          )
+             ACCOUNT_NUMBER,
+          ROUND (CAST (B.BALANCE AS NUMBER), 2) BALANCE,
+             DECODE(AU.REGISTRATION_STATE_ID, 1, 'Bulk Request Received',
+                    2, 'Request Received',
+                    3, 'Approved',
+                    4, 'Discrepant',
+                    5, 'Decline',
+                    6, 'Rejected',
+                    10, 'Closed',
+                    9,  'Dormant')"REGISTRATION_STATE",
+          H.FIRST_NAME||' '||
+          CASE WHEN H.LAST_NAME<>H.FIRST_NAME THEN   H.LAST_NAME END "NAME",
+          H.CNIC,
+          (CASE WHEN A.LAST_TRANSACTION_DATE IS NULL THEN AU.CREATED_ON ELSE A.LAST_TRANSACTION_DATE  END)"LAST_TRANSACTION_DATE",
+           SUBSTR(SYSDATE,1,9) "CURRENT_DATE",
+          SUBSTR((SYSDATE-(CASE WHEN A.LAST_TRANSACTION_DATE IS NULL THEN AU.CREATED_ON ELSE A.LAST_TRANSACTION_DATE  END)),7,5) "DAYS",
+         
+(CASE WHEN SUBSTR((SYSDATE-(CASE WHEN A.LAST_TRANSACTION_DATE IS NULL THEN AU.CREATED_ON ELSE A.LAST_TRANSACTION_DATE  END)),7,5)>=365
+          AND AU.REGISTRATION_STATE_ID='9' THEN 'NO'
+          WHEN SUBSTR((SYSDATE-(CASE WHEN A.LAST_TRANSACTION_DATE IS NULL THEN AU.CREATED_ON ELSE A.LAST_TRANSACTION_DATE  END)),7,5)<365
+          THEN 'NO'
+WHEN SUBSTR((SYSDATE-(CASE WHEN A.LAST_TRANSACTION_DATE IS NULL THEN AU.CREATED_ON ELSE A.LAST_TRANSACTION_DATE  END)),7,5)>=365
+          AND    AU.REGISTRATION_STATE_ID='3' THEN 'YES'
+          ELSE 'NO'
+          END) "IS_DORMANT_REQUIRED",
+         
+          AI.AREA AS AREA_NAME,
+          H.MOBILE_NUMBER,
+          H.DOB,
+          T.NAME AS CUSTOMER_ACCOUNT_TYPE,
+          (CASE
+              WHEN     AU.IS_CLOSED_UNSETTLED = 0
+                   AND AU.IS_CLOSED_SETTLED = 0
+              THEN
+                 'OPEN'
+              WHEN     AU.IS_CLOSED_UNSETTLED = 1
+                   AND AU.IS_CLOSED_SETTLED = 0
+              THEN
+                 'CLOSED UNSETTLED'
+              WHEN     AU.IS_CLOSED_UNSETTLED = 1
+                   AND AU.IS_CLOSED_SETTLED = 1
+              THEN
+                 'CLOSED SETTLED'
+           END)
+             AS IS_ACCOUNT_CLOSED,
+          TR.NAME TAX_REGIME,
+          CAST ('' AS VARCHAR2 (50)) SEGMENT,
+           CAST ('' AS Number) SEGMENT_ID,
+           UD.USER_ID,
+           T.CUSTOMER_ACCOUNT_TYPE_ID
+         
+     FROM LEDGER_INFO A,
+          ACCOUNT B,
+          ACCOUNT_HOLDER H,
+          OLA_CUSTOMER_ACCOUNT_TYPE T,
+          APP_USER AU,
+          AGENT_ADDRESS_VIEW RCA,
+          RETAILER_CONTACT RC,
+          TAX_REGIME TR,
+          AREA_INFO AI,
+          DEBIT_CARD DC,
+          USER_DEVICE_ACCOUNTS UD
+    WHERE     AU.RETAILER_CONTACT_ID = RC.RETAILER_CONTACT_ID
+          AND AU.MOBILE_NO = H.MOBILE_NUMBER
+          AND B.ACCOUNT_HOLDER_ID = H.ACCOUNT_HOLDER_ID
+          AND B.ACCOUNT_ID = A.ACCOUNT_ID(+)
+          AND B.CUSTOMER_ACCOUNT_TYPE_ID <> 9
+          AND B.CUSTOMER_ACCOUNT_TYPE_ID = T.CUSTOMER_ACCOUNT_TYPE_ID
+          AND RC.RETAILER_CONTACT_ID = RCA.RETAILER_CONTACT_ID(+)
+          AND RC.AREA_ID = AI.AREA_ID
+          AND RC.TAX_REGIME_ID = TR.TAX_REGIME_ID(+)
+          AND APP_USER_TYPE_ID = 3
+          AND AU.REGISTRATION_STATE_ID NOT IN '10'
+          AND H.IS_ACTIVE NOT IN '0'
+          AND AU.APP_USER_ID = UD.APP_USER_ID
+          AND B.CUSTOMER_ACCOUNT_TYPE_ID <>4
+          AND AU.APP_USER_ID=DC.APP_USER_ID(+)
+   UNION
+   SELECT B.ACCOUNT_ID,
+   AU.CITY,
+   CUST.CREATED_ON AS ACCOUNT_OPENING_DATE,
+   DC.CARD_NO,
+   AU.DORMANCY_REMOVED_ON,
+   AU.DORMANT_MARKED_ON,
+          TRIM
+          (
+             REGEXP_REPLACE
+             (
+                ' ' || TRIM (TRANSLATE (B.ACCOUNT_NUMBER, 'DEL', ' ')),
+                '(.).',
+                '\1'
+             )
+          )
+             ACCOUNT_NUMBER,
+          ROUND (CAST (B.BALANCE AS NUMBER), 2) BALANCE,
+             DECODE(AU.REGISTRATION_STATE_ID, 1, 'Bulk Request Received',
+                    2, 'Request Received',
+                    3, 'Approved',
+                    4, 'Discrepant',
+                    5, 'Decline',
+                    6, 'Rejected',
+                    10, 'Closed',
+                    9,  'Dormant')"REGISTRATION_STATE",
+          H.FIRST_NAME||' '||
+          CASE WHEN H.LAST_NAME<>H.FIRST_NAME THEN   H.LAST_NAME END "NAME",
+          H.CNIC,
+         (CASE WHEN A.LAST_TRANSACTION_DATE IS NULL THEN AU.CREATED_ON ELSE A.LAST_TRANSACTION_DATE  END)"LAST_TRANSACTION_DATE",
+           SUBSTR(SYSDATE,1,9) "CURRENT_DATE",
+          SUBSTR((SYSDATE-(CASE WHEN A.LAST_TRANSACTION_DATE IS NULL THEN AU.CREATED_ON ELSE A.LAST_TRANSACTION_DATE  END)),7,5) "DAYS",
+         
+(CASE WHEN SUBSTR((SYSDATE-(CASE WHEN A.LAST_TRANSACTION_DATE IS NULL THEN AU.CREATED_ON ELSE A.LAST_TRANSACTION_DATE  END)),7,5)>=365
+          AND AU.REGISTRATION_STATE_ID='9' THEN 'NO'
+          WHEN SUBSTR((SYSDATE-(CASE WHEN A.LAST_TRANSACTION_DATE IS NULL THEN AU.CREATED_ON ELSE A.LAST_TRANSACTION_DATE  END)),7,5)<365
+          THEN 'NO'
+WHEN SUBSTR((SYSDATE-(CASE WHEN A.LAST_TRANSACTION_DATE IS NULL THEN AU.CREATED_ON ELSE A.LAST_TRANSACTION_DATE  END)),7,5)>=365
+          AND    AU.REGISTRATION_STATE_ID='3' THEN 'YES'
+          ELSE 'NO'
+          END) "IS_DORMANT_REQUIRED",
+         
+          NULL AS AREA_NAME,
+          H.MOBILE_NUMBER,
+          H.DOB,
+          T.NAME AS CUSTOMER_ACCOUNT_TYPE,
+          (CASE
+              WHEN     AU.IS_CLOSED_UNSETTLED = 0
+                   AND AU.IS_CLOSED_SETTLED = 0
+              THEN
+                 'OPEN'
+              WHEN     AU.IS_CLOSED_UNSETTLED = 1
+                   AND AU.IS_CLOSED_SETTLED = 0
+              THEN
+                 'CLOSED UNSETTLED'
+              WHEN     AU.IS_CLOSED_UNSETTLED = 1
+                   AND AU.IS_CLOSED_SETTLED = 1
+              THEN
+                 'CLOSED SETTLED'
+           END)
+             AS IS_ACCOUNT_CLOSED,
+          TR.NAME TAX_REGIME,
+          S.NAME SEGMENT,
+          CUST.SEGMENT_ID,
+          UD.USER_ID,
+          T.CUSTOMER_ACCOUNT_TYPE_ID
+     FROM LEDGER_INFO A,
+          ACCOUNT B,
+          ACCOUNT_HOLDER H,
+          OLA_CUSTOMER_ACCOUNT_TYPE T,
+          APP_USER AU,
+          CUSTOMER_ADDRESS_VIEW CA,
+          CUSTOMER CUST,
+          TAX_REGIME TR,
+          SEGMENT S,
+          DEBIT_CARD DC,
+          USER_DEVICE_ACCOUNTS UD
+    WHERE     B.ACCOUNT_HOLDER_ID = H.ACCOUNT_HOLDER_ID
+          AND B.ACCOUNT_ID = A.ACCOUNT_ID(+)
+          AND B.CUSTOMER_ACCOUNT_TYPE_ID = T.CUSTOMER_ACCOUNT_TYPE_ID
+          AND H.MOBILE_NUMBER = AU.MOBILE_NO
+          AND AU.CUSTOMER_ID = CUST.CUSTOMER_ID
+          AND CUST.CUSTOMER_ID = CA.CUSTOMER_ID(+)
+          AND CUST.TAX_REGIME_ID = TR.TAX_REGIME_ID(+)
+          AND CUST.SEGMENT_ID = S.SEGMENT_ID
+          AND B.CUSTOMER_ACCOUNT_TYPE_ID <> 9
+          AND APP_USER_TYPE_ID = 2
+          AND AU.REGISTRATION_STATE_ID NOT IN '10'
+          AND H.IS_ACTIVE NOT IN '0'
+          AND AU.APP_USER_ID = UD.APP_USER_ID
+          AND B.CUSTOMER_ACCOUNT_TYPE_ID <>4--234550  Rows
+           AND AU.APP_USER_ID=DC.APP_USER_ID(+);
+

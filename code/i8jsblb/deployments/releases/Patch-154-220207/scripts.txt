@@ -1,0 +1,2 @@
+ALTER TABLE customer
+ADD purpose_of_account varchar2(50); 

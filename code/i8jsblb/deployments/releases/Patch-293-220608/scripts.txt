@@ -1,0 +1,11 @@
+Alter table customer 
+add ACC_OPENED_BY_AMA number (1, 0) DEFAULT 0 NOT NULL ENABLE;
+
+
+Alter table customer
+add AMA_ACC_CONSENT varchar2(50);
+
+
+alter table cls_pending_account_opening add is_sms_required number(1) default 1;
+
+

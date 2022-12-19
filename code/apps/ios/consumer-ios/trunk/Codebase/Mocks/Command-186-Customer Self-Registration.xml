@@ -1,0 +1,26 @@
+<!--<msg id="204" reqTime="1417761314759">-->
+<!--    <params>-->
+<!--        <param name="IS_ZONG_SUBS">0</param>-->
+<!--        <param name="DTID">5</param>-->
+<!--        <param name="IS_BVS_VERF">0</param>-->
+<!--        <param name="CNIC">3656984785956</param>-->
+<!--        <param name="MOBN">03000000083</param>-->
+<!--        <param name="IS_CNIC_REG">0</param>-->
+<!--        -->
+<!--        <param name="UDID">8a9d95f7312afdd5</param>-->
+<!--        <param name="OS">Android</param>-->
+<!--        <param name="OSVERSION">7.0</param>-->
+<!--        <param name="VENDOR">HUAWEI</param>-->
+<!--        <param name="NETWORK">Warid</param>-->
+<!--        <param name="DCID">06764646465456</param>-->
+<!--        <param name="MODEL">Nexus 5X</param>-->
+<!--        -->
+<!--    </params>-->
+<!--</msg>-->
+
+
+<msg id="186">
+    <mesgs>
+        <mesg level="1">Dear Customer, your request for Account Opening has been received Successfully. Kindly visit Timepey Agent for Initial Deposit.</mesg>
+    </mesgs>
+</msg>

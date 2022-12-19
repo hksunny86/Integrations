@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="start"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:background="@drawable/fingerprint_icon_six"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvfingersix"
+                android:paddingRight="@dimen/textViewMarginSmall"
+                android:layout_gravity="end"
+                android:text="6" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:background="@drawable/fingerprint_icon_seven"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:paddingRight="@dimen/textViewMarginSmall"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvfingersaveen"
+                android:layout_gravity="end"
+                android:text="7" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:background="@drawable/fingerprint_icon_eight"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvfingereight"
+                android:paddingRight="@dimen/textViewMarginSmall"
+                android:paddingTop="@dimen/textViewMarginSmall"
+                android:layout_gravity="end"
+                android:text="8" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:background="@drawable/fingerprint_icon_nine"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/tvfingernine"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/textViewMarginSmall"
+                android:paddingTop="@dimen/textViewMarginSmall"
+                android:layout_gravity="end"
+                android:text="9" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:background="@drawable/fingerprint_icon_ten"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvfingerten"
+                android:paddingRight="@dimen/textViewMarginSmall"
+                android:paddingTop="@dimen/textViewMarginSmall"
+                android:layout_gravity="end"
+                android:text="10" />
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:background="@drawable/fingerprint_icon_one"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvfingerone"
+                android:layout_gravity="end"
+                android:paddingLeft="@dimen/textViewMarginSmall"
+                android:textColor="@color/white"
+                android:text="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:background="@drawable/fingerprint_icon_two"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvfingertwo"
+                android:layout_gravity="end"
+                android:paddingLeft="@dimen/textViewMarginSmall"
+                android:textColor="@color/white"
+                android:text="2" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:background="@drawable/fingerprint_icon_three"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:id="@+id/tvfingerthree"
+                android:paddingLeft="@dimen/textViewMarginSmall"
+                android:paddingTop="@dimen/textViewMarginSmall"
+                android:layout_gravity="end"
+                android:text="3" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:background="@drawable/fingerprint_icon_four"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:id="@+id/tvfingerfour"
+                android:paddingLeft="@dimen/textViewMarginSmall"
+                android:paddingTop="@dimen/textViewMarginSmall"
+                android:textColor="@color/white"
+                android:text="4" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:background="@drawable/fingerprint_icon_five"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:id="@+id/tvfingerfive"
+                android:paddingLeft="@dimen/textViewMarginSmall"
+                android:paddingTop="@dimen/textViewMarginSmall"
+                android:textColor="@color/white"
+                android:text="5" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

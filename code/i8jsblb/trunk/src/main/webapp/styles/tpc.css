@@ -1,0 +1,1411 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+/* Importing External CSS Files */
+@import url('error.css');
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*--------------------------------------- PAGE SETTINGS ---------------------------------------*/
+/*---------------------------------------- STARTS HERE ----------------------------------------*/
+body{ 
+	margin:0px auto;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+.body_table{
+	padding: 8px;
+	padding-bottom:3px;
+	width:100%;
+	border:0 none
+}
+/* breadcrum starts */
+.nav_bar{
+	font-weight: bold;
+	font-size: 11px;
+	color: #FF0000;
+	height: 30px;
+}
+.nav_bar a {
+	text-decoration: none;
+	padding-right: 18px;
+	padding-left: 5px;
+	color: #414141;
+	background-image: url(../images/icons/breadcrumb.gif);
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+/* breadcrum ends */
+/* head starts */
+.head{
+	background-image:url(../images/head/middle_header.jpg); 
+	background-repeat:repeat-x; height:29px;
+}
+.left_header{ 
+	background-image:url(../images/head/left_header.jpg); 
+	background-repeat:no-repeat; 
+	float:left; 
+	width:42px; 
+	height:29px; 
+	padding-top:3px;
+}
+.right_header{ 
+	background-image:url(../images/head/right_header.jpg); 
+	background-position:top right; 
+	background-repeat:no-repeat; 
+	float:right; 
+	padding-top:7px; 
+	width:42px; 
+	height:29px;
+}
+.middle_header{
+	background-image:url(../images/head/middle_header.jpg); 
+	background-repeat:repeat-x; 
+	font-family:verdana; 
+	font-weight:bold; 
+	font-size:14px; 
+	color:#414141;
+	float:left; 
+	padding-top:5px;
+	width:auto; 
+	height:29px;
+}
+.headeffect{ 
+	float:right; 
+	clear:none;
+}
+/* head ends */
+/**********************************WIZARD Settings******************************************************/
+
+/* Wizard*/
+.wizard{
+	background-color:#6d6e71;
+	padding:3px 0px 3px 0px; 
+	margin-top:20px; 
+	border:1px solid #414141; 
+	border-bottom:0px; 
+	height:25px; 
+	width:auto; 
+}
+
+/* Black Start */
+.bwizs{
+	background: transparent url(../images/wizard/brl.png) no-repeat top left; 
+	display: block; 
+	float: left; 
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	line-height: 16px; 
+	height: 24px; 
+	padding-left: 10px; 
+	text-decoration: none; 
+	margin:0px 1px;
+	cursor:pointer;
+	color:#FFFFFF; 
+	text-decoration:none; 
+}
+.bwizs span{
+	background: transparent url(../images/wizard/bar.png) no-repeat top right; 
+	display: block; 
+	padding: 4px 20px 4px 6px; 
+	cursor:default
+}
+/* Black Middle */
+.bwizm{
+	background: transparent url(../images/wizard/bal.png) no-repeat top left; 
+	display: block; 
+	float: left; 
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	line-height: 16px; 
+	height: 24px; 
+	padding-left: 10px; 
+	text-decoration: none; 
+	margin:0px 1px; 
+	cursor:default;
+	color:#FFFFFF; 
+	text-decoration:none;
+	margin-left:-7px;
+
+}
+.bwizm span{
+	background: transparent url(../images/wizard/bar.png) no-repeat top right; 
+	display: block; 
+	padding: 4px 20px 4px 6px; 
+	cursor:default
+}
+/* Black End */
+/* Black Middle first */
+.bwizf{
+	background: transparent url(../images/wizard/bal.png) no-repeat top left; 
+	display: block; 
+	float: left; 
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	line-height: 16px; 
+	height: 24px; 
+	padding-left: 10px; 
+	text-decoration: none; 
+	margin:0px 1px; 
+	cursor:default;
+	color:#FFFFFF; 
+	text-decoration:none;
+	margin-left:7px;
+}
+.bwizf span{
+	background: transparent url(../images/wizard/bar.png) no-repeat top right; 
+	display: block; 
+	padding: 4px 20px 4px 6px; 
+	cursor:default
+}
+/* Black middle first End */
+
+.bwize{
+	background: transparent url(../images/wizard/bal.png) no-repeat top left; 
+	display: block; 
+	float: left; 
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	line-height: 16px; 
+	height: 24px; 
+	padding-left: 10px; 
+	text-decoration: none; 
+	margin:0px 1px; 
+	cursor:default;
+	color:#FFFFFF; 
+	text-decoration:none;
+	margin-left:-7px;
+}
+.bwize span{
+	background: transparent url(../images/wizard/brr.png) no-repeat top right; 
+	display: block; 
+	padding: 4px 20px 4px 6px; 
+	cursor:default
+}	
+/* Red Start */
+.rwizs{
+	background: transparent url(../images/wizard/rrl.png) no-repeat top left; 
+	display: block; 
+	float: left; 
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	line-height: 16px; 
+	height: 24px; 
+	padding-left: 10px; 
+	text-decoration: none; 
+	margin:0px 1px;
+	color:#FFFFFF; 
+	text-decoration:none; 
+	cursor:default;
+}
+.rwizs span{
+	background: transparent url(../images/wizard/rar.png) no-repeat top right; 
+	display: block; 
+	padding: 4px 20px 4px 6px; 
+	cursor:default;
+}	
+/* Red Middle */
+.rwizm{
+	background: transparent url(../images/wizard/ral.png) no-repeat top left; 
+	display: block; 
+	float: left; 
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	line-height: 16px; 
+	height: 24px; 
+	padding-left: 10px; 
+	text-decoration: none; 
+	margin:0px 1px; 
+	cursor:default;
+	color:#FFFFFF; 
+	text-decoration:none; 
+	margin-left:-7px;
+}
+.rwizm span{
+	background: transparent url(../images/wizard/rar.png) no-repeat top right; 
+	display: block; 
+	padding: 4px 20px 4px 6px; 
+	cursor:default;
+}
+/* Red End */
+.rwize{
+	background: transparent url(../images/wizard/ral.png) no-repeat top left; 
+	display: block; 
+	float: left; 
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	line-height: 16px; 
+	height: 24px; 
+	padding-left: 10px; text-decoration: none; margin:0px 1px; cursor:default;
+	color:#FFFFFF; 
+	text-decoration:none; 
+	margin-left:-7px;
+}
+.rwize span{
+	background: transparent url(../images/wizard/rrr.png) no-repeat top right; 
+	display: block; 
+	padding: 4px 20px 4px 6px; 
+	cursor:default;
+}
+
+/*wizard ends*/
+
+/* tabs starts */
+.tabs_title_area{
+	margin-top: 23px;
+	height:24px; 
+	width:auto; 
+	clear:both; 
+	overflow-y:hidden;
+}
+.tabs_bottom{
+	width:100%; 
+	height:5px; 
+	background-color:#e91820;
+}
+a.tabs{
+	background: transparent url(../images/tabs/tabs_b.png) no-repeat top right; 
+	display:block; 
+	float:left; 
+	font-size:11px; 
+	font-family:Verdana; 
+	color:#ffffff; 
+	white-space:nowrap;
+	line-height:16px; 
+	height:24px; 
+	padding-left:10px; 
+	text-decoration:none; 
+	margin:0px; 
+	margin-right:2px; 
+	cursor:pointer; 
+	text-decoration:none; 
+	padding-right:20px; 
+	padding-top:4px;
+}
+a.tabs:hover{
+	background: transparent url(../images/tabs/tabs_r.png) no-repeat top right; 
+	display:block; 
+	float:left; 
+	font-size:11px; 
+	font-family:Verdana; 
+	color:#ffffff; 
+	white-space:nowrap;
+	line-height:16px; 
+	height:24px; 
+	padding-left:10px; 
+	text-decoration:none; 
+	margin:0px; 
+	margin-right:2px; 
+	cursor:pointer; 
+	text-decoration:none; 
+	padding-right:20px; 
+	padding-top:4px;
+}
+.active{
+	background: transparent url(../images/tabs/tabs_r.png) no-repeat top right; 
+	display:block; 
+	float:left; 
+	font-size:11px; 
+	font-family:Verdana; 
+	color:#ffffff; 
+	white-space:nowrap;
+	line-height:16px; 
+	height:24px; 
+	padding-left:10px; 
+	text-decoration:none; 
+	margin:0px; 
+	margin-right:2px; 
+	cursor:default; 
+	text-decoration:none; 
+	padding-right:20px; 
+	padding-top:4px;
+}
+.tabl_bottom{
+	width:100%; 
+	height:5px; 
+	background-color:#e91820;
+}
+/* tabs ends */
+
+.container_table{
+	width:100%;
+	padding:0px;
+	vertical-align:top;
+	border:1px #414141 solid;
+}
+.tab_component_bar{
+	padding-left:8px;
+	background-image:url(../images/tab/toolbar_bg.gif);
+	background-repeat:repeat-x;
+	height:22px;
+	padding-top:8px;
+	padding-right:10px;
+	vertical-align:middle;
+}
+.tab_tool_container{
+	width: 30%;
+	float:right;
+	vertical-align:top;
+}
+.tab_component_icon{
+	height:16px; 
+	width:16px;
+	float:right;	
+	padding-left:5px;
+	padding-right:5px;
+	vertical-align:top;
+}
+.icon{
+	border-width:0px;
+	cursor: pointer
+}
+.work_table{
+	border:0px none;
+	padding:8px;
+	padding-bottom: 	0px;
+	padding-right: 20px;
+}
+/* footer starts */
+.tab_footer_bar{
+	background-color:#6d6e71; 
+	height:30px;
+}
+.tab_fbar_but{ 
+	margin-top:2px;
+	text-align:center;
+}
+.tips {
+	float:left;
+	color: #ffffff;
+	padding-top:10px;
+	padding-left:5px;
+}
+/* footer ends */
+
+/* status bar starts */
+.statusbar{ 
+	background:url(../images/progressbar/statusbar_bg.jpg) repeat-x; 
+	height:27px; 
+	width:100%;
+}
+/*.status { 
+	float:right; 
+	padding-top:5px; 
+	padding-right:30px;
+}*/
+/* status bar ends */
+
+/* main button starts */
+input.main_button{
+	background: transparent url(../images/buttons/mbl.png) no-repeat top left;
+	display: block;
+	font: bold 12px Verdana; /* Change 13px as desired */
+	line-height: 18px; /* This value + 4px + 4px (top and bottom padding of SPAN) must equal height of button background (default is 30px) */
+	height: 26px; /* Height of button background height */
+	padding-left: 10px; /* Width of left menu image */
+	text-decoration: none;
+	margin:0px;
+	cursor:pointer;
+}
+a.main_button, span.main_button{
+	background: transparent url(../images/buttons/mbl.png) no-repeat top left;
+	display: block;
+	font: bold 12px Verdana; /* Change 13px as desired */
+	line-height: 18px; /* This value + 4px + 4px (top and bottom padding of SPAN) must equal height of button background (default is 30px) */
+	height: 26px; /* Height of button background height */
+	padding-left: 10px; /* Width of left menu image */
+	text-decoration: none;
+	margin:0px;
+	cursor:pointer;
+	border:0px;
+}
+a:link.main_button, a:visited.main_button, a:hover.main_button, a:active.main_button, span.main_button input{color:#CCCCCC; text-decoration:none; cursor:pointer;}/* button text color */
+a.main_button span, span.main_button input{
+	background: transparent url(../images/buttons/mbr.png) no-repeat top right;
+	font: bold 12px Verdana;
+	display: block; 
+	padding: 4px 10px 4px 2px; /*Set 10px to be equal or greater than'padding-left' value above*/
+	cursor:pointer;
+	border:0px;
+	line-height: 18px;
+	height:26px;
+	margin:0px;
+}
+a:hover.main_button, span:hover.main_button input{color:#FFFFFF; text-decoration:none; cursor:pointer;}
+/* main button ends */
+
+/* secondary button starts */
+input.secondary_button{
+	background: transparent url(../images/buttons/sbl.png) no-repeat top left;
+	display: block;
+	font: bold 12px Verdana; /* Change 13px as desired */
+	line-height: 18px; /* This value + 4px + 4px (top and bottom padding of SPAN) must equal height of button background (default is 30px) */
+	height: 26px; /* Height of button background height */
+	padding-left: 10px; /* Width of left menu image */
+	text-decoration: none;
+	margin:0px;
+	cursor:pointer;
+}
+a.secondary_button, span.secondary_button{
+	background: transparent url(../images/buttons/sbl.png) no-repeat top left;
+	display: block;
+	font: bold 12px Verdana; /* Change 13px as desired */
+	line-height: 18px; /* This value + 4px + 4px (top and bottom padding of SPAN) must equal height of button background (default is 30px) */
+	height: 18px; /* Height of button background height */
+	padding-left: 10px; /* Width of left menu image */
+	text-decoration: none;
+	margin:0px;
+	cursor:pointer;
+	border:0px;
+	margin-right:3px
+}
+a:link.secondary_button, a:visited.secondary_button, a:hover.secondary_button, a:active.secondary_button, span.secondary_button input{color:#FFFFFF; text-decoration:none; cursor:pointer;}/* button text color */
+a.secondary_button span, span.secondary_button input{
+	background: transparent url(../images/buttons/sbr.png) no-repeat top right;
+	font: bold 12px Verdana;
+	display: block;
+	padding-top:0px;
+	padding-right:10px;
+	padding-left:0px;
+	padding-bottom:8px;
+	/*padding: 4px 10px 4px 2px; /*Set 10px to be equal or greater than'padding-left' value above*/
+	cursor:pointer;
+	border:0px;
+	line-height: 18px;
+	height:26px;
+	margin:0px;
+}
+/* Hover state CSS */
+a:hover.secondary_button, span:hover.secondary_button input{
+	color:#FFFFFF; 
+	text-decoration:none; 
+	cursor:pointer;
+}
+/* secondary button ends */
+
+/* datagrid starts */
+.datagrid{
+	border:1px solid #414141;
+	border-collapse: collapse;
+}
+.table_header{
+	/*background: transparent url(../images/datatable/thead_bg.jpg) repeat-x top left #888888;*/
+	background-color:#888888;
+	height:20px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:#FFFFFF;
+	font-size:12px;
+	font-weight:bold;
+	min-height:10px;
+	text-align: center;
+}
+.datagrid tr.table_header, .table_header{
+	/*background: transparent url(../images/datatable/thead_bg.jpg) repeat-x top left #888888;*/
+	background-color:#888888;
+	height:30px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:#FFFFFF;
+	font-size:12px;
+	font-weight:bold;
+	min-height:30px;
+}
+.datagrid th{
+	text-align:center;
+	padding:4px 6px;
+	/*background: url(../images/datatable/th_bg.jpg) no-repeat 5px left;
+	background: transparent url(../images/datatable/thead_bg.jpg) repeat-x top left;*/
+}
+.datagrid th .hd{
+	text-align:left;
+	padding:0px 6px;
+	/*background: url(../images/datatable/th_bg.jpg) no-repeat 5px left;*/
+}
+.datagrid tr{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:#FFFFFF;
+	font-size:11px;
+	font-weight:bold;
+}
+.datagrid td{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:#414141;
+	font-size:11px;
+	font-weight:normal;
+	padding:5px 5px;
+	text-align: center;
+	
+	/*
+	white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 *
+	white-space: -pre-wrap;      /* Opera 4-6 *
+	white-space: -o-pre-wrap;    /* Opera 7 *
+	white-space: pre-wrap;       /* css-3 *
+	word-break: break-all;
+	white-space: normal;
+	word-wrap: break-word;       /* Internet Explorer 5.5+ *
+	*/
+	
+}
+.datagrid tr.rowodd { background-color: #FFFFFF; }
+.datagrid tr.roweven { background-color: #CCCCCC; }
+.datagrid .sortcol {
+	cursor: pointer;
+	padding-right: 20px;
+	background-repeat: no-repeat;
+	background-position: right center;	
+}
+.datagrid .sortasc { background-image: url(../js/up.gif); }
+.datagrid .sortdesc { background-image: url('../js/down.gif'); }
+.datagrid .nosort { cursor: default; }
+.datagrid .highlight{ background-color: #CCCCCC; }
+.datagrid .crn_bg{	
+	background-color:#8a8a8a;
+	width:5px;
+	padding:0px;
+}
+.datagrid .foot{	
+	background-color:#8a8a8a;
+	height:11px;	
+	min-height:11px;
+}
+.urg1, .urg2, .urg3, .urg4, .urg5 {
+	padding: 3px;
+	text-align: center;
+	border: 1px solid #333;
+	width: 3em;
+}
+.urg1 {	background-color: #FFFACD;}
+.urg2 {	background-color: #FFD700;}
+.urg3 {	background-color: #FFA500;}
+.urg4 {	background-color: #E13E00;}
+.urg5 {	background-color: Red;}
+.datagrid th.resize-handle-active { cursor: e-resize; }
+div.resize-handle {
+	cursor: e-resize;
+	width: 2px;
+	border-right: 1px dashed #414141;
+	position:absolute;
+	top:0;
+	left:0;
+}
+.datagrid_firstcol{
+	width:5px;
+	text-align:left
+}
+.datagrid_lastcol{
+	width:20px;
+	text-align:left
+}
+.datagrid_td{
+	vertical-align:top; 
+	padding:5px
+}
+.rowodd { background-color: #FFFFFF; }
+.roweven { background-color: #CCCCCC; }
+/* datagrid ends*/
+/*
+.error_cont{
+	background-color:#ffece8; 
+	border:solid 1px #ab1e2e; 
+	padding:10px;
+	padding-top:5px;
+	width:95%;
+	height:45px; 
+	overflow-y:scroll;
+	overflow-x:hidden;
+	margin:5px 0px 10px 0px;
+}
+.error{ 
+	height:20px; 
+	vertical-align:middle;
+	padding-bottom: 0px;
+}
+.error_icon{ 
+	background:url(../images/icons/error.gif) no-repeat; 
+	float:left; 
+	width:16px; 
+	height:16px;
+}
+.error_txt{ 
+	height:16px; 
+	vertical-align:middle; 
+	line-height:16px; 
+	font-family:Verdana; 
+	font-size:11px;
+	font-weight:bold; 
+	color:#FF0000; 
+	padding-left:5px;
+}*/
+.error_subtxt{
+	font-weight:bold;
+	color:#2d2d2d; 
+	/*
+	list-style:square outside url("../images/icons/error.gif");
+	list-style-image:url("../images/icons/error.gif");
+	font-weight:bold;
+	padding-left: 5px;
+	font-size:10px;
+	padding: 0px;
+	margin: 0px;
+	align:left;
+	*/
+}
+.error_txt1 td{
+	background:url(../images/icons/error.gif) no-repeat;
+}
+.buttons {
+	background-color: #FFFFFF;
+	color: #FFFFFF;
+	font-size: 8.5pt;
+	font-weight: normal;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	background-image: url(../images/button2.gif);
+	height: 22px;
+	background-position: center center;
+	padding: 0px;
+	border: 1px solid #666666;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* generic classes starts */
+.bold{
+	font-weight: bold;
+}
+.red{
+	color: #FF0000;
+}
+.colan{
+	font-weight: bold;
+	padding-right: 10px;
+}
+.component_grid{
+}
+.component_grid td{
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+.valign_top{
+	vertical-align:top;
+}
+.ta{
+	border: 1px solid #494949;
+}
+.fset{
+padding: 8px;
+}
+.dl{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #414141;
+	border: 1px solid #494949;
+}
+/* For Readyonly Dropdown List Settings */
+.dl_fixed{width:141px;}
+.dl_half{width:70px;}
+
+.tf{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #414141;
+	height: 13px;
+	background-color: #FFFFFF;
+	border: 1px solid #494949;
+}
+.tf_disabled{
+	background-color: #f5f5f5;
+	border:1px solid #999;
+}
+/* For Readyonly Text Field Settings */
+.tf [type="text"][readonly]{
+	/*background-color: #eee;*/
+	background-color: #f5f5f5;
+	border:1px solid #999;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	font-weight: normal;
+	height: 13px;
+	color: #414141;
+	text-decoration: none;
+}
+.tf_icon{
+	cursor:pointer;
+	vertical-align:middle;
+	border: 0px
+}
+.ff{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #414141;
+}
+.icon_align{
+	vertical-align:top
+}
+/* Text Field Width Settings */
+.tf_fixed{width:137px;}
+.tf_lu_date{width:114px;}
+
+.topBorder{
+	border-top:1px black solid;
+}
+.rightBorder{
+	border-right:1px black solid;
+}
+.leftBorder{
+	border-left:1px black solid;
+}
+.tlr_border{
+	border-top:1px black solid;
+	border-left:1px black solid;
+	border-right:1px black solid;
+}
+.grid_icon{
+	padding-left: 2px;
+	padding-right: 2px;
+}
+.astrik{
+	padding-left: 5px;
+	padding-right: 5px;
+	color: #FF0000;
+}
+.check_title{
+	font-style:italic; 
+	color: #3333FF;
+}
+.clink{
+	font-weight: bold;
+	color: #3333FF;
+	text-decoration: underline;
+	cursor:pointer;
+}
+.scroll_bar{
+	scrollbar-face-color: #858583; 
+	scrollbar-shadow-color: #ffffff; 
+	scrollbar-highlight-color: #858585; 
+	scrollbar-3dlight-color: #fefeff; 
+	scrollbar-darkshadow-color: #5e5e5c; 
+	scrollbar-track-color: #f6f5f0; 
+	scrollbar-arrow-color: #f2f2f2; 
+	SCROLLBAR-BASE-COLOR: #525250;
+}
+.infoMessage { float:left; padding-top:8px;padding-left:10px;}
+/* generic classes ends */
+
+
+
+
+.fieldset_tree fieldset div.rf-tr{
+	height: 354px; overflow-x:hidden; overflow-y:true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.bodyfont{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:x-small
+}
+
+/* HEADER Sytles Definitions */
+.header{
+	height:33px;
+	width:auto;
+	background:url(../images/header/upper1_bg.gif) top repeat-x;
+}
+.heading_white {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.main_actions{
+	height:47px;
+	width:auto;
+	background:url(../images/header/upper2_bg.gif) #414141 top repeat-x;
+}
+
+/* FOOTER Sytles Definitions */
+.footer{
+	background:url(../images/footer/footer.jpg) repeat-x;
+	height:30px;
+}
+
+/* LEFT MENU Sytles Definitions */
+.leftmenu{
+	background-color:#414141;
+}
+
+/* SLIDER Sytles Definitions */
+.LeftFrameSwitcher{	
+	width:7px;
+	height:100%;
+	padding-top:200px;	
+}
+.lfs{
+	background:url(../images/collapse_expand/collaps_bar_bg.gif) #414141 left top  repeat-y;
+}
+
+
+.popup_screen{ 
+	background-color:#525252;
+}
+
+/* Text Sytles Definitions */
+.astrk {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	color: #FF0000;
+}
+.italic{ font-style:italic; }
+.bold{ font-weight:bold; }
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*-------------------------------------- TABLE SETTINGS ---------------------------------------*/
+/*---------------------------------------- STARTS HERE ----------------------------------------*/
+.WorkTable{
+	border:1px solid #414141;
+	width:100%
+}
+
+/* Main Content Body*/
+
+.MainContentTable{
+	width:100%;
+	border:1px solid #414141;
+}
+
+/* Price Plan Table */
+.tb_border{
+	border: 1px #C0C0C0 solid;
+}
+.tr_border{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+}
+.tr_border2{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	padding-left: 5px;
+}
+
+.tr_height{
+ height:3px;
+}
+
+/* CELL Setting */
+.txt_label{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	color:#000000;
+	padding-left:5px;
+}
+
+/* CELL GAP Setting */
+.gap{ width:50px;}
+
+.tbl_cell{
+	border-bottom-style:solid;
+	border-bottom-color:#BEBEBE;
+	border-bottom-width:1px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	padding-left: 5px;
+	background-color: #DFDFDF;
+}
+.tbl_cell0{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	padding-left: 5px;
+	background-color: #DFDFDF;
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/*---------------------------------------- LINKS SETTINGS ---------------------------------------*/
+/*---------------------------------------- STARTS HERE ----------------------------------------*/
+
+/* Nev Bar Settings */
+
+.nav_label_pad{
+	padding-left: 5px;
+}
+
+/* TAB Menu Settings */
+
+.tab_cbar_bar{ 
+	float:right; 
+	height:30px;
+}
+.tab_cbar_icon{ 
+	padding-top:5px; 
+	cursor:pointer;
+}
+.tab_title_area{
+	height:25px; 
+	width:auto; 
+	clear:both;
+}
+.tab_title{
+	height:25px; 
+	width:auto; 
+	float:left; 
+	font-size:11px; 
+	font-weight:bold; 
+	color:#FFFFFF; 
+	font-family:Verdana; 
+	vertical-align:middle; 
+	line-height:25px; 
+	padding-left:10px; 
+	padding-right:10px; 
+	background-image:url(../images/tab/tab_bg.gif); 
+	background-repeat:repeat-x; 
+	border-left:1px solid #4e4e4e;
+}
+.tab_corner{
+	float:left; 
+	height:25px; 
+	width:13px; 
+	display:block; 
+	background-image:url(../images/tab/tab_corner.gif); 
+	background-repeat:no-repeat;
+}
+.tab_cbar_separator{
+	background-image:url(../images/tab/toolbar_separator.gif); 
+	background-repeat:no-repeat; 
+	width:3px; 
+	height:30px; 
+	float:left;
+}
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*-------------------------------------- WIZARD SETTINGS --------------------------------------*/
+/*---------------------------------------- STARTS HERE ----------------------------------------*/
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*---------------------------------- BUTTON & IMAGE SETTINGS ----------------------------------*/
+/*---------------------------------------- STARTS HERE ----------------------------------------*/
+
+/* LOGO Sytles Definitions */
+.logo{
+	height:33px;
+	width:112px;
+	margin-left:10px;
+	float:left;
+	background:url(../images/header/logo.png) left bottom no-repeat;
+}
+
+/* ICON Sytles Definitions */
+
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*-------------------------------------- FORM COMPONENTS --------------------------------------*/
+/*---------------------------------------- STARTS HERE ----------------------------------------*/
+
+/* Text Field Sytles Definitions */
+/* Declaration:	tf = Text Field */
+
+/* For Normal Text Field Settings */
+
+.tf_wide{width:200px;}
+.tf_inline {width:100px;}
+.tf_wi {width:117px;}
+
+/* Test Field With Icon */
+.tf_icon{cursor:pointer; width:18px; padding-left:2px; vertical-align:top;}
+
+
+/* Dropdown List Sytles Definitions */
+/* Declaration:	dl = Dropdown List */
+
+/* For Normal Dropdown list Settings */
+
+fieldset{ 
+	margin:20px 30px;
+	padding-top:0px;
+}
+
+legend{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #FF0000;
+	padding-right:7px;
+	padding-left:7px;
+	padding-bottom:7px;
+}
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*----------------------------------------- DATA GRID -----------------------------------------*/
+/*---------------------------------------- STARTS HERE ----------------------------------------*/
+
+
+.urg5 {
+	padding: 3px;
+	text-align: center;
+	border: 1px solid #333;
+	width: 3em;
+}
+.urg4 {
+	padding: 3px;
+	text-align: center;
+	border: 1px solid #333;
+	width: 3em;
+}
+.urg3 {
+	padding: 3px;
+	text-align: center;
+	border: 1px solid #333;
+	width: 3em;
+}
+.urg2 {
+	padding: 3px;
+	text-align: center;
+	border: 1px solid #333;
+	width: 3em;
+}
+.urg1 {
+	padding: 3px;
+	text-align: center;
+	border: 1px solid #333;
+	width: 3em;
+}
+.urg1 {	background-color: #FFFACD;}
+.urg2 {	background-color: #FFD700;}
+.urg3 {	background-color: #FFA500;}
+.urg4 {	background-color: #E13E00;}
+.urg5 {	background-color: Red;}
+div.resize-handle {
+	cursor: e-resize;
+	width: 2px;
+	border-right: 1px dashed #414141;
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/*-----------------------------------------PAGINATION -----------------------------------------*/
+/*---------------------------------------- STARTS HERE ----------------------------------------*/
+
+.pagination {
+	float: right;
+	padding-top: 8px;
+	padding-bottom: 4px;
+	padding-left: 2px;
+	font-family:Verdana;
+}
+.pagination ul {
+	margin: 0;
+	padding: 0;
+	text-align: right; /*Set to "right" to right align pagination interface*/;
+	font-size: 10px;
+	font-family:Verdana;
+}
+.pagination li {
+	list-style-type: none;
+	padding-bottom: 1px;
+	display: inline;
+	font-family:Verdana;
+}
+.pagination a:visited {
+	padding: 0 5px;
+	border: 1px solid #414141;
+	text-decoration: none;
+	color: #414141;
+	font-family:Verdana;
+}
+.pagination a {
+	padding: 0 5px;
+	border: 1px solid #414141;
+	text-decoration: none;
+	color: #414141;
+	font-family:Verdana;
+}
+.pagination a:active {
+	border: 1px solid #414141;
+	color: #414141;
+	background-color: #CCCCCC;
+	font-family:Verdana;
+}
+.pagination a:hover {
+	border: 1px solid #414141;
+	color: #414141;
+	background-color: #CCCCCC;
+	font-family:Verdana;
+}
+.pagination a.currentpage {
+	background-color: #ff0000;
+	color: #FFF !important;
+	border-color: #414141;
+	font-weight: bold;
+	cursor: default;
+	font-family:Verdana;
+}
+.pagination a.disablelink:hover {
+	background-color: white;
+	cursor: default;
+	color: #929292;
+	border-color: #929292;
+	font-weight: normal !important;
+	font-family:Verdana;
+}
+.pagination a.disablelink {
+	background-color: white;
+	cursor: default;
+	color: #929292;
+	border-color: #929292;
+	font-weight: normal !important;
+	font-family:Verdana;
+}
+.pagination a.prevnext {
+	font-weight: bold;
+	font-family:Verdana;
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/*----------------------------------------- FEE RULE ------------------------------------------*/
+/*---------------------------------------- STARTS HERE ----------------------------------------*/
+
+.rules{	
+width:100%;	
+display:block; 
+padding-left:8px; 
+padding-top:5px;
+}
+.rules .rule{
+	background-color:#e5e5e5; 
+	border:2px solid #cccccc;	
+	width:100%;	
+	height:12px; 
+	overflow:hidden; 
+	list-style:none; 
+	padding:5px; 
+	padding-right:0px; 
+	padding-bottom:3px; 
+	margin-bottom:3px; 
+	display:block;
+}
+.rules .expand{ 
+	height:100%;
+}
+.rules .iconplus{ 
+	list-style:url(images/icons/icon_plus.png) inside;
+}
+.rules .iconminus{
+	list-style:url(images/icons/icon_minus.png) inside;
+}
+.rules .icon{
+	width:11px;	
+	height:11px; 
+	cursor:pointer; 
+	float:left;
+}
+.rules .text{
+	float:left;	
+	margin-left:10px; 
+	font-family:Verdana; 
+	font-size:11px;
+}
+.rules .action{
+	width:auto; 
+	height:auto; 
+	float:right;	
+	cursor:pointer;	
+	padding-right:10px;
+}
+.fee_rule {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 10px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	text-decoration: none;
+	float: left;
+	height: auto;
+	width: auto;
+}
+#FeeRule {
+	font-family: Verdana, Geneva, sans-serif;
+	overflow: visible;
+	position: fixed;
+	visibility: visible;
+	z-index: auto;
+	width: 300px;
+}
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*--------------------------------------- ERROR HANDLING --------------------------------------*/
+/*---------------------------------------- STARTS HERE ----------------------------------------*/
+
+
+.main_table{
+	width:100%;
+	padding:10px;
+}
+.container_table{
+	vertical-align:top;
+	width:100%;
+	height:200px;
+	border:1px #414141 solid
+}
+.container_td{
+	vertical-align:top;
+	height:200px;
+	width:100%;
+	padding:10px;
+}
+/*---------------------------------------- PAGE ENDS HERE ----------------------------------------*/
+
+
+
+
+
+

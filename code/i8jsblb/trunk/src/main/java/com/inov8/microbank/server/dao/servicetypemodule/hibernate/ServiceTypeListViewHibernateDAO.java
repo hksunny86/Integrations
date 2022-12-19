@@ -1,0 +1,10 @@
+package com.inov8.microbank.server.dao.servicetypemodule.hibernate;
+
+import com.inov8.framework.server.dao.framework.hibernate.BaseHibernateDAO;
+import com.inov8.microbank.common.model.servicemodule.ServiceTypeListViewModel;
+import com.inov8.microbank.server.dao.servicetypemodule.ServiceTypeListViewDAO;
+
+public class ServiceTypeListViewHibernateDAO extends BaseHibernateDAO<ServiceTypeListViewModel,Long,ServiceTypeListViewDAO>
+implements ServiceTypeListViewDAO  {
+
+}

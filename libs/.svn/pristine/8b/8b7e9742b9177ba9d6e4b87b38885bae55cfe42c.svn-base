@@ -1,0 +1,16 @@
+<?xml version="1.0"?><project>
+  <parent>
+    <artifactId>webservices</artifactId>
+    <groupId>com.sun.xml.ws</groupId>
+    <version>1.2</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>javax.xml</groupId>
+  <artifactId>webservices-api</artifactId>
+  <packaging>hk2-jar</packaging>
+  <name>Metro Implementation</name>
+  <version>1.2</version>
+  <distributionManagement>
+    <status>deployed</status>
+  </distributionManagement>
+</project>

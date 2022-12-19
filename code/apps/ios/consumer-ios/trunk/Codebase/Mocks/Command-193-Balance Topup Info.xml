@@ -1,0 +1,21 @@
+<!--Request-->
+<!--
+<msg id="193" reqTime="1470920791571"><params><param name="DTID">5</param><param name="PID">50040</param><param name="MOBN">03454254477</param><param name="TXAM">100</param></params></msg>
+-->
+<!--Response-->
+<msg id="193">
+     <params>
+         <param name="MOBN">03454254477</param>
+         <param name="CMOB">03454254477</param>
+         <param name="NAME">nida nida</param>
+         <param name="CNIC">8978978798789</param>
+         <param name="TXAM">100.0</param>
+         <param name="TXAMF">100.00</param>
+         <param name="CAMT">0.0</param>
+         <param name="CAMTF">0.00</param>
+         <param name="TPAM">0.0</param>
+         <param name="TPAMF">0.00</param>
+         <param name="TAMT">100.0</param>
+         <param name="TAMTF">100.00</param>
+     </params>
+ </msg>

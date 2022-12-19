@@ -1,0 +1,1 @@
+Insert into Registration_state (REGISTRATION_STATE_ID,NAME,DESCRIPTION,COMMENTS,CREATED_BY,UPDATED_BY,CREATED_ON,UPDATED_ON,VERSION_NO) values (15,'Discrepent_Request_Received',null,null,1,1,to_date('26-SEP-22','DD-MON-RR'),to_date('26-SEP-22','DD-MON-RR'),0);

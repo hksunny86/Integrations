@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%p [%t] | %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="dailyRollFile" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/> 
+		<param name="File" value="../server/default/log/microbanklogs/LogFile-'yyyy-MM-dd'.log"/>
+		<layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" value="%p [%t] | %m%n"/>
+		</layout>
+		 <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="DEBUG"/>
+            <param name="LevelMax" value="FATAL"/>
+        </filter>
+	</appender>
+	
+	
+	<appender name="dailyRollFileScheduler" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/> 
+		<param name="File" value="../server/default/log/microbanklogs/scheduler/LogFile-'yyyy-MM-dd'.log"/>
+		<layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" value="%p [%t] | %m%n"/>
+		</layout>
+		 <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="DEBUG"/>
+            <param name="LevelMax" value="FATAL"/>
+        </filter>
+	</appender>
+    
+    <logger name="com.inov8.microbank" >
+        <level value="INFO"/>
+    </logger>
+   <!--  
+    <logger name="com.inov8.schedulers" >
+        <level value="DEBUG"/>
+        <appender-ref ref="dailyRollFileScheduler"/>
+    </logger>
+    -->
+    
+    <logger name="com.inov8.microbank.util">
+        <level value="INFO"/>
+    </logger>
+    
+    <logger name="com.inov8.microbank.webapp.filter">
+        <level value="DEBUG"/>
+    </logger>
+    <logger name="com.inov8.microbank.server.service.veriflymodule">
+        <level value="INFO"/>
+        <!-- <appender-ref ref="jmsAppender"/> -->
+    </logger>
+
+   <logger name="com.inov8.microbank.server.messaging.listener">
+        <level value="DEBUG"/>
+        <!-- <appender-ref ref="jmsAppender"/> -->
+    </logger>
+    
+    <logger name="com.inov8.microbank.webapp.listener.UserCounterListener">
+        <level value="WARN"/>
+    </logger>
+    
+    <logger name="org.springframework.security">
+        <level value="INFO"/>
+    </logger>
+    
+    <logger name="org.apache.commons">
+        <level value="INFO"/>
+    </logger>
+    <logger name="org.apache.activemq">
+        <level value="DEBUG"/>
+    </logger>
+    <logger name="org.springframework">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="org.apache">
+        <level value="INFO"/>
+    </logger>
+    
+    <logger name="org.hibernate">
+        <level value="WARN"/>
+    </logger>  
+    
+    <logger name="org.hibernate.SQL">
+        <level value="INFO"/>
+    </logger>
+    
+    <logger name="org.hibernate.type">
+        <level value="INFO"/>
+    </logger>
+    
+    <logger name="org.hibernate.ps.PreparedStatementCache">
+        <level value="INFO"/>
+    </logger>   
+    
+    <logger name="net.sf.ehcache">
+        <level value="INFO"/>
+    </logger>
+    
+    <logger name="net.sf.navigator">
+        <level value="INFO"/>
+    </logger>
+
+    <logger name="com.thoughtworks.xstream.XStream">
+        <level value="INFO"/>
+    </logger>
+
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</log4j:configuration>

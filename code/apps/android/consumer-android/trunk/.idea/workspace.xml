@@ -1,0 +1,1514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="js-c" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c98a3894-0677-4eb6-980f-ac45893a7d99" name="Default" comment="code updated">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevDebug/armeabi-v7a/android_gradle_build.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevDebug/armeabi-v7a/android_gradle_build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevDebug/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevDebug/armeabi-v7a/android_gradle_build_mini.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevDebug/armeabi-v7a/ndkBuild_build_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevDebug/armeabi-v7a/ndkBuild_build_command.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevDebug/armeabi-v7a/ndkBuild_build_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevDebug/armeabi-v7a/ndkBuild_build_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevRelease/armeabi-v7a/android_gradle_build.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevRelease/armeabi-v7a/android_gradle_build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevRelease/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevRelease/armeabi-v7a/android_gradle_build_mini.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevRelease/armeabi-v7a/ndkBuild_build_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevRelease/armeabi-v7a/ndkBuild_build_command.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevRelease/armeabi-v7a/ndkBuild_build_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerDevRelease/armeabi-v7a/ndkBuild_build_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveDebug/armeabi-v7a/android_gradle_build.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveDebug/armeabi-v7a/android_gradle_build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveDebug/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveDebug/armeabi-v7a/android_gradle_build_mini.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveDebug/armeabi-v7a/ndkBuild_build_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveDebug/armeabi-v7a/ndkBuild_build_command.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveDebug/armeabi-v7a/ndkBuild_build_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveDebug/armeabi-v7a/ndkBuild_build_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveRelease/armeabi-v7a/android_gradle_build.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveRelease/armeabi-v7a/android_gradle_build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveRelease/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveRelease/armeabi-v7a/android_gradle_build_mini.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveRelease/armeabi-v7a/ndkBuild_build_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveRelease/armeabi-v7a/ndkBuild_build_command.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveRelease/armeabi-v7a/ndkBuild_build_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveRelease/armeabi-v7a/ndkBuild_build_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadDebug/armeabi-v7a/android_gradle_build.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadDebug/armeabi-v7a/android_gradle_build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadDebug/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadDebug/armeabi-v7a/android_gradle_build_mini.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadDebug/armeabi-v7a/ndkBuild_build_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadDebug/armeabi-v7a/ndkBuild_build_command.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadDebug/armeabi-v7a/ndkBuild_build_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadDebug/armeabi-v7a/ndkBuild_build_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadRelease/armeabi-v7a/android_gradle_build.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadRelease/armeabi-v7a/android_gradle_build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadRelease/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadRelease/armeabi-v7a/android_gradle_build_mini.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadRelease/armeabi-v7a/ndkBuild_build_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadRelease/armeabi-v7a/ndkBuild_build_command.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadRelease/armeabi-v7a/ndkBuild_build_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerLiveUploadRelease/armeabi-v7a/ndkBuild_build_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQADebug/armeabi-v7a/android_gradle_build.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQADebug/armeabi-v7a/android_gradle_build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQADebug/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQADebug/armeabi-v7a/android_gradle_build_mini.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQADebug/armeabi-v7a/ndkBuild_build_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQADebug/armeabi-v7a/ndkBuild_build_command.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQADebug/armeabi-v7a/ndkBuild_build_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQADebug/armeabi-v7a/ndkBuild_build_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQARelease/armeabi-v7a/android_gradle_build.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQARelease/armeabi-v7a/android_gradle_build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQARelease/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQARelease/armeabi-v7a/android_gradle_build_mini.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQARelease/armeabi-v7a/ndkBuild_build_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQARelease/armeabi-v7a/ndkBuild_build_command.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQARelease/armeabi-v7a/ndkBuild_build_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerQARelease/armeabi-v7a/ndkBuild_build_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingDebug/armeabi-v7a/android_gradle_build.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingDebug/armeabi-v7a/android_gradle_build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingDebug/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingDebug/armeabi-v7a/android_gradle_build_mini.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingDebug/armeabi-v7a/ndkBuild_build_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingDebug/armeabi-v7a/ndkBuild_build_command.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingDebug/armeabi-v7a/ndkBuild_build_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingDebug/armeabi-v7a/ndkBuild_build_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingRelease/armeabi-v7a/android_gradle_build.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingRelease/armeabi-v7a/android_gradle_build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingRelease/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingRelease/armeabi-v7a/android_gradle_build_mini.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingRelease/armeabi-v7a/ndkBuild_build_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingRelease/armeabi-v7a/ndkBuild_build_command.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingRelease/armeabi-v7a/ndkBuild_build_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerStagingRelease/armeabi-v7a/ndkBuild_build_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATDebug/armeabi-v7a/android_gradle_build.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATDebug/armeabi-v7a/android_gradle_build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATDebug/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATDebug/armeabi-v7a/android_gradle_build_mini.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATDebug/armeabi-v7a/ndkBuild_build_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATDebug/armeabi-v7a/ndkBuild_build_command.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATDebug/armeabi-v7a/ndkBuild_build_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATDebug/armeabi-v7a/ndkBuild_build_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATRelease/armeabi-v7a/android_gradle_build.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATRelease/armeabi-v7a/android_gradle_build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATRelease/armeabi-v7a/android_gradle_build_mini.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATRelease/armeabi-v7a/android_gradle_build_mini.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATRelease/armeabi-v7a/ndkBuild_build_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATRelease/armeabi-v7a/ndkBuild_build_command.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATRelease/armeabi-v7a/ndkBuild_build_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/.externalNativeBuild/ndkBuild/jsConsumerUATRelease/armeabi-v7a/ndkBuild_build_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/build/generated/res/google-services/jsConsumerDev/debug/values/values.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/build/generated/res/google-services/jsConsumerDev/debug/values/values.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/build/generated/res/google-services/jsConsumerLive/release/values/values.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/build/generated/res/google-services/jsConsumerLive/release/values/values.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/build/generated/res/google-services/jsConsumerMigratedUAT/release/values/values.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/build/generated/res/google-services/jsConsumerMigratedUAT/release/values/values.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/build/generated/res/google-services/jsConsumerQA/release/values/values.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/build/generated/res/google-services/jsConsumerQA/release/values/values.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/build/generated/res/google-services/jsConsumerUAT/release/values/values.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/build/generated/res/google-services/jsConsumerUAT/release/values/values.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/build/generated/source/buildConfig/jsConsumerDev/debug/com/inov8/jsblconsumer/BuildConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/build/generated/source/buildConfig/jsConsumerDev/debug/com/inov8/jsblconsumer/BuildConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/build/generated/source/buildConfig/jsConsumerLive/release/com/inov8/jsblconsumer/BuildConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/build/generated/source/buildConfig/jsConsumerLive/release/com/inov8/jsblconsumer/BuildConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/build/generated/source/buildConfig/jsConsumerMigratedUAT/release/com/inov8/jsblconsumer/BuildConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/build/generated/source/buildConfig/jsConsumerMigratedUAT/release/com/inov8/jsblconsumer/BuildConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/build/generated/source/buildConfig/jsConsumerQA/release/com/inov8/jsblconsumer/BuildConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/build/generated/source/buildConfig/jsConsumerQA/release/com/inov8/jsblconsumer/BuildConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/build/generated/source/buildConfig/jsConsumerUAT/release/com/inov8/jsblconsumer/BuildConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/build/generated/source/buildConfig/jsConsumerUAT/release/com/inov8/jsblconsumer/BuildConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/src/jsConsumerDev/java/com.inov8.jsblconsumer.util/BuildConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/src/jsConsumerDev/java/com.inov8.jsblconsumer.util/BuildConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/CategoryMenuActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/CategoryMenuActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/TransactionReceiptActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/TransactionReceiptActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSBL-cmate/src/main/res/mipmap-hdpi/contact_picker.png" beforeDir="false" afterPath="$PROJECT_DIR$/JSBL-cmate/src/main/res/mipmap-hdpi/contact_picker.png" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/JSBL-cmate">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <PATH>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
+              </PATH_ELEMENT>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="JSBL-Consumer" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
+              </PATH_ELEMENT>
+            </PATH>
+            <PATH>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
+              </PATH_ELEMENT>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="JSBL-Consumer" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
+              </PATH_ELEMENT>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="JSBL-Consumer" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ModuleNode" />
+              </PATH_ELEMENT>
+            </PATH>
+            <PATH>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
+              </PATH_ELEMENT>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="JSBL-Consumer" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
+              </PATH_ELEMENT>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="JSBL-Consumer" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ModuleNode" />
+              </PATH_ELEMENT>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="Tasks" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode" />
+              </PATH_ELEMENT>
+            </PATH>
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="layoutResourceFile" />
+        <option value="resourceFile" />
+        <option value="layoutResourceFile_vertical" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/../../Bulides/Consumer/JS BB/jskeystore.jks" />
+    <option name="KEY_ALIAS" value="jsblconsumer" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
+    <option name="BUILD_TARGET_KEY" value="apk" />
+  </component>
+  <component name="ProjectId" id="1lPKqLF6D0wZz4k003daDtunhZo" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+    <ConfirmationsSetting value="1" id="Remove" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ApkExportedModule" value="JSBL-Consumer-180412.JSBL-cmate" />
+    <property name="BundleExportedModule" value="JSBL-Consumer-180412.JSBL-cmate" />
+    <property name="DEBUGGABLE_DEVICE" value="vivo-vivo_1907_19-6HFAROOVLJ6XSWKB" />
+    <property name="DEBUGGABLE_PROCESS" value="com.inov8.jsblconsumer" />
+    <property name="DEBUGGER_ID" value="Java" />
+    <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/../../Bulides/Consumer/JS BB/004" />
+    <property name="ExportApk.BuildType" value="release" />
+    <property name="ExportApk.BuildVariants" value="jsConsumerLiveRelease&#10;jsConsumerMigratedUATRelease&#10;jsConsumerQARelease" />
+    <property name="ExportApk.Flavors" value="jsConsumerLive&#10;jsConsumerLiveUpload&#10;jsConsumerQA&#10;jsConsumerStaging&#10;jsConsumerUAT" />
+    <property name="ExportApk.SignV1" value="true" />
+    <property name="ExportApk.SignV2" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHOW_ALL_PROCESSES" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="lo&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/LocatorActivity.java&#10;di&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/DirectionsActivity.java&#10;bu&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/jsConsumerDev/java/com.inov8.jsblconsumer.util/BuildConstants.java&#10;spl&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/SplashActivity.java&#10;log&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/LoginActivity.java&#10;con&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/Constants.java&#10;nad&#9;PSI&#9;JAVA://com.inov8.jsblconsumer.bvs.NadraRestClientActivity&#10;D&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/DirectionsActivity.java&#10;loc&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/LocatorActivity.java&#10;d&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/DirectionsActivity.java&#10;AES&#9;PSI&#9;JAVA://com.inov8.jsblconsumer.util.AesEncryptor&#10;faq&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/faq/FaqsActivity.java&#10;pop&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/ui/components/PopupDialogs.java&#10;htt&#9;PSI&#9;JAVA://com.inov8.jsblconsumer.net.HttpCalls&#10;app&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/AppMessages.java&#10;man&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/AndroidManifest.xml&#10;bal&#9;PSI&#9;JAVA://com.inov8.jsblconsumer.activities.myAccount.MyAccountBalanceInquiryActivity&#10;str&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/res/values/strings.xml&#10;bott&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/BottomBarActivity.java&#10;base&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/BaseActivity.java&#10;cat&#9;PSI&#9;JAVA://com.inov8.jsblconsumer.activities.CategoryMenuActivity&#10;my&#9;PSI&#9;JAVA://com.inov8.jsblconsumer.activities.myAccount.MyAccountMyLimitActivity&#10;open&#9;PSI&#9;JAVA://com.inov8.jsblconsumer.activities.openAccount.OpenAccountBvsActivity&#10;more&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/res/layout/dialog_more.xml&#10;col&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/res/values/colors.xml&#10;dim&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/res/values/dimen.xml&#10;ht&#9;PSI&#9;JAVA://com.inov8.jsblconsumer.net.HttpAsyncTask&#10;dumm&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/DummyXmlMessages.java&#10;de&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/DecodingUtility.java&#10;op&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/openAccount/OpenAccountBvsOtpActivity.java&#10;fo&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/forgotPassword/ForgotPasswordMobileInputActivity.java&#10;for&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/forgotPassword/ForgotPasswordMobileInputActivity.java&#10;ke&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/jni/keys.c&#10;De&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/DecodingUtility.java&#10;b&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/jsConsumerDev/java/com.inov8.jsblconsumer.util/BuildConstants.java&#10;act&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/res/layout/activity_login.xml&#10;Con&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/PasswordController.java&#10;Base&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/BaseActivity.java&#10;mai&#9;PSI&#9;JAVA://com.inov8.jsblconsumer.activities.MainMenuActivity&#10;on&#9;PSI&#9;JAVA://com.inov8.jsblconsumer.Manifest.permission&#10;Cat&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/CategoryMenuActivity.java&#10;Bu&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/jsConsumerDev/java/com.inov8.jsblconsumer.util/BuildConstants.java&#10;ope&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/openAccount/OpenAccountConfirmationActivity.java&#10;xml&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/parser/XmlParser.java&#10;o&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/res/layout/activity_login.xml&#10;du&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/DummyXmlMessages.java&#10;gen&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/myAccount/GenerateMpinActivity.java&#10;com&#9;PSI&#9;JAVA://com.inov8.jsblconsumer.activities.BaseCommunicationActivity&#10;nadra&#9;PSI&#9;JAVA://com.inov8.jsblconsumer.bvs.NadraRestClientActivity&#10;head&#9;FILE&#9;file://E:/i8workpaceAgentmate/JSBL-Consumer/JSBL-cmate/src/main/res/layout/header_layout.xml" />
+    <property name="VectorAssetImportPath" value="F:\JS Consumer\Vr.2\Slicing\svg" />
+    <property name="android-custom-view/Users/rehanaslam/Documents/i8/Consumer/JSBL-Consumer-180412/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/DrawableTextView.java_SELECTED" value="DrawableTextView" />
+    <property name="android-custom-view/Users/rehanaslam/Library/Android/sdk/sources/android-29/android/widget/EditText.java_SELECTED" value="EditText" />
+    <property name="android.profiler.active" value="true" />
+    <property name="android.project.structure.last.selected" value="JSBL-cmate" />
+    <property name="android.project.structure.proportion" value="0.15" />
+    <property name="android.sdk.path" value="E:/sdk" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1523512470637" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="device.picker.selection" value="LGH8308fa052a4" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/JSBL-cmate/src/main/res/mipmap-hdpi" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/JSBL-cmate/src/main/res/mipmap-hdpi" />
+    <property name="multi-representation-preview/Users/rehanaslam/Documents/i8/Consumer/JSBL-Consumer-180412/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/DrawableTextView.java_selected" value="Custom views" />
+    <property name="multi-representation-preview/Users/rehanaslam/Library/Android/sdk/sources/android-29/android/widget/EditText.java_selected" value="Custom views" />
+    <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+    <property name="sync.plugin.last.upgrade.timestamp" value="1517313303740" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\i8workpaceAgentmate\JSBL-Consumer\JSBL-cmate\src\main\res\drawable" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.inov8.jsblconsumer.util" />
+      <recent name="com.inov8.jsblconsumer.activities.forgotPassword" />
+      <recent name="com.inov8.jsblconsumer.activities.retailPayment.retailpaymentmpass" />
+      <recent name="com.inov8.jsblconsumer.test" />
+      <recent name="com.inov8.jsblconsumer.adapters" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/JSBL-cmate/src/main/res/mipmap-hdpi" />
+      <recent name="$PROJECT_DIR$/JSBL-cmate/src/main/res/mipmap-xxhdpi" />
+      <recent name="E:\i8workpaceAgentmate\JSBL-Consumer\JSBL-cmate" />
+      <recent name="E:\i8workpaceAgentmate\JSBL-Consumer\JSBL-cmate\src\main\res\drawable" />
+      <recent name="E:\i8workpaceAgentmate\JSBL-Consumer\JSBL-cmate\src\main\res\layout" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Android App.JSBL-cmate">
+    <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+    </configuration>
+    <configuration name="&lt;template&gt;" type="JUnit" default="true" selected="false">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+    </configuration>
+    <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+    </configuration>
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JSBL-cmate" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="JSBL-Consumer-180412.JSBL-cmate" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" />
+      </method>
+    </configuration>
+    <configuration name="timepey-cmate" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="timepey-cmate" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
+      <option name="TESTING_TYPE" value="0" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="INCLUDE_GRADLE_EXTRA_OPTIONS" value="true" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JSBL-Consumer [signingReport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="signingReport" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <module name="" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Android App.timepey-cmate" />
+      <item itemvalue="Android App.JSBL-cmate" />
+      <item itemvalue="Gradle.JSBL-Consumer [signingReport]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.JSBL-Consumer [signingReport]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>$USER_HOME$/.subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c98a3894-0677-4eb6-980f-ac45893a7d99" name="Default" comment="" />
+      <created>1505033034075</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1505033034075</updated>
+    </task>
+    <task id="LOCAL-00001" summary="remove hard coded cash withdrawl transaction.">
+      <created>1510124618447</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1510124618447</updated>
+    </task>
+    <task id="LOCAL-00002" summary="main menu and pop dialog flow and ui updated">
+      <created>1512547194606</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1512547194606</updated>
+    </task>
+    <task id="LOCAL-00003" summary="code updated">
+      <created>1512547694928</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1512547694928</updated>
+    </task>
+    <task id="LOCAL-00004" summary="code updated">
+      <created>1513604336524</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1513604336524</updated>
+    </task>
+    <task id="LOCAL-00005" summary="code updated">
+      <created>1513945667078</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1513945667078</updated>
+    </task>
+    <task id="LOCAL-00006" summary="CMDID param added in Account Opening OTP Verification Command.">
+      <created>1514352048747</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1514352048747</updated>
+    </task>
+    <task id="LOCAL-00007" summary="retail payment flow updated">
+      <created>1514525093199</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1514525093199</updated>
+    </task>
+    <task id="LOCAL-00008" summary="bug fixes">
+      <created>1514966008353</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1514966008353</updated>
+    </task>
+    <task id="LOCAL-00009" summary="retail payment flow updated">
+      <created>1515495652047</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1515495652047</updated>
+    </task>
+    <task id="LOCAL-00010" summary="E-Challan Flow implementation">
+      <created>1515667026988</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1515667026988</updated>
+    </task>
+    <task id="LOCAL-00011" summary="code updated">
+      <created>1516166908096</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1516166908096</updated>
+    </task>
+    <task id="LOCAL-00012" summary="code updated">
+      <created>1516187061482</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1516187061482</updated>
+    </task>
+    <task id="LOCAL-00013" summary="sdk updated">
+      <created>1516192832242</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1516192832242</updated>
+    </task>
+    <task id="LOCAL-00014" summary="bug fixes">
+      <created>1516625117878</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1516625117878</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Bug fixes">
+      <created>1516871908910</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1516871908910</updated>
+    </task>
+    <task id="LOCAL-00016" summary="catalog issuse fixed">
+      <created>1517314708106</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1517314708106</updated>
+    </task>
+    <task id="LOCAL-00017" summary="sdk updated">
+      <created>1517471188407</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1517471188407</updated>
+    </task>
+    <task id="LOCAL-00018" summary="code updated">
+      <created>1519041178784</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1519041178784</updated>
+    </task>
+    <task id="LOCAL-00019" summary="splash screen updated">
+      <created>1519112454558</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1519112454558</updated>
+    </task>
+    <task id="LOCAL-00020" summary="sdk updated and version code 3">
+      <created>1519713776960</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1519713776960</updated>
+    </task>
+    <task id="LOCAL-00021" summary="app name change and bug fixes">
+      <created>1519889435288</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1519889435288</updated>
+    </task>
+    <task id="LOCAL-00022" summary="app crash issue fixed">
+      <created>1520318650168</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1520318650168</updated>
+    </task>
+    <task id="LOCAL-00023" summary="forgot password and mpin regen flow added">
+      <created>1521202830700</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1521202830700</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Remove MPIN from Refresh Balance.&#10;Remove MPIN from Balance Inquiry.">
+      <created>1521451275137</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1521451275137</updated>
+    </task>
+    <task id="LOCAL-00025" summary="bug fixes">
+      <created>1521637040913</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1521637040913</updated>
+    </task>
+    <task id="LOCAL-00026" summary="otp auto fatch and otp separate screen flow added">
+      <created>1521713609179</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1521713609179</updated>
+    </task>
+    <task id="LOCAL-00027" summary="ui fixes">
+      <created>1522064414255</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1522064414255</updated>
+    </task>
+    <task id="LOCAL-00028" summary="code updated">
+      <created>1523007066724</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1523007066724</updated>
+    </task>
+    <task id="LOCAL-00029" summary="bug fixes">
+      <created>1523356205488</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1523356205488</updated>
+    </task>
+    <task id="LOCAL-00030" summary="bug fixes">
+      <created>1523510111429</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1523510111429</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Fixes.......">
+      <created>1607530398035</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1607530398036</updated>
+    </task>
+    <task id="LOCAL-00032" summary="fixes......">
+      <created>1609388161032</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1609388161032</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="remove hard coded cash withdrawl transaction." />
+    <MESSAGE value="main menu and pop dialog flow and ui updated" />
+    <MESSAGE value="CMDID param added in Account Opening OTP Verification Command." />
+    <MESSAGE value="retail payment flow updated" />
+    <MESSAGE value="E-Challan Flow implementation" />
+    <MESSAGE value="Bug fixes" />
+    <MESSAGE value="catalog issuse fixed" />
+    <MESSAGE value="sdk updated" />
+    <MESSAGE value="splash screen updated" />
+    <MESSAGE value="sdk updated and version code 3" />
+    <MESSAGE value="app name change and bug fixes" />
+    <MESSAGE value="app crash issue fixed" />
+    <MESSAGE value="forgot password and mpin regen flow added" />
+    <MESSAGE value="Remove MPIN from Refresh Balance.&#10;Remove MPIN from Balance Inquiry." />
+    <MESSAGE value="otp auto fatch and otp separate screen flow added" />
+    <MESSAGE value="ui fixes" />
+    <MESSAGE value="code updated" />
+    <MESSAGE value="bug fixes" />
+    <MESSAGE value="Fixes......." />
+    <MESSAGE value="fixes......" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes......" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="458" y="292" key="#VCS_History_Cache_Settings" timestamp="1609388232294">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="458" y="292" key="#VCS_History_Cache_Settings/0.25.1280.711@0.25.1280.711" timestamp="1609388232294" />
+    <state x="342" y="186" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1609914825561">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="342" y="186" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1280.711@0.25.1280.711" timestamp="1609914825561" />
+    <state x="453" y="91" key="#com.intellij.ide.util.MemberChooser" timestamp="1608715484681">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="453" y="91" key="#com.intellij.ide.util.MemberChooser/0.25.1280.711@0.25.1280.711" timestamp="1608715484681" />
+    <state x="371" y="69" key="#xdebugger.evaluate" timestamp="1608712265114">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="371" y="69" key="#xdebugger.evaluate/0.25.1280.711@0.25.1280.711" timestamp="1608712265114" />
+    <state x="372" y="131" key="AndroidProcessChooserDialog" timestamp="1609387764173">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="372" y="131" key="AndroidProcessChooserDialog/0.25.1280.711@0.25.1280.711" timestamp="1609387764173" />
+    <state x="81" y="25" key="CommitChangelistDialog2" timestamp="1609388147405">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="81" y="25" key="CommitChangelistDialog2/0.25.1280.711@0.25.1280.711" timestamp="1609388147405" />
+    <state x="126" y="82" key="DiffContextDialog" timestamp="1609388078303">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="126" y="82" key="DiffContextDialog/0.25.1280.711@0.25.1280.711" timestamp="1609388078303" />
+    <state width="1238" height="174" key="GridCell.Tab.0.bottom" timestamp="1609734880578">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state width="1238" height="174" key="GridCell.Tab.0.bottom/0.25.1280.709@0.25.1280.709" timestamp="1608879077120" />
+    <state width="1238" height="174" key="GridCell.Tab.0.bottom/0.25.1280.711@0.25.1280.711" timestamp="1609734880578" />
+    <state width="1238" height="174" key="GridCell.Tab.0.center" timestamp="1609734880577">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state width="1238" height="174" key="GridCell.Tab.0.center/0.25.1280.709@0.25.1280.709" timestamp="1608879077119" />
+    <state width="1238" height="174" key="GridCell.Tab.0.center/0.25.1280.711@0.25.1280.711" timestamp="1609734880577" />
+    <state width="1238" height="174" key="GridCell.Tab.0.left" timestamp="1609734880576">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state width="1238" height="174" key="GridCell.Tab.0.left/0.25.1280.709@0.25.1280.709" timestamp="1608879077106" />
+    <state width="1238" height="174" key="GridCell.Tab.0.left/0.25.1280.711@0.25.1280.711" timestamp="1609734880576" />
+    <state width="1238" height="174" key="GridCell.Tab.0.right" timestamp="1609734880577">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state width="1238" height="174" key="GridCell.Tab.0.right/0.25.1280.709@0.25.1280.709" timestamp="1608879077120" />
+    <state width="1238" height="174" key="GridCell.Tab.0.right/0.25.1280.711@0.25.1280.711" timestamp="1609734880577" />
+    <state width="1238" height="174" key="GridCell.Tab.1.bottom" timestamp="1609734880580">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state width="1238" height="174" key="GridCell.Tab.1.bottom/0.25.1280.709@0.25.1280.709" timestamp="1608879077127" />
+    <state width="1238" height="174" key="GridCell.Tab.1.bottom/0.25.1280.711@0.25.1280.711" timestamp="1609734880580" />
+    <state width="1238" height="174" key="GridCell.Tab.1.center" timestamp="1609734880579">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state width="1238" height="174" key="GridCell.Tab.1.center/0.25.1280.709@0.25.1280.709" timestamp="1608879077125" />
+    <state width="1238" height="174" key="GridCell.Tab.1.center/0.25.1280.711@0.25.1280.711" timestamp="1609734880579" />
+    <state width="1238" height="174" key="GridCell.Tab.1.left" timestamp="1609734880579">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state width="1238" height="174" key="GridCell.Tab.1.left/0.25.1280.709@0.25.1280.709" timestamp="1608879077124" />
+    <state width="1238" height="174" key="GridCell.Tab.1.left/0.25.1280.711@0.25.1280.711" timestamp="1609734880579" />
+    <state width="1238" height="174" key="GridCell.Tab.1.right" timestamp="1609734880580">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state width="1238" height="174" key="GridCell.Tab.1.right/0.25.1280.709@0.25.1280.709" timestamp="1608879077126" />
+    <state width="1238" height="174" key="GridCell.Tab.1.right/0.25.1280.711@0.25.1280.711" timestamp="1609734880580" />
+    <state x="141" y="25" width="997" height="711" key="SettingsEditor" timestamp="1610018243206">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="141" y="25" width="997" height="711" key="SettingsEditor/0.25.1280.711@0.25.1280.711" timestamp="1610018243206" />
+    <state width="538" height="74" key="changelist.details.popup" timestamp="1608025176039">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state width="538" height="74" key="changelist.details.popup/0.25.1280.711@0.25.1280.711" timestamp="1608025176039" />
+    <state x="420" y="162" key="chooseDestDirectoryDialog" timestamp="1609842514608">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="420" y="162" key="chooseDestDirectoryDialog/0.25.1280.711@0.25.1280.711" timestamp="1609842514608" />
+    <state x="159" y="118" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1609388118552">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="159" y="118" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.25.1280.711@0.25.1280.711" timestamp="1609388118552" />
+    <state x="332" y="135" width="751" height="490" key="find.popup" timestamp="1608708843238">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="332" y="135" width="751" height="490" key="find.popup/0.25.1280.711@0.25.1280.711" timestamp="1608708843238" />
+    <state x="305" y="60" width="670" height="676" key="search.everywhere.popup" timestamp="1610002760522">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="305" y="60" width="670" height="676" key="search.everywhere.popup/0.25.1280.711@0.25.1280.711" timestamp="1610002760522" />
+    <state x="414" y="285" key="svn.upgradeDialog" timestamp="1608704838580">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="414" y="285" key="svn.upgradeDialog/0.25.1280.711@0.25.1280.711" timestamp="1608704838580" />
+    <state x="255" y="239" key="svn4idea.checkout.options" timestamp="1608704836768">
+      <screen x="0" y="25" width="1280" height="711" />
+    </state>
+    <state x="255" y="239" key="svn4idea.checkout.options/0.25.1280.711@0.25.1280.711" timestamp="1608704836768" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/adapters/MainMenuViewPagerAdapter.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/LoginActivity.java</url>
+          <line>1357</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/myAccount/MyAccountSelectMiniStatementActivity.java</url>
+          <line>156</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/test/SubMenuActivity.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/test/SubMenuActivity.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/components/imageslider/ImageSliderManager.java</url>
+          <line>140</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/components/imageslider/ImageSliderManager.java</url>
+          <line>142</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/billPayment/BillPaymentActivity.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/billPayment/BillPaymentActivity.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/LocatorActivity.java</url>
+          <line>469</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/LocatorActivity.java</url>
+          <line>637</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/LocatorActivity.java</url>
+          <line>560</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/LocatorActivity.java</url>
+          <line>513</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/LocatorActivity.java</url>
+          <line>520</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/net/HttpCalls.java</url>
+          <line>827</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/retailPayment/retailpaymentmpass/RetailPaymentActivity.java</url>
+          <line>105</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/agentTransfer/TransferInInputActivity.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/BaseActivity.java</url>
+          <line>122</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/openAccount/OpenAccountBvsOtpActivity.java</url>
+          <line>287</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/retailPayment/retailpaymentmpass/RetailPaymentComfirmationMPassActivity.java</url>
+          <line>97</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/retailPayment/retailpaymentmpass/RetailPaymentActivity.java</url>
+          <line>260</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/openAccount/CameraActivity.java</url>
+          <line>103</line>
+          <option name="timeStamp" value="78" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/openAccount/CameraActivity.java</url>
+          <line>189</line>
+          <option name="timeStamp" value="79" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/openAccount/CameraActivity.java</url>
+          <line>202</line>
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/retailPayment/retailpaymentmpass/RetailPaymentReceiptActivity.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/retailPayment/retailpaymentmpass/RetailPaymentComfirmationMPassActivity.java</url>
+          <line>225</line>
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/retailPayment/retailpaymentmpass/RetailPaymentComfirmationMPassActivity.java</url>
+          <line>175</line>
+          <option name="timeStamp" value="83" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/retailPayment/retailpaymentmpass/RetailPaymentComfirmationMPassActivity.java</url>
+          <line>265</line>
+          <option name="timeStamp" value="91" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/retailPayment/retailpaymentmpass/RetailPaymentComfirmationMPassActivity.java</url>
+          <line>306</line>
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/SplashActivity.java</url>
+          <line>269</line>
+          <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/AppValidator.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/AppValidator.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="95" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/SplashActivity.java</url>
+          <line>258</line>
+          <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/collection/CollectionPaymentsInfoActivity.java</url>
+          <line>206</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/collection/CollectionPaymentsInfoActivity.java</url>
+          <line>251</line>
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/TransactionReceiptActivity.java</url>
+          <line>186</line>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/TransactionReceiptActivity.java</url>
+          <line>248</line>
+          <option name="timeStamp" value="106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/collection/CollectionPaymentsInfoActivity.java</url>
+          <line>266</line>
+          <option name="timeStamp" value="107" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/collection/CollectionPaymentConfirmationActivity.java</url>
+          <line>261</line>
+          <option name="timeStamp" value="108" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/ui/components/PopupDialogs.java</url>
+          <line>299</line>
+          <option name="timeStamp" value="111" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/net/HttpCalls.java</url>
+          <line>779</line>
+          <option name="timeStamp" value="112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/net/HttpCalls.java</url>
+          <line>802</line>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/collection/CollectionPaymentConfirmationActivity.java</url>
+          <line>231</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/MainMenuActivity.java</url>
+          <line>253</line>
+          <option name="timeStamp" value="117" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/LoginActivity.java</url>
+          <line>1407</line>
+          <option name="timeStamp" value="120" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/fundsTransfer/FundsTransferInputActivity.java</url>
+          <line>73</line>
+          <option name="timeStamp" value="127" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/BaseActivity.java</url>
+          <line>934</line>
+          <option name="timeStamp" value="129" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/BaseActivity.java</url>
+          <line>938</line>
+          <option name="timeStamp" value="130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/BaseActivity.java</url>
+          <line>936</line>
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/BaseActivity.java</url>
+          <line>929</line>
+          <option name="timeStamp" value="132" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/bvs/NadraRestClientActivity.java</url>
+          <line>173</line>
+          <option name="timeStamp" value="134" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/bvs/NadraRestClientActivity.java</url>
+          <line>197</line>
+          <option name="timeStamp" value="135" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/bvs/NadraRestClientActivity.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="136" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/retailPayment/retailpaymentmpass/RetailPaymentComfirmationMPassActivity.java</url>
+          <line>263</line>
+          <option name="timeStamp" value="138" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/LoginActivity.java</url>
+          <line>659</line>
+          <option name="timeStamp" value="142" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/LoginActivity.java</url>
+          <line>643</line>
+          <option name="timeStamp" value="143" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/LoginActivity.java</url>
+          <line>648</line>
+          <option name="timeStamp" value="150" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/bvs/NadraRestClientActivity.java</url>
+          <line>117</line>
+          <option name="timeStamp" value="154" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/bvs/NadraRestClientActivity.java</url>
+          <line>163</line>
+          <option name="timeStamp" value="156" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/net/HttpCalls.java</url>
+          <line>127</line>
+          <option name="timeStamp" value="160" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/net/HttpUtils.java</url>
+          <line>122</line>
+          <option name="timeStamp" value="161" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/net/HttpUtils.java</url>
+          <line>126</line>
+          <option name="timeStamp" value="162" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/myAccount/RegenerateMpinActivity.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="164" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/myAccount/RegenerateMpinActivity.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="165" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/CategoryMenuActivity.java</url>
+          <line>142</line>
+          <option name="timeStamp" value="166" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/CategoryMenuActivity.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="170" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/CategoryMenuActivity.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/myAccount/RegenerateMpinActivity.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="172" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/forgotPassword/ForgotPasswordActivity.java</url>
+          <line>286</line>
+          <option name="timeStamp" value="176" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/forgotPassword/ForgotPasswordMobileInputActivity.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="177" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/forgotPassword/ForgotPasswordActivity.java</url>
+          <line>87</line>
+          <option name="timeStamp" value="178" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/forgotPassword/ForgotPasswordMobileInputActivity.java</url>
+          <line>152</line>
+          <option name="timeStamp" value="179" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/forgotPassword/ForgotPasswordMobileInputActivity.java</url>
+          <line>148</line>
+          <option name="timeStamp" value="180" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/forgotPassword/ForgotPasswordMobileInputActivity.java</url>
+          <line>160</line>
+          <option name="timeStamp" value="181" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/forgotPassword/ForgotPasswordOtpActivity.java</url>
+          <line>108</line>
+          <option name="timeStamp" value="183" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/DecodingUtility.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="193" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/DecodingUtility.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="194" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/SplashActivity.java</url>
+          <line>98</line>
+          <option name="timeStamp" value="195" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/SplashActivity.java</url>
+          <line>100</line>
+          <option name="timeStamp" value="197" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/util/DecodingUtility.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="198" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/SplashActivity.java</url>
+          <line>105</line>
+          <option name="timeStamp" value="199" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/SplashActivity.java</url>
+          <line>107</line>
+          <option name="timeStamp" value="201" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/ui/components/PopupDialogs.java</url>
+          <line>259</line>
+          <option name="timeStamp" value="204" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/ui/components/PopupDialogs.java</url>
+          <line>278</line>
+          <option name="timeStamp" value="205" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/ui/components/PopupDialogs.java</url>
+          <line>363</line>
+          <option name="timeStamp" value="206" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/ui/components/PopupDialogs.java</url>
+          <line>317</line>
+          <option name="timeStamp" value="207" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/ui/components/PopupDialogs.java</url>
+          <line>314</line>
+          <option name="timeStamp" value="208" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/ui/components/PopupDialogs.java</url>
+          <line>204</line>
+          <option name="timeStamp" value="210" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/ui/components/PopupDialogs.java</url>
+          <line>201</line>
+          <option name="timeStamp" value="211" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/ui/components/PopupDialogs.java</url>
+          <line>249</line>
+          <option name="timeStamp" value="212" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/adapters/ImageSlideAdapter.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="214" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/LoginActivity.java</url>
+          <line>907</line>
+          <option name="timeStamp" value="215" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/MainMenuActivity.java</url>
+          <line>408</line>
+          <option name="timeStamp" value="216" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/LoginActivity.java</url>
+          <line>897</line>
+          <option name="timeStamp" value="217" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/LoginActivity.java</url>
+          <line>896</line>
+          <option name="timeStamp" value="218" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/LoginActivity.java</url>
+          <line>895</line>
+          <option name="timeStamp" value="219" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/LocatorActivity.java</url>
+          <line>680</line>
+          <option name="timeStamp" value="222" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/DirectionsActivity.java</url>
+          <line>156</line>
+          <option name="timeStamp" value="230" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/locator/DirectionsActivity.java</url>
+          <line>142</line>
+          <option name="timeStamp" value="232" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/BaseActivity.java</url>
+          <line>1159</line>
+          <option name="timeStamp" value="234" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/BaseActivity.java</url>
+          <line>1154</line>
+          <option name="timeStamp" value="235" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/fundsTransfer/FundsTransferInputActivity.java</url>
+          <line>658</line>
+          <option name="timeStamp" value="236" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/TransactionReceiptActivity.java</url>
+          <line>282</line>
+          <option name="timeStamp" value="242" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/fundsTransfer/FundsTransferConfirmationActivity.java</url>
+          <line>366</line>
+          <option name="timeStamp" value="243" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/harToWallet/HraToWalletInputActivity.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="244" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/harToWallet/HraToWalletInputActivity.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="245" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/fundsTransfer/FundsTransferInputActivity.java</url>
+          <line>714</line>
+          <option name="timeStamp" value="246" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/billPayment/BillPaymentsUtilityFetchBillInfoActivity.java</url>
+          <line>691</line>
+          <option name="timeStamp" value="247" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/billPayment/BillPaymentsUtilityFetchBillInfoActivity.java</url>
+          <line>679</line>
+          <option name="timeStamp" value="248" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/activities/forgotPassword/ForgotPasswordOtpActivity.java</url>
+          <line>211</line>
+          <option name="timeStamp" value="249" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/JSBL-cmate/src/main/java/com/inov8/jsblconsumer/components/imageslider/ImageSliderManager.java</url>
+          <line>138</line>
+          <properties class="com.inov8.jsblconsumer.components.imageslider.ImageSliderManager" method="sendRequest" />
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutParent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
+
+    <LinearLayout
+        android:id="@+id/balanceLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/container_header"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/main_balance_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvAccountTittle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text=""
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textViewTextSizeXLarge" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="PKR "
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textViewTextSizeSmall" />
+
+                <TextView
+                    android:id="@+id/tvAvailableBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textViewTextSizeXXLarge" />
+
+                <TextView
+                    android:id="@+id/tvAvailableBalancePoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text=".00 "
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textViewTextSizeSmall" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/current_balance"
+                android:textAlignment="center"
+                android:gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textViewTextSizeSmall"/>
+            <TextView
+                android:id="@+id/tvIbanNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/iban_number"
+                android:textAlignment="center"
+                android:gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textViewTextSizeSmall"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutMiddle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomBar"
+        android:layout_below="@id/balanceLayout"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layoutAd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/sliderView"
+                layout="@layout/slider_view" />
+
+            <VideoView
+                android:id="@+id/videoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recylerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/layoutMarginSmall"
+            android:background="@color/white"></androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/bottomBar"
+        layout="@layout/layout_bottom_bar" />
+
+    <include
+        android:id="@+id/bottomBarQR"
+        layout="@layout/layout_qr_code" />
+
+
+</RelativeLayout>

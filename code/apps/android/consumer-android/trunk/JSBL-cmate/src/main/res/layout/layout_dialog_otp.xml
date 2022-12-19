@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/dialogSideMargin"
+    android:layout_marginRight="@dimen/dialogSideMargin"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/dialog_bg_rounded"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/popup_close_iconHeightWidth">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btnClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_below="@+id/parent_layout"
+                android:layout_marginRight="@dimen/dialogPaddingNormal"
+                android:layout_marginTop="@dimen/dialogPaddingNormal"
+                android:visibility="gone"
+                app:srcCompat="@drawable/btn_popup_close" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layoutMarginXXLarge"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dialogPaddingXLarge"
+            android:paddingRight="@dimen/dialogPaddingXLarge">
+
+            <TextView
+                android:id="@+id/tvAlertHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/textViewMarginXLarge"
+                android:gravity="center_horizontal"
+                android:text="@string/mpin_verification"
+                android:textColor="@color/popup_heading_title_color"
+                android:textSize="@dimen/textViewTextSizeXLarge" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/textViewMarginNormal"
+                android:background="@color/popup_password_border_bottom_color" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/layoutMarginXLarge"
+                android:layout_marginTop="@dimen/layoutMarginLarge"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/txtLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/textViewMarginSmall"
+                    android:gravity="center_horizontal"
+                    android:singleLine="false"
+                    android:text="A security PIN has been sent to your registered Mobile Number. Please enter your 4 digit Security PIN. "
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal" />
+
+
+                <TextView
+                    android:id="@+id/tvMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enter_mpin"
+                    android:textColor="@color/popup_heading_password_color"
+                    android:textSize="@dimen/textViewTextSizeSmall" />
+
+                <include
+                    android:id="@+id/layoutFPin"
+                    layout="@layout/layout_fpin" />
+
+            </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:id="@+id/layoutBtns"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/layoutMarginLarge"
+                    android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnRegenerate"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/buttonHeightNormal"
+                    android:layout_marginLeft="@dimen/buttonInnerMarginNormal"
+                    android:layout_toLeftOf="@+id/btnCancel"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_ok"
+                    android:text="@string/regenerate"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/buttonTextSizeMedium"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btnOK"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/buttonHeightNormal"
+                    android:layout_marginRight="@dimen/buttonInnerMarginNormal"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_ok"
+                    android:text="@string/next"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/buttonTextSizeMedium"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/btnResend"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/buttonHeightNormal"
+                    android:layout_marginLeft="@dimen/buttonInnerMarginNormal"
+                    android:layout_toRightOf="@id/btnOK"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_cancel"
+                    android:text="@string/resend"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/buttonTextSizeMedium"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivAlertIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/popup_otp_verification_icon" />
+
+</RelativeLayout>

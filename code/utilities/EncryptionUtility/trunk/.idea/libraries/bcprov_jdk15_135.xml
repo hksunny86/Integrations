@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="bcprov-jdk15-135">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../Encryption_Utility/bcprov-jdk15-135.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

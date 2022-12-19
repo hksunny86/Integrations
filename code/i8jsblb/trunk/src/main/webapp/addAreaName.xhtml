@@ -1,0 +1,387 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+<h:head>
+<link rel="stylesheet" href="#{request.contextPath}/styles/wizard_style.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/tpc.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/style_js.css" type="text/css" />
+<meta name="title" content="Add Area Name" />
+ <style>
+.col {
+    width: 33%;
+}
+.centercol {
+    width: 33%;
+    text-align: center;
+}
+</style>
+<script type="text/javascript" src="#{request.contextPath}/scripts/commonFormValidator.js"></script>
+<script type="text/javascript" src="#{request.contextPath}/scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" >
+	function invokeEdit()
+	{
+		var rowIndex = document.getElementById("myform:rowIndex").value;
+		document.getElementById("myform:areaNameDataTable:" + rowIndex + ":edit").click();
+	}
+	
+	function invokeDelete()
+	{
+		var rowIndex = document.getElementById("myform:rowIndex").value;
+		document.getElementById("myform:areaNameDataTable:" + rowIndex + ":delete").click();
+	}
+	
+	function saveRowIndex(id)
+	{
+		var prefix = id.substring(0,id.lastIndexOf(":"));
+		 var index = prefix.substring(prefix.lastIndexOf(":")+1, prefix.length);
+		 document.getElementById("myform:rowIndex").value = index;
+	}
+
+	var jq = jQuery.noConflict();
+	jq(document).ready(function() {
+	    document.getElementById("myform:regions").focus();
+
+		var hasReadOnlyRights = #{!areaNameActionBean.securityCheck and !areaNameActionBean.editSecurityCheck};
+		if( hasReadOnlyRights )
+		{
+			jq("#content_wrap").find("input, textarea, button, select, img").attr("disabled", true);
+		}
+	});
+	
+	function focustOnYes(id)
+	{
+		document.getElementById(id).focus();
+	}
+	
+	$(window).scroll(function() { return false; });
+	
+</script>
+</h:head>
+<h:body>
+<f:view>
+	<h:form id="myform" >
+		<h:inputHidden id="rowIndex" value="" />
+		<div id="wizard_group"> 
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+	                <td id="header_wizard"><h1>Add Area Name</h1></td>
+                </tr>
+            	<tr>
+                	<td>
+                        <div id="status_bar_top">
+                        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td width="70%" valign="top" align="left">
+                                  	<div id="ah_nav">
+                                        <ul>
+                                            <li><a href="#">Regional Hierarchy</a></li>
+                                            <li><a href="#">Region</a></li>
+                                            <li><a href="#" >Area Levels</a></li>
+                                            <li><a href="#">Agent Levels</a></li>
+                                            <li><a href="#" class="selectd">Area Names</a></li>
+                                        </ul>
+                                    </div>
+                                  </td>
+                                  <td width="30%" valign="top" align="right">
+                                  	<a4j:outputPanel id="edit_div" styleClass="icons_div" style="display:block;float:right;" >
+                                        <a4j:commandLink actionListener="#{areaNameActionBean.resetAreaNameForm}"
+                                             title="Clear" rendered="#{!regionalHierarchyActionBean.regionalHierarchyModel.editMode}"
+                                            render="regions,arealevel, areaName, description, parentAreaName, comments, active, areaNameDataTable, dataScroller, btnDiv">
+                                        <h:graphicImage url="/images/ah_images/icon_clear.png" />
+                                        </a4j:commandLink>
+                                        
+                                        <h:commandLink action="#{areaNameActionBean.exportToExcel}" rendered="#{areaNameActionBean.listSize != 0}"
+                                      			 id="exportToExcel" title="Export To Excel" >
+                                        	<h:graphicImage url="/images/ah_images/xls.png" />
+                                   		</h:commandLink>
+                                        
+                                        
+                                    </a4j:outputPanel>
+                                  </td>
+                              </tr>
+                            </table>
+                        </div>
+                        
+                        
+                        <div class="clear"></div>
+                    </td>
+                </tr>
+            	
+                <tr>
+                	<td >
+                    	<div id="content_wrap">
+                          <div class="row,error_text_red" style="margin-left: 30px" >
+                                <a4j:outputPanel ajaxRendered="true">
+                                    <a4j:outputPanel styleClass="error_cont" rendered="#{! empty facesContext.maximumSeverity}">
+                                        <a4j:outputPanel>
+                                            <a4j:outputPanel styleClass="error_txt" >
+                                                <h:messages globalOnly="true" />
+                                            </a4j:outputPanel>
+                                        </a4j:outputPanel>
+                                    </a4j:outputPanel>                
+                                </a4j:outputPanel>
+                            </div>
+                            
+                            <table width="" border="0" align="center" cellpadding="0" cellspacing="10">
+                                  <tr>
+                                    <td width="170" valign="top">Agent Network Name:</td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:outputText id="regionalHierarchyName" styleClass="txt_value" value="#{areaNameActionBean.regionalHierarchyModel.regionalHierarchyName}"  />
+                                    </td>
+                                    <td width="40" align="left">&nbsp;</td>
+                                    <td width="170" valign="top">&nbsp;</td>
+                                    <td width="200" align="left" valign="top">&nbsp;
+                                    	
+                                    </td>
+                              </tr>
+                                  
+                                  <tr>
+                                    <td width="170" valign="top">Region <span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                   	  <h:selectOneMenu id="regions"  styleClass="type_list" disabled="#{areaNameActionBean.areaNameModel.editMode}" 
+                                                value="#{areaNameActionBean.areaNameModel.regionModelId}" title="Region">
+                                            <f:selectItem itemLabel="[select]" itemValue="-1" />
+                                            <f:selectItems value="#{areaNameActionBean.regions }"/>
+                                             <a4j:ajax event="change" listener="#{areaNameActionBean.loadAreaLevels}" render="arealevel active" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td width="40" rowspan="2" align="left">&nbsp;</td>
+                                    <td width="170" rowspan="2" valign="top">Description:</td>
+                                    <td width="200" rowspan="2" align="left" valign="top">
+                                   	  <h:inputTextarea id="description" value="#{areaNameActionBean.areaNameModel.description}" rows="3" style="width:240px;" styleClass="type_txt" 
+	                                    onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);" title="Description"/>
+                                    </td>
+                              </tr>
+                                  <tr>
+                                    <td valign="top">Area Level <span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:selectOneMenu id="arealevel" value="#{areaNameActionBean.areaNameModel.areaLevelModelId }" title="Area Level" styleClass="type_list" disabled="#{areaNameActionBean.areaNameModel.editMode}">
+                                            <f:selectItem itemLabel="[select]" itemValue="-1" />
+                                            <f:selectItems value="#{areaNameActionBean.levelItems }"/>
+                                            <a4j:ajax event="change" listener="#{areaNameActionBean.loadParentNames}" render="parentAreaName active" />
+                                        </h:selectOneMenu>	
+                                    </td>
+                                  </tr>
+                                  
+                                  
+                                  <tr>
+                                    <td width="170" valign="top">Area Name <span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                   	  <h:inputText id="areaName" value="#{areaNameActionBean.areaNameModel.name }" styleClass="type_txt" maxlength="50" title="Area Name"
+                                   	   onkeypress="return maskAlphaNumericWithSpdashforAH(this,event)" onkeydown="return disablePasteOption(event)"/>
+                                    </td>
+                                    <td width="40" rowspan="2" align="left">&nbsp;</td>
+                                    <td width="170" rowspan="2" valign="top">Comments:</td>
+                                    <td width="200" rowspan="2" align="left" valign="top">
+                                   	  <h:inputTextarea id="comments" rows="3" value="#{areaNameActionBean.areaNameModel.comments}" style="width:240px;" styleClass="type_txt" 
+	                                    onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);" title="Comments"/>
+                                    </td>
+                              </tr>
+                                  <tr>
+                                    <td valign="top">Parent Area Name <span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:selectOneMenu id="parentAreaName" disabled="#{areaNameActionBean.areaNameModel.disabled}" title="Parent Area Name" styleClass="type_list" value="#{areaNameActionBean.areaNameModel.parentAreaId}" >
+                                            <f:selectItem itemLabel="[select]" itemValue="-1" />
+                                            <f:selectItems value="#{areaNameActionBean.parentAreaNames}" />
+                                            <a4j:ajax event="change" listener="#{areaNameActionBean.checkParentalActiveStatus}" render="active" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                  </tr>
+                                  
+                                  <tr>
+                                    <td colspan="2" valign="top">
+                                    	<h:selectBooleanCheckbox styleClass="type_check"  id="active" value="#{areaNameActionBean.areaNameModel.active}" 
+                                         disabled="#{!areaNameActionBean.areaActiveEnable}" title="Active">
+                                         <a4j:ajax event="click" listener="#{areaNameActionBean.onChangeActive}" render="active"/>
+                                         </h:selectBooleanCheckbox>
+                                        <label for="check_active">Active</label>
+                                    </td>
+                                    <td width="40" align="left">&nbsp;</td>
+                                    <td width="170" valign="top">&nbsp;</td>
+                                    <td width="200" align="right" valign="top">
+                                   	  <a4j:outputPanel id="btnDiv" rendered="#{areaNameActionBean.securityCheck or areaNameActionBean.editSecurityCheck}">
+                                            <a4j:commandButton actionListener="#{areaNameActionBean.saveAreaName}" rendered="#{!areaNameActionBean.areaNameModel.editMode and areaNameActionBean.securityCheck}"  title="Add"
+                                                value="Add" render="regions,arealevel, areaName, description, parentAreaName, comments, active, areaNameDataTable, dataScroller, btnDiv,edit_div" styleClass="submit_btn" />
+                                            <a4j:commandButton actionListener="#{areaNameActionBean.saveAreaName}" rendered="#{areaNameActionBean.areaNameModel.editMode and areaNameActionBean.editSecurityCheck}" 
+                                                styleClass="submit_btn" value="Update" title="Update"
+                                                render="regions,arealevel, areaName, description, parentAreaName, comments, active, areaNameDataTable, dataScroller, btnDiv,edit_div"  />
+                                        </a4j:outputPanel>
+                                    </td>
+                              </tr>
+                                  
+                                  
+                          </table>
+                            
+                            <div class="row" style="width:90%; margin:0px; margin:15px auto !important;overflow-x:auto; overflow-y:hidden; border: 1px solid #c4c0c9;">
+                                     <rich:dataTable id="areaNameDataTable" rows="5" width="100%" styleClass="datagrid" headerClass="table_header" 
+                                        rowClasses="rowodd, roweven" columnClasses="col" rowKeyVar="rowIndex" value="#{areaNameActionBean.areaNameList}" var="model">
+                                        <h:column>
+                                            <f:facet name="header" >
+                                                <h:outputText value="Region Name" rendered="#{areaNameActionBean.listSize == 0}" />
+                                                <a4j:commandLink style="vertical-align:bottom;" rendered="#{areaNameActionBean.listSize != 0}" value="Region Name" render="areaNameDataTable" actionListener="#{areaNameActionBean.sortByRegionName}" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{areaNameActionBean.regionNameSortingOrder == 1}" url="/images/ah_images/down.png" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{areaNameActionBean.regionNameSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                            </f:facet>
+                                            <h:outputText value="#{model.regionModel.regionName}" />
+                                        </h:column>		            
+                                        <h:column>
+                                            <f:facet name="header" >
+                                                <h:outputText value="Area Level Name" rendered="#{areaNameActionBean.listSize == 0}" />
+                                                <a4j:commandLink style="vertical-align:bottom;" rendered="#{areaNameActionBean.listSize != 0}" value="Area Level Name" render="areaNameDataTable" actionListener="#{areaNameActionBean.sortByAreaLevelName}" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{areaNameActionBean.areaLevelNameSortingOrder == 1}" url="/images/ah_images/down.png" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{areaNameActionBean.areaLevelNameSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                            </f:facet>
+                                            <h:outputText value="#{model.areaLevelModel.areaLevelName}" />
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header" >
+                                                <h:outputText value="Area Name" rendered="#{areaNameActionBean.listSize == 0}" />
+                                                <a4j:commandLink style="vertical-align:bottom;" rendered="#{areaNameActionBean.listSize != 0}" value="Area Name" render="areaNameDataTable" actionListener="#{areaNameActionBean.sortByAreaName}" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{areaNameActionBean.areaNameSortingOrder == 1}" url="/images/ah_images/down.png" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{areaNameActionBean.areaNameSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                            </f:facet>
+                                            <h:outputText value="#{model.name}" />
+                                        </h:column>
+                                         <h:column>
+                                            <f:facet name="header" >
+                                                <h:outputText value="Parent Area Name" rendered="#{areaNameActionBean.listSize == 0}"  />
+                                                <a4j:commandLink style="vertical-align:bottom;" rendered="#{areaNameActionBean.listSize != 0}" value="Parent Area Name" render="areaNameDataTable" actionListener="#{areaNameActionBean.sortByParentAreaName}" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{areaNameActionBean.parentAreaNameSortingOrder == 1}" url="/images/ah_images/down.png" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{areaNameActionBean.parentAreaNameSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                            </f:facet>
+                                            <h:outputText value="#{model.relationParentAreaIdAreaModel.name}" />
+                                        </h:column>
+                                        <h:column>
+                                                <f:facet name="header" >	
+                                                    <h:outputText value="Status" rendered="#{areaNameActionBean.listSize == 0}" />
+                                                    <a4j:commandLink style="vertical-align:bottom;" rendered="#{areaNameActionBean.listSize != 0}" value="Status" render="areaNameDataTable" actionListener="#{areaNameActionBean.sortByStatus}" />
+	                                            	<h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{areaNameActionBean.statusSortingOrder == 1}" url="/images/ah_images/down.png" />
+	                                            	<h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{areaNameActionBean.statusSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                                </f:facet>
+                                                <a4j:outputPanel >
+                                                    <h:graphicImage rendered="#{model.active}" url="/images/ah_images/active.png" style="border:0px;"/>
+                                                    <h:graphicImage rendered="#{!model.active}" url="/images/ah_images/inactive.png" style="border:0px;"/>
+                                                </a4j:outputPanel>
+                                        </h:column>
+                                        <h:column headerClass="center_header_class" rendered="#{areaNameActionBean.editSecurityCheck}" >
+                                            <f:facet name="header" >
+                                                <h:outputText value="Edit" />
+                                            </f:facet>
+                                                <a4j:outputPanel >
+                                                	<h:commandLink title="Edit Area Name" rendered="#{!model.editMode}" >
+			                                        	<h:graphicImage id="editImage" url="/images/ah_images/edit.png" onclick="saveRowIndex(this.id);" />
+			                                            <rich:componentControl target="editpopup" operation="show" />
+			    									</h:commandLink>
+                                                    <a4j:commandLink id="edit" style="display:none;"
+                                                        actionListener="#{areaNameActionBean.updateAreaName(model)}"
+                                                        render="regions,arealevel,areaName,description,parentAreaName,comments,active,areaNameDataTable, areaNameDataTable, dataScroller, btnDiv,edit_div">
+                                                        <f:param name="rowIndexValue" value="#{rowIndex}" />
+                                                    </a4j:commandLink>
+                                                    <a4j:commandLink id="save"
+                                                        actionListener="#{areaNameActionBean.saveAreaName}"
+                                                        rendered="#{model.editMode}"
+                                                        render="regions,arealevel,areaName,description, parentAreaName,comments,active,areaNameDataTable,areaNameDataTable, dataScroller,btnDiv,edit_div">
+                                                        <h:graphicImage url="/images/ah_images/save.png" />
+                                                        <f:param name="rowIndexValue" value="#{rowIndex}" />
+                                                    </a4j:commandLink>
+                                                </a4j:outputPanel>
+                                        </h:column>
+                                        <h:column rendered="#{areaNameActionBean.deleteSecurityCheck}">
+                                                <f:facet name="header" >	
+                                                    <h:outputText value="Delete" />
+                                                </f:facet>
+                                                <a4j:outputPanel >
+                                                	<h:commandLink title="Delete Agent Level" >
+			                                        	<h:graphicImage id="deleteImage" url="/images/ah_images/delete.png" onclick="saveRowIndex(this.id);" />
+			                                            <rich:componentControl target="deletepopup" operation="show" />
+			    									</h:commandLink> 
+                                                    <a4j:commandLink id="delete" action="#{areaNameActionBean.deleteAreaName(model)}" style="display:none;"
+                                                    render="regions, areaLevelName, description, parentAreaLevels, comments, active, areaNameDataTable, dataScroller, btnDiv, edit_div">
+                                                </a4j:commandLink>
+                                                </a4j:outputPanel>
+                                        </h:column>
+                                    </rich:dataTable>
+                         	 </div>    
+                             <div align="center"><rich:dataScroller id="dataScroller" for="areaNameDataTable" render="areaNameDataTable" /></div>
+                        </div>
+                    	
+                    </td>
+                </tr>
+		    
+
+		    	<tr>
+                	<td id="status_bar_bottom">
+                    	<div>
+                            <a4j:outputPanel styleClass="infoMessage" ajaxRendered="true">
+                                <h:outputText style="color:#ed1c24;" value="#{infoMessage}"/>
+                            </a4j:outputPanel>
+                        </div>
+                    </td>
+                </tr>
+                
+                
+		    	<tr>
+                	<td>
+                    	<div id="footer">
+                    	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    	    <tr>
+                    	      <td width="50%" valign="top" align="left"><h:commandLink styleClass="btn_cancel" value="" action="#{areaNameActionBean.cancel}"/></td>
+                    	      <td width="50%" valign="top" align="right">
+                              	<h:commandLink styleClass="btn_prev" value="" action="#{areaNameActionBean.previous }" />
+                              	<h:commandLink styleClass="btn_finish" value="" action="#{areaNameActionBean.finish}" />
+                              </td>
+                  	      </tr>
+                  	    </table>
+                    	</div>
+                  </td>
+                </tr>
+            </table>
+		</div>
+	</h:form>
+				<div class="status">
+                            <a4j:status>
+                                <f:facet name="start">
+                                    <h:graphicImage url="/images/ah_images/tabs_loader.gif" style="border:0px;"/>
+                                </f:facet>
+                                <f:facet name="stop"></f:facet>
+                            </a4j:status>
+                        </div>
+        <rich:popupPanel id="editpopup" onshow="focustOnYes('editYes');" modal="true" autosized="true" resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Confirm" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('editpopup')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:panelGroup>
+        	<p>Are you sure you want to edit?</p>
+        	<h:commandButton id="editYes" tabindex="1" styleClass="submit_btn" label="Yes" value="Yes" onclick="invokeEdit();#{rich:component('editpopup')}.hide(); return false;" />
+        	<h:commandButton styleClass="submit_btn" tabindex="2" label="No" value="No" onclick="#{rich:component('editpopup')}.hide(); return false;" />
+       	</h:panelGroup>
+        
+	</rich:popupPanel>
+	<rich:popupPanel id="deletepopup" modal="true" autosized="true" onshow="focustOnYes('deleteYes');" resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Confirm" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('deletepopup')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:panelGroup>
+        	<p>Are you sure you want to delete?</p>
+        	<h:commandButton id="deleteYes" tabindex="3" styleClass="submit_btn" label="Yes" value="Yes" onclick="invokeDelete();#{rich:component('deletepopup')}.hide(); return false;" />
+        	<h:commandButton styleClass="submit_btn" tabindex="4" label="No" value="No" onclick="#{rich:component('deletepopup')}.hide(); return false;" />
+       	</h:panelGroup>
+	</rich:popupPanel>
+</f:view>
+</h:body>
+</html>

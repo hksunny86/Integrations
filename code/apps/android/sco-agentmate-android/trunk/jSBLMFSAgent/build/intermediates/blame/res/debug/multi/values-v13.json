@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v13\\values-v13.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 58,
+                    "endOffset": 109
+                },
+                "from": {
+                    "file": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\values-v13\\values-v13.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 58,
+                        "endOffset": 109
+                    }
+                }
+            }
+        ]
+    }
+]

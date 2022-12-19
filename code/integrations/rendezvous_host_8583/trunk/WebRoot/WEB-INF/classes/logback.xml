@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- For assistance related to logback-translator or configuration  -->
+<!-- files in general, please contact the logback user mailing list -->
+<!-- at http://www.qos.ch/mailman/listinfo/logback-user             -->
+<!--                                                                -->
+<!-- For professional support please see                            -->
+<!--    http://www.qos.ch/shop/products/professionalSupport         -->
+<!--                                                                -->
+<configuration>
+  <appender name="FILELOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- Tests run on modern PCs show that buffering related property -->
+    <!-- "bufferSize" has negligible impact and will be ignored.  -->
+    <!-- Tests run on modern PCs show that buffering related property -->
+    <!-- "immediateFlush" has negligible impact and will be ignored.  -->
+    <!-- Tests run on modern PCs show that buffering related property -->
+    <!-- "bufferedIO" has negligible impact and will be ignored.  -->
+    <!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
+    <!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy-->
+    <!--for further documentation-->
+    <File>logs/middleware/rdv-integration.log</File>
+    <encoding>UTF-8</encoding>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>DEBUG</level>
+    </filter>
+  </appender>
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  <logger name="org.springframework" level="ERROR"/>
+  <logger name="org.apache" level="OFF"/>
+  <logger name="ch.qos" level="OFF"/>
+  <root level="DEBUG">
+    <appender-ref ref="FILELOG"/>
+    <appender-ref ref="CONSOLE"/>
+  </root>
+</configuration>

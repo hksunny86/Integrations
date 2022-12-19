@@ -1,0 +1,2 @@
+Insert into registration_state (REGISTRATION_STATE_ID,NAME,DESCRIPTION,COMMENTS,CREATED_BY,UPDATED_BY,CREATED_ON,UPDATED_ON,VERSION_NO)
+values (7,'BlackListed',null,null,1,1,sysdate,sysdate,0);

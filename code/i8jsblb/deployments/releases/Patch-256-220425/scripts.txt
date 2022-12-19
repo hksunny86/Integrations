@@ -1,0 +1,885 @@
+Alter table product_threshold_charges
+add max_threshold_amount number;
+
+Alter table commission_threshold_rate
+add MAX_THRESHOLD_AMOUNT NUMBER;
+
+
+
+
+create or replace TRIGGER "tr_product_Threshold_charges"
+  BEFORE
+
+INSERT OR UPDATE ON product_threshold_charges
+  REFERENCING
+NEW AS new
+OLD AS old
+
+  FOR EACH ROW
+
+DECLARE
+
+  counter NUMBER;
+
+  v_commission_threshold_rate_id NUMBER;
+
+  v_product_threshold_charges_id NUMBER;
+
+  v_product_id NUMBER;
+
+  v_old_product_id NUMBER;
+
+  v_segment_id NUMBER;
+
+  v_old_segment_id NUMBER;
+
+  v_distributor_id NUMBER;
+
+  v_old_distributor_id NUMBER;
+
+  v_device_type_id NUMBER;
+
+  v_old_device_type_id NUMBER;
+
+  v_old_limit_type_id NUMBER;
+
+  v_is_deleted NUMBER;
+
+  v_updated_by NUMBER;
+
+  v_created_by NUMBER;
+
+  v_created_on DATE;
+
+  v_updated_on DATE;
+
+  rule_counter NUMBER;
+
+  v_rule_id NUMBER;
+
+  v_priority_id NUMBER;
+
+  v_highest_priority_id NUMBER;
+
+  v_threshold_amount NUMBER;
+
+  v_percentage_charges NUMBER;
+
+  v_limit_type_id NUMBER;
+
+  v_pr_id NUMBER;
+
+  V_MAX_THRESHOLD_AMOUNT NUMBER;
+
+BEGIN
+
+  v_product_threshold_charges_id := :new.product_threshold_charges_id;
+
+  v_product_id := :new.product_id;
+
+  v_segment_id := :new.segment_id;
+
+  v_distributor_id := :new.distributor_id;
+
+  v_device_type_id := :new.device_type_id;
+
+  v_is_deleted := :new.is_deleted;
+
+  v_old_product_id := :old.product_id;
+
+  v_old_segment_id := :old.segment_id;
+
+  v_old_device_type_id := :old.device_type_id;
+
+  v_old_distributor_id := :old.distributor_id;
+
+  v_old_limit_type_id := :old.limit_type_id;
+
+  v_created_on := :new.created_on;
+
+  v_updated_on := :new.updated_on;
+
+  v_updated_by := :new.updated_by;
+
+  v_created_by := :new.created_by;
+
+  v_threshold_amount := :new.threshold_amount;
+
+  v_percentage_charges := :new.percentage_charges;
+
+  v_limit_type_id := :new.limit_type_id;
+
+  v_max_threshold_amount := :new.max_threshold_amount;
+
+
+
+
+
+    IF UPDATING AND :new.is_deleted = 1 THEN
+      UPDATE commission_threshold_rate
+         SET is_deleted = 1, version_no = 0, updated_on = SYSDATE
+       WHERE product_threshold_charges_id = v_product_threshold_charges_id;
+
+
+      SELECT NVL(MIN(version_no), 0)
+        INTO v_highest_priority_id
+        FROM commission_threshold_rate
+       WHERE is_deleted = 2
+         AND product_id = v_old_product_id;
+
+      UPDATE commission_threshold_rate
+         SET is_deleted = 0, updated_on = SYSDATE
+       WHERE is_deleted = 2
+         AND product_id = v_old_product_id
+         AND version_no = v_highest_priority_id;
+
+    ELSIF (UPDATING AND v_is_deleted = 0 AND
+          (v_old_PRODUCT_ID <> v_PRODUCT_ID OR
+          NVL(v_old_DISTRIBUTOR_ID, 0) <> NVL(v_DISTRIBUTOR_ID, 0) OR
+          NVL(v_old_DEVICE_TYPE_ID, 0) <> NVL(v_DEVICE_TYPE_ID, 0) OR
+          NVL(v_old_SEGMENT_ID, 0) <> NVL(v_SEGMENT_ID, 0) OR
+          NVL(v_old_limit_type_id, 0) <> NVL(v_limit_type_id, 0))) OR
+          (INSERTING AND v_is_deleted = 0) THEN
+
+      IF (NVL(v_old_PRODUCT_ID, 0) <> NVL(v_PRODUCT_ID, 0) OR
+         NVL(v_old_DISTRIBUTOR_ID, 0) <> NVL(v_DISTRIBUTOR_ID, 0) OR
+         NVL(v_old_DEVICE_TYPE_ID, 0) <> NVL(v_DEVICE_TYPE_ID, 0) OR
+         NVL(v_old_SEGMENT_ID, 0) <> NVL(v_SEGMENT_ID, 0) OR
+         NVL(v_old_limit_type_id, 0) <> NVL(v_limit_type_id, 0))  THEN
+
+        UPDATE commission_threshold_rate
+           SET is_deleted = 1, version_no = 0, updated_on = SYSDATE
+         WHERE product_threshold_charges_id = v_product_threshold_charges_id;
+
+      END IF;
+
+
+    FOR st IN (select segment_id
+                 from segment
+                where segment_id = nvl(v_segment_id, segment_id)
+                  and is_active = 1) LOOP
+
+      FOR dr in (select distributor_id
+                   from distributor
+                  where distributor_id =
+                        nvl(v_distributor_id, distributor_id)
+                    and is_active = 1) LOOP
+
+        FOR dt in (SELECT device_type_id
+                     FROM device_type
+                    WHERE device_type_id = nvl(v_device_type_id, 5)
+                       or device_type_id = nvl(v_device_type_id, 13)
+                       or device_type_id = nvl(v_device_type_id, 14)
+                       or device_type_id = nvl(v_device_type_id, 8)) LOOP
+
+          FOR lt in (select limit_type_id
+                       from limit_type
+                      where limit_type_id = nvl(v_limit_type_id, 1)
+                         or limit_type_id = nvl(v_limit_type_id, 2)
+                         or limit_type_id = nvl(v_limit_type_id, 3)) LOOP
+
+
+
+        if (v_segment_id is not null and v_distributor_id is not null) then
+
+             SELECT nvl(MIN(version_no), 0)
+              INTO v_priority_id
+              FROM commission_threshold_rate
+
+             WHERE
+
+             product_id = :new.product_id
+
+             AND is_deleted = 0
+
+             AND device_type_id = dt.device_type_id
+
+             AND distributor_id = dr.distributor_id
+
+             AND segment_id = st.segment_id
+
+             AND limit_type_id = lt.limit_type_id;
+
+
+             if v_priority_id = 0 then
+             --v_pr_id := 1;
+
+              INSERT INTO commission_threshold_rate
+              VALUES
+                (
+
+                 commission_threshold_rate_seq.NEXTVAL,
+
+                 1,
+
+                 :new.product_id,
+
+                 NULL,
+
+                 5,
+
+                 NULL,
+
+                 NULL,
+
+                 50020,
+
+                 NULL,
+
+                 0,
+
+                 NULL,
+
+                 NULL,
+
+                 1,
+
+                 NULL,
+
+                 NULL,
+
+                 NULL,
+
+                 :new.created_by,
+
+                 :new.updated_by,
+
+                 :new.created_on,
+
+                 SYSDATE,
+
+                 1,
+
+                 st.segment_id,
+
+                 dr.distributor_id,
+
+                 dt.device_type_id,
+
+                 0,
+
+                 :new.product_threshold_charges_id,
+
+                 :new.threshold_amount,
+
+                 :new.percentage_charges,
+
+                 lt.limit_type_id,
+
+                 :new.max_threshold_amount
+
+                 );
+
+                 
+            elsif v_priority_id > 1 then
+
+             UPDATE commission_threshold_rate
+               SET is_deleted = 2, updated_on = SYSDATE
+             WHERE     version_no > 1
+                   AND product_id = :new.product_id
+                   AND IS_DELETED = 0
+                   AND device_type_id = dt.device_type_id
+                   AND distributor_id = dr.distributor_id
+                   AND segment_id = st.segment_id
+                   AND limit_type_id = lt.limit_type_id;
+
+              --v_pr_id := 1;
+
+               INSERT INTO commission_threshold_rate
+              VALUES
+                (
+
+                 commission_threshold_rate_seq.NEXTVAL,
+
+                 1,
+
+                 :new.product_id,
+
+                 NULL,
+
+                 5,
+
+                 NULL,
+
+                 NULL,
+
+                 50020,
+
+                 NULL,
+
+                 0,
+
+                 NULL,
+
+                 NULL,
+
+                 1,
+
+                 NULL,
+
+                 NULL,
+
+                 NULL,
+
+                 :new.created_by,
+
+                 :new.updated_by,
+
+                 :new.created_on,
+
+                 SYSDATE,
+
+                 1,
+
+                 st.segment_id,
+
+                 dr.distributor_id,
+
+                 dt.device_type_id,
+
+                 0,
+
+                 :new.product_threshold_charges_id,
+
+                 :new.threshold_amount,
+
+                 :new.percentage_charges,
+
+                 lt.limit_type_id,
+
+                 :new.max_threshold_amount
+
+                 );
+            end if;
+
+        elsif (v_segment_id is not null and v_distributor_id is null) then
+
+
+             SELECT nvl(MIN(version_no), 0)
+              INTO v_priority_id
+              FROM commission_threshold_rate
+
+             WHERE
+
+             product_id = :new.product_id
+
+             AND is_deleted = 0
+
+             AND device_type_id = dt.device_type_id
+
+             AND distributor_id = dr.distributor_id
+
+             AND segment_id = st.segment_id
+
+             AND limit_type_id = lt.limit_type_id;
+
+
+            if v_priority_id = 0 then
+             --v_pr_id := 2;
+
+              INSERT INTO commission_threshold_rate
+              VALUES
+                (
+
+                 commission_threshold_rate_seq.NEXTVAL,
+
+                 1,
+
+                 :new.product_id,
+
+                 NULL,
+
+                 5,
+
+                 NULL,
+
+                 NULL,
+
+                 50020,
+
+                 NULL,
+
+                 0,
+
+                 NULL,
+
+                 NULL,
+
+                 1,
+
+                 NULL,
+
+                 NULL,
+
+                 NULL,
+
+                 :new.created_by,
+
+                 :new.updated_by,
+
+                 :new.created_on,
+
+                 SYSDATE,
+
+                 2,
+
+                 st.segment_id,
+
+                 dr.distributor_id,
+
+                 dt.device_type_id,
+
+                 0,
+
+                 :new.product_threshold_charges_id,
+
+                 :new.threshold_amount,
+
+                 :new.percentage_charges,
+
+                 lt.limit_type_id,
+
+                 :new.max_threshold_amount
+
+                 );
+
+            elsif v_priority_id > 2 then
+
+             UPDATE commission_threshold_rate
+               SET is_deleted = 2, updated_on = SYSDATE
+             WHERE     version_no > 2
+                   AND product_id = :new.product_id
+                   AND IS_DELETED = 0
+                   AND device_type_id = dt.device_type_id
+                   AND distributor_id = dr.distributor_id
+                   AND segment_id = st.segment_id
+                   AND limit_type_id = lt.limit_type_id;
+
+              --v_pr_id := 2;  
+
+               INSERT INTO commission_threshold_rate
+              VALUES
+                (
+
+                 commission_threshold_rate_seq.NEXTVAL,
+
+                 1,
+
+                 :new.product_id,
+
+                 NULL,
+
+                 5,
+
+                 NULL,
+
+                 NULL,
+
+                 50020,
+
+                 NULL,
+
+                 0,
+
+                 NULL,
+
+                 NULL,
+
+                 1,
+
+                 NULL,
+
+                 NULL,
+
+                 NULL,
+
+                 :new.created_by,
+
+                 :new.updated_by,
+
+                 :new.created_on,
+
+                 SYSDATE,
+
+                 2,
+
+                 st.segment_id,
+
+                 dr.distributor_id,
+
+                 dt.device_type_id,
+
+                 0,
+
+                 :new.product_threshold_charges_id,
+
+                 :new.threshold_amount,
+
+                 :new.percentage_charges,
+
+                 lt.limit_type_id,
+
+                 :new.max_threshold_amount
+
+                 );
+
+              end if;
+
+
+        elsif (v_segment_id is null and v_distributor_id is not null) then
+
+             SELECT nvl(MIN(version_no), 0)
+              INTO v_priority_id
+              FROM commission_threshold_rate
+
+             WHERE
+
+             product_id = :new.product_id
+
+             AND is_deleted = 0
+
+             AND device_type_id = dt.device_type_id
+
+             AND distributor_id = dr.distributor_id
+
+             AND segment_id = st.segment_id
+
+             AND limit_type_id = lt.limit_type_id;
+
+                if v_priority_id = 0 then
+                  --v_pr_id := 3;
+
+                   INSERT INTO commission_threshold_rate
+              VALUES
+                (
+
+                 commission_threshold_rate_seq.NEXTVAL,
+
+                 1,
+
+                 :new.product_id,
+
+                 NULL,
+
+                 5,
+
+                 NULL,
+
+                 NULL,
+
+                 50020,
+
+                 NULL,
+
+                 0,
+
+                 NULL,
+
+                 NULL,
+
+                 1,
+
+                 NULL,
+
+                 NULL,
+
+                 NULL,
+
+                 :new.created_by,
+
+                 :new.updated_by,
+
+                 :new.created_on,
+
+                 SYSDATE,
+
+                 3,
+
+                 st.segment_id,
+
+                 dr.distributor_id,
+
+                 dt.device_type_id,
+
+                 0,
+
+                 :new.product_threshold_charges_id,
+
+                 :new.threshold_amount,
+
+                 :new.percentage_charges,
+
+                 lt.limit_type_id,
+
+                 :new.max_threshold_amount
+
+                 );
+
+               elsif v_priority_id > 3 then
+
+             UPDATE commission_threshold_rate
+               SET is_deleted = 2, updated_on = SYSDATE
+             WHERE     version_no > 3
+                   AND product_id = :new.product_id
+                   AND IS_DELETED = 0
+                    AND device_type_id = dt.device_type_id
+                   AND distributor_id = dr.distributor_id
+                   AND segment_id = st.segment_id
+                   AND limit_type_id = lt.limit_type_id;
+
+              --v_pr_id := 3;
+
+               INSERT INTO commission_threshold_rate
+              VALUES
+                (
+
+                 commission_threshold_rate_seq.NEXTVAL,
+
+                 1,
+
+                 :new.product_id,
+
+                 NULL,
+
+                 5,
+
+                 NULL,
+
+                 NULL,
+
+                 50020,
+
+                 NULL,
+
+                 0,
+
+                 NULL,
+
+                 NULL,
+
+                 1,
+
+                 NULL,
+
+                 NULL,
+
+                 NULL,
+
+                 :new.created_by,
+
+                 :new.updated_by,
+
+                 :new.created_on,
+
+                 SYSDATE,
+
+                 3,
+
+                 st.segment_id,
+
+                 dr.distributor_id,
+
+                 dt.device_type_id,
+
+                 0,
+
+                 :new.product_threshold_charges_id,
+
+                 :new.threshold_amount,
+
+                 :new.percentage_charges,
+
+                 lt.limit_type_id,
+
+                 :new.max_threshold_amount
+
+                 );
+
+            end if;
+
+        elsif (v_segment_id is null and v_distributor_id is null) then
+
+             SELECT nvl(MIN(version_no), 0)
+              INTO v_priority_id
+              FROM commission_threshold_rate
+
+             WHERE
+
+             product_id = :new.product_id
+
+             AND is_deleted = 0
+
+             AND device_type_id = dt.device_type_id
+
+             AND distributor_id = dr.distributor_id
+
+             AND segment_id = st.segment_id
+
+             AND limit_type_id = lt.limit_type_id;
+
+
+             if v_priority_id = 0 then
+             --v_pr_id := 4;
+
+              INSERT INTO commission_threshold_rate
+              VALUES
+                (
+
+                 commission_threshold_rate_seq.NEXTVAL,
+
+                 1,
+
+                 :new.product_id,
+
+                 NULL,
+
+                 5,
+
+                 NULL,
+
+                 NULL,
+
+                 50020,
+
+                 NULL,
+
+                 0,
+
+                 NULL,
+
+                 NULL,
+
+                 1,
+
+                 NULL,
+
+                 NULL,
+
+                 NULL,
+
+                 :new.created_by,
+
+                 :new.updated_by,
+
+                 :new.created_on,
+
+                 SYSDATE,
+
+                 4,
+
+                 st.segment_id,
+
+                 dr.distributor_id,
+
+                 dt.device_type_id,
+
+                 0,
+
+                 :new.product_threshold_charges_id,
+
+                 :new.threshold_amount,
+
+                 :new.percentage_charges,
+
+                 lt.limit_type_id,
+
+                 :new.max_threshold_amount
+
+                 );
+
+            elsif v_priority_id > 4 then
+
+             UPDATE commission_threshold_rate
+               SET is_deleted = 2, updated_on = SYSDATE
+             WHERE     version_no > 4
+                   AND product_id = :new.product_id
+                   AND IS_DELETED = 0
+                      AND device_type_id = dt.device_type_id
+                   AND distributor_id = dr.distributor_id
+                   AND segment_id = st.segment_id
+                   AND limit_type_id = lt.limit_type_id;
+
+              --v_pr_id := 4;
+               INSERT INTO commission_threshold_rate
+              VALUES
+                (
+
+                 commission_threshold_rate_seq.NEXTVAL,
+
+                 1,
+
+                 :new.product_id,
+
+                 NULL,
+
+                 5,
+
+                 NULL,
+
+                 NULL,
+
+                 50020,
+
+                 NULL,
+
+                 0,
+
+                 NULL,
+
+                 NULL,
+
+                 1,
+
+                 NULL,
+
+                 NULL,
+
+                 NULL,
+
+                 :new.created_by,
+
+                 :new.updated_by,
+
+                 :new.created_on,
+
+                 SYSDATE,
+
+                 4,
+
+                 st.segment_id,
+
+                 dr.distributor_id,
+
+                 dt.device_type_id,
+
+                 0,
+
+                 :new.product_threshold_charges_id,
+
+                 :new.threshold_amount,
+
+                 :new.percentage_charges,
+
+                 lt.limit_type_id,
+
+                 :new.max_threshold_amount
+
+                 );
+            end if;
+
+        end if;
+
+
+
+
+          end loop;
+
+        end loop;
+
+      end loop;
+
+    end loop;
+
+  END IF;
+
+END;

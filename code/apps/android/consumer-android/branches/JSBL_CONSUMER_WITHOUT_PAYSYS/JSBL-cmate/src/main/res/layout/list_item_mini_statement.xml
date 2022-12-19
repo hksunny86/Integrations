@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="@color/white"
+    card_view:cardElevation="@dimen/card_elevation_normal"
+    card_view:cardPreventCornerOverlap="false"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/listview_background_normal"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/layoutData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/layoutMarginSmall"
+            android:layout_marginTop="@dimen/layoutMarginSmall"
+            android:gravity="center_vertical|fill_horizontal">
+
+            <TextView
+                android:id="@+id/txtLabel"
+                android:layout_width="@dimen/listItemTextWidth"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/textViewMarginNormal"
+                android:shadowColor="@color/white"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="0.6"
+                android:text="23/2/2222"
+                android:textColor="@color/text_grey"
+                android:textSize="@dimen/textViewTextSizeMedium"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtdes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtLabel"
+                android:layout_marginLeft="@dimen/textViewMarginNormal"
+                android:layout_marginTop="@dimen/textViewMarginSmall"
+                android:shadowColor="@color/white"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="0.6"
+                android:text="IBFT"
+                android:textColor="@color/text_grey_light"
+                android:textSize="@dimen/textViewTextSizeMedium"/>
+
+            <TextView
+                android:id="@+id/txtData"
+                android:layout_width="@dimen/listItemTextWidth"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/txtLabel"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/textViewMarginNormal"
+                android:layout_toRightOf="@+id/txtLabel"
+                android:gravity="right"
+                android:text="PKR 50"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/textViewTextSizeMedium"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

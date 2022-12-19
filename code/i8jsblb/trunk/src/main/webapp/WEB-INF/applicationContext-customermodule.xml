@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<bean id="customerPictureDAO"
+		class="com.inov8.microbank.server.dao.customermodule.hibernate.CustomerPictureHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="blinkCustomerPictureDAO"
+		  class="com.inov8.microbank.server.dao.customermodule.hibernate.BlinkCustomerPictureHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="blinkCustomerModelDAO"
+		  class="com.inov8.microbank.server.dao.customermodule.hibernate.BlinkCustomerModelHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="applicantDetailDAO"
+		class="com.inov8.microbank.server.dao.customermodule.hibernate.ApplicantDetailHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="businessDetailDAO"
+		class="com.inov8.microbank.server.dao.customermodule.hibernate.BusinessDetailHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="walkinCustomerDAO"
+		class="com.inov8.microbank.server.dao.customermodule.hibernate.WalkinCustomerHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- DAO -->
+	<bean id="custTransListViewDAO"
+		class="com.inov8.microbank.server.dao.customermodule.hibernate.CustTransListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="customerDAO"
+		class="com.inov8.microbank.server.dao.customermodule.hibernate.CustomerHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="customerListViewDAO"
+		class="com.inov8.microbank.server.dao.customermodule.hibernate.CustomerListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="goldenNosDAO"
+		class="com.inov8.microbank.server.dao.portal.mfsaccountmodule.hibernate.GoldenNosHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="goldenNoSequenceGenerator"
+		class="com.inov8.framework.server.dao.framework.jdbc.OracleSequenceGeneratorJdbcDAO"
+		init-method="initDao">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sequenceName" value="GOLDEN_NOS_SEQ" />
+	</bean>
+	<bean id="segmentDAO"
+		class="com.inov8.microbank.server.dao.customermodule.hibernate.SegmentHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="languageDAO"
+		class="com.inov8.microbank.server.dao.customermodule.hibernate.LanguageHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="fundSourceDAO"
+		class="com.inov8.microbank.server.dao.customermodule.hibernate.FundSourceHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="customerTypeDAO"
+		class="com.inov8.microbank.server.dao.customermodule.hibernate.CustomerTypeHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="customerRemitterDAO"
+		  class="com.inov8.microbank.server.dao.customermodule.hibernate.CustomerRemitterHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	
+	<!-- Service -->
+	<bean id="custTransManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean
+				class="com.inov8.microbank.server.service.customermodule.CustTransManagerImpl">
+				<property name="custTransListViewDAO">
+					<ref local="custTransListViewDAO" />
+				</property>
+				<property name="customerDAO">
+					<ref local="customerDAO" />
+				</property>
+				<property name="appUserDAO">
+					<ref bean="appUserDAO" />
+				</property>
+				<property name="customerRemitterDAO">
+					<ref bean="customerRemitterDAO" />
+				</property>
+
+			</bean>
+		</property>
+	</bean>
+	<bean id="blinkCustomerModelManager" class="com.inov8.microbank.server.dao.customermodule.Manager.BlinkCustomerModelManagerImpl">
+		<property name="blinkCustomerModelDAO" ref="blinkCustomerModelDAO"/>
+	</bean>
+
+	<bean id="customerManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean
+				class="com.inov8.microbank.server.service.customermodule.CustomerManagerImpl">
+				<property name="customerListViewDAO">
+					<ref local="customerListViewDAO" />
+				</property>
+				<property name="customerRemitterDAO">
+					<ref local="customerRemitterDAO" />
+				</property>
+
+				<property name="customerDAO">
+					<ref local="customerDAO" />
+				</property>
+				<property name="appUserDAO">
+					<ref bean="appUserDAO" />
+				</property>
+
+				<property name="userDeviceAccountsDAO">
+					<ref bean="userDeviceAccountsDAO" />
+				</property>
+
+				<property name="goldenNosDAO">
+					<ref local="goldenNosDAO" />
+				</property>
+				
+				<property name="actionLogManager" ref="actionLogManager"/>
+
+				<property name="smsSender" ref="smsSender" />
+				<property name="sequenceGenerator"
+					ref="goldenNoSequenceGenerator" />
+
+				<property name="appUserManager" ref="userManager" />
+				<property name="segmentDAO">
+					<ref local="segmentDAO" />
+				</property>                                    
+				
+
+			</bean>
+		</property>
+	</bean>
+
+
+
+	<!-- Facade -->
+	<bean id="customerFacade"
+		class="com.inov8.microbank.server.facade.CustomerFacadeImpl">
+		<property name="frameworkExceptionTranslator">
+			<ref bean="frameworkExceptionTranslator" />
+		</property>
+		<property name="custTransManager">
+			<ref local="custTransManager" />
+		</property>
+
+		<property name="customerManager">
+			<ref local="customerManager" />
+		</property>
+	</bean>
+</beans>

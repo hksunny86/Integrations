@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.dft.android:onyx-core-4.2.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/onyx-core-4.2.4.aar/2f3f41a7542a6219f25e454ccf34bbff/jars/libs/opencv-android-2.4.13.2.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/onyx-core-4.2.4.aar/2f3f41a7542a6219f25e454ccf34bbff/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/onyx-core-4.2.4.aar/2f3f41a7542a6219f25e454ccf34bbff/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

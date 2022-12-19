@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.inov8.jsblmfs"
+    android:versionCode="70"
+    android:versionName="2.0.10.28">
+
+    <uses-feature android:glEsVersion="0x00020000" android:required="true" />
+
+    <uses-feature android:name="android.hardware.usb.host" />
+
+    <uses-permission android:name="android.permission.USB_PERMISSION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.MOUNT_FORMAT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- <uses-permission android:name="android.permission.NFC" /> -->
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <application
+        android:name="com.inov8.agentmate.MyApplication"
+        android:allowBackup="false"
+        android:icon="@drawable/icon"
+        android:label="JSBL AGENTmate"
+        android:theme="@android:style/Theme.NoTitleBar"
+        tools:replace="android:allowBackup, android:label">
+        <activity android:name="com.inov8.agentmate.activities.proofOfLife.ProofOfLifeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.inov8.agentmate.activities.proofOfLife.ProofOfLifeInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.BOPCardIssuanceReIssuanceConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.BOPCardIssuanceReIssuance"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.inov8.agentmate.activities.debitCard.TermsConditionsDebitCardActivity" />
+        <activity android:name="com.inov8.agentmate.activities.debitCard.DebitCardIssuance" />
+        <activity
+            android:name="com.inov8.agentmate.activities.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.inov8.agentmate.activities.LoginActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.inov8.agentmate.activities.SignOutActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.BaseActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.IBFTInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.IBFTConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.SubMenuAcitivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.CategoryMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.BaseCommunicationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.MainMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.TransactionReceiptActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.collection.CollectionPaymentInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.exciseAndTaxation.ExciseAndTaxationInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.exciseAndTaxation.ExciseAndTaxationConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.collection.CollectionPaymentConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.cashIn.CashInInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.cashIn.CashInConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.cashOut.CashOutInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.bvs.paysys.FingerScanActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.cashOut.CashOutConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.cashOut.CashOut3rdPartyInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.cashOut.CashOut3rdPartyConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.AgentToAgentInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.AgentToAgentConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.fundsTransfer.FundsTransferInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.fundsTransfer.FundsTransferConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
+        <activity
+            android:name="com.inov8.agentmate.activities.fundsTransfer.ReceiveCashInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.fundsTransfer.ReceiveCashConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.TransferInInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.TransferInConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.TransferOutInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.TransferOutConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.billPayment.BillPaymentsUtilityFetchBillInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.billPayment.BillPaymentTypeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.billPayment.BillPaymentConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.retailPayment.RetailPaymentInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.retailPayment.RetailPaymentConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.myAccount.MyAccountViewTransactionsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.myAccount.MyAccountBalanceInquiryActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.myAccount.MyAccountChangePinActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.myAccount.MyAccountChangePinMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.myAccount.MyAccountSelectMiniStatementActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.TermsConditionsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.hra.HraRegistrationActivity1"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.hra.HraRegistrationActivity2"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.hra.HraRegistrationActivity3"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.dormancy.DormancyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.dormancy.DormancyConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountBvsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.KhidmatCardRegistrationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountHraActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountMobileInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountSecondInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountSecondInputDiscrepantActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountDiscrepantDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountPicInputUploadActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountConfirmationDiscrepantActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.CameraActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
+        <activity
+            android:name="com.inov8.agentmate.bvs.paysys.NadraRestClient"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name="com.inov8.agentmate.bvs.paysys.OTCClient"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name="com.inov8.agentmate.activities.BvsDeviceSelectorActivity1"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.bvs.BvsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/device_filter"
+                android:value="true" />
+        </activity>
+    </application>
+</manifest>

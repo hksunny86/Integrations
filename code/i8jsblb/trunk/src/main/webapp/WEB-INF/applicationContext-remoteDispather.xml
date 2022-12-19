@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:lang="http://www.springframework.org/schema/lang" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd">
+
+    <!-- ######################################################## -->
+    <!-- EXPOSING SPRING BEAN VIA HTTPINVOKER SPRING REMOTING -->
+    <!-- ######################################################## -->
+
+    <bean id="iBFTSwitchController" class="com.inov8.integration.controller.IBFTSwitchController">
+        <property name="messageSource" ref="messageSource"></property>
+        <property name="fonePaySwitchController" ref="fonePaySwitchController"></property>
+        <property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"/>
+        <property name="commissionTransactionViewFacade" ref="commissionTransactionViewFacade"/>
+        <property name="manualAdjustmentManager" ref="manualAdjustmentManager"/>
+        <property name="manualReversalFacade" ref="manualReversalFacade"/>
+        <property name="portalOlaFacade" ref="portalOlaFacade"/>
+        <property name="postedTransactionReportDAO" ref="postedTransactionReportDAO"/>
+        <property name="transactionCodeDAO" ref="transactionCodeDAO"/>
+        <property name="userDeviceAccountsDAO" ref="userDeviceAccountsDAO"/>
+        <property name="transactionReversalDAO" ref="transactionReversalDAO"/>
+        <property name="reversalAdviceQueingPreProcessor" ref="reversalAdviceQueingPreProcessor"/>
+        <property name="ibftRetryAdviceDAO" ref="ibftRetryAdviceDAO"/>
+        <property name="ibftStatusHibernateDAO" ref="ibftStatusDAO"/>
+        <property name="esbAdapter" ref="esbAdapter"></property>
+
+    </bean>
+
+    <bean name="/ibft"
+          class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="service" ref="iBFTSwitchController"/>
+        <property name="serviceInterface" value="com.inov8.integration.ibft.controller.HostTransactionController"/>
+    </bean>
+
+    <bean id="fonePaySwitchController" class="com.inov8.integration.controller.FonePaySwitchController">
+        <property name="mfsWebResponseDataPopulator" ref="mfsWebResponseDataPopulator"/>
+        <property name="mfsAccountClosureFacade" ref="mfsAccountClosureFacade"/>
+        <property name="mfsAccountManager" ref="mfsAccountFacade"/>
+        <property name="smartMoneyAccountManager" ref="smartMoneyAccountManager"/>
+        <property name="smartMoneyAccountDAO" ref="smartMoneyAccountDAO"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="accountHolderManager" ref="accountHolderManager"/>
+        <property name="catalogDAO" ref="productCatalogDAO"/>
+        <property name="updateCustomerNameFacade" ref="updateCustomerNameFacade"/>
+        <property name="clsPendingBlinkCustomerDAO" ref="clsPendingBlinkCustomerDAO"></property>
+        <property name="limitManager" ref="limitManager"></property>
+        <property name="ecofinSubAgentDAO" ref="ecofinSubAgentDAO"/>
+        <property name="blinkCustomerModelDAO" ref="blinkCustomerModelDAO"/>
+        <property name="updateCustomerNameDAO" ref="updateCustomerNameDAO"></property>
+        <property name="appUserDAO" ref="appUserDAO"></property>
+        <property name="customerDAO" ref="customerDAO"/>
+        <property name="clsPendingAccountOpeningDAO" ref="clsPendingAccountOpeningDAO"></property>
+        <property name="customerPictureDAO" ref="customerPictureDAO"></property>
+        <property name="esbAdapter" ref="esbAdapter"></property>
+        <property name="ibftRetryAdviceDAO" ref="ibftRetryAdviceDAO"></property>
+
+        <!--		<property name="chequeBookDAO" ref="chequeBookDAO"></property>-->
+    </bean>
+
+    <bean name="/fonepay"
+          class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="service" ref="fonePaySwitchController"/>
+        <property name="serviceInterface"
+                  value="com.inov8.integration.webservice.controller.WebServiceSwitchController"/>
+    </bean>
+
+    <bean id="i8SBSwitchControllerImpl" class="com.inov8.integration.controller.I8SBSwitchControllerImpl">
+        <property name="ussdRequestHandlerDelegate" ref="ussdRequestHandlerDelegate"/>
+    </bean>
+
+    <bean name="ussdRequestHandlerDelegate" class="com.inov8.microbank.server.webservice.USSDRequestHandlerDelegate">
+        <property name="ussdHandler" ref="ussdReqHandler"/>
+        <property name="actionLogManager" ref="actionLogManager"/>
+    </bean>
+
+
+    <bean name="/i8sb"
+          class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="service" ref="i8SBSwitchControllerImpl"/>
+        <property name="serviceInterface" value="com.inov8.integration.i8sb.controller.I8SBSwitchController"/>
+    </bean>
+
+</beans>

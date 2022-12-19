@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/offwhite"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/layoutInputs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_alignParentTop="true"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:layout_centerHorizontal="true">
+
+                <RelativeLayout
+                    android:id="@+id/cnic_mobile_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/cnic_mobile_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lbl_customer_mobile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/textViewsPadding"
+                            android:shadowColor="@color/white"
+                            android:text="@string/customer_mobile_number"
+                            android:textColor="@color/text_grey"
+                            android:textSize="@dimen/ts_normal"
+                            android:textStyle="normal" />
+
+                        <EditText
+                            android:id="@+id/input_customer_mobile"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lbl_customer_mobile"
+                            android:background="@drawable/rounded_bg"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:maxLength="11"
+                            android:minHeight="@dimen/editTextMinHeight"
+                            android:paddingLeft="@dimen/editTextPadding"
+                            android:paddingRight="@dimen/editTextPadding"
+                            android:singleLine="true">
+
+                            <requestFocus />
+                        </EditText>
+
+
+                        <TextView
+                            android:id="@+id/lbl_customer_cnic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/input_customer_mobile_confirm"
+                            android:layout_marginTop="@dimen/margin_normal"
+                            android:padding="@dimen/textViewsPadding"
+                            android:shadowColor="@color/white"
+                            android:text="@string/customer_cnic"
+                            android:textColor="@color/text_grey"
+                            android:textSize="@dimen/ts_normal"
+                            android:textStyle="normal" />
+
+                        <EditText
+                            android:id="@+id/input_customer_cnic"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lbl_customer_cnic"
+                            android:background="@drawable/rounded_bg"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:maxLength="13"
+                            android:minHeight="@dimen/editTextMinHeight"
+                            android:paddingLeft="@dimen/editTextPadding"
+                            android:paddingRight="@dimen/editTextPadding"
+                            android:singleLine="true" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="@dimen/buttonWidthLarge"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutInputs"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:textAllCaps="true"
+                android:layout_marginTop="@dimen/margin_Xlarge"
+                android:background="@drawable/button_next_selector"
+                android:text="@string/next"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/buttonTextSizeLarge"
+                android:textStyle="normal" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

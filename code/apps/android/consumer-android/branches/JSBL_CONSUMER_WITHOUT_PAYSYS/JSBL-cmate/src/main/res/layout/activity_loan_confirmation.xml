@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/container_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomBarQR"
+        android:layout_below="@+id/container_heading"
+        android:layout_marginLeft="@dimen/activitySideMarginNormal"
+        android:layout_marginTop="@dimen/textViewMarginNormal"
+        android:layout_marginRight="@dimen/activitySideMarginNormal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lblPartialPay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/textViewMarginSmall"
+            android:padding="2dp"
+            android:shadowColor="@color/white"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="0"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/textViewTextSizeExtraSmall"
+            android:textStyle="italic"
+            android:visibility="gone" />
+
+        <ScrollView
+            android:id="@+id/scView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layoutMarginNormal"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:id="@+id/scViewInLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/layoutMarginNormal">
+
+                <RelativeLayout
+                    android:id="@+id/layoutBillConfirmation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/layoutListView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/yellow_rounded_bg"
+                        android:paddingBottom="@dimen/cornerRadiusNormal">
+
+                        <com.inov8.jsblconsumer.ui.components.ListViewExpanded
+                            android:id="@+id/dataList"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/list_background"
+                            android:divider="@color/line_light_grey"
+                            android:dividerHeight="1dp"
+                            android:footerDividersEnabled="false"
+                            android:padding="2dp"
+                            android:scrollbars="none"></com.inov8.jsblconsumer.ui.components.ListViewExpanded>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/lblAlert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/layoutListView"
+                        android:layout_marginBottom="@dimen/textViewMarginSmall"
+                        android:layout_marginTop="@dimen/textViewMarginSmall"
+                        android:shadowColor="@color/white"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="0"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textViewTextSizeSmall"
+                        android:textStyle="italic"/>
+
+                    <LinearLayout
+                        android:id="@+id/layoutBtns"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lblAlert"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+                        android:layout_marginTop="@dimen/buttonTopMarginSmall"
+                        android:layout_marginRight="@dimen/buttonSideMarginNormal"
+                        android:layout_marginBottom="@dimen/buttonBottomMarginSmall"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <Button
+                            android:id="@+id/btnNext"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/buttonHeightNormal"
+                            android:layout_marginRight="@dimen/buttonInnerMarginNormal"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_ok"
+                            android:text="@string/confirm"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/buttonTextNormal" />
+
+                        <Button
+                            android:id="@+id/btnCancel"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/buttonHeightNormal"
+                            android:layout_marginLeft="@dimen/buttonInnerMarginNormal"
+                            android:layout_toRightOf="@id/btnNext"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_cancel"
+                            android:text="@string/cancel"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/buttonTextNormal" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/bottomBar"
+        layout="@layout/layout_bottom_bar" />
+
+    <include
+        android:id="@+id/bottomBarQR"
+        layout="@layout/layout_qr_code" />
+</RelativeLayout>

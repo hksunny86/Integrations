@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutBottomBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:splitMotionEvents="false">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/bottom_bar_text_color" />
+
+        <LinearLayout
+            android:id="@+id/layoutMenuBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/upperBorder"
+            android:orientation="horizontal"
+            android:splitMotionEvents="false"
+            android:weightSum="5">
+
+            <LinearLayout
+                android:id="@+id/layoutHome"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/bottomBarHeight"
+                android:layout_weight="1"
+
+                android:background="@drawable/button_bottom_bar_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnNearByAgent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/bottom_icon_home" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/textViewMarginSmall"
+                    android:text="@string/home"
+                    android:textColor="@color/bottom_bar_text_color"
+                    android:textSize="@dimen/textViewTextSizeExtraSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutMyAccount"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/bottomBarHeight"
+                android:layout_weight="1"
+                android:background="@drawable/button_bottom_bar_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnMyAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/bottom_menu_icon_account" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/textViewMarginSmall"
+                    android:text="@string/my_account"
+                    android:textColor="@color/bottom_bar_text_color"
+                    android:textSize="@dimen/textViewTextSizeExtraSmall" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutQRCode"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/bottomBarHeight"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/textViewMarginSmall"
+                    android:text="@string/qr_code"
+                    android:textColor="@color/bottom_bar_text_color"
+                    android:textSize="@dimen/textViewTextSizeExtraSmall"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutNearByAgent"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/bottomBarHeight"
+                android:layout_weight="1"
+                android:background="@drawable/button_bottom_bar_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnOffers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/bottom_menu_icon_locator" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/textViewMarginSmall"
+                    android:text="@string/near_by_agent"
+                    android:textColor="@color/bottom_bar_text_color"
+                    android:textSize="@dimen/textViewTextSizeExtraSmall" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutMore"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/bottomBarHeight"
+                android:layout_weight="1"
+
+                android:background="@drawable/button_bottom_bar_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnNotifications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/bottom_icon_help" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/textViewMarginSmall"
+                    android:text="@string/help"
+                    android:textColor="@color/bottom_bar_text_color"
+                    android:textSize="@dimen/textViewTextSizeExtraSmall" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/textViewMarginSmall"
+        android:text="@string/qr_code"
+        android:textColor="@color/bottom_bar_text_color"
+        android:textSize="@dimen/textViewTextSizeExtraSmall"
+        android:visibility="gone" />
+</RelativeLayout>

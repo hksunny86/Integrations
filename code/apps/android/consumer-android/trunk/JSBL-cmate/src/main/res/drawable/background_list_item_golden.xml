@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="@color/orange" />
+
+    <corners
+        android:bottomLeftRadius="@dimen/rounded_bg_corner"
+        android:bottomRightRadius="@dimen/rounded_bg_corner"
+        android:topLeftRadius="@dimen/rounded_bg_corner"
+        android:topRightRadius="@dimen/rounded_bg_corner" />
+
+</shape>

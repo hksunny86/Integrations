@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+          http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-2.5.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+    <context:annotation-config />
+
+    <context:component-scan base-package="com.inov8.microbank.ws.server"/>
+
+	<bean id="javaAgi" class="com.inov8.ivr.script.JavaAgiScript">
+		<constructor-arg ref="agiManager"/>
+	</bean>
+
+	<bean id="agiManager" class="com.inov8.ivr.agi.service.AgiManager" depends-on="flow" ><!-- ,cardFlow depends-on="ivrConfigLoaderThread" -->
+	    <property name="context" ref="context" />
+	</bean>
+
+<!-- 	<bean id="ivrConfigLoaderThread" class="com.inov8.ivr.thread.config.IvrConfigLoaderThread" init-method="startAndWait" depends-on="wsClient,applicationContextImpl">
+		<constructor-arg ref="context"/>
+		<property name="reloadAfter" value="1800"/>
+	</bean>
+ -->
+ 
+<!--  	<bean id="cardFlow" class="com.inov8.ivr.thread.config.CardFlow" depends-on="wsClient,applicationContextImpl">
+ 	    <constructor-arg ref="context" />
+ 	    <constructor-arg value="Local/@phones"/>
+ 	    <constructor-arg value="SIP/@wateen.net"/>
+ 	    <constructor-arg ref="taskContext"/>
+ 	</bean> -->
+
+	<util:map id="taskContext" key-type="java.Lang.String"
+		value-type="io.task.tasks.Task" map-class="java.util.HashMap">
+	</util:map>
+	
+	<bean id="wateenAsteriskServerWrapper" class="com.inov8.ivr.wrapper.AsteriskServerWrapper">
+		<property name="asteriskServer" ref="asteriskServer1" />
+		<property name="channel" value="SIP/@wateen.net" />
+		<property name="callerId" value="0428354900 &lt;0428354900&gt;"/>
+	</bean>
+	
+	<!-- <bean id="multinetAsteriskServerWrapper" class="com.inov8.ivr.wrapper.AsteriskServerWrapper">
+		<property name="asteriskServer" ref="asteriskServer2" />
+		<property name="channel" value="SIP/@mppl-pri" />
+		<property name="callerId" value="042832560122 &lt;042832560122&gt;"/>
+	</bean> -->
+
+	<util:list id="asteriskServers" list-class="java.util.ArrayList" value-type="com.inov8.ivr.wrapper.AsteriskServerWrapper">
+		<ref local="wateenAsteriskServerWrapper"/>
+		<!-- <ref local="multinetAsteriskServerWrapper"/> -->
+	</util:list>
+
+ 	<bean id="flow" class="com.inov8.ivr.thread.config.Flow" depends-on="wsClient,applicationContextImpl">
+ 	    <constructor-arg ref="context" />
+ 	    <!-- <constructor-arg value="Local/@phones"/> -->
+ 	    <!-- <constructor-arg value="SIP/@wateen.net"/> -->
+ 	    <constructor-arg ref="taskContext"/>
+ 	</bean>
+
+	<bean id="asteriskServer1" class="org.asteriskjava.live.DefaultAsteriskServer" init-method="initialize">
+		<!-- Asterisk server hostname -->
+		<constructor-arg value="asteriskserverip1"/>
+		<!-- The manager port as configured in manager.conf -->
+		<constructor-arg value="5038"/>
+		<!-- The username as configured in manager.conf -->
+		<constructor-arg value="manager"/>
+		<!-- The password as configured in manager.conf -->
+		<constructor-arg value="1234"/>
+	</bean>
+ 
+	<!-- <bean id="asteriskServer2" class="org.asteriskjava.live.DefaultAsteriskServer" init-method="initialize">
+		<constructor-arg value="asteriskserverip2"/>
+		<constructor-arg value="5038"/>
+		<constructor-arg value="manager"/>
+		<constructor-arg value="1234"/>
+	</bean> -->
+
+	<bean id="context" class="io.task.context.ContextImpl">
+	    <property name="beanFactory" ref="beanFactory"/>
+	</bean>
+	
+	<bean id="beanFactory" class="io.task.factory.BeanFactoryImpl">
+	    <property name="beanLoader" ref="beanDbLoader"/>
+	</bean>
+	
+	<bean id="applicationContextImpl" class="com.inov8.spring.ApplicationContextImpl"/>
+
+	<bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">
+		<!-- The URL to host webservice on to. Change port here as per the connecting party. -->
+    	<property name="baseAddress" value="http://0.0.0.0:8585/"/>
+	</bean>
+
+	<bean id="ivrWebServiceImpl" class="com.inov8.microbank.ws.server.IvrWebServiceImpl" lazy-init="false" >
+	    <property name="context" ref="context" />
+	</bean>
+
+	<bean id="ivrRequestHandlerDelegate" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+	    <property name="serviceInterface" value="com.inov8.microbank.ws.service.IVRRequestHandlerDelegate"/>
+	    <!-- Change port here for the IVR to connect to the microbank service -->
+	    <property name="wsdlDocumentUrl" value="http://microbankservice:8080/i8Microbank/IVRRequestHandlerPort?wsdl"/>
+	    <property name="namespaceUri" value="http://service.microbank.inov8.com/"/>
+	    <property name="serviceName" value="IVRRequestHandlerService"/>
+	    <property name="portName" value="IVRRequestHandlerPort"/>
+	    <property name="lookupServiceOnStartup" value="false" />
+	</bean>
+	
+	<bean id="wsClient" class="com.inov8.microbank.ws.service.WsClient">
+	    <property name="ivrRequestHandlerDelegate" ref="ivrRequestHandlerDelegate" />
+	</bean>
+
+	<!-- bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    	<property name="staticMethod" value="com.inov8.microbank.ws.service.WsClient.setIVRRequestHandlerDelegate"/>
+    	<property name="arguments">
+	        <list>
+            	<ref bean="ivrRequestHandlerDelegate"/>
+        	</list>
+    	</property>
+	</bean-->
+
+</beans>

@@ -1,0 +1,11 @@
+<vector
+    android:height="@dimen/cardHeight"
+    android:viewportHeight="280"
+    android:viewportWidth="280"
+    android:width="@dimen/cardHeight"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <path android:fillColor="#1b4774" android:pathData="M16,151.8c-0.9,1.9 -1.6,5 -0.9,7.9c0.6,2.2 1.8,4.4 4.4,6.2c2.1,1.5 14.5,4.3 29,7.2c4.2,-9.3 4.4,-21.4 4.3,-25.4c-11.8,-1.8 -21.2,-3 -23.3,-2.8c-3.2,0.2 -6,1 -8.3,2.1C18.6,148.3 16.9,149.9 16,151.8z"/>
+    <path android:fillColor="#1b4774" android:pathData="M43.9,157.2c0,10.8 -8.8,19.6 -19.6,19.6S4.7,168 4.7,157.2s8.8,-19.6 19.6,-19.6C35.1,137.6 43.9,146.4 43.9,157.2z"/>
+    <path android:fillColor="#1b4774" android:pathData="M43.9,157.2c0,10.8 -8.8,19.6 -19.6,19.6S4.7,168 4.7,157.2s8.8,-19.6 19.6,-19.6C35.1,137.6 43.9,146.4 43.9,157.2z"/>
+</vector>

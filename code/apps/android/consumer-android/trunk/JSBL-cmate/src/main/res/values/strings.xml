@@ -1,0 +1,197 @@
+<resources>
+    <string name="app_name" translatable="false">JS Wallet</string>
+    <string name="reference_number" translatable="false">Reference Number</string>
+    <string name="bill_payee_name" translatable="false">Bill Payee Name</string>
+    <string name="pin_verification" translatable="false">PIN Verification</string>
+    <string name="mobile_number" translatable="false">Mobile Number</string>
+    <string name="pin" translatable="false">PIN</string>
+    <string name="payment_successful" translatable="false">Payment Successful</string>
+    <string name="registration_successful" translatable="false">Registration Successful</string>
+    <string name="terms_conditions" translatable="false">asdasddaddaddadaddddddddddddddddddddd</string>
+    <string name="email_address_hint" translatable="false">E-mail address</string>
+    <string name="mobile_hint" translatable="false">Enter your registered mobile no.</string>
+    <string name="mobile_hint1" translatable="false">Enter your mobile no.</string>
+    <string name="password_hint" translatable="false">PIN</string>
+    <string name="password_hint_login" translatable="false">Enter your 4 digits PIN.</string>
+    <string name="customer_hint_embossing_name" translatable="false">Enter Your Embossing Name</string>
+    <string name="customer_hint_mailing_address" translatable="false">Enter Your Mailing Address</string>
+
+    <string name="password_hint_login_open_account" translatable="false">Enter your 4 digits PIN(send via SMS)</string>
+    <string name="password_hint_text" translatable="false">Enter your 4 digits PIN.</string>
+    <string name="login" translatable="false">Login</string>
+    <string name="welcome" translatable="false">Welcome</string>
+    <string name="forgot_password" translatable="false">Forgot Password?</string>
+    <string name="forgot_pin" translatable="false">Forgot Password</string>
+    <string name="name" translatable="false"> Name</string>
+    <string name="available_balance" translatable="false">Available Balance</string>
+    <string name="current_balance" translatable="false">Current Balance</string>
+    <string name="iban_number" translatable="false">IBAN Number</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="submit" translatable="false">SUBMIT</string>
+    <string name="open_account" translatable="false">Open Account</string>
+    <string name="forgot_mpin" translatable="false">Forgot MPIN</string>
+    <string name="pin_change" translatable="false">Change Pin</string>
+    <string name="confirm_transaction" translatable="false">Confirm Transaction</string>
+    <string name="confirm" translatable="false">Confirm</string>
+    <string name="pay_now" translatable="false">Pay Now</string>
+    <string name="accept" translatable="false">Accept</string>
+    <string name="reject" translatable="false">Reject</string>
+    <string name="scan" translatable="false">Scan Qr Code</string>
+    <string name="register" translatable="false">Register</string>
+    <string name="otp_hint_text" translatable="false">An OTP has been sent to your mobile no.
+    Please enter 5 digits OTP.</string>
+    <string name="customer_registration" translatable="false">Customer Registration</string>
+    <string name="cancel" translatable="false">Cancel</string>
+    <string name="skip" translatable="false">Skip</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="reset_pin" translatable="false">RESET LOGIN PIN</string>
+    <string name="resend" translatable="false">Resend</string>
+    <string name="payment_amount">Payment Amount</string>
+    <string name="confirm_following_payment_details">Confirm following payment details</string>
+    <string name="please_confirm_the_following_details">Please confirm the following details</string>
+    <string name="enter_payment_amount">Enter Payment Amount</string>
+    <string name="merchant_details">Merchant Details</string>
+    <string name="merchant_id">Merchant ID</string>
+    <string name="merchant_name">Merchant Name</string>
+    <string name="transaction_type">Transaction Type</string>
+    <string name="transaction_fee">Transaction Fee</string>
+    <string name="qr_payment">QR Payment</string>
+    <string name="amount">Amount</string>
+    <string name="fund_transfer_successful">Fund Transfer Successful</string>
+    <string name="qr_payment_successful">QR Payment Successful</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="enter_merchant_id">Enter Merchant ID</string>
+    <string name="regenerate" translatable="false">Regenerate</string>
+    <string name="register_continue" translatable="false">Cancel</string>
+    <string name="verify" translatable="false">Verify</string>
+    <string name="enter_consumer_number" translatable="false">Enter Consumer / Ref No.</string>
+    <string name="pay_by_cash" translatable="false">Pay By Cash</string>
+    <string name="pay_by_account" translatable="false">Pay By Account</string>
+    <string name="continue_text" translatable="false">Continue</string>
+    <string name="login_js" translatable="false">Login</string>
+    <string name="js_heading_2" translatable="false">Go cashless with QR code payments. Scan the retailers QR code, enter the amount payable, and you\'re done!</string>
+    <string name="js_heading" translatable="false">You can open a level-0 account with a daily  transaction limit of Rs.25000 in a less than a minute. Simply enter your CNIC, CNIC date of issue, Mobile number and Email Address and start transaction immediately. Account opening has never been this easy.</string>
+    <!--<string name="old_pin" translatable="false">Current Password</string>-->
+    <!--<string name="new_pin" translatable="false">New Password</string>-->
+    <!--<string name="confirm_new_pin" translatable="false">Confirm New Password</string>-->
+
+    <string name="general_error" translatable="false">Connection with the server cannot be established at this time. Please try again or contact your service provider.</string>
+    <string name="old_pin" translatable="false">Old Login PIN</string>
+    <string name="new_pin" translatable="false">New Login PIN</string>
+    <string name="confirm_new_pin" translatable="false">Confirm New Login PIN</string>
+    <string name="card_block_temporary" translatable="false">Temporary Block</string>
+    <string name="card_block_permanent" translatable="false">Permanent Block</string>
+    <string name="card_block_title" translatable="false">Debit Card Block Type</string>
+
+    <string name="change_pin" translatable="false">Change PIN</string>
+    <string name="set_mpin_later" translatable="false">SET MPIN LATER</string>
+    <string name="label_invalid_account_number" formatted="false">Please enter %s or %s digit %s Account Numb"er / 24 digits IBAN</string>
+    <string name="label_invalid_account_number_min" formatted="false">Please enter %s digit %s Account Numb"er / 24 digits IBAN</string>
+    <string name="terms_condition" translatable="false">I/We agree to the</string>
+    <string name="terms_link" translatable="false"><u>Terms &amp; Conditions</u></string>
+    <string name="terms_link_js" translatable="false">Terms &amp; Conditions</string>
+    <string name="alertNotification">Alert Notification</string>
+    <string name="title_select_device" translatable="false">Select a device to connect</string>
+    <string name="title_address" translatable="false">Address</string>
+    <string name="title_connect" translatable="false">Connect</string>
+    <string name="title_bluetooth_disabled" translatable="false">Bluetooth is disabled</string>
+    <string name="title_scan" translatable="false">Scan for devices</string>
+    <string name="title_scanning" translatable="false">Scanning for devices&#8230;</string>
+    <string name="title_please_wait" translatable="false">Please wait</string>
+    <string name="msg_failed_to_init" translatable="false">Failed to init printer</string>
+    <string name="msg_failed_to_connect" translatable="false">Failed to establish connection</string>
+    <string name="msg_failed_to_print_text" translatable="false">Failed to print text</string>
+    <string name="msg_failed_to_print_image" translatable="false">Failed to print image</string>
+    <string name="msg_failed_to_print_barcode" translatable="false">Failed to print barcode</string>
+    <string name="msg_no_paper" translatable="false">No paper</string>
+    <string name="msg_paper_ready" translatable="false">Paper ready</string>
+    <string name="msg_overheated" translatable="false">Overheated</string>
+    <string name="msg_low_battery" translatable="false">Low battery</string>
+    <string name="msg_connecting" translatable="false">Connecting to device&#8230;</string>
+    <string name="msg_printing_text" translatable="false">Printing text&#8230;</string>
+    <string name="msg_printing_image" translatable="false">Printing image&#8230;</string>
+    <string name="msg_printing_barcode" translatable="false">Printing barcode&#8230;</string>
+    <string name="msg_failed_to_read_card" translatable="false">Failed to read card</string>
+    <string name="msg_failed_to_read_barcode" translatable="false">Failed to read barcode</string>
+    <string name="msg_reading_magstripe" translatable="false">Reading magnetic card&#8230;</string>
+    <string name="card_info" translatable="false">Card information</string>
+    <string name="barcode" translatable="false">Barcode</string>
+    <string name="card_no" translatable="false">Card#</string>
+    <string name="holder" translatable="false">Holder</string>
+    <string name="exp_date" translatable="false">Exp date</string>
+    <string name="no_card_read" translatable="false">No card information read</string>
+    <string name="open_l0_account" translatable="false">Open an L0 account without Biometric?</string>
+    <string name="please_wait" translatable="false">Please Wait</string>
+    <string name="processing" translatable="false">Processing...</string>
+    <string name="proceed" translatable="false">Proceed</string>
+    <string name="terms_and_conditions" translatable="false">Terms And Conditions</string>
+    <string name="user_guide" translatable="false">User Guide</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="more">More</string>
+    <string name="my_account">My Account</string>
+    <string name="near_by_agent">Agent Locator</string>
+    <string name="home">Home</string>
+    <string name="offers">Offers</string>
+    <string name="qr_code">QR Code</string>
+    <string name="notifications">Notifications</string>
+    <string name="phone_banking">24/7 Customer Support</string>
+    <string name="contact_value"><u>021 111 444 000</u></string>
+    <string name="contact_value_other"><u>Other user +923111112525</u></string>
+    <string name="email"><u>jcash@jsbl.com</u></string>
+    <string name="website"><u>www.jsbl.com/jcash</u></string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="internet_connection_problem">There is no or poor internet connection. Please connect to stable internet connection and try again.</string>
+    <string name="mpin_verification">MPIN Verification</string>
+    <string name="enter_mpin">Enter PIN</string>
+    <string name="enter_mpin_n">Enter MPIN</string>
+    <string name="other_relationship">Other Relationship</string>
+    <string name="logout__text">Are you sure you want to logout?</string>
+    <string name="faqs">FAQs</string>
+    <string name="help">Help</string>
+    <string name="confirm_details">Please verify details.</string>
+    <string name="branch">Branch</string>
+    <string name="atm">ATM</string>
+    <string name="agent">Agent</string>
+    <string name="five_km">5KM</string>
+    <string name="get_directions">Get Directions</string>
+    <string name="heading_distance_option">Choose Radius</string>
+    <string name="heading_locator_option">Select Locator</string>
+    <string name="download">DOWNLOAD</string>
+    <string name="selectfinger">Select a Finger</string>
+    <string name="selectgreenfinger">Please tap a finger to select</string>
+    <string name="customer_details">Customer Details</string>
+    <string name="retry">Retry</string>
+    <string name="customer_mobile_number">Mobile Number</string>
+    <string name="customer_emobossing_name">Embossing Name</string>
+    <string name="customer_mailing_address">Mailing Address</string>
+    <string name="otp">One Time PIN</string>
+    <string name="customer_mobile_number_confirm">Confirm Mobile Number</string>
+
+    <string name="customer_cnic">Customer NIC</string>
+
+
+    <string name="mobile_no">Mobile No.</string>
+
+
+    <string name="cnic">CNIC</string>
+    <string name="international_remittance_location">International Remittance Location</string>
+    <string name="relationship">Relationship</string>
+    <string name="relationship_with_originator">Relationship With Originator</string>
+    <string name="income_source">Source of Income</string>
+    <string name="account_purpose">Purpose of Account</string>
+    <string name="occupation">Occupation</string>
+    <string name="mobile_no_next_kin">Mobile No(Next of KIN)</string>
+    <string name="search" translatable="false">Search</string>
+    <string name="card_embossing_name" translatable="false">Embossing Name</string>
+    <string name="mailing_address_text" translatable="false">Mailing Address</string>
+    <string name="title_activity_terms_conditions_debit_card">TermsConditionsDebitCardActivity</string>
+    <string name="mobile_network">Select your mobile network</string>
+    <string name="no_of_occurrences">Number of Occurrences</string>
+    <string name="recur_every">Recur Every</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="unexp_value">"Unexpected value: "</string>
+
+    <string name="contacts_permission_denied_msg">Permission Denied. Your permission is needed to access from your CONTACTS.</string>
+</resources>

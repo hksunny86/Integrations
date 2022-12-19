@@ -1,0 +1,6 @@
+<!-- Response -->
+<msg id="106">
+    <trans>
+        <trn AMOB="03333322570" BALF="17,391.23" BBACID="i8_ret_1002277" CAMT="0.0" CAMTF=".00" COREACID="Account tile: 29" COREACTL="Account tile: 29" DATE="24/03/15" DATEF="Tue, Mar 24, 2015" PROD="Transfer Out" TAMT="200.00" TAMTF="200.00" TIMEF="12:50:02 PM" TPAM="0.0" TPAMF=".00" TRXID="457359234500" TXAM="200" TXAMF="200.00" />
+    </trans>
+</msg>

@@ -1,0 +1,1 @@
+fetch segments list, fetch agent catalogs api

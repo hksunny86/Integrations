@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"      
+	  xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+<link rel="stylesheet" href="#{request.contextPath}/styles/wizard_style.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/tpc.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/style_js.css" type="text/css" />
+
+<meta name="title" content="Add/Edit Handler" />
+
+ <style>
+.col {
+    width:100px;
+}
+</style>
+<script type="text/javascript" src="#{request.contextPath}/scripts/commonFormValidator.js"></script>
+<script type="text/javascript" src="#{request.contextPath}/scripts/jquery-1.7.2.min.js"></script>
+
+</h:head>
+<h:body>
+<f:view >
+
+
+		<div id="wizard_group"> 
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+	                <td id="header_wizard">
+	                	<h1>
+	                		<h:outputText value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.userType}" />
+	                	</h1>
+	                </td>
+                </tr>
+
+		    	<tr>
+                	<td id="status_bar_bottom">
+                    	<div class="infoMessage">
+                          <a4j:outputPanel ajaxRendered="true">
+                            <h:outputText id="infoMessage" value="#{infoMessage}"/>
+                          </a4j:outputPanel>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                	<td align="center">
+                    	<div id="content_wrap" >  
+                    	<fieldset>
+                    		<legend>Transaction Summary</legend>
+                    		<table border="0" width="50%">
+     								<tr>
+     									<td align="right">Transaction ID:</td>
+     									<td>
+			                                <h:outputText id="ut" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.transactionCode}"/>  								
+     									</td>
+     								</tr>  
+     								<tr>
+     									<td align="right">Date:</td>
+     									<td>
+			                                <h:outputText id="ut1" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.transactionDate}"/>  								
+     									</td>
+     								</tr>  
+     								<tr>
+     									<td align="right">Sender Mobile:</td>
+     									<td>
+			                                <h:outputText id="ut" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.senderMobileNumber}"/>  								
+     									</td>
+     								</tr>   
+     								<tr>
+     									<td align="right">Sender CNIC:</td>
+     									<td>
+			                                <h:outputText id="ut" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.cnic}"/>  								
+     									</td>
+     								</tr>  
+     								<tr>
+     									<td align="right">Sender Name:</td>
+     									<td>
+			                                <h:outputText id="un" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.userName}"/>  								
+     									</td>
+     								</tr>  
+     								<tr>
+     									<td align="right">Amount:</td>
+     									<td>
+			                                <h:outputText id="amt" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.amountFormated}"/>  								
+     									</td>
+     								</tr>  
+     								<tr>
+     									<td align="right">Charges:</td>
+     									<td>
+			                                <h:outputText id="chr" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.commisttionAmount}"/>  								
+     									</td>
+     								</tr> 
+     								<tr>
+     									<td align="right">Total Amount:</td>
+     									<td>
+			                                <h:outputText id="tamt" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.totalAmount}"/>  								
+     									</td>
+     								</tr>
+
+     						</table>	
+                    	</fieldset>
+                    </div>
+                    </td>
+                </tr>
+
+            </table>
+    	</div>
+						<div class="status">
+                          <a4j:status>
+                            <f:facet name="start">
+                              <h:graphicImage url="/images/ah_images/tabs_loader.gif" style="border:0px;"/>
+                            </f:facet>
+                            <f:facet name="stop"></f:facet>
+                          </a4j:status>
+                        </div>
+</f:view>
+
+<script>	
+	var errorDiv = document.getElementById("errorDiv");
+	
+	<c:if test="${param.created==1}">	
+		errorDiv.innerHTML = 'Handler '+'#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.appUserModel.username}'+ ' has been created successfully with User ID '+'#{param.userId}'+ '.';
+	</c:if>
+</script>
+
+<script>	
+	var errorDiv = document.getElementById("errorDiv");
+	
+	<c:if test="${param.created==3}">	
+		errorDiv.innerHTML = 'Handler '+'#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.appUserModel.username}'+ ' has been updated successfully.';
+	</c:if>
+</script>
+
+</h:body>
+</html>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--ChangeATMPINVC-->
+        <scene sceneID="ru3-ex-gMq">
+            <objects>
+                <viewController storyboardIdentifier="ChangeATMPINVC" id="fBC-1c-lHK" customClass="ChangeATMPINVC" customModule="JS_Wallet" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Uze-ps-VSU"/>
+                        <viewControllerLayoutGuide type="bottom" id="K6W-6V-Fpu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vSR-r4-x6z">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2fj-SE-00g" customClass="HeaderTitleView" customModule="JS_Wallet" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="60" width="375" height="70"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change ATM PIN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Yk-WE-OBa">
+                                        <rect key="frame" x="99" y="18" width="176.5" height="35"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="23"/>
+                                        <color key="textColor" red="0.0" green="0.28235294119999998" blue="0.56470588239999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="30"/>
+                                        </variation>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="2iL-IU-uUf">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="94"/>
+                                    </constraint>
+                                    <constraint firstAttribute="bottom" secondItem="9Yk-WE-OBa" secondAttribute="bottom" constant="17" id="oDK-rd-4S6">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="30"/>
+                                    </constraint>
+                                    <constraint firstItem="9Yk-WE-OBa" firstAttribute="top" secondItem="2fj-SE-00g" secondAttribute="top" constant="18" id="qgA-8C-IF4">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="29"/>
+                                    </constraint>
+                                    <constraint firstItem="9Yk-WE-OBa" firstAttribute="centerX" secondItem="2fj-SE-00g" secondAttribute="centerX" constant="-0.25" id="rnh-Bn-Cga"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qK2-RN-G0k">
+                                <rect key="frame" x="10" y="145" width="355" height="247"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New ATM PIN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uud-up-2oI">
+                                        <rect key="frame" x="4" y="2.5" width="347" height="20"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="25"/>
+                                        </variation>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7d0-vn-k3R">
+                                        <rect key="frame" x="4" y="29.5" width="347" height="40"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="LcB-Xm-5m4">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="70"/>
+                                            </constraint>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" secureTextEntry="YES"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="24"/>
+                                        </variation>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confirm New ATM PIN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Zg-6R-lXk">
+                                        <rect key="frame" x="4" y="84.5" width="347" height="20"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="25"/>
+                                        </variation>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ptl-Bn-eXl">
+                                        <rect key="frame" x="4" y="111.5" width="347" height="40"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="dn5-dn-5AN">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="70"/>
+                                            </constraint>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" secureTextEntry="YES"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="24"/>
+                                        </variation>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDp-9O-0pg">
+                                        <rect key="frame" x="25" y="181.5" width="305" height="50"/>
+                                        <color key="backgroundColor" red="0.99215686270000003" green="0.70588235290000001" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="7FQ-mL-GrP">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="80"/>
+                                            </constraint>
+                                        </constraints>
+                                        <state key="normal" title="Change ATM PIN">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                                <color key="value" red="0.0" green="0.28235294119999998" blue="0.56470588239999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="highlightedColor">
+                                                <color key="value" red="0.0" green="0.28235294119999998" blue="0.56470588239999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="25"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="changePinPressed:" destination="fBC-1c-lHK" eventType="touchUpInside" id="8tL-Kk-G3l"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="9Zg-6R-lXk" firstAttribute="leading" secondItem="qK2-RN-G0k" secondAttribute="leading" constant="4" id="0Vi-qa-BFf"/>
+                                    <constraint firstItem="Ptl-Bn-eXl" firstAttribute="top" secondItem="9Zg-6R-lXk" secondAttribute="bottom" constant="7" id="5qn-rZ-Nyj">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                    </constraint>
+                                    <constraint firstItem="7d0-vn-k3R" firstAttribute="top" secondItem="uud-up-2oI" secondAttribute="bottom" constant="7" id="8II-Ax-Ied">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                                    </constraint>
+                                    <constraint firstAttribute="trailing" secondItem="TDp-9O-0pg" secondAttribute="trailing" constant="25" id="BKW-Zm-1fQ">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="24"/>
+                                    </constraint>
+                                    <constraint firstAttribute="trailing" secondItem="Ptl-Bn-eXl" secondAttribute="trailing" constant="4" id="Ezs-Rg-REu"/>
+                                    <constraint firstAttribute="height" constant="247" id="Fkh-af-PAw">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="546"/>
+                                    </constraint>
+                                    <constraint firstItem="TDp-9O-0pg" firstAttribute="top" secondItem="Ptl-Bn-eXl" secondAttribute="bottom" constant="30" id="Jee-Ve-i0I">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                                    </constraint>
+                                    <constraint firstItem="uud-up-2oI" firstAttribute="top" secondItem="qK2-RN-G0k" secondAttribute="top" constant="2.5" id="PvF-dS-SCx"/>
+                                    <constraint firstItem="Ptl-Bn-eXl" firstAttribute="leading" secondItem="qK2-RN-G0k" secondAttribute="leading" constant="4" id="TVz-Eb-1bv"/>
+                                    <constraint firstAttribute="trailing" secondItem="uud-up-2oI" secondAttribute="trailing" constant="4" id="Vcl-v8-61T"/>
+                                    <constraint firstItem="uud-up-2oI" firstAttribute="leading" secondItem="qK2-RN-G0k" secondAttribute="leading" constant="4" id="mP5-a1-3wp"/>
+                                    <constraint firstItem="TDp-9O-0pg" firstAttribute="leading" secondItem="qK2-RN-G0k" secondAttribute="leading" constant="25" id="mos-sY-iYx">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="24"/>
+                                    </constraint>
+                                    <constraint firstItem="9Zg-6R-lXk" firstAttribute="top" secondItem="7d0-vn-k3R" secondAttribute="bottom" constant="15" id="nIn-0Q-zda">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="25"/>
+                                    </constraint>
+                                    <constraint firstItem="7d0-vn-k3R" firstAttribute="leading" secondItem="qK2-RN-G0k" secondAttribute="leading" constant="4" id="r9f-q9-ruw"/>
+                                    <constraint firstAttribute="trailing" secondItem="7d0-vn-k3R" secondAttribute="trailing" constant="4" id="rMI-y0-vDQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="9Zg-6R-lXk" secondAttribute="trailing" constant="4" id="ymL-GE-5u5"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2fj-SE-00g" firstAttribute="leading" secondItem="vSR-r4-x6z" secondAttribute="leading" id="5lR-Yf-UKx"/>
+                            <constraint firstItem="2fj-SE-00g" firstAttribute="top" secondItem="Uze-ps-VSU" secondAttribute="bottom" constant="60" id="8DU-NX-Sfa">
+                                <variation key="heightClass=regular-widthClass=regular" constant="92"/>
+                            </constraint>
+                            <constraint firstItem="qK2-RN-G0k" firstAttribute="top" secondItem="2fj-SE-00g" secondAttribute="bottom" constant="15" id="JDJ-aR-0R2">
+                                <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                            </constraint>
+                            <constraint firstItem="qK2-RN-G0k" firstAttribute="leading" secondItem="vSR-r4-x6z" secondAttribute="leading" constant="10" id="P6w-Fg-wcA">
+                                <variation key="heightClass=regular-widthClass=regular" constant="31"/>
+                            </constraint>
+                            <constraint firstAttribute="trailing" secondItem="2fj-SE-00g" secondAttribute="trailing" id="WGg-Px-hVQ"/>
+                            <constraint firstAttribute="trailing" secondItem="qK2-RN-G0k" secondAttribute="trailing" constant="10" id="afN-s8-YOg">
+                                <variation key="heightClass=regular-widthClass=regular" constant="31"/>
+                            </constraint>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="changePinButton" destination="TDp-9O-0pg" id="10n-6Z-zna"/>
+                        <outlet property="confirmPinLabel" destination="9Zg-6R-lXk" id="ts8-Br-MJ7"/>
+                        <outlet property="confirmnewPinTextField" destination="Ptl-Bn-eXl" id="Olh-a3-Ed0"/>
+                        <outlet property="newPinLabel" destination="uud-up-2oI" id="iBu-Vc-TcT"/>
+                        <outlet property="newPinTextField" destination="7d0-vn-k3R" id="bgh-eZ-zxb"/>
+                        <outlet property="screenTitleLabel" destination="9Yk-WE-OBa" id="MYW-Dg-1Ze"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y5L-xw-3RI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="677.60000000000002" y="300.89955022488761"/>
+        </scene>
+    </scenes>
+</document>

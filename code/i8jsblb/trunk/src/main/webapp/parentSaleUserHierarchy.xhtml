@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+<h:head>
+<link rel="stylesheet" href="#{request.contextPath}/styles/wizard_style.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/tpc.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/style_js.css" type="text/css" />
+
+<meta name="title" content="Parent Sale User Hierarchy" />
+
+<style>
+	.col 
+	{
+	    width: 33%;
+	}
+	.centercol 
+	{
+	    width: 33%;
+	    text-align: center;
+	}
+</style>
+
+<script type="text/javascript" language="javascript">
+	
+function closeParentSaleUserHierarchy()
+{
+	window.returnValue = 'Success';
+	window.close();
+}
+</script>
+</h:head>
+<h:body>
+<f:view>
+	<h:form id="myform">
+
+		<div id="wizard_group"> 
+    		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+	                <td id="header_wizard"><h1>Sale User Hierarchy</h1></td>
+                </tr>
+                <tr>
+                	<td >
+                    	<div id="content_div" >	
+                            <rich:tree id="tree" 
+                                value="#{salesHierarchyActionBean.saleUserNodes}" 
+                                var="item"
+                                selectionChangeListener="#{salesHierarchyActionBean.processSelection}" 
+                                selectionType="ajax"
+                                iconCollapsed="/images/ah_images/plus.png" 
+                                iconExpanded="/images/ah_images/minus.png" 
+                                icon="/images/ah_images/area.png" 
+                                iconLeaf="/images/ah_images/area.png"
+                                nodeType="SALE_USER_NODE"
+                                toggleType="client" >
+                                <rich:treeNode type="SALE_USER_NODE" iconExpanded="/images/ah_images/area.png" 
+									iconCollapsed="/images/ah_images/area.png" iconLeaf="/images/ah_images/area.png" >
+									<h:outputText value="#{item.name}" />
+								</rich:treeNode>
+                             </rich:tree>
+                                  
+                        </div>    
+                    </td>
+                </tr>
+		    	<tr>
+                	<td>
+                    	<div id="footer">
+                    	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    	    <tr>
+                    	      <td width="50%" valign="top" align="left"><a4j:commandButton styleClass="btn_cancel" value=" " actionListener="#{salesHierarchyActionBean.clearNodeSelection}" oncomplete="window.close();" /></td>
+                    	      <td width="50%" valign="top" align="right"><a4j:commandButton styleClass="btn_ok" value=" " oncomplete="closeParentSaleUserHierarchy();" /></td>
+                  	      	</tr>
+                  	      </table>
+                    	</div>
+                  	</td>
+                </tr>
+            </table>
+		</div>
+	</h:form>
+</f:view>
+</h:body>
+</html>

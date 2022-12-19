@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/header_layout"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+        <LinearLayout
+
+            android:id="@+id/llmain"
+            android:layout_below="@+id/header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F4F4F4"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activitySideMarginNormal"
+                android:layout_marginRight="@dimen/activitySideMarginNormal"
+                android:layout_marginTop="@dimen/layoutMarginNormal"
+                android:text="@string/enter_merchant_id"
+                android:textColor="@color/text_gray_light"
+                android:textSize="@dimen/textViewTextSizeSmall" />
+
+            <EditText
+                android:id="@+id/etMerchantId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activitySideMarginNormal"
+                android:layout_marginRight="@dimen/activitySideMarginNormal"
+                android:background="@drawable/bg_input"
+                android:hint="@string/enter_merchant_id"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:longClickable="false"
+                android:maxLength="7"
+                android:paddingBottom="@dimen/editTextFieldPadding"
+                android:paddingLeft="0dp"
+                android:paddingRight="@dimen/editTextFieldPadding"
+                android:paddingTop="@dimen/editTextFieldPadding"
+                android:singleLine="true"
+                android:textColor="@color/text_gray_dark"
+                android:textSize="@dimen/textViewTextSizeNormal" />
+
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/textViewMarginXLarge"
+                android:layout_marginTop="@dimen/textViewMarginXXXLarge"
+                android:background="@drawable/button_yellow_selector"
+                android:gravity="center"
+                android:padding="@dimen/textViewMarginLarge"
+                android:paddingBottom="@dimen/textViewTextSizeNormal"
+                android:text="@string/next"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/textViewTextSizeNormal"
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_below="@+id/llmain"
+            android:layout_width="match_parent"
+            android:weightSum="2"
+            android:layout_above="@+id/bottomBarQR"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F4F4F4">
+
+                <View
+                    android:id="@+id/v_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/textViewTextSizeNormal"
+                    android:background="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/v_border"
+                    android:background="@drawable/retail_artwork_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/textViewTextSizeNormal">
+
+                    <Button
+                        android:id="@+id/btnScanQrCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/textViewMarginXLarge"
+                        android:layout_marginTop="@dimen/textViewMarginXXXLarge"
+                        android:background="@drawable/retail_btn_qr_scan"
+                        android:padding="@dimen/textViewMarginLarge"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/textViewTextSizeLarge" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:src="@drawable/retail_qr_img" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/circular_textview"
+                    android:gravity="center"
+                    android:text="OR"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    <include
+        android:id="@+id/bottomBar"
+        android:visibility="visible"
+        layout="@layout/layout_bottom_bar" />
+
+    <include
+        android:id="@+id/bottomBarQR"
+        android:visibility="visible"
+        layout="@layout/layout_qr_code" />
+
+
+
+</RelativeLayout>

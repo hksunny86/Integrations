@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HeaderBarView" customModule="JSBL_BB" customModuleProvider="target">
+            <connections>
+                <outlet property="backButton" destination="E5T-fK-0Qe" id="2fO-ec-IXy"/>
+                <outlet property="homeButton" destination="vKC-N0-D2h" id="B4j-Cw-d6f"/>
+                <outlet property="signoutButton" destination="YUl-fn-CPe" id="3wv-2G-Lms"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eNQ-Xf-z2H">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                    <color key="backgroundColor" red="0.0" green="0.28235294117647058" blue="0.56470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header_logo" translatesAutoresizingMaskIntoConstraints="NO" id="mjr-S7-uXv">
+                    <rect key="frame" x="43" y="9" width="57" height="46"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Kxd-OM-tFo">
+                            <variation key="heightClass=regular-widthClass=regular" constant="56"/>
+                        </constraint>
+                    </constraints>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <exclude reference="Kxd-OM-tFo"/>
+                        </mask>
+                    </variation>
+                </imageView>
+                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YUl-fn-CPe">
+                    <rect key="frame" x="278" y="9" width="42" height="46"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="cWG-G2-rLT"/>
+                    </constraints>
+                    <state key="normal" image="btn_logout_normal"/>
+                    <state key="selected" image="btn_logout_pressed"/>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <exclude reference="cWG-G2-rLT"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="actHeaderBtn:" destination="-1" eventType="touchUpInside" id="SSc-Vh-bla"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vKC-N0-D2h">
+                    <rect key="frame" x="236" y="9" width="42" height="46"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="5lJ-gf-eWd">
+                            <variation key="heightClass=regular-widthClass=regular" constant="56"/>
+                        </constraint>
+                    </constraints>
+                    <state key="normal" image="btn_home_normal"/>
+                    <state key="selected" image="btn_home_pressed"/>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <exclude reference="5lJ-gf-eWd"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="actHeaderBtn:" destination="-1" eventType="touchUpInside" id="gRY-6j-S4k"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E5T-fK-0Qe">
+                    <rect key="frame" x="0.0" y="9" width="42" height="46"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="46" id="Ryu-A5-Imx">
+                            <variation key="heightClass=regular-widthClass=regular" constant="56"/>
+                        </constraint>
+                    </constraints>
+                    <state key="normal" image="btn_back_normal"/>
+                    <state key="selected" image="btn_back_pressed"/>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <exclude reference="Ryu-A5-Imx"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="actHeaderBtn:" destination="-1" eventType="touchUpInside" id="8DQ-IV-apc"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="mjr-S7-uXv" firstAttribute="leading" secondItem="E5T-fK-0Qe" secondAttribute="trailing" constant="1" id="1ee-A6-Ayl">
+                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                </constraint>
+                <constraint firstItem="eNQ-Xf-z2H" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="IX3-dn-FD9"/>
+                <constraint firstItem="mjr-S7-uXv" firstAttribute="centerY" secondItem="eNQ-Xf-z2H" secondAttribute="centerY" id="Kjb-zz-anV"/>
+                <constraint firstItem="YUl-fn-CPe" firstAttribute="centerY" secondItem="vKC-N0-D2h" secondAttribute="centerY" id="NfS-yT-Fdv"/>
+                <constraint firstAttribute="bottom" secondItem="eNQ-Xf-z2H" secondAttribute="bottom" id="Nkw-0l-ZcW"/>
+                <constraint firstItem="vKC-N0-D2h" firstAttribute="centerY" secondItem="eNQ-Xf-z2H" secondAttribute="centerY" id="PJq-bV-B0U"/>
+                <constraint firstAttribute="trailing" secondItem="YUl-fn-CPe" secondAttribute="trailing" id="XFl-1I-iwi"/>
+                <constraint firstItem="YUl-fn-CPe" firstAttribute="leading" secondItem="vKC-N0-D2h" secondAttribute="trailing" id="bFv-gx-8SR">
+                    <variation key="heightClass=regular-widthClass=regular" constant="1"/>
+                </constraint>
+                <constraint firstItem="E5T-fK-0Qe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="9" id="e8O-1E-WwJ">
+                    <variation key="heightClass=regular-widthClass=regular" constant="12"/>
+                </constraint>
+                <constraint firstItem="E5T-fK-0Qe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="hRa-BM-QLP"/>
+                <constraint firstItem="E5T-fK-0Qe" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ig7-2x-cO7"/>
+                <constraint firstAttribute="trailing" secondItem="eNQ-Xf-z2H" secondAttribute="trailing" id="jWI-AT-lNf"/>
+                <constraint firstItem="eNQ-Xf-z2H" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="prH-du-kP0"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="btn_back_normal" width="42" height="46"/>
+        <image name="btn_back_pressed" width="42" height="46"/>
+        <image name="btn_home_normal" width="42" height="46"/>
+        <image name="btn_home_pressed" width="42" height="46"/>
+        <image name="btn_logout_normal" width="42" height="46"/>
+        <image name="btn_logout_pressed" width="42" height="46"/>
+        <image name="header_logo" width="57" height="46"/>
+    </resources>
+</document>

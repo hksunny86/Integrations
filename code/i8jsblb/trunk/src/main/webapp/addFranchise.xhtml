@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+
+
+
+<h:head>
+<link rel="stylesheet" href="#{request.contextPath}/styles/wizard_style.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/tpc.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/style_js.css" type="text/css" />
+
+<meta name="title" content="Add Franchise" />
+
+ <style>
+.col {
+    width: 100px;
+}
+</style>
+<script type="text/javascript" src="#{request.contextPath}/scripts/commonFormValidator.js"></script>
+<script type="text/javascript" src="#{request.contextPath}/scripts/jquery-1.7.2.min.js"></script>
+<script>
+var jq = jQuery.noConflict();
+jq(document).ready(function() 
+{
+	var message = document.getElementById("myform:infoMessage").innerHTML;
+	if(message != "")
+	{
+		document.getElementById("status_bar_bottom").focus();
+	}
+	if(message == "")
+	{
+		if(document.getElementById("myform:error_cont") == null)
+		{
+			if(document.getElementById("myform:distributor").disabled == true)
+			{
+				document.getElementById("myform:city").focus();
+			}else{
+				document.getElementById("myform:distributor").focus();
+			}
+		}
+		else
+		{
+			document.getElementById("myform:error_cont").focus();
+		}
+	}
+
+	var hasReadOnlyRights = #{!retailerBean.securityCheck and !retailerBean.editSecurityCheck};
+	if( hasReadOnlyRights )
+	{
+		jq("#content_wrap").find("input, textarea, button, select, img").attr("disabled", true);
+	}
+});
+
+</script>
+</h:head>
+<h:body>
+<f:view >
+
+	<f:event type="preRenderView" listener="#{retailerBean.clearAllSessionObjects}"></f:event>
+
+	<h:form id="myform" >	
+		<div id="wizard_group"> 
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+	                <td id="header_wizard">
+	                	<h1>
+	                		<h:outputText value="Add Franchise" rendered="#{!retailerBean.editMode and (retailerBean.securityCheck or retailerBean.editSecurityCheck)}" />
+	                		<h:outputText value="View Franchise" rendered="#{!retailerBean.securityCheck and !retailerBean.editSecurityCheck}" />		
+	                 		<h:outputText value="Edit Franchise" rendered="#{retailerBean.editMode and (retailerBean.securityCheck or retailerBean.editSecurityCheck)}" />
+	                	</h1>
+	                </td>
+                </tr>
+            	<tr>
+                	<td>
+                        <div id="status_bar_top">
+                        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td width="70%" valign="top" align="left">
+                                  	<!-- <div id="ah_nav">
+                                        <ul>
+                                            <li><a href="#" class="selectd">Franchise</a></li>
+                                        </ul>
+                                    </div> -->
+                                  </td>
+                                  <td width="30%" valign="top" align="right">
+                                  	<a4j:outputPanel id="icons_div" styleClass="icons_div" style="display:block;float:right;" >
+                                        <a4j:commandLink action="#{retailerBean.clearFranchiseForm}" title="Clear"
+                                            rendered="#{!retailerBean.editMode}" disabled="#{!retailerBean.securityCheck and !retailerBean.editSecurityCheck}"
+                                            render="distributor,city,comment,zip,brnachname,fax,active,contactname,address,permanentaddress,region,country,province,email,contactno,description">
+                                         <h:graphicImage url="/images/ah_images/icon_clear.png" />   
+                                        </a4j:commandLink> 
+                                    </a4j:outputPanel>
+                                  </td>
+                              </tr>
+                            </table>
+                        </div>
+                        
+                        
+                        <div class="clear"></div>
+                    </td>
+                </tr>
+            	
+                <tr>
+                	<td >
+                    	<div id="content_wrap">
+                         <div class="row,error_text_red" style="margin-left: 30px" >
+                            <a4j:outputPanel ajaxRendered="true" >
+                                 <a4j:outputPanel id="error_cont" styleClass="error_cont" rendered="#{! empty facesContext.maximumSeverity}">
+                                     <a4j:outputPanel styleClass="error_txt" >
+                                        <h:messages globalOnly="true" />
+                                     </a4j:outputPanel>
+                                 </a4j:outputPanel>                
+                            </a4j:outputPanel>
+                        </div>   
+                        
+                        <fieldset>
+                                <legend>Franchise Details</legend>
+                        <table width="" border="0" align="center" cellpadding="0" cellspacing="10">
+                              <tr>
+                                    <td width="170" valign="top">Agent Network Name<span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:selectOneMenu id="distributor" styleClass="type_list" value="#{retailerBean.retailerModel.distributorId}" disabled="#{retailerBean.editMode}" title="Agent Network Name">
+                                            <f:selectItem itemLabel="[Select]" itemValue="0" />
+                                            <f:selectItems value="#{retailerBean.distributorItems}"/>
+                                            <a4j:ajax listener="#{retailerBean.onChangeDistributor}" render="region" event="change"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td width="40" align="left">&nbsp;</td>
+                                    <td width="170" valign="top">City<span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                 		<h:inputText id="city" styleClass="type_txt"  maxlength="50" value="#{retailerBean.retailerModel.city}" title="City"
+                                 		onkeypress="return maskAlphaNumericWithSpdashforAH(this,event)" onkeydown="return disablePasteOption(event)"/>   	                   	
+                                    </td>
+                              </tr>
+                              
+                              <tr>
+                                    <td width="170" valign="top">Region<span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:selectOneMenu id="region" styleClass="type_list" value="#{retailerBean.retailerModel.regionModelId}" disabled="#{retailerBean.editMode}" title="Region">
+                                            <f:selectItem itemLabel="[Select]" itemValue="0" />
+                                            <f:selectItems value="#{retailerBean.regionItems}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td width="40" align="left">&nbsp;</td>
+                                    <td width="170" valign="top">Zip Code:</td>
+                                    <td width="200" align="left" valign="top">
+                                 		<h:inputText id="zip" styleClass="type_txt" maxlength="50" value="#{retailerBean.retailerModel.zip}" title="Zip Code"
+		                                 onkeypress="return maskInteger(this,event)" onkeydown="return disablePasteOption(event)"/>   	                
+                                    </td>
+                              </tr>
+                              
+                              <tr>
+                                    <td width="170" valign="top">Franchise/Branch Name<span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:inputText id="brnachname" styleClass="type_txt" maxlength="50" value="#{retailerBean.retailerModel.name}" title="Franchise"
+                                    	 onkeypress="return maskAlphaNumericWithSpdashforAH(this,event)" onkeydown="return disablePasteOption(event)"/>
+                                    </td>
+                                    <td width="40" align="left">&nbsp;</td>
+                                    <td width="170" valign="top">Current Address<span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                 		<h:inputText id="address" styleClass="type_txt" maxlength="250" value="#{retailerBean.retailerModel.address1}" title="Current Address"
+		                                onkeypress="return maskAlphaNumericWithSp(this,event)" onkeyup="textAreaLengthCounter(this,250);"/>
+                                    </td>
+                              </tr>
+                              
+                              <tr>
+                                    <td width="170" valign="top">Contact Name<span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:inputText id="contactname" styleClass="type_txt" maxlength="250" value="#{retailerBean.retailerModel.contactName}" title="Contact Name"
+                                    	 onkeypress="return maskAlphaWithSp(this,event)" onkeydown="return disablePasteOption(event)"/>
+                                    </td>
+                                    <td width="40" align="left">&nbsp;</td>
+                                    <td width="170" valign="top">Permanent Address:</td>
+                                    <td width="200" align="left" valign="top">
+                                 		<h:inputText id="permanentaddress" styleClass="type_txt" maxlength="50" value="#{retailerBean.retailerModel.address2}" title="Permanent Address"
+		                                onkeypress="return maskAlphaNumericWithSp(this,event)" onkeyup="textAreaLengthCounter(this,250);"/>
+                                    </td>
+                              </tr>
+                              
+                              <tr>
+                                    <td width="170" valign="top">Country<span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:selectOneMenu id="country" styleClass="type_list" value="#{retailerBean.retailerModel.country}" title="Country">
+                                            <f:selectItem itemLabel="[Select]" itemValue="0" />
+                                            <f:selectItems value="#{retailerBean.countryItems}" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td width="40" align="left">&nbsp;</td>
+                                    <td width="170" valign="top">Email:</td>
+                                    <td width="200" align="left" valign="top">
+                                 		<h:inputText id="email" styleClass="type_txt" maxlength="50" value="#{retailerBean.retailerModel.email}" title="Email"/>   	                
+                                    </td>
+                              </tr>
+                              
+                              <tr>
+                                    <td width="170" valign="top">Province<span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:inputText id="province" styleClass="type_txt" value="#{retailerBean.retailerModel.state}" maxlength="50" title="Province"
+                                    	onkeypress="return maskAlphaNumericWithSpdashforAH(this,event)" onkeydown="return disablePasteOption(event)"/>	                	
+                                    </td>
+                                    <td width="40" rowspan="2" align="left">&nbsp;</td>
+                                    <td width="170" rowspan="2" valign="top">Description:</td>
+                                    <td width="200" rowspan="2" align="left" valign="top">
+                            			<h:inputTextarea id="description" styleClass="type_txt" rows="3" value="#{retailerBean.retailerModel.description}" title="Description"
+			                            onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);"/>     		
+                                    </td>
+                              </tr>
+                              <tr>
+                                <td valign="top">Contact No<span class="asterisk">*</span>:</td>
+                                <td width="200" align="left" valign="top">
+                                	<h:inputText id="contactno" styleClass="type_txt" maxlength="11" value="#{retailerBean.retailerModel.phoneNo}" title="Contact No"
+		                                 onkeypress="return maskInteger(this,event)" onkeydown="return disablePasteOption(event)"/>   	                
+                                </td>
+                              </tr>
+                              
+                              <tr>
+                                    <td width="170" valign="top">Fax:</td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:inputText id="fax" styleClass="type_txt" maxlength="11" value="#{retailerBean.retailerModel.fax}" title="Fax"
+		                                 onkeypress="return maskInteger(this,event)" onkeydown="return disablePasteOption(event)"/>   
+                                    </td>
+                                    <td width="40" rowspan="2" align="left">&nbsp;</td>
+                                    <td width="170" rowspan="2" valign="top">Comments:</td>
+                                    <td width="200" rowspan="2" align="left" valign="top">
+                            			<h:inputTextarea id="comment" styleClass="type_txt" rows="3" value="#{retailerBean.retailerModel.comments}" title="Comments"
+			                            onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);"/>
+                                    </td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" valign="top">
+                                	<h:selectBooleanCheckbox  id="active" styleClass="type_check" value="#{retailerBean.retailerModel.active}" title="Active">
+                                		<a4j:ajax event="change" listener="#{retailerBean.onChangeActive}" render="active"/>
+                                	</h:selectBooleanCheckbox>	 
+	                                <label>Active</label>               
+                                </td>
+                              </tr>
+                              
+                              
+                                  
+                                  
+                                  
+                                  
+                          </table>
+                          </fieldset>
+                    </div>
+                    	
+                    </td>
+                </tr>
+		    
+
+		    	<tr>
+                	<td id="status_bar_bottom">
+                    	<div class="infoMessage">
+                          <a4j:outputPanel ajaxRendered="true">
+                            <h:outputText id="infoMessage" value="#{infoMessage}"/>
+                          </a4j:outputPanel>
+                        </div>
+                    </td>
+                </tr>
+		    	<tr>
+                	<td>
+                    	<div id="footer">
+                    	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    	    <tr>
+                    	      <td width="30%" valign="top" align="left"><h:commandLink styleClass="btn_cancel" value="" action="#{retailerBean.cancel}"/></td>
+                    	      <td width="50%" valign="top" align="right">
+                    	      	<a4j:outputPanel rendered="#{retailerBean.editMode and retailerBean.userGroupsReadAllowed}">
+                    	      		<a class="btn_create_group" href="p_partnergroupmanagement.html" />
+                    	      	</a4j:outputPanel>
+                    	      	<h:commandLink  styleClass="btn_save" value="" render="icons_div" action="#{retailerBean.saveFranchise}" rendered="#{!retailerBean.editMode and (retailerBean.securityCheck or retailerBean.editSecurityCheck)}">
+                    	      		<f:param name="actionAuthorizationId" value="${param.authId}" />
+                                    <f:param name="resubmitRequest" value="${param.isReSubmit}" />
+                            	</h:commandLink> 
+                    	      	<h:commandLink  styleClass="btn_update" value="" render="icons_div" action="#{retailerBean.saveFranchise}" rendered="#{retailerBean.editMode and (retailerBean.securityCheck or retailerBean.editSecurityCheck)}">
+                    	      		<f:param name="actionAuthorizationId" value="${param.authId}" />
+                                    <f:param name="resubmitRequest" value="${param.isReSubmit}" />
+                            	</h:commandLink> 
+                    	      </td>
+                  	      </tr>
+                  	    </table>
+                    	</div>
+                  </td>
+                </tr>
+            </table>
+    	</div>
+	</h:form>
+						<div class="status">
+                          <a4j:status>
+                            <f:facet name="start">
+                              <h:graphicImage url="/images/ah_images/tabs_loader.gif" style="border:0px;"/>
+                            </f:facet>
+                            <f:facet name="stop"></f:facet>
+                          </a4j:status>
+                        </div>
+</f:view>
+</h:body>
+</html>

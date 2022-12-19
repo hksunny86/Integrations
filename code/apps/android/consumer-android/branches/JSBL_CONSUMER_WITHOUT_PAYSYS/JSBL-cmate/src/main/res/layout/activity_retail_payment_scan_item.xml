@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_title"
+        layout="@layout/heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activitySideMarginNormal"
+        android:layout_marginRight="@dimen/activitySideMarginNormal"
+        android:layout_marginTop="@dimen/layoutMarginNormal"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/retail_qr_pic" />
+
+        <LinearLayout
+            android:id="@+id/layoutBtns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+            android:layout_marginRight="@dimen/buttonSideMarginNormal"
+            android:layout_marginTop="@dimen/buttonTopMarginXLarge"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/btn_scan"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_marginRight="@dimen/buttonInnerMarginNormal"
+                android:layout_weight="1"
+                android:background="@drawable/button_ok"
+                android:text="@string/scan"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/buttonTextNormal" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

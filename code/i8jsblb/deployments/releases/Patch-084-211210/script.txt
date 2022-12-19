@@ -1,0 +1,6 @@
+BEGIN
+DBMS_SCHEDULER.SET_ATTRIBUTE( 
+             name => 'CLEAN_AGENT_BVS_STAT_JOB', 
+             attribute => 'job_action', value => 'Delete from AGENT_BVS_STAT where last_updated_on < SYSTIMESTAMP; commit;');
+      
+END;

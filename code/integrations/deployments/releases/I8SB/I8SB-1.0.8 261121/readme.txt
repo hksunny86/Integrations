@@ -1,0 +1,1 @@
+error code response mapping against status code in account opening api

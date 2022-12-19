@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+<bean id="switchFinderDAO" class="com.inov8.microbank.server.dao.switchmodule.hibernate.SwitchFinderHibernateDAO">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+<bean id="switchDAO" class="com.inov8.microbank.server.dao.switchmodule.hibernate.SwitchModuleHibernateDAO">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+<bean id="switchFinderListViewDAO" class="com.inov8.microbank.server.dao.switchmodule.hibernate.SwitchFinderListViewHibernateDAO">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+<bean id="switchListViewDAO" class="com.inov8.microbank.server.dao.switchmodule.hibernate.SwitchListViewHibernateDAO">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+
+<!-- Definition of Service -->
+<bean id="switchManager" parent="baseTransactionProxy">
+  <property name="target">
+    <bean class="com.inov8.microbank.server.service.financialintegrationmodule.switchmodule.SwitchModuleManagerImpl">
+      <property name="switchFinderDAO">
+        <ref local="switchFinderDAO"/>
+      </property>
+      <property name="switchDAO">
+        <ref local="switchDAO"/>
+      </property>
+      <property name="switchListViewDAO">
+        <ref local="switchListViewDAO"/>
+      </property>
+    </bean>
+  </property>
+</bean>
+
+<bean id="switchFinderManager" parent="baseTransactionProxy">
+  <property name="target">
+    <bean class="com.inov8.microbank.server.service.financialintegrationmodule.switchmodule.SwitchFinderManagerImpl">
+      <property name="switchFinderDAO">
+        <ref local="switchFinderDAO"/>
+      </property>
+      
+      <property name="switchFinderListViewDAO">
+        <ref local="switchFinderListViewDAO"/>
+      </property>
+      
+    </bean>
+  </property>
+</bean>
+
+
+<bean id="switchFacade" class="com.inov8.microbank.server.facade.SwitchModuleFacadeImpl">
+  <property name="frameworkExceptionTranslator">
+    <ref bean="frameworkExceptionTranslator"/>
+  </property>
+  <property name="switchManager">
+    <ref bean="switchManager"/>
+  </property>
+  <property name="switchFinderManager">
+    <ref bean="switchFinderManager"/>
+  </property>
+</bean>
+
+
+<bean id="switchController" class="com.inov8.microbank.server.service.financialintegrationmodule.switchmodule.SwitchController">
+  <property name="xstream">
+    <ref bean="xstream"/>
+  </property>
+  <property name="auditLogModule">
+    <ref bean="auditLogModuleFacade"/>
+  </property>
+  <property name="postedTransactionReportModule">
+    <ref bean="postedTransactionReportFacade"/>
+  </property>
+  <property name="switchFactory">
+    <ref bean="switchFactory"/>
+  </property>
+</bean>
+
+<bean id="switchFactory" class="com.inov8.microbank.server.service.financialintegrationmodule.switchmodule.SwitchFactory">
+  <property name="switchManager">
+    <ref bean="switchManager"/>
+  </property>
+</bean>
+
+  <bean id="esbAdapter" class="com.inov8.microbank.server.service.financialintegrationmodule.switchmodule.ESBAdapter">
+  </bean>
+
+</beans>

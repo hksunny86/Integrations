@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading1"
+        layout="@layout/heading_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layoutMarginSmall"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activitySideMarginNormal"
+            android:layout_marginRight="@dimen/activitySideMarginNormal">
+
+            <LinearLayout
+                android:id="@+id/layoutInputs"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/textViewMarginNormal">
+
+                <include
+                    android:id="@+id/layoutPassword"
+                    layout="@layout/layout_password_account_open_otp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutBtns"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutInputs"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+                android:layout_marginRight="@dimen/buttonSideMarginNormal"
+                android:layout_marginTop="@dimen/buttonTopMarginLarge"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnResend"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/buttonHeightNormal"
+                    android:layout_marginRight="@dimen/margin_short"
+                    android:layout_toRightOf="@id/btnNext"
+                    android:background="@drawable/button_resend"
+                    android:layout_weight="1"
+                    android:text="@string/resend"
+                    android:textAllCaps="true"
+                    android:visibility="visible"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/buttonTextNormal"/>
+
+                <Button
+                    android:id="@+id/btnNext"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/buttonHeightNormal"
+                    android:layout_marginRight="@dimen/buttonInnerMarginNormal"
+                    android:background="@drawable/button_yellow_selector"
+                    android:layout_weight="1"
+                    android:text="@string/next"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/buttonTextNormal" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

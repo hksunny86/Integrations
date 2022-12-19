@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+          http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<!-- AGI Server -->
+	<bean id="agiServer"
+		class="org.asteriskjava.fastagi.DefaultAgiServer">
+		<property name="port" value="4573" />
+		<property name="maximumPoolSize" value="1000" />
+		<property name="poolSize" value="100" />
+		<property name="mappingStrategy" ref="mappingStrategy" />
+	</bean>
+
+	<bean id = "agiServerThread" class="org.asteriskjava.fastagi.AgiServerThread" 
+	    init-method="startup" destroy-method="shutdown">
+	    <property name="agiServer" ref="agiServer" />
+	</bean>
+
+	<!-- AGI Mappings -->
+	<bean id="mappingStrategy"
+		class="org.asteriskjava.fastagi.SimpleMappingStrategy">
+		<property name="mappings">
+			<map>
+				<entry key="javaivr.agi" value-ref="javaAgi" />
+			</map>
+		</property>
+	</bean>
+
+</beans>
+

@@ -1,0 +1,6 @@
+framework module EYImageSlider {
+  umbrella header "EYImageSlider-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+Alter table bulk_disbursements
+add isapproved varchar2(30);
+
+
+Alter table BULK_DISBURSEMENTS_FILE_INFO
+add isapproved varchar2(30);

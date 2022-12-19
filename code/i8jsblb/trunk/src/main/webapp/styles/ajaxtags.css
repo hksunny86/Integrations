@@ -1,0 +1,236 @@
+
+.ajaxMsg {
+	background: #ffffcc;
+    /*border: 1px solid #000;*/
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    margin: 10px auto;
+    text-align: center;
+    vertical-align: bottom;
+    color: blue;
+}
+/* --- AUTOCOMPLETE CSS --- */
+
+.autocomplete {
+  position: absolute;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #666;
+  font-family: Arial;
+  overflow: hidden;
+}
+
+.autocomplete ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow: auto;
+}
+
+.autocomplete li {
+  display: block;
+  white-space: nowrap;
+  cursor: pointer;
+  margin: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border: 1px solid #fff;
+}
+
+.autocomplete li.selected {
+  background-color: #cef;
+  border-top: 1px solid #9bc;
+  border-bottom: 1px solid #9bc;
+}
+
+/* --- HTML CONTENT CSS --- */
+
+#modelDescription {
+  position: absolute;
+  left: 300px;
+  width: 300px;
+  min-height: 100px;
+  background: #ffe;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #666 #ccc #ccc #666;
+  padding: 5px;
+}
+
+#htmlContentForm {
+  width: 350px;
+}
+
+
+/* --- TAB PANEL CSS --- */
+
+#tabPanelWrapper {
+  width: 600px;
+}
+
+.tabContent {
+  border: 1px solid #ccc;
+  border-top: none;
+  clear: both;
+  margin: 0px;
+  padding: 15px;
+}
+
+.tabPanel {
+  border-bottom: 1px solid #ccc;
+  margin: 0;
+  padding-bottom: 19px;
+  padding-left: 10px;
+}
+
+.tabPanel ul, .tabPanel li {
+  display: inline;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tabPanel a:link, .tabPanel a:visited {
+  border: 1px solid #ccc;
+  float: left;
+  font-size: small;
+  font-weight: normal;
+  line-height: 14px;
+  margin-right: 8px;
+  padding: 2px 10px 2px 10px;
+  text-decoration: none;
+}
+
+.tabPanel a:link.ajaxCurrentTab, .tabPanel a:visited.ajaxCurrentTab {
+  border-bottom: 1px solid #fff;
+  color: #000;
+}
+
+.tabPanel a:hover {
+}
+
+
+/* --- PORTLET CSS --- */
+
+.portletBox {
+  width: 400px;
+  border: 1px solid #ccc;
+}
+
+.portletTitle {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #ccc;
+  padding: 2px 4px;
+  font: bold 10pt Arial;
+}
+
+.portletTools {
+  float: right;
+  padding: 2px 4px;
+  margin-top: 1px;
+  font: bold 8pt Arial;
+  cursor: pointer;
+}
+
+.portletTools img {
+  border-left: 1px solid #666;
+  padding: 0px 3px;
+  cursor: pointer;
+}
+
+.portletTools img:first-child {
+  border: none;
+}
+
+.portletContent {
+  min-height: 200px;
+  overflow: auto;
+  padding: 4px;
+}
+
+
+/* --- TOGGLE CSS --- */
+
+div.star-rating {
+  width: 140px;
+  float: left;
+  clear: both;
+}
+div.star-rating a {
+  cursor: pointer;
+  margin: 0px;
+  float: left;
+  display: block;
+  width: 18px;
+  height: 16px;
+  padding: 0 1px;
+  background-image: url(../img/stars.gif);
+  background-repeat: no-repeat;
+  background-position: 1px 0;
+}
+div.star-rating a.over {
+  background-position: 1px -32px;
+}
+div.star-rating a.selected {
+  background-position: 1px -64px;
+}
+div.star-rating a.selectedover {
+  background-position: 1px -48px;
+}
+div.star-rating a.selectedless {
+  background-position: 1px -16px;
+}
+div.star-rating-message {
+  display: block;
+  height: 12px;
+  font: 10px Verdana;
+}
+
+
+/* --- CALLOUT CSS --- */
+
+.olbg {background-color:#999;
+}
+.olcg {background-color:#000;}
+.olfg {background-color:#ddd;}
+.olcap {font-family:Arial; font-size:12px; font-weight:bold; color:#fff;}
+a.olclo {font-family:Arial; font-size:10px; font-weight:bold; color:#ddd;}
+a.olclo:hover {color:#fff;}
+.oltxt {font-family:Arial; font-size:12px; color:#000;}
+
+/* --- Tree CSS --- */
+.tree {
+ font-family:Verdana, Arial, Helvetica, sans-serif; 
+ list-style: none;
+ margin-left: 15px;
+ padding: 0px; 
+ line-height:20px; 
+}
+ 
+.expandedNode {
+  list-style: none;
+  padding-left: 10px;
+  background-image: url(../img/arrow_down.gif);
+  background-repeat: no-repeat;
+  background-position: 0 .5em;
+}
+ 
+.expandedNode:hover {
+  cursor:pointer;
+}
+ 
+.collapsedNode {
+  list-style: none;
+  padding-left: 10px;
+  background-image: url(../img/arrow.gif);
+  background-repeat: no-repeat;
+  background-position: 0 .5em;
+}
+
+.collapsedNode:hover {
+  cursor:pointer;
+}
+
+ 

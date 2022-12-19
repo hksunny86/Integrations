@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+
+<!-- DAO -->
+
+ <bean id="linkPaymentModeDAO" class="com.inov8.microbank.server.dao.portal.linkpaymentmodemodule.hibernate.LinkPaymentModeHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+ <bean id="linkPaymentModeValidator" class="com.inov8.microbank.webapp.action.portal.linkpaymentmodemodule.LinkPaymentModeValidator"/>
+
+
+  <bean id="smartMoneyAccountDAO" class="com.inov8.microbank.server.dao.smartmoneymodule.hibernate.SmartMoneyAccountHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+  <bean id="changeAccountNickListViewDAO" class="com.inov8.microbank.server.dao.portal.changeaccnickmodule.hibernate.ChangeAccountNickListViewHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  
+<!-- Service -->
+
+  <bean id="linkPaymentModeManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.portal.linkpaymentmodemodule.LinkPaymentModeManagerImpl">
+        <property name="linkPaymentModeDAO">
+          <ref local="linkPaymentModeDAO"/>
+        </property>                
+        <property name="allpayUserInfoListViewDAO"><ref  bean="allpayUserInfoListViewDAO"/> </property> 
+        <property name="actionLogManager"><ref  bean="actionLogManager"/> </property>
+        <property name="financialIntegrationManager"> <ref bean="financialIntegrationManager"/> </property>
+        <property name="smsSender" ref="smsSender"/>
+        <property name="changeAccountNickListViewDAO" ref="changeAccountNickListViewDAO"/>
+        <property name="smartMoneyAccountDAO" ref="smartMoneyAccountDAO"/>
+        <property name="userInfoListViewDAO" ref="userInfoListViewDAO"/>
+        <property name="currencyCodeDAO" ref="currencyCodeDAO"/>
+        <property name="accountTypeDAO" ref="accountTypeDAO"/>
+        <property name="userDeviceAccountsManager">
+      <ref bean="userDeviceAccountsManager"/>
+    </property>  
+     <property name="userDeviceAccountsDAO"> <ref bean="userDeviceAccountsDAO"/> </property>  
+     <property name="appUserDAO"> <ref bean="appUserDAO"/> </property>  
+     
+      </bean>
+    </property>
+
+  </bean>
+
+  
+<!-- Facade -->
+
+  <bean id="linkPaymentModeFacade" class="com.inov8.microbank.server.facade.portal.linkpaymentmodemodule.LinkPaymentModeFacadeImpl">
+    <property name="frameworkExceptionTranslator">
+      <ref bean="frameworkExceptionTranslator"/>
+    </property>
+    <property name="linkPaymentModeManager" ref="linkPaymentModeManager"/>
+     
+  </bean>
+
+</beans>
+
+

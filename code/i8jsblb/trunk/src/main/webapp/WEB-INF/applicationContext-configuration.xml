@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		 xmlns:aop="http://www.springframework.org/schema/aop"	
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xmlns:jee="http://www.springframework.org/schema/jee"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+		   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd
+		   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+<!-- 
+
+This bean (propertyConfigurer) has been replaced with bean (applicationProperties) in file server-configurations.xml
+Plz see server-configurations.xml for more.
+
+  <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+      <list>        
+        <value>classpath:escEmailAddresses.properties</value>
+        <value>classpath:mail.properties</value>
+        <value>classpath:sms.properties</value>
+        <value>classpath:JmsMessages.properties</value>
+        <value>classpath:server-config.properties</value>
+        <value>classpath:ApplicationResources.properties</value>
+        <value>classpath:report_queries.properties</value>
+      </list>
+    </property>
+  </bean>
+-->
+
+  <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+    <property name="basenames">
+      <list>        
+        <value>server-config</value><!-- Top file = High priority -->
+        <value>ApplicationResources</value>
+        <value>report_queries</value>
+        <value>FieldMapping</value>
+      </list>
+    </property>
+
+  </bean>
+  
+ <bean id="baseTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
+    <property name="transactionManager">
+      <ref bean="springTransactionManager"/>
+    </property>
+    <property name="transactionAttributes">
+      <props>
+        <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+        <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+        <prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+        <prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>
+        <prop key="retrieve*">PROPAGATION_REQUIRED,readOnly</prop>
+        <prop key="list*">PROPAGATION_REQUIRED,readOnly</prop>
+        <prop key="is*">PROPAGATION_REQUIRED,readOnly</prop>
+        <prop key="create*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="insert*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="define*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="save*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="new*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="make*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="delete*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="remove*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="eliminate*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="update*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="edit*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="modify*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="change*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="merge*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="integrate*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="deactivate*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="activate*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="reactivate*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="workflow*">PROPAGATION_REQUIRED, -FrameworkCheckedException, -WorkFlowException</prop>
+        <prop key="publish*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="produce*">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="*RequiresNewTransaction">PROPAGATION_REQUIRES_NEW, -FrameworkCheckedException</prop>
+        <prop key="getBillInfo">PROPAGATION_REQUIRED, -FrameworkCheckedException</prop>
+        <prop key="check*">PROPAGATION_REQUIRED,readOnly, -FrameworkCheckedException</prop>
+        <prop key="billPayment*">PROPAGATION_REQUIRED, readOnly,  -FrameworkCheckedException</prop>
+        <prop key="rollback">PROPAGATION_REQUIRES_NEW, -FrameworkCheckedException</prop>                
+        <prop key="reverseOrphanTransaction*">PROPAGATION_REQUIRED, -FrameworkCheckedException, -WorkFlowException</prop>                
+      </props>
+    </property>
+  </bean>
+  
+  <bean id="frameworkExceptionTranslator" class="com.inov8.framework.common.exception.FrameworkExceptionTranslator">
+    <property name="messageSource">
+      <ref local="messageSource"/>
+    </property>
+  </bean>
+  
+  <bean id="messageUtil" class="com.inov8.microbank.common.util.MessageUtil">
+    <property name="messageSource">
+      <ref local="messageSource"/>
+    </property>
+  </bean>
+  
+  
+  
+   <bean id="reflectionUtils" class="com.inov8.framework.common.util.ReflectionUtils">
+    <property name="messageSource">
+      <ref local="messageSource"/>
+    </property>
+  </bean>
+  
+  <bean id="mailEngine" class="com.inov8.framework.server.service.common.MailEngine">
+    <property name="mailSender" ref="mailSender"/>
+    <property name="velocityEngine" ref="velocityEngine"/>
+  </bean>
+  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="${mail.host}"/>
+    <property name="username" value="${mail.username}"/>
+    <property name="password" value="${mail.password}"/>
+  </bean>
+  <!-- Configure Velocity for sending e-mail -->
+  <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+    <property name="velocityProperties">
+      <props>
+        <prop key="resource.loader">class</prop>
+        <prop key="class.resource.loader.class">org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader        </prop>
+        <prop key="velocimacro.library">        </prop>
+      </props>
+    </property>
+  </bean>
+  <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage">
+    <property name="from" value="${mail.default.from}"/>
+  </bean>
+  <bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+  	<property name="classesToBeBound">
+  		<list>
+  			<value>com.inov8.microbank.disbursement.vo.BulkDisbursementsXmlVo</value>
+  			<value>com.inov8.microbank.common.vo.account.BulkCustomerAccountVo</value>
+            <value>com.inov8.microbank.common.model.portal.authorizationreferencedata.BulkManualAdjustmentRefDataModel</value>
+            <value>com.inov8.microbank.common.model.portal.authorizationreferencedata.BulkReversalRefDataModel</value>
+            <value>com.inov8.microbank.common.model.portal.inovtransactiondetailmodule.TransactionDetailPortalListModel</value>
+            <value>com.inov8.microbank.common.model.portal.inovtransactiondetailmodule.BispTransactionDetailViewModel</value>
+            <value>com.inov8.microbank.common.model.portal.authorizationreferencedata.ActivateDeactivateMfsAccountRefDataModel</value>
+            <value>com.inov8.microbank.common.model.portal.transactiondetailmodule.ExtendedSenderRedeemViewModel</value>
+            <value>com.inov8.microbank.common.model.portal.transactiondetailmodule.ExtendedCashTransactionViewModel</value>
+            <value>com.inov8.microbank.common.model.SmartMoneyAccountModel</value>
+            <value>com.inov8.microbank.common.model.portal.authorizationmodule.ExtendedActionAuthorizationModel</value>
+            <value>com.inov8.microbank.common.model.UsecaseModel</value>
+            <value>com.inov8.microbank.common.model.ActionStatusModel</value>
+            <value>com.inov8.microbank.common.model.AppUserModel</value>
+            <value>com.inov8.microbank.common.model.portal.transactiondetailmodule.ExtendedTransactionAllViewModel</value>
+            <value>com.inov8.microbank.common.model.P2PDetailModel</value>
+            <value>com.inov8.microbank.common.vo.transactionreversal.TransactionReversalVo</value>
+            <value>com.inov8.microbank.common.model.TransactionDetailMasterModel</value>
+            <value>com.inov8.microbank.common.model.portal.transactiondetailmodule.CashTransactionViewModel</value>
+            <value>com.inov8.microbank.common.model.minitransactionmodule.MiniTransactionViewModel</value>
+            <value>com.inov8.microbank.common.model.PaymentModeModel</value>
+            <value>com.inov8.microbank.common.model.UserDeviceAccountsModel</value>
+            <value>com.inov8.microbank.common.model.retailermodule.RetailerContactSearchViewModel</value>
+            <value>com.inov8.microbank.common.model.portal.bbcustomers.BbCustomerAccountsViewModel</value>
+            <value>com.inov8.microbank.common.model.portal.agentreportsmodule.AgentTransactionDetailViewModel</value>
+  		</list>
+  	</property>
+  </bean>
+  <bean id="xmlMarshaller" class="com.inov8.microbank.server.service.xml.XmlMarshallerImpl">
+  	<property name="marshaller" ref="jaxb2Marshaller"/>
+  	<property name="unmarshaller" ref="jaxb2Marshaller"/>
+  </bean>
+  <bean id="popupParser" class="com.inov8.framework.common.util.PopupParser" init-method="initialize">
+     <property name="popupXmlFile" value="classpath:/popups.xml"/>
+  </bean>
+  <aop:aspectj-autoproxy/>
+</beans>
+
+        <!--E:/Projects/JS Trunck/src/main/resources/popups.xml-->

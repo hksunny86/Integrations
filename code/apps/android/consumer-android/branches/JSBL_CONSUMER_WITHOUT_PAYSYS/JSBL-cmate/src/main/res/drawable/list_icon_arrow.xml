@@ -1,0 +1,4 @@
+<vector android:height="@dimen/listIconArrowHeight" android:viewportHeight="38"
+    android:viewportWidth="51" android:width="@dimen/listIconArrowWidth" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#004890" android:name="Shape 419" android:pathData="m50.07 16.88 -16.75 -16.03c-1.21 -1.16 -3.18 -1.16 -4.39 0c-1.21 1.16 -1.21 3.04 0 4.2l11.46 10.96h-37.26c-1.71 0 -3.1 1.33 -3.1 2.97c0 1.64 1.39 2.97 3.1 2.97h37.26l-11.46 10.96c-1.21 1.16 -1.21 3.04 0 4.2c0.61 0.58 1.4 0.87 2.19 0.87c0.79 0 1.59 -0.29 2.19 -0.87l16.75 -16.03c1.21 -1.16 1.21 -3.04 0 -4.2z"/>
+</vector>

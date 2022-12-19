@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="220dp"
+    android:layout_gravity="center" >
+
+    <RelativeLayout
+        android:id="@+id/layout_root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/alert_popup" >
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:scrollbars="none"
+            android:layout_above="@+id/btnOK"
+            android:layout_marginTop="56dp" >
+
+            <TextView
+                android:id="@+id/msg_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:gravity="center_horizontal"
+                android:padding="2dp"
+                android:shadowColor="@color/white"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="0.6"
+                android:text="Alert   "
+                android:textColor="@color/text_grey"
+                android:textSize="17sp" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/heading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="19dp"
+            android:text="Alert Notification"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+         <RelativeLayout
+            android:id="@+id/layoutButtons"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+           android:layout_above="@+id/bottom_layout"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="20dp"
+            android:gravity="center_horizontal" >
+
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="110dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/button_next_selector"
+                android:text="@string/register"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <Button
+                android:id="@+id/btnContinue"
+                android:layout_width="110dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@id/btnRegister"
+                android:background="@drawable/button_cancel_selector"
+                android:text="@string/register_continue"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
+
+

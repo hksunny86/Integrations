@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/headerLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/header_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <View
+        android:id="@+id/space_top"
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+    <ImageView
+        android:id="@+id/imageViewHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/space_top"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/button_back" />
+    <ImageView
+        android:id="@+id/imageViewicon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/space_top"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/logo_agent_small" />
+
+    <Button
+        android:id="@+id/buttonsignout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="1dp"
+        android:background="@drawable/button_signout" />
+
+</RelativeLayout>

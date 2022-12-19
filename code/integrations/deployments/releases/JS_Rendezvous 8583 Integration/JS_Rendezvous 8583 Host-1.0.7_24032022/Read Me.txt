@@ -1,0 +1,1 @@
+amount card holder billing (DE-6) set in posTransaction, balanceInquiry, cashWithdrawal

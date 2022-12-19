@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="logPath">./log/inov8/ivr</Property>
+		<Property name="stdoutAppender">stdoutAppender</Property>
+		<Property name="rootLog">root</Property>
+		<Property name="rootAppender">rootAppender</Property>
+		<Property name="wsLog">ws</Property>
+		<Property name="logFileExt">.log</Property>
+		<Property name="compressionExt">.gz</Property>
+		<Property name="wsAppender">wsAppender</Property>
+		<Property name="logPattern">%p [%t] [%d] %l%n &lt;%m&gt; %n</Property>
+		<Property name="logFileSize">400MB</Property>
+		<Property name="maxFileCounter">10000</Property>
+		<Property name="rootLogFilePath">${logPath}/${rootLog}${logFileExt}</Property>
+		<Property name="wsLogFilePath">${logPath}/${wsLog}${logFileExt}</Property>
+		<Property name="logFilePathPatternPrefix">${logPath}/$${date:yyyy-MM}/</Property>
+		<Property name="logFilePathPatternPostfix">-%d{MM-dd-yyyy}-%i${logFileExt}${compressionExt}</Property>
+		<Property name="rootFilePathPattern">${logFilePathPatternPrefix}${rootLog}${logFilePathPatternPostfix}</Property>
+		<Property name="wsFilePathPattern">${logFilePathPatternPrefix}${wsLog}${logFilePathPatternPostfix}</Property>
+	</Properties>
+
+	<Appenders>
+		<Console name="${stdoutAppender}">
+			<PatternLayout pattern="${logPattern}" />
+		</Console>
+		<RollingFile name="${rootAppender}" fileName="${rootLogFilePath}"
+			filePattern="${rootFilePathPattern}">
+			<PatternLayout>
+				<Pattern>${logPattern}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="${logFileSize}" />
+			</Policies>
+			<DefaultRolloverStrategy max="${maxFileCounter}"/>
+		</RollingFile>
+		<RollingFile name="${wsAppender}" fileName="${wsLogFilePath}"
+			filePattern="${wsFilePathPattern}">
+			<PatternLayout>
+				<Pattern>${logPattern}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="${logFileSize}" />
+			</Policies>
+			<DefaultRolloverStrategy max="${maxFileCounter}"/>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="${rootAppender}" />
+			<AppenderRef ref="${stdoutAppender}" />
+		</Root>
+		<Logger name="com.inov8.microbank.ws" level="info" additivity="false">
+			<AppenderRef ref="${wsAppender}" />
+			<AppenderRef ref="${stdoutAppender}" />
+		</Logger>
+		<Logger name="org.slf4j" level="info"/>
+		<Logger name="org.apache" level="info"/>
+		<Logger name="org.gjt" level="info"/>
+		<Logger name="com.mysql" level="info"/>
+		<Logger name="org.aopalliance" level="info"/>
+		<Logger name="org.asteriskjava" level="info"/>
+		<Logger name="org.springframework" level="info"/>
+
+	</Loggers>
+
+</Configuration>

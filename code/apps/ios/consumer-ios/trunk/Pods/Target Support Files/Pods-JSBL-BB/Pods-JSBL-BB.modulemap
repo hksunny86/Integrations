@@ -1,0 +1,6 @@
+framework module Pods_JSBL_BB {
+  umbrella header "Pods-JSBL-BB-umbrella.h"
+
+  export *
+  module * { export * }
+}

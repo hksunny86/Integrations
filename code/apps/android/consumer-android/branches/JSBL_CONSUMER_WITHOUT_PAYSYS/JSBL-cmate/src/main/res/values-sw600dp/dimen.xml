@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="cornerRadiusXSmall">3dp</dimen>
+    <dimen name="cornerRadiusSmall">4dp</dimen>
+    <dimen name="cornerRadiusNormal">6dp</dimen>
+    <dimen name="cornerRadiusMedium">8dp</dimen>
+    <dimen name="cornerRadiusLarge">9dp</dimen>
+
+    <dimen name="mainIconHeaderHeight">80dp</dimen>
+    <dimen name="mainIconHeaderWidth">150dp</dimen>
+
+
+    <dimen name="mainMenuIconHeight">175dp</dimen>
+    <dimen name="mainMenuIconWidth">153dp</dimen>
+
+    <dimen name="headingIconHeight">34dp</dimen>
+    <dimen name="headingIconWidth">34dp</dimen>
+
+    <dimen name="listIconArrowHeight">25dp</dimen>
+    <dimen name="listIconArrowWidth">30dp</dimen>
+
+
+
+    <dimen name="cardHeight">352dp</dimen>
+    <dimen name="card_elevation_normal">5dp</dimen>
+
+    <dimen name="rounded_bg_corner">4dp</dimen>
+
+    <dimen name="loginInputLayoutTopMargin">60dp</dimen>
+
+    <dimen name="headerIconHeight">80dp</dimen>
+    <dimen name="headerIconWidth">75dp</dimen>
+
+    <dimen name="activitySideMarginSmall">15dp</dimen>
+    <dimen name="activitySideMarginNormal">20dp</dimen>
+
+    <dimen name="layoutMarginSmall">17dp</dimen>
+    <dimen name="layoutMarginNormal">25dp</dimen>
+    <dimen name="layoutMarginLarge">30dp</dimen>
+    <dimen name="layoutMarginXLarge">43dp</dimen>
+    <dimen name="layoutMarginXXLarge">55dp</dimen>
+
+    <dimen name="margin_short">12dp</dimen>
+    <dimen name="margin_extra_short">7dp</dimen>
+
+    <dimen name="layoutPaddingXXSmall">6dp</dimen>
+    <dimen name="layoutPaddingNormal">25dp</dimen>
+    <dimen name="layoutPaddingLarge">30dp</dimen>
+
+    <dimen name="buttonPaddingSmall">10dp</dimen>
+    <dimen name="buttonPaddingNormal">20dp</dimen>
+
+    <dimen name="buttonTextSizeSmall">17dp</dimen>
+    <dimen name="buttonTextSizeMedium">27dp</dimen>
+    <dimen name="buttonTextNormal">30dp</dimen>
+
+    <dimen name="buttonSideMarginSmall">10dp</dimen>
+    <dimen name="buttonSideMarginNormal">20dp</dimen>
+    <dimen name="buttonTopMarginSmall">18dp</dimen>
+    <dimen name="buttonTopMarginNormal">35dp</dimen>
+    <dimen name="buttonTopMarginLarge">50dp</dimen>
+    <dimen name="buttonTopMarginXLarge">80dp</dimen>
+    <dimen name="buttonTopMargin">30dp</dimen>
+    <dimen name="buttonBottomMarginSmall">18dp</dimen>
+    <dimen name="buttonBottomMarginNormal">30dp</dimen>
+    <dimen name="buttonInnerMarginNormal">8dp</dimen>
+    <dimen name="buttonHeightNormal">80dp</dimen>
+    <dimen name="buttonWidthNormal">130dp</dimen>
+
+    <dimen name="borderHeightNormal">2dp</dimen>
+
+    <dimen name="editTextFieldPadding">15dp</dimen>
+
+    <dimen name="drawablePaddingNormal">15dp</dimen>
+
+    <dimen name="textViewTextSizeExtraSmall">14dp</dimen>
+    <dimen name="textViewTextSizeXSmall">16dp</dimen>
+    <dimen name="textViewTextSizeSmall">18dp</dimen>
+    <dimen name="textViewTextSizeNormal">20dp</dimen>
+    <dimen name="textViewTextSizeMedium">26dp</dimen>
+    <dimen name="textViewTextSizeLarge">30dp</dimen>
+    <dimen name="textViewTextSizeXLarge">32dp</dimen>
+    <dimen name="textViewTextSizeXXLarge">34dp</dimen>
+    <dimen name="textViewTextSizeXXXLarge">38dp</dimen>
+    <dimen name="textViewTextSizeXXXXLarge">42dp</dimen>
+
+    <dimen name="textViewFieldMargin">7dp</dimen>
+    <dimen name="textViewMarginSmall">9dp</dimen>
+    <dimen name="textViewMarginNormal">15dp</dimen>
+    <dimen name="textViewMarginLarge">20dp</dimen>
+    <dimen name="textViewMarginXLarge">26dp</dimen>
+    <dimen name="textViewMarginXXLarge">32dp</dimen>
+    <dimen name="textViewMarginXXXLarge">37dp</dimen>
+
+    <dimen name="dialogSideMargin">80dp</dimen>
+
+    <dimen name="dialogPaddingNormal">15dp</dimen>
+    <dimen name="dialogPaddingMedium">18dp</dimen>
+    <dimen name="dialogPaddingLarge">20dp</dimen>
+    <dimen name="dialogPaddingXLarge">30dp</dimen>
+
+    <dimen name="dialogHeaderHeightNormal">75dp</dimen>
+    <dimen name="dialogScrollHeightNormal">140dp</dimen>
+    <dimen name="dialogScrollHeightLarge">170dp</dimen>
+    <dimen name="dialogButtonWidth">180dp</dimen>
+
+    <dimen name="listItemHeightNormal">90dp</dimen>
+    <dimen name="listItemTextWidth">200dp</dimen>
+    <dimen name="menuIconPadding">0dp</dimen>
+    <dimen name="faqPadding">15dp</dimen>
+    <dimen name="faqMarginRight">40dp</dimen>
+
+    <dimen name="bottomBarIconWidth">140dp</dimen>
+    <dimen name="bottomBarIconHeight">110dp</dimen>
+    <dimen name="qrIconWidthHeight">180dp</dimen>
+    <dimen name="popupHeaderIconLengthWidth">45dp</dimen>
+
+
+
+    <dimen name="fingerHeight">200dp</dimen>
+    <dimen name="finger_width">200dp</dimen>
+
+    <dimen name="right_thumb_margin_top">75dp</dimen>
+    <dimen name="right_thumb_margin_left">185dp</dimen>
+
+    <dimen name="right_index_margin_top">130dp</dimen>
+    <dimen name="right_index_margin_left">50dp</dimen>
+
+    <dimen name="right_middle_margin_top">185dp</dimen>
+    <dimen name="right_middle_margin_left">25dp</dimen>
+
+    <dimen name="right_ring_margin_top">250dp</dimen>
+    <dimen name="right_ring_margin_left">32dp</dimen>
+
+    <dimen name="right_little_margin_top">305dp</dimen>
+    <dimen name="right_little_margin_left">70dp</dimen>
+
+    <dimen name="left_thumb_margin_top">78dp</dimen>
+    <dimen name="left_thumb_margin_left">148dp</dimen>
+
+    <dimen name="left_index_margin_top">135dp</dimen>
+    <dimen name="left_index_margin_left">290dp</dimen>
+
+    <dimen name="left_middle_margin_top">186dp</dimen>
+    <dimen name="left_middle_margin_left">316dp</dimen>
+
+    <dimen name="left_ring_margin_top">248dp</dimen>
+    <dimen name="left_ring_margin_left">305dp</dimen>
+
+    <dimen name="left_little_margin_top">305dp</dimen>
+    <dimen name="left_little_margin_left">270dp</dimen>
+
+    <dimen name="finger_hight_width_small">25dp</dimen>
+    <dimen name="finger_hight_width_normal">30dp</dimen>
+    <dimen name="finger_hight_width_large">35dp</dimen>
+
+</resources>

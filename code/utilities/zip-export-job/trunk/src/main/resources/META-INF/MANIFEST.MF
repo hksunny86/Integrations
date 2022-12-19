@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Class-Path: . zipexportjob_lib/log4j-1.2.17.jar zipexportjob_lib/log4j-rolling-appender-20140925-0909.jar zipexportjob_lib/ojdbc6-11.1.0.7.0.jar
+ zipexportjob_lib/jackson-mapper-asl-1.9.10.jar zipexportjob_lib/jackson-core-asl-1.9.10.jar zipexportjob_lib/jackson-annotations-2.7.0.jar
+ zipexportjob_lib/poi-3.11.jar zipexportjob_lib/commons-codec-1.9.jar zipexportjob_lib/poi-ooxml-3.11.jar
+ zipexportjob_lib/poi-ooxml-schemas-3.11.jar zipexportjob_lib/xmlbeans-2.6.0.jar
+ zipexportjob_lib/stax-api-1.0.1.jar zipexportjob_lib/commons-lang-2.6.jar
+ zipexportjob_lib/commons-validator-1.3.1.jar zipexportjob_lib/commons-beanutils-1.7.0.jar
+ zipexportjob_lib/commons-digester-1.6.jar zipexportjob_lib/xml-apis-1.0.b2.jar zipexportjob_lib/commons-logging-1.0.4.jar
+ zipexportjob_lib/commons-collections-3.2.jar zipexportjob_lib/javax.mail-api-1.5.6.jar zipexportjob_lib/activation-1.1.1.jar
+ zipexportjob_lib/javax.mail-1.5.5.jar zipexportjob_lib/bcprov-jdk15-135.jar
+ zipexportjob_lib/xstream-1.4.4.jar zipexportjob_lib/xmlpull-1.1.3.1.jar
+ zipexportjob_lib/xpp3-1.1.4c.jar zipexportjob_lib/export-zip-1.0-SNAPSHOT.jar zipexportjob_lib/extremecomponents-1.0.4.jar
+ zipexportjob_lib/framework-1.0.12-SNAPSHOT.jar zipexportjob_lib/log4j-rolling-appender-20140925-0909.jar
+ zipexportjob_lib/serializer-2.7.2.jar zipexportjob_lib/xalan-2.7.2.jar
+Main-Class: com.inov8.export.ExportFileJobController
+
+
+

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "773821808662",
+    "firebase_url": "https://jsbl-bb.firebaseio.com",
+    "project_id": "jsbl-bb",
+    "storage_bucket": "jsbl-bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773821808662:android:af991539865aeeedf2f537",
+        "android_client_info": {
+          "package_name": "com.inov8.jsblconsumer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773821808662-e1f2250t78ms6p87l3pmf288kja08f5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQB43rPO4XkfGmUB_3x8RJuQ-_cozHwTA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773821808662-e1f2250t78ms6p87l3pmf288kja08f5g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "773821808662-eelup5fcu8f9f1n73qm3115nj529ufqa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "jsbl-consumer-iOS"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,2 @@
+alter table cls_pending_account_opening add is_sms_required number(1) default 1;
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="JS Rendezvous 8583"
+  id="myeclipse.1333978442714"
+  context-root="/js-outbound-integration"
+  j2ee-spec="5.0"
+  archive="JS Rendezvous 8583.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+

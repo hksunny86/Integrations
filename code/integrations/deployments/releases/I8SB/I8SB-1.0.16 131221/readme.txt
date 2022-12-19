@@ -1,0 +1,1 @@
+eocean response class name changes to message response class

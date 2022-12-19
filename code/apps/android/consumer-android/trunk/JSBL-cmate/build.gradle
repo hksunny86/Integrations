@@ -1,0 +1,171 @@
+apply plugin: 'com.android.application'
+
+android {
+    def String appVersionCode
+    def String appCode
+    compileSdkVersion 29
+    useLibrary 'org.apache.http.legacy'
+    flavorDimensions "versionCode"
+    buildToolsVersion '28.0.3'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    signingConfigs {
+        releaseConfig {
+            storeFile file("jskeystore.jks")
+            storePassword("12345678")
+            keyAlias("jsblconsumer")
+            keyPassword("12345678")
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.inov8.jsblconsumer"
+        minSdkVersion 16
+        targetSdkVersion 29
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+        appVersionCode = "2.0.9.12"
+        appCode = "00"
+
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles 'proguard-project.txt'
+            shrinkResources true
+            debuggable false
+            signingConfig signingConfigs.releaseConfig
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def date = new Date();
+                    def formattedDate = date.format('yyMMdd')
+
+                    def apkName = output.outputFile.name
+                    apkName = apkName.replace("jSBLMFSAgent", "JSBLMFS-Agent_" + appVersionCode
+                            + appCode + "-" + formattedDate)
+                    apkName = apkName.replace("-release", "")
+                    output.outputFileName = "${apkName}"
+                }
+            }
+
+            ndk {
+                abiFilters 'armeabi-v7a', 'arm64-v8a'
+            }
+
+        }
+
+        debug {
+            debuggable true
+//            minifyEnabled true
+//            proguardFiles 'proguard-project.txt'
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            ndk {
+                abiFilters "armeabi-v7a", "x86"
+            }
+
+        }
+    }
+    packagingOptions {
+        exclude 'main/jniLibs/'
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
+    }
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
+        }
+
+        sourceSets {
+            main {
+                jni.srcDirs = []
+            }
+        }
+    }
+
+    productFlavors {
+        jsConsumerDev {
+        }
+        jsConsumerQA {
+        }
+        jsConsumerUAT {
+        }
+        jsConsumerStaging {
+        }
+        jsConsumerLive {
+        }
+        jsConsumerLiveUpload {
+        }
+        jsConsumerMigratedProduction {
+        }
+        jsConsumerMigratedUAT {
+        }
+        jsConsumerStagingMigrated {
+        }
+    }
+}
+
+dependencies {
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'org.bouncycastle:bcprov-jdk16:1.46'
+    implementation 'org.apache.commons:commons-lang3:3.4'
+    implementation 'net.sf.kxml:kxml2:2.3.0'
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+    implementation 'com.google.zxing:core:3.2.1'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:multidex:1.0.1'
+    implementation 'com.uncopt:android.justified:1.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
+
+    implementation platform('com.google.firebase:firebase-bom:26.0.0')
+    implementation 'com.google.firebase:firebase-analytics'
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation group: 'com.github.bumptech.glide', name: 'okhttp3-integration', version: '1.5.0'
+//    implementation 'com.paysyslabs:instascan:1.1.8.1-SNAPSHOT'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+//    implementation 'com.google.firebase:firebase-core:11.8.0'
+//    implementation 'com.google.firebase:firebase-firestore:11.8.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.paysyslabs:instascan:1.2.0.2-SNAPSHOT'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+}
+
+repositories {
+    flatDir {
+        dirs 'libs/'
+    }
+}
+
+apply plugin: 'com.google.gms.google-services'

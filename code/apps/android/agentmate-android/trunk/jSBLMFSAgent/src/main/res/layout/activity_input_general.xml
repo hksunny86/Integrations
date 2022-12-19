@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/offwhite"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/container_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_layout" />
+
+    <include
+        android:id="@+id/container_heading"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/heading_layout" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none" >
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+
+            <LinearLayout
+                android:id="@+id/llRadioGroup"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:layout_height="wrap_content">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/cardNumber"
+                        android:textColor="@color/black"
+                        android:checked="true"
+                        android:text="  Card Number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioButton
+                        android:id="@+id/mobileNumber"
+                        android:textColor="@color/black"
+                        android:text="  Mobile Number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutInputs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llRadioGroup"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:id="@+id/lblField1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:textColor="@color/text_grey"
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/input1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField1"
+                    android:background="@drawable/rounded_bg"
+                    android:inputType="number"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:visibility="gone" >
+
+                    <requestFocus />
+                </EditText>
+
+
+                <TextView
+                    android:id="@+id/lblField3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input2"
+                    android:layout_marginTop="10dp"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text=""
+                    android:textColor="@color/text_grey"
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/input3"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField3"
+                    android:background="@drawable/rounded_bg"
+                    android:inputType="number"
+                    android:maxLength="25"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:visibility="gone" >
+                </EditText>
+
+                <TextView
+                    android:id="@+id/lblField2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input1"
+                    android:layout_marginTop="10dp"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text=""
+                    android:textColor="@color/text_grey"
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/input2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField2"
+                    android:background="@drawable/rounded_bg"
+                    android:inputType="number"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:visibility="gone" >
+                </EditText>
+
+                <TextView
+                    android:id="@+id/lblField4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input3"
+                    android:layout_marginTop="10dp"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text=""
+                    android:textColor="@color/text_grey"
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/input4"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField4"
+                    android:background="@drawable/rounded_bg"
+                    android:inputType="number"
+                    android:maxLength="20"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:visibility="gone" >
+                </EditText>
+
+                <TextView
+                    android:id="@+id/lblSpinner1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input4"
+                    android:layout_marginTop="10dp"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="Select Segment"
+                    android:textColor="@color/text_grey"
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+                <Spinner
+                    android:id="@+id/inputSpinner1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblSpinner1"
+                    android:background="@drawable/spinner_bg"
+                    android:inputType="number"
+                    android:maxLength="25"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/lblAlertmultiple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/input3"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:textColor="@color/skyBlue"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lblAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/layoutInputs"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:shadowColor="@color/white"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="0"
+                android:textColor="@color/skyBlue"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:visibility="gone" />
+
+
+            <LinearLayout
+                android:id="@+id/termsAndConditions"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/textViewMarginNormal"
+                android:layout_marginTop="@dimen/textViewMarginNormal"
+                android:layout_below="@+id/lblAlert">
+
+            <CheckBox
+                android:id="@+id/checkTermsAndConditions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/textViewMarginXLarge"
+                android:text="I agree to the "
+                android:visibility="gone"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textViewTextSizeSmall" />
+
+            <TextView
+                android:id="@+id/termsHyperText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/textViewMarginXLarge"
+                android:visibility="gone"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textViewTextSizeSmall" />
+
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="220dp"
+                android:layout_height="48dp"
+                android:layout_below="@id/termsAndConditions"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_next_selector"
+                android:text="@string/next"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

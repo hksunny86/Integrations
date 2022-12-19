@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        android:layout_below="@+id/container_header"
+        layout="@layout/heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_above="@+id/bottomBarQR"
+        android:layout_below="@+id/container_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/buttonTopMarginLarge"
+        android:layout_marginLeft="@dimen/activitySideMarginNormal"
+        android:layout_marginRight="@dimen/activitySideMarginNormal"
+        android:orientation="horizontal"
+        android:background="@android:color/black"
+        android:weightSum="3"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="@dimen/layoutPaddingNormal"
+            android:layout_weight="1"
+            android:background="@color/limit_bg_color">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Limit"
+                android:textSize="@dimen/textViewTextSizeXLarge"
+                android:textColor="@color/limit_txt_color"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:padding="@dimen/layoutPaddingNormal"
+            android:layout_weight="1"
+            android:background="@color/limit_bg_color">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Debit"
+                android:textSize="@dimen/textViewTextSizeXLarge"
+                android:textColor="@color/limit_txt_color"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:padding="@dimen/layoutPaddingNormal"
+            android:layout_weight="1"
+            android:background="@color/limit_bg_color">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Credit"
+                android:textSize="@dimen/textViewTextSizeXLarge"
+                android:textColor="@color/limit_txt_color"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.inov8.jsblconsumer.ui.components.ListViewExpanded
+        android:id="@+id/dataList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/line_light_grey"
+        android:dividerHeight="0.5dp"
+        android:footerDividersEnabled="false"
+        android:scrollbars="none"
+        android:listSelector="@android:color/transparent"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activitySideMarginNormal"
+        android:layout_marginRight="@dimen/activitySideMarginNormal">
+
+        <Button
+            android:id="@+id/btnOK"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/buttonHeightNormal"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/buttonTopMarginXLarge"
+            android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+            android:layout_marginRight="@dimen/buttonSideMarginNormal"
+            android:background="@drawable/button_ok"
+            android:text="OK"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/buttonTextNormal"
+            android:textStyle="normal"
+            android:layout_marginBottom="@dimen/layoutMarginNormal"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+    <include
+        android:id="@+id/bottomBar"
+        layout="@layout/layout_bottom_bar" />
+
+    <include
+        android:id="@+id/bottomBarQR"
+        layout="@layout/layout_qr_code" />
+</RelativeLayout>

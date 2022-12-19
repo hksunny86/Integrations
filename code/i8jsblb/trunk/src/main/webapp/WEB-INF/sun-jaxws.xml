@@ -1,0 +1,9 @@
+<?xml version = "1.0"?>
+<endpoints version="2.0"
+	xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
+
+	<endpoint name="IVRRequestHandlerPort"
+		implementation="com.inov8.microbank.server.webservice.IVRRequestHandlerDelegate"
+		url-pattern="/IVRRequestHandlerPort">
+	</endpoint>
+	</endpoints>

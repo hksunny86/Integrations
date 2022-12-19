@@ -1,0 +1,19 @@
+
+<!--<msg id="16" reqTime="1470920961851">-->
+<!--    <params>-->
+<!--        <param name="DTID">5</param>-->
+<!--        <param name="PID">50040</param>-->
+<!--        <param name="PIN">6tBH5Et3C3b9p7Xzr1YVIQ==</param>-->
+<!--        <param name="ACID">2582371</param>-->
+<!--        <param name="ENCT">1</param>-->
+<!--        <param name="TXAM">100.0</param>-->
+<!--        <param name="MOBN">03454254477</param>-->
+<!--        <param name="BAID">50050</param>-->
+<!--    </params>-->
+<!--</msg>-->
+
+<msg id="16">
+     <trans>
+         <trn code="157557188675" mNo="03454254477" type="8" date="Thu Aug 11 18:09:33 PKT 2016" datef="Thu, Aug 11, 2016" timef="06:09:33 pm" pmode="i8_bb_10000015871" prod="Balance Topup" supp="Zong Service Supplier" TAMT="100.0" TAMTF="100.0" TPAM="0.00" TPAMF="0.0" bcode="" amtf="100.00" amt="100.0" helpLine="Call xxxxxxxxx"></trn>
+     </trans>
+ </msg>

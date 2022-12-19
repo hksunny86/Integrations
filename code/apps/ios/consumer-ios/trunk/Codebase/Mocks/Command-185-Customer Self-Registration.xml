@@ -1,0 +1,35 @@
+
+<!--<msg id="202" reqTime="1417761314759">-->
+<!--<params>-->
+<!--      <param name="DTID">5</param>-->
+<!--      <param name="MOBN">03214578478</param>-->
+<!--      <param name="CNIC">2201454254785</param>-->
+<!--</params>-->
+<!--</msg>-->
+
+<!--<msg id="185">-->
+<!--   <params>-->
+<!--      <param name="IS_ZONG_SUBS">0</param>-->
+<!--      <param name="IS_BVS_VERF">0</param>-->
+<!--      <param name="CNIC">2201454254785</param>-->
+<!--      <param name="MOBN">03214578478</param>-->
+<!--      <param name="IS_CNIC_REG">0</param>-->
+<!--   </params>-->
+<!--</msg>-->
+
+<!--<msg id="185">-->
+<!--    <params>-->
+<!--        <param name="CNAME">Muhammad Mudassar</param>-->
+<!--        <param name="CDOB">1997-07-22</param>-->
+<!--        <param name="CNIC_EXP">2016-01-06</param>-->
+<!--        <param name="CUSTOMER_PHOTO_FLAG">1</param>-->
+<!--        <param name="CNIC_FRONT_PHOTO_FLAG">1</param>-->
+<!--    </params>-->
+<!--</msg>-->
+
+<msg id="185">
+    <params>
+        <param name="DTID">2</param>
+    </params>
+</msg>
+

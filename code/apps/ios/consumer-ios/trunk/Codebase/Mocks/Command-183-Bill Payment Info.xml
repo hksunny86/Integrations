@@ -1,0 +1,17 @@
+<!-- Bill Payment info Response -->
+<msg id="183">
+    <params>
+        <param name="CMOB">03454254477</param>
+        <param name="PNAME">Mobilink Prepaid</param>
+        <param name="CONSUMER">03888888549</param>
+        <param name="BAMT">200.0</param>
+        <param name="BAMTF">200.00</param>
+        <param name="LBAMT">20000.0</param>
+        <param name="LBAMTF">20,000.00</param>
+        <param name="BPAID">0</param>
+        <param name="CNIC">8978978798789</param>
+        <param name="DUEDATE">31/08/2016</param>
+        <param name="DUEDATEF">Wed, 31 August 2016 11:59 PM</param>
+        <param name="ISOVERDUE">0</param>
+    </params>
+</msg>

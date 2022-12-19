@@ -1,0 +1,1 @@
+remove headers from eocean service method

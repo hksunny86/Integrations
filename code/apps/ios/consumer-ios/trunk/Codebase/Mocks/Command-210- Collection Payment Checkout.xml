@@ -1,0 +1,20 @@
+<!--<msg id="209" reqTime="1406289749947">-->
+<!--	<params>-->
+<!--		<param name="DTID">5</param>-->
+<!--		<param name="PID">5</param>-->
+<!--		<param name="CNSMRNO">5</param>-->
+<!--		<param name="TXAM">5</param>-->
+<!--		<param name="MOBN">5</param>-->
+<!--		<param name="CNIC">5</param>-->
+<!--		<param name="TXAM">5</param>-->
+<!--		<param name="TPAM">5</param>-->
+<!--		<param name="TAMT">5</param>-->
+<!--	</params> -->
+<!--</msg>-->
+
+<!-- response -->
+<msg id="209">
+	<trans>
+		<trn TRXID="" PID="" PROD="" CNSMRNO="" TXAM ="" TXAMF="" TPAM="" TPAMF = "" TAMT="" TAMTF = "" MOBN ="" CNIC="" DATEF="" BALF=""/>
+	</trans>	
+</msg>

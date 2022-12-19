@@ -1,0 +1,14 @@
+<msg id="81">
+    <params>
+        <param name="RANAME">Service</param> <!-- Merchant Name-->
+        <param name="AMOB">03204140392</param>
+        <param name="CAMT">204.01</param>
+        <param name="CAMTF">204.01</param>
+        <param name="TPAM">161.1</param>
+        <param name="TPAMF">161.10</param>
+        <param name="TAMT">1272.1</param>
+        <param name="TAMTF">1,272.10</param>
+        <param name="TXAM">1000.0</param>
+        <param name="TXAMF">1,000.00</param>
+    </params>
+</msg>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddOriginatorCell2" customModule="JS_Wallet" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="originatorCell2" rowHeight="276" id="KGk-i7-Jjw" customClass="AddOriginatorCell2" customModule="JS_Wallet" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="392" height="276"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="392" height="276"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Originator 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NK4-Cy-MhN">
+                        <rect key="frame" x="15" y="15" width="96" height="21"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="International Remmittance Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wzC-Az-IHL">
+                        <rect key="frame" x="15" y="46" width="270.5" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Ni-Lf-Rw4">
+                        <rect key="frame" x="15" y="77" width="362" height="34"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Relationship With Originator" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="or9-TX-weK">
+                        <rect key="frame" x="15" y="119" width="214" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wXw-1d-wZk">
+                        <rect key="frame" x="15" y="150" width="362" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="enq-Pm-9mR"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <state key="normal" title="Spouse">
+                            <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </state>
+                        <connections>
+                            <action selector="actChooseRelation:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ngj-vH-BnN"/>
+                        </connections>
+                    </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropdown_icon_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="fQi-C4-bDG">
+                        <rect key="frame" x="352" y="162.5" width="20" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="apg-LM-FTu"/>
+                            <constraint firstAttribute="width" constant="20" id="oAg-ig-AAi"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7RG-rx-zrc">
+                        <rect key="frame" x="116" y="210" width="160" height="50"/>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.69411764710000001" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="160" id="HHp-63-6Jd"/>
+                            <constraint firstAttribute="height" constant="50" id="atX-XO-O64"/>
+                        </constraints>
+                        <state key="normal" title="ADD ORIGINATOR">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                <color key="value" red="0.0" green="0.28235294119999998" blue="0.56470588239999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="highlightedColor">
+                                <color key="value" red="0.0" green="0.28235294119999998" blue="0.56470588239999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="actAddOriginator:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lkf-qc-rg7"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GI2-fr-Wfz">
+                        <rect key="frame" x="357" y="14.5" width="20" height="22"/>
+                        <state key="normal" image="trash" catalog="system"/>
+                        <connections>
+                            <action selector="actDeleteSelf:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="yUd-F8-ZCk"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="fQi-C4-bDG" firstAttribute="centerY" secondItem="wXw-1d-wZk" secondAttribute="centerY" id="5fZ-YN-4Vz"/>
+                    <constraint firstItem="wXw-1d-wZk" firstAttribute="top" secondItem="or9-TX-weK" secondAttribute="bottom" constant="10" id="6BW-JY-fIe"/>
+                    <constraint firstItem="5Ni-Lf-Rw4" firstAttribute="top" secondItem="wzC-Az-IHL" secondAttribute="bottom" constant="10" id="6Y2-eo-fXm"/>
+                    <constraint firstItem="7RG-rx-zrc" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="8ZV-od-x1V"/>
+                    <constraint firstItem="or9-TX-weK" firstAttribute="leading" secondItem="NK4-Cy-MhN" secondAttribute="leading" id="9ss-k1-3SS"/>
+                    <constraint firstItem="GI2-fr-Wfz" firstAttribute="centerY" secondItem="NK4-Cy-MhN" secondAttribute="centerY" id="DH2-Hd-c2h"/>
+                    <constraint firstItem="5Ni-Lf-Rw4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="L1f-lY-Apm"/>
+                    <constraint firstItem="wXw-1d-wZk" firstAttribute="leading" secondItem="5Ni-Lf-Rw4" secondAttribute="leading" id="N7Y-by-OW3"/>
+                    <constraint firstAttribute="trailing" secondItem="5Ni-Lf-Rw4" secondAttribute="trailing" constant="15" id="NXY-PA-81V"/>
+                    <constraint firstItem="NK4-Cy-MhN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="Rcs-dG-Ice"/>
+                    <constraint firstItem="or9-TX-weK" firstAttribute="top" secondItem="5Ni-Lf-Rw4" secondAttribute="bottom" constant="8" id="ZPE-pO-HKW"/>
+                    <constraint firstItem="fQi-C4-bDG" firstAttribute="trailing" secondItem="wXw-1d-wZk" secondAttribute="trailing" constant="-5" id="hQM-Sk-HRO"/>
+                    <constraint firstItem="7RG-rx-zrc" firstAttribute="top" secondItem="wXw-1d-wZk" secondAttribute="bottom" constant="20" id="l9H-95-VzY"/>
+                    <constraint firstItem="NK4-Cy-MhN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="lI9-mU-PQu"/>
+                    <constraint firstItem="wzC-Az-IHL" firstAttribute="top" secondItem="NK4-Cy-MhN" secondAttribute="bottom" constant="10" id="lcQ-ws-Xq2"/>
+                    <constraint firstAttribute="trailing" secondItem="GI2-fr-Wfz" secondAttribute="trailing" constant="15" id="lch-Bi-sS6"/>
+                    <constraint firstItem="wXw-1d-wZk" firstAttribute="trailing" secondItem="5Ni-Lf-Rw4" secondAttribute="trailing" id="v2a-Yv-rgx"/>
+                    <constraint firstItem="wzC-Az-IHL" firstAttribute="leading" secondItem="NK4-Cy-MhN" secondAttribute="leading" id="vUX-Hz-Aj6"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="btnAddOriginator" destination="7RG-rx-zrc" id="vyV-Gd-5PE"/>
+                <outlet property="btnDelete" destination="GI2-fr-Wfz" id="zVw-pf-shw"/>
+                <outlet property="btnRelationWithOriginator" destination="wXw-1d-wZk" id="bnc-Fp-RT8"/>
+                <outlet property="lblOriginatorNO" destination="NK4-Cy-MhN" id="Y4G-jz-6FJ"/>
+                <outlet property="locationTextField" destination="5Ni-Lf-Rw4" id="NUY-jB-Sgu"/>
+            </connections>
+            <point key="canvasLocation" x="26" y="100"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="dropdown_icon_arrow" width="170.5" height="170.5"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
+    </resources>
+</document>

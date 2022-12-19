@@ -1,0 +1,469 @@
+-- Merging decision tree log ---
+manifest
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:2:1-210:12
+	package
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:4:11-38
+		INJECTED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml
+		INJECTED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:6:11-36
+		INJECTED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml
+		INJECTED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:3:11-57
+	android:versionCode
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:5:11-34
+		INJECTED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml
+		INJECTED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:2:11-69
+uses-sdk
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:design:25.0.1] C:\Users\ALI REHAN\.android\build-cache\f62cf2fbb596e32d05777c427bee1627fe223a12\output\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:appcompat-v7:25.0.1] C:\Users\ALI REHAN\.android\build-cache\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:25.0.1] C:\Users\ALI REHAN\.android\build-cache\73e708fa6e27382be4b8eb966eb33274179a39aa\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.0.1] C:\Users\ALI REHAN\.android\build-cache\603914aff9eb695d6861ff99ab328256442ff111\output\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:recyclerview-v7:25.0.1] C:\Users\ALI REHAN\.android\build-cache\517dcb453a2ee2993a2e56998b2bb0d177ab9284\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:transition:25.0.1] C:\Users\ALI REHAN\.android\build-cache\a22868df366ef3a55a76bbe7108bf2d0978ffc3f\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:25.0.1] C:\Users\ALI REHAN\.android\build-cache\b8513b68ade359ce2a45494fc8baa90e3ac94aeb\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.0.1] C:\Users\ALI REHAN\.android\build-cache\a7c19d8be6183d3e15637dc6b49d0477a871ab27\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.0.1] C:\Users\ALI REHAN\.android\build-cache\9fd6c89f14dce4afbf37fae1b1720379958270e5\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.0.1] C:\Users\ALI REHAN\.android\build-cache\b8b0f197702b10da224128a121b00c0944e0016c\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.0.1] C:\Users\ALI REHAN\.android\build-cache\d12d753a45cf6f4a35f3435ccc397fa811a34cf5\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:25.0.1] C:\Users\ALI REHAN\.android\build-cache\0e7227b9847c847fb2cfad22f5da1f0aea550dff\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.paysyslabs:instascan:1.0.8] C:\Users\ALI REHAN\.android\build-cache\57d2a71bf444f5b348b6dcffbe46a36e8ea64472\output\AndroidManifest.xml:7:5-9:41
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:25.0.1] C:\Users\ALI REHAN\.android\build-cache\f62cf2fbb596e32d05777c427bee1627fe223a12\output\AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:10:9-38
+		INJECTED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml
+		INJECTED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:9:9-35
+		INJECTED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml
+		INJECTED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml
+supports-screens
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:12:5-18:24
+	android:largeScreens
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:14:9-36
+	android:smallScreens
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:16:9-36
+	android:normalScreens
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:15:9-37
+	android:xlargeScreens
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:17:9-37
+	android:anyDensity
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:13:9-34
+uses-feature#0x00020000
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:20:5-22:35
+	android:glEsVersion
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:21:9-41
+	android:required
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:22:9-32
+uses-permission#android.permission.CAMERA
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:24:5-65
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:24:22-62
+uses-permission#android.permission.INTERNET
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:25:5-67
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:25:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:26:5-79
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:26:22-76
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:27:5-79
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:27:22-76
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:28:5-81
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:28:22-78
+uses-permission#android.permission.ACCESS_LOCATION
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:29:5-74
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:29:22-71
+uses-permission#android.permission.ACCESS_GPS
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:30:5-69
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:30:22-66
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:31:5-75
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:31:22-72
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:32:5-80
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:32:22-77
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:33:5-81
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:33:22-78
+uses-permission#android.permission.WRITE_INTERNAL_STORAGE
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:34:5-81
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:34:22-78
+uses-permission#android.permission.CALL_PHONE
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:35:5-69
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:35:22-66
+uses-permission#android.permission.VIBRATE
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:36:5-66
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:36:22-63
+uses-permission#android.permission.FLASHLIGHT
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:37:5-69
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:37:22-66
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:38:5-71
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:38:22-68
+uses-permission#android.permission.WAKE_LOCK
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:39:5-68
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:39:22-65
+uses-permission#android.permission.INTERACT_ACROSS_USERS_FULL
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:41:5-85
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:41:22-82
+uses-feature#android.hardware.camera
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:43:5-45:36
+	android:required
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:45:9-33
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:44:9-47
+uses-feature#android.hardware.camera.autofocus
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:46:5-48:36
+	android:required
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:48:9-33
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:47:9-57
+application
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:50:5-208:19
+MERGED from [com.android.support:design:25.0.1] C:\Users\ALI REHAN\.android\build-cache\f62cf2fbb596e32d05777c427bee1627fe223a12\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:25.0.1] C:\Users\ALI REHAN\.android\build-cache\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.0.1] C:\Users\ALI REHAN\.android\build-cache\73e708fa6e27382be4b8eb966eb33274179a39aa\output\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.0.1] C:\Users\ALI REHAN\.android\build-cache\603914aff9eb695d6861ff99ab328256442ff111\output\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:transition:25.0.1] C:\Users\ALI REHAN\.android\build-cache\a22868df366ef3a55a76bbe7108bf2d0978ffc3f\output\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:25.0.1] C:\Users\ALI REHAN\.android\build-cache\b8513b68ade359ce2a45494fc8baa90e3ac94aeb\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.0.1] C:\Users\ALI REHAN\.android\build-cache\a7c19d8be6183d3e15637dc6b49d0477a871ab27\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.0.1] C:\Users\ALI REHAN\.android\build-cache\9fd6c89f14dce4afbf37fae1b1720379958270e5\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.0.1] C:\Users\ALI REHAN\.android\build-cache\b8b0f197702b10da224128a121b00c0944e0016c\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.0.1] C:\Users\ALI REHAN\.android\build-cache\d12d753a45cf6f4a35f3435ccc397fa811a34cf5\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.0.1] C:\Users\ALI REHAN\.android\build-cache\0e7227b9847c847fb2cfad22f5da1f0aea550dff\output\AndroidManifest.xml:25:5-20
+MERGED from [com.paysyslabs:instascan:1.0.8] C:\Users\ALI REHAN\.android\build-cache\57d2a71bf444f5b348b6dcffbe46a36e8ea64472\output\AndroidManifest.xml:11:5-15:19
+	android:label
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:53:9-39
+		REJECTED from [com.paysyslabs:instascan:1.0.8] C:\Users\ALI REHAN\.android\build-cache\57d2a71bf444f5b348b6dcffbe46a36e8ea64472\output\AndroidManifest.xml:13:9-41
+	android:supportsRtl
+		ADDED from [com.paysyslabs:instascan:1.0.8] C:\Users\ALI REHAN\.android\build-cache\57d2a71bf444f5b348b6dcffbe46a36e8ea64472\output\AndroidManifest.xml:14:9-35
+	android:icon
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:52:9-38
+	android:allowBackup
+		ADDED from [com.paysyslabs:instascan:1.0.8] C:\Users\ALI REHAN\.android\build-cache\57d2a71bf444f5b348b6dcffbe46a36e8ea64472\output\AndroidManifest.xml:12:9-35
+	android:theme
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:55:9-56
+	tools:replace
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:54:9-38
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:51:9-57
+activity#com.inov8.agentmate.activities.SplashActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:56:9-64:20
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:58:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:57:13-73
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:59:13-63:29
+action#android.intent.action.MAIN
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:60:17-69
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:60:25-66
+category#android.intent.category.LAUNCHER
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:62:17-77
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:62:27-74
+activity#com.inov8.agentmate.activities.LoginActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:65:9-69:20
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:68:13-49
+	android:launchMode
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:67:13-42
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:66:13-72
+activity#com.inov8.agentmate.activities.SignOutActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:70:9-72:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:72:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:71:13-74
+activity#com.inov8.agentmate.activities.BaseActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:73:9-75:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:75:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:74:13-71
+activity#com.inov8.agentmate.activities.SubMenuAcitivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:76:9-78:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:78:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:77:13-75
+activity#com.inov8.agentmate.activities.CategoryMenuActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:79:9-81:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:81:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:80:13-79
+activity#com.inov8.agentmate.activities.BaseCommunicationActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:82:9-84:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:84:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:83:13-84
+activity#com.inov8.agentmate.activities.MainMenuActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:85:9-88:20
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:87:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:86:13-75
+activity#com.inov8.agentmate.activities.TransactionReceiptActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:89:9-91:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:91:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:90:13-85
+activity#com.inov8.agentmate.activities.cashIn.CashInInputActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:92:9-94:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:94:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:93:13-85
+activity#com.inov8.agentmate.activities.cashIn.CashInConfirmationActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:95:9-97:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:97:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:96:13-92
+activity#com.inov8.agentmate.activities.cashOut.CashOutInputActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:98:9-100:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:100:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:99:13-87
+activity#com.inov8.agentmate.bvs.FingerScanActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:101:9-103:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:103:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:102:13-70
+activity#com.inov8.agentmate.activities.cashOut.CashOutConfirmationActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:104:9-106:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:106:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:105:13-94
+activity#com.inov8.agentmate.activities.agentTransfer.AgentToAgentInputActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:107:9-109:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:109:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:108:13-98
+activity#com.inov8.agentmate.activities.agentTransfer.AgentToAgentConfirmationActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:110:9-112:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:112:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:111:13-105
+activity#com.inov8.agentmate.activities.fundsTransfer.FundsTransferInputActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:113:9-115:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:115:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:114:13-99
+activity#com.inov8.agentmate.activities.fundsTransfer.FundsTransferConfirmationActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:116:9-118:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:118:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:117:13-106
+activity#com.inov8.agentmate.activities.fundsTransfer.ReceiveCashInputActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:119:9-121:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:121:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:120:13-97
+activity#com.inov8.agentmate.activities.fundsTransfer.ReceiveCashConfirmationActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:122:9-124:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:124:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:123:13-104
+activity#com.inov8.agentmate.activities.agentTransfer.TransferInInputActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:125:9-127:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:127:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:126:13-96
+activity#com.inov8.agentmate.activities.agentTransfer.TransferInConfirmationActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:128:9-130:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:130:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:129:13-103
+activity#com.inov8.agentmate.activities.agentTransfer.TransferOutInputActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:131:9-133:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:133:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:132:13-97
+activity#com.inov8.agentmate.activities.agentTransfer.TransferOutConfirmationActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:134:9-136:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:136:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:135:13-104
+activity#com.inov8.agentmate.activities.billPayment.BillPaymentsUtilityFetchBillInfoActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:137:9-139:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:139:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:138:13-111
+activity#com.inov8.agentmate.activities.billPayment.BillPaymentTypeActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:140:9-142:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:142:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:141:13-94
+activity#com.inov8.agentmate.activities.billPayment.BillPaymentConfirmationActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:143:9-145:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:145:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:144:13-102
+activity#com.inov8.agentmate.activities.retailPayment.RetailPaymentInputActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:146:9-148:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:148:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:147:13-99
+activity#com.inov8.agentmate.activities.retailPayment.RetailPaymentConfirmationActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:149:9-151:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:151:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:150:13-106
+activity#com.inov8.agentmate.activities.myAccount.MyAccountViewTransactionsActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:152:9-154:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:154:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:153:13-102
+activity#com.inov8.agentmate.activities.myAccount.MyAccountBalanceInquiryActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:155:9-157:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:157:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:156:13-100
+activity#com.inov8.agentmate.activities.myAccount.MyAccountChangePinActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:158:9-160:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:160:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:159:13-95
+activity#com.inov8.agentmate.activities.myAccount.MyAccountChangePinMenuActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:161:9-163:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:163:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:162:13-99
+activity#com.inov8.agentmate.activities.myAccount.MyAccountSelectMiniStatementActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:164:9-166:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:166:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:165:13-105
+activity#com.inov8.agentmate.activities.TermsConditionsActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:167:9-169:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:169:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:168:13-82
+activity#com.inov8.agentmate.activities.openAccount.OpenAccountBvsActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:170:9-172:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:172:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:171:13-93
+activity#com.inov8.agentmate.activities.openAccount.OpenAccountMobileInputActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:173:9-175:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:175:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:174:13-101
+activity#com.inov8.agentmate.activities.openAccount.OpenAccountSecondInputActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:176:9-178:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:178:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:177:13-101
+activity#com.inov8.agentmate.activities.openAccount.OpenAccountPicInputUploadDiscrepantActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:179:9-181:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:181:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:180:13-114
+activity#com.inov8.agentmate.activities.openAccount.OpenAccountSecondInputDiscrepantActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:182:9-184:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:184:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:183:13-111
+activity#com.inov8.agentmate.activities.openAccount.OpenAccountConfirmationActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:185:9-187:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:187:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:186:13-102
+activity#com.inov8.agentmate.activities.openAccount.OpenAccountDiscrepantDetailsActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:188:9-190:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:190:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:189:13-107
+activity#com.inov8.agentmate.activities.openAccount.OpenAccountPicInputUploadActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:191:9-193:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:193:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:192:13-104
+activity#com.inov8.agentmate.activities.openAccount.OpenAccountConfirmationDiscrepantActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:194:9-196:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:196:13-49
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:195:13-112
+activity#com.inov8.agentmate.activities.openAccount.CameraActivity
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:197:9-199:53
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:199:13-50
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:198:13-85
+activity#com.inov8.agentmate.bvs.NadraRestClient
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:200:9-203:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:203:13-49
+	android:theme
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:202:13-57
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:201:13-67
+activity#com.inov8.agentmate.bvs.OTCClient
+ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:204:9-207:52
+	android:screenOrientation
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:207:13-49
+	android:theme
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:206:13-57
+	android:name
+		ADDED from E:\i8workpaceAgentmate\JSBL-Agentmate-Studio\jSBLMFSAgent\src\main\AndroidManifest.xml:205:13-61

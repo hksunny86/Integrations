@@ -1,0 +1,1 @@
+pin data removed, title fetch check for core to wallet

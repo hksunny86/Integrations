@@ -1,0 +1,148 @@
+apply plugin: 'com.android.application'
+
+android {
+    def String appVersionCode
+    def String appCode
+    compileSdkVersion 29
+    flavorDimensions "versionCode"
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        applicationId "com.inov8.jsblmfs"
+        targetSdkVersion 26
+        minSdkVersion 18
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+        appVersionCode = "2.0.10.22-"
+        appCode = "003"
+
+        lintOptions {
+            checkReleaseBuilds false
+            abortOnError false
+        }
+
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    signingConfigs {
+        releaseConfig {
+            storeFile file("jsblAgentmate.jks")
+            storePassword("123456")
+            keyAlias("jsblAgentmate")
+            keyPassword("123456")
+        }
+    }
+
+    buildTypes {
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles 'proguard-project.txt'
+
+            shrinkResources true
+            debuggable false
+            signingConfig signingConfigs.releaseConfig
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def date = new Date();
+                    def formattedDate = date.format('yyMMdd')
+
+                    def apkName = output.outputFile.name
+                    apkName = apkName.replace("jSBLMFSAgent", "JSBLMFS-Agent_" + appVersionCode
+                            + appCode + "-" + formattedDate)
+                    apkName = apkName.replace("-release", "")
+                    output.outputFileName = "${apkName}"
+                }
+            }
+
+//            ndk {
+//                abiFilters "armeabi-v7a"
+//            }
+        }
+
+        debug {
+            debuggable true
+//            ndk {
+//                abiFilters "armeabi-v7a", "x86"
+//            }
+        }
+    }
+
+    productFlavors {
+        dev {
+        }
+        qa {
+        }
+        staging {
+        }
+        migratedStaging {
+        }
+        uat {
+        }
+        production {
+        }
+        migratedProduction {
+        }
+        migratedUAT {
+        }
+    }
+
+    packagingOptions {
+        exclude 'main/jniLibs/'
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
+    }
+
+    sourceSets {
+        main {
+            jni.srcDirs = []
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs/'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: '*.jar', dir: 'libs')
+    implementation(name: 'SpeedX500Blib-release', ext: 'aar')
+    implementation(name: 'SpeedX500BSdk-release', ext: 'aar')
+
+    implementation files('libs/fingerprintControl.jar')
+    implementation files('libs/PosUtil.jar')
+
+    implementation project(':P41M2SDK')
+    implementation project(':libBioMini_v20')
+
+    implementation 'am.util:printer:2.1.0'
+    implementation 'com.inuker.bluetooth:library:1.4.0'
+    implementation 'com.paysyslabs:instascan:1.2.0.2-SNAPSHOT'
+    implementation 'org.bouncycastle:bcprov-jdk16:1.46'
+    implementation 'org.apache.commons:commons-lang3:3.4'
+    implementation 'net.sf.kxml:kxml2:2.3.0'
+    implementation 'com.android.support:appcompat-v7:25.0.0'
+    implementation 'com.android.support:design:25.0.0'
+    implementation 'com.android.support:support-v4:18.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
+
+    implementation 'com.android.support:multidex:1.0.3'
+
+
+
+}

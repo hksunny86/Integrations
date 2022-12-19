@@ -1,0 +1,9 @@
+<vector android:height="@dimen/popup_main_icon_Height" android:viewportHeight="320.0"
+    android:viewportWidth="320.0" android:width="@dimen/popup_main_icon_Width" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#FFFFFF" android:pathData="M160,160m-160,0a160,160 0,1 1,320 0a160,160 0,1 1,-320 0"/>
+    <path android:fillColor="#00BC87" android:pathData="M160,160m-117,0a117,117 0,1 1,234 0a117,117 0,1 1,-234 0"/>
+    <path android:fillColor="#00000000"
+        android:pathData="M228.9,110.8l-78.8,98.4l-59,-59.1"
+        android:strokeColor="#FFFFFF" android:strokeLineCap="round"
+        android:strokeLineJoin="round" android:strokeWidth="5"/>
+</vector>

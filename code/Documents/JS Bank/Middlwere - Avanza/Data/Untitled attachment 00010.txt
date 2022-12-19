@@ -1,0 +1,654 @@
+FYI
+
+ 
+
+From: Saad Sarwar Mirza [mailto:Saad.Mirza@jsbl.com] 
+Sent: Friday, July 11, 2014 11:47 AM
+To: faisal.basra@inov8.com.pk
+Cc: 'Adnan Ali Syed'; 'Muhammad Akbar Moghal'; 'Syed Ali Saqib Zaidi';
+Bashir Sheikh; Hasnain Sheikh; Imran.Soomro@jsbl.com; 'Madihah Islam';
+maqsood.shahzad@inov8.com.pk; Burhan Ahmad; Ahmed Shaheryar Khan; Arfat
+Sarfaraz Shaikh; Babar Mehboob Siddiqi
+Subject: RE: Weekly Project Status Update Report and Meeting
+
+ 
+
+
+Dear Faisal, 
+
+
+Reference to our discussion, please find the required data in the
+attachment. 
+
+Regards,
+Saad Sarwar 
+
+
+
+From:        "Burhan Ahmad" <burhan.ahmad@inov8.com.pk
+<mailto:burhan.ahmad@inov8.com.pk> > 
+To:        "'Muhammad Akbar Moghal'" <Akbar.Moghal@jsbl.com
+<mailto:Akbar.Moghal@jsbl.com> >, 
+Cc:        "'Syed Ali Saqib Zaidi'" <Ali.Saqib@jsbl.com
+<mailto:Ali.Saqib@jsbl.com> >, "Bashir Sheikh" <bashir.sheikh@inov8.com.pk
+<mailto:bashir.sheikh@inov8.com.pk> >, "Hasnain Sheikh"
+<has.sheikh@inov8.com.pk <mailto:has.sheikh@inov8.com.pk> >,
+<Imran.Soomro@jsbl.com <mailto:Imran.Soomro@jsbl.com> >, "'Madihah Islam'"
+<madihah.islam@inov8.com.pk <mailto:madihah.islam@inov8.com.pk> >,
+<maqsood.shahzad@inov8.com.pk <mailto:maqsood.shahzad@inov8.com.pk> >,
+"'Muhammad Raza Dyer'" <Muhammad.Dyer@jsbl.com
+<mailto:Muhammad.Dyer@jsbl.com> >, "'Raja Abdullah'" <Raja.Abdullah@jsbl.com
+<mailto:Raja.Abdullah@jsbl.com> >, "'Saad Sarwar Mirza'"
+<Saad.Mirza@jsbl.com <mailto:Saad.Mirza@jsbl.com> >, "'Adnan Ali Syed'"
+<Adnan.Syed@jsbl.com <mailto:Adnan.Syed@jsbl.com> > 
+Date:        07/10/2014 03:26 PM 
+Subject:        RE: Weekly Project Status Update Report and Meeting 
+
+  _____  
+
+
+
+
+Dear Akbar, 
+
+  
+
+Please find attached updated MFS project status for review meeting tomorrow
+at 11 am. 
+
+  
+
+  
+
+Regards, 
+
+  
+
+Burhan Ahmad | Project Manager | 
+
+Inov8 Limited 
+
+03224689299 
+
+  
+
+  
+
+  
+
+From: Burhan Ahmad [ <mailto:burhan.ahmad@inov8.com.pk>
+mailto:burhan.ahmad@inov8.com.pk] 
+Sent: Thursday, July 03, 2014 3:28 PM
+To: 'Muhammad Akbar Moghal'
+Cc: 'Syed Ali Saqib Zaidi'; Bashir Sheikh; Hasnain Sheikh;
+'Imran.Soomro@jsbl.com'; 'Madihah Islam'; 'maqsood.shahzad@inov8.com.pk';
+'Muhammad Raza Dyer'; 'Raja Abdullah'; 'Saad Sarwar Mirza'; 'Adnan Ali Syed'
+Subject: RE: Weekly Project Status Update Report and Meeting 
+
+  
+
+Dear Akbar, 
+
+Please find attached MFS project status to be discussed tomorrow at 11 am in
+review meeting. Please confirm. 
+
+  
+
+Regards, 
+
+Burhan Ahmad | Project Manager | 
+
+Inov8 Limited 
+
+03224689299 
+
+  
+
+  
+
+  
+
+From: Burhan Ahmad [ <mailto:burhan.ahmad@inov8.com.pk>
+mailto:burhan.ahmad@inov8.com.pk] 
+Sent: Monday, June 30, 2014 12:07 PM
+To: 'Muhammad Akbar Moghal'
+Cc: 'Syed Ali Saqib Zaidi'; Bashir Sheikh; Hasnain Sheikh;
+'Imran.Soomro@jsbl.com'; 'Madihah Islam'; 'maqsood.shahzad@inov8.com.pk';
+'Muhammad Raza Dyer'; 'Raja Abdullah'; 'Saad Sarwar Mirza'; 'Adnan Ali Syed'
+Subject: RE: Weekly Project Status Update Report and Meeting 
+
+  
+
+Dear Akbar, 
+
+  
+
+Please find attached meeting minutes for the review meeting held on
+27-06-14. 
+
+  
+
+Regards, 
+
+  
+
+Burhan Ahmad | Project Manager | 
+
+Inov8 Limited 
+
+03224689299 
+
+  
+
+  
+
+From: Burhan Ahmad [ <mailto:burhan.ahmad@inov8.com.pk>
+mailto:burhan.ahmad@inov8.com.pk] 
+Sent: Thursday, June 26, 2014 7:39 PM
+To: 'Muhammad Akbar Moghal'
+Cc: 'Syed Ali Saqib Zaidi'; Bashir Sheikh; Hasnain Sheikh;
+'Imran.Soomro@jsbl.com'; 'Madihah Islam'; 'maqsood.shahzad@inov8.com.pk';
+'Muhammad Raza Dyer'; 'Raja Abdullah'; 'Saad Sarwar Mirza'; 'Adnan Ali Syed'
+Subject: RE: Weekly Project Status Update Report and Meeting 
+
+  
+
+Dear Akbar, 
+
+  
+
+Please find below URL to access the demo environment: 
+
+  
+
+ <http://58.27.141.229/i8Microbank/login.jsp>
+http://58.27.141.229/i8Microbank/login.jsp 
+
+  
+
+  
+
+We have also attached a Credentials Sheet which provides login and other
+details of test users to be used during the demo. We can plan a session to
+give a walkthrough of the demo system to the intended users. Kindly let us
+know timings for the same. 
+
+  
+
+Regards, 
+
+  
+
+Burhan Ahmad | Project Manager | 
+
+Inov8 Limited 
+
+03224689299 
+
+  
+
+  
+
+  
+
+  
+
+  
+
+From: Adnan Ali Syed [ <mailto:Adnan.Syed@jsbl.com>
+mailto:Adnan.Syed@jsbl.com] 
+Sent: Thursday, June 26, 2014 4:50 PM
+To: Burhan Ahmad
+Cc: 'Ahmed Ali Larik'; 'Muhammad Akbar Moghal'; 'Syed Ali Saqib Zaidi';
+Bashir Sheikh; Hasnain Sheikh;  <mailto:Imran.Soomro@jsbl.com>
+Imran.Soomro@jsbl.com; 'Madihah Islam';
+<mailto:maqsood.shahzad@inov8.com.pk> maqsood.shahzad@inov8.com.pk;
+'Muhammad Raza Dyer'; 'Raja Abdullah'; 'Saad Sarwar Mirza'
+Subject: RE: Weekly Project Status Update Report and Meeting 
+
+  
+
+Burhan 
+
+Demo environment was due today? The day has come to a close, no news from
+your end??? 
+
+Kindly let me know status..ASAP 
+
+
+
+
+Regards 
+Adnan. A.Syed 
+Head of Business Development 
+Branchless Banking 
+JS Bank Limited (JSBL) 
+7th Floor Shaheen Commercial Complex 
+Dr. Ziauddin Ahmed Road 
+Karachi - 74200 
+Pakistan 
+Tel : 111-572-265  ext 428 
+
+
+
+From:        "Burhan Ahmad" < <mailto:burhan.ahmad@inov8.com.pk>
+burhan.ahmad@inov8.com.pk> 
+To:        "'Muhammad Akbar Moghal'" < <mailto:Akbar.Moghal@jsbl.com>
+Akbar.Moghal@jsbl.com>, 
+Cc:        "Bashir Sheikh" < <mailto:bashir.sheikh@inov8.com.pk>
+bashir.sheikh@inov8.com.pk>, "Hasnain Sheikh" <
+<mailto:has.sheikh@inov8.com.pk> has.sheikh@inov8.com.pk>, <
+<mailto:Imran.Soomro@jsbl.com> Imran.Soomro@jsbl.com>, "'Madihah Islam'" <
+<mailto:madihah.islam@inov8.com.pk> madihah.islam@inov8.com.pk>, <
+<mailto:maqsood.shahzad@inov8.com.pk> maqsood.shahzad@inov8.com.pk>,
+"'Muhammad Raza Dyer'" < <mailto:Muhammad.Dyer@jsbl.com>
+Muhammad.Dyer@jsbl.com>, "'Adnan Ali Syed'" < <mailto:Adnan.Syed@jsbl.com>
+Adnan.Syed@jsbl.com>, "'Syed Ali Saqib Zaidi'" < <mailto:Ali.Saqib@jsbl.com>
+Ali.Saqib@jsbl.com>, "'Raja Abdullah'" < <mailto:Raja.Abdullah@jsbl.com>
+Raja.Abdullah@jsbl.com>, "'Saad Sarwar Mirza'" <
+<mailto:Saad.Mirza@jsbl.com> Saad.Mirza@jsbl.com>, "'Ahmed Ali Larik'" <
+<mailto:Ahmed.Larik@jsbl.com> Ahmed.Larik@jsbl.com> 
+Date:        06/26/2014 04:07 PM 
+Subject:        RE: Weekly Project Status Update Report and Meeting 
+
+  _____  
+
+
+
+
+Dear Akbar, 
+
+  
+
+Please find attached MFS project status to be discussed tomorrow at 11 am in
+review meeting. Please confirm. 
+
+  
+
+Regards, 
+
+  
+
+Burhan Ahmad | Project Manager | 
+
+Inov8 Limited 
+
+03224689299 
+
+  
+
+  
+
+From: Burhan Ahmad [ <mailto:burhan.ahmad@inov8.com.pk>
+mailto:burhan.ahmad@inov8.com.pk] 
+Sent: Thursday, June 19, 2014 7:01 PM
+To: 'Muhammad Akbar Moghal'
+Cc: Bashir Sheikh; Hasnain Sheikh; 'Imran.Soomro@jsbl.com'; 'Madihah Islam';
+'maqsood.shahzad@inov8.com.pk'; 'Muhammad Raza Dyer'; 'Adnan Ali Syed';
+'Syed Ali Saqib Zaidi'; 'Raja Abdullah'; 'Saad Sarwar Mirza'; 'Ahmed Ali
+Larik'
+Subject: RE: Weekly Project Status Update Report and Meeting 
+
+  
+
+Dear Akbar, 
+
+  
+
+Please find below MFS project status. Action items from last review meeting
+have also been incorporated for your kind review. 
+
+  
+
+Please confirm meeting timings at 11 am tomorrow. 
+
+  
+
+Regards, 
+
+  
+
+Burhan Ahmad | Project Manager | 
+
+Inov8 Limited 
+
+03224689299 
+
+  
+
+  
+
+  
+
+From: Burhan Ahmad [ <mailto:burhan.ahmad@inov8.com.pk>
+mailto:burhan.ahmad@inov8.com.pk] 
+Sent: Thursday, June 12, 2014 6:31 PM
+To: 'Muhammad Akbar Moghal'
+Cc: Bashir Sheikh; Hasnain Sheikh; 'Imran.Soomro@jsbl.com'; 'Madihah Islam';
+'maqsood.shahzad@inov8.com.pk'; 'Muhammad Raza Dyer'; 'Adnan Ali Syed';
+'Syed Ali Saqib Zaidi'; 'Raja Abdullah'; 'Saad Sarwar Mirza'; 'Ahmed Ali
+Larik'
+Subject: RE: Weekly Project Status Update Report and Meeting 
+
+  
+
+Dear Akbar, 
+
+  
+
+Please find below updated MFS project status for major milestones. Detailed
+Implementation plan is also attached for your review. 
+
+  
+
+  
+
+
+S. No. 
+
+Task Name 
+
+Planned Start 
+
+Deadline 
+
+Status 
+
+
+1.         
+
+External Dependency - Response on Questionnaire by JSBL Team 
+
+Fri 5/2/14 
+
+Thu 5/8/14 
+
+Alternatively completed through Video Conference sessions 
+
+
+2.         
+
+External Dependency: Relevant JSBL resources and Information availability
+(for Requirement analysis/approval) 
+
+Fri 5/9/14 
+
+Fri 5/26/14 
+
+Completed 
+
+
+3.         
+
+External Dependency: Signoff for JSBL-MFS-Phase1-Requirements 
+
+Mon 5/26/14 
+
+Fri 5/30/14 
+
+Verbal Sign-off completed. Formal Sign-Off awaited 
+
+
+4.         
+
+External Dependency: SBP Application & Product Program Sign Off 
+
+Thu 5/29/14 
+
+Fri 5/30/14 
+
+Completed 
+
+6-11 
+
+
+5.         
+
+External Dependency: Third Party Technical Document/Resource Availability 
+
+*	Oracle Financial Meeting Awaited 
+
+Fri 5/9/14 
+
+Mon 5/19/14 
+
+In Progress. OF Format received. Delayed with minor impact 
+
+
+6.         
+
+External Dependency: Infrastructure & Integration Design Signoff 
+
+Mon 5/26/14 
+
+Tue 5/28/14 
+
+In Progress 
+
+
+7.         
+
+External Dependency: Project - Release Scope/Plan Signoff 
+
+Thu 5/30/14 
+
+Thu 6/2/14 
+
+Agreed in Principal. Sign off pending. 
+
+
+8.         
+
+External dependency: Client Test System Availability/Connectivity 
+
+Fri 6/6/14 
+
+Thu 6/12/14 
+
+Pending. Await response from JS Bank 
+
+
+9.         
+
+External dependency: User Acceptance Test Cases 
+
+Fri 6/6/14 
+
+Thu 6/19/14 
+
+Open 
+
+
+10.     
+
+External Dependency: System Integration Testing 
+
+Fri 7/11/14 
+
+Tue 7/24/14 
+
+Open 
+
+
+11.     
+
+External Dependency- Primary/DR sites Connectivity Establishment 
+
+Fri 7/18/14 
+
+Thu 7/24/14 
+
+Open 
+
+
+12.     
+
+External dependency: User Acceptance Testing/Signoff 
+
+Fri 8/13/14 
+
+Wed 8/27/14 
+
+Open 
+
+
+13.     
+
+External Dependency: GO LIVE approval 
+
+Thu 8/28/14 
+
+Thu 8/29/14 
+
+Open 
+
+
+14.     
+
+External Dependency: SBP Application Submission and Approval (90 Days) 
+
+Mon 6/2/14 
+
+Thu 10/9/14 
+
+Open 
+
+  
+
+Regards, 
+
+  
+
+  
+
+Burhan Ahmad | Project Manager | 
+
+Inov8 Limited 
+
+03224689299 
+
+  
+
+  
+
+  
+
+From: Muhammad Akbar Moghal [ <mailto:Akbar.Moghal@jsbl.com>
+mailto:Akbar.Moghal@jsbl.com] 
+Sent: Thursday, June 12, 2014 10:38 AM
+To: Burhan Ahmad
+Cc: Bashir Sheikh; Hasnain Sheikh;  <mailto:Imran.Soomro@jsbl.com>
+Imran.Soomro@jsbl.com; 'Madihah Islam';
+<mailto:maqsood.shahzad@inov8.com.pk> maqsood.shahzad@inov8.com.pk; Muhammad
+Raza Dyer; Adnan Ali Syed; Syed Ali Saqib Zaidi; Raja Abdullah; Saad Sarwar
+Mirza; Ahmed Ali Larik
+Subject: Weekly Project Status Update Report and Meeting 
+
+  
+
+Dear Burhan, 
+
+Going forward, we would require a weekly update on the "status" of the
+project, especially highlighting the following elements: 
+1.        Time line achievements; delay and their reasons; efforts to
+maintain the agreed schedule; 
+1.        Any open issues, that require closure 
+1.        Queries that require clarification from the bank or other partners
+
+
+
+
+I would appreciate if you could prepare a weekly update report on the same,
+send this out on email every Thursday evening, and then present the same
+with your team on every Friday at 11:00am (1 hour duration total). 
+
+I look forward to the first report today, and then the call tomorrow
+morning, 13th June 2014. 
+
+
+Regards, 
+Akbar
+
+Disclaimer:
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+-------------------
+
+This message (and any associated files) is intended only for the use of the
+individual or entity to which it is addressed and may contain information
+that is confidential, or subject to copyright. You are hereby notified that
+any unauthorized dissemination, copying or distribution of this message or
+files associated with this message, is prohibited. If you are not the
+intended recipient/ you have received this message by error, please notify
+the sender by replying to the message and delete it from your system
+immediately.
+JS Bank Limited disclaims responsibility for any private publication or
+statement by any individual. The views expressed in this email are those of
+the sender and do not necessarily reflect the views of JS Bank Limited. Any
+defamatory statements, infringement or authorization of any infringement of
+copyright or any legal right in email communications by any employee of JS
+Bank Limited is contrary to its policies and outside the scope of the
+employment of the individual concerned. JS Bank Limited will not accept any
+liability in respect of such communications.
+Nor does JS Bank Limited accept responsibility for the security of this
+message and/or any viruses, errors or omissions that are present in this
+message or any attachment, that have arisen as a result of e-mail
+transmission via the Internet or otherwise. [attachment "JSBL - MFS Project
+Status 27-06-14.xlsx" deleted by Adnan Ali Syed/Branchless
+Banking/KHI/South/jsbl] 
+
+
+Disclaimer:
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+-------------------
+
+This message (and any associated files) is intended only for the use of the
+individual or entity to which it is addressed and may contain information
+that is confidential, or subject to copyright. You are hereby notified that
+any unauthorized dissemination, copying or distribution of this message or
+files associated with this message, is prohibited. If you are not the
+intended recipient/ you have received this message by error, please notify
+the sender by replying to the message and delete it from your system
+immediately.
+JS Bank Limited disclaims responsibility for any private publication or
+statement by any individual. The views expressed in this email are those of
+the sender and do not necessarily reflect the views of JS Bank Limited. Any
+defamatory statements, infringement or authorization of any infringement of
+copyright or any legal right in email communications by any employee of JS
+Bank Limited is contrary to its policies and outside the scope of the
+employment of the individual concerned. JS Bank Limited will not accept any
+liability in respect of such communications.
+Nor does JS Bank Limited accept responsibility for the security of this
+message and/or any viruses, errors or omissions that are present in this
+message or any attachment, that have arisen as a result of e-mail
+transmission via the Internet or otherwise. [attachment "JSBL - MFS Project
+Status 10-07-14.xlsx" deleted by Saad Sarwar Mirza/IT/KHI/South/jsbl] 
+
+
+Disclaimer:
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+-------------------
+
+This message (and any associated files) is intended only for the use of the
+individual or entity to which it is addressed and may contain information
+that is confidential, or subject to copyright. You are hereby notified that
+any unauthorized dissemination, copying or distribution of this message or
+files associated with this message, is prohibited. If you are not the
+intended recipient/ you have received this message by error, please notify
+the sender by replying to the message and delete it from your system
+immediately.
+JS Bank Limited disclaims responsibility for any private publication or
+statement by any individual. The views expressed in this email are those of
+the sender and do not necessarily reflect the views of JS Bank Limited. Any
+defamatory statements, infringement or authorization of any infringement of
+copyright or any legal right in email communications by any employee of JS
+Bank Limited is contrary to its policies and outside the scope of the
+employment of the individual concerned. JS Bank Limited will not accept any
+liability in respect of such communications.
+Nor does JS Bank Limited accept responsibility for the security of this
+message and/or any viruses, errors or omissions that are present in this
+message or any attachment, that have arisen as a result of e-mail
+transmission via the Internet or otherwise.
+

@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <bean name="escalationScheduler" class="com.inov8.microbank.webapp.scheduler.ComplaintEscalationScheduler"/>
+
+    <bean name="escalationSchedulerJobDetailBean" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.inov8.microbank.webapp.scheduler.ComplaintEscalationScheduler"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="enableEmail" value="${escalation.enableEmail}"/>
+                <entry key="complaintManager" value-ref="complaintManager"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="escalationSchedulerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="escalationSchedulerJobDetailBean"/>
+        <!-- CRON Daily after every 15 minutes -->
+        <property name="cronExpression" value="0 0/15 * 1/1 * ? *"/>
+        <!--  <property name="cronExpression" value="0 0/1 * 1/1 * ? *" /> -->
+    </bean>
+
+    <bean name="transliterationScheduler" class="com.inov8.microbank.nadraVerisys.job.TransliterationScheduler">
+        <property name="verisysDataManager" ref="verisysDataManager"/>
+    </bean>
+    <bean id="transliterationSchedulerJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="transliterationScheduler"/>
+        <property name="targetMethod" value="process"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <!--<bean name="transliterationSchedulerJobDetailBean" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.inov8.microbank.nadraVerisys.job.TransliterationScheduler" />
+
+    </bean>-->
+
+    <bean id="transliterationSchedulerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="transliterationSchedulerJob"/>
+        <!-- CRON Daily after every 15 minutes -->
+        <property name="cronExpression" value="0 0/3 * 1/1 * ? *"/>
+        <!--  <property name="cronExpression" value="0 0/1 * 1/1 * ? *" /> -->
+    </bean>
+
+    <bean name="SchedulerFundTransferScheduler"
+          class="com.inov8.microbank.server.service.dailyjob.SchedulerFundTransferScheduler" autowire="byName">
+        <!--<property name="filePath" value="${fundTranFilepath}" />-->
+        <property name="commonCommandManager" ref="commonCommandManager"/>
+        <property name="commandManager" ref="cmdManager"></property>
+    </bean>
+
+
+    <bean name="donationPaymentRetailerScheduler"
+          class="com.inov8.microbank.server.service.dailyjob.DonationPaymentRetailerScheduler"/>
+
+    <bean id="fundTransferScheduler" class="com.inov8.microbank.server.service.dailyjob.FundTransferScheduler">
+        <property name="stakeholderBankInfoManager">
+            <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="settlementTransactionDAO">
+            <ref bean="settlementTransactionDAO"/>
+        </property>
+        <property name="settlementSchedulerDAO">
+            <ref bean="settlementSchedulerDAO"/>
+        </property>
+        <property name="settlementManager">
+            <ref bean="settlementManager"/>
+        </property>
+        <property name="filePath" value="${fundTranFilepath}"/>
+        <property name="scanDaysWithNoTransaction" value="${fundTransfer.scanDaysWithNoTransaction}"/>
+    </bean>
+    <bean id="fundTransferSchedulerJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="fundTransferScheduler"/>
+        <property name="targetMethod" value="process"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="fundTransferSchedulerJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="fundTransferSchedulerJob"/>
+        <property name="cronExpression" value="0 5 0 1/1 * ? *"/><!-- Daily @ 12:05 AM Night  -->
+    </bean>
+
+
+    <bean id="whtDeductionJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="whtDeductionScheduler"/>
+        <property name="targetMethod" value="process"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="whtDeductionCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="whtDeductionJob"/>
+        <property name="cronExpression" value="	0 15 16 1/1 * ? *"/>
+    </bean>
+    <bean id="whtDeductionScheduler" class="com.inov8.microbank.tax.job.WHTDeductionScheduler">
+        <property name="taxManager" ref="taxRegimeFacade"/>
+        <property name="dailyWhtDeductionManager" ref="dailyWhtDeductionManager"/>
+
+    </bean>
+
+
+    <bean id="markUserDormantJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="markUserDormantScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="markUserDormantCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="markUserDormantJob"/>
+        <property name="cronExpression" value="0 0/5 * 1/1 * ? *"/>
+    </bean>
+    <bean id="markUserDormantScheduler" class="com.inov8.microbank.server.service.dailyjob.MarkUserDormantScheduler">
+        <property name="appUserManager" ref="userManager"/>
+        <property name="ledgerManager" ref="ledgerManager"/>
+        <property name="accountManager" ref="accountManager"/>
+        <property name="smsSenderService" ref="smsSenderService"/>
+    </bean>
+
+    <!-- Debit Card -->
+
+    <bean id="debitCardImportExportJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="debitCardImportExportScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="debitCardImportExportCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="debitCardImportExportJob"/>
+        <property name="cronExpression" value="0 0/2 * 1/1 * ? *"/>
+    </bean>
+    <bean id="debitCardImportExportScheduler"
+          class="com.inov8.microbank.debitcard.dailyjob.DebitCardDataImportExportScheduler">
+        <property name="debitCardManager" ref="debitCardManager"/>
+    </bean>
+
+    <!-- Debit Card -->
+
+
+    <!-- AirTime Top-Up Scheduler -->
+
+    <bean id="airTimeTopUpScheduler" class="com.inov8.microbank.schedulers.AirTimeTopUpScheduler">
+        <property name="appUserManager" ref="securityFacade"/>
+        <property name="hraManager" ref="hraManager"/>
+        <property name="commandManager" ref="cmdManager"/>
+    </bean>
+    <bean id="airTimeTopUpJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="airTimeTopUpScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="airTimeTopUpSchedulerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="airTimeTopUpJob"/>
+        <property name="cronExpression" value="0 0/3 * 1/1 * ? *"/>
+    </bean>
+
+    <!-- AirTime Top-Up Scheduler -->
+
+    <!-- debitCardFeeDeductionScheduler -->
+
+    <bean id="debitCardFeeDeductionJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="debitCardFeeDeductionScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="debitCardFeeDeductiontCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="debitCardFeeDeductionJob"/>
+        <property name="cronExpression" value="0 0/5 * 1/1 * ? *"/>
+    </bean>
+    <bean id="debitCardFeeDeductionScheduler" class="com.inov8.microbank.schedulers.DebitCardFeeDeductionScheduler">
+        <property name="debitCardManager" ref="debitCardManager"/>
+        <property name="commandManager" ref="cmdManager"/>
+    </bean>
+
+
+    <!-- debitCardFeeDeductionScheduler -->
+
+
+    <!-- Start of debitcardReissuanceScheduler bean-->
+    <bean id="debitcardReissuanceScheduler" class="com.inov8.microbank.schedulers.DebitCardReIssuanceScheduler">
+        <property name="debitCardManager" ref="debitCardManager"/>
+        <property name="commandManager" ref="cmdManager"/>
+    </bean>
+    <bean id="debitcardReissuanceSchedulerCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="debitcardReissuanceSchedulerJobDetail"/>
+        <property name="cronExpression" value="0 0/2 * 1/1 * ? *"/>
+        <!--0 0 12 1/1 * ? *-->
+    </bean>
+    <bean id="debitcardReissuanceSchedulerJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="debitcardReissuanceScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <!-- End of debitcardReissuanceScheduler bean-->
+
+
+    <!-- pendingAccountOpeningScheduler -->
+
+    <bean id="pendingAccountOpeningJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="pendingAccountOpeningScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="pendingAccountOpeningCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="pendingAccountOpeningJob"/>
+        <property name="cronExpression" value="0 0/5 * 1/1 * ? *"/>
+    </bean>
+    <bean id="pendingAccountOpeningScheduler" class="com.inov8.microbank.schedulers.PendingAccountOpeningScheduler">
+        <property name="commandManager" ref="cmdManager"/>
+        <property name="pendingAccountOpeningManager" ref="pendingAcountOpeningManager"></property>
+    </bean>
+
+
+    <!-- pendingAccountOpeningScheduler -->
+
+
+    <!-- MarkAmaAccountDebitBlockScheduler -->
+
+    <bean id="markAmaAccountDebitBlockJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="markAmaAccountDebitBlockScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="markAmaAccountDebitBlockCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="markAmaAccountDebitBlockJob"/>
+        <property name="cronExpression" value="0 */3 * ? * *"/>
+    </bean>
+    <bean id="markAmaAccountDebitBlockScheduler"
+          class="com.inov8.microbank.schedulers.MarkAmaAccountDebitBlockScheduler">
+        <property name="commandManager" ref="cmdManager"/>
+        <property name="appUserManager" ref="securityFacade"></property>
+        <property name="amaBvsConfigurationsDAO" ref="amaBvsConfigurationsDAO"></property>
+
+    </bean>
+
+
+    <!-- ClsPendingAccountOpening -->
+
+    <bean id="clsPendingAccountOpeningJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="clsPendingAccountOpeningScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="clsPendingAccountOpeningCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="clsPendingAccountOpeningJob"/>
+        <property name="cronExpression" value="0 */3 * ? * *"/>
+    </bean>
+    <bean id="clsPendingAccountOpeningScheduler"
+          class="com.inov8.microbank.schedulers.ClsPendingAccountOpeningScheduler">
+        <property name="commandManager" ref="cmdManager"/>
+        <property name="appUserManager" ref="securityFacade"></property>
+        <property name="amaBvsConfigurationsDAO" ref="amaBvsConfigurationsDAO"></property>
+        <property name="clsPendingAccountOpeningDAO" ref="clsPendingAccountOpeningDAO"></property>
+        <property name="clsDebitCreditDAO" ref="clsDebitCreditDAO"></property>
+        <property name="customerDAO" ref="customerDAO"></property>
+        <property name="appUserDAO" ref="appUserDAO"></property>
+        <property name="esbAdapter" ref="esbAdapter"></property>
+        <property name="debitCardModelDAO" ref="debitCardModelDAO"></property>
+
+    </bean>
+
+
+    <!-- ClsPendingAccountOpening -->
+
+
+    <!-- ClsPendingAccountOpeningUpdateAMA -->
+
+    <bean id="clsPendingAccountOpeningApproveUpdateAmaJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="clsPendingAccountOpeningApproveUpdateAmaScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="clsPendingAccountOpeningApproveUpdateAmaCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="clsPendingAccountOpeningApproveUpdateAmaJob"/>
+        <property name="cronExpression" value="0 */3 * ? * *"/>
+    </bean>
+    <bean id="clsPendingAccountOpeningApproveUpdateAmaScheduler"
+          class="com.inov8.microbank.schedulers.ClsPendingAccountOpeningApproveUpdateAmaScheduler">
+        <property name="clsPendingAccountOpeningDAO" ref="clsPendingAccountOpeningDAO"></property>
+        <property name="esbAdapter" ref="esbAdapter"></property>
+        <property name="clsPendingAccountOpeningManager" ref="clsPendingAccountOpeningManager"></property>
+
+    </bean>
+
+
+    <!-- ClsPendingAccountOpeningUpdateAMA -->
+
+
+    <!-- PendingAccountOpeningApprovedSmsAlert -->
+
+    <bean id="clsPendingAccountOpeningApproveSmsAlertJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="clsPendingAccountOpeningApproveSmsAlertScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="clsPendingAccountOpeningApproveSmsAlertCronTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="clsPendingAccountOpeningApproveSmsAlertJob"/>
+        <property name="cronExpression" value="0 */3 * ? * *"/>
+    </bean>
+    <bean id="clsPendingAccountOpeningApproveSmsAlertScheduler"
+          class="com.inov8.microbank.schedulers.ClsPendingAccountOpeningApproveSmsAlertScheduler">
+        <property name="commandManager" ref="cmdManager"/>
+        <property name="clsPendingAccountOpeningManager" ref="clsPendingAccountOpeningManager"></property>
+        <property name="clsPendingAccountOpeningDAO" ref="clsPendingAccountOpeningDAO"></property>
+
+    </bean>
+
+
+    <!-- PendingAccountOpeningApprovedSmsAlert -->
+
+
+    <!--CLSPendingBlinkCustomer-->
+
+
+    <bean id="clsPendingBlinkCustomerJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="clsPendingBlinkCustomerScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="clsPendingBlinkCustomerCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="clsPendingBlinkCustomerJob"/>
+        <property name="cronExpression" value="0 0/5 * 1/1 * ? *"/>
+    </bean>
+    <bean id="clsPendingBlinkCustomerScheduler" class="com.inov8.microbank.schedulers.ClsPendingBlinkCustomerScheduler">
+        <property name="commandManager" ref="cmdManager"/>
+        <property name="pendingAccountOpeningManager" ref="clsPendingBlinkCustomerManager"></property>
+    </bean>
+
+
+    <!--CLSPendingBlinkCustomer-->
+
+
+    <!-- advanceSalaryLoanDeductionScheduler -->
+
+    <bean id="advanceSalaryLoanJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="advanceSalaryLoanScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="advanceSalaryLoanCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="advanceSalaryLoanJob"/>
+        <property name="cronExpression" value="0 0/5 * 1/1 * ? *"/>
+    </bean>
+    <bean id="advanceSalaryLoanScheduler" class="com.inov8.microbank.schedulers.AdvanceSalaryLoanScheduler">
+        <property name="commandManager" ref="cmdManager"/>
+        <property name="advanceSalaryLoanManager" ref="advanceSalaryLoanManager"></property>
+        <property name="advanceSalaryLoanDAO" ref="advanceSalaryLoanDao"></property>
+    </bean>
+
+
+    <!-- advanceSalaryLoanDeductionScheduler -->
+    <!--SalariedAccountProfitCreditDebitScheduler-->
+    <bean id="salariedAccountsProfitCreditDebitJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="salariedAccountsProfitCreditDebitScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="salariedAccountsProfitCreditDebitCronTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="salariedAccountsProfitCreditDebitJob"/>
+        <property name="cronExpression" value="0 0/5 * 1/1 * ? *"/>
+    </bean>
+    <bean id="salariedAccountsProfitCreditDebitScheduler"
+          class="com.inov8.microbank.schedulers.SalariedAccountsProfitCreditDebitScheduler">
+        <property name="commandManager" ref="cmdManager"/>
+        <property name="salariedAccountProfitcreditDebitManager"
+                  ref="salariedAccountProfitcreditDebitManager"></property>
+        <!--		<property name="sala" ref="salarie"></property>-->
+    </bean>
+
+    <!--SalariedAccountProfitCreditDebitScheduler-->
+
+    <!-- debitCardFeeChargesDeductionScheduler -->
+
+    <bean id="debitCardFeeChargesDeductionJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="debitCardFeeChargesDeductionScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="debitCardChargesDeductiontCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="debitCardFeeChargesDeductionJob"/>
+        <property name="cronExpression" value="0 0/5 * 1/1 * ? *"/>
+    </bean>
+    <bean id="debitCardFeeChargesDeductionScheduler"
+          class="com.inov8.microbank.schedulers.DebitCardFeeChargesScheduler">
+        <property name="debitCardManager" ref="debitCardManager"/>
+        <property name="commandManager" ref="cmdManager"/>
+
+    </bean>
+
+
+    <bean id="walletToWalletTransactionJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="walletToWalletTransactionScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="walletToWalletTransactionCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="walletToWalletTransactionJob"/>
+        <property name="cronExpression" value="0 0/5 * 1/1 * ? *"/>
+    </bean>
+    <bean id="walletToWalletTransactionScheduler"
+          class="com.inov8.microbank.schedulers.WalletToWalletTransactionScheduler">
+        <property name="walletSafRepoDAO" ref="walletSafRepoDAO"/>
+        <property name="commonCommandManager" ref="commonCommandManager"/>
+        <property name="commandManager" ref="cmdManager"/>
+        <property name="financialIntegrationManager" ref="financialIntegrationManager"/>
+        <property name="manualReversalFacade" ref="manualReversalFacade"/>
+        <property name="settlementManager">
+            <ref bean="settlementFacade"/>
+        </property>
+        <property name="commissionManager" ref="commissionManager"/>
+        <property name="creditAccountQueingPreProcessor">
+            <ref bean="creditAccountQueingPreProcessor"/>
+        </property>
+        <property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"></property>
+        <property name="commissionTransactionViewFacade" ref="commissionTransactionViewFacade"/>
+        <property name="portalOlaFacade" ref="portalOlaFacade"/>
+        <property name="manualAdjustmentManager" ref="manualAdjustmentManager"/>
+
+    </bean>
+
+    <!-- debitCardFeeDeductionScheduler -->
+
+    <bean id="bulkAgentCreationScheduler" class="com.inov8.microbank.schedulers.BulkAgentCreationScheduler">
+        <property name="bulkAgentCreationDAO" ref="bulkAgentCreationDAO"/>
+        <property name="mfsAccountFacade" ref="mfsAccountFacade"/>
+        <property name="securityFacade" ref="securityFacade"/>
+        <property name="actionLogManager" ref="actionLogManager"/>
+        <property name="schedulerManager" ref="schedulerManager"/>
+    </bean>
+    <bean id="bulkAgentCreationJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="bulkAgentCreationScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="bulkAgentCreationSchedulerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="bulkAgentCreationJob"/>
+        <property name="cronExpression" value="0 0/15 * 1/1 * ? *"/>
+    </bean>
+
+    <bean id="agentCasheUpdateJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="agentCasheUpdateScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="casheUpdateCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="agentCasheUpdateJob"/>
+        <property name="cronExpression" value="0 0 0/3 1/1 * ? *"/>
+    </bean>
+    <bean id="agentCasheUpdateScheduler" class="com.inov8.microbank.server.service.dailyjob.CasheJob">
+        <property name="retailerContactManager" ref="retailerContactManager"/>
+
+    </bean>
+
+
+    <bean name="donationPaymentRetailerSchedulerJobDetailBean"
+          class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.inov8.microbank.server.service.dailyjob.DonationPaymentRetailerScheduler"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="switchController">
+                    <ref bean="switchController"/>
+                </entry>
+                <entry key="transactionModuleManager">
+                    <ref bean="transactionModuleManager"/>
+                </entry>
+                <entry key="supplierBankInfoManager">
+                    <ref bean="supplierBankInfoManager"/>
+                </entry>
+                <entry key="stakeholderBankInfoManager">
+                    <ref bean="stakeholderBankInfoManager"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="donationPaymentRetailerSchedulerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="donationPaymentRetailerSchedulerJobDetailBean"/>
+        <!-- CRON Daily after every 1 minutes -->
+        <property name="cronExpression" value="0 0/1 * 1/1 * ? *"/>
+    </bean>
+
+
+    <bean name="donationPaymentCustomerScheduler"
+          class="com.inov8.microbank.server.service.dailyjob.DonationPaymentCustomerScheduler"/>
+
+    <bean name="donationPaymentCustomerSchedulerJobDetailBean"
+          class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.inov8.microbank.server.service.dailyjob.DonationPaymentCustomerScheduler"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="switchController">
+                    <ref bean="switchController"/>
+                </entry>
+                <entry key="transactionModuleManager">
+                    <ref bean="transactionModuleManager"/>
+                </entry>
+                <entry key="transactionDetailMasterManager">
+                    <ref bean="transactionDetailMasterManager"/>
+                </entry>
+                <entry key="supplierBankInfoManager">
+                    <ref bean="supplierBankInfoManager"/>
+                </entry>
+                <entry key="stakeholderBankInfoManager">
+                    <ref bean="stakeholderBankInfoManager"/>
+                </entry>
+                <entry key="olaVeriflyFinancialInstitution">
+                    <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="donationPaymentCustomerSchedulerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="donationPaymentCustomerSchedulerJobDetailBean"/>
+        <!-- CRON Daily after every 1 minutes -->
+        <property name="cronExpression" value="0 0/1 * 1/1 * ? *"/>
+    </bean>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--				<ref bean="pendingAccountOpeningCronTrigger"></ref>-->
+                <!--								<ref bean="clsPendingBlinkCustomerCronTrigger"></ref>-->
+                <!--				<ref bean="markAmaAccountDebitBlockCronTrigger"></ref>-->
+<!--                <ref bean="clsPendingAccountOpeningCronTrigger"></ref>-->
+<!--                <ref bean="clsPendingAccountOpeningApproveUpdateAmaCronTrigger"></ref>-->
+                <!--				<ref bean="clsPendingAccountOpeningApproveSmsAlertCronTrigger"></ref>-->
+
+                <!--<ref bean="walletToWalletTransactionCronTrigger"/>-->
+                <!--<ref bean="bulkPaymentsCronTrigger"/>-->
+                <!--				<ref bean="debitCardChargesDeductiontCronTrigger" />-->
+                <!--<ref bean="disbursementCronTrigger" />-->
+                <!--<ref bean="bulkAgentCreationSchedulerTrigger" />-->
+                <!--				<ref bean="debitCardImportExportCronTrigger" />-->
+
+                <!--				<ref bean="advanceSalaryLoanCronTrigger" />-->
+
+                <!--				<ref bean="advanceSalaryLoanCronTrigger" />-->
+                <!--				<ref bean="debitcardReissuanceSchedulerCronTrigger"/>-->
+
+                <!--<ref bean="airTimeTopUpSchedulerTrigger" />-->
+                <!--				<ref bean="debitCardFeeDeductiontCronTrigger" />-->
+                <!--<ref bean="debitCardChargesDeductiontCronTrigger" />-->
+                <!-- <ref bean="casheUpdateCronTrigger" /> -->
+                <!--				 <ref bean="markUserDormantCronTrigger" />-->
+                <!--<ref bean="fundTransferSchedulerJobCronTrigger"/>-->
+                <!--<ref bean="whtDeductionCronTrigger" />
+                  <ref bean="transliterationSchedulerTrigger" />
+              &lt;!&ndash; <ref bean="bulkPaymentsCronTrigger"/>  &ndash;&gt;
+                <ref bean="markUserDormantCronTrigger" />-->
+                <!--<ref bean="redemptinReversalCronTrigger"/>
+
+
+                <ref bean="bulkPaymentsCronTrigger"/>
+                <ref bean="fundTransferSchedulerJobCronTrigger"/>
+
+                <ref bean="failedSmsCronTrigger"/>
+                <ref bean="cronTriggerMonitoringScheduler" />
+                <ref bean="bulkPaymentsCronTrigger"/>-->
+                <!-- <ref bean="customerBalanceDecryptionCronTrigger"/> -->
+                <!-- <ref bean="agentMonthlyTxStatsCronTrigger"/>
+                <ref bean="agentDailyTxStatsCronTrigger"/>
+                <ref bean="commissionCronTrigger" />
+                <ref bean="disbursementCronTrigger" />
+                <ref bean="escalationSchedulerTrigger" />
+                <ref bean="topupCronTrigger" />
+                <ref bean="commissionCronTrigger" />
+                <ref bean="franchiseCommissionCronTrigger" />
+                <ref bean="donationPaymentRetailerSchedulerTrigger" />
+                <ref bean="donationPaymentCustomerSchedulerTrigger" />
+
+                <ref bean="bulkPaymentsCronTrigger"/>
+                <ref bean="bulkPayment_OrphanTxCronTrigger"/>
+                <ref bean="orphanTxCronTrigger" />
+                <ref bean="C2C_OrphanTxCronTrigger" />
+                <ref bean="disbursementCronTrigger" />
+                <ref bean="customerBalanceDecryptionCronTrigger"/>
+                <ref bean="appUserAccountCheckCronTrigger" /> -->
+                <!--				<ref bean=	"salariedAccountsProfitCreditDebitCronTrigger"/>-->
+
+
+            </list>
+        </property>
+    </bean>
+
+    <bean id="exporter" class="org.springframework.jmx.export.MBeanExporter">
+        <property name="beans">
+            <map>
+                <entry key="bean:name=escalationSchedulerTrigger" value-ref="escalationSchedulerTrigger"/>
+            </map>
+        </property>
+    </bean>
+
+
+</beans>

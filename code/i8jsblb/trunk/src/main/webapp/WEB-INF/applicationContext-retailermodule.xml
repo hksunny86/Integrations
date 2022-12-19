@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<!-- DAO -->
+	<bean id="retailerTransactionListViewDAO"
+		class="com.inov8.microbank.server.dao.retailermodule.hibernate.RetailerTransactionListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="retailerCommissionListViewDAO"
+		class="com.inov8.microbank.server.dao.retailermodule.hibernate.RetailerCommissionListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="retailerContactDAO"
+		class="com.inov8.microbank.server.dao.retailermodule.hibernate.RetailerContactHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="retailerDAO" ref="retailerDAO" />
+ 	</bean>
+
+	<bean id="retailerListViewDAO"
+		class="com.inov8.microbank.server.dao.retailermodule.hibernate.RetailerListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="retailerContactListViewDAO"
+		class="com.inov8.microbank.server.dao.retailermodule.hibernate.RetailerContactListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="retailerDAO"
+		class="com.inov8.microbank.server.dao.retailermodule.hibernate.RetailerHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="distributorDAO" ref="distributorDAO" />
+	</bean>
+
+	<bean id="goldenNosDAO"
+		class="com.inov8.microbank.server.dao.portal.mfsaccountmodule.hibernate.GoldenNosHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="goldenNoSequenceGenerator"
+		class="com.inov8.framework.server.dao.framework.jdbc.OracleSequenceGeneratorJdbcDAO"
+		init-method="initDao">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sequenceName" value="GOLDEN_NOS_SEQ" />
+	</bean>
+
+  <bean id="partnerDAO" class="com.inov8.microbank.server.dao.usergroupmodule.hibernate.PartnerHibernateDAO">
+	   <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>  
+  <bean id="concernPartnerDAO" class="com.inov8.microbank.server.dao.portal.concernmodule.hibernate.ConcernPartnerHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>  
+
+  <bean id="partnerPermissionGroupDAO" class="com.inov8.microbank.server.dao.usergroupmodule.hibernate.PartnerPermissionGroupHibernateDAO">
+	   <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>  
+<bean id="retailerSequenceGenerator" class="com.inov8.framework.server.dao.framework.jdbc.OracleSequenceGeneratorJdbcDAO" init-method="initDao">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="sequenceName" value="RETAILER_APPLICATION_NOS_SEQ"/>
+  </bean>
+
+	<bean id="retailerTransactionViewDao" class="com.inov8.microbank.server.dao.retailermodule.hibernate.RetailerTransactionViewHibernateDao" autowire="byName">
+	</bean>
+	
+	<bean id="handlerDAO"
+		class="com.inov8.microbank.server.dao.handlermodule.hibernate.HandlerHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="handlerSearchViewDAO"
+		class="com.inov8.microbank.server.dao.handlermodule.hibernate.HandlerSearchViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- Service -->
+	<bean id="retailerTransactionManager"
+		parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.inov8.microbank.server.service.retailermodule.RetailerTransactionManagerImpl" autowire="byName">
+				<property name="retailerTransactionListViewDAO">
+					<ref local="retailerTransactionListViewDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="retailerManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean
+				class="com.inov8.microbank.server.service.retailermodule.RetailerManagerImpl">
+				<property name="retailerListViewDAO">
+					<ref local="retailerListViewDAO" />
+				</property>
+				<property name="retailerDAO">
+					<ref local="retailerDAO" />
+				</property>
+		       <property name="partnerDAO">
+        		  <ref local="partnerDAO"/>
+       			</property>
+       			<property name="concernPartnerDAO">
+          		  <ref local="concernPartnerDAO"/>
+        		</property> 
+       		   <property name="partnerPermissionGroupDAO">
+          			<ref local="partnerPermissionGroupDAO"/>
+       		   </property>								
+       		   <property name="actionLogManager" ref="actionLogManager"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="retailerContactManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean
+				class="com.inov8.microbank.server.service.retailermodule.RetailerContactManagerImpl">
+				<property name="retailerContactSearchViewDAO" ref="retailerContactSearchViewDAO"/>
+				<property name="retailerContactDAO">
+					<ref local="retailerContactDAO" />
+				</property>
+				<property name="retailerContactListViewDAO">
+					<ref local="retailerContactListViewDAO" />
+				</property>
+
+				<property name="userDeviceAccountsDAO">
+					<ref bean="userDeviceAccountsDAO" />
+				</property>
+
+				<property name="goldenNosDAO">
+					<ref local="goldenNosDAO" />
+				</property>
+
+	    		<property name="addressDAO" ref="addressDAO"/>
+	    		<property name="retailerContactAddressesDAO" ref="retailerContactAddressesDAO"/>
+	    		
+	    		<property name="actionLogManager" ref="actionLogManager"/>
+				
+				<property name="smsSender" ref="smsSender" />
+				<property name="appUserPartnerGroupDAO" ref="appUserPartnerGroupDAO"/>
+				<property name="sequenceGenerator"
+					ref="goldenNoSequenceGenerator" />
+
+				<property name="appUserManager" ref="userManager" />
+				<property name="appUserDAO">
+					<ref bean="appUserDAO" />
+				</property>
+				<property name="retailerSequenceGenerator" ref="retailerSequenceGenerator"/>
+			</bean>
+		</property>
+	</bean>
+
+
+	<bean id="retailerCommissionManager"
+		parent="baseTransactionProxy">
+		<property name="target">
+			<bean
+				class="com.inov8.microbank.server.service.retailermodule.RetailerCommissionManagerImpl">
+				<property name="retailerCommissionListViewDAO">
+					<ref local="retailerCommissionListViewDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Facade -->
+	<bean id="retailerFacade"
+		class="com.inov8.microbank.server.facade.RetailerFacadeImpl">
+		<property name="frameworkExceptionTranslator">
+			<ref bean="frameworkExceptionTranslator" />
+		</property>
+		<property name="retailerCommissionManager">
+			<ref local="retailerCommissionManager" />
+		</property>
+		<property name="retailerManager">
+			<ref local="retailerManager" />
+		</property>
+		<property name="retailerTransactionManager">
+			<ref local="retailerTransactionManager" />
+		</property>
+
+		<property name="retailerContactManager">
+			<ref local="retailerContactManager" />
+		</property>
+
+	</bean>
+	
+	<bean id="handlerManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean
+				class="com.inov8.microbank.server.service.handlermodule.HandlerManagerImpl">
+				<property name="handlerDAO">
+					<ref local="handlerDAO" />
+				</property>
+				<property name="handlerSearchViewDAO">
+					<ref local="handlerSearchViewDAO" />
+				</property>
+       		   <property name="actionLogManager" ref="actionLogManager"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="bulkAgentCreationDAO"
+		  class="com.inov8.microbank.server.dao.retailermodule.hibernate.BulkAgentCreationHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+</beans>

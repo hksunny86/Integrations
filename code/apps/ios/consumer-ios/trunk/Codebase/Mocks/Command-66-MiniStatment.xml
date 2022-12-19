@@ -1,0 +1,11 @@
+
+<!-- Response -->
+<msg id="66">
+    <trans>
+        <trn DATE="07/10/16" DATEF="07/10/2016 16:51 PM" DESCRIPTION="Customer Retail Payment" TAMT="100.0" TAMTF="100.00" />
+        <trn DATE="07/10/16" DATEF="07/10/2016 16:48 PM" DESCRIPTION="Customer Retail Payment" TAMT="255.0" TAMTF="255.00" />
+        <trn DATE="07/10/16" DATEF="07/10/2016 12:09 PM" DESCRIPTION="Account To CNIC" TAMT="1003.0" TAMTF="1,003.00" />
+<!--        <trn DATE="07/10/16" DATEF="07/10/2016 12:04 PM" DESCRIPTION="To Mobile Wallet" TAMT="1003.0" TAMTF="1,003.00" />-->
+<!--        <trn DATE="07/10/16" DATEF="07/10/2016 11:41 AM" DESCRIPTION="To Mobile Wallet" TAMT="100.0" TAMTF="100.00" />-->
+    </trans>
+</msg>

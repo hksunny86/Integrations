@@ -1,0 +1,132 @@
+
+
+-dontwarn org.xmlpull.v1.**
+-dontwarn org.bouncycastle.**
+-dontwarn org.apache.commons.**
+-dontwarn org.apache.httpcomponents.**
+-dontwarn android.support.v4.**
+-dontwarn com.andreabaccega.**
+-dontwarn org.apache.http.**
+-dontwarn android.support.v7.**
+-dontwarn com.google.android.gms.**
+-dontwarn com.google.android.gms.internal.**
+-dontwarn com.android.biomini.**
+-dontwarn com.hardware.usb.**
+-dontwarn okhttp3.internal.platform.*
+-dontwarn org.conscrypt.*
+-dontwarn android.net.http.AndroidHttpClient.**
+-dontwarn com.android.volley.toolbox.**
+-dontwarn sun.misc.Unsafe
+-dontwarn com.amazonaws.**
+-dontwarn javax.annotation.**
+-dontwarn android.bluetooth.BluetoothDevice.**
+-dontwarn android.bluetooth.BluetoothAdapter.**
+-dontwarn com.yn020.yn020host.**
+-dontwarn com.yn020.yn020host.HostAPI.**
+-dontwarn com.HEROFUN.**
+-dontwarn com.inov8.agentmate.bvs.paysys.**
+
+-keep class com.google.android.gms.**{*;}
+-keep class com.google.android.gms.internal.**{*;}
+-keep class org.xmlpull.v1.**{*;}
+-keep class com.amazonaws.**{*;}
+-keep class org.apache.http.**{*;}
+-keep class com.HEROFUN.LAPI.**{*;}
+-keep class com.HEROFUN.HAPI.**{*;}
+-keep class com.HEROFUN.HostUsb.**{*;}
+-keep class com.inov8.agentmate.util.**{*;}
+-keep class com.inov8.agentmate.bvs.paysys.NadraRestClient.**{*;}
+-keep class com.inov8.agentmate.bvs.paysys.**{*;}
+-keep class com.inov8.agentmate.bvs.paysys.OTCClient.**{*;}
+-keep class com.HEROFUN.HostUsb.**{*;}
+-keep class android.bluetooth.BluetoothDevice.**{*;}
+-keep class android.bluetooth.BluetoothAdapter.**{*;}
+
+-dontwarn retrofit2.**
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn org.opencv.**
+-dontwarn com.squareup.picasso.**
+-dontwarn org.codehaus.**
+-dontwarn com.inov8.agentmate.util.**
+-dontwarn com.paysyslabs.instascan.**
+-dontwarn com.paysyslabs.instascan.Fingers.**
+-dontwarn com.inov8.agentmate.bvs.**
+-dontwarn com.inov8.agentmate.bluetoothPrinter.**
+-dontwarn com.hoin.btsdk.BluetoothService.**
+-dontwarn com.hoin.btsdk.PrintPic.**
+
+-dontwarn com.suprema.BioMiniFactory.**
+-dontwarn com.suprema.CaptureResponder.**
+-dontwarn com.suprema.IBioMiniDevice.**
+-dontwarn com.common.pos.api.util.posutil.PosUtil.**
+-dontwarn com.suprema.**
+-dontwarn com.example.ftransisdk.FrigerprintControl.**
+-dontwarn com.common.pos.api.util.posutil.**
+-dontwarn com.common.pos.api.util.**
+-dontwarn com.example.ftransisdk.**
+
+-keep class com.hoin.btsdk.BluetoothService.**{*;}
+-keep class com.hoin.btsdk.PrintPic.**{*;}
+-keep class org.opencv.**{*;}
+-keep class com.inov8.agentmate.bluetoothPrinter.SpeedXBTPrinter.**{*;}
+-keep class com.inov8.agentmate.bvs.**{*;}
+-keep class com.paysyslabs.instascan.**{*;}
+-keep class com.google.gson.examples.android.model.* { *; }
+-keep public class com.google.android.gms.* { public *; }
+-keep class com.google.gson.examples.android.model.** { *; }
+
+-keep class com.suprema.BioMiniFactory.** { *; }
+-keep class com.suprema.CaptureResponder.** { *; }
+-keep class com.suprema.IBioMiniDevice.** { *; }
+-keep class com.suprema.IUsbEventHandler.** { *; }
+-keep class com.common.pos.api.util.posutil.PosUtil.** { *; }
+-keep class com.common.pos.api.util.** { *; }
+-keep class com.example.ftransisdk.** { *; }
+-keep class com.suprema.** { *; }
+
+-keep class com.inov8.agentmate.bvs.P41M2.P41M2Handler.**{*;}
+-keep class com.inov8.agentmate.bvs.supremaSlim2.SupremaSlim2Handler**{*;}
+
+-keep class com.paysyslabs.instascan.Fingers.**
+-keep class com.paysyslabs.instascan.**
+-keep class com.paysyslabs.instascan.NadraActivity.**{*;}
+
+-keep class com.google.gson.** { *; }
+-keep class org.opencv.** {*;}
+-keep class android.support.v4.** { *; }
+-keep class android.support.v7.** { *; }
+-keep class com.android.biomini.** { *; }
+
+
+##---------------Begin: proguard configuration for Gson  ----------
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+-keep class com.inov8.agentmate.model.NadraRequestModel { *; }
+-keep class com.inov8.agentmate.model.NadraResponseModel { *; }
+#-keep class com.google.gson.stream.** { *; }
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keepclasseswithmembernames,includedescriptorclasses class * {
+    native <methods>;
+}
+
+-keepclassmembers class com.inov8.agentmate.** {
+    public protected <fields>;
+    private *** string*;
+}
+
+#-obfuscatecode class com.inov8.agentmate.**
+
+-keepattributes *

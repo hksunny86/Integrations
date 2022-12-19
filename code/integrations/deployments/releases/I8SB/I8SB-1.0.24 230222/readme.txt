@@ -1,0 +1,1 @@
+primaryNic set in importCardRequest in card reissuance api

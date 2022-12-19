@@ -1,0 +1,1 @@
+add finger template type WSQ in upgrade L0 to L1 account from wallet app

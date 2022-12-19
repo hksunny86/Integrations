@@ -1,0 +1,2 @@
+Insert into card_status (CARD_STATUS_ID,NAME,CREATED_BY,CREATED_ON,UPDATED_BY,UPDATED_ON,VERSION_NO) values 
+(9,'Initiated',2,sysdate,2,sysdate,0);

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="@dimen/margin_standard"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/dialogSideMargin"
+    android:layout_marginRight="@dimen/dialogSideMargin"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialogHeaderHeightNormal"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/header_dialog_bg">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/imageViewAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_normal"
+            app:srcCompat="@drawable/alert_popup_icon" />
+
+        <TextView
+            android:id="@+id/textViewAlertHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_toRightOf="@+id/imageViewAlert"
+            android:text="Account Opening"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textViewTextSizeXLarge" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutHeader"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginLeft="@dimen/margin_Xlarge"
+        android:layout_marginRight="@dimen/margin_Xlarge"
+
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txtLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/textViewFieldMargin"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textViewTextSizeNormal"
+                android:text="Open an L0 account without Biometric?"
+                android:singleLine="false"/>
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scroll_view"
+        android:layout_above="@+id/bottom_layout"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:id="@+id/layoutBtns2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_standard"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/btnYes"
+                android:layout_width="@dimen/dialogButtonWidth"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_marginRight="@dimen/margin_small"
+                android:background="@drawable/button_next_selector"
+                android:text="@string/yes"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/buttonTextSizeNormal" />
+
+            <Button
+                android:id="@+id/btnRetry"
+                android:layout_width="@dimen/dialogButtonWidth"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_marginLeft="@dimen/margin_small"
+                android:layout_toRightOf="@id/btnYes"
+                android:background="@drawable/button_cancel_selector"
+                android:text="@string/retry"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/buttonTextSizeNormal" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

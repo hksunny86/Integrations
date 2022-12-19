@@ -1,0 +1,1 @@
+card product type id param added in debit card issuance inquiry request

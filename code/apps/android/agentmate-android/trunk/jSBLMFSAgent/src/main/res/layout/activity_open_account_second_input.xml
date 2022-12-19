@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/offwhite"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/container_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_layout" />
+
+    <include
+        android:id="@+id/container_heading"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/heading_layout" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none" >
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <RelativeLayout
+                android:id="@+id/layoutInputs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:id="@+id/lblField1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="First Name"
+                    android:textColor="@color/text_grey"
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/input1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField1"
+                    android:background="@drawable/rounded_bg"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                    android:imeOptions="actionNext"
+                    android:maxLength="12"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:singleLine="true" >
+
+                    <requestFocus />
+                </EditText>
+
+                <TextView
+                    android:id="@+id/lblField2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input1"
+                    android:layout_marginTop="10dp"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="Last Name"
+                    android:textColor="@color/text_grey"
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/input2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField2"
+                    android:background="@drawable/rounded_bg"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                    android:imeOptions="actionDone"
+                    android:maxLength="5"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:singleLine="true" >
+                </EditText>
+
+                <RelativeLayout
+                    android:id="@+id/layout_initial_amt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/input2"
+                        >
+
+                    <TextView
+                        android:id="@+id/lblField_initial_amt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:padding="2dp"
+                        android:shadowColor="@color/white"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="0"
+                        android:text="Initial Deposit"
+                        android:textColor="@color/text_grey"
+                        android:textSize="18sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/lblField_initial_amt_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/input2"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@+id/lblField_initial_amt"
+                        android:padding="2dp"
+                        android:shadowColor="@color/white"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="0"
+                        android:text="220 to 3000"
+                        android:textColor="@color/text_blue"
+                        android:textSize="15sp"
+                        android:textStyle="normal" />
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/input_initial_amt"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_initial_amt"
+                    android:background="@drawable/rounded_bg"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:textColor="@color/text_grey" >
+                </EditText>
+
+                <TextView
+                    android:id="@+id/lblField3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input_initial_amt"
+                    android:layout_marginTop="10dp"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="Date of Birth"
+                    android:textColor="@color/text_grey"
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
+
+                <RelativeLayout
+                    android:id="@+id/input3_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField3"
+                    android:background="@drawable/spinner_bg" >
+
+                    <TextView
+                        android:id="@+id/input3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:text="Select Date"
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/lblField4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input3_layout"
+                    android:layout_marginTop="10dp"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="CNIC Expiry Date"
+                    android:textColor="@color/text_grey"
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
+
+                <RelativeLayout
+                    android:id="@+id/input4_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField4"
+                    android:background="@drawable/spinner_bg" >
+
+                    <TextView
+                        android:id="@+id/input4"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:text="Select Date"
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/lblFieldcnicseen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input4_layout"
+                    android:layout_marginTop="10dp"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="Is CNIC Seen?"
+                    android:textColor="@color/text_grey"
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_cnicseen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input4_layout"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/lblFieldcnicseen"
+                    android:checked="false"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/lblField5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblFieldcnicseen"
+                    android:layout_marginTop="10dp"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="Account Level"
+                    android:textColor="@color/text_grey"
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
+
+                <Spinner
+                    android:id="@+id/spinneraccountLevel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblField5"
+                    android:background="@drawable/spinner_bg"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="18dp" >
+
+                    <requestFocus />
+                </Spinner>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lblAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/layoutInputs"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:shadowColor="@color/white"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="0"
+                android:textColor="@color/skyBlue"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="220dp"
+                android:layout_height="48dp"
+                android:layout_below="@id/lblAlert"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_next_selector"
+                android:text="@string/next"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

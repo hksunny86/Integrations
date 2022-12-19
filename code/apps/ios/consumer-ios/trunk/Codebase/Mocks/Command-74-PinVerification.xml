@@ -1,0 +1,6 @@
+<!-- Pin Verfication Response -->
+<msg id="74">
+    <params>
+        <param name="DTID">5</param>
+    </params>
+</msg>

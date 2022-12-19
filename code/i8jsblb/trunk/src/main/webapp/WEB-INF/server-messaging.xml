@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd
+           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+    <bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+        <property name="connectionFactory" ref="connectionFactory"></property>
+    </bean>
+
+    <!-- Configuration for Publishing Jms Messages -->
+    <bean id="activeMqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+        <property name="disableTimeStampsByDefault" value="true"/>
+        <property name="useAsyncSend" value="true"/>
+        <property name="nonBlockingRedelivery" value="true"/>
+        <property name="redeliveryPolicy" ref="redeliveryPolicy"/>
+        <property name="trustAllPackages" value="true"/>
+    </bean>
+
+    <bean id="redeliveryPolicy" class="org.apache.activemq.RedeliveryPolicy">
+        <property name="initialRedeliveryDelay" value="10000"/>
+        <property name="maximumRedeliveryDelay" value="50000"/>
+        <property name="maximumRedeliveries" value="3"/>
+        <property name="redeliveryDelay" value="50000"/>
+        <property name="useExponentialBackOff" value="true"/>
+    </bean>
+
+    <bean id="outgoingSmsQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/outgoingSmsQueue"/>
+    </bean>
+
+    <bean id="franchiseQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/franchiseQueue"/>
+    </bean>
+
+    <bean id="delayedSmsQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/delayedSmsQueue"/>
+    </bean>
+
+    <bean id="emailServiceQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/emailServiceQueue"/>
+    </bean>
+
+    <bean id="bulkAgentQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/bulkAgentQueue"/>
+    </bean>
+
+    <!-- 	<bean id="bulkWalkInAccountsQueue" class="org.apache.activemq.command.ActiveMQQueue">
+            <property name="physicalName" value="queue/bulkWalkInAccountsQueue"/>
+        </bean>
+     -->
+
+    <bean id="thirdPartyCashOutQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/thirdPartyCashOutQueue"/>
+    </bean>
+
+    <bean id="phoenixBillPaymentQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/phoenixBillPaymentQueue"/>
+    </bean>
+
+    <bean id="creditAccountQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/creditAccountQueue"/>
+    </bean>
+
+    <bean id="ivrAuthenticationQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/ivrAuthenticationQueue"/>
+    </bean>
+
+    <bean id="bulkCustomerQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/bulkCustomerQueue"/>
+    </bean>
+
+    <bean id="ibftIncomingQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/ibftIncomingQueue"/>
+    </bean>
+
+    <bean id="walletToCoreIncomingQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/walletToCoreIncomingQueue"/>
+    </bean>
+
+    <bean id="creditPaymentQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/creditPaymentQueue"/>
+    </bean>
+
+    <bean id="debitPaymentQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/debitPaymentQueue"/>
+    </bean>
+
+    <bean id="bulkManualAdjustmentQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/bulkManualAdjustmentQueue"/>
+    </bean>
+
+    <bean id="bulkReversalQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/bulkReversalQueue"/>
+    </bean>
+
+    <bean id="activemqDLQ" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="ActiveMQ.DLQ"/>
+    </bean>
+
+    <bean id="coreAdviceQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/coreAdviceQueue"/>
+    </bean>
+
+    <bean id="reversalReqAdviceQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/reversalReqAdviceQueue"/>
+    </bean>
+
+    <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="activeMqConnectionFactory"/>
+        <property name="sessionCacheSize" value="200"/>
+        <property name="cacheProducers" value="true"/>
+        <property name="cacheConsumers" value="true"/>
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="deliveryPersistent" value="true"/>
+        <property name="explicitQosEnabled" value="true"/>
+        <property name="messageIdEnabled" value="false"/>
+        <property name="messageTimestampEnabled" value="false"/>
+    </bean>
+
+    <bean id="nonTransactedJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="sessionTransacted" value="false"/>
+        <property name="deliveryPersistent" value="true"/>
+        <property name="explicitQosEnabled" value="true"/>
+        <property name="messageIdEnabled" value="false"/>
+        <property name="messageTimestampEnabled" value="false"/>
+    </bean>
+
+    <bean id="jmsProducer" parent="baseTransactionProxy">
+        <property name="target">
+            <bean class="com.inov8.microbank.server.service.jms.JmsProducerImpl">
+                <property name="jmsTemplate" ref="jmsTemplate"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="nonTransactedJmsProducer" class="com.inov8.microbank.server.service.jms.JmsProducerImpl">
+        <property name="jmsTemplate" ref="nonTransactedJmsTemplate"/>
+    </bean>
+
+    <bean id="jmsProducerFacade" class="com.inov8.microbank.server.facade.JmsProducerFacadeImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+    <!-- End Configuration for Publishing Jms Messages -->
+
+    <bean id="dlqMessageListener" class="com.inov8.microbank.server.messaging.listener.DlqMessageListener"
+          autowire="byName">
+    </bean>
+
+    <bean id="dlqMessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="activemqDLQ"/>
+        <property name="messageListener" ref="dlqMessageListener"/>
+    </bean>
+
+    <!-- this is the Message Driven POJO (MDP) -->
+    <bean id="smsMessageListener" class="com.inov8.microbank.server.messaging.listener.SmsMessageListener">
+        <property name="realTimeSmsSender" ref="realTimeSmsSender"/>
+    </bean>
+
+    <bean id="smsMessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="transactionManager" ref="jmsTransactionManager"/>
+        <property name="destination" ref="outgoingSmsQueue"/>
+        <property name="messageListener" ref="smsMessageListener"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="concurrentConsumers" value="100"/>
+        <property name="maxConcurrentConsumers" value="200"/>
+        <property name="idleConsumerLimit" value="50"/>
+        <property name="receiveTimeout" value="5000"/>
+        <property name="idleTaskExecutionLimit" value="50"/>
+        <property name="cacheLevel">
+            <util:constant
+                    static-field="org.springframework.jms.listener.DefaultMessageListenerContainer.CACHE_CONSUMER"/>
+        </property>
+    </bean>
+
+    <bean id="baseTransactedMessageListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer" abstract="true">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="transactionManager" ref="jmsTransactionManager"/>
+        <property name="concurrentConsumers" value="10"/>
+        <property name="maxConcurrentConsumers" value="10"/>
+        <property name="idleConsumerLimit" value="1"/>
+        <property name="receiveTimeout" value="5000"/>
+        <property name="idleTaskExecutionLimit" value="50"/>
+        <property name="cacheLevel">
+            <util:constant
+                    static-field="org.springframework.jms.listener.DefaultMessageListenerContainer.CACHE_CONSUMER"/>
+        </property>
+    </bean>
+
+    <bean id="baseNonTransactedMessageListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer" abstract="true">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <!-- <property name="transactionManager" ref="jmsTransactionManager"/> -->
+        <property name="concurrentConsumers" value="10"/>
+        <property name="maxConcurrentConsumers" value="10"/>
+        <property name="idleConsumerLimit" value="1"/>
+        <property name="receiveTimeout" value="5000"/>
+        <property name="idleTaskExecutionLimit" value="50"/>
+        <property name="cacheLevel">
+            <util:constant
+                    static-field="org.springframework.jms.listener.DefaultMessageListenerContainer.CACHE_CONSUMER"/>
+        </property>
+    </bean>
+
+    <bean id="franchiseListener" class="com.inov8.microbank.server.messaging.listener.FranchiseListener">
+        <property name="agentHierarchyManager" ref="agentHierarchyManager"/>
+    </bean>
+
+    <bean id="phoenixBillPaymentListener"
+          class="com.inov8.microbank.server.messaging.listener.PhoenixBillPaymentListener">
+        <property name="transactionManager" ref="transactionModuleManager"></property>
+        <property name="olaVeriflyFinancialInstitution"
+                  ref="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"/>
+        <property name="messageQueueLogDAO" ref="messageQueueLogDAO"></property>
+    </bean>
+
+    <bean id="delayedSmsMessageListener"
+          class="com.inov8.microbank.server.messaging.listener.DelayedSmsMessageListener">
+        <property name="realTimeSmsSender" ref="realTimeSmsSender"/>
+        <property name="delay" value="${user.sms.delay}"/>
+    </bean>
+
+    <bean id="thirdPartyCashOutAdviceSender" class="com.inov8.microbank.common.util.ThirdPartyCashOutAdviceSenderImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+    <bean id="thirdPartyCashOutListener" class="com.inov8.microbank.server.messaging.listener.ThirdPartyCashOutListener"
+          autowire="byName"/>
+
+    <bean id="thirdPartyCashOurListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="concurrentConsumers" value="50"/>
+        <property name="maxConcurrentConsumers" value="100"/>
+        <property name="idleConsumerLimit" value="20"/>
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="thirdPartyCashOutQueue"/>
+        <property name="messageListener" ref="thirdPartyCashOutListener"/>
+        <property name="transactionManager" ref="jmsTransactionManager"/>
+        <property name="sessionTransacted" value="true"/>
+    </bean>
+
+    <bean id="phoenixBillPaymentListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="concurrentConsumers" value="10"/>
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="phoenixBillPaymentQueue"/>
+        <property name="messageListener" ref="phoenixBillPaymentListener"/>
+        <property name="transactionManager" ref="jmsTransactionManager"/>
+    </bean>
+
+
+    <bean id="creditAccountQueueSender" class="com.inov8.microbank.common.util.CreditAccountQueueSenderImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+    <bean id="creditAccountQueueListener"
+          class="com.inov8.microbank.server.messaging.listener.CreditAccountQueueListener">
+        <property name="olaManager" ref="olaManager"/>
+        <property name="delay" value="0"/>
+    </bean>
+
+    <bean id="creditAccountQueueListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="concurrentConsumers" value="10"/>
+        <property name="destination" ref="creditAccountQueue"/>
+        <property name="messageListener" ref="creditAccountQueueListener"/>
+        <property name="sessionTransacted" value="true"/>
+    </bean>
+
+    <bean id="emailServiceListener" class="com.inov8.microbank.server.messaging.listener.EmailServiceListener">
+        <property name="mailEngine" ref="mailEngine"/>
+        <property name="mailMessage" ref="mailMessage"/>
+    </bean>
+
+
+    <bean id="emailServiceListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="emailServiceQueue"/>
+        <property name="messageListener" ref="emailServiceListener"/>
+        <property name="sessionTransacted" value="true"/>
+    </bean>
+
+
+    <!-- and this is the message listener container -->
+
+    <bean id="userSmsListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="delayedSmsQueue"/>
+        <property name="messageListener" ref="delayedSmsMessageListener"/>
+    </bean>
+
+    <bean id="franchiseListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="franchiseQueue"/>
+        <property name="messageListener" ref="franchiseListener"/>
+    </bean>
+
+    <bean id="franchiseCreator" class="com.inov8.microbank.common.util.FranchiseCreatorImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+    <bean id="smsSender" class="com.inov8.microbank.common.util.SmsSenderImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+    <bean id="nonTransactedSmsSender" class="com.inov8.microbank.common.util.SmsSenderImpl">
+        <property name="jmsProducer" ref="nonTransactedJmsProducer"/>
+    </bean>
+
+    <bean id="jmsAgentSender" class="com.inov8.microbank.common.util.JMSAgentSenderImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+    <bean id="bulkAgentListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="bulkAgentQueue"/>
+        <property name="messageListener" ref="bulkAgentListener"/>
+    </bean>
+
+    <bean id="bulkAgentListener" class="com.inov8.microbank.server.messaging.listener.BulkAgentListener">
+        <property name="agentHierarchyManager" ref="agentHierarchyManager"/>
+        <property name="encryptionHandler" ref="encryptionHandler"/>
+    </bean>
+
+    <!-- 	<bean id="walkInAccountMessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" parent="baseTransactedMessageListenerContainer">
+            <property name="destination" ref="bulkWalkInAccountsQueue" />
+            <property name="messageListener" ref="walkInAccountMessageListener" />
+            <property name="concurrentConsumers" value="50"/>
+            <property name="maxConcurrentConsumers" value="100"/>
+            <property name="idleConsumerLimit" value="20"/>
+        </bean>
+
+        <bean id="walkInAccountMessageListener" class="com.inov8.microbank.server.messaging.listener.WalkInAccountMessageListener" autowire="byName"/>
+     -->
+    <bean id="customerAccountMessageListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="bulkCustomerQueue"/>
+        <property name="messageListener" ref="customerAccountMessageListener"/>
+        <property name="concurrentConsumers" value="50"/>
+        <property name="maxConcurrentConsumers" value="100"/>
+        <property name="idleConsumerLimit" value="10"/>
+    </bean>
+
+    <bean id="customerAccountMessageListener"
+          class="com.inov8.microbank.server.messaging.listener.CustomerAccountMessageListener" autowire="byName"/>
+
+    <bean id="realTimeSmsSender" class="com.inov8.microbank.common.util.RealTimeSmsSenderImpl">
+        <property name="oracleSequenceMaxValueIncrementer" ref="oracleSequenceMaxValueIncrementer"></property>
+        <property name="logDAO" ref="logDAO"></property>
+        <property name="esbAdapter" ref="esbAdapter"/>
+
+        <property name="defaultUrl" value="${sms.defaultUrl}"></property>
+        <property name="urls">
+            <map>
+                <entry key="1610" value="${sms.1610}"/>
+                <entry key="1611" value="${sms.1611}"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="oracleSequenceMaxValueIncrementer"
+          class="org.springframework.jdbc.support.incrementer.OracleSequenceMaxValueIncrementer">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="incrementerName" value="SMS_LOG_SEQ"/>
+    </bean>
+
+    <bean id="logDAO" class="com.inov8.verifly.server.dao.logmodule.hibernate.SmsLogHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="ivrAuthenticationRequestQueueSender"
+          class="com.inov8.microbank.common.util.IvrAuthenticationRequestQueueImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+    <bean id="ivrAuthenticationQueueListener"
+          class="com.inov8.microbank.server.messaging.listener.IvrAuthenticationQueueListener">
+        <property name="ivrRequestHandler" ref="ivrRequestHandler"/>
+        <property name="delay" value="0"/>
+    </bean>
+
+    <bean id="ivrAuthenticationRequestQueueListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="ivrAuthenticationQueue"/>
+        <property name="messageListener" ref="ivrAuthenticationQueueListener"/>
+        <property name="concurrentConsumers" value="50"/>
+        <property name="maxConcurrentConsumers" value="100"/>
+        <property name="idleConsumerLimit" value="20"/>
+    </bean>
+
+    <!-- IBFT Incoming Queue -->
+    <bean id="iBFTIncomingRequestQueue" class="com.inov8.microbank.common.util.IBFTIncomingRequestQueueImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+    <bean id="iBFTQueueListener" class="com.inov8.microbank.server.messaging.listener.IBFTIncomingReqQueueListener"
+          autowire="byName">
+        <property name="ibftStatusHibernateDAO" ref="ibftStatusDAO"/>
+    </bean>
+
+    <bean id="walletIncomingRequestQueue" class="com.inov8.microbank.common.util.WalletIncomingReqQueueImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+    <bean id="creditPaymentRequestQueue" class="com.inov8.microbank.common.util.CreditPaymentReqQueueImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+    <bean id="debitPaymentRequestQueue" class="com.inov8.microbank.common.util.DebitPaymentReqQueueImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+    <bean id="walletQueueListener" class="com.inov8.microbank.server.messaging.listener.WalletIncomingReqQueueListener"
+          autowire="byName">
+    </bean>
+
+    <bean id="creditQueueListener" class="com.inov8.microbank.server.messaging.listener.CreditPaymentReqQueueListener"
+          autowire="byName">
+    </bean>
+
+
+    <bean id="debitQueueListener" class="com.inov8.microbank.server.messaging.listener.DebitPaymentReqQueueListener"
+          autowire="byName">
+    </bean>
+
+    <bean id="iBFTRequestQueueListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="ibftIncomingQueue"/>
+        <property name="messageListener" ref="iBFTQueueListener"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="concurrentConsumers" value="50"/>
+        <property name="maxConcurrentConsumers" value="100"/>
+        <property name="idleConsumerLimit" value="20"/>
+    </bean>
+
+    <bean id="walletRequestQueueListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="walletToCoreIncomingQueue"/>
+        <property name="messageListener" ref="walletQueueListener"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="concurrentConsumers" value="50"/>
+        <property name="maxConcurrentConsumers" value="100"/>
+        <property name="idleConsumerLimit" value="20"/>
+    </bean>
+
+    <bean id="creditPaymentRequestQueueListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="creditPaymentQueue"/>
+        <property name="messageListener" ref="creditQueueListener"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="concurrentConsumers" value="50"/>
+        <property name="maxConcurrentConsumers" value="100"/>
+        <property name="idleConsumerLimit" value="20"/>
+    </bean>
+
+    <bean id="debitPaymentRequestQueueListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="debitPaymentQueue"/>
+        <property name="messageListener" ref="debitQueueListener"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="concurrentConsumers" value="50"/>
+        <property name="maxConcurrentConsumers" value="100"/>
+        <property name="idleConsumerLimit" value="20"/>
+    </bean>
+
+    <bean id="coreAdviceSender" class="com.inov8.microbank.common.util.CoreAdviceSenderImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+    <bean id="reversalAdviceSender" class="com.inov8.microbank.common.util.ReversalAdviceSenderImpl">
+        <property name="jmsProducer" ref="jmsProducer"/>
+    </bean>
+
+
+    <bean id="reversalReqAdviceListener"
+          class="com.inov8.microbank.server.messaging.listener.ReversalRequestAdviceListener" autowire="byName">
+        <property name="ibftSwitchController" ref="iBFTSwitchController"/>
+        <property name="transactionCodeDAO" ref="transactionCodeDAO"/>
+    </bean>
+
+    <bean id="reversalReqAdviceListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="reversalReqAdviceQueue"/>
+        <property name="messageListener" ref="reversalReqAdviceListener"/>
+        <property name="sessionTransacted" value="true"/>
+    </bean>
+
+    <bean id="coreAdviceListener" class="com.inov8.microbank.server.messaging.listener.CoreAdviceListener"
+          autowire="byName">
+        <property name="ibftSwitchController" ref="iBFTSwitchController"/>
+    </bean>
+    <!--	<bean id="challanCollectionListener" class="com.inov8.microbank.server.messaging.listener.ChallanCollectionListener" autowire="byName"/>-->
+
+    <bean id="coreAdviceListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="destination" ref="coreAdviceQueue"/>
+        <property name="messageListener" ref="coreAdviceListener"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="concurrentConsumers" value="50"/>
+        <property name="maxConcurrentConsumers" value="100"/>
+        <property name="idleConsumerLimit" value="20"/>
+    </bean>
+
+    <bean id="bulkManualAdjustmentQueueListener"
+          class="com.inov8.microbank.server.messaging.listener.BulkManualAdjustmentQueueListener">
+        <property name="manualAdjustmentManager" ref="manualAdjustmentFacade"/>
+        <property name="xmlMarshaller" ref="xmlMarshaller"/>
+        <property name="workflowExceptionTranslator" ref="workflowExceptionTranslator"/>
+    </bean>
+
+    <bean id="bulkManualAdjustmentQueueListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="concurrentConsumers" value="10"/>
+        <property name="destination" ref="bulkManualAdjustmentQueue"/>
+        <property name="messageListener" ref="bulkManualAdjustmentQueueListener"/>
+        <property name="sessionTransacted" value="true"/>
+    </bean>
+
+
+    <bean id="bulkReversalQueueListener"
+          class="com.inov8.microbank.server.messaging.listener.BulkReversalQueueListener">
+        <property name="manualReversalManager" ref="manualReversalFacade" />
+        <property name="manualReversalFacade" ref="manualReversalFacade" />
+        <property name="portalOlaFacade" ref="portalOlaFacade" />
+        <property name="xmlMarshaller" ref="xmlMarshaller"/>
+        <property name="workflowExceptionTranslator" ref="workflowExceptionTranslator"/>
+    </bean>
+
+    <bean id="bulkReversalQueueListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer"
+          parent="baseTransactedMessageListenerContainer">
+        <property name="concurrentConsumers" value="10"/>
+        <property name="destination" ref="bulkReversalQueue"/>
+        <property name="messageListener" ref="bulkReversalQueueListener"/>
+        <property name="sessionTransacted" value="true"/>
+    </bean>
+
+</beans>

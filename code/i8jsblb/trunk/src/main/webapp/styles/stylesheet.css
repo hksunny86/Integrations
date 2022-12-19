@@ -1,0 +1,254 @@
+body {
+  Font-Family: Arial;
+  Font-Size: 12px;
+}
+
+.demoWebAppHeader {
+    Background-Color:#333399;
+    Font-Family: Arial;
+    Font-Size: 24px;
+    Font-Weight: Bold;
+    Color : #ffffff;
+}
+
+.bodyText {
+  Font-Family: Arial;
+  Font-Size: 12px;
+}
+
+.frontpageHead{
+  Font-Family: Arial;
+  Font-Size: 11 px;
+  Font-Weight: Bold;
+  Color: #333399;
+
+}
+
+
+.leftmenuHead {
+  Background-Color: #eeeeee;
+  Border-Bottom: solid 1px #cccccc;
+  Font-Family: Arial;
+  Font-Size: 11 px;
+  Font-Weight: Bold;
+  Color: #333399;
+}
+
+.leftmenu {
+  Font-Family: Arial;
+  Font-Size: 8px;
+
+  Border-Top: solid 1px #cccccc;
+  Border-Bottom: solid 1px #cccccc;
+  Border-Left: solid 1px #cccccc;
+  Border-Right: solid 1px #cccccc;
+ }
+
+.leftmenuLink{
+  Font-Family: Arial;
+  Font-Size: 11px;
+
+}
+
+
+
+.topBar{
+}
+
+.topMenuText {
+  Font-Family: Arial;
+  Font-Size: 11px;
+  Font-Weight: bold;
+  Color: #33ff99;
+  Border-Right: solid 1px #cccccc;
+  Border-Left: solid 1px #cccccc;
+  Border-Bottom: solid 1px #cccccc;
+}
+
+.menuBackground{
+  Background-Color: #eeeeee;
+}
+
+.topMenuRow{
+  Background-Color: "#cccccc";
+  Height: 1;
+}
+
+.topMenuEnd{
+  Background-Color: "#cccccc";
+  Width: 1;
+}
+
+.bottomBar {
+  Font-Family: Arial;
+  Font-Size: 11px;
+  Font-Weight: bold;
+  Border-Top: solid 1px #cccccc;
+  Background-Color: 333399;
+  Color: #ffffff;
+}
+
+.mainTable{
+  Background-Color: #ffffff;
+  Border-Left-x:  solid 1px #cccccc;
+  Border-Right-x: solid 1px #cccccc;
+  Font-Family: Arial;
+  Font-Size: 12px;
+  Width:  700px;
+  Height: 100%;
+  	
+}
+
+.head1 {
+  Font-Family: Arial;
+  Font-Size: 18;
+  Font-Weight: bold;
+}
+
+.head2 {
+  Font-Family: Arial;
+  Font-Size: 14;
+  Font-Weight: bold;
+}
+
+.head3 {
+  Font-Family: Arial;
+  Font-Size: 12;
+  Font-Weight: bold;
+}
+
+
+.tableBordered {
+  Border-Top: solid 1px #cccccc;
+  Border-Bottom: solid 1px #cccccc;
+  Border-Left: solid 1px #cccccc;
+  Border-Right: solid 1px #cccccc;
+  Font-Family: Arial;
+  Font-Size: 12px;
+}
+
+.tableHead {
+  Background-Color: #eeeeee;
+  Border-Bottom: solid 1px #cccccc;
+  Font-Family: Arial;
+  Font-Size: 12 px;
+  Font-Weight: Bold;
+  Color: #333399;
+}
+
+.tableFoot {
+  Background-Color: #eeeeee;
+  Border-Top: solid 1px #cccccc;
+  Font-Family: Arial;
+  Font-Size: 12 px;
+  Font-Weight: none;
+}
+
+
+.newsBox {
+  -Border-Top: solid 1px #cccccc;
+  -Border-Bottom: solid 1px #cccccc;
+  -Border-Left: solid 1px #cccccc;
+  -Border-Right: solid 1px #cccccc;
+  Font-Family: Arial;
+  Font-Size: 12px;
+}
+
+.newsBoxHead {
+  -Border-Top:    solid 1px  #000000;
+  -Border-Bottom: solid 1px  #000000;
+  -Border-Left:   solid 1px  #000000;
+  -Border-Right:  solid 1px  #000000;
+
+  Background-Color: #333399;
+  Font-Family: Arial;
+  Font-Size: 12 px;
+  Font-Weight: Bold;
+  Color: #ffffff;
+}
+
+.newsBoxBody {
+  Border-Top: solid 1px #cccccc;
+  Border-Bottom: solid 1px #cccccc;
+  Border-Left: solid 1px #cccccc;
+  Border-Right: solid 1px #cccccc;
+  Font-Family: Arial;
+  Font-Size: 12 px;
+}
+
+.newsBoxDivider {
+  Border-Top: solid 1px #eeeeee;
+  Border-Bottom: solid 1px #cccccc;
+  Border-Left: solid 1px #eeeeee;
+  Border-Right: solid 1px #eeeeee;
+}
+
+
+
+.taglineRow {
+  bBorder-Bottom: solid 1px #cccccc;
+}
+
+.taglineText {
+  Font-Family: Arial;
+  Font-Size: 12 px;
+  Font-Weight: Bold;
+  Color: #FFFFFF;
+}
+
+
+
+a {
+  Color: #333399;
+  Font-Weight: bold;
+  Text-Decoration: none;
+}
+
+a:hover{
+  Color: #cccccc;
+  Text-Decoration: none;
+}
+
+a:active{
+  Color: #666666;
+  Text-Decoration: none;
+}
+
+p, td {
+  Font-Family: Arial;
+  Font-Size: 12px;
+}
+
+
+
+
+.article {
+  Font-Family    : Arial;
+  Font-Size      : 15px;
+  Font-Weight    : boldie;
+  Margin-Top     : .1in;
+  Margin-Left    : .25in;
+  Margin-Right   : .25in;
+}
+
+.articlebox {
+  Font-Family    : Arial;
+  Font-Size      : 15px;
+  Font-Weight    : boldie;
+  Margin-Top     : .1in;
+  border         : 1px solid black;
+}
+
+.articleHead1 {
+  Font-Family: Arial;
+  Font-Size: 18;
+  Font-Weight: bold;
+}
+
+.articleHead2 {
+  Font-Family : Arial;
+  Font-Size   : 16;
+  Font-Weight : bold;
+  Margin-Top  : .1in;
+  Margin-Left : .1in;
+}

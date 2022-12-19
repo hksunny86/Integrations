@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout"
+        android:layout_below="@+id/container_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_above="@+id/bottomBarQR"
+        android:layout_below="@+id/container_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/layoutMarginNormal"
+            android:layout_marginLeft="@dimen/activitySideMarginNormal"
+            android:layout_marginRight="@dimen/activitySideMarginNormal">
+
+            <RelativeLayout
+                android:id="@+id/layoutInputs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layoutMarginSmall">
+
+                <TextView
+                    android:id="@+id/lblField1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="Label1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/input1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField1"
+                    android:background="@drawable/input_bg"
+                    android:inputType="number"
+                    android:maxLength="12"
+                    android:minHeight="45dp"
+                    android:padding="@dimen/editTextFieldPadding"
+                    android:textSize="@dimen/textViewTextSizeMedium"
+                    android:visibility="gone">
+
+                    <requestFocus />
+                </EditText>
+
+                <TextView
+                    android:id="@+id/lblField2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input1"
+                    android:layout_marginBottom="@dimen/textViewMarginSmall"
+                    android:layout_marginTop="@dimen/textViewMarginNormal"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/input2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField2"
+                    android:background="@drawable/input_bg"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:minHeight="45dp"
+                    android:padding="@dimen/editTextFieldPadding"
+                    android:textSize="@dimen/textViewTextSizeMedium"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/lblField3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input2"
+                    android:layout_marginTop="@dimen/textViewMarginNormal"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/input3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField3"
+                    android:background="@drawable/input_bg"
+                    android:inputType="number"
+                    android:maxLength="25"
+                    android:minHeight="45dp"
+                    android:padding="@dimen/editTextFieldPadding"
+                    android:textSize="@dimen/textViewTextSizeMedium"
+                    android:visibility="gone"></EditText>
+
+                <TextView
+                    android:id="@+id/lblAlertmultiple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/input3"
+                    android:layout_marginBottom="@dimen/textViewMarginSmall"
+                    android:layout_marginTop="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textViewTextSizeExtraSmall"
+                    android:textStyle="italic"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/lblField4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input3"
+                    android:layout_marginTop="@dimen/textViewMarginNormal"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/input4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField4"
+                    android:background="@drawable/input_bg"
+                    android:inputType="number"
+                    android:maxLength="25"
+                    android:minHeight="45dp"
+                    android:padding="@dimen/editTextFieldPadding"
+                    android:textSize="@dimen/textViewTextSizeMedium"
+                    android:visibility="gone"></EditText>
+
+                <TextView
+                    android:id="@+id/lblField5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input4"
+                    android:layout_marginTop="@dimen/textViewMarginNormal"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
+                <Spinner
+                    android:id="@+id/spinner_denoms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField5"
+                    android:background="@drawable/spinner_bg"
+                    android:padding="@dimen/editTextFieldPadding"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lblAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/layoutInputs"
+                android:layout_marginBottom="@dimen/textViewMarginSmall"
+                android:layout_marginTop="@dimen/textViewMarginNormal"
+                android:shadowColor="@color/white"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="0"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textViewTextSizeExtraSmall"
+                android:textStyle="italic" />
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_below="@id/lblAlert"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+                android:layout_marginRight="@dimen/buttonSideMarginNormal"
+                android:layout_marginTop="@dimen/buttonTopMarginNormal"
+                android:background="@drawable/button_ok"
+                android:text="@string/next"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/buttonTextNormal"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/bottomBar"
+        layout="@layout/layout_bottom_bar" />
+
+    <include
+        android:id="@+id/bottomBarQR"
+        layout="@layout/layout_qr_code" />
+
+</RelativeLayout>

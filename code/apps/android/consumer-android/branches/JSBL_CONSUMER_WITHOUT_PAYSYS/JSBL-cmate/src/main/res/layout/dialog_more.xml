@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dialogMoreWidth"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|right"
+    android:layout_marginBottom="@dimen/bottomBarHeight"
+    android:background="@drawable/button_bottom_bar_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llContactUs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_bottom_bar"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/layoutMarginSmall">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/textViewMarginLarge"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/textViewMarginLarge"
+            android:paddingTop="@dimen/textViewMarginLarge"
+            android:text="@string/contact_us"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textViewTextSizeExtraSmall" />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewSeperatorOne"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bar_light"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/llHelp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_bottom_bar"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/layoutMarginSmall">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/textViewMarginLarge"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/textViewMarginLarge"
+            android:paddingTop="@dimen/textViewMarginLarge"
+            android:text="@string/help"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textViewTextSizeExtraSmall" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewSeperatorTwo"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/bar_light"
+        android:visibility="visible" />
+
+
+
+</LinearLayout>

@@ -1,0 +1,16 @@
+<!-- Response -->
+<msg id="105">
+    <params>
+        <param name="BBACID">2058345829130</param>
+        <param name="COREACID">03204140392</param>
+        <param name="COREACTL">XXXXXXX</param>
+        <param name="CAMT">204.01</param>
+        <param name="CAMTF">204.01</param>
+        <param name="TPAM">161.1</param>
+        <param name="TPAMF">161.10</param>
+        <param name="TXAM">161.1</param>
+        <param name="TXAMF">161.10</param>
+        <param name="TAMT">1272.1</param>
+        <param name="TAMTF">1,272.10</param>
+    </params>
+</msg>

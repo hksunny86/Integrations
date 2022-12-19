@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+<h:head>
+<link rel="stylesheet" href="#{request.contextPath}/styles/wizard_style.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/tpc.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/style_js.css" type="text/css" />
+<meta name="title" content="Search Regional Hierarchy" />
+ <style>
+.col {
+    width: 100px;
+}
+</style>
+<script type="text/javascript" src="#{request.contextPath}/scripts/commonFormValidator.js"></script>
+<script type="text/javascript" src="#{request.contextPath}/scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" >
+
+function focustOnYes(id)
+{
+	document.getElementById(id).focus();
+}
+
+	function invokeEdit()
+	{
+		var rowIndex = document.getElementById("myform:rowIndex").value;
+		document.getElementById("myform:regionalHierarchyModelDataTable:" + rowIndex + ":edit").click();
+	}
+	
+	function saveRowIndex(id)
+	{
+		 var prefix = id.substring(0,id.lastIndexOf(":"));
+		 var index = prefix.substring(prefix.lastIndexOf(":")+1, prefix.length);
+		 document.getElementById("myform:rowIndex").value = index;
+	}
+
+	var jq = jQuery.noConflict();
+	jq(document).ready(function() {
+	    document.getElementById("myform:regionalHierarchyName").focus();
+	});
+</script>
+</h:head>
+<h:body>
+<f:view>
+
+	<f:event type="preRenderView" listener="#{regionalHierarchyActionBean.clearAllSessionObjects}"></f:event>  
+	<h:form id="myform" onkeypress="if(event.keyCode==13){document.getElementById('myform:searchbtn').click() ; return false}">
+		<h:inputHidden id="rowIndex" value="" />
+		<div id="wizard_group"> 
+    		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+	                <td id="header_wizard"><h1>Search Regional Hierarchy</h1></td>
+                </tr>
+            	<tr>
+                	<td>
+                        <div id="status_bar_top">
+                        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td width="70%" valign="top" align="left">&nbsp;
+                                  	
+                                  </td>
+                                  <td width="30%" valign="top" align="right">
+                                  	<a4j:outputPanel ajaxRendered="true" styleClass="icons_div" style="display:block;float:right;"  >
+                                        <a4j:commandLink action="#{regionalHierarchyActionBean.clearRegionalHierarchyForm}" title="Clear" 
+                                            render="regionalHierarchyName, dataScroller,regionalHierarchyModelDataTable" >
+                                            <h:graphicImage url="/images/ah_images/icon_clear.png" ></h:graphicImage>
+                                        </a4j:commandLink>
+                                            &nbsp;
+                                        <h:commandLink action="#{regionalHierarchyActionBean.addRegionalHierarchy}" title="Add Regional Hierarchy" disabled="#{!regionalHierarchyActionBean.securityCheck}">
+                                        	<h:graphicImage url="/images/ah_images/icon_add_dist.png" />
+                                        </h:commandLink>                                        
+                                         <h:commandLink action="#{regionalHierarchyActionBean.exportToExcel}" rendered="#{regionalHierarchyActionBean.listSize != 0 and regionalHierarchyActionBean.exportToXlsAllowed}"
+                                        			 id="exportToExcel" title="Export To Excel" >
+                                          	<h:graphicImage url="/images/ah_images/xls.png" />
+                                     	</h:commandLink>
+                                    </a4j:outputPanel>
+                                  </td>
+                              </tr>
+                            </table>
+                        </div>
+                        
+                        <div class="clear"></div>
+                    </td>
+                </tr>
+            	
+                <tr>
+                	<td >
+                		
+                    	<div id="content_wrap" >
+                           <table width="" border="0" align="center" cellpadding="0" cellspacing="10">
+                              <tr>
+                                <td width="170">Regional Hierarchy Name:</td>
+                                <td width="200" align="left">
+                                    <h:inputText id="regionalHierarchyName" styleClass="type_txt" value="#{regionalHierarchyActionBean.regionalHierarchyModel.regionalHierarchyName}" maxlength="50" title="Regional Hierarchy Name"
+                                    onkeydown="return disablePasteOption(event)"/>
+                                </td>
+                                <td width="40" align="left">&nbsp;</td>
+                                <td width="170"></td>
+                                <td width="200" align="left">
+                                
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="5" align="right">
+                                       <h:commandButton styleClass="submit_btn" value="Search" 
+                                       actionListener="#{regionalHierarchyActionBean.searchRegionalHierarchyByCriteria}" 
+                                       title="Search" id="searchbtn" />
+                                </td>
+                              </tr>
+                          </table>      
+                            <div class="row" style="width:90%; margin:0px; margin:15px auto !important; overflow-x:auto; overflow-y:hidden; border: 1px solid #c4c0c9;">
+                            	<div id="gridDiv" >
+                                <rich:dataTable id="regionalHierarchyModelDataTable" rowKeyVar="rowIndex" rows="5" width="100%" styleClass="datagrid" 
+                                    rowClasses="rowodd, roweven" value="#{regionalHierarchyActionBean.regionalHierarchyModelList}" var="model">
+                                    <f:facet name="header">
+                                        <rich:columnGroup>
+                                            <rich:column>
+                                            	<h:outputText value="Name" rendered="#{regionalHierarchyActionBean.listSize == 0}" />
+                                                <a4j:commandLink style="vertical-align:bottom;" rendered="#{regionalHierarchyActionBean.listSize != 0}" value="Name" render="regionalHierarchyModelDataTable" actionListener="#{regionalHierarchyActionBean.sortByName}" />
+                                                <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{regionalHierarchyActionBean.nameSortingOrder == 1}" url="/images/ah_images/down.png" />
+                                                <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{regionalHierarchyActionBean.nameSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                            </rich:column>
+                                            <rich:column>
+                                                <h:outputText value="Status" rendered="#{regionalHierarchyActionBean.listSize == 0}" />
+                                                <a4j:commandLink rendered="#{regionalHierarchyActionBean.listSize != 0}" value="Status" render="regionalHierarchyModelDataTable" actionListener="#{regionalHierarchyActionBean.sortByStatus}" >
+                                                	<h:graphicImage style="margin-left: 10px;margin-bottom: 1px;" rendered="#{regionalHierarchyActionBean.statusSortingOrder == 1}" url="/images/ah_images/down.png" />
+                                                	<h:graphicImage style="margin-left: 10px;margin-bottom: 1px;" rendered="#{regionalHierarchyActionBean.statusSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                                </a4j:commandLink>
+                                            </rich:column>
+                                            <rich:column rendered="#{regionalHierarchyActionBean.editSecurityCheck}">
+                                                <h:outputText value="Edit" />
+                                            </rich:column>
+                                            <rich:column rendered="#{!regionalHierarchyActionBean.editSecurityCheck}">
+                                                <h:outputText value="View" />
+                                            </rich:column>
+                                        </rich:columnGroup>
+                                    </f:facet>
+                                    <rich:column>
+                                        <h:outputText value="#{model.regionalHierarchyName}" />
+                                    </rich:column>
+                                    <rich:column >
+                                        <a4j:outputPanel style="text-align:center;" >
+                                        <h:graphicImage rendered="#{model.active}" url="/images/ah_images/active.png" style="border:0px;"/>
+                                        <h:graphicImage rendered="#{!model.active}" url="/images/ah_images/inactive.png" style="border:0px;"/>
+                                        </a4j:outputPanel>
+                                    </rich:column>
+                                    <rich:column  rendered="#{regionalHierarchyActionBean.editSecurityCheck}">  
+                                        <a4j:outputPanel style="text-align:center;" >
+	                                        <h:commandLink title="Edit Regional Hierarchy" >
+	                                        	<h:graphicImage id="uuu" url="/images/ah_images/edit.png" onclick="saveRowIndex(this.id);" />
+	                                            <rich:componentControl target="popup" operation="show" />
+	    									</h:commandLink>
+	    									<h:commandLink id="edit" style="display:none;" action="#{regionalHierarchyActionBean.editRegionalHierarchy}">
+	    										<f:param name="regionalHierarchyId" value="#{model.regionalHierarchyId}" />
+       										</h:commandLink>
+                                        </a4j:outputPanel>
+                                    </rich:column>
+                                    <rich:column rendered="#{!regionalHierarchyActionBean.editSecurityCheck}">  
+                                        <a4j:outputPanel style="text-align:center;" >
+	    									<h:commandLink id="view" title="View Regional Hierarchy" action="#{regionalHierarchyActionBean.editRegionalHierarchy}" onclick="saveRowIndex(this.id);" >
+	    										<f:param name="regionalHierarchyId" value="#{model.regionalHierarchyId}" />
+	    										<h:graphicImage url="/images/ah_images/view_detail.png"  />
+       										</h:commandLink>
+                                        </a4j:outputPanel>
+                                    </rich:column>
+                                </rich:dataTable>
+                                </div>
+                            </div>
+                            <div align="center"><rich:dataScroller id="dataScroller" for="regionalHierarchyModelDataTable" render="regionalHierarchyModelDataTable" /></div>
+                        </div>
+                    </td>
+                </tr>
+		    	<tr>
+                	<td id="status_bar_bottom">
+                    	<div>
+                            <a4j:outputPanel styleClass="infoMessage" ajaxRendered="true">
+                                <h:outputText style="color:#0e385f;" value="#{infoMessage}"/>
+                            </a4j:outputPanel>
+                        </div>
+                    </td>
+                </tr>
+                
+                
+		    	<tr>
+                	<td>
+                    	<div id="footer">
+                    	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    	    <tr>
+                    	      <td width="50%" valign="top">&nbsp;</td>
+                    	      <td width="50%" valign="top">&nbsp;</td>
+                  	      </tr>
+                  	    </table>
+                    	</div>
+                  </td>
+                </tr>
+                
+                
+            </table>
+		</div>
+	</h:form>
+	<div class="status">
+	  <a4j:status>
+	    <f:facet name="start"  >
+	      <h:graphicImage url="/images/ah_images/tabs_loader.gif" style="border:0px;"/>
+	    </f:facet>
+	    <f:facet name="stop"></f:facet>
+	  </a4j:status>
+	</div>
+	
+	<rich:popupPanel id="popup" modal="true" autosized="true" onshow="focustOnYes('editYes');" resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Confirm" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('popup')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:panelGroup>
+        	<p>Are you sure you want to edit?</p>
+	    	<h:commandButton id="editYes" styleClass="submit_btn" label="Yes" value="Yes" onclick="invokeEdit();#{rich:component('popup')}.hide(); return false;" />
+	    	<h:commandButton styleClass="submit_btn" label="No" value="No" onclick="#{rich:component('popup')}.hide(); return false;" />
+       	</h:panelGroup>
+	</rich:popupPanel>
+	
+</f:view>
+</h:body>
+</html>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    tools:context="com.inov8.jsblconsumer.activities.openAccount.OpenAccountSuccessActivity"
+    android:background="@drawable/dialog_bg_rounded">
+
+        <RelativeLayout
+            android:id="@+id/layoutScView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dialogSideMargin"
+            android:layout_marginRight="@dimen/dialogSideMargin"
+            android:layout_marginTop="11dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageViewAlert"
+                android:layout_width="@dimen/buttonWidthNormal"
+                android:layout_height="@dimen/headerIconHeight"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/dialogPaddingNormal"
+                app:srcCompat="@drawable/popup_success_message_icon" />
+
+            <TextView
+                android:id="@+id/tvHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageViewAlert"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/activitySideMarginSmall"
+                android:text="Congratulations!"
+                android:textColor="@color/black"
+                android:textSize="@dimen/buttonTextSizeMedium"/>
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_below="@+id/tvHeading"
+                android:layout_marginTop="@dimen/layoutMarginSmall"
+                android:layout_marginLeft="@dimen/layoutMarginXXLarge"
+                android:layout_marginRight="@dimen/layoutMarginXXLarge"
+                android:background="@color/lightest_grey">
+            </View>
+
+            <TextView
+                android:id="@+id/tvMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line"
+                android:textAlignment="center"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/activitySideMarginNormal"
+                android:textColor="@color/black"
+                android:text="Account has been opened sucdbckdxc
+                hbcsv bcdibidubyudgbhyucessfully."/>
+
+            <ScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:scrollbars="none">
+
+            </ScrollView>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnOK"
+            android:layout_marginTop="@dimen/layoutMarginXXLarge"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/buttonHeightNormal"
+            android:layout_below="@+id/layoutScView"
+            android:layout_marginBottom="@dimen/dialogPaddingLarge"
+            android:background="@drawable/button_ok"
+            android:text="@string/ok"
+
+            android:textAllCaps="true"
+            android:layout_marginLeft="@dimen/layoutMarginXXLarge"
+            android:layout_marginRight="@dimen/layoutMarginXXLarge"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/buttonTextSizeMedium" />
+</RelativeLayout>

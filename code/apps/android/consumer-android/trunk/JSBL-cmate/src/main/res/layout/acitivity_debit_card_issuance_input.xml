@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/container_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_layout" />
+
+    <include
+        android:id="@+id/container_heading"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/heading_layout" />
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/scViewParent"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent" >-->
+
+        <!--<ScrollView-->
+            <!--android:id="@+id/scView"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_above="@+id/footer_layout"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:scrollbarAlwaysDrawVerticalTrack="true"-->
+            <!--android:scrollbars="none" >-->
+
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/scViewInLayout"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content" >-->
+
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/layoutInputs"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_marginTop="10dp" >-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/lblCategory"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:padding="2dp"-->
+                        <!--android:shadowColor="@color/white"-->
+                        <!--android:shadowDx="0"-->
+                        <!--android:shadowDy="0"-->
+                        <!--android:shadowRadius="0"-->
+                        <!--android:text="Category"-->
+                        <!--android:textColor="@color/text_grey"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textStyle="normal" />-->
+
+                    <!--<Spinner-->
+                        <!--android:id="@+id/spinnerCategory"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/lblCategory"-->
+                        <!--android:paddingLeft="8dp"-->
+                        <!--android:paddingRight="18dp" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/lblType"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/spinnerCategory"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:padding="2dp"-->
+                        <!--android:shadowColor="@color/white"-->
+                        <!--android:shadowDx="0"-->
+                        <!--android:shadowDy="0"-->
+                        <!--android:shadowRadius="0"-->
+                        <!--android:text="Type"-->
+                        <!--android:textColor="@color/text_grey"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textStyle="normal" />-->
+
+                    <!--<Spinner-->
+                        <!--android:id="@+id/spinnerType"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/lblType"-->
+                        <!--android:paddingLeft="8dp"-->
+                        <!--android:paddingRight="18dp" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/lblRank"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/spinnerType"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:padding="2dp"-->
+                        <!--android:shadowColor="@color/white"-->
+                        <!--android:shadowDx="0"-->
+                        <!--android:shadowDy="0"-->
+                        <!--android:shadowRadius="0"-->
+                        <!--android:text="Rank"-->
+                        <!--android:textColor="@color/text_grey"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textStyle="normal"-->
+                        <!--android:visibility="gone" />-->
+
+                    <!--<Spinner-->
+                        <!--android:id="@+id/spinnerRank"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/lblRank"-->
+                        <!--android:paddingLeft="8dp"-->
+                        <!--android:paddingRight="18dp" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/lblApplicantType"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/spinnerRank"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:padding="2dp"-->
+                        <!--android:shadowColor="@color/white"-->
+                        <!--android:shadowDx="0"-->
+                        <!--android:shadowDy="0"-->
+                        <!--android:shadowRadius="0"-->
+                        <!--android:text="Applicant Type"-->
+                        <!--android:textColor="@color/text_grey"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textStyle="normal" />-->
+
+                    <!--<Spinner-->
+                        <!--android:id="@+id/spinnerApplicantType"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/lblApplicantType"-->
+                        <!--android:paddingLeft="8dp"-->
+                        <!--android:paddingRight="18dp" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/lblMobileNumber"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/spinnerApplicantType"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:padding="2dp"-->
+                        <!--android:shadowColor="@color/white"-->
+                        <!--android:shadowDx="0"-->
+                        <!--android:shadowDy="0"-->
+                        <!--android:shadowRadius="0"-->
+                        <!--android:text="Mobile Number"-->
+                        <!--android:textColor="@color/text_grey"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textStyle="normal" />-->
+
+                    <!--<com.andreabaccega.widget.FormEditText-->
+                        <!--android:id="@+id/inputMobileNumber"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@id/lblMobileNumber"-->
+                        <!--android:background="@drawable/rounded_bg"-->
+                        <!--android:inputType="number"-->
+                        <!--android:maxLength="11"-->
+                        <!--android:minHeight="45dp"-->
+                        <!--android:paddingLeft="8dp"-->
+                        <!--android:paddingRight="8dp" >-->
+                    <!--</com.andreabaccega.widget.FormEditText>-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/lblBranch"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/inputMobileNumber"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:padding="2dp"-->
+                        <!--android:shadowColor="@color/white"-->
+                        <!--android:shadowDx="0"-->
+                        <!--android:shadowDy="0"-->
+                        <!--android:shadowRadius="0"-->
+                        <!--android:text="Branch Code"-->
+                        <!--android:textColor="@color/text_grey"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textStyle="normal" />-->
+
+                    <!--<com.andreabaccega.widget.FormEditText-->
+                        <!--android:id="@+id/inputBranchCode"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@id/lblBranch"-->
+                        <!--android:background="@drawable/rounded_bg"-->
+                        <!--android:inputType="number"-->
+                        <!--android:maxLength="4"-->
+                        <!--android:minHeight="45dp"-->
+                        <!--android:paddingLeft="8dp"-->
+                        <!--android:paddingRight="8dp" >-->
+                    <!--</com.andreabaccega.widget.FormEditText>-->
+                    <!---->
+                    <!--<TextView-->
+                        <!--android:id="@+id/lblCardNumber"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/inputBranchCode"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:padding="2dp"-->
+                        <!--android:shadowColor="@color/white"-->
+                        <!--android:shadowDx="0"-->
+                        <!--android:shadowDy="0"-->
+                        <!--android:shadowRadius="0"-->
+                        <!--android:text="Card Number"-->
+                        <!--android:textColor="@color/text_grey"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textStyle="normal" />-->
+
+                    <!--<com.andreabaccega.widget.FormEditText-->
+                        <!--android:id="@+id/inputCardNumber"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@id/lblCardNumber"-->
+                        <!--android:background="@drawable/rounded_bg"-->
+                        <!--android:inputType="number"-->
+                        <!--android:maxLength="16"-->
+                        <!--android:minHeight="45dp"-->
+                        <!--android:paddingLeft="8dp"-->
+                        <!--android:paddingRight="8dp" >-->
+                    <!--</com.andreabaccega.widget.FormEditText>-->
+                    <!---->
+                <!--</RelativeLayout>-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/btnNext"-->
+                    <!--android:layout_width="220dp"-->
+                    <!--android:layout_height="48dp"-->
+                    <!--android:layout_below="@id/layoutInputs"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:layout_marginTop="30dp"-->
+                    <!--android:background="@drawable/button_ok"-->
+                    <!--android:text="@string/next"-->
+                    <!--android:textColor="@android:color/white"-->
+                    <!--android:textSize="24sp"-->
+                    <!--android:textStyle="normal" />-->
+            <!--</RelativeLayout>-->
+        <!--</ScrollView>-->
+    <!--</RelativeLayout>-->
+
+</LinearLayout>

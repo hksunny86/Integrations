@@ -1,0 +1,84 @@
+{
+	"info": {
+		"name": "Payments",
+		"_postman_id": "09eb2fff-a6eb-4f94-e786-dbfb0ed48f9d",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Payment Inquiry",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "DTID",
+							"value": "5",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "PID",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "AMOB",
+							"value": "033343278741",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "CMOB",
+							"value": "033343278741",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "CONSUMER",
+							"value": "1122",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "PMTTYPE",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "BAID",
+							"value": "5050050",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://mfahad88-eval-test.apigee.net/db_microbank/",
+					"protocol": "https",
+					"host": [
+						"mfahad88-eval-test",
+						"apigee",
+						"net"
+					],
+					"path": [
+						"db_microbank",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/faqs_list_item_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/lblQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/faqMarginRight"
+        android:padding="@dimen/textViewMarginLarge"
+        android:text="What if i forget my Username and/or Password?"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/textViewTextSizeNormal" />
+
+    <ImageView
+        android:id="@+id/imageViewindicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="right"
+        android:background="@drawable/faqs_indicator" />
+
+</RelativeLayout>

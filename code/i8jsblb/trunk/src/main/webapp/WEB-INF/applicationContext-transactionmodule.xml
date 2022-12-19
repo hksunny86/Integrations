@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+    <bean id="transactionCodeDAO" class="com.inov8.microbank.server.dao.transactionmodule.hibernate.TransactionCodeHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="transactionDAO" class="com.inov8.microbank.server.dao.transactionmodule.hibernate.TransactionHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="transactionDetailMasterDAO" class="com.inov8.microbank.server.dao.transactionmodule.hibernate.TransactionDetailMasterHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <bean id="salesSummaryListViewDAO" class="com.inov8.microbank.server.dao.transactionmodule.hibernate.SalesSummaryListViewHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="transactionCodeGenerator" class="com.inov8.microbank.server.service.transactionmodule.TransactionCodeGeneratorImpl"/>
+
+    <!-- Definition of Service -->
+    <bean id="transactionModuleManager" parent="baseTransactionProxy">
+        <property name="target">
+            <bean class="com.inov8.microbank.server.service.transactionmodule.TransactionManagerImpl">
+                <property name="transactionDAO">
+                    <ref local="transactionDAO"/>
+                </property>
+
+                <property name="transactionCodeDAO">
+                    <ref local="transactionCodeDAO"/>
+                </property>
+
+                <property name="miniTransactionDAO">
+                    <ref bean="miniTransactionDAO"/>
+                </property>
+
+                <property name="transactionDetailDAO">
+                    <ref bean="transactionDetailDAO"/>
+                </property>
+
+                <property name="transactionSummaryDAO">
+                    <ref local="transactionSummaryDAO"/>
+                </property>
+
+                <property name="transactionDetailMasterManager">
+                    <ref local="transactionDetailMasterManager"/>
+                </property>
+
+                <property name="accountManager">
+                    <ref bean="accountManager"/>
+                </property>
+
+                <property name="ledgerManager">
+                    <ref bean="ledgerManager"/>
+                </property>
+
+                <property name="p2pDetailDAO">
+                    <ref bean="p2pDetailDAO"/>
+                </property>
+
+                <property name="smsSender">
+                    <ref bean="smsSender"/>
+                </property>
+                <property name="bookMeLogDAO">
+                    <ref bean="bookMeLogDAO"/>
+                </property>
+
+                <property name="actionLogManager" ref="actionLogManager"/>
+
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="transactionDetailMasterManager" parent="baseTransactionProxy">
+        <property name="target">
+            <bean class="com.inov8.microbank.server.service.transactionmodule.TransactionDetailMasterManagerImpl">
+
+                <property name="transactionDetailMasterDAO">
+                    <ref local="transactionDetailMasterDAO"/>
+                </property>
+                <property name="appUserManager">
+                    <ref bean="securityFacade"/>
+                </property>
+                <property name="smartMoneyAccountManager">
+                    <ref bean="smartMoneyAccountManager"/>
+                </property>
+                <property name="userDeviceAccountsManager">
+                    <ref bean="userDeviceAccountsManager"/>
+                </property>
+                <property name="productManager">
+                    <ref bean="productFacade"/>
+                </property>
+                <property name="deviceTypeManager">
+                    <ref bean="deviceTypeManager"/>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="transactionFacade" class="com.inov8.microbank.server.facade.TransactionFacadeImpl">
+
+        <property name="frameworkExceptionTranslator">
+            <ref bean="frameworkExceptionTranslator"/>
+        </property>
+        <property name="transactionModuleManager">
+            <ref local="transactionModuleManager"/>
+        </property>
+    </bean>
+
+    <bean id="transactionSummaryDAO" class="com.inov8.microbank.server.dao.transactionmodule.hibernate.TransactionSummaryHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="messageQueueLogDAO" class="com.inov8.microbank.server.dao.messagelog.hibernate.MessageQueueLogHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="p2pDetailDAO" class="com.inov8.microbank.server.dao.p2pupdatemodule.hibernate.P2PDetailHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="customerPendingTrxManager" parent="baseTransactionProxy">
+        <property name="target">
+            <bean class="com.inov8.microbank.server.service.bulkdisbursements.CustomerPendingTrxManagerImpl" autowire="byName">
+                <property name="olaVeriflyFinancialInstitution" ref="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"/>
+                <property name="appUserManager" ref="userManager"/>
+                <property name="smartMoneyAccountManager" ref="smartMoneyAccountManager"/>
+                <property name="transactionManager" ref="transactionModuleManager"/>
+                <property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"/>
+                <property name="actionLogManager" ref="actionLogManager"/>
+                <property name="workflowExceptionTranslator" ref="workflowExceptionTranslator"/>
+                <property name="retailerContactManager" ref="retailerContactManager"/>
+                <property name="commissionManager" ref="commissionFacade"/>
+                <property name="userDeviceAccountsManager" ref="userDeviceAccountsManager"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="orphanA2PReversalManager" parent="baseTransactionProxy">
+        <property name="target">
+            <bean class="com.inov8.microbank.server.service.transactionmodule.OrphanA2PReversalManagerImpl" autowire="byName">
+                <property name="appUserManager" ref="userManager"/>
+                <property name="transactionManager" ref="transactionModuleManager"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="orphanA2PReversalFacade" class="com.inov8.microbank.server.facade.OrphanA2PReversalFacadeImpl">
+        <property name="frameworkExceptionTranslator">
+            <ref bean="frameworkExceptionTranslator"/>
+        </property>
+        <property name="orphanA2PReversalManager">
+            <ref local="orphanA2PReversalManager"/>
+        </property>
+        <property name="creditAccountQueingPreProcessor">
+            <ref bean="creditAccountQueingPreProcessor"/>
+        </property>
+    </bean>
+
+
+</beans>

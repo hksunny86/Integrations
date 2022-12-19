@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+
+	<!-- DAO -->
+
+	<bean id="transactionDataDownloadDAO" class="com.inov8.microbank.server.dao.portal.transactiondetaili8module.hibernate.TransactionDataDownloadHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="messageSource" ref="messageSource"/>
+	</bean>
+
+	<bean id="bIspTransactionDetailViewDAO" class="com.inov8.microbank.server.dao.portal.transactiondetaili8module.hibernate.BispTransactionDetailViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="transactionDetailPortalListViewDAO" class="com.inov8.microbank.server.dao.portal.transactiondetaili8module.hibernate.TransactionDetailPortalListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="ofSettlementTransactionDetailListViewDAO" class="com.inov8.microbank.server.dao.portal.transactiondetaili8module.hibernate.OFSettlementTransactionDetailListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="dateWiseTxSummaryDAO" class="com.inov8.microbank.server.dao.portal.transactiondetaili8module.hibernate.DateWiseTxSummaryHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="allpayTransactionDetailPortalListViewDAO" class="com.inov8.microbank.server.dao.portal.transactiondetaili8module.allpay.AllPayTransactionDetailPortalListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="ofSettlementTransactionListViewDAO" class="com.inov8.microbank.server.dao.portal.transactiondetaili8module.hibernate.OFSettlementTransactionListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="ofSettlementTransactionDetailDAO" class="com.inov8.microbank.server.dao.portal.transactiondetaili8module.hibernate.OFSettlementTransactionDetailHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- Service -->
+
+	<bean id="transactionDetailI8Manager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.inov8.microbank.server.service.portal.transactiondetaili8module.TransactionDetailI8ManagerImpl">
+				<property name="bispTransactionDetailViewDAO" ref="bIspTransactionDetailViewDAO" />
+				<property name="transactionDetailPortalListViewDAO">
+					<ref local="transactionDetailPortalListViewDAO"/>
+				</property>
+				<property name="dateWiseTxSummaryDAO">
+					<ref local="dateWiseTxSummaryDAO"/>
+				</property>
+				<property name="ofSettlementTransactionListViewDAO">
+					<ref local="ofSettlementTransactionListViewDAO"/>
+				</property>
+				<property name="ofSettlementTransactionDetailDAO">
+					<ref local="ofSettlementTransactionDetailDAO" />
+				</property>
+				<property name="ofSettlementTransactionDetailListViewDAO">
+					<ref local="ofSettlementTransactionDetailListViewDAO" />
+				</property>
+				<property name="transactionDataDownloadDAO" ref="transactionDataDownloadDAO"/>
+				<property name="actionLogManager" ref="actionLogManager"/>
+
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Facade -->
+
+	<bean id="transactionDetailI8Facade" class="com.inov8.microbank.server.facade.portal.transactiondetaili8module.TransactionDetailI8FacadeImpl">
+		<property name="transactionDetailI8Manager">
+			<ref local="transactionDetailI8Manager"/>
+		</property>
+		<property name="frameworkExceptionTranslator">
+			<ref bean="frameworkExceptionTranslator"/>
+		</property>
+	</bean>
+
+	<!--AllPay Module -->
+	<bean id="allPayTransactionDetailI8Manager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.inov8.microbank.server.service.portal.transactiondetaili8module.allpay.AllPayTransactionDetailI8ManagerImpl">
+				<property name="allpayTransactionDetailPortalListViewDAO">
+					<ref local="allpayTransactionDetailPortalListViewDAO"/>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<!--<bean id="allpayTransactionDetailI8Facade" class="com.inov8.microbank.server.facade.portal.transactiondetaili8module.allpay.AllPayTransactionDetailI8FacadeImpl">-->
+	<!--		<property name="allPayTransactionDetailI8Manager">-->
+	<!--			<ref local="allPayTransactionDetailI8Manager"/>-->
+	<!--		</property>-->
+	<!--		<property name="frameworkExceptionTranslator">-->
+	<!--			<ref bean="frameworkExceptionTranslator"/>-->
+	<!--		</property>-->
+	<!--	</bean>-->
+
+</beans>

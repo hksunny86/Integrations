@@ -1,0 +1,234 @@
+Alter table transaction_detail_master
+add RESERVED8 VARCHAR2(300 BYTE);
+
+Alter table transaction_detail_master
+add RESERVED9 VARCHAR2(300 BYTE);
+
+Alter table transaction_detail_master
+add RESERVED10 VARCHAR2(300 BYTE);
+
+
+Alter table transaction_detail_master
+add RESERVED1 VARCHAR2(300 BYTE);
+
+
+Alter table transaction_detail_master
+add RESERVED2 VARCHAR2(300 BYTE);
+
+Alter table transaction_detail_master
+add RESERVED6 VARCHAR2(300 BYTE);
+
+Alter table transaction_detail_master
+add RESERVED7 VARCHAR2(300 BYTE);
+
+
+
+
+ CREATE OR REPLACE FORCE VIEW "I8_MICROBANK_JS_PROD"."TRANSACTION_DETAIL_PORTAL_LIST" ("PK", "TRANSACTION_ID", "MFS_ID", "BANK_ACCOUNT_NO", "BANK_ACCOUNT_NO_LAST_FIVE", "RECIPIENT_BANK_ACCOUNT_NO", "TRANSACTION_CODE", "CREATED_ON", "UPDATED_ON", "PRODUCT_ID", "PRODUCT_NAME", "PRODUCT_CODE", "TERMINAL_ID", "CHANNEL_ID", "EXTERNAL_PRODUCT_NAME", "UPDATE_P2P_FLAG", "UPDATE_P2P_FLAG_STRING", "BILL_TYPE", "SUPPLIER_ID", "SUPPLIER_NAME", "PAYMENT_MODE_ID", "PAYMENT_MODE", "BANK_ID", "BANK_NAME", "TRANSACTION_CODE_ID", "TRANSACTION_DETAIL_ID", "TRANSACTION_AMOUNT", "TOTAL_AMOUNT", "PRODUCT_THRESHOLD_CHARGES", "FAILURE_REASON_ID", "FAILURE_REASON", "VERIFLY_STATUS", "PROCESSING_STATUS_NAME", "CONSUMER_NO", "RECIPIENT_ACCOUNT_NICK", "RECIPIENT_ACCOUNT_NO", "DEPOSITOR_CNIC", "SENDER_CNIC", "RECIPIENT_MOBILE_NO", "RECIPIENT_MFS_ID", "RECIPIENT_CNIC", "SENDER_ACCOUNT_NICK", "TO_BANK", "TO_AGENT1", "TO_AGENT2", "TO_FRANCHISE1", "RETAILER_SHARE", "WHT", "FED", "TAX_DEDUCTED", "SERVICE_CHARGES_INCLUSIVE", "SERVICE_CHARGES_EXCLUSIVE", "SUP_PROCESSING_STATUS_ID", "AGENT1_ID", "AGENT1_MOBILE_NO", "BUSINESS_NAME", "AGENT2_ID", "AGENT2_ACCOUNT_NO", "TITLE_FETCH_RRN", "BILL_INQUIRY_RRN", "BILL_PAYMENT_RRN", "CHECK_BALANCE_RRN", "COMMISSION_REASON_ID", "SALE_MOBILE_NO", "AUTHORIZATION_CODE", "FUND_TRANSFER_RRN", "DEVICE_TYPE", "FRANCHISE1_ID", "FRANCHISE2_ID", "SENDER_DEVICE_TYPE_ID", "RECIPIENT_DEVICE_TYPE_ID", "RECIPIENT_DEVICE_TYPE", "IS_MANUAL_OT_PIN", "IS_MANUAL_OT_PIN_STRING", "IS_ISSUE", "BILL_DUE_DATE", "PAYMENT_TYPE_ID", "PAYMENT_TYPE_NAME", "SENDING_REGION", "RECEIVING_REGION", "TO_SALES_TEAM", "SEGMENT_ID", "OTHERS", "BILL_AGGREGATOR", "SENDER_AGENT_ACCOUNT_NO", "RECIPIENT_AGENT_ACCOUNT_NO", "REVERSED_BY_NAME", "REVERSED_COMMENTS", "REVERSED_ON", "SENDER_BVS", "RECEIVER_BVS", "BLB_COMM_SETTLEMENT", "FONEPAY_TRANSACTION_CODE", "FONEPAY_TRANSACTION_TYPE", "SENDER_DISTRIBUTOR_NAME", "SENDER_SERVICE_OP_NAME", "RECEIVER_DISTRIBUTOR_NAME", "RECEIVER_SERVICE_OP_NAME", "SENDER_REGION_NAME", "RECEIVER_REGION_NAME", "SENDER_DISTRIBUTOR_ID", "SENDER_SERVICE_OP_ID", "RECEIVER_DISTRIBUTOR_ID", "RECEIVER_SERVICE_OP_ID", "SENDER_AREA_NAME", "SENDER_AREA_ID", "RECEIVER_AREA_NAME", "RECEIVER_AREA_ID", "SCO_COMMISSION", "SEGMENT", "NADRA_NIFQ", "NADRA_MINTAEI_COUNT", "TRANSACTION_PURPOSE", "BISP_RETRY_COUNT", "RESPONSE_CODE", "CARD_NO", "IDM", "BANK_SHORT_NAME", "UNIQUE_IDENTIFIER", "BANK_INCOME", "RESERVED3", "RESERVED4", "RESERVED5", "RESERVED1", "RESERVED2", "RESERVED6", "RESERVED7", "RESERVED8", "RESERVED9", "RESERVED10") AS 
+  SELECT tdm.PK,
+          tdm.TRANSACTION_ID,
+          tdm.MFS_ID,
+          tdm.BANK_ACCOUNT_NO,
+          tdm.BANK_ACCOUNT_NO_LAST_FIVE,
+          tdm.RECIPIENT_BANK_ACCOUNT_NO,
+          tdm.TRANSACTION_CODE,
+          tdm.CREATED_ON,
+          tdm.UPDATED_ON,
+          tdm.PRODUCT_ID,
+          tdm.PRODUCT_NAME,
+          tdm.PRODUCT_CODE,
+          tdm.TERMINAL_ID,
+          tdm.CHANNEL_ID,
+          tdm.EXTERNAL_PRODUCT_NAME,
+          tdm.UPDATE_P2P_FLAG,
+          (CASE
+              WHEN UPDATE_P2P_FLAG = 0 THEN 'Yes'
+              WHEN UPDATE_P2P_FLAG = 1 THEN 'No'
+              ELSE ''
+           END)
+             AS UPDATE_P2P_FLAG_STRING,
+          tdm.BILL_TYPE,
+          tdm.SUPPLIER_ID,
+          tdm.SUPPLIER_NAME,
+          tdm.PAYMENT_MODE_ID,
+          tdm.PAYMENT_MODE,
+          tdm.BANK_ID,
+          tdm.BANK_NAME,
+          tdm.TRANSACTION_CODE_ID,
+          tdm.TRANSACTION_DETAIL_ID,
+          tdm.TRANSACTION_AMOUNT,
+          (CASE
+              WHEN tdm.SUP_PROCESSING_STATUS_ID = 2
+              THEN
+                 tdm.transaction_amount
+              ELSE
+                 tdm.total_amount
+           END)
+             AS TOTAL_AMOUNT,
+          tdm.product_threshold_charges,
+          tdm.failure_reason_id,
+          tdm.failure_reason,
+          tdm.VERIFLY_STATUS,
+          tdm.PROCESSING_STATUS_NAME,
+          tdm.CONSUMER_NO,
+          tdm.RECIPIENT_ACCOUNT_NICK,
+          tdm.RECIPIENT_ACCOUNT_NO,
+          tdm.DEPOSITOR_CNIC,
+          tdm.SENDER_CNIC,
+          tdm.RECIPIENT_MOBILE_NO,
+          tdm.RECIPIENT_MFS_ID,
+          tdm.RECIPIENT_CNIC,
+          tdm.SENDER_ACCOUNT_NICK,
+          (CASE
+              WHEN tdm.SUP_PROCESSING_STATUS_ID <> 2 THEN tdm.TO_BANK
+              ELSE 0
+           END)
+             AS TO_BANK,
+          (CASE
+              WHEN tdm.SUP_PROCESSING_STATUS_ID <> 2 THEN tdm.TO_AGENT1
+              ELSE 0
+           END)
+             AS TO_AGENT1,
+          (CASE
+              WHEN tdm.SUP_PROCESSING_STATUS_ID <> 2 THEN tdm.TO_AGENT2
+              ELSE 0
+           END)
+             AS TO_AGENT2,
+          (CASE
+              WHEN tdm.SUP_PROCESSING_STATUS_ID <> 2 THEN tdm.TO_FRANCHISE1
+              ELSE 0
+           END)
+             AS TO_FRANCHISE1,
+          (CASE
+              WHEN tdm.SUP_PROCESSING_STATUS_ID <> 2 THEN tdm.RETAILER_SHARE
+              ELSE 0
+           END)
+             AS RETAILER_SHARE,
+          (CASE
+              WHEN tdm.SUP_PROCESSING_STATUS_ID <> 2 THEN tdm.WHT
+              ELSE 0
+           END)
+             AS WHT,
+          (CASE
+              WHEN tdm.SUP_PROCESSING_STATUS_ID <> 2 THEN tdm.FED
+              ELSE 0
+           END)
+             AS FED,
+          (CASE
+              WHEN tdm.SUP_PROCESSING_STATUS_ID <> 2 THEN tdm.TAX_DEDUCTED
+              ELSE 0
+           END)
+             AS TAX_DEDUCTED,
+          (CASE
+              WHEN tdm.SUP_PROCESSING_STATUS_ID <> 2
+              THEN
+                 tdm.SERVICE_CHARGES_INCLUSIVE
+              ELSE
+                 0
+           END)
+             AS SERVICE_CHARGES_INCLUSIVE,
+          (CASE
+              WHEN tdm.SUP_PROCESSING_STATUS_ID <> 2
+              THEN
+                 tdm.SERVICE_CHARGES_EXCLUSIVE
+              ELSE
+                 0
+           END)
+             AS SERVICE_CHARGES_EXCLUSIVE,
+          tdm.SUP_PROCESSING_STATUS_ID,
+          tdm.AGENT1_ID,
+          tdm.AGENT1_MOBILE_NO,
+          rc.business_name,
+          AGENT2_ID,
+          RECIPIENT_AGENT_ACCOUNT_NO AGENT2_ACCOUNT_NO,
+          tdm.TITLE_FETCH_RRN,
+          tdm.BILL_INQUIRY_RRN,
+          tdm.BILL_PAYMENT_RRN,
+          tdm.CHECK_BALANCE_RRN,
+          tdm.COMMISSION_REASON_ID,
+          tdm.SALE_MOBILE_NO,
+          tdm.AUTHORIZATION_CODE,
+          tdm.FUND_TRANSFER_RRN,
+          tdm.DEVICE_TYPE,
+          tdm.FRANCHISE1_ID,
+          tdm.FRANCHISE2_ID,
+          tdm.SENDER_DEVICE_TYPE_ID,
+          tdm.RECIPIENT_DEVICE_TYPE_ID,
+          tdm.RECIPIENT_DEVICE_TYPE,
+          tdm.IS_MANUAL_OT_PIN,
+          DECODE (tdm.IS_MANUAL_OT_PIN,  NULL, 'No',  0, 'No',  1, 'Yes')
+             AS IS_MANUAL_OT_PIN_STRING,
+          tdm.IS_ISSUE,
+          tdm.BILL_DUE_DATE,
+          tdm.PAYMENT_TYPE_ID,
+          tdm.PAYMENT_TYPE_NAME,
+          tdm.SENDING_REGION,
+          tdm.RECEIVING_REGION,
+          (CASE
+              WHEN tdm.SUP_PROCESSING_STATUS_ID <> 2 THEN tdm.TO_SALES_TEAM
+              ELSE 0
+           END)
+             AS TO_SALES_TEAM,
+          tdm.SEGMENT_ID,
+          tdm.OTHERS,
+          tdm.BILL_AGGREGATOR,
+          tdm.SENDER_AGENT_ACCOUNT_NO,
+          tdm.RECIPIENT_AGENT_ACCOUNT_NO,
+          tdm.REVERSED_BY_NAME,
+          tdm.REVERSED_COMMENTS,
+          tdm.REVERSED_ON,
+          DECODE (SENDER_BVS,  1, 'Yes',  0, 'No',  '', 'No') SENDER_BVS,
+          DECODE (RECEIVER_BVS,  1, 'Yes',  0, 'No',  '', 'No') RECEIVER_BVS,
+          tdm.BLB_SETTLE_COMM BLB_COMM_SETTLEMENT,
+          tdm.FONEPAY_TRANSACTION_CODE,
+          DECODE (tdm.FONEPAY_TRANSACTION_TYPE,
+                  1, 'JS CUSTOMER - FONEPAY MERCHANT',
+                  2, 'FONEPAY CUSTOMER - JS AGENT',
+                  3, 'JS CUSTOMER - JS AGENT')
+             FONEPAY_TRANSACTION_TYPE,
+          tdm.SENDER_DISTRIBUTOR_NAME,
+          tdm.SENDER_SERVICE_OP_NAME,
+          tdm.RECEIVER_DISTRIBUTOR_NAME,
+          tdm.RECEIVER_SERVICE_OP_NAME,
+          tdm.SENDER_REGION_NAME,
+          tdm.RECEIVER_REGION_NAME,
+          tdm.SENDER_DISTRIBUTOR_ID,
+          tdm.SENDER_SERVICE_OP_ID,
+          tdm.RECEIVER_DISTRIBUTOR_ID,
+          tdm.RECEIVER_SERVICE_OP_ID,
+          tdm.SENDER_AREA_NAME,
+          tdm.SENDER_AREA_ID,
+          tdm.RECEIVER_AREA_NAME,
+          tdm.RECEIVER_AREA_ID,
+          tdm.SCO_COMMISSION,
+
+          s.name segment,
+          tdm.NIFQ,
+          tdm.MINUTAIE_COUNT,
+          tp.NAME,
+          bisp.RETRY_COUNT,
+          bisp.RESPONSE_CODE,
+          tdm.CARD_NO,
+          TDM.TO_BANK_IMD IMD,
+          (SELECT SHORT_NAME
+             FROM MEMBER_BANK
+            WHERE DEBIT_CARD_IMD = TDM.TO_BANK_IMD)
+             BANK_SHORT_NAME,
+             tdm.stan UNIQUE_IDENTIFIER,
+                 CASE
+                 WHEN TDM.PRODUCT_ID =10245319  THEN tdm.TRANSACTION_AMOUNT
+                 WHEN TDM.PRODUCT_ID =10245317  THEN tdm.service_charges_exclusive - tdm.fed
+                 WHEN TDM.PRODUCT_ID =10245315  THEN tdm.service_charges_exclusive - tdm.fed
+               ELSE NULL END AS BANK_INCOME,
+            tdm.RESERVED3,tdm.RESERVED4,tdm.RESERVED5,tdm.RESERVED1,tdm.RESERVED2,tdm.RESERVED6,tdm.RESERVED7,tdm.RESERVED8,tdm.RESERVED9,tdm.RESERVED10
+     FROM transaction_detail_master tdm,
+          transaction t,
+          retailer_contact rc,
+          segment s,
+          TRANSACTION_PURPOSE tp,
+          BISP_CUST_NADRA_VERIFICATION bisp
+    WHERE     t.transaction_id(+) = tdm.transaction_id
+          AND rc.retailer_contact_id(+) = t.FROM_RET_CONTACT_ID
+          AND tdm.segment_id = s.segment_id(+)
+          AND tp.TRANS_PURPOSE_ID(+) = tdm.TRANS_PURPOSE_ID
+          AND bisp.TRANSACTION_CODE(+) = tdm.transaction_code;

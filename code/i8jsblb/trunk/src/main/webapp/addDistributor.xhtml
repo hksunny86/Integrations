@@ -1,0 +1,331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+
+
+
+<h:head>
+<link rel="stylesheet" href="#{request.contextPath}/styles/wizard_style.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/tpc.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/style_js.css" type="text/css" />
+
+<meta name="title" content="Add Agent Network" />
+
+ <style>
+.col {
+    width: 100px;
+}
+</style>
+<script type="text/javascript" src="#{request.contextPath}/scripts/commonFormValidator.js"></script>
+<script type="text/javascript" src="#{request.contextPath}/scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+	var jq = jQuery.noConflict();
+	jq(document).ready(function() {
+	    document.getElementById("myform:distName").focus();
+	    //disableCombo();
+
+		var hasReadOnlyRights = #{!distributorActionBean.securityCheck and !distributorActionBean.editSecurityCheck};
+		if( hasReadOnlyRights )
+		{
+			jq("#content_wrap").find("input, textarea, button, select, img").attr("disabled", true);
+		}
+	});
+	
+	function checkEnableBank(){	
+			//document.getElementById("myform:mnoCombo").value=0;
+			//document.getElementById("myform:bankCombo").disabled=false;
+			document.getElementById("myform:mnoCombo").disabled=true;
+	}
+	function checkEnableMNO(){	
+		//document.getElementById("myform:bankCombo").value=0;
+		//document.getElementById("myform:bankCombo").disabled=true;
+		document.getElementById("myform:mnoCombo").disabled=false;
+	}
+	function disableCombo(){
+		if(document.getElementById("myform:bankCombo").value>0){
+			document.getElementById("myform:bankCombo").disabled=false;
+			document.getElementById("myform:mnoCombo").disabled=true;
+			document.getElementById("bankchk").checked=true;
+		}else if(document.getElementById("myform:mnoCombo").value>0){
+			document.getElementById("myform:bankCombo").disabled=true;
+			document.getElementById("myform:mnoCombo").disabled=false;
+			document.getElementById("mnochk").checked=true;			
+		}else{
+			document.getElementById("myform:bankCombo").disabled=true;
+			document.getElementById("myform:mnoCombo").disabled=true;
+			//document.getElementById("mnochk").checked=true;
+		}
+		
+	}
+	
+	function clearCheckBoxes(){	
+		document.getElementById("myform:bankCombo").value=0;
+		document.getElementById("myform:mnoCombo").value=0;
+		document.getElementById("myform:bankCombo").disabled=true;
+		document.getElementById("myform:mnoCombo").disabled=true;
+		document.getElementById("mnochk").checked=false;
+		document.getElementById("bankchk").checked=false;
+	}
+
+</script>
+</h:head>
+
+<h:body onload="">
+<f:view >
+<f:event type="preRenderView"  listener="#{distributorActionBean.clearAllSessionObjects}"></f:event>
+	<h:form id="myform" >	
+		<div id="wizard_group"> 
+    		
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+	                <td id="header_wizard">
+	                	<h1>
+	                		<h:outputText value="Add Agent Network" rendered="#{!distributorActionBean.distributorVO.editMode}" />		
+	                 		<h:outputText value="Edit Agent Network" rendered="#{distributorActionBean.distributorVO.editMode}" />
+	                	</h1>
+	                </td>
+                </tr>
+            	<tr>
+                	<td>
+                        <div id="status_bar_top">
+                        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td width="70%" valign="top" align="left">
+                                  	<div id="ah_nav">
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                  </td>
+                                  <td width="30%" valign="top" align="right">
+                                  	<a4j:outputPanel id="icons_div" styleClass="icons_div" style="display:block;float:right;" >
+                                        <a4j:commandButton actionListener="#{distributorActionBean.resetDistributorFields}" title="Clear" onclick="clearCheckBoxes()"
+                                            image="/images/ah_images/icon_clear.png" 
+                                            styleClass="icon_clear"  rendered="#{!distributorActionBean.distributorVO.editMode}"
+                                            render="distName,contName,active,address1,address2,zipcode,city,email,fax,description,state,country,comment,phoneNo"/>
+                                    </a4j:outputPanel>
+                                  </td>
+                              </tr>
+                            </table>
+                        </div>
+                        
+                        
+                        <div class="clear"></div>
+                    </td>
+                </tr>
+            	
+                <tr>
+                	<td >
+                    	<div id="content_wrap">
+                         <div class="row,error_text_red" style="margin-left: 30px" >
+                            <a4j:outputPanel ajaxRendered="true" >
+                                 <a4j:outputPanel styleClass="error_cont" rendered="#{! empty facesContext.maximumSeverity}">
+                                     <a4j:outputPanel styleClass="error_txt" >
+                                        <h:messages globalOnly="true" />
+                                     </a4j:outputPanel>
+                                 </a4j:outputPanel>                
+                            </a4j:outputPanel>
+                        </div> 
+                        
+                        
+                        <fieldset>
+                                <legend>Agent Network Details</legend>
+                        <table width="" border="0" align="center" cellpadding="0" cellspacing="10">
+                              <tr>
+                                <td width="170" valign="top">Agent Network Name<span class="asterisk">*</span>:</td>
+                                <td width="200" align="left" valign="top">
+                                <h:inputText id="distName" styleClass="type_txt"  value="#{distributorActionBean.distributorVO.name}" maxlength="50" title="Agent Network Name"
+                                 onkeypress="return maskAlphaWithSp(this,event)" onkeydown="return disablePasteOption(event)"/>
+                                </td>
+                                <td width="40" align="left" valign="top">&nbsp;</td>
+                                <td width="170" valign="top">
+                                	<input type="radio" id="mnochk" name="radio_group2" class="type_check1" onclick="checkEnableMNO()"/>
+                                 	<label for="check_radio" style="width:107px;">Service Operator <span class="asterisk">*</span></label>
+                                </td>
+                                <td width="200" align="left" valign="top">
+                                    <h:selectOneMenu id="mnoCombo" styleClass="type_list" value="#{distributorActionBean.distributorVO.mnoId}" title="Service Operator" >
+                                        <f:selectItem itemLabel="[Select]" itemValue="0" />
+                                        <f:selectItems value="#{distributorActionBean.distributorVO.mnoList}"/>
+                                    </h:selectOneMenu>
+                                </td>
+                                
+                                
+                              </tr>
+                              <tr>
+                                <td width="170" valign="top">Contact Name<span class="asterisk">*</span>:</td>
+                                <td width="200" align="left" valign="top">
+                                <h:inputText id="contName" styleClass="type_txt" value="#{distributorActionBean.distributorVO.contactName}" maxlength="50" title="Contact Name"
+                                 onkeypress="return maskAlphaWithSp(this,event)" onkeydown="return disablePasteOption(event)"/></td>
+                                <td width="40" align="left" valign="top">&nbsp;</td>
+                                <td width="170" valign="top">
+                                	<input type="radio" id="bankchk" name="radio_group1" class="type_check" onclick="checkEnableBank()"/>
+		                            <label for="check_radio2" style="width:107px;">Bank</label>
+                                </td>
+                                <td width="200" align="left" valign="top">
+                                    <h:selectOneMenu id="bankCombo" styleClass="type_list" value="#{distributorActionBean.distributorVO.bankId}" title="Bank">
+                                        <f:selectItem itemLabel="[Select]" itemValue="0" />
+                                        <f:selectItems value="#{distributorActionBean.distributorVO.bankList}" />
+                                    </h:selectOneMenu>
+                                </td>
+                                
+                                
+                              </tr>
+                              <tr>
+                                <td colspan="5" align="left" valign="top">
+                                	<h:selectBooleanCheckbox  id="active" styleClass="type_check" value="#{distributorActionBean.distributorVO.active}" title="Active">
+                                        <a4j:ajax event="click" listener="#{distributorActionBean.onChangeActive}" render="active"/>
+                                    </h:selectBooleanCheckbox>
+                                    <label for="check_active">Active</label>
+                                </td>
+                          	  </tr>
+							  <!-- <tr>
+                                <td width="170" valign="top"><span class="col_l"><label>Address 1<span class="asterisk">*</span>:</label></span></td>
+                                <td width="200" align="left" valign="top">
+       	                        <h:inputTextarea id="address1" styleClass="type_txt" rows="3" value="#{distributorActionBean.distributorVO.address1}" title="Address1"
+		                            onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);"/></td>
+                                <td width="40" align="left" valign="top">&nbsp;</td>
+                                <td width="170" valign="top"><span class="col_r"><label>Address 2:</label></span></td>
+                                <td width="200" align="left" valign="top">
+                                    <h:inputTextarea id="address2" styleClass="type_txt" rows="3" value="#{distributorActionBean.distributorVO.address2}" title="Address2"
+                           			onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);"/>
+                                </td>
+                                
+                                
+                              </tr> -->
+                              <tr>
+                                <td colspan="5" align="right"></td>
+                              </tr>
+                          </table>
+                          </fieldset>
+                        
+                          
+                          
+                          <fieldset>
+                                <legend>Address</legend>
+                          
+                          <table width="" border="0" align="center" cellpadding="0" cellspacing="10">
+                          	   <tr>
+                                <td width="170" valign="top"><span class="col_l"><label>Address 1<span class="asterisk">*</span>:</label></span></td>
+                                <td width="200" align="left" valign="top">
+       	                        <h:inputTextarea id="address1" styleClass="type_txt" rows="3" value="#{distributorActionBean.distributorVO.address1}" title="Address1"
+		                            onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);"/></td>
+                                <td width="40" align="left" valign="top">&nbsp;</td>
+                                <td width="170" valign="top"><span class="col_r"><label>Address 2:</label></span></td>
+                                <td width="200" align="left" valign="top">
+                                    <h:inputTextarea id="address2" styleClass="type_txt" rows="3" value="#{distributorActionBean.distributorVO.address2}" title="Address2"
+                           			onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);"/>
+                                </td>
+                                
+                                
+                              </tr>
+                              <tr>
+                                <td width="170" valign="top">Zip Code:</td>
+                                <td width="200" align="left" valign="top"><h:inputText id="zipcode" styleClass="type_txt" value="#{distributorActionBean.distributorVO.zip}" maxlength="50" title="Zip Code" 
+                                    onkeypress="return maskInteger(this,event)" onkeydown="return disablePasteOption(event)"/>
+                                </td>
+                                <td width="40" rowspan="4" align="left" valign="top">&nbsp;</td>
+                                <td width="170" rowspan="4" valign="top">Description:</td>
+                                <td width="200" rowspan="4" align="left" valign="top">
+                                    <h:inputTextarea id="description" styleClass="type_txt" rows="5" value="#{distributorActionBean.distributorVO.description}" title="Description"
+                                    onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);"/>
+                                </td>
+                                
+                                
+                              </tr>
+                              <tr>
+                                <td valign="top">City:</td>
+                                <td width="200" align="left" valign="top"><h:inputText id="city" styleClass="type_txt" value="#{distributorActionBean.distributorVO.city}" maxlength="50" title="City"
+                                 onkeypress="return maskAlphaNumericWithSpdashforAH(this,event)" onkeydown="return disablePasteOption(event)"/></td>
+                              </tr>
+                              <tr>
+                                <td valign="top">Email:</td>
+                                <td width="200" align="left" valign="top"><h:inputText id="email" styleClass="type_txt" value="#{distributorActionBean.distributorVO.email}" maxlength="50" title="Email"/></td>
+                              </tr>
+                              <tr>
+                                <td valign="top">Fax:</td>
+                                <td width="200" align="left" valign="top"><h:inputText id="fax" styleClass="type_txt" value="#{distributorActionBean.distributorVO.fax}" maxlength="11" title="Fax"
+                                    onkeypress="return maskInteger(this,event)" onkeydown="return disablePasteOption(event)"/>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td width="170" valign="top">State:</td>
+                                <td width="200" align="left" valign="top"><h:inputText id="state" styleClass="type_txt" value="#{distributorActionBean.distributorVO.state}" title="State" maxlength="50"
+                                 onkeypress="return maskAlphaNumericWithSpdashforAH(this,event)" onkeydown="return disablePasteOption(event)"/></td>
+                                <td width="40" rowspan="4" align="left" valign="top">&nbsp;</td>
+                                <td width="170" rowspan="4" valign="top">Comments:</td>
+                                <td width="200" rowspan="4" align="left" valign="top">
+                                    <h:inputTextarea id="comment" styleClass="type_txt" rows="5" value="#{distributorActionBean.distributorVO.comments}" title="Comments"
+                                    onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);"/>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td valign="top">Country:</td>
+                                <td width="200" align="left" valign="top">
+                                	<h:selectOneMenu id="country" value="#{distributorActionBean.distributorVO.country}" styleClass="type_list" title="Country">
+                                		<!-- <f:selectItem itemLabel="[Select]" itemValue="0"/> -->
+                                		<f:selectItems value="#{distributorActionBean.countryItems}"/>
+                                	</h:selectOneMenu>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td valign="top">Phone No:</td>
+                                <td width="200" align="left" valign="top">
+                                	<h:inputText id="phoneNo" styleClass="type_txt" value="#{distributorActionBean.distributorVO.phoneNo}" maxlength="11" title="Phone No"
+                                    onkeypress="return maskInteger(this,event)" onkeydown="return disablePasteOption(event)"/>
+                                </td>
+                              </tr>
+                          </table>	                        
+                          </fieldset>
+                        </div>
+                    	
+                    </td>
+                </tr>
+		    
+
+		    	<tr>
+                	<td id="status_bar_bottom">
+                    	<div class="infoMessage" >
+                          <a4j:outputPanel ajaxRendered="true">
+                            <h:outputText value="#{infoMessage}"/>
+                          </a4j:outputPanel>
+                        </div>
+                    </td>
+                </tr>
+                
+                
+		    	<tr>
+                	<td>
+                    	<div id="footer">
+                    	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    	    <tr>
+                    	      <td width="50%" valign="top" align="left">
+                    	      	<h:commandLink styleClass="btn_cancel" action="#{distributorActionBean.cancel}"  />
+                    	      </td>
+                    	      <td width="50%" valign="top" align="right">
+                    	      	<h:commandLink styleClass="btn_update" action="#{distributorActionBean.saveDistributor}" rendered="#{distributorActionBean.distributorVO.editMode and (distributorActionBean.securityCheck or distributorActionBean.editSecurityCheck)}"/>
+                    	      	<h:commandLink styleClass="btn_save" action="#{distributorActionBean.saveDistributor}" rendered="#{!distributorActionBean.distributorVO.editMode and (distributorActionBean.securityCheck or distributorActionBean.editSecurityCheck)}"/>
+                    	      </td>
+                  	      </tr>
+                  	    </table>
+                    	</div>
+                  </td>
+                </tr>
+            </table>                        
+		</div>
+	</h:form>
+	<div class="status">
+	  <a4j:status>
+	    <f:facet name="start">
+	      <h:graphicImage url="/images/ah_images/tabs_loader.gif" style="border:0px;"/>
+	    </f:facet>
+	    <f:facet name="stop"></f:facet>
+	  </a4j:status>
+	</div>
+</f:view>
+</h:body>
+</html>

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FPINPopupView" customModule="JS_Wallet" customModuleProvider="target">
+            <connections>
+                <outlet property="btnCancel" destination="QZx-Cz-KlU" id="w6q-hd-D7k"/>
+                <outlet property="btnOk" destination="maf-RE-b5p" id="f0i-YA-aNa"/>
+                <outlet property="inputParentView" destination="Yft-9h-lwC" id="MdE-h2-ipP"/>
+                <outlet property="pinTextField" destination="fWR-X7-bkp" id="Tvf-rc-aBe"/>
+                <outlet property="popUpView" destination="r2P-VE-G28" id="LeU-cP-UOL"/>
+                <outlet property="view" destination="QoV-oM-kpS" id="2Hf-kk-473"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="QoV-oM-kpS">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view alpha="0.60000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfd-J3-hVq">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r2P-VE-G28">
+                    <rect key="frame" x="77" y="228" width="260" height="280"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fm3-D3-2L2">
+                            <rect key="frame" x="0.0" y="0.0" width="260" height="64"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mpin_popup_icon" translatesAutoresizingMaskIntoConstraints="NO" id="B79-eY-w3s">
+                                    <rect key="frame" x="12" y="12" width="40" height="40"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OTP Verification" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6m-qT-Kg8">
+                                    <rect key="frame" x="68" y="9" width="177" height="46"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                    <variation key="heightClass=regular-widthClass=regular">
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="36"/>
+                                    </variation>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.0" green="0.28235294117647058" blue="0.56470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="k6m-qT-Kg8" firstAttribute="top" secondItem="fm3-D3-2L2" secondAttribute="top" constant="9" id="06N-mk-Xhu">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                </constraint>
+                                <constraint firstItem="B79-eY-w3s" firstAttribute="leading" secondItem="fm3-D3-2L2" secondAttribute="leading" constant="12" id="5oN-Yi-0Ze">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                </constraint>
+                                <constraint firstItem="B79-eY-w3s" firstAttribute="top" secondItem="fm3-D3-2L2" secondAttribute="top" constant="12" id="AeO-M9-REK">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                </constraint>
+                                <constraint firstAttribute="bottom" secondItem="B79-eY-w3s" secondAttribute="bottom" constant="12" id="J88-Hy-Woc">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                </constraint>
+                                <constraint firstItem="k6m-qT-Kg8" firstAttribute="leading" secondItem="fm3-D3-2L2" secondAttribute="leading" constant="68" id="Lcr-VP-EgG">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="103"/>
+                                </constraint>
+                                <constraint firstAttribute="height" constant="64" id="QHr-cH-CO9">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="100"/>
+                                </constraint>
+                                <constraint firstAttribute="bottom" secondItem="k6m-qT-Kg8" secondAttribute="bottom" constant="9" id="ctE-dj-sSA">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                </constraint>
+                                <constraint firstItem="k6m-qT-Kg8" firstAttribute="leading" secondItem="B79-eY-w3s" secondAttribute="trailing" constant="16" id="ocn-at-3kG">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="13"/>
+                                </constraint>
+                                <constraint firstAttribute="trailing" secondItem="k6m-qT-Kg8" secondAttribute="trailing" constant="15" id="y5T-4t-azb">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="8"/>
+                                </constraint>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter OTP" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ocs-B4-BPn">
+                            <rect key="frame" x="13" y="89" width="239" height="24"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
+                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular-widthClass=regular">
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="25"/>
+                            </variation>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yft-9h-lwC">
+                            <rect key="frame" x="10" y="122" width="240" height="40"/>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fWR-X7-bkp">
+                                    <rect key="frame" x="18" y="0.0" width="222" height="40"/>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="38" id="hIs-1q-jkP">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                            <variation key="heightClass=regular-widthClass=regular" constant="70"/>
+                                        </constraint>
+                                    </constraints>
+                                    <color key="textColor" red="0.2784313725" green="0.2784313725" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" secureTextEntry="YES"/>
+                                    <variation key="heightClass=regular-widthClass=regular">
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="24"/>
+                                    </variation>
+                                </textField>
+                            </subviews>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="fWR-X7-bkp" firstAttribute="top" secondItem="Yft-9h-lwC" secondAttribute="top" id="6bz-wI-QNR"/>
+                                <constraint firstItem="fWR-X7-bkp" firstAttribute="leading" secondItem="Yft-9h-lwC" secondAttribute="leading" constant="11" id="6re-6A-uRA">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="18"/>
+                                    <variation key="heightClass=regular-widthClass=regular" constant="18"/>
+                                </constraint>
+                                <constraint firstAttribute="trailing" secondItem="fWR-X7-bkp" secondAttribute="trailing" constant="11" id="WjR-6i-pcP">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                    <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                                </constraint>
+                                <constraint firstAttribute="height" constant="44" id="eSQ-Ut-FQo">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                </constraint>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="eSQ-Ut-FQo"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular-widthClass=compact">
+                                <mask key="constraints">
+                                    <include reference="eSQ-Ut-FQo"/>
+                                </mask>
+                            </variation>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k97-ee-aHQ">
+                            <rect key="frame" x="0.0" y="196" width="260" height="50"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="maf-RE-b5p">
+                                    <rect key="frame" x="15" y="0.0" width="110" height="50"/>
+                                    <color key="backgroundColor" red="0.99215686270000003" green="0.70588235290000001" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="hh5-lW-ZvI">
+                                            <variation key="heightClass=regular-widthClass=regular" constant="80"/>
+                                        </constraint>
+                                        <constraint firstAttribute="width" constant="110" id="jLg-jg-YE9">
+                                            <variation key="heightClass=regular-widthClass=regular" constant="170"/>
+                                        </constraint>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="16"/>
+                                    <state key="normal" title="OK">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <state key="selected">
+                                        <color key="titleColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                            <color key="value" red="0.0" green="0.28235294119999998" blue="0.56470588239999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="highlightedColor">
+                                            <color key="value" red="0.0" green="0.28235294119999998" blue="0.56470588239999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <variation key="heightClass=regular-widthClass=regular">
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="25"/>
+                                    </variation>
+                                    <connections>
+                                        <action selector="actOkay:" destination="-1" eventType="touchUpInside" id="flV-dw-gGW"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZx-Cz-KlU">
+                                    <rect key="frame" x="135" y="0.0" width="110" height="50"/>
+                                    <color key="backgroundColor" red="0.38823529410000002" green="0.38823529410000002" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="16"/>
+                                    <state key="normal" title="CANCEL">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                            <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="highlightedColor">
+                                            <color key="value" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <variation key="heightClass=regular-widthClass=regular">
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="25"/>
+                                    </variation>
+                                    <connections>
+                                        <action selector="actCancel:" destination="-1" eventType="touchUpInside" id="RrU-rc-BHi"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="maf-RE-b5p" firstAttribute="leading" secondItem="k97-ee-aHQ" secondAttribute="leading" constant="12" id="0xv-Hl-h4N">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="15"/>
+                                    <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                                </constraint>
+                                <constraint firstAttribute="bottom" secondItem="QZx-Cz-KlU" secondAttribute="bottom" id="8ac-4b-mcx">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                                </constraint>
+                                <constraint firstItem="maf-RE-b5p" firstAttribute="width" secondItem="QZx-Cz-KlU" secondAttribute="width" id="DeY-8S-fTs"/>
+                                <constraint firstItem="QZx-Cz-KlU" firstAttribute="leading" secondItem="maf-RE-b5p" secondAttribute="trailing" constant="17" id="EMh-gd-76i">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                    <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                                </constraint>
+                                <constraint firstItem="maf-RE-b5p" firstAttribute="top" secondItem="k97-ee-aHQ" secondAttribute="top" id="F7Y-uB-A1z"/>
+                                <constraint firstAttribute="bottom" secondItem="maf-RE-b5p" secondAttribute="bottom" id="Kcw-uX-I8s">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                                </constraint>
+                                <constraint firstAttribute="trailing" secondItem="QZx-Cz-KlU" secondAttribute="trailing" constant="11" id="ZuR-I6-WUT">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="15"/>
+                                    <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                                </constraint>
+                                <constraint firstItem="QZx-Cz-KlU" firstAttribute="top" secondItem="k97-ee-aHQ" secondAttribute="top" id="koX-Sb-RtV"/>
+                                <constraint firstItem="QZx-Cz-KlU" firstAttribute="leading" secondItem="maf-RE-b5p" secondAttribute="trailing" constant="17" id="vbG-ad-o7H">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                    <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                                </constraint>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="fm3-D3-2L2" secondAttribute="trailing" id="04r-xw-Fqb">
+                            <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                        </constraint>
+                        <constraint firstItem="ocs-B4-BPn" firstAttribute="leading" secondItem="r2P-VE-G28" secondAttribute="leading" constant="13" id="0X9-Kh-J1U">
+                            <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                        </constraint>
+                        <constraint firstItem="k97-ee-aHQ" firstAttribute="leading" secondItem="r2P-VE-G28" secondAttribute="leading" id="175-cH-YaG"/>
+                        <constraint firstItem="fm3-D3-2L2" firstAttribute="top" secondItem="r2P-VE-G28" secondAttribute="top" id="7pV-k6-9W1"/>
+                        <constraint firstItem="ocs-B4-BPn" firstAttribute="top" secondItem="fm3-D3-2L2" secondAttribute="bottom" constant="19" id="FuN-VJ-ZZW">
+                            <variation key="heightClass=regular-widthClass=compact" constant="25"/>
+                            <variation key="heightClass=regular-widthClass=regular" constant="15"/>
+                        </constraint>
+                        <constraint firstAttribute="trailing" secondItem="k97-ee-aHQ" secondAttribute="trailing" id="JA1-G4-fh5">
+                            <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                        </constraint>
+                        <constraint firstItem="k97-ee-aHQ" firstAttribute="top" secondItem="Yft-9h-lwC" secondAttribute="bottom" constant="42" id="Lrw-QF-znW">
+                            <variation key="heightClass=regular-widthClass=compact" constant="34"/>
+                            <variation key="heightClass=regular-widthClass=regular" constant="18"/>
+                        </constraint>
+                        <constraint firstItem="Yft-9h-lwC" firstAttribute="top" secondItem="ocs-B4-BPn" secondAttribute="bottom" constant="47" id="Nh8-UZ-blf">
+                            <variation key="heightClass=regular-widthClass=compact" constant="9"/>
+                        </constraint>
+                        <constraint firstAttribute="trailing" secondItem="ocs-B4-BPn" secondAttribute="trailing" constant="8" id="S2Y-Tx-YLB">
+                            <variation key="heightClass=regular-widthClass=regular" constant="141"/>
+                        </constraint>
+                        <constraint firstAttribute="bottom" secondItem="k97-ee-aHQ" secondAttribute="bottom" constant="32" id="Zea-F7-sHp">
+                            <variation key="heightClass=regular-widthClass=compact" constant="34"/>
+                            <variation key="heightClass=regular-widthClass=regular" constant="19"/>
+                        </constraint>
+                        <constraint firstAttribute="height" constant="280" id="Ziw-B9-fjj">
+                            <variation key="heightClass=regular-widthClass=regular" constant="350"/>
+                        </constraint>
+                        <constraint firstItem="Yft-9h-lwC" firstAttribute="leading" secondItem="r2P-VE-G28" secondAttribute="leading" constant="10" id="d7z-kH-ras">
+                            <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                            <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                        </constraint>
+                        <constraint firstItem="Yft-9h-lwC" firstAttribute="top" secondItem="ocs-B4-BPn" secondAttribute="bottom" constant="24" id="dT0-pu-kOG">
+                            <variation key="heightClass=regular-widthClass=regular" constant="15"/>
+                        </constraint>
+                        <constraint firstAttribute="trailing" secondItem="Yft-9h-lwC" secondAttribute="trailing" constant="10" id="gKT-51-RTh">
+                            <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                            <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                        </constraint>
+                        <constraint firstAttribute="width" constant="260" id="oLt-0P-ijA">
+                            <variation key="heightClass=regular-widthClass=regular" constant="400"/>
+                        </constraint>
+                        <constraint firstItem="fm3-D3-2L2" firstAttribute="leading" secondItem="r2P-VE-G28" secondAttribute="leading" id="sDQ-ae-Ttz"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Nh8-UZ-blf"/>
+                            <exclude reference="dT0-pu-kOG"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="Nh8-UZ-blf"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=regular">
+                        <mask key="constraints">
+                            <include reference="dT0-pu-kOG"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="wfd-J3-hVq" firstAttribute="leading" secondItem="QoV-oM-kpS" secondAttribute="leading" id="3su-oR-eQ1"/>
+                <constraint firstAttribute="bottom" secondItem="wfd-J3-hVq" secondAttribute="bottom" id="8pb-KT-jXv"/>
+                <constraint firstItem="r2P-VE-G28" firstAttribute="centerX" secondItem="QoV-oM-kpS" secondAttribute="centerX" id="RpY-RJ-0t0"/>
+                <constraint firstAttribute="trailing" secondItem="wfd-J3-hVq" secondAttribute="trailing" id="Ylq-DU-yT7"/>
+                <constraint firstItem="r2P-VE-G28" firstAttribute="centerY" secondItem="QoV-oM-kpS" secondAttribute="centerY" id="zC3-Yz-WT6"/>
+                <constraint firstItem="wfd-J3-hVq" firstAttribute="top" secondItem="QoV-oM-kpS" secondAttribute="top" id="zUe-p7-4ZX"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="308" y="286"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="mpin_popup_icon" width="27.333333969116211" height="28"/>
+    </resources>
+</document>

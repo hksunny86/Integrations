@@ -1,0 +1,6 @@
+Agent Account Login
+Agnet Account Login Pin Generation
+agent Account Login Pin Reset
+Agent Balance Inquiry
+Agent Ibft Inquiry
+Agnet Ibft Payment apis 

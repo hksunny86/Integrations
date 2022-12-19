@@ -1,0 +1,16 @@
+<!--<msg id="208" reqTime="1406289749982">-->
+<!--    <params>-->
+<!--        <param name="DTID">5</param>-->
+<!--        <param name="TAMT">1000</param>-->
+<!--        <param name="MRID">11234567891</param>-->
+<!--    </params>-->
+<!--</msg>-->
+
+<msg id="208">
+    <params>
+        <param name="MRID">11234567891</param>
+        <param name="MNAME">Khaddi</param>
+        <param name="TAMT">1000000</param>
+        <param name="TAMTF">1,000000.00</param>
+    </params>
+</msg>

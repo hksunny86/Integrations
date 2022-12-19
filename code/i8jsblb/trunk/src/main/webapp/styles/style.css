@@ -1,0 +1,311 @@
+#headerLogo {
+	float: left;
+}
+
+#headerLinks {
+	float: inherit;
+}
+
+#main {
+	/*float: left;*/
+}
+
+.formText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #333333;
+}
+
+select{
+	padding:0px !important;
+	width:175px !important;
+}
+
+.textBox {
+	/*
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	color: #333333;
+	border: 1px solid #999999;
+	width: 163px;
+	*/
+	height: 22px;
+	background-color:#fff;
+	/*color:#7e7e7e;*/
+	color:#000000;
+	border:1px solid #c4c6ca;
+	line-height: 20px;
+	padding:0px 5px;
+	margin-top:0px; margin-bottom: 0px;
+	width: 163px;
+}
+
+.button {
+	cursor:pointer;
+	/*display:inline-block !important;*/
+	font:13px/100% Arial, Helvetica, Verdana, sans-serif;
+	padding:4px 6px;
+	outline:none !important;
+	text-align:center;
+	text-decoration:none;
+	/*background:#f1f1f1 url(../images/aw/portal-btns-bg.png) repeat-x 0px 0px;*/
+	background:#0060af;
+	border-top:1px solid #6ca3d1;
+	border-left:1px solid #6ca3d1;
+	border-right:1px solid #004a9b;
+	border-bottom:1px solid #004a9b;
+	color:#ffffff;
+	width: auto;
+	overflow: visible;
+}
+.button:hover:disabled{
+	cursor: default !important;
+	color:#999 !important;
+	background-color:#ccc !important;
+	border-top:1px solid #ccc !important;
+	border-left:1px solid #ccc !important;
+	border-right:1px solid #999 !important;
+	border-bottom:1px solid #999 !important;
+}
+.button:hover{
+	/*border:1px solid #5b8927;
+	background:#f1f1f1 url(../images/aw/portal-btns-bg-hover.png) repeat-x 0px 0px;*/
+	background:#0094d2;
+	color:#ffffff;
+
+}
+.button[disabled]{
+	cursor: default !important;
+	color:#999 !important;
+	background-color:#ccc !important;
+	border-top:1px solid #ccc !important;
+	border-left:1px solid #ccc !important;
+	border-right:1px solid #999 !important;
+	border-bottom:1px solid #999 !important;
+}
+/*
+input[type="submit"]{
+	background:#6291a5 !important;
+	border-top:1px solid #a4c0cb !important;
+	border-left:1px solid #a4c0cb !important;
+	border-right:1px solid #4c7a90 !important;
+	border-bottom:1px solid #4c7a90 !important;
+}
+input[type="submit"]:hover{
+	background:#83b9d0 !important;
+	border-top:1px solid #a4c0cb !important;
+	border-left:1px solid #a4c0cb !important;
+	border-right:1px solid #4c7a90 !important;
+	border-bottom:1px solid #4c7a90 !important;
+}*/
+input[type="reset"]{
+	border:1px solid #4d555e !important;
+	background:url(../images/aw/input-btn-reset-bg.png) repeat-x 0px 0px !important;
+}
+input[type="reset"]:hover{
+	border:1px solid #4d555e !important;
+	background:url(../images/aw/input-btn-reset-bg-hover.png) repeat-x 0px 0px !important;
+}
+
+a.linktext {
+	display:block;
+	width:auto !important;
+	background:#dce0e5 url(../images/aw/linktext-btn-bg.png) repeat-x -483px 0px !important;
+	border:1px solid #c5c9cd !important;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px !important;
+	font-weight:bold !important;
+	color:#555e67 !important;
+	text-decoration:none !important;
+	line-height:normal !important;
+	padding:15px 35px 15px !important;
+	text-align: left !important;
+	float:left !important;
+	margin:15px 0px 15px 20px;
+}
+a.linktext:hover {
+	background:#e1e9a0 url(../images/aw/linktext-btn-bg-hover.png) repeat-x -483px 0px !important;
+	color:#000000 !important;
+}
+
+.tableRegion a.linktext{
+	
+	background:none !important;
+	border:none !important;
+	color:#555e67 !important;
+	text-decoration:underline !important;
+	line-height:normal !important;
+	padding:0px 0px !important;
+	text-align: left !important;
+	clear:both !important;
+	margin:0px 0px !important;
+}
+
+.disabledlinktext {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: blue;
+	font-size: 11px;
+	text-decoration: normal;
+}
+
+a:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: blue;
+	font-size: 11px;
+	text-decoration: underline;
+}
+
+a:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: blue;
+	font-size: 11px;
+	text-decoration: underline;
+}
+
+a:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: blue;
+	font-size: 11px;
+	text-decoration: underline;
+}
+
+.pageHeading {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #333333;
+}
+
+.dropMenu {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	color: #333333;
+	border: 1px solid #999999;
+}
+
+.tableHeading {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #333333;
+}
+
+.errorMsg {
+	background: #ffffcc;
+	border: 1px solid #000;
+	color: blue;
+	/*color: red;*/
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	margin: 10px auto;
+	padding: 3px;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+.errorMsgSmall {
+	background: #ffffcc;
+	border: 1px solid #000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 12px;
+	margin: 7px auto;
+	padding: 3px;
+	text-align: center;
+	vertical-align: middle;
+	color: blue;
+}
+
+.infoMsg {
+	background: #ffffcc;
+	border: 1px solid #000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	margin: 10px auto;
+	padding: 3px;
+	text-align: center;
+	vertical-align: bottom;
+	color: blue;
+}
+
+.leftPadding {
+	padding-left: 90px;
+}
+
+.border {
+	border: 1px solid #999999;
+}
+
+.calClearText {
+	color: black;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	cursor: hand;
+}
+
+.label {
+	background-color: #F4F4F4;
+	color: black;
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 10px;
+}
+
+.asterisk {
+	color:#FF0000;
+}
+
+
+
+
+input[type="submit"], input[type="reset"], input[type="button"]{
+	padding: 0px 17px;
+	background: none !important;
+	border:none !important;
+	height:36px;
+	border-radius:5px;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	font-size:14px;
+}
+input[type="submit"], input[type="button"]{
+	background-color:#74ba66 !important;
+}
+input[type="submit"]:hover, input[type="button"]:hover{
+	background-color: #0094d2 !important;
+	color: #ffffff !important;
+}
+
+input[type="reset"] {
+	border: none !important;
+	background: none !important;
+	background-color:#e0e0e0 !important;
+	color:#7c7c7c;
+}
+input[type="reset"]:hover {
+	background: none !important;
+	background-color:#4d555e !important;
+	color:#fff;
+}
+
+/*
+Following style is added by
+Atif Hussain
+to hide non selectable dates for JSF Rich Faces 
+calendar
+  */
+
+*.rf-cal-boundary-day{
+	color:white !important;
+	background: white !important;
+	font-size: 0px !important;
+}
+
+input[type="button"]:disabled, input[type="submit"]:disabled,input[type="reset"]:disabled,input[type="file"]:disabled::-webkit-file-upload-button,button:disabled,select:disabled,keygen:disabled,optgroup:disabled,option:disabled,select[disabled]>option
+{
+	background: lightgrey;
+}

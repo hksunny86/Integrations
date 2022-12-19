@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/headerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/layoutHeaderMain"
+        android:splitMotionEvents="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/header_bg"
+        android:gravity="center_vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnBack"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            app:srcCompat="@drawable/button_back" />
+
+        <View
+            android:id="@+id/viewLeft"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/btnBack"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/ivHeaderLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/viewLeft"
+            android:layout_marginLeft="@dimen/textViewMarginXXLarge"
+            android:text="Login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textViewMarginXLarge"/>
+
+        </RelativeLayout>
+</RelativeLayout>

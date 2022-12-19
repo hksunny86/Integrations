@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rounded_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layoutMarginLarge"
+        android:layout_marginRight="@dimen/layoutMarginLarge"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/layoutMarginLarge">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/tvHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:padding="@dimen/textViewsPadding"
+                android:shadowColor="@color/white"
+                android:text="Originator1"
+                android:textColor="@color/text_grey"
+                android:textSize="@dimen/ts_normal"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:id="@+id/ivRemove"
+                android:layout_marginTop="@dimen/layoutMarginLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/textViewTextSizeSmall"
+                android:background="@drawable/iv_remove" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:padding="@dimen/textViewsPadding"
+            android:shadowColor="@color/white"
+            android:text="@string/international_remittance_location"
+            android:textColor="@color/text_grey"
+            android:textSize="@dimen/ts_normal"
+            android:textStyle="normal" />
+
+        <EditText
+            android:id="@+id/etOrgLoc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_customer_mobile"
+            android:background="@drawable/rounded_bg"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLength="25"
+            android:minHeight="@dimen/editTextMinHeight"
+            android:paddingLeft="@dimen/editTextPadding"
+            android:paddingRight="@dimen/editTextPadding"
+            android:singleLine="true">
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/lbl_sp_relationship"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/input_kin_cnic"
+            android:layout_alignStart="@+id/cnic_mobile_input"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:padding="@dimen/textViewsPadding"
+            android:shadowColor="@color/white"
+            android:text="@string/relationship_with_originator"
+            android:textColor="@color/text_grey"
+            android:textSize="@dimen/ts_normal"
+            android:textStyle="normal"
+            android:layout_alignLeft="@+id/cnic_mobile_input" />
+
+        <Spinner
+            android:id="@+id/spinner_relationship"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbl_account_type"
+            android:background="@drawable/spinner_bg"
+            android:paddingLeft="8dp"
+            android:paddingRight="18dp"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/lbl_other_relationship"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:padding="@dimen/textViewsPadding"
+            android:shadowColor="@color/white"
+            android:visibility="gone"
+            android:text="@string/relationship_with_originator"
+            android:textColor="@color/text_grey"
+            android:textSize="@dimen/ts_normal"
+            android:textStyle="normal" />
+
+        <EditText
+            android:id="@+id/etOrgRel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lbl_customer_mobile_confirm"
+            android:background="@drawable/rounded_bg"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:visibility="gone"
+            android:maxLength="25"
+            android:minHeight="@dimen/editTextMinHeight"
+            android:paddingLeft="@dimen/editTextPadding"
+            android:paddingRight="@dimen/editTextPadding"
+            android:singleLine="true"/>
+
+        <Button
+            android:id="@+id/btnAddOriginator"
+            android:layout_width="@dimen/buttonWidthLarge"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lblAlert"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_Xlarge"
+            android:background="@drawable/button_next_selector"
+            android:text="Add Originator"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/buttonTextSizeLarge"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+</RelativeLayout>

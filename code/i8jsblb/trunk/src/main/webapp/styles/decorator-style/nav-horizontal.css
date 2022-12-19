@@ -1,0 +1,137 @@
+/* A CSS Framework by Mike Stenhouse of Content with Style */ /* NAV */
+div#nav ul {
+	list-style: none;
+	width: 230px; /*C 150*/
+	margin: 0;
+	padding: 0;
+	margin-right: 0; /*C 7*/
+	/*font-size: 1.1em;*/
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+div#nav li {
+	margin: 0px 0px 0px 0px; /*3. 5px*/
+}
+
+div#nav li.last {
+	margin-bottom: 0;
+}
+
+div#nav li a { 
+	/* height: 20px;*/
+	/*width: 93% ; /*C 100*/
+	/*text-decoration: none;
+	color: #505050; 
+	display: block;
+	padding: 4px 0 2px 10px; 
+	background: transparent;
+	border-left: 4px solid #6699CC;
+	border-bottom: 1px solid #6699CC;*/
+	
+	
+	display:block;
+	/*width:230px;*/
+	/*height:24px;
+	line-height:24px;*/
+	padding: 8px 0px;
+	text-decoration: none;
+	text-indent:10px;
+	color: #4a4a4a;
+	font-size: 12px;
+	border-left: 4px solid #ed1c24;
+	border-bottom: 1px solid #d2d2d2;
+	text-align:left;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+div#nav .pad {
+	display: none;
+}
+
+div#local li a:hover, div#nav li a:hover, div#nav li a.current {
+	background: #e4e4e4; /*d7e9f5 by Shoaib or eaeaea*/
+	color: #ed1c24;
+	border-left: 4px solid #ed1c24; /*CCCCCC*/
+}
+
+ul#local li {
+	list-style: none;
+	margin-left: 10px;
+}
+
+/* END NAV */ /* DROP DOWN MENUS */
+ul#primary-nav, ul#primary-nav ul {
+	margin: 0;
+	padding: 0px 1px 0px 0px; 
+	width: 240px; /* Width of Menu Items */ /*C 200*/
+	background: #ffffff; /* IE6 Bug */ /*This color is cell spacing*/
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;	
+}
+
+ul#primary-nav li {
+	position: relative;
+	list-style: none;
+	/*font-size: 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;	*/
+
+}
+
+ul#primary-nav li a {
+	display: block;
+	text-decoration: none;
+	/*color: #1465bc;*/ /*original 1465bc (font color of menu)*/
+	padding: 9px 0px; /*spacing in menu cells*/
+	
+}
+
+
+/* Fix IE. Hide from IE Mac \*/
+* html ul#primary-nav li {
+	float: left;
+	height: 1%;
+}
+
+* html ul#primary-nav li a {
+	height: 1%;
+}
+
+/* End */
+ul#primary-nav ul {
+	
+	display: none;
+	border: 1px solid #9f9f9f;
+	position: absolute;
+	left: 200px; /* Set 1px less than menu width */ /*C 149*/
+	top: 0;
+	z-index: 9999;
+
+}
+
+ul#primary-nav ul li ul{
+	left: 210px; /* Set 1px less than menu width */ /*C 149*/
+}
+
+ul#primary-nav li ul li a {
+	/*padding: 2px 5px;*/
+}  /* Sub Menu Styles */
+ul#primary-nav li:hover ul ul,ul#primary-nav li:hover ul ul ul,ul#primary-nav li.over ul ul,ul#primary-nav li.over ul ul ul
+	{
+	display: none;
+}  /* Hide sub-menus initially */
+ul#primary-nav li:hover ul,ul#primary-nav li:hover li:hover ul,ul#primary-nav li li li:hover ul,ul#primary-nav li.over ul,ul#primary-nav li li.over ul,ul#primary-nav li li li.over ul
+	{
+	display: block;
+}  /* The magic */
+ul#primary-nav li.menubar {
+	background: url(../../images/arrow.gif) 95% center no-repeat;
+}
+
+ul#primary-nav li:hover, ul#primary-nav li.over {
+	background-color: #e4e4e4;
+}
+
+ul#primary-nav li a:hover {
+	color: #000000;
+}
+/* END DROP DOWN MENUS */

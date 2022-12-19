@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.ajaxtags</groupId>
+  <artifactId>ajaxtags</artifactId>
+  <packaging>jar</packaging>
+  <version>1.2-beta3</version>
+  <name>AjaxTags</name>
+  <organization>
+    <name>Darren L. Spurgeon</name>
+  </organization>
+  <inceptionYear>2005</inceptionYear>
+  <url>http://ajaxtags.sourceforge.net/</url>
+
+  <issueManagement>
+    <system>SourceForge Tracker</system>
+    <url>http://sourceforge.net/tracker/?group_id=140499</url>
+  </issueManagement>
+
+  <developers>
+    <developer>
+      <id>dspurgeon</id>
+      <name>Darren L. Spurgeon</name>
+      <email>kalitai [at] yahoo.com</email>
+      <roles>
+        <role>Creator</role>
+        <role>Advisor</role>
+      </roles>
+      <timezone>-5</timezone>
+    </developer>
+    <developer>
+      <id>musachy</id>
+      <name>Musachy Barroso</name>
+      <email>musachy [at] gmail.com</email>
+      <roles>
+        <role>Project Manager</role>
+        <role>Developer</role>
+      </roles>
+      <timezone>-5</timezone>
+    </developer>
+    <developer>
+      <id>paticubita</id>
+      <name>Ernesto Gonzalez</name>
+      <email>paticubita [at] yahoo.com</email>
+      <roles>
+        <role>Advisor</role>
+      </roles>
+      <timezone>-5</timezone>
+    </developer>
+    <developer>
+      <id>phobetron</id>
+      <name>Charles Hudson</name>
+      <email>phobetron [at] users.sourceforge.net</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>juliareynolds</id>
+      <name>Julia Reynolds</name>
+      <email>juliareynolds [at] users.sourceforge.net</email>
+    </developer>
+    <developer>
+      <id>pablohstc</id>
+      <name>Pablo Henrique</name>
+      <email>pablohstc [at] users.sourceforge.net</email>
+    </developer>
+    <developer>
+      <id>sergek</id>
+      <name>Serge Knystautas</name>
+      <email>sergek [at] users.sourceforge.net</email>
+    </developer>
+  </developers>
+
+  <contributors>
+    <contributor>
+      <name>James Good</name>
+      <roles>
+        <role>Provides hosting space for our demo website</role>
+      </roles>
+      <timezone>-5</timezone>
+    </contributor>
+    <contributor>
+      <name>Ben J. Christensen</name>
+      <roles>
+        <role>Suggestions/fixes</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Huw B. Richards</name>
+      <roles>
+        <role>Suggestions/fixes</role>
+      </roles>
+    </contributor>
+    <contributor>
+      <name>Tomislav Stojcevich</name>
+      <roles>
+        <role>Suggestions/fixes</role>
+      </roles>
+    </contributor>
+  </contributors>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection></connection>
+    <developerConnection></developerConnection>
+    <url>http://cvs.sourceforge.net/viewcvs.py/ajaxtags/AjaxTags/</url>
+  </scm>
+
+  <build>
+    <defaultGoal>package</defaultGoal>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.properties</include>
+        </includes>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.*</include>
+        </includes>
+        <excludes>
+          <exclude>**/*.css</exclude>
+          <exclude>**/*.gif</exclude>
+          <exclude>**/*.js</exclude>
+          <exclude>**/*.png</exclude>
+          <exclude>**/*.txt</exclude>
+        </excludes>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.4</source>
+          <target>1.4</target>
+          <deprecation>on</deprecation>
+          <debug>on</debug>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <locales>en</locales>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <!-- Binary Distribution -->
+          <execution>
+            <id>1</id>
+            <phase>site</phase>
+            <goals>
+              <goal>assembly</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/main/assembly/bin.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+          <!-- Source Distribution -->
+          <execution>
+            <id>2</id>
+            <phase>site</phase>
+            <goals>
+              <goal>assembly</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/main/assembly/src.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.7.0</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.3</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.12</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>struts</groupId>
+      <artifactId>struts</artifactId>
+      <version>1.2.8</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>net.htmlparser</groupId>
+      <artifactId>jericho-html</artifactId>
+      <version>2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+</project>

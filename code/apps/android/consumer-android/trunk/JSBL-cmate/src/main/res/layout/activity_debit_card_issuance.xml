@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/container_header" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomBar"
+        android:layout_below="@+id/container_heading"
+        android:layout_marginBottom="@dimen/layoutMarginSmall"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activitySideMarginNormal"
+            android:layout_marginRight="@dimen/activitySideMarginNormal">
+
+            <LinearLayout
+                android:id="@+id/layoutInputs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/textViewMarginNormal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvMobileHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/customer_mobile_number"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_mobile_No"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:visibility="visible"
+                    android:layout_marginLeft="@dimen/margin_extra_short"
+                    android:text="03006669999" />
+                <TextView
+                    android:id="@+id/tv_cnic_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cnic"
+                    android:visibility="visible"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_cnic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:visibility="visible"
+                    android:layout_marginLeft="@dimen/margin_extra_short"
+                    android:text="3410125659871" />
+
+
+                <TextView
+                    android:id="@+id/tvEmbossingName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/customer_emobossing_name"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etEmbosingName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="start"
+                    android:hint="XXXXX"
+                    android:inputType="textCapCharacters"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                    android:maxLength="19"
+                    android:text=""
+                    android:textSize="@dimen/textViewTextSizeMedium"
+
+                    app:backgroundTint="@color/golden" />
+
+                <TextView
+                    android:id="@+id/mobile_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_extra_short"
+                    android:text="@string/customer_hint_embossing_name" />
+
+
+                <TextView
+                    android:id="@+id/tvMailingAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/customer_mailing_address"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etMailingAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="start"
+                    android:hint="XXXXX"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:minEms="50"
+                    android:text=""
+                    android:textSize="@dimen/textViewTextSizeMedium"
+                    app:backgroundTint="@color/golden" />
+
+                <TextView
+                    android:id="@+id/mobile_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_extra_short"
+                    android:layout_marginBottom="@dimen/textViewMarginXLarge"
+                    android:text="@string/customer_hint_mailing_address" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cbFee"
+                    android:layout_width="wrap_content"
+                    android:text="Fee"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:id="@+id/btnNext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:layout_marginTop="@dimen/buttonInnerMarginNormal"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:layout_marginBottom="25dp"
+                    android:background="@drawable/button_yellow_selector"
+                    android:text="@string/next"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textViewTextSizeLarge"
+                    android:textStyle="normal" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/bottomBar"
+        layout="@layout/layout_bottom_bar" />
+
+    <include
+        android:id="@+id/bottomBarQR"
+        layout="@layout/layout_qr_code" />
+
+
+</RelativeLayout>

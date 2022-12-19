@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+<h:head>
+<link rel="stylesheet" href="#{request.contextPath}/styles/wizard_style.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/tpc.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/style_js.css" type="text/css" />
+
+<meta name="title" content="Sales User History" />
+
+<style>
+	.col 
+	{
+	    width: 33%;
+	}
+	.centercol 
+	{
+	    width: 33%;
+	    text-align: center;
+	}
+</style>
+
+<script type="text/javascript" language="javascript">
+	
+function closeSalesHierarchyHistory()
+{
+	window.returnValue = 'Success';
+	window.close();
+}
+</script>
+</h:head>
+<h:body>
+<f:view>
+	<h:form id="myform">
+
+		<div id="wizard_group"> 
+    		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+	                <td id="header_wizard"><h1>Sales User History</h1></td>
+                </tr>
+                <tr>
+                	<td >
+                    	<div id="content_div">	
+                            <div id="gridDiv">
+                                <rich:dataTable id="salesHierarchyHistoryModelDataTable" rowKeyVar="rowIndex" width="100%" styleClass="datagrid" 
+                                    rowClasses="rowodd, roweven" value="#{salesHierarchyActionBean.salesUserHierarchyHistoryModels}" var="model">
+                                    <f:facet name="header">
+                                        <rich:columnGroup>
+                                        <rich:column>
+                                            	<h:outputText value="Sr.No"  />
+                                            </rich:column>
+                                            <rich:column>
+                                            	<h:outputText value="Updated By"  />
+                                            </rich:column>
+                                            <rich:column>
+                                                <h:outputText value="Updated On" />
+                                            </rich:column>
+                                            
+                                            <rich:column>
+                                                <h:outputText value="Old Role" />
+                                            </rich:column>
+                                            <rich:column>
+                                                <h:outputText value="New Role" />
+                                            </rich:column>
+                                            
+                                            <rich:column>
+                                                <h:outputText value="Old Parent Bank User" />
+                                            </rich:column>
+                                            <rich:column>
+                                                <h:outputText value="New Parent Bank User" />
+                                            </rich:column>
+                                            
+                                            <rich:column>
+                                                <h:outputText value="Old Ultimate Parent User" />
+                                            </rich:column>
+                                            <rich:column>
+                                                <h:outputText value="New Ultimate Parent User" />
+                                            </rich:column>
+                                            
+                                            <rich:column>
+                                                <h:outputText value="Old Status" />
+                                            </rich:column>
+                                            <rich:column>
+                                                <h:outputText value="New Status" />
+                                            </rich:column>
+                                            
+                                        </rich:columnGroup>
+                                    </f:facet>
+                                    <rich:column>
+                                    	<h:outputText value="#{rowIndex+1}" />
+                                    </rich:column>
+                                    <rich:column>
+                                        <h:outputText value="#{model.updatedByAppUserModel.username}" />
+                                    </rich:column>
+                                    <rich:column >
+                                        <h:outputText value="#{model.updatedOn}" />
+                                    </rich:column>
+                                    
+                                    <rich:column>
+                                        <h:outputText value="#{model.oldRoleTitle}" />
+                                    </rich:column>
+                                    
+                                    <rich:column style="color: #{salesHierarchyActionBean.isValueChanged(model.oldRoleTitle, model.newRoleTitle)};">
+                                        <h:outputText value="#{model.newRoleTitle}" />
+                                    </rich:column>
+                                    
+                                    <rich:column >
+                                        <h:outputText value="#{model.oldParentBankUserAppUserModel.username}" />
+                                    </rich:column>
+                                    <rich:column style="color: #{salesHierarchyActionBean.isValueChanged(model.oldParentBankUserAppUserModel.username, model.newParentBankUserAppUserModel.username)};">
+                                        <h:outputText value="#{model.newParentBankUserAppUserModel.username}" />
+                                    </rich:column>
+                                    
+                                    <rich:column >
+                                        <h:outputText value="#{model.oldUltimateParentBankUserAppUserModel.username}" />
+                                    </rich:column>
+                                    <rich:column style="color: #{salesHierarchyActionBean.isValueChanged(model.oldUltimateParentBankUserAppUserModel.username, model.newUltimateParentBankUserAppUserModel.username)};">
+                                        <h:outputText value="#{model.newUltimateParentBankUserAppUserModel.username}" />
+                                    </rich:column>
+                                    
+                                    <rich:column >
+                                        <h:outputText value="#{model.oldActive=='true' ? 'Active' : 'Inactive'}" />
+                                    </rich:column>
+                                    <rich:column style="color: #{salesHierarchyActionBean.isValueChanged(model.oldActive, model.newActive)};">
+                                        <h:outputText value="#{model.newActive=='true' ? 'Active' : 'Inactive'}" />
+                                    </rich:column>
+                                    
+                                </rich:dataTable>
+                                </div>      
+                        </div>    
+                    </td>
+                </tr>
+		    	<tr>
+                	<td>
+                    	<div id="footer">
+                    	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    	    <tr>
+                    	      <td width="50%" valign="top" align="left"><a4j:commandButton styleClass="btn_cancel" value=" " oncomplete="window.close();" /></td>
+                    	      <td width="50%" valign="top" align="right"><a4j:commandButton styleClass="btn_ok" value=" " oncomplete="closeSalesHierarchyHistory();" /></td>
+                  	      	</tr>
+                  	      </table>
+                    	</div>
+                  	</td>
+                </tr>
+            </table>
+		</div>
+	</h:form>
+</f:view>
+</h:body>
+</html>

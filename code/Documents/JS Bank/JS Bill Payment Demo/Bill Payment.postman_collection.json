@@ -1,0 +1,101 @@
+{
+	"info": {
+		"name": "Bill Payment",
+		"_postman_id": "0dc1e98f-732e-18b6-fbd2-41ce3a25aede",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "DTID",
+							"value": "5",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "PIN",
+							"value": "6tBH5Et3C3b9p7Xzr1YVIQ==",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "ENCT",
+							"value": "215498851",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "PID",
+							"value": "2510710",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "AMOB",
+							"value": "03015156171",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "CMOB",
+							"value": "03002351442",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "CONSUMER",
+							"value": "1223",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "PMTTYPE",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "BAID",
+							"value": "50050",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "TXAM",
+							"value": "2100",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://mfahad88-eval-test.apigee.net/db_microbankpayment",
+					"protocol": "https",
+					"host": [
+						"mfahad88-eval-test",
+						"apigee",
+						"net"
+					],
+					"path": [
+						"db_microbankpayment"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

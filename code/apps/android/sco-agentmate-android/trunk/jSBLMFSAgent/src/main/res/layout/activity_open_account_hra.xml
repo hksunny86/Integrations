@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/offwhite"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="fill_parent"
+            android:paddingBottom="@dimen/layoutMarginLarge"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layoutInputs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <LinearLayout
+                    android:id="@+id/cnic_mobile_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/lbl_account_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/input_cnic_expiry_date_layout"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:padding="@dimen/textViewsPadding"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:shadowColor="@color/white"
+                        android:text="Purpose of Account"
+                        android:textColor="@color/text_grey"
+                        android:textSize="@dimen/ts_normal"
+                        android:textStyle="normal"
+                        android:visibility="visible" />
+
+                    <Spinner
+                        android:id="@+id/spPurposeOfAccount"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lbl_account_type"
+                        android:background="@drawable/spinner_bg"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="18dp"
+                        android:visibility="visible" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:padding="@dimen/textViewsPadding"
+                        android:shadowColor="@color/white"
+                        android:text="@string/occupation"
+                        android:textColor="@color/text_grey"
+                        android:textSize="@dimen/ts_normal"
+                        android:textStyle="normal" />
+
+                    <EditText
+                        android:id="@+id/etOccupation"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_bg"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:maxLength="11"
+                        android:minHeight="@dimen/editTextMinHeight"
+                        android:paddingLeft="@dimen/editTextPadding"
+                        android:paddingRight="@dimen/editTextPadding"
+                        android:singleLine="true">
+
+                        <requestFocus />
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:padding="@dimen/textViewsPadding"
+                        android:shadowColor="@color/white"
+                        android:text="@string/mobile_no_next_kin"
+                        android:textColor="@color/text_grey"
+                        android:textSize="@dimen/ts_normal"
+                        android:textStyle="normal" />
+
+                    <EditText
+                        android:id="@+id/etNextKin"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lbl_customer_mobile_confirm"
+                        android:background="@drawable/rounded_bg"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:maxLength="20"
+                        android:minHeight="@dimen/editTextMinHeight"
+                        android:paddingLeft="@dimen/editTextPadding"
+                        android:paddingRight="@dimen/editTextPadding"
+                        android:singleLine="true">
+                    </EditText>
+                </LinearLayout>
+            </LinearLayout>
+
+            <include
+                android:id="@+id/layoutOriginator1"
+                layout="@layout/layout_originator1"
+                android:layout_marginLeft="@dimen/editTextPadding"
+                android:layout_marginRight="@dimen/editTextPadding"
+                android:layout_marginTop="@dimen/layoutMarginNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/layoutOriginator2"
+                layout="@layout/layout_originator1"
+                android:layout_marginTop="@dimen/layoutMarginNormal"
+                android:layout_marginLeft="@dimen/editTextPadding"
+                android:layout_marginRight="@dimen/editTextPadding"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/layoutOriginator3"
+                layout="@layout/layout_originator1"
+                android:visibility="gone"
+                android:layout_marginLeft="@dimen/editTextPadding"
+                android:layout_marginRight="@dimen/editTextPadding"
+                android:layout_marginTop="@dimen/layoutMarginNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/layoutOriginator4"
+                layout="@layout/layout_originator1"
+                android:visibility="gone"
+                android:layout_marginLeft="@dimen/editTextPadding"
+                android:layout_marginRight="@dimen/editTextPadding"
+                android:layout_marginTop="@dimen/layoutMarginNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/layoutOriginator5"
+                layout="@layout/layout_originator1"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/layoutMarginNormal"
+                android:layout_marginLeft="@dimen/editTextPadding"
+                android:layout_marginRight="@dimen/editTextPadding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/layoutBtns2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblAlert"
+                android:layout_marginRight="@dimen/margin_large"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_large"
+                android:gravity="center"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnNext"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_normal"
+                    android:layout_below="@id/lblAlert"
+                    android:background="@drawable/button_next_selector"
+                    android:text="@string/next"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textViewTextSizeXLarge"
+                    android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btnNext"
+                    android:background="@drawable/button_cancel_selector"
+                    android:text="Cancel"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textViewTextSizeXLarge"
+                    android:textStyle="bold"
+                    android:visibility="visible"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

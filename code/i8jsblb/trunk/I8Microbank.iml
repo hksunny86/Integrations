@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="web" name="Web">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="jboss-deployment-structure.xml" url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/jboss-deployment-structure.xml" />
+          <deploymentDescriptor name="jboss-web.xml" url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/jboss-web.xml" />
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
+        </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
+        </sourceRoots>
+      </configuration>
+    </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset2" name="Spring Application Context (2)" removed="false">
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/action-servlet.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-accounttypemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-actionlogmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-addressmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-advancesalaryloanmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-agentbvsstatmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-agentcashmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-agenthierarchymodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-agentlocationstatmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-agentsegmentrestrictionmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-ajaxactivatedeactivatemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-ajaxtagsmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-alerts.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-allpaymodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-applicationmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-applicationversionmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-auditlogmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-authenticationmethodmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-authorizationmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-availablepaymentmodesmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-bankmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-bookmetransactiondetailmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-bulkdisbursement.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-changemobilemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-changepasswordmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-chargebackmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-clspendingblinkcustomermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-collectionpaymentmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-commandmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-commissionmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-commissionstakeholdermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-common.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-complaintmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-concernmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-configuration.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-coretowalletmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-creditmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-currencycodemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-customerdisputemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-customermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-debitcardmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-delinkrelinkpaymentmode.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-demographicsmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-devicemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-digidormancyaccount.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-disbursement.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-distributormodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-ecofinmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-escalateinov8module.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-esctoinov8.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-export.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-failurelogmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-faqmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-favoritenumbermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-financialintegration.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-fonepaymodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-forgotpinmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-forgotveriflypin.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-goldennosmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-hibernate.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-hramodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-ibftmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-integrationmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-inventorymodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-issuemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-ivrmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-lescocollection.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-linkedAccountsModule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-linkpaymentmodemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-mainmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-manualadjustmentmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-messagemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-mfsaccountmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-mfsmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-mfssubscriptionremindermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-mfswebmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-mnologsmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-mnomodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-mnosearchusermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-mobilehistorymodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-nadraverisysmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-notificationmessagemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-olamodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-operatinghoursrulemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-operatormodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-otpmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-partnergroupmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-paymentsmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-pendingaccountopeningmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-portalreportsmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-postedtransactionreport.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-productdeviceflowmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-productmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-remoteDispather.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-resources.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-retailermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-retailertypemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-safrepo.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-salariedaccountprofitdebitcreditmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-salemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-salesmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-schedulermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-securitymodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-servicemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-servicetypemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-settlementmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-smartmoneymodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-smssendermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-stakeholdermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-statuscheckmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-supplierescalationmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-suppliermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-switchmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-taxmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-taxreportmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-tickermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-tillbalancemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-transactiondetaili8module.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-transactiondetailinfomodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-transactiondetailmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-transactionmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-transactionreversalmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-updatecustomername.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-usecasemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-userdeviceaccountmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-usermanagementmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-ussdmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-validation.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-velocityrulemodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-veriflymodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-vflogmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-walkincustomermodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-workflowmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/security.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/server-configurations.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/server-messaging.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/test-configurations.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <datasource-mapping>
+          <factory-entry name="Entities" />
+        </datasource-mapping>
+        <naming-strategy-map />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="javax.ejb" level="project" />
+    <orderEntry type="library" name="activation-1.1" level="project" />
+  </component>
+</module>

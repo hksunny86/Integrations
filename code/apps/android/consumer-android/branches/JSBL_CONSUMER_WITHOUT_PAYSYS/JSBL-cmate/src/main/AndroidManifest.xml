@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.inov8.jsblconsumer"
+    android:versionCode="39"
+    android:versionName="2.0.9.18">
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <application
+        android:name=".activities.JSBLConsumer"
+        android:allowBackup="false"
+        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
+        android:exported="false"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/MyMaterialTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:theme,android:allowBackup,android:appComponentFactory">
+        <activity android:name=".activities.myAccount.MyAccountCheckIban"></activity>
+        <activity android:name=".activities.debitCard.DebitCardManagement" />
+        <activity android:name=".activities.bookMe.Ticketing" />
+        <activity android:name=".activities.bookMe.BookMePaymentReceiptActivity" />
+        <activity android:name=".activities.bookMe.BookMePaymentConfirmationActivity" />
+        <activity android:name=".activities.forgotMpin.ForgotMpinInputActivity" /> <!-- <activity android:name=".activities.bookMe.BusTicketing" /> -->
+        <activity android:name=".activities.loginPinChange.LoginPinChangeInputActivity" />
+        <activity
+            android:name=".activities.loan.LoanConfirmationActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activities.siHistory.SIHistoryActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activities.loan.LoanActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity
+            android:name=".activities.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.debitCardActivation.TermsConditionsDebitCardActivity"
+            android:exported="false"
+            android:label="@string/title_activity_terms_conditions_debit_card"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyMaterialTheme.NoActionBar" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activities.openAccount.OpenAccountBvsActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activities.openAccount.OpenAccountBvsOtpActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.openAccount.OpenAccountSuccessActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.openAccount.TermsConditionsJsActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.openAccount.OpenAccountConfirmationActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.forgotPassword.ForgotPasswordMobileInputActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".harToWallet.HraToWalletConfirmationActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.forgotPassword.ForgotPasswordOtpActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.forgotPassword.ForgotPasswordActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.openAccount.OpenAccountPicInputUploadActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.openAccount.OpenAccountSecondInputActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.myAccount.RegenerateMpinActivity"
+            android:exported="false"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".bvs.FingerScanActivity"
+            android:configChanges="keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".bvs.NadraRestClientActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SignOutActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.collection.CollectionPaymentsInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.collection.CollectionPaymentConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.BaseActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.retailPayment.retailpaymentmpass.RetailPaymentActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.retailPayment.retailpaymentmpass.RetailPaymentComfirmationMPassActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activities.retailPayment.retailpaymentmpass.QRScanInputMPassActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.retailPayment.retailpaymentmpass.RetailPaymentReceiptActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CategoryMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MainMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activities.TransactionReceiptActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.registration.RegistrationInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.fundsTransfer.FundsTransferInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.fundsTransfer.FundsTransferConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.agentTransfer.TransferInInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.agentTransfer.TransferInConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.agentTransfer.TransferOutInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.agentTransfer.TransferOutConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.billPayment.BillPaymentsUtilityFetchBillInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.billPayment.BillPaymentTypeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.billPayment.BillPaymentActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.billPayment.BillPaymentConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.retailPayment.RetailPaymentInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.retailPayment.RetailPaymentConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.myAccount.MyAccountBalanceInquiryActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.myAccount.MyAccountChangePinActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.myAccount.MyAccountSelectMiniStatementActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.WebViewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.contactus.ContactUsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".activities.debitCardActivation.DebitCardActivationConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.faq.FaqsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.locator.LocatorActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.locator.DirectionsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.registration.TermsConditionsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.cashWithdrawal.CashWithdrawalReceiptActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.retailPayment.RetailPaymentScanItemActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.registration.RegistrationReceiptActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.myAccount.MyAccountMyLimitActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.openAccount.CameraActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCpqHVbvqLRbLyYW_nPY4ez3HkI9PHF1ic" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".activities.atmPinChange.AtmPinChangeInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.debitCardBlock.DebitCardBlockConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.atmPinGeneration.AtmPinGenerationConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.atmPinGeneration.AtmPinGenerationInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.miniLoad.MiniLoadInputActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.miniLoad.MiniLoadConfirmationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.locator.LocatorComingSoonActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.BottomBarActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.hra.HraRegistrationActivity1"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.hra.HraRegistrationActivity2"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.hra.HraRegistrationActivity3"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.debitCard.DebitCardIssuance"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity android:name=".harToWallet.HraToWalletInputActivity" />
+        <activity android:name=".activities.schedule.ScheduleActivity" />
+    </application>
+
+</manifest>

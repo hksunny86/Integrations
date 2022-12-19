@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/container_header" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/textViewMarginSmall"
+        android:id="@+id/tvTermsConditions"
+        android:text="@string/terms_link_js_agentmate"
+        android:gravity="center"
+        android:textSize="@dimen/textViewTextSizeLarge"
+        android:textColor="@color/black"
+        android:layout_below="@+id/container_heading"
+        android:layout_height="wrap_content" />
+
+    <WebView
+        android:id="@+id/webViewSuccessMsg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layoutBtns"
+        android:layout_below="@+id/tvTermsConditions" />
+
+    <LinearLayout
+        android:id="@+id/layoutBtns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/buttonBottomMarginNormal"
+        android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+        android:layout_marginRight="@dimen/buttonSideMarginNormal"
+        android:layout_marginTop="@dimen/buttonTopMarginNormal"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RadioButton
+            android:id="@+id/btnNext"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/buttonHeightNormal"
+            android:layout_marginRight="@dimen/buttonInnerMarginNormal"
+            android:layout_weight="1"
+            android:text="@string/accept"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/buttonTextNormal" />
+
+        <RadioButton
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/buttonHeightNormal"
+            android:layout_marginLeft="@dimen/buttonInnerMarginNormal"
+            android:layout_toRightOf="@id/btnNext"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/buttonTextNormal" />
+    </LinearLayout>
+
+
+</RelativeLayout>

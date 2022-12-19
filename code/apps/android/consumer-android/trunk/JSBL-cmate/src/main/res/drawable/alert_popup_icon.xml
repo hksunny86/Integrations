@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/popupHeaderIconLengthWidth"
+    android:height="@dimen/popupHeaderIconLengthWidth"
+    android:viewportHeight="112"
+    android:viewportWidth="109">
+    <path
+        android:name="Forma 1"
+        android:fillColor="#fff"
+        android:pathData="m52.89 24.13v50.53h5.12v-50.53zm0 58.11v5.05h5.12v-5.05zm38.78 -75.53c5.72 0 10.37 4.71 10.37 10.5v77c0 5.79 -4.65 10.5 -10.37 10.5h-73.94c-5.72 0 -10.38 -4.71 -10.38 -10.5v-77c0 -5.79 4.65 -10.5 10.38 -10.5zm-73.94 -6.49c-9.26 0 -16.79 7.62 -16.79 16.99v77c0 9.37 7.53 16.99 16.79 16.99h73.94c9.26 0 16.79 -7.62 16.79 -16.99v-77c0 -9.37 -7.53 -16.99 -16.79 -16.99z" />
+</vector>

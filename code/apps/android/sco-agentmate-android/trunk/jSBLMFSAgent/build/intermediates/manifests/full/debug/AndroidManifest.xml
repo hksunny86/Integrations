@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.inov8.jsblmfs"
+    android:versionCode="1"
+    android:versionName="2.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="25" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" >
+    </supports-screens>
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- <uses-permission android:name="android.permission.NFC" /> -->
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <application
+        android:name="com.inov8.agentmate.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="JSBL AGENTmate"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.NoTitleBar" >
+        <activity
+            android:name="com.inov8.agentmate.activities.SplashActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.inov8.agentmate.activities.LoginActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.inov8.agentmate.activities.SignOutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.BaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.SubMenuAcitivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.CategoryMenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.BaseCommunicationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.MainMenuActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.inov8.agentmate.activities.TransactionReceiptActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.cashIn.CashInInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.cashIn.CashInConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.cashOut.CashOutInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.bvs.FingerScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.cashOut.CashOutConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.AgentToAgentInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.AgentToAgentConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.fundsTransfer.FundsTransferInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.fundsTransfer.FundsTransferConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.fundsTransfer.ReceiveCashInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.fundsTransfer.ReceiveCashConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.TransferInInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.TransferInConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.TransferOutInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.agentTransfer.TransferOutConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.billPayment.BillPaymentsUtilityFetchBillInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.billPayment.BillPaymentTypeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.billPayment.BillPaymentConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.retailPayment.RetailPaymentInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.retailPayment.RetailPaymentConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.myAccount.MyAccountViewTransactionsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.myAccount.MyAccountBalanceInquiryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.myAccount.MyAccountChangePinActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.myAccount.MyAccountChangePinMenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.myAccount.MyAccountSelectMiniStatementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.TermsConditionsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountBvsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountMobileInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountSecondInputActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountPicInputUploadDiscrepantActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountSecondInputDiscrepantActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountConfirmationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountDiscrepantDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountPicInputUploadActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.OpenAccountConfirmationDiscrepantActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.inov8.agentmate.activities.openAccount.CameraActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.inov8.agentmate.bvs.NadraRestClient"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity
+            android:name="com.inov8.agentmate.bvs.OTCClient"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light" />
+    </application>
+
+</manifest>

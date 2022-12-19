@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+ 
+  <!-- DAO -->
+  <bean id="accountInfoDao" class="com.inov8.verifly.server.dao.mainmodule.hibernate.AccountInfoHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+    <property name="dataSource" ref="dataSource"/>
+  </bean>
+  <bean id="veriflyConfigurationDao" class="com.inov8.verifly.server.dao.mainmodule.hibernate.VeriflyConfigurationHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="vfFailureReasonDao" class="com.inov8.verifly.server.dao.mainmodule.hibernate.FailureReasonHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="vfPaymentModeDAO" class="com.inov8.verifly.server.dao.mainmodule.hibernate.PaymentModeHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="vfCardTypeDAO" class="com.inov8.verifly.server.dao.mainmodule.hibernate.CardTypeHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+ <bean id="encryptionHandler" class="com.inov8.verifly.common.des.EncryptionHandler" >
+	<constructor-arg>
+  	<ref bean="veriflyConfigurationDao"/>
+	</constructor-arg>   
+  </bean>
+
+  <!-- Service -->
+
+  <bean id="vfVeriflyManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.verifly.server.service.mainmodule.VeriflyManagerImpl">
+        <property name="logManager">
+          <ref bean="logManager"/>
+        </property>
+        <property name="accountInfoDao">
+          <ref local="accountInfoDao"/>
+        </property>
+        <property name="veriflyConfigurationDao">
+          <ref local="veriflyConfigurationDao"/>
+        </property>
+        <property name="failureReasonDao">
+          <ref local="vfFailureReasonDao"/>
+        </property>
+        <property name="logDetailDao">
+          <ref bean="logDetailDao"/>
+        </property>
+        <property name="logDao">
+          <ref bean="logDao"/>
+        </property>
+        <property name="paymentModeDAO">
+          <ref local="vfPaymentModeDAO"/>
+        </property>
+        <property name="cardTypeDAO">
+          <ref local="vfCardTypeDAO"/>
+        </property>
+        <property name="encryptionHandler">
+          <ref local="encryptionHandler"/>
+        </property>
+        <property name="keysObj">
+          <ref local="keysObj"/>
+        </property>
+        <property name="variflyValidator">
+          <ref local="veriflyValidator"/>
+        </property>
+        <property name="messageSource">
+          <ref bean="messageSource"/>
+        </property>        
+      </bean>
+    </property>
+  </bean>
+
+  
+
+
+  <!--Facade-->
+  <bean id="veriflyFacade" class="com.inov8.verifly.server.facade.VeriflyFacadeImpl">
+    <property name="veriflyManager">
+      <ref local="vfVeriflyManager"/>
+    </property>
+    <property name="logManager">
+      <ref bean="logManager"/>
+    </property>
+    <property name="messageSource">
+      <ref bean="messageSource" />
+    </property>
+  </bean>
+
+<!--for client test application should be removed if test applicatin not longer need  -->
+
+<bean id="keysObj" class="com.inov8.verifly.common.util.ConfigurationContainer" >
+<constructor-arg>
+  <ref bean="veriflyConfigurationDao"/>
+</constructor-arg>   
+</bean>
+
+<bean id="veriflyValidator" class="com.inov8.verifly.common.util.VariflyValidator">
+  <property name="accountInfoDao">
+    <ref local="accountInfoDao"/>
+  </property>
+    <property name="paymentModeDAO">
+    <ref local="vfPaymentModeDAO"/>
+  </property>
+    <property name="cardTypeDAO">
+    <ref local="vfCardTypeDAO"/>
+  </property>
+      <property name="encryptionHandler">
+    <ref local="encryptionHandler"/>
+  </property>
+ 
+</bean>
+
+
+
+</beans>

@@ -1,0 +1,36 @@
+03020200F23E44D529E081200000000006000022165041710000000772401020000000010000090814164100681616164109081211090860119010012C00000100C0000001006504171245041710000000772=1211101000000142839101FDH00001T00000010000000UMOYO HOUSE BRANCH     BLANTYRE     00MW4540041510010000014283905110450513118015211201213144002
+
+*------------------- Parsed Message Details ------------------------*
+
+ Position               Field Description                  Field Value
+*-------------------------------------------------------------------*
+2        :     PAN                                      : 5041710000000772
+3        :     PROCESSING CODE                          : 401020
+4        :     AMOUNT, TRANSACTION                      : 000000010000
+7        :     TRANSMISSION DATE AND TIME               : 0908141641
+11       :     SYSTEM TRACE AUDIT NUMBER                : 006816
+12       :     TIME, LOCAL TRANSACTION                  : 161641
+13       :     DATE, LOCAL TRANSACTION                  : 0908
+14       :     DATE, EXPIRATION                         : 1211
+15       :     DATE, SETTLEMENT                         : 0908
+18       :     MERCHANTS TYPE                           : 6011
+22       :     POINT OF SERVICE ENTRY MODE              : 901
+25       :     POINT OF SERVICE CONDITION CODE          : 00
+26       :     POINT OF SERVICE PIN CAPTURE CODE        : 12
+28       :     AMOUNT, TRANSACTION FEE                  : C00000100
+30       :     AMOUNT, TRANSACTION PROCESSING FEE       : C00000010
+32       :     ACQUIRING INSTITUTION IDENT CODE         : 504171
+35       :     TRACK 2 DATA                             : 5041710000000772=1211101
+37       :     RETRIEVAL REFERENCE NUMBER               : 000000142839
+40       :     SERVICE RESTRICTION CODE                 : 101
+41       :     CARD ACCEPTOR TERMINAL IDENTIFICACI      : FDH00001
+42       :     CARD ACCEPTOR IDENTIFICATION CODE        : T00000010000000
+43       :     CARD ACCEPTOR NAME/LOCATION              : UMOYO HOUSE BRANCH     BLANTYRE     00MW
+49       :     CURRENCY CODE, TRANSACTION               : 454
+56       :     RESERVED ISO                             : 1510
+59       :     RESERVED NATIONAL                        : 0000142839
+102      :     ACCOUNT IDENTIFICATION 1                 : 11045
+103      :     ACCOUNT IDENTIFICATION 2                 : 13118
+123      :     RESERVED PRIVATE USE                     : 211201213144002
+
+*-------------------------------------------------------------------*

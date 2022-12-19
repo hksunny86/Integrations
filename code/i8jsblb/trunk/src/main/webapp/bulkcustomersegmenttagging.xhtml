@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+<h:head>
+    <link rel="stylesheet" href="#{request.contextPath}/styles/wizard_style.css" type="text/css" />
+    <link rel="stylesheet" href="#{request.contextPath}/styles/tpc.css" type="text/css" />
+    <link rel="stylesheet" href="#{request.contextPath}/styles/style_js.css" type="text/css" />
+    <meta name="title" content="Bulk Update Segment - Customer" />
+    <script type="text/javascript" src="#{request.contextPath}/scripts/commonFormValidator.js"></script>
+</h:head>
+<h:body>
+    <f:view>
+        <h:outputStylesheet>
+            .top { vertical-align: top; }
+            .info { height: 202px; overflow: auto; }
+        </h:outputStylesheet>
+        <f:event type="preRenderView" listener="#{bulkCustomerSegmentActionBean.clearAllSessionObjects}"></f:event>
+        <h:form id="myform">
+            <div id="wizard_group">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td id="header_wizard"><h1>Bulk Upload Segments - Customer</h1></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="status_bar_top">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td width="70%" valign="top" align="left"></td>
+                                        <td width="30%" valign="top" align="right">
+                                            <a4j:outputPanel id="icons_div" styleClass="icons_div" style="display:block;float:right;" >
+                                                <a4j:commandLink actionListener="#{bulkCustomerSegmentActionBean.clearBulkCustomerSegmentForm}"
+                                                                 id="clearBulkSegmentForm" title="Clear"
+                                                                 render="segments, errorTable, button_group, bulkUpload">
+                                                    <h:graphicImage url="/images/ah_images/icon_clear.png" />
+                                                </a4j:commandLink>
+                                            </a4j:outputPanel>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <div id="content_wrap">
+                                <div class="row,error_text_red" style="margin-left: 30px" >
+                                    <a4j:outputPanel ajaxRendered="true">
+                                        <a4j:outputPanel styleClass="error_cont" rendered="#{! empty facesContext.maximumSeverity}">
+                                            <a4j:outputPanel>
+                                                <a4j:outputPanel styleClass="error_txt" >
+                                                    <h:messages globalOnly="true" />
+                                                </a4j:outputPanel>
+                                            </a4j:outputPanel>
+                                        </a4j:outputPanel>
+                                    </a4j:outputPanel>
+                                </div>
+                                <table  class="upload_con" border="0" align="center" cellpadding="0" cellspacing="10">
+                                    <tr>
+                                        <td width="150" align="right" valign="top" style="padding-top:5px;">Customer Segment <span class="asterisk">*</span>: </td>
+                                        <td width="400" align="left" valign="top">
+                                            <h:selectOneMenu id="customerSegments" styleClass="type_list" title="Customer Segment" value="#{bulkCustomerSegmentActionBean.customerSegmentId}" >
+                                                <f:selectItem itemLabel="[select]" itemValue="-1" />
+                                                <f:selectItems value="#{bulkCustomerSegmentActionBean.segments}" />
+                                                <a4j:ajax event="change" listener="#{bulkCustomerSegmentActionBean.onChangeCustomerSegment}"
+                                                          render="errorTable button_group bulkUpload" />
+                                            </h:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="150" align="right" valign="top" style="padding-top:5px;">Upload CSV File <span class="asterisk">*</span>:</td>
+                                        <td width="400" align="left" valign="top">
+                                            <h:panelGrid columns="2" columnClasses="top,top">
+                                                <rich:fileUpload disabled="#{bulkCustomerSegmentActionBean.fileUploadActionDisabled}" onclear="javascript:document.getElementById('myform:clearState').click();"
+                                                                 fileUploadListener="#{bulkCustomerSegmentActionBean.uploadFile}" id="bulkUpload" acceptedTypes="csv"
+                                                                 ontyperejected="alert('Only csv file is permitted');" listHeight="1" render="errorTable, button_group"
+                                                                 maxFilesQuantity="1" >
+                                                </rich:fileUpload>
+                                                <a4j:commandButton id="clearState"
+                                                                   actionListener="#{bulkCustomerSegmentActionBean.clearState}" style="display:none;"
+                                                                   render="errorTable, button_group" />
+                                            </h:panelGrid>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="150" align="center" valign="top">&nbsp;
+                                        </td>
+                                        <td width="400" align="center" valign="top">
+                                            <a4j:outputPanel  id="button_group" >
+                                                <a4j:commandButton id="validateBulkCustomers"
+                                                                   actionListener="#{bulkCustomerSegmentActionBean.validateBulkCustomerSegments}" title="Validate Customers"
+                                                                   value="Validate Bulk Customers" style="width: 190px; margin-right:10px;" styleClass="submit_btn"
+                                                                   render="bulkUpload, errorTable, button_group" />
+                                                <a4j:commandButton id="addBulkCustomers" rendered="#{!bulkCustomerSegmentActionBean.addBulkCustomerActionDisabled}"
+                                                                   style="width: 190px" actionListener="#{bulkCustomerSegmentActionBean.updateCustomerSegment}" title="Update Segment"
+                                                                   value="Update Segment" styleClass="submit_btn" render="bulkUpload, errorTable, button_group" />
+
+                                                <a4j:commandButton id="addBulkCustomerDisabled" disabled="true" style="width: 190px" title="Update Segment"
+                                                                   value="Update Segment" styleClass="submit_btn_dis" rendered="#{bulkCustomerSegmentActionBean.addBulkCustomerActionDisabled}" />
+                                            </a4j:outputPanel>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <fieldset>
+                                    <legend>Console</legend>
+                                    <rich:dataTable id="errorTable" width="100%" styleClass="datagrid" headerClass="table_header"
+                                                    rowClasses="rowodd, roweven" rowKeyVar="rowIndex" value="#{bulkCustomerSegmentActionBean.errorList}" var="error">
+                                        <h:column style="text-align:left;" >
+                                            <f:facet name="header" >
+                                                <h:outputText value="Log" />
+                                            </f:facet>
+                                            <h:outputText value="#{error}" />
+                                        </h:column>
+                                    </rich:dataTable>
+                                </fieldset>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="status_bar_bottom">
+                            <div>
+                                <a4j:outputPanel styleClass="infoMessage" ajaxRendered="true">
+                                    <h:outputText style="color:#ed1c24;" value="#{infoMessage}"/>
+                                </a4j:outputPanel>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="footer">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td width="50%" valign="top" align="left"><h:commandLink styleClass="btn_cancel" value="" action="#{bulkCustomerSegmentActionBean.clearAllSessionObjects}" /></td>
+                                        <td width="50%" valign="top" align="right">&nbsp;</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </h:form>
+    </f:view>
+    <div class="status">
+        <a4j:status>
+            <f:facet name="start">
+                <h:graphicImage url="/images/ah_images/tabs_loader.gif" style="border:0px;"/>
+            </f:facet>
+            <f:facet name="stop"></f:facet>
+        </a4j:status>
+    </div>
+</h:body>
+</html>

@@ -1,0 +1,2 @@
+alter table update_customer_name
+add ACTION_STATUS_ID varchar2(100);

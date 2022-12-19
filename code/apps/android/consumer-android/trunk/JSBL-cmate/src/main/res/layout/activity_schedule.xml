@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout"
+        android:layout_below="@+id/container_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/container_heading1"
+        android:layout_below="@+id/container_heading"
+        layout="@layout/heading_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_below="@+id/container_heading1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layoutMarginSmall"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activitySideMarginNormal"
+            android:layout_marginRight="@dimen/activitySideMarginNormal">
+
+            <LinearLayout
+                android:id="@+id/layoutInputs"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/textViewMarginNormal">
+
+                <TextView
+                    android:id="@+id/spinnerText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="@string/recur_every"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal"
+                    android:textStyle="normal"
+                    android:visibility="visible" />
+
+                <Spinner
+                    android:id="@+id/spinner_recur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spinnerText"
+                    android:minHeight="45dp"
+                    android:padding="@dimen/editTextFieldPadding"
+                    android:textSize="@dimen/textViewTextSizeMedium"
+                    android:background="@drawable/rounded_bg"
+                    android:visibility="visible" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_startDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/layoutMarginNormal">
+
+                    <TextView
+                        android:id="@+id/start_date_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/textViewFieldMargin"
+                        android:text="@string/start_date"
+                        android:textColor="@color/text_grey"
+                        android:textSize="@dimen/textViewTextSizeNormal"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_dateStart"
+                        android:layout_width="match_parent"
+                        android:layout_height="28dp"
+                        android:layout_below="@id/start_date_heading"
+                        android:gravity="center_vertical"
+                        android:hint="dd/mm/yyyy" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivDateStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/textViewMarginNormal"
+                        app:srcCompat="@drawable/bookme_date_icon" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/tv_dateStart"
+                        android:background="@color/golden" />
+                </RelativeLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_endDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/layoutMarginNormal">
+
+                    <RadioButton
+                        android:id="@+id/rbEndDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:checked="true"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/end_date_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/rbEndDate"
+                        android:layout_toRightOf="@id/rbEndDate"
+                        android:gravity="center_vertical"
+                        android:text="@string/end_date"
+                        android:textColor="@color/text_grey"
+                        android:textSize="@dimen/textViewTextSizeNormal"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_dateEnd"
+                        app:layout_constraintStart_toEndOf="@+id/rbEndDate"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_dateEnd"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_below="@id/end_date_heading"
+                        android:gravity="center_vertical"
+                        android:hint="dd/mm/yyyy"
+                        app:layout_constraintBottom_toTopOf="@+id/view"
+                        app:layout_constraintEnd_toStartOf="@+id/ivDateEnd"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rbEndDate" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivDateEnd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/textViewMarginNormal"
+                        android:layout_marginRight="@dimen/textViewMarginNormal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/bookme_date_icon" />
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/tv_dateEnd"
+                        android:background="@color/golden"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/textViewMarginNormal">
+
+                    <RadioButton
+                        android:id="@+id/rbNoOfOccurrences"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvNoOfOccurrences"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/no_of_occurrences"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etNoOfOccurrences"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:ellipsize="start"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:minEms="30"
+                    android:textSize="@dimen/textViewTextSizeMedium"
+                    app:backgroundTint="@color/golden" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/layoutBtns"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutInputs"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/layoutMarginLarge"
+        android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+        android:layout_marginRight="@dimen/buttonSideMarginNormal"
+        android:layout_marginTop="@dimen/buttonTopMarginLarge"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/buttonInnerMarginNormal"
+            android:layout_weight="1"
+            android:background="@drawable/button_yellow_selector"
+            android:text="@string/next"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/buttonTextNormal" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

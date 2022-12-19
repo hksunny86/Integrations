@@ -1,0 +1,876 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="JsBLBIntegrationService" targetNamespace="http://tempuri.org/">
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/" elementFormDefault="unqualified" targetNamespace="http://tempuri.org/" version="1.0">
+<xs:element name="AccountLinkDeLink">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="transactionType" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="AccountLinkDeLinkResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="AccountOpeningRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ConsumerName" type="xs:string"/>
+<xs:element minOccurs="0" name="AccountTitle" type="xs:string"/>
+<xs:element minOccurs="0" name="BirthPlace" type="xs:string"/>
+<xs:element minOccurs="0" name="PresentAddress" type="xs:string"/>
+<xs:element minOccurs="0" name="CnicStatus" type="xs:string"/>
+<xs:element minOccurs="0" name="CnicExpiry" type="xs:string"/>
+<xs:element minOccurs="0" name="DOB" type="xs:string"/>
+<xs:element minOccurs="0" name="FatherHusbandName" type="xs:string"/>
+<xs:element minOccurs="0" name="MotherMaiden" type="xs:string"/>
+<xs:element minOccurs="0" name="Gender" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="AccountType" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="AccountOpeningResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="CardTagging">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="CardExpiry" type="xs:string"/>
+<xs:element minOccurs="0" name="CardNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="FirstName" type="xs:string"/>
+<xs:element minOccurs="0" name="LastName" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="TransactionId" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="CNIC" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="CardTaggingResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ConventionalAccountOpening">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="ConsumerName" type="xs:string"/>
+<xs:element minOccurs="0" name="CnicExpiry" type="xs:string"/>
+<xs:element minOccurs="0" name="DOB" type="xs:string"/>
+<xs:element minOccurs="0" name="CustomerPhoto" type="xs:string"/>
+<xs:element minOccurs="0" name="CnicFrontPhoto" type="xs:string"/>
+<xs:element minOccurs="0" name="CnicBackPhoto" type="xs:string"/>
+<xs:element minOccurs="0" name="SignaturePhoto" type="xs:string"/>
+<xs:element minOccurs="0" name="TermsPhoto" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="AccountType" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ConventionalAccountOpeningResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="OtpVerificationRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="OtpPin" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="OtpVerificationResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="PaymentInquiryRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Amount" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="TransactionType" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="PaymentInquiryResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="Charges" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="PaymentRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="accountNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="Amount" type="xs:string"/>
+<xs:element minOccurs="0" name="Charges" type="xs:string"/>
+<xs:element minOccurs="0" name="TransactionType" type="xs:string"/>
+<xs:element minOccurs="0" name="MPIN" type="xs:string"/>
+<xs:element minOccurs="0" name="TerminalId" type="xs:string"/>
+<xs:element minOccurs="0" name="PaymentType" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="PaymentResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="TransactionCode" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="PaymentReversalRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="TransactionCode" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="PaymentReversalResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetCardStatus">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="transactionType" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="CardNo" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="SetCardStatusResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="VerifyAccountRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="TransactionType" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="VerifyAccountResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="AccountTitle" type="xs:string"/>
+<xs:element minOccurs="0" name="firstName" type="xs:string"/>
+<xs:element minOccurs="0" name="LastName" type="xs:string"/>
+<xs:element minOccurs="0" name="AccountType" type="xs:string"/>
+<xs:element minOccurs="0" name="CnicExpiry" type="xs:string"/>
+<xs:element minOccurs="0" name="DateOfBirth" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="CustomerStatus" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="accountLinkDeLink" type="tns:accountLinkDeLink"/>
+<xs:element name="accountLinkDeLinkResponse" type="tns:accountLinkDeLinkResponse"/>
+<xs:element name="accountOpening" type="tns:accountOpening"/>
+<xs:element name="accountOpeningResponse" type="tns:accountOpeningResponse"/>
+<xs:element name="cardTagging" type="tns:cardTagging"/>
+<xs:element name="cardTaggingResponse" type="tns:cardTaggingResponse"/>
+<xs:element name="conventionalAccountOpening" type="tns:conventionalAccountOpening"/>
+<xs:element name="conventionalAccountOpeningResponse" type="tns:conventionalAccountOpeningResponse"/>
+<xs:element name="otpVerification" type="tns:otpVerification"/>
+<xs:element name="otpVerificationResponse" type="tns:otpVerificationResponse"/>
+<xs:element name="paymentInquiry" type="tns:paymentInquiry"/>
+<xs:element name="paymentInquiryResponse" type="tns:paymentInquiryResponse"/>
+<xs:element name="paymentRequest" type="tns:paymentRequest"/>
+<xs:element name="paymentRequestResponse" type="tns:paymentRequestResponse"/>
+<xs:element name="paymentReversal" type="tns:paymentReversal"/>
+<xs:element name="paymentReversalResponse" type="tns:paymentReversalResponse"/>
+<xs:element name="setCardStatus" type="tns:setCardStatus"/>
+<xs:element name="setCardStatusResponse" type="tns:setCardStatusResponse"/>
+<xs:element name="verifyAccount" type="tns:verifyAccount"/>
+<xs:element name="verifyAccountResponse" type="tns:verifyAccountResponse"/>
+<xs:complexType name="accountLinkDeLink">
+<xs:sequence>
+<xs:element minOccurs="0" name="accountLinkDeLink">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="transactionType" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="accountLinkDeLinkResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="paymentReversal">
+<xs:sequence>
+<xs:element minOccurs="0" name="paymentReversalRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="TransactionCode" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="paymentReversalResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="paymentRequest">
+<xs:sequence>
+<xs:element minOccurs="0" name="paymentRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="accountNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="Amount" type="xs:string"/>
+<xs:element minOccurs="0" name="Charges" type="xs:string"/>
+<xs:element minOccurs="0" name="TransactionType" type="xs:string"/>
+<xs:element minOccurs="0" name="MPIN" type="xs:string"/>
+<xs:element minOccurs="0" name="TerminalId" type="xs:string"/>
+<xs:element minOccurs="0" name="PaymentType" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="paymentRequestResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="TransactionCode" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cardTagging">
+<xs:sequence>
+<xs:element minOccurs="0" name="cardTaggingRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="CardExpiry" type="xs:string"/>
+<xs:element minOccurs="0" name="CardNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="FirstName" type="xs:string"/>
+<xs:element minOccurs="0" name="LastName" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="TransactionId" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="CNIC" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cardTaggingResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="conventionalAccountOpening">
+<xs:sequence>
+<xs:element minOccurs="0" name="conventionalAccountOpening">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="ConsumerName" type="xs:string"/>
+<xs:element minOccurs="0" name="CnicExpiry" type="xs:string"/>
+<xs:element minOccurs="0" name="DOB" type="xs:string"/>
+<xs:element minOccurs="0" name="CustomerPhoto" type="xs:string"/>
+<xs:element minOccurs="0" name="CnicFrontPhoto" type="xs:string"/>
+<xs:element minOccurs="0" name="CnicBackPhoto" type="xs:string"/>
+<xs:element minOccurs="0" name="SignaturePhoto" type="xs:string"/>
+<xs:element minOccurs="0" name="TermsPhoto" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="AccountType" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="conventionalAccountOpeningResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="otpVerification">
+<xs:sequence>
+<xs:element minOccurs="0" name="otpVerificationRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="OtpPin" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="otpVerificationResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="paymentInquiry">
+<xs:sequence>
+<xs:element minOccurs="0" name="accountInquiryRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Amount" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="TransactionType" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="paymentInquiryResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="Charges" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="setCardStatus">
+<xs:sequence>
+<xs:element minOccurs="0" name="setCardStatus">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="transactionType" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="CardNo" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="setCardStatusResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="verifyAccount">
+<xs:sequence>
+<xs:element minOccurs="0" name="verifyAccountRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="TransactionType" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="verifyAccountResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="AccountTitle" type="xs:string"/>
+<xs:element minOccurs="0" name="firstName" type="xs:string"/>
+<xs:element minOccurs="0" name="LastName" type="xs:string"/>
+<xs:element minOccurs="0" name="AccountType" type="xs:string"/>
+<xs:element minOccurs="0" name="CnicExpiry" type="xs:string"/>
+<xs:element minOccurs="0" name="DateOfBirth" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="CustomerStatus" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="accountOpening">
+<xs:sequence>
+<xs:element minOccurs="0" name="accountOpeningRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="UserName" type="xs:string"/>
+<xs:element minOccurs="0" name="Password" type="xs:string"/>
+<xs:element minOccurs="0" name="Cnic" type="xs:string"/>
+<xs:element minOccurs="0" name="DateTime" type="xs:string"/>
+<xs:element minOccurs="0" name="MobileNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ConsumerName" type="xs:string"/>
+<xs:element minOccurs="0" name="AccountTitle" type="xs:string"/>
+<xs:element minOccurs="0" name="BirthPlace" type="xs:string"/>
+<xs:element minOccurs="0" name="PresentAddress" type="xs:string"/>
+<xs:element minOccurs="0" name="CnicStatus" type="xs:string"/>
+<xs:element minOccurs="0" name="CnicExpiry" type="xs:string"/>
+<xs:element minOccurs="0" name="DOB" type="xs:string"/>
+<xs:element minOccurs="0" name="FatherHusbandName" type="xs:string"/>
+<xs:element minOccurs="0" name="MotherMaiden" type="xs:string"/>
+<xs:element minOccurs="0" name="Gender" type="xs:string"/>
+<xs:element minOccurs="0" name="ChannelId" type="xs:string"/>
+<xs:element minOccurs="0" name="AccountType" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="accountOpeningResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="Rrn" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseCode" type="xs:string"/>
+<xs:element minOccurs="0" name="ResponseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="HashData" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="accountLinkDeLinkResponse">
+<wsdl:part element="tns:accountLinkDeLinkResponse" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="cardTagging">
+<wsdl:part element="tns:cardTagging" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="setCardStatus">
+<wsdl:part element="tns:setCardStatus" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="paymentInquiryResponse">
+<wsdl:part element="tns:paymentInquiryResponse" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="cardTaggingResponse">
+<wsdl:part element="tns:cardTaggingResponse" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="accountOpeningResponse">
+<wsdl:part element="tns:accountOpeningResponse" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="paymentInquiry">
+<wsdl:part element="tns:paymentInquiry" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="verifyAccountResponse">
+<wsdl:part element="tns:verifyAccountResponse" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="accountLinkDeLink">
+<wsdl:part element="tns:accountLinkDeLink" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="conventionalAccountOpening">
+<wsdl:part element="tns:conventionalAccountOpening" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="otpVerification">
+<wsdl:part element="tns:otpVerification" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="paymentRequestResponse">
+<wsdl:part element="tns:paymentRequestResponse" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="paymentReversalResponse">
+<wsdl:part element="tns:paymentReversalResponse" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="setCardStatusResponse">
+<wsdl:part element="tns:setCardStatusResponse" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="conventionalAccountOpeningResponse">
+<wsdl:part element="tns:conventionalAccountOpeningResponse" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="verifyAccount">
+<wsdl:part element="tns:verifyAccount" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="otpVerificationResponse">
+<wsdl:part element="tns:otpVerificationResponse" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="accountOpening">
+<wsdl:part element="tns:accountOpening" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="paymentReversal">
+<wsdl:part element="tns:paymentReversal" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="paymentRequest">
+<wsdl:part element="tns:paymentRequest" name="parameters"></wsdl:part>
+</wsdl:message>
+<wsdl:portType name="JsBLBIntegration">
+<wsdl:operation name="accountLinkDeLink">
+<wsdl:input message="tns:accountLinkDeLink" name="accountLinkDeLink"></wsdl:input>
+<wsdl:output message="tns:accountLinkDeLinkResponse" name="accountLinkDeLinkResponse"></wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="paymentReversal">
+<wsdl:input message="tns:paymentReversal" name="paymentReversal"></wsdl:input>
+<wsdl:output message="tns:paymentReversalResponse" name="paymentReversalResponse"></wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="paymentRequest">
+<wsdl:input message="tns:paymentRequest" name="paymentRequest"></wsdl:input>
+<wsdl:output message="tns:paymentRequestResponse" name="paymentRequestResponse"></wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="cardTagging">
+<wsdl:input message="tns:cardTagging" name="cardTagging"></wsdl:input>
+<wsdl:output message="tns:cardTaggingResponse" name="cardTaggingResponse"></wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="conventionalAccountOpening">
+<wsdl:input message="tns:conventionalAccountOpening" name="conventionalAccountOpening"></wsdl:input>
+<wsdl:output message="tns:conventionalAccountOpeningResponse" name="conventionalAccountOpeningResponse"></wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="otpVerification">
+<wsdl:input message="tns:otpVerification" name="otpVerification"></wsdl:input>
+<wsdl:output message="tns:otpVerificationResponse" name="otpVerificationResponse"></wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="paymentInquiry">
+<wsdl:input message="tns:paymentInquiry" name="paymentInquiry"></wsdl:input>
+<wsdl:output message="tns:paymentInquiryResponse" name="paymentInquiryResponse"></wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="setCardStatus">
+<wsdl:input message="tns:setCardStatus" name="setCardStatus"></wsdl:input>
+<wsdl:output message="tns:setCardStatusResponse" name="setCardStatusResponse"></wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="verifyAccount">
+<wsdl:input message="tns:verifyAccount" name="verifyAccount"></wsdl:input>
+<wsdl:output message="tns:verifyAccountResponse" name="verifyAccountResponse"></wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="accountOpening">
+<wsdl:input message="tns:accountOpening" name="accountOpening"></wsdl:input>
+<wsdl:output message="tns:accountOpeningResponse" name="accountOpeningResponse"></wsdl:output>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="JsBLBIntegrationServiceSoapBinding" type="tns:JsBLBIntegration">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="accountLinkDeLink">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="accountLinkDeLink">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="accountLinkDeLinkResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="paymentReversal">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="paymentReversal">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="paymentReversalResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="paymentRequest">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="paymentRequest">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="paymentRequestResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="cardTagging">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="cardTagging">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="cardTaggingResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="conventionalAccountOpening">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="conventionalAccountOpening">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="conventionalAccountOpeningResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="otpVerification">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="otpVerification">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="otpVerificationResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="paymentInquiry">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="paymentInquiry">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="paymentInquiryResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="setCardStatus">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="setCardStatus">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="setCardStatusResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="verifyAccount">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="verifyAccount">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="verifyAccountResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="accountOpening">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="accountOpening">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="accountOpeningResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="JsBLBIntegrationService">
+<wsdl:port binding="tns:JsBLBIntegrationServiceSoapBinding" name="JsBLBIntegrationPort">
+<soap:address location="http://localhost:9090/js-blb-integration/JsBLBIntegration"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

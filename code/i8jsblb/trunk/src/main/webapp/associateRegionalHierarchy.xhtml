@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+<h:head>
+<link rel="stylesheet" href="#{request.contextPath}/styles/wizard_style.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/tpc.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/style_js.css" type="text/css" />
+<meta name="title" content="Add Area Level" />
+ <style>
+.col {
+    width: 33%;
+}
+.centercol {
+    width: 33%;
+    text-align: center;
+}
+</style>
+<script type="text/javascript" src="#{request.contextPath}/scripts/commonFormValidator.js"></script>
+<script type="text/javascript" src="#{request.contextPath}/scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" >
+
+ function focustOnYes(id)
+{
+	document.getElementById(id).focus();
+}
+
+	function invokeEdit()
+	{
+		var rowIndex = document.getElementById("myform:rowIndex").value;
+		document.getElementById("myform:dataTable:" + rowIndex + ":edit").click();
+	}
+	
+	function invokeDelete()
+	{
+		var rowIndex = document.getElementById("myform:rowIndex").value;
+		document.getElementById("myform:dataTable:" + rowIndex + ":delete").click();
+	}
+	
+	function saveRowIndex(id)
+	{
+		 var prefix = id.substring(0,id.lastIndexOf(":"));
+		 var index = prefix.substring(id.lastIndexOf(":")-1, prefix.length);
+		 document.getElementById("myform:rowIndex").value = index;
+	}
+	
+</script>
+</h:head>
+<h:body>
+<f:view>
+	<h:form id="myform">
+		<h:inputHidden id="rowIndex" value="" />
+		<div id="wizard_group"> 
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+	                <td id="header_wizard"><h1>Regional Hierarchy Association</h1></td>
+                </tr>
+            	<tr>
+                	<td>
+                        <div id="status_bar_top">
+                        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td width="70%" valign="top" align="left">
+                                  	<div id="ah_nav">
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                  </td>
+                                  <td width="30%" valign="top" align="right">
+                                  	 <a4j:outputPanel id="icons_div" styleClass="icons_div" style="display:block;float:right;" >
+                                        <a4j:commandLink actionListener="#{associateRegHierActionBean.clearAssociateRegionalHierarchyForm}" title="Clear"
+                                            	render="btnDiv, regionalHierarchies, distributors,dataTable, description, dataScroller" >
+                                         	<h:graphicImage url="/images/ah_images/icon_clear.png" title="Clear" />
+                                        </a4j:commandLink> 
+                                        
+                                        <h:commandLink action="#{associateRegHierActionBean.exportToExcel}" rendered="#{associateRegHierActionBean.listSize != 0}"
+                                      			 id="exportToExcel" title="Export To Excel" >
+                                        	<h:graphicImage url="/images/ah_images/xls.png" />
+                                   		</h:commandLink>
+                                    </a4j:outputPanel>
+                                  </td>
+                              </tr>
+                            </table>
+                        </div>
+                        <div class="clear"></div>
+                    </td>
+                </tr>
+            	
+                <tr>
+                	<td >
+                    	<div id="content_wrap">
+                            <div class="row,error_text_red" style="margin-left: 30px" >
+                                <a4j:outputPanel ajaxRendered="true">
+                                    <a4j:outputPanel styleClass="error_cont" rendered="#{! empty facesContext.maximumSeverity}">
+                                        <a4j:outputPanel>
+                                            <a4j:outputPanel styleClass="error_txt" >
+                                                <h:messages globalOnly="true" />
+                                            </a4j:outputPanel>
+                                        </a4j:outputPanel>
+                                    </a4j:outputPanel>                
+                                </a4j:outputPanel>
+                            </div>
+                            <table width="" border="0" align="center" cellpadding="0" cellspacing="10">
+                                  <tr>
+                                    <td width="170" valign="top">Agent Network<span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                    	 <h:selectOneMenu id="distributors" styleClass="type_list"  
+                                            value="#{associateRegHierActionBean.distRegHierAssociationModel.distributorId}" title="Region" >
+                                        <f:selectItem itemLabel="[select]" itemValue="-1" />
+                                        <f:selectItems value="#{associateRegHierActionBean.distributorList}"/>
+                                    </h:selectOneMenu>
+                                    </td>
+                                    <td width="40" align="left">&nbsp;</td>
+                                    <td width="170" valign="top">Description:</td>
+                                    <td width="200" align="left" valign="top">&nbsp;
+                                    	<h:inputTextarea id="description" value="#{associateRegHierActionBean.distRegHierAssociationModel.description}" rows="3" style="width:240px;" styleClass="type_txt" 
+	                                    onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);" title="Description"/>
+                                    </td>
+                              </tr>
+                                  <tr>
+                                    <td width="170" valign="top">Regional Hierarchy<span class="asterisk">*</span>:</td>
+                                    <td width="200" align="left" valign="top">
+                                   	   <h:selectOneMenu id="regionalHierarchies" styleClass="type_list"  
+                                            value="#{associateRegHierActionBean.distRegHierAssociationModel.regionalHierarchyId}" title="Region" >
+                                        <f:selectItem itemLabel="[select]" itemValue="-1" />
+                                        <f:selectItems value="#{associateRegHierActionBean.regionalHierarchyList}"/>
+                                    </h:selectOneMenu> 
+                                    </td>
+                                    <td width="40" rowspan="2" align="left">&nbsp;</td>
+                                    <td width="170" rowspan="2" valign="top">&nbsp;</td>
+                                    <td width="200" rowspan="2" align="left" valign="top">
+                                   	  
+                                    </td>
+                              </tr>
+                                                                    
+                                  <tr>
+                                    <td width="170" valign="top">&nbsp;</td>
+                                    <td width="200" align="left" valign="top">&nbsp;</td>
+                                    <td width="40" align="left">&nbsp;</td>
+                                    <td width="170" valign="top">&nbsp;</td>
+                                    <td width="200" align="right" valign="top">
+                                   	   <a4j:outputPanel id="btnDiv" rendered="#{associateRegHierActionBean.securityCheck or associateRegHierActionBean.editSecurityCheck}">
+                                        <a4j:commandButton actionListener="#{associateRegHierActionBean.saveOrUpdateAssociation}" rendered="#{!associateRegHierActionBean.distRegHierAssociationModel.editMode and associateRegHierActionBean.securityCheck}"  
+                                            value="Add" render="icons_div, btnDiv, regionalHierarchies, distributors,dataTable, description, dataScroller" styleClass="submit_btn" title="Add"/>
+                                        <a4j:commandButton actionListener="#{associateRegHierActionBean.saveOrUpdateAssociation}" rendered="#{associateRegHierActionBean.distRegHierAssociationModel.editMode and associateRegHierActionBean.editSecurityCheck}" 
+                                            styleClass="submit_btn" value="Update" render="icons_div, btnDiv, regionalHierarchies, distributors,dataTable, description, dataScroller"  title="Update"/>
+                                    </a4j:outputPanel> 
+                                    </td>
+                              </tr>
+                          </table>
+                         
+                            <div class="row" style="width:90%; margin:0px; margin:15px auto !important;overflow-x:auto; overflow-y:hidden; border: 1px solid #c4c0c9;">
+                                     <rich:dataTable id="dataTable" rows="5" width="100%" styleClass="datagrid" headerClass="table_header" 
+                                        rowClasses="rowodd, roweven" columnClasses="col" rowKeyVar="rowIndex" value="#{associateRegHierActionBean.distRegHierAssociationModelList}" var="model">
+                                        <h:column>
+                                            <f:facet name="header" >
+                                                <h:outputText value="Distributor Name" rendered="#{associateRegHierActionBean.listSize == 0}" />
+                                                <a4j:commandLink style="vertical-align:bottom;" rendered="#{associateRegHierActionBean.listSize != 0}" value="Distributor Name" render="dataTable" actionListener="#{associateRegHierActionBean.sortByDistributorName}" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{associateRegHierActionBean.distributorNameSortingOrder == 1}" url="/images/ah_images/down.png" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{associateRegHierActionBean.distributorNameSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                            </f:facet>
+                                            <h:outputText value="#{model.distributorName}" />
+                                        </h:column>		            
+                                        <h:column>
+                                            <f:facet name="header" >
+                                                <h:outputText value="Regional Hierarchy Name" rendered="#{associateRegHierActionBean.listSize == 0}" />
+                                                <a4j:commandLink style="vertical-align:bottom;" rendered="#{associateRegHierActionBean.listSize != 0}" value="Regional Hierarchy Name" render="dataTable" actionListener="#{associateRegHierActionBean.sortByRegionalHierarchy}" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{associateRegHierActionBean.regHierNameSortingOrder == 1}" url="/images/ah_images/down.png" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{associateRegHierActionBean.regHierNameSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                            </f:facet>
+                                            <h:outputText value="#{model.regionalHierarchyName}" />
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header" >
+                                                <h:outputText value="Description" rendered="#{associateRegHierActionBean.listSize == 0}" />
+                                                <a4j:commandLink style="vertical-align:bottom;" rendered="#{associateRegHierActionBean.listSize != 0}" value="Description" render="dataTable" actionListener="#{associateRegHierActionBean.sortByDescription}" />
+                                                <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{associateRegHierActionBean.descriptionSortingOrder == 1}" url="/images/ah_images/down.png" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{associateRegHierActionBean.descriptionSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                            </f:facet>
+                                            <h:outputText value="#{model.description}" />
+                                        </h:column>
+                                        <h:column headerClass="center_header_class" rendered="#{associateRegHierActionBean.editSecurityCheck}">
+                                            <f:facet name="header" >
+                                                <h:outputText value="Edit" />
+                                            </f:facet>
+                                                <a4j:outputPanel >
+                                                	<h:commandLink title="Edit Association" rendered="#{!model.editMode}" >
+			                                        	<h:graphicImage id="editImage" url="/images/ah_images/edit.png" onclick="saveRowIndex(this.id);" />
+			                                            <rich:componentControl target="editpopup" operation="show" />
+			    									</h:commandLink>
+                                                    <a4j:commandLink id="edit" style="display:none;"
+                                                        actionListener="#{associateRegHierActionBean.editAssociation}"
+                                                        render="btnDiv, regionalHierarchies, distributors,description, dataTable, dataScroller">
+                                                        <f:param name="rowIndexValue" value="#{rowIndex}" />
+                                                    </a4j:commandLink>
+                                                    <a4j:commandLink id="save"
+                                                        actionListener="#{associateRegHierActionBean.updateAssociation}"
+                                                        rendered="#{model.editMode}"
+                                                        render="btnDiv, regionalHierarchies, distributors,description, dataTable, dataScroller">
+                                                        <h:graphicImage url="/images/ah_images/save.png" />
+                                                        <f:param name="rowIndexValue" value="#{rowIndex}" />
+                                                    </a4j:commandLink>
+                                                </a4j:outputPanel>
+                                        </h:column>
+                                        <h:column rendered="#{associateRegHierActionBean.deleteSecurityCheck}">
+                                                <f:facet name="header" >	
+                                                    <h:outputText value="Delete" />
+                                                </f:facet>
+                                                <a4j:outputPanel >
+                                                	<h:commandLink title="Delete Association" >
+			                                        	<h:graphicImage id="deleteImage" url="/images/ah_images/delete.png" onclick="saveRowIndex(this.id);" />
+			                                            <rich:componentControl target="deletepopup" operation="show" />
+			    									</h:commandLink>
+                                                    <a4j:commandLink id="delete" style="display:none;"
+                                                    	actionListener="#{associateRegHierActionBean.deleteAssociation}"
+                                                    	render="description, dataTable, dataScroller">
+                                                    	<f:param name="rowIndexValue" value="#{rowIndex}" />
+                                                	</a4j:commandLink>
+                                                </a4j:outputPanel>
+                                        </h:column>
+                                    </rich:dataTable>
+                                        
+                                </div>
+                                <div align="center"><rich:dataScroller id="dataScroller" for="dataTable" render="dataTable" /></div>
+                        </div>
+                    	
+                    </td>
+                </tr>
+		    
+
+		    	<tr>
+                	<td id="status_bar_bottom">
+                    	<div>
+                            <a4j:outputPanel styleClass="infoMessage" ajaxRendered="true">
+                                <h:outputText style="color:#ed1c24;" value="#{infoMessage}"/>
+                            </a4j:outputPanel>
+                        </div>
+                    </td>
+                </tr>
+                
+                
+		    	<tr>
+                	<td>
+                    	<div id="footer">
+                    	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    	    <tr>
+                    	      <td width="50%" valign="top" align="left"><h:commandLink styleClass="btn_cancel" value="" action="#{associateRegHierActionBean.cancel}" /></td>
+                    	      <td width="50%" valign="top" align="right">
+                              </td>
+                  	      </tr>
+                  	    </table>
+                    	</div>
+                  </td>
+                </tr>
+            </table>
+		</div>
+	</h:form>
+	<div class="status">
+        <a4j:status>
+            <f:facet name="start">
+                <h:graphicImage url="/images/ah_images/tabs_loader.gif" style="border:0px;"/>
+            </f:facet>
+            <f:facet name="stop"></f:facet>
+        </a4j:status>
+    </div>
+    <rich:popupPanel id="editpopup" modal="true" autosized="true" onshow="focustOnYes('editYes');" resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Confirm" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('editpopup')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:panelGroup>
+        	<p>Are you sure you want to edit?</p>
+        	<h:commandButton id="editYes" styleClass="submit_btn" label="Yes" value="Yes" onclick="invokeEdit();#{rich:component('editpopup')}.hide(); return false;" />
+        	<h:commandButton styleClass="submit_btn" label="No" value="No" onclick="#{rich:component('editpopup')}.hide(); return false;" />
+       	</h:panelGroup>
+        
+	</rich:popupPanel>
+	<rich:popupPanel id="deletepopup" modal="true" autosized="true" resizeable="false" onshow="focustOnYes('deleteYes');" >
+        <f:facet name="header">
+            <h:outputText value="Confirm" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('deletepopup')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:panelGroup>
+        	<p>Are you sure you want to delete?</p>
+        	<h:commandButton id="deleteYes" styleClass="submit_btn" label="Yes" value="Yes" onclick="invokeDelete();#{rich:component('deletepopup')}.hide(); return false;" />
+        	<h:commandButton styleClass="submit_btn" label="No" value="No" onclick="#{rich:component('deletepopup')}.hide(); return false;" />
+	    	
+       	</h:panelGroup>
+	</rich:popupPanel>
+</f:view>
+</h:body>
+</html>

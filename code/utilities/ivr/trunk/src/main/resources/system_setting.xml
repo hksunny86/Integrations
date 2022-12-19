@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+	<entry key="AsteriskIp">192.168.150.180</entry>
+	<entry key="ApplicationId">10</entry>
+	<entry key="ConfigReloadInterval">1</entry>
+	<!-- SFTP Settings Starts -->
+	<entry key="UseSFTP">no</entry>
+	<entry key="SFTPPort">22</entry>
+	<entry key="SFTPUser">root</entry>
+	<entry key="SFTPUserPassword">123</entry>
+	<entry key="SFTPLogFilePath">/JavaIvr/logs/ftp-%g.log</entry>
+	<entry key="SoundFilePathMain">/var/lib/asterisk/sounds/</entry>
+	<entry key="SoundFilePathDefault">/var/lib/asterisk/sounds/IVR/</entry>
+	<entry key="SoundFilePathTmp">/tmp/</entry>
+	<entry key="LocalIp"> </entry>
+	<entry key="LocalFilePathTmp">/JavaIvr/logs/</entry>
+	<!-- SFTP Settings Ends -->
+	<!-- DbPingThread Settings Starts -->
+	<entry key="EnableDbPing">yes</entry>
+	<entry key="DbPingSleep">300000</entry>
+	<entry key="PingIvrDID">1441</entry>
+	<!-- DbPingThread Settings Ends -->
+	<!-- Text to Speech Setting Starts -->
+	<entry key="SwiftCmd">/usr/local/bin/swift</entry>	
+	<entry key="Voice">Allison -p audio/sampling-rate=8000</entry>
+	<!-- Text to Speech Setting Ends -->
+	<!-- DB setting starts-->
+	<entry key="DBTimeout">5</entry>
+	<entry key="AlertMailFrequency1">10</entry>
+	<!-- DB setting ends-->
+	<!-- CSR DIAL setting starts -->
+	<entry key="DialSuffix"> </entry>
+	<entry key="GotoStatement">extensions|?|1/n</entry>
+	<!-- CSR DIAL setting ends -->
+
+	<!-- FAQs Parameters starts -->
+	<entry key="FAQParams"> FAQ,FAQ,ANS,4 </entry>
+	<!-- FAQs Parameters ends -->
+	
+	<!-- Enrollment Reason Id starts -->
+	<entry key="ReasonId">7</entry>
+	<!-- Enrollment Reason Id ends -->
+	
+	<!-- Set CallerId with CallId starts -->
+	<entry key="SetCallerId">yes</entry>
+	<!-- Set CallerId with CallId ends -->
+
+	<!-- Set DbSqlParser related settings starts -->
+	<entry key="DbSqlParser"> </entry>
+	<entry key="JavaIvrRootPath">/home/user/Desktop/Eclipse workspace/JavaAGI/output/</entry>
+	<!-- Set DbSqlParser related settings ends -->
+
+
+	
+	<!-- Set Db Interaction Retries start-->
+	<entry key="DbFailureRetries">5</entry>
+	<!-- Set Db Interaction Retries end -->
+	
+	<!-- Set Announcements folder name start-->
+	<entry key="AncmntsFolder">Announcements</entry>
+	<!-- Set Announcements folder name end -->
+	
+	<!-- Set Announcements file name start-->
+	<entry key="AncmntFileName">Announcement</entry>
+	<!-- Set Announcements file name end -->
+	
+	<!-- Set Greeting file name start-->
+	<entry key="CustomGreetingFileName">CustomGreeting</entry>
+	<!-- Set Greeting file name end -->
+	
+	<!-- Set Greeting thread Dirty bit check interval start-->
+	<entry key="GreetingDirtyBitCheckInterval">1</entry>
+	<!-- Set Greeting thread Dirty bit check interval end -->
+	
+	<!-- Engine Addresses for ivr engine communication - START -->
+	<entry key="IntelloEngine1">192.168.0.171,55555,1</entry>
+	<!-- Engine Addresses for ivr engine communication - END -->
+
+	</properties>

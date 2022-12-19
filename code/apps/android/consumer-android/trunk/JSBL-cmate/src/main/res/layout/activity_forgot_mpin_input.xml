@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.forgotMpin.ForgotMpinInputActivity">
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <include
+        android:id="@+id/container_heading"
+        android:layout_below="@+id/container_header"
+        layout="@layout/heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/scViewInLayout"
+        android:layout_width="match_parent"
+        android:layout_below="@id/container_heading"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activitySideMarginNormal"
+        android:layout_marginRight="@dimen/activitySideMarginNormal">
+
+        <LinearLayout
+            android:id="@+id/layoutInputs"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/textViewMarginNormal">
+
+
+
+
+            <include
+                android:id="@+id/cnicView"
+                android:visibility="visible"
+                android:layout_below="@id/input1"
+                layout="@layout/layout_cnic_controller" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter your CNIC No. "
+                android:layout_marginLeft="@dimen/margin_extra_short"
+                android:layout_marginBottom="@dimen/textViewMarginXLarge"/>
+
+
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/layoutBtns"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutInputs"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/layoutMarginLarge"
+        android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+        android:layout_marginRight="@dimen/buttonSideMarginNormal"
+        android:layout_marginTop="@dimen/buttonTopMarginLarge"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/btnNextForgotMpin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/buttonInnerMarginNormal"
+            android:layout_weight="1"
+            android:background="@drawable/button_yellow_selector"
+            android:text="@string/next"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/buttonTextNormal" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

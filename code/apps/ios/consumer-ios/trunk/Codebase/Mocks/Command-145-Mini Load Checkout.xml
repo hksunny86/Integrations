@@ -1,0 +1,21 @@
+
+<!--<msg id="145" reqTime="1487308285084">-->
+<!--    <params>-->
+<!--        <param name="DTID">5</param>-->
+<!--        <param name="PID">50046</param>-->
+<!--        <param name="PIN">6tBH5Et3C3b9p7Xzr1YVIQ==</param>-->
+<!--        <param name="ENCT">1</param>-->
+<!--        <param name="TMOB">03234343021</param>-->
+<!--        <param name="TXAM">100</param>-->
+<!--        <param name="CAMT">17.24</param>-->
+<!--        <param name="TPAM">10.0</param>-->
+<!--        <param name="TAMT">110.0</param>-->
+<!--    </params>-->
+<!--</msg>-->
+
+<msg id="145">
+    <trans>
+        <trn TRXID="095510122335" PROD="ML Transfer to Customer" TMOB="03234343021" AMOB="03224870789" DATE="17/02/17" DATEF="17/02/17 10:11" TIMEF="10:11 AM" TXAM="100" TXAMF="100.00" CAMT="17.24" CAMTF="17.24" TPAM="10.0" TPAMF="10.00" TAMT="110.0" TAMTF="110.00" BALF="185,549.73" ></trn>
+    </trans>
+</msg>
+

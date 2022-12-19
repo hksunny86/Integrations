@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/header_layout"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header_layout"
+        android:visibility="visible"/>
+
+    <RelativeLayout
+        android:id="@+id/lefthand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <View
+            android:id="@+id/view_6"
+            android:layout_width="@dimen/finger_hight_width_large"
+            android:layout_height="@dimen/finger_hight_width_normal"
+            android:layout_marginLeft="@dimen/left_thumb_margin_left"
+            android:background="@android:color/white"
+            android:layout_marginTop="@dimen/left_thumb_margin_top"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/view_7"
+            android:layout_width="@dimen/finger_hight_width_large"
+            android:layout_height="@dimen/finger_hight_width_large"
+            android:layout_marginLeft="@dimen/left_index_margin_left"
+            android:layout_marginTop="@dimen/left_index_margin_top"
+            android:background="@android:color/white"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/view_8"
+            android:layout_width="@dimen/finger_hight_width_large"
+            android:layout_height="@dimen/finger_hight_width_small"
+            android:layout_marginLeft="@dimen/left_middle_margin_left"
+            android:layout_marginTop="@dimen/left_middle_margin_top"
+            android:background="@android:color/white"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/view_9"
+            android:layout_width="@dimen/finger_hight_width_large"
+            android:layout_height="@dimen/finger_hight_width_small"
+            android:layout_marginLeft="@dimen/left_ring_margin_left"
+            android:layout_marginTop="@dimen/left_ring_margin_top"
+            android:background="@android:color/white"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/view_10"
+            android:layout_width="@dimen/finger_hight_width_large"
+            android:layout_height="@dimen/finger_hight_width_normal"
+            android:layout_marginLeft="@dimen/left_little_margin_left"
+            android:layout_marginTop="@dimen/left_little_margin_top"
+            android:background="@android:color/white"
+            android:visibility="visible" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/fingerprint_lft_icon_bg" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivfingersix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/fingerprint_icon_six_pressed" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivfingerseven"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/fingerprint_icon_seven_pressed" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivfingereight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/fingerprint_icon_eight_pressed" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivfingernine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/fingerprint_icon_nine_pressed" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivfingerten"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/fingerprint_icon_ten_pressed" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+
+        <View
+            android:id="@+id/view_1"
+            android:layout_width="@dimen/finger_hight_width_large"
+            android:layout_height="@dimen/finger_hight_width_normal"
+            android:layout_marginLeft="@dimen/right_thumb_margin_left"
+            android:layout_marginTop="@dimen/right_thumb_margin_top"
+            android:background="@android:color/white"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/view_2"
+            android:layout_width="@dimen/finger_hight_width_large"
+            android:layout_height="@dimen/finger_hight_width_large"
+            android:layout_marginLeft="@dimen/right_index_margin_left"
+            android:layout_marginTop="@dimen/right_index_margin_top"
+            android:background="@android:color/white"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/view_3"
+            android:layout_width="@dimen/finger_hight_width_large"
+            android:layout_height="@dimen/finger_hight_width_small"
+            android:layout_marginLeft="@dimen/right_middle_margin_left"
+            android:layout_marginTop="@dimen/right_middle_margin_top"
+            android:background="@android:color/white"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/view_4"
+            android:layout_width="@dimen/finger_hight_width_large"
+            android:layout_height="@dimen/finger_hight_width_small"
+            android:layout_marginLeft="@dimen/right_ring_margin_left"
+            android:layout_marginTop="@dimen/right_ring_margin_top"
+            android:background="@android:color/white"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/view_5"
+            android:layout_width="@dimen/finger_hight_width_large"
+            android:layout_height="@dimen/finger_hight_width_normal"
+            android:layout_marginLeft="@dimen/right_little_margin_left"
+            android:layout_marginTop="@dimen/right_little_margin_top"
+            android:background="@android:color/white"
+            android:visibility="visible" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/fingerprint_rgt_icon_bg" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivfingerone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/fingerprint_icon_one_pressed" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivfingertwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/fingerprint_icon_two_pressed" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivfingerthree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/fingerprint_icon_three_pressed" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivfingerfour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/fingerprint_icon_four_pressed" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivfingerfive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/fingerprint_icon_five_pressed" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lefthand"
+        android:layout_marginTop="@dimen/textViewMarginXXXLarge"
+        android:gravity="center"
+        android:text="@string/selectgreenfinger"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textViewTextSizeMedium" />
+
+</RelativeLayout>
+
+

@@ -1,0 +1,330 @@
+[
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\main_icon_agent_transfer.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\main_icon_agent_transfer.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\main_icon_cash_in.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\main_icon_cash_in.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\navigation_empty_icon.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\f62cf2fbb596e32d05777c427bee1627fe223a12\\output\\res\\drawable\\navigation_empty_icon.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\button_popup_register_selector.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\button_popup_register_selector.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_switch_thumb_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_switch_thumb_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_search_api_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_ic_search_api_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\button_shutter_selector.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\button_shutter_selector.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\flash_on.png",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\flash_on.png"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\rounded_bg_orange.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\rounded_bg_orange.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_textfield_search_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_check_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_btn_check_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_ab_back_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_ic_ab_back_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_small_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_ratingbar_small_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\up.png",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\up.png"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_dark.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\alert_popup_icon.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\alert_popup_icon.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_bg_rounded.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\dialog_bg_rounded.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\button_blue_selector.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\button_blue_selector.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\design_ic_visibility.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\f62cf2fbb596e32d05777c427bee1627fe223a12\\output\\res\\drawable\\design_ic_visibility.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\listview_background_selected.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\listview_background_selected.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_thumb_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_seekbar_thumb_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\button_cancel_selector.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\button_cancel_selector.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_spinner_textfield_background_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_spinner_textfield_background_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\info_popup_icon.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\info_popup_icon.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\main_icon_retail_payment.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\main_icon_retail_payment.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_bg_low.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\notification_bg_low.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_menu_overflow_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_ic_menu_overflow_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_clear_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_ic_clear_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_light.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_item_background_holo_light.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\main_icon_account_open.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\main_icon_account_open.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\rounded_bg.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\rounded_bg.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\listview_selector.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\listview_selector.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\shutter_hover.png",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\shutter_hover.png"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_indicator_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_ratingbar_indicator_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\shutter.png",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\shutter.png"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\main_icon_funds_transfer.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\main_icon_funds_transfer.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\rounded_bg_disbaled.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\rounded_bg_disbaled.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_top_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\button_signout.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\button_signout.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\button_next_selector.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\button_next_selector.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\main_icon_cash_out.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\main_icon_cash_out.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\button_grey_selector.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\button_grey_selector.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_icon_background.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\notification_icon_background.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_dark.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_list_selector_holo_dark.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\button_back.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\button_back.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\default_img.png",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\default_img.png"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\main_icon_bill_payment.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\main_icon_bill_payment.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\accept.png",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\accept.png"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_vector_test.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_vector_test.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\success_popup_icon.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\success_popup_icon.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\listview_background_normal.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\listview_background_normal.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_bg.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\notification_bg.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_tile_bg.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\notification_tile_bg.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_dialog_material_background.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_dialog_material_background.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_voice_search_api_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_ic_voice_search_api_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\design_bottom_navigation_item_background.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\f62cf2fbb596e32d05777c427bee1627fe223a12\\output\\res\\drawable\\design_bottom_navigation_item_background.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_track_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_seekbar_track_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_go_search_api_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_ic_go_search_api_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_text_cursor_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_text_cursor_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\divider.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\divider.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\button_refresh.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\button_refresh.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\header_dialog_bg.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\header_dialog_bg.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\design_snackbar_background.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\f62cf2fbb596e32d05777c427bee1627fe223a12\\output\\res\\drawable\\design_snackbar_background.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\main_icon_my_account.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\main_icon_my_account.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\failure_popup_icon.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\failure_popup_icon.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_internal_bg.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_cab_background_internal_bg.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\button_login_selector.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\button_login_selector.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_tab_indicator_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\design_fab_background.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\f62cf2fbb596e32d05777c427bee1627fe223a12\\output\\res\\drawable\\design_fab_background.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\mpin_popup_icon.xml",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\mpin_popup_icon.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_radio_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_btn_radio_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_ratingbar_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\flash_off.png",
+        "source": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\src\\main\\res\\drawable\\flash_off.png"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_tick_mark_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_light.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_list_selector_holo_light.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_dark.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
+    },
+    {
+        "merged": "E:\\i8workpaceAgentmate\\JSBL-Agentmate-Studio\\jSBLMFSAgent\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_borderless_material.xml",
+        "source": "C:\\Users\\ALI REHAN\\.android\\build-cache\\b849d3ff2d3a77ebf0188cb0e5df5f1d2e62121f\\output\\res\\drawable\\abc_btn_borderless_material.xml"
+    }
+]

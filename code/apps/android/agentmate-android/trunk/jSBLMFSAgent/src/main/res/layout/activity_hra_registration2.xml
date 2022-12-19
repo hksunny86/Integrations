@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/offwhite"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Next of KIN"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textViewTextSizeXLarge" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/layoutInputs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <RelativeLayout
+                    android:id="@+id/cnic_mobile_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/cnic_mobile_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lbl_kin_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/textViewsPadding"
+                            android:shadowColor="@color/white"
+                            android:text="@string/name"
+                            android:textColor="@color/text_grey"
+                            android:textSize="@dimen/ts_normal"
+                            android:textStyle="normal" />
+
+                        <EditText
+                            android:id="@+id/input_kin_name"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lbl_kin_name"
+                            android:background="@drawable/rounded_bg"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLength="50"
+                            android:minHeight="@dimen/editTextMinHeight"
+                            android:paddingLeft="@dimen/editTextPadding"
+                            android:paddingRight="@dimen/editTextPadding"
+                            android:singleLine="true">
+
+                            <requestFocus />
+                        </EditText>
+
+                        <TextView
+                            android:id="@+id/lbl_kin_mobile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/input_kin_name"
+                            android:layout_marginTop="@dimen/margin_normal"
+                            android:padding="@dimen/textViewsPadding"
+                            android:shadowColor="@color/white"
+                            android:text="@string/mobile_no"
+                            android:textColor="@color/text_grey"
+                            android:textSize="@dimen/ts_normal"
+                            android:textStyle="normal" />
+
+                        <EditText
+                            android:id="@+id/input_kin_mobile"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lbl_kin_mobile"
+                            android:background="@drawable/rounded_bg"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:maxLength="11"
+                            android:minHeight="@dimen/editTextMinHeight"
+                            android:paddingLeft="@dimen/editTextPadding"
+                            android:paddingRight="@dimen/editTextPadding"
+                            android:singleLine="true" />
+
+                        <TextView
+                            android:id="@+id/lbl_kin_cnic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_normal"
+                            android:padding="@dimen/textViewsPadding"
+                            android:shadowColor="@color/white"
+                            android:text="@string/cnic"
+                            android:textColor="@color/text_grey"
+                            android:textSize="@dimen/ts_normal"
+                            android:textStyle="normal" />
+
+                        <EditText
+                            android:id="@+id/input_kin_cnic"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lbl_kin_cnic"
+                            android:background="@drawable/rounded_bg"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:maxLength="13"
+                            android:minHeight="@dimen/editTextMinHeight"
+                            android:paddingLeft="@dimen/editTextPadding"
+                            android:paddingRight="@dimen/editTextPadding"
+                            android:singleLine="true"></EditText>
+
+                        <TextView
+                            android:id="@+id/lbl_kin_relationship"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/input_kin_cnic"
+                            android:layout_marginTop="@dimen/margin_normal"
+                            android:padding="@dimen/textViewsPadding"
+                            android:shadowColor="@color/white"
+                            android:text="@string/relationship"
+                            android:textColor="@color/text_grey"
+                            android:textSize="@dimen/ts_normal"
+                            android:textStyle="normal" />
+
+                        <EditText
+                            android:id="@+id/input_kin_relationship"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lbl_kin_relationship"
+                            android:background="@drawable/rounded_bg"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:maxLength="50"
+                            android:minHeight="@dimen/editTextMinHeight"
+                            android:paddingLeft="@dimen/editTextPadding"
+                            android:paddingRight="@dimen/editTextPadding"
+                            android:singleLine="true" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutInputs"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_Xlarge">
+
+                <Button
+                    android:id="@+id/btnNext"
+                    android:layout_width="160dp"
+                    android:layout_height="48dp"
+                    android:layout_below="@id/lblAlert"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:layout_marginRight="@dimen/margin_Xlarge"
+                    android:background="@drawable/button_next_selector"
+                    android:text="@string/next"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/buttonTextSizeLarge"
+                    android:textStyle="normal" />
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="160dp"
+                    android:layout_height="48dp"
+                    android:layout_below="@id/lblAlert"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_Xlarge"
+                    android:background="@drawable/button_cancel_selector"
+                    android:text="@string/cancel"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/buttonTextSizeLarge"
+                    android:textStyle="normal" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

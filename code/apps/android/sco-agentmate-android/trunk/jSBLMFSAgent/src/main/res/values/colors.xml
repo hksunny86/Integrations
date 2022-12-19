@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <color name="btn_ok_normal">#f69b1a</color>
+    <color name="btn_ok_pressed">#e24919</color>
+    
+    <color name="btn_cancel_normal">#636363</color>
+    <color name="btn_cancel_pressed">#333333</color>
+    
+    <color name="dialog_background">#B5B5B5</color>
+    
+    <color name="header_sky_blue_bg">#4BABE8</color>
+    <color name="welcome_text_color">#4C4C4C</color>
+    <color name="name_text_color">#4B4B4B</color>
+    <color name="balance_text_color">#358E10</color>
+    <color name="list_text_color">#676767</color>
+    <color name="list_background">#ff111111</color>
+    <color name="dialog_header_background">#D71112</color>
+    <color name="orange">#f19b15</color>
+    <color name="text_green">#8ebb21</color>
+    <color name="text_BLue">#4babe8</color>
+    <color name="light_grey">#E0E0E0</color>
+    <color name="transparent_new">#00000000</color>
+    <color name="offwhite">#F2F2F2</color>
+    <color name="skyBlue">#4BABE8</color>
+    <color name="lightest_grey">#D3D3D3</color>
+     
+    
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff00</color>
+    <color name="blue">#0000ff</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+   	<color name="text_grey">#424242</color>
+    <color name="blue_bg">#2ea3db</color>
+    <color name="line_light_grey">#c1c1c1</color>
+    <color name="lightest_grey_bg">#f1f1f1</color>
+    <color name="deep_red">#950100</color>
+    <color name="text_blue">#057daf</color>
+    <!-- 3e4a64 -->
+    <color name="text_blue_dark">#00608a</color>
+    <color name="text_grey_heading">#697082</color>
+    <color name="text_grey_light">#c0c0c0</color>
+    <color name="menu_grey">#414141</color>
+    <color name="text_blue_light">#617090</color>
+    
+    <!-- <color name="bg_table_row_color2">#bfbfbf</color>-->
+    <color name="bg_table_row_color1">#ffffff</color>
+    <color name="bg_table_row_color2">#d2d2d2</color>
+    <color name="bg_table_row_color3">#4a728f</color>
+    <color name="light_gray">#d2d2d2</color>
+    <color name="main_menu_image_normal">#273785</color>
+    <color name="main_menu_image_pressed">#009fdf</color>
+
+
+    <!--
+  Use android transparent to avoid a bug where background set to transparent shows an image instead:
+  Stack overflow here:http://stackoverflow.com/questions/3822123/weird-layout-problem-please-see-the-attached-image
+
+
+
+
+    -->
+    <color name="transparent">@android:color/transparent</color>
+
+</resources>

@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<MenuConfig>
+    <Displayers>
+        <!--Use the Velocity Menu Type-->
+        <Displayer name="Velocity" type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>
+    </Displayers>
+    <Menus>
+        <!-- Admin Menu -->
+
+        <!--  <Menu name="Bulk_Disbursement" title="Bulk Disbursements" roles="PG_GP_C,PG_GP_R,BULK_DISBURSEMENTS_C,MNG_BULK_DISBURSEMENTS_R,RPT_BULK_PAYMENTS_R" >
+            <Item title="Disbursement Upload" target="" location="p_bulkdisbursements.html"  roles="PG_GP_C,BULK_DISBURSEMENTS_C"/>
+            <Item title="Disbursement File Summary" target="" location="p_disbursementFileInfo.html"  roles="PG_GP_R,DISB_F_SUMR_R"/>
+            <Item title="Scheduled Bulk Disbursements" target="" location="p_bulkdisbursementsearch.html"  roles="PG_GP_R,MNG_BULK_DISBURSEMENTS_R"/>
+           <Item title="Disbursement Details" target="" location="p_bulkPaymentDisbReport.html"  roles="PG_GP_R,DISB_DET_R"/>
+            <Item title="Bulk Payments Receiving Report" target="" location="p_bulkpaymentsdetail.html" roles="PG_GP_R,RPT_BULK_PAYMENTS_R"/>
+        </Menu> -->
+
+
+        <!-- Added by waqar -->
+        <!-- <Menu name="Bulk_Operations" title="Bulk Operations" roles="ADM_GP_R,PG_GP_C,PG_GP_U,MNG_FILER_BLK_U,PG_GP_R,BULK_DISBURSEMENTS_C,MNG_BULK_DISBURSEMENTS_R,RPT_BULK_PAYMENTS_R,MNG_CHNL_BLK_R,MNG_CHNL_BLK_U,MNG_BLKLST_MRKNG_U,MNG_BLKLST_MRKNG_R" > -->
+        <Menu name="Bulk_Operations" title="Bulk Operations"
+              roles="FILER_NONFILER_UPLD_U,PG_GP_C,PG_GP_R,BULK_DISBURSEMENTS_C,MNG_BULK_DISBURSEMENTS_R,RPT_BULK_PAYMENTS_R">
+
+            <Item name="Bulk_Disbursement" title="Bulk Disbursements"
+                  roles="PG_GP_C,PG_GP_R,MNG_BLKLST_MRKNG_U,MNG_BLKLST_MRKNG_R,BULK_DISBURSEMENTS_C,MNG_BULK_DISBURSEMENTS_R,RPT_BULK_PAYMENTS_R">
+                <Item title="Disbursement Upload" target="" location="p_bulkdisbursements.html"
+                      roles="PG_GP_C,BULK_DISBURSEMENTS_C"/>
+                <Item title="Disbursement File Summary" target="" location="p_disbursementFileInfo.html"
+                      roles="PG_GP_R,DISB_F_SUMR_R"/>
+                <Item title="Scheduled Bulk Disbursements" target="" location="p_bulkdisbursementsearch.html"
+                      roles="PG_GP_R,MNG_BULK_DISBURSEMENTS_R"/>
+                <Item title="Disbursement Details" target="" location="p_bulkPaymentDisbReport.html"
+                      roles="PG_GP_R,DISB_DET_R"/>
+                <Item title="Bulk Payments Receiving Report" target="" location="p_bulkpaymentsdetail.html"
+                      roles="PG_GP_R,RPT_BULK_PAYMENTS_R"/>
+            </Item>
+
+            <!-- <Item title="Manage Channel Bulk" target="" location="p_channelconfigurationbulk.html" roles="ADM_GP_R,PG_GP_R,PG_GP_U,MNG_CHNL_BLK_R,MNG_CHNL_BLK_U"/>
+            <Item title="Bulk Filer Marking" target="" location="p_bulkfilerupdate.html" roles="PG_GP_C,PG_GP_U,MNG_FILER_BLK_U"/> -->
+            <Item title="Blacklist Marking" roles="ADM_GP_R,PG_GP_R,MNG_BLKLST_MRKNG_U,MNG_BLKLST_MRKNG_R">
+                <Item title="Blacklist Marking" location="p_blacklistmarking.html"
+                      roles="ADM_GP_R,PG_GP_R,MNG_BLKLST_MRKNG_C,MNG_BLKLST_MRKNG_U,MNG_BLKLST_MRKNG_R"/>
+                <Item title="Blacklist Marking Bulk Upload" location="p_blacklistmarkingbulkupload.html"
+                      roles="ADM_GP_R,PG_GP_R,MNG_BLKLST_MRKNG_BULK_UPLOAD_C,MNG_BLKLST_MRKNG_BULK_UPLOAD_U,MNG_BLKLST_MRKNG_BULK_UPLOAD_R"/>
+                <Item title="Blacklisted CNIC (External)" location="p_blacklistedCNIC.html"
+                      roles="ADM_GP_R,PG_GP_R,MNG_BLKLST_CNIC_C,MNG_BLKLST_CNIC_U,MNG_BLKLST_CNIC_R"/>
+            </Item>
+
+
+            <Item title="Bulk Filer Upload" location="p_bulkupdatefilernonfiler.html"
+                  roles="ADM_GP_R,PG_GP_R,FILER_NONFILER_UPLD_U"/>
+
+        </Menu>
+
+
+        <Menu name="Partner_Management" title="Manage Partners" roles="ADM_GP_R">
+            <Item title="Bank" target="" location="bankmanagement.html" roles="ADM_GP_R"/>
+            <Item title="Service Operator" target="" location="mnomanagement.html" roles="ADM_GP_R"/>
+            <Item title="Supplier" target="" location="suppliermanagement.html" roles="ADM_GP_R"/>
+            <Item title="Supplier Bank" target="" location="supplierbankinfomanagement.html" roles="ADM_GP_R"/>
+        </Menu>
+
+        <Menu name="Bank_Management" title=" Bank" roles="">
+            <Item title="Bank" target="" location="bankmanagement.html" roles=""/>
+            <Item title="Bank User" target="" location="bankusermanagement.html" roles=""/>
+        </Menu>
+
+        <Menu name="Commission_Management" title="Charges and Limits" roles="ADM_GP_R,MNG_TX_CHARGES_R,PG_GP_R">
+            <Item title="Transaction Charges" target="" location="commissionratemanagement.html"
+                  roles="ADM_GP_R,MNG_TX_CHARGES_R,PG_GP_R"/>
+            <Item title="Charges Method" target="" location="commissionreasonmanagement.html" roles="ADM_GP_R"/>
+            <Item title="Stakeholders" target="" location="commissionstakeholdermanagement.html" roles="ADM_GP_R"/>
+        </Menu>
+
+        <Menu name="Credit_Management" title=" Credit Transfer" roles="">
+            <Item title="Credit Information" target="" location="creditinfomanagement.html" roles=""/>
+            <Item title="Agent Credit Transfer" target="" location="inov8distributorcreditform.html" roles=""/>
+        </Menu>
+
+        <Menu name="Customer_Management" title="Customer" roles="">
+            <Item title="Customer" target="" location="customermanagement.html" roles=""/>
+            <Item title="Mobile History" target="" location="mobilehistory.html" roles=""/>
+            <Item title="Smart Money Account" target="" location="smartmoneyaccountmanagement.html" roles=""/>
+        </Menu>
+
+        <Menu name="Distribution_Management" title=" Agent" roles="">
+            <Item title="Super Agent" target="" location="distributormanagement.html" roles=""/>
+            <Item title="Agent Contact" target="" location="distributorcontactmanagement.html" roles=""/>
+            <Item title="Agent Level" target="" location="distributorlevelmanagement.html" roles=""/>
+        </Menu>
+
+        <Menu name="MNO_Management" title=" Service Operator" roles="">
+            <Item title="Service Operator" target="" location="mnomanagement.html" roles=""/>
+            <Item title="Service Operator Dialing Code" target="" location="mnodialingcodemanagement.html" roles=""/>
+            <Item title="Service Operator User" target="" location="mnousermanagement.html" roles=""/>
+        </Menu>
+
+        <Menu name="Operator_Management" title="Operator" roles="">
+            <Item title="Operator Bank" target="" location="operatorbankinfomanagement.html" roles=""/>
+            <Item title="Operator User" target="" location="operatorusermanagement.html" roles=""/>
+        </Menu>
+
+        <Menu name="Retailer_Information_Management" title=" Retailer" roles="">
+            <Item title="Retailer" target="" location="retailermanagement.html" roles=""/>
+            <Item title="Retailer Contact" target="" location="retailercontactmanagement.html" roles=""/>
+            <Item title="Retailer Type" target="" location="retailertype.html" roles=""/>
+        </Menu>
+
+        <Menu name="Service_Management" title=" Service" roles="ADM_GP_R">
+            <Item title="Service" target="" location="servicemanagement.html" roles="ADM_GP_R"/>
+            <Item title="Service Type" target="" location="servicetype.html" roles="ADM_GP_R"/>
+        </Menu>
+
+        <Menu name="Supplier_Management" title=" Supplier" roles="">
+            <Item title="Supplier" target="" location="suppliermanagement.html" roles=""/>
+            <Item title="Supplier Bank" target="" location="supplierbankinfomanagement.html" roles=""/>
+            <Item title="Supplier User" target="" location="supplierusermanagement.html" roles=""/>
+        </Menu>
+
+        <Menu name="Switch_Management" title=" Switch" roles="">
+            <Item title="Switch" target="" location="switchmanagement.html" roles=""/>
+            <Item title="Switch Finder" target="" location="switchfindermanagement.html" roles=""/>
+        </Menu>
+
+        <Menu name="Miscellaneous" title=" Miscellaneous " target="" roles="">
+            <Item title="Action Log" target="" location="actionlog.html" roles=""/>
+            <Item title="Application Version" target="" location="applicationversionmanagement.html" roles=""/>
+            <Item title="Area" target="" location="areamanagement.html" roles=""/>
+            <Item title="Audit Log" target="" location="auditlog.html" roles=""/>
+            <Item title="Command" target="" location="command.html" roles=""/>
+            <Item title="Device Account" target="" location="userdeviceaccount.html" roles=""/>
+            <Item title="Channel" target="" location="devicetypemanagement.html" roles=""/>
+            <Item title="Favorite Numbers" target="" location="favoritenumber.html" roles=""/>
+            <Item title="Golden No" target="" location="goldennosmanagement.html" roles=""/>
+            <Item title="Notification Message " target="" location="notificationmessages.html" roles=""/>
+            <Item title="Ticker String" target="" location="tickermanagement.html" roles=""/>
+            <Item title="AllPay Transactions " location="allpaytransactiondetailinfomanagement.html" roles=""/>
+            <Item title="MWallet Transactions " location="transactiondetailinfomanagement.html" roles=""/>
+            <Item title="Transaction Detail" location="p_transactiondetaili8management.html" roles=""/>
+            <Item title="AllPay Transaction Detail" location="p_allpaytransactiondetaili8management.html" roles=""/>
+            <Item title="Verifly " location="veriflymanagement.html" roles=""/>
+        </Menu>
+
+        <Menu name="Configuration" title="Configuration"
+              roles="MNO_GP_R,ADM_GP_R,PG_GP_R,MNG_CUST_AC_TP_LMT_R,MNG_ALERT_RECIPIENT_R,MNG_VELOCITY_RULES_R,MNG_COMM_SH_SHARE_R,MNG_PRDCT_CAT_R,MNG_PRDCT_LMTS_C,MNG_PRDCT_LMTS_R,MNG_EXCLD_LIMIT_RULES_R,CUST_TX_LIMITS_R,MNG_CUST_SGMNT_R,AGNT_NET_COMM_SHARE_U,MNG_COMM_SH_ACC_R,MNG_SH_ACC_R,AGENT_GRP_C,AGENT_GRP_R,MNG_TRNSFR_RULE_U,MNG_TAX_REGIME_R,MNG_TAX_REGIME_C,MNG_TAX_REGIME_U,MNG_FED_RULE_U,MNG_FED_RULE_R,WHT_CNFG_U,WHT_CNFG_R,SERCH_WHT_TRX_R,SERCH_WHT_EXEMP_R,MNG_WHT_EXEM_C,MNG_WHT_EXEM_U,SERCH_VIRTUAL_CARD_R,SERCH_VIRTUAL_CARD_U">
+            <Item title="Manage Products"
+                  roles="MNO_GP_R,MNG_PRDCT_LMTS_R,PG_GP_R,ADM_GP_R,PG_GP_R,MNG_VELOCITY_RULES_R,MNG_PRDCT_LMTS_C,MNG_PRDCT_LMTS_R,MNG_EXCLD_LIMIT_RULES_R">
+                <Item title="Product" target="" location="productmanagement.html" roles="ADM_GP_R"/>
+                <Item title="Product Catalog" target="" location="productcatalogmanagement.html"
+                      roles="ADM_GP_R,PG_GP_R,MNG_PRDCT_CAT_R"/>
+                <Item title="Channel Product Matrix" target="" location="productdeviceflowmanagement.html"
+                      roles="ADM_GP_R"/>
+                <Item title="Add Product" location="productupdateform.html" roles="MNG_PRDCT_LMTS_C,PG_GP_R"/>
+                <Item title="Search Product" location="productsearch.html" roles="MNG_PRDCT_LMTS_R,PG_GP_R,MNO_GP_R"/>
+                <Item title="Product Threshold Charges" location="productthresholdcharges.html"
+                      roles="MNG_PRDCT_LMTS_R,PG_GP_R,MNO_GP_R"/>
+                <Item title="Velocity Rule" location="p_velocityrulemanagement.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,MNG_VELOCITY_RULES_R"/>
+                <Item title="Operating Hours Rule/Agent Location Verification"
+                      location="p_operatinghoursrulemanagement.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,MNG_VELOCITY_RULES_R"/>
+                <Item title="Exclude Limit" target="" location="p_limitrulemanagement.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,MNG_EXCLD_LIMIT_RULES_R"/>
+            </Item>
+            <Item title="Manage Account Types" roles="ADM_GP_R,PG_GP_R,MNG_CUST_AC_TP_LMT_R,CUST_TX_LIMITS_R">
+                <Item title="Account Types" location="p_customeraccounttypemanagement.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,MNG_CUST_AC_TP_LMT_R"/>
+                <Item title="Account Type Limits" location="p_customertransactionlimits.html"
+                      roles="ADM_GP_R,PG_GP_R,CUST_TX_LIMITS_R"/>
+            </Item>
+            <Item title="Manage Customer Segment" location="p_customersegmentmanagement.html"
+                  roles="PG_GP_R,MNG_CUST_SGMNT_R,ADM_GP_R"/>
+            <Item title="Alerts" roles="">
+                <Item title="Error Alert Configurations" location="p_alertconfigsearch.html?actionId=2" roles=""/>
+                <Item title="Alert Recipients" location="p_alertsrecepientssearch.html?actionId=2" roles=""/>
+            </Item>
+            <Item title="Agent Network Commission Share" location="p_distributorcommshare.html"
+                  roles="ADM_GP_R,PG_GP_R,AGNT_NET_COMM_SHARE_U"/>
+            <Item title="Manage Virtual Cards" location="p_virtualcards.html"
+                  roles="ADM_GP_R,PG_GP_R,SERCH_VIRTUAL_CARD_R,SERCH_VIRTUAL_CARD_U"/>
+
+            <Item title="Verifly " location="veriflymanagement.html" roles="ADM_GP_R"/>
+            <Item title="Switch" location="switchmanagement.html" roles="ADM_GP_R"/>
+            <Item title="Switch Finder" location="switchfindermanagement.html" roles="ADM_GP_R"/>
+            <Item title="Area" location="areamanagement.html" roles="ADM_GP_R"/>
+            <Item title="Command" target="" location="command.html" roles="ADM_GP_R"/>
+            <Item title="Channel" target="" location="devicetypemanagement.html" roles="ADM_GP_R"/>
+            <Item title="Quick Pay Numbers" target="" location="favoritenumber.html" roles="ADM_GP_R"/>
+            <Item title="Golden No" target="" location="goldennosmanagement.html" roles="ADM_GP_R"/>
+            <Item title="Notification Message " target="" location="notificationmessages.html" roles="ADM_GP_R"/>
+            <Item title="Ticker String" target="" location="tickermanagement.html" roles="ADM_GP_R"/>
+            <Item title="Manage Stakeholders" roles="ADM_GP_R,PG_GP_R,MNG_COMM_SH_ACC_R,MNG_SH_ACC_R">
+                <Item title="Stakeholder Accounts" target="" location="p_stakeholderaccounts.html?actionId=2"
+                      roles="ADM_GP_R,ADM_GP_C,PG_GP_R,PG_GP_C,MNG_SH_ACC_R"/>
+                <Item title="Create Stakeholder G/L" target="" location="commissionstakeholderaccountsform.html"
+                      roles="ADM_GP_R,ADM_GP_C,PG_GP_R,PG_GP_C,MNG_COMM_SH_ACC_R,MNG_COMM_SH_ACC_C"/>
+                <Item title="Manage Stakeholders" target="" location="commissionstakeholderaccountsmanagement.html"
+                      roles="ADM_GP_R,PG_GP_R,MNG_COMM_SH_ACC_R"/>
+            </Item>
+            <Item title="Manage LSA Network"
+                  roles="ADM_GP_R,PG_GP_R,AGENT_GRP_C,AGENT_GRP_R,AGENT_GRP_U,MNG_TRNSFR_RULE_U">
+                <Item title="Create Agent Group" target="" location="p_createAgentGroup.html"
+                      roles="ADM_GP_R,PG_GP_R,AGENT_GRP_C"/>
+                <Item title="Search Agent Group" target="" location="p_searchAgentGroup.html"
+                      roles="ADM_GP_R,PG_GP_R,AGENT_GRP_R,AGENT_GRP_U"/>
+                <Item title="Agent to Agent Transfer Rule" target="" location="p_agenttransferruleform.html"
+                      roles="ADM_GP_R,PG_GP_R,MNG_TRNSFR_RULE_U"/>
+            </Item>
+            <Item title="Manage Taxes"
+                  roles="SERCH_WHT_TRX_R,SERCH_WHT_EXEMP_R,ADM_GP_R,PG_GP_R,MNG_TAX_REGIME_R,MNG_TAX_REGIME_C,MNG_TAX_REGIME_U,MNG_FED_RULE_U,MNG_WHT_EXEM_C,MNG_WHT_EXEM_U,MNG_WHT_EXEM_R,MNG_FED_RULE_R,WHT_CNFG_U,WHT_CNFG_R">
+                <Item title="Tax Regime Default Rates" location="p_taxregimedefaultfedrate.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,MNG_TAX_REGIME_R,MNG_TAX_REGIME_C,MNG_TAX_REGIME_U"/>
+                <Item title="Manage FED Rules" location="p_fedrulemanagementform.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,MNG_FED_RULE_U,MNG_FED_RULE_R"/>
+                <Item title="WHT Configuration" location="p_WHTConfig.html"
+                      roles="ADM_GP_R,PG_GP_R,WHT_CNFG_U,WHT_CNFG_R"/>
+                <Item title="Search WHT Transactions" location="p_WHTTrx.html"
+                      roles="ADM_GP_R,PG_GP_R,SERCH_WHT_TRX_R"/>
+                <Item title="Search WHT Exemption" location="p_searchWHTExemption.html"
+                      roles="ADM_GP_R,PG_GP_R,SERCH_WHT_EXEMP_R"/>
+                <Item title="WHT Exemption" location="p_WHTExemption_form.html"
+                      roles="ADM_GP_R,PG_GP_R,MNG_WHT_EXEM_C,MNG_WHT_EXEM_U"/>
+            </Item>
+            <Item title="Manage Batch Jobs" location="schedulersmanagement.html"
+                  roles="ADM_GP_R,PG_GP_R,MNG_BATCH_JOBS_R"/>
+            <Item title="Manage Airtime TopUp" location="conversionRate.html?actionId=1"
+                  roles="ADM_GP_R,PG_GP_R,MNG_BATCH_JOBS_R"/>
+            <Item title="Manage Segment" roles="ADM_GP_R,PG_GP_R,MNG_BATCH_JOBS_R">
+            <Item title="Segment Restriction Tagging For Agent" location="p_agentsegmentrestriction.html"
+                  roles="ADM_GP_R,PG_GP_R,MNG_BATCH_JOBS_R"/>
+            <Item title="Segment De-Active For Agent" location="p_agentsegmentactivedeactive.html"
+                  roles="ADM_GP_R,PG_GP_R,MNG_BATCH_JOBS_R"/>
+            </Item>
+
+        </Menu>
+
+        <Menu name="Logs_Menu" title="Logs Menu" roles="ADM_GP_R">
+            <Item title="Action Log" location="actionlog.html" roles="ADM_GP_R"/>
+            <Item title="Audit Log" location="auditlog.html" roles="ADM_GP_R"/>
+        </Menu>
+
+        <!-- CSR Menu -->
+        <Menu name="i8_TransactionDetails" title="Reports"
+              roles="TRG_WHT_DET_RPT_R,SERCH_FP_TRX_RPT_R,RPT_EXPORT_ZIP_R,RPT_SALES_TEAM_COMM_R,RPT_HANDLER_TX_DETAIL_R,RPT_AGENT_TX_SUMMARY_R,RPT_AGENT_GRP_DETAIL_R,RPT_UNSTLD_COM_R,RPT_CASH_TRX_R,RPT_FED_DET_R,RPT_AGENT_WHT_R,RPT_TRN_WHT_R,WHT_STHOLDER_R,RPT_SETTLEMENT_CLOSING_BAL_R,RPT_DAY_END_SETTLEMENT_R,RPT_OF_SETTLEMENT_DETAIL_R,RPT_OF_SETTLEMENT_SUMM_R,RPT_P2P_TRANSFER_R,RPT_VIEW_SALES_R,RETRY_CREDIT_R,RETRY_CREDIT_U,ADM_GP_R,PG_GP_R,MNO_GP_R,CSR_GP_R,PRS_GP_R,RPT_COLL_PAY_R,RPT_TX_DETAIL_R,RPT_VIEW_TX_R,RPT_CTR_R,RPT_POSTED_TX_R,RPT_POSTED_TX_PHX_R,RPT_POSTED_TX_NADRA_R,RPT_COMM_RECON_R,RPT_DATE_WISE_ACT_R,RPT_DATE_WISE_SUMM_R,RPT_TX_TYPE_SUMM_R,RPT_ACT_OPENING_R,RPT_ACT_TO_ACT_R,RPT_ACT_TO_CNIC_R,RPT_CNIC_TO_CNIC_R,RPT_CUST_RETAIL_PAY_R,RPT_UTIL_BILL_PAY_R,RPT_BAL_TOP_UP_R,RPT_CASH_DEP_R,RPT_CASH_WITHDRAWAL_R,RPT_TX_REVENUE_R,RPT_FRANCH_ACTIVITY_R,RPT_RETAIL_ACTIVITY_R,RPT_REG_RETAIL_ACTIVITY_R,RPT_AGNT_CLOSING_BAL_R,RPT_CUST_CLOSING_BAL_R,RPT_TOTAL_COMM_SUMM_R,RPT_BB_ACT_R,RPT_AGENTS_R,RPT_FRANCH_BRANCH_R,RPT_AGNT_DETAILED_TX_R,RPT_AGNT_AC_SUMM_R,RPT_CASH_BANK_RECON_R,RPT_CASH_BANK_RECON_UPLOAD_R,RPT_SRCH_WALK_IN_R,RPT_USR_ACTION_LOGS_R,RPT_BB_ACCOUNTS_R,RPT_BULK_FRANCH_R,RPT_BULK_AGNT_R,RPT_RETRY_ADVICE_R,RPT_RETRY_ADVICE_U,IBFT_RETRY_ADVICE_R,IBFT_RETRY_ADVICE_U,RPT_SENDER_REDMP_DETAIL_R,RPT_INTGRT_SYS_LOGS">
+            <Item title="Collection Payment Transactions" location="p_collectionpaymenttransactions.html?actionId=2"
+                  roles="PRS_GP_R,RPT_COLL_PAY_R"/>
+            <Item title="Transaction Reports"
+                  roles="RPT_SENDER_REDMP_DETAIL_R,IBFT_RETRY_ADVICE_U,IBFT_RETRY_ADVICE_R,RETRY_CREDIT_U,RETRY_CREDIT_R,RPT_VIEW_SALES_R,ADM_GP_R,PG_GP_R,MNO_GP_R,CSR_GP_R,RPT_TX_DETAIL_R,RPT_VIEW_TX_R,RPT_CTR_R,RPT_POSTED_TX_R,RPT_POSTED_TX_PHX_R,RPT_POSTED_TX_NADRA_R,RPT_COMM_RECON_R,RPT_RETRY_ADVICE_R,RPT_RETRY_ADVICE_U">
+                <Item title="Agents Transactions " location="allpaytransactiondetailinfomanagement.html" roles=""/>
+                <Item title="Agent Transaction Details" location="p_allpaytransactiondetaili8management.html" roles=""/>
+                <Item title="Customer Transactions " location="transactiondetailinfomanagement.html" roles=""/>
+                <Item title="Transaction Details" location="p_transactiondetaili8management.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,MNO_GP_R,RPT_TX_DETAIL_R"/>
+                <Item title="Book ME Transaction Details" location="p_bookmetransactiondetailmanagement.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,MNO_GP_R,RPT_TX_DETAIL_R"/>
+                <Item title="Book ME Report" location="p_bookmereports.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,MNO_GP_R,RPT_TX_DETAIL_R"/>
+
+                <Item title="BISP Transaction Detail" location="p_bisptransactiondetailreport.html"
+                      roles="ADM_GP_R,PG_GP_R,MNO_GP_R,BISP_RPT_TX_DETAIL_R"/>
+                <Item title="View Transactions" location="p_alltransactionsmanagement.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,CSR_GP_R,RPT_VIEW_TX_R"/>
+                <Item title="Cash Transfer Reversals" location="p_cashtransferreversals.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,RPT_CTR_R"/>
+                <Item title="Posted Transactions RDV" roles="ADM_GP_R,PG_GP_R,CSR_GP_R,RPT_POSTED_TX_PHX_R"
+                      location="p_postedtransactionphoenixmanagement.html?actionId=2"/>
+                <Item title="Commission Reconciliation" roles="ADM_GP_R,PG_GP_R,RPT_COMM_RECON_R"
+                      location="p_transactionscommission.html?actionId=2"/>
+                <Item title="View Sales" location="p-viewsalesmanagement.html?actionId=2"
+                      roles="MNO_GP_R,RPT_VIEW_SALES_R"/>
+                <!-- ADDED BY ATIF HUSSAIN -->
+                <Item title="Retry Advice" location="p_retryadvicelistviewmanagement.html"
+                      roles="ADM_GP_R,RPT_RETRY_ADVICE_R,RPT_RETRY_ADVICE_U"/>
+                <Item title="Retry Debit/Credit" location="p_retryCreditAccount.html"
+                      roles="ADM_GP_R,RETRY_CREDIT_R,RETRY_CREDIT_U"/>
+
+                <Item title="IBFT Retry Advice" location="p_ibftretryadvicelist.html"
+                      roles="ADM_GP_R,IBFT_RETRY_ADVICE_R,IBFT_RETRY_ADVICE_U"/>
+                <Item title="Sender Redeem Transaction detail" location="p_searchSenderRedeemTransactionDetail.html"
+                      roles="ADM_GP_R,PG_GP_R,RPT_SENDER_REDMP_DETAIL_R"/>
+                <Item title="PayMTCN Retry/AIS Retry" location="p_searchpaymtcnrequests.html"
+                      roles="ADM_GP_R,PG_GP_R,RPT_PMTNC_REQ_R,RPT_PMTNC_REQ_U"/>
+            </Item>
+            <Item title="Vc File Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_WHT_DETAILED_R" location="p_vcfile.html?actionId=2"></Item>
+            <Item title="Vc File Summary Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_WHT_DETAILED_R" location="p_vcfileSummary.html?actionId=2"></Item>
+            <Item title="Merchant Campaing Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_WHT_DETAILED_R" location="p_merchantcampaing.html?actionId=2"></Item>
+
+            <Item title="Marketing Reports"
+                  roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_DATE_WISE_ACT_R,RPT_DATE_WISE_SUMM_R,RPT_TX_TYPE_SUMM_R,RPT_ACT_OPENING_R,RPT_ACT_TO_ACT_R,RPT_ACT_TO_CNIC_R,RPT_CNIC_TO_CNIC_R,RPT_CUST_RETAIL_PAY_R,RPT_UTIL_BILL_PAY_R,RPT_BAL_TOP_UP_R,RPT_CASH_DEP_R,RPT_CASH_WITHDRAWAL_R,RPT_TX_REVENUE_R,RPT_P2P_TRANSFER_R">
+                <Item title="Date Wise Activity Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_DATE_WISE_ACT_R"
+                      location="p_marketingdatewiseactivity.html?actionId=2"/>
+                <Item title="Date Wise Summary Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_DATE_WISE_SUMM_R"
+                      location="p_marketingdatewisesummary.html?actionId=2"/>
+                <Item title="Transaction Type Summary Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_TX_TYPE_SUMM_R"
+                      location="p_marketingtransactiontypesummary.html?actionId=2"/>
+                <Item title="A/C Opening Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_ACT_OPENING_R"
+                      location="p_marketingaccountopening.html?actionId=2"/>
+                <Item title="A/C to A/C Transfer Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_ACT_TO_ACT_R"
+                      location="p_marketingaccounttoaccount.html?actionId=2&amp;reportType=account_to_account"/>
+                <Item title="A/C to CNIC Transfer Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_ACT_TO_CNIC_R"
+                      location="p_marketingaccounttocnic.html?actionId=2&amp;reportType=account_to_cnic"/>
+                <Item title="CNIC to CNIC Fund Transfer Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_CNIC_TO_CNIC_R"
+                      location="p_marketingcnictocnic.html?actionId=2&amp;reportType=cnic_to_cnic"/>
+                <Item title="P2P Receiving Status Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_P2P_TRANSFER_R"
+                      location="p_p2ptransactiondetail.html?actionId=2&amp;reportType=p_to_p"/>
+                <Item title="Customer Retail Payment Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_CUST_RETAIL_PAY_R"
+                      location="p_marketingcustomerretailpayment.html?actionId=2&amp;reportType=customer_retail_payment"/>
+                <Item title="Utility Bill Payment Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_UTIL_BILL_PAY_R"
+                      location="p_marketingbillpayment.html?actionId=2"/>
+                <Item title="Cash IN Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_CASH_DEP_R"
+                      location="p_marketingcashdeposit.html?actionId=2&amp;reportType=cash_deposit"/>
+                <Item title="Cash OUT Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_CASH_WITHDRAWAL_R"
+                      location="p_marketingcashwithdrawal.html?actionId=2&amp;reportType=cash_withdrawal"/>
+                <Item title="Transactional Revenue Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_TX_REVENUE_R"
+                      location="p_marketingtransactionalrevenue.html?actionId=2&amp;reportType=transactional_revenue"/>
+            </Item>
+            <Item title="Marketing Retail Reports"
+                  roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_FRANCH_ACTIVITY_R,RPT_RETAIL_ACTIVITY_R,RPT_REG_RETAIL_ACTIVITY_R">
+                <Item title="Franchise Activity Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_FRANCH_ACTIVITY_R"
+                      location="p_marketingfranchiseactivity.html?actionId=2"/>
+                <Item title="Agent Network Activity Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_RETAIL_ACTIVITY_R"
+                      location="p_marketingretailactivity.html?actionId=2"/>
+                <Item title="Regional Retail Activity Report"
+                      roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_REG_RETAIL_ACTIVITY_R"
+                      location="p_marketingregionalactivity.html?actionId=2"/>
+            </Item>
+            <Item title="Finance Reports"
+                  roles="RPT_UNSTLD_COM_R,RPT_FED_DET_R,RPT_DAY_END_SETTLEMENT_R,RPT_OF_SETTLEMENT_DETAIL_R,RPT_OF_SETTLEMENT_SUMM_R,MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGNT_CLOSING_BAL_R,RPT_CUST_CLOSING_BAL_R,RPT_TOTAL_COMM_SUMM_R,RPT_BB_ACT_R,RPT_SETTLEMENT_CLOSING_BAL_R,RPT_TRN_WHT_R,WHT_STHOLDER_R,RPT_AGENT_WHT_R,RPT_CASH_TRX_R">
+                <Item title="Agent Closing Balance Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGNT_CLOSING_BAL_R"
+                      location="p_financeagentclosingbalance.html?actionId=2"/>
+                <Item title="Customer Closing Balance Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_CUST_CLOSING_BAL_R"
+                      location="p_financecustomerbalance.html?actionId=2"/>
+                <Item title="Total Commission Summary Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_TOTAL_COMM_SUMM_R"
+                      location="p_financecommissionsummary.html?actionId=2"/>
+                <Item title="Microbank Settlement Accounts" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_BB_ACT_R"
+                      location="p_settlementbbaccounts.html?actionId=2"/>
+                <Item title="OF Settlement Detail Report" roles="ADM_GP_R,PG_GP_R,MNO_GP_R,RPT_OF_SETTLEMENT_SUMM_R"
+                      location="p_ofsettlementtransaction.html?actionId=2"/>
+                <Item title="OF Settlement Summary Report" roles="ADM_GP_R,PG_GP_R,MNO_GP_R,RPT_OF_SETTLEMENT_DETAIL_R"
+                      location="p_ofsettlementtransactiondetail.html?actionId=2"/>
+                <Item title="Day End Settlement Report" roles="ADM_GP_R,PG_GP_R,RPT_DAY_END_SETTLEMENT_R"
+                      location="p_dayendsettlementreport.html?actionId=2"/>
+                <!-- added by atif hussain -->
+                <Item title="Settlement Closing Balance Report"
+                      roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_SETTLEMENT_CLOSING_BAL_R"
+                      location="p_financesettlementclosingbalance.html?actionId=2"/>
+                <!-- FED/WHT reports -->
+                <Item title="Stakeholder WHT Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,WHT_STHOLDER_R"
+                      location="p_whtReportStakeholderWise.html?actionId=2"/>
+                <Item title="WHT Transaction wise Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_TRN_WHT_R"
+                      location="p_transactionwisewhtreport.html?actionId=2"/>
+
+                <Item title="FED Transaction wise Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_FED_DET_R"
+                      location="p_fedbreakupdetailreport.html?actionId=2"/>
+                <Item title="CNIC based Transaction Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_CASH_TRX_R"
+                      location="p_cashtransactionreport.html?actionId=2"/>
+                <Item title="Closed/Blacklisted Accounts Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_UNSTLD_COM_R"
+                      location="p_unsettledcommreport.html?actionId=2"/>
+            </Item>
+            <Item title="Agent Reports"
+                  roles="RPT_SALES_TEAM_COMM_R,RPT_HANDLER_TX_DETAIL_R,MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENTS_R,RPT_FRANCH_BRANCH_R,RPT_AGNT_DETAILED_TX_R,RPT_AGNT_AC_SUMM_R,RPT_AGENT_TX_SUMMARY_R,RPT_AGENT_GRP_DETAIL_R">
+                <Item title="Agents" name="allpay_retailer_account_management"
+                      location="allpayRetailerAccountManagement.html" roles="ADM_GP_R,PG_GP_R,MNO_GP_R,RPT_AGENTS_R"/>
+                <Item title="Agent Group Detail" name="Agent_Group_Detail" location="searchAgentGroupReport.html"
+                      roles="ADM_GP_R,PG_GP_R,RPT_AGENT_GRP_DETAIL_R"/>
+
+                <Item title="Franchise/Branch" name="retailermanagement" location="retailermanagement.html"
+                      roles="ADM_GP_R,PG_GP_R,MNO_GP_R,RPT_FRANCH_BRANCH_R"/>
+                <Item title="Agent Detailed Transaction Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGNT_DETAILED_TX_R"
+                      location="p_agenttransactiondetail.html?actionId=2"/>
+                <Item title="Agent/Franchise Commission Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_TX_SUMMARY_R"
+                      location="p_agenttransactionsummary.html?actionId=2"/>
+                <Item title="Handler Transaction Detail Report"
+                      roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_HANDLER_TX_DETAIL_R"
+                      location="p_handlertransactiondetail.html?actionId=2"/>
+                <Item title="Account Summary Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGNT_AC_SUMM_R"
+                      location="p_bbaccountsbyagents.html?actionId=2"/>
+                <Item title="Sales Team Commission Report" roles="ADM_GP_R,PG_GP_R,MNO_GP_R,RPT_SALES_TEAM_COMM_R"
+                      location="p_salesteamcomission.html?actionId=2"/>
+            </Item>
+            <Item title="Cash-Bank Reconciliation Reports"
+                  roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_CASH_BANK_RECON_R,RPT_CASH_BANK_RECON_UPLOAD_R">
+                <Item title="Cash-Bank Reconciliation" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_CASH_BANK_RECON_R"
+                      location="p_cashmovementreport.html?actionId=2"/>
+                <Item title="Cash-Bank Reconciliation Upload"
+                      roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_CASH_BANK_RECON_UPLOAD_R"
+                      location="p_agentcashupload.html?actionId=2"/>
+            </Item>
+            <Item title="Misc Reports"
+                  roles="SERCH_FP_TRX_RPT_R,ADM_GP_R,PG_GP_R,RPT_SRCH_WALK_IN_R,RPT_USR_ACTION_LOGS_R,RPT_BB_ACCOUNTS_R,RPT_BULK_FRANCH_R,RPT_BULK_AGNT_R,RPT_EXPORT_ZIP_R,RPT_INTGRT_SYS_LOGS_R">
+                <Item title="Search Beneficiary" location="p_walkincustomers.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,RPT_SRCH_WALK_IN_R"/>
+                <Item title="User Action Logs" roles="ADM_GP_R,PG_GP_R,RPT_USR_ACTION_LOGS_R"
+                      location="p_mnologsmanagement.html?actionId=2"/>
+                <Item title="Integrated System Logs" roles="ADM_GP_R,PG_GP_R,RPT_INTGRT_SYS_LOGS_R"
+                      location="p_IntegratedSystemActivityReport.html?actionId=2"/>
+                <Item title="Branchless Banking Accounts" roles="ADM_GP_R,PG_GP_R,RPT_BB_ACCOUNTS_R"
+                      location="p_bbcustomeraccounts.html?actionId=2"/>
+                <Item title="Digi Dormancy Accounts" roles="ADM_GP_R,PG_GP_R,RPT_BB_ACCOUNTS_R"
+                      location="p_digiDormancyAccounts.html?actionId=2"/>
+                <Item title="Bulk Franchise Report" roles="ADM_GP_R,PG_GP_R,RPT_BULK_FRANCH_R"
+                      location="p_bulkfranchisereport.html?actionId=2"/>
+                <Item title="Export Zip Download " location="p_exportzipdownload.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,CSR_GP_R,MNO_GP_R,RPT_EXPORT_ZIP_R"/>
+                <Item title="FonePay Transaction Detail " location="p_fonePayTransactionDetail.html?actionId=2"
+                      roles="ADM_GP_R,PG_GP_R,SERCH_FP_TRX_RPT_R"/>
+                <Item title="BlackListed NIC Report" location="p_blackListedNicsHistory.html"
+                      roles="ADM_GP_R,PG_GP_R,BLCK_NIC_RPT_R"/>
+                <Item title="BlackListed Walk-In NIC Report" location="p_walkInBlackListedNicReport.html"
+                      roles="ADM_GP_R,PG_GP_R,BLCK_WALKIN_NIC_RPT_R"/>
+                <Item title="Expired NIC Report" location="p_expiredNicReport.html"
+                      roles="ADM_GP_R,PG_GP_R,NIC_EXP_RPT_R"/>
+                <Item title="BOP Card Issuance Report" location="bopcardissuancereport.html?actionId=2"
+                      roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R"/>
+                <Item title="Debit Card Charge" location="debitcardchargeviewform.html"
+                      roles="ADM_GP_R,PG_GP_R,BLCK_NIC_RPT_R"/>
+            </Item>
+            <Item title="Tax Reports"
+                  roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R,RPT_AGENT_WHT_231_A_R, RPT_AGENT_WHT_236_P_R,RPT_FED_DETAILED_R,RPT_WHT_DETAILED_R,TRG_WHT_DET_RPT_R">
+                <Item title="Agent WHT Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R"
+                      location="p_whtagentreport.html?actionId=2"/>
+                <Item title="Agent WHT Report 231-A" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_231_A_R"
+                      location="p_whtAgentCustReport231A.html?actionId=2"/>
+                <Item title="Agent WHT Report 236-P" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_236_P_R"
+                      location="p_whtAgentCustReport236P.html?actionId=2"/>
+                <Item title="FED Detailed Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_FED_DETAILED_R"
+                      location="p_feddetailedreport.html?actionId=2"/>
+                <Item title="WHT Detailed Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_WHT_DETAILED_R"
+                      location="p_whtdetailedreport.html?actionId=2"/>
+                <Item title="Targeted WHT Detailed Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,TRG_WHT_DET_RPT_R"
+                      location="p_targetedwhtdetailreport.html?actionId=2"/>
+            </Item>
+            <Item title="BLB OPS Reports"
+                  roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R,RPT_AGENT_WHT_231_A_R, RPT_AGENT_WHT_236_P_R,RPT_FED_DETAILED_R,RPT_WHT_DETAILED_R,TRG_WHT_DET_RPT_R">
+                <Item title="BDE KPI Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R"
+                      location="p_bdekpireport.html?actionId=2"/>
+                <Item title="Debit Card Charges Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R"
+                      location="p_debitcardchargesreport.html?actionId=2"/>
+                <Item title="Handler Activity Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R"
+                      location="p_handleractivityreport.html?actionId=2"/>
+                <Item title="Parent Agent Child Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R"
+                      location="p_agentparentchildreport.html?actionId=2"/>
+                <Item title="Dormancy Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R"
+                      location="p_dormancyReport.html?actionId=2"/>
+                <Item title="Account Dormancy Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R"
+                      location="p_accountdormancyreport.html?actionId=2"/>
+                <Item title="Cnic Expired Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R"
+                      location="p_expiredcnicreport.html?actionId=2"/>
+                <Item title="DIGI Debit Card Annual Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R"
+                      location="p_digidebitcardannualreport.html?actionId=2"/>
+                <Item title="Digi Posted RDV" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R"
+                      location="p_digipostedrdvreport.html?actionId=2"/>
+            </Item>
+        </Menu>
+
+        <Menu name="Chargeback_And_Adjustment" title="Chargeback and Adjustment"
+              roles="PG_GP_R,VIEW_CHARGEBACKS_R,PG_GP_R,RPT_MANUAL_ADJUSTMENT_R,PG_GP_C,MANUAL_ADJUSTMENT_C,BULK_MAN_ADJUST_C">
+            <Item title="View Chargeback" location="p-chargebackmanagement.html" roles="PG_GP_R,VIEW_CHARGEBACKS_R"/>
+            <Item title="Transaction Reversal/Adjustment" roles="ADM_GP_R,PG_GP_R,TRX_REVERSAL_R"
+                  location="p_manualreversal.html"/>
+            <Item title="Manual Correction/Adjustment" roles="PG_GP_C,MANUAL_ADJUSTMENT_C"
+                  location="p_manualadjustment.html?actionId=2"/>
+            <Item title="Manual Correction/Adjustment - Bulk" roles="PG_GP_C,BULK_MAN_ADJUST_C"
+                  location="p_bulkmanualadjustment.html?actionId=2"/>
+            <Item title="Manual Adjustment Report" roles="PG_GP_R,RPT_MANUAL_ADJUSTMENT_R"
+                  location="p_manualadjustmentreport.html?actionId=2"/>
+            <Item title="Manual Adjustment Report - Bulk" roles="ADM_GP_R,PG_GP_R,RPT_BULK_MANUAL_ADJUSTMENT_R"
+                  location="p_bulkManualAdjustmentReport.html?actionId=2"/>
+            <Item title="Bulk Reversal" roles="ADM_GP_R,PG_GP_R,RPT_BULK_MANUAL_ADJUSTMENT_R" location="p_bulkreversal.html?actionId=2"/>
+            <Item title="Bulk Reversal Report - Bulk" roles="ADM_GP_R,PG_GP_R,RPT_BULK_MANUAL_ADJUSTMENT_R"
+                  location="p_bulkReversalForm.html?actionId=2"/>
+
+        </Menu>
+
+        <!-- MNO & Product Supplier Menu -->
+        <Menu name="Product_Sales" title=" Product Sales" roles="PRS_GP_R">
+            <Item title="Customer Dispute" location="p_customerdisputeprodmanagement.html?actionId=2" roles="PRS_GP_R"/>
+            <Item title="Escalated to Inov8" location="p_prescalatetoinov8.html?actionId=2" roles="PRS_GP_R"/>
+        </Menu>
+
+        <!-- MNO & Payment Service Menu -->
+        <Menu name="Product_Payments" title=" Payments" roles="PAS_GP_R">
+            <Item title="View Payments" location="p-viewpaymentsmanagement.html?actionId=2" roles="PAS_GP_R"/>
+            <Item title="Customer Dispute" location="p_customerdisputemanagement.html?actionId=2" roles="PAS_GP_R"/>
+            <Item title="Escalated to Inov8" location="p_psescalatetoinov8.html?actionId=2" roles="PAS_GP_R"/>
+        </Menu>
+
+        <Menu name="Complaints_And_Concerns" title="Complaints and Concerns"
+              roles="CSR_GP_R,MNO_GP_R,PG_GP_R,PAS_GP_R,MNG_PRT_CNCRN_R,MY_COMPLAINTS_R,LIST_COMPLAINTS_R,PG_GP_R,RET_GP_R,CONCERNS_LIST_R,MNG_MY_CNCRN_R,CONCERN_RULES_R,CONCERN_CAT_DEF_R">
+            <Item title="Complaints" roles="CSR_GP_R,MNO_GP_R,PG_GP_R,MY_COMPLAINTS_R,LIST_COMPLAINTS_R">
+                <Item title="Manage Complaint Nature" location="p_complaintsubcategorysearch.html?actionId=2"
+                      roles="PG_GP_R,MNG_COMPLAINT_NATURE_R"/>
+                <Item title="My Complaints" location="p_mycomplaints.html?actionId=2"
+                      roles="CSR_GP_R,PG_GP_R,MY_COMPLAINTS_R"/>
+                <Item title="List Complaints" location="p_listcomplaint.html?actionId=2"
+                      roles="CSR_GP_R,MNO_GP_R,PG_GP_R,LIST_COMPLAINTS_R"/>
+            </Item>
+            <Item name="i8_Concern" title="Concerns"
+                  roles="PG_GP_R,RET_GP_R,MNO_GP_R,CONCERNS_LIST_R,PAS_GP_R,MNG_MY_CNCRN_R,MNG_PRT_CNCRN_R,CONCERN_RULES_R,CONCERN_CAT_DEF_R">
+                <Item title="My Concerns" location="p_myconcerns.html?actionId=2"
+                      roles="RET_GP_R,MNO_GP_R,PAS_GP_R,MNG_MY_CNCRN_R"/>
+                <Item title="List Concerns" location="p_listconcerns.html?actionId=2"
+                      roles="RET_GP_R,MNO_GP_R,PAS_GP_R,MNG_PRT_CNCRN_R"/>
+                <Item title="Concerns List" location="p_opconcernsmanagement.html?actionId=2"
+                      roles="PG_GP_R,CONCERNS_LIST_R"/>
+                <Item title="Concern Rules" location="p_opconcernrules.html?actionId=2"
+                      roles="PG_GP_R,CONCERN_RULES_R"/>
+                <Item title="Concern Category Definition" location="p_opconcerncatdefmanagement.html?actionId=2"
+                      roles="PG_GP_R,CONCERN_CAT_DEF_R"/>
+            </Item>
+        </Menu>
+
+        <Menu name="Search_Customer" title="Search Customer" roles="" location="p_pgsearchuserinfo.html?actionId=2">
+        </Menu>
+
+        <!-- Payment Gateway Menu -->
+
+        <Menu name="Card_Management" title="Manage Cards" roles="ADM_GP_R,PG_GP_R,MNG_BB_CARDS_R,MNG_BB_CARDS_C">
+            <Item title="Search Debit Card Requests" location="searchDebitCardRequests.html?actionId=2"
+                  roles="ADM_GP_R,PG_GP_R,MNG_BB_CARDS_R"/>
+            <Item title="Debit Card Management" location="debitcardmanagement.html?actionId=2"
+                  roles="ADM_GP_R,PG_GP_R,MNG_BB_CARDS_R"/>
+            <Item title="Debit Card Fee Configuration" location="cardfeeconfiguration.html?actionId=2"
+                  roles="ADM_GP_R,PG_GP_R,PG_GP_R,MNG_CARDS_FEE_R,MNG_CARDS_FEE_C,MNG_CARDS_FEE_U,MNG_CARDS_FEE_D"/>
+        </Menu>
+        <Menu name="PG_Customers_Management" title="Manage BB Customers"
+              roles="PG_GP_R,MNG_GEN_ACC_R,LNK_PAY_MOD_R,FRGT_BNK_PIN_R,FRGT_GEN_PIN_R,RET_GP_R,ADM_GP_R,MNG_BB_CUST_R,MNG_BB_CUST_C,MNG_CUST_AC_TP_LMT_R,PG_GP_C,ADD_CUST_BULK_C,MNG_L2_KYC_C,MNG_L2_KYC_R">
+            <Item title="Search BB Customer" location="p_pgsearchuserinfo.html?actionId=2"
+                  roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R"/>
+            <Item title="Search BB Minor Customer" location="p_minorsearchuserinfo.html?actionId=2"
+                  roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R"/>
+
+            <Item title="Refferal Customer" location="p_refferalcustomer.html?actionId=2"
+                  roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R"/>
+
+            <Item title="Third Party Account Opening Report" location="thirdpartyaccountopeningreport.html?actionId=2"
+                  roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R"/>
+            <Item title="Search KYC" location="p_l2_kyc_searchform.html?actionId=2"
+                  roles="MNG_GEN_ACC_R,ADM_GP_R,MNG_L2_KYC_R"/>
+            <Item title="Create KYC" location="p_l2_kyc_form.html" roles="MNG_L2_KYC_C"/>
+            <Item title="L0/L1 Customer SignUp" location="p_mnonewmfsaccountform.html"
+                  roles="MNG_GEN_ACC_R,RET_GP_C,ADM_GP_C,PG_GP_C,MNG_BB_CUST_C"/>
+            <Item title="CLS Screening Report" location="p_clsscreeningreports.html"
+                  roles="ADM_GP_R,PG_GP_R,MNO_GP_R,RPT_TX_DETAIL_R"/>
+            <Item title="L2 Customer SignUp" location="p_l2_kyc_form.html"
+                  roles="MNG_GEN_ACC_R,RET_GP_C,ADM_GP_C,PG_GP_C,MNG_L2_CUST_C"/>
+            <Item title="Add Customer Bulk" location="p_bulkcustomeraccountsupload.html"
+                  roles="PG_GP_C,ADD_CUST_BULK_C"/>
+            <Item title="Link New Account" location="p_linkpaymentmodeform.html" roles=""/>
+            <Item title="De-Link/Re-Link Account" location="p_delinkrelinkpaymentmodemanagement.html" roles=""/>
+            <Item title="Forgot Account PIN" location="p_forgotveriflypinmanagement.html" roles="FRGT_BNK_PIN_R"/>
+            <Item title="Forgot MWallet PIN" location="p_pgforgotpin.html" roles=""/>
+            <Item title="Forgot Web Password" location="p_pgforgotpassword.html" roles=""/>
+            <Item title="De-Activate/Re-Activate MWallet Account" location="p_pgdeactivatemfsaccount.html"
+                  roles="MNG_GEN_ACC_R"/>
+            <Item title="Mobile History" target="" location="mobilehistory.html" roles="ADM_GP_R"/>
+            <Item title="Smart Money Account" target="" location="smartmoneyaccountmanagement.html" roles="ADM_GP_R"/>
+            <Item title="Update Account to Blink" target="" location="p_updateaccounttoblinkinfo.html"
+                  roles="Upd_Acc_To_Blink_R,Upd_Acc_To_Blink_U,Upd_Acc_To_Blink_C"/>
+            <Item title="Update Customer Name" roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R"
+                  location="p_updateCustomerNameInfo.html"/>
+            <Item title="Screening Performed Upload" target="" location="p-updatecustomerscreening.html"
+                  roles="ADM_GP_R,PG_GP_R,SCR_PER_UPLD_U"/>
+            <Item title="Bulk Segment Tagging - Customer" target=""
+                  location="bulkcustomersegmenttagging.jsf?postBack=false" roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,
+					CUST_BULK_SEG_TAG_R,CUST_BULK_SEG_TAG_U"/>
+            <Item title="Customer AC Nature Marking Bulk Upload" location="p_customeracnaturemarkingbulkupload.html"
+                  roles="ADM_GP_R,PG_GP_R,MNG_BLKLST_MRKNG_BULK_UPLOAD_C,MNG_BLKLST_MRKNG_BULK_UPLOAD_U,MNG_BLKLST_MRKNG_BULK_UPLOAD_R"/>
+            <Item title="Blink Account CLS Report" target="" location="p_blinkAccountCLSReport.html"
+                  roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R"/>
+
+            <!--<Item title="Manage Ads" roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R">
+                <Item title="Upload New Ad" target="" location="p_uploadnewad.html" roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R"/>
+                <Item title="Update Ads" target="" location="p_manageads.html" roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R"/>
+            </Item>-->
+        </Menu>
+
+        <Menu name="PG_Reports" title=" Reports" roles="TX_RPT_R,MNG_CHARGBACK_R,ESC_TO_I8_RPT_R,LNK_ACC_RPT_R">
+            <Item title="Transactions" location="p-transactiondetailmanagement.html" roles="TX_RPT_R"/>
+            <Item title="View Chargebacks" location="p-chargebackmanagement.html" roles="MNG_CHARGBACK_R"/>
+            <Item title="Escalate to AKBL" location="p_esctoinov8management.html" roles="ESC_TO_I8_RPT_R"/>
+            <Item title="Linked MWallet Accounts" location="p_linkedaccountsreport.html" roles="LNK_ACC_RPT_R"/>
+        </Menu>
+
+        <Menu name="PG_Payment_Modes" title=" Payment Modes" roles="LNK_PAY_MOD_R" location="p_pgviewpaymentmode.html"/>
+
+        <Menu name="PG_Admin" title="Administration"
+              roles="ADM_USR_MGMT_R,ADM_GP_R,PG_GP_R,MNG_USR_GRPS_R,MNG_USRS_R,ACTION_AUTH_R,MY_ACTION_AUTH_R,MNG_USECASE_R">
+            <Item title="Users" name="PG_Admin_ View_Users" location="p_adminusermanagement.html"
+                  roles="ADM_USR_MGMT_R"/>
+            <Item title="User Groups" name="PG_Admin_View_User_Groups" location="p_partnergroupmanagement.html"
+                  roles="ADM_GP_R,PG_GP_R,MNG_USR_GRPS_R"/>
+            <Item title="User Management" name="PG_User_Mngmt" location="p_i8usermanagement.html?actionId=2"
+                  roles="ADM_GP_R,PG_GP_R,MNG_USRS_R"/>
+            <Item title="Bank User" target="" location="bankusermanagement.html" roles="ADM_GP_R"/>
+            <Item title="Operator User" target="" location="operatorusermanagement.html" roles="ADM_GP_R"/>
+            <Item title="Supplier User" target="" location="supplierusermanagement.html" roles="ADM_GP_R"/>
+            <Item title="Usecase Management" target="" location="p_usecasemanagement.html"
+                  roles="ADM_GP_R,PG_GP_R,MNG_USECASE_R"/>
+            <Item title="Authorization" roles="PG_GP_R,ADM_GP_R,ACTION_AUTH_R,MY_ACTION_AUTH_R">
+                <Item title="My Authorization Requests" location="p_myauthorizationrequests.html?myRequests=true"
+                      roles="PG_GP_R,ADM_GP_R,MY_ACTION_AUTH_R"/>
+                <Item title="List Authorizations" location="p_actionauthorizationrequests.html"
+                      roles="PG_GP_R,ADM_GP_R,ACTION_AUTH_R"/>
+            </Item>
+        </Menu>
+
+
+        <!-- All Reports -->
+        <Menu name="DD_Reports" title="Reports" roles="">
+            <Item title="Generate Reports " name="DD_Generate_Reports" location="p_adhocreports.html" roles=""/>
+            <Item title="Report Directory " name="DD_Report_Directory" location="p_reportdirectorymain.html" roles=""/>
+        </Menu>
+
+        <Menu name="OLA_Management" title="Branchless Banking Account" roles="">
+            <Item title="View Branchless Banking Account" name="OLA_account_panagement"
+                  location="p_OLAAccountManagement.html?actionId=2" roles="OLA_MNG_ACC_R"/>
+            <Item title="Create Branchless Banking Account" name="OLA_account_management"
+                  location="p_OLACreateEditAccount.html" roles="OLA_MNG_ACC_R"/>
+        </Menu>
+
+        <Menu name="Retailer_Management" title="Reports" roles="DIS_GP_R">
+            <Item title="Retailer Transaction Detail" location="p_allpayretailerreport.html?actionId=2"
+                  roles="DIS_GP_R"/>
+            <Item title="AllPay Bill Summary Report" location="p_allpaybillsummaryreport.html?actionId=2"
+                  roles="DIS_GP_R"/>
+            <Item title="AllPay Retailer head Report" location="p_allpayretailerheadreport.html?actionId=2"
+                  roles="DIS_GP_R"/>
+
+            <Item title="Regional Head Summary Report" target="" location="p_allpayregheadsummaryreport.html?actionId=2"
+                  roles=""/>
+            <Item title="Retailer Summary Report" target="" location="p_allpayretailersummaryreport.html?actionId=2"
+                  roles=""/>
+
+            <Item title="Agent Head Report" location="p_allpaydistributorheadreport.html?actionId=2" roles="DIS_GP_R"/>
+            <Item title="Agent Head Summary Report" location="p_allpaydistheadsummaryreport.html?actionId=2"
+                  roles="DIS_GP_R"/>
+        </Menu>
+
+        <Menu name="All_Pay" title="Manage BB Agents"
+              roles="MNG_GEN_ACC_R,LNK_PAY_MOD_R,FRGT_BNK_PIN_R,FRGT_GEN_PIN_R,ALLPAY_MNG_ACC_R">
+            <Item title="View Agent Account Info" name="allpay_distributor_account_management"
+                  location="allpayDistributorAccountManagement.html" roles="LNK_PAY_MOD_R,MNG_GEN_ACC_R"/>
+            <Item title="Create New Agent Account" name="allpay_distributor_account_form"
+                  location="allpayDistributorAccountForm.html" roles="LNK_PAY_MOD_R,MNG_GEN_ACC_R"/>
+            <Item title="Search Agents" name="allpay_retailer_account_management"
+                  location="allpayRetailerAccountManagement.html" roles="LNK_PAY_MOD_R,MNG_GEN_ACC_R"/>
+            <Item title="New Agent SignUp" name="allpay_retailer_account_form" location="allpayRetailerAccountForm.html"
+                  roles="PG_GP_C,LNK_PAY_MOD_R,MNG_GEN_ACC_R"/>
+
+            <Item title="Forgot Web Password" location="allpayforgotpassword.html?actionId=2"
+                  roles="MNG_GEN_ACC_R,LNK_PAY_MOD_R"/>
+            <Item title="AllPay Commission Rates" name="allpay_commission_rates"
+                  location="AllpayCommissionRatesManagement.html" roles=""/>
+
+            <Item title="Link New Account" name="link_payment_mode" location="p_allpaylinkpaymentmode.html"
+                  roles="ALLPAY_MNG_ACC_R"/>
+            <Item title="De-Link/Re-Link Account" name="delink_relink_payment_mode"
+                  location="p_allpayderelinkpaymentmode.html?actionId=2" roles="ALLPAY_MNG_ACC_R"/>
+            <Item title="Agent Level" target="" location="distributorlevelmanagement.html"
+                  roles="MNG_GEN_ACC_R,LNK_PAY_MOD_R"/>
+        </Menu>
+
+        <Menu name="All_Pay_pg" title="AllPay" roles="ALLPAY_MNG_ACC_R">
+            <Item title="Link New Account" name="link_payment_mode" location="p_allpaylinkpaymentmode.html"
+                  roles="ALLPAY_MNG_ACC_R"/>
+            <Item title="De-Link/Re-Link Account" name="delink_relink_payment_mode"
+                  location="p_allpayderelinkpaymentmode.html" roles="ALLPAY_MNG_ACC_R"/>
+            <!--				<Item title="Forgot Bank Pin" name="forgot_bank_pin" location="p_allpayforgotbankpin.html" roles="ALLPAY_MNG_ACC_R"/>-->
+        </Menu>
+
+        <Menu name="Agent_Hierarchy" title="Manage BB Agents"
+              roles="PG_GP_R,PG_GP_C,MNO_GP_R,ADM_GP_R,ADM_GP_C,MNG_AGNT_NET_C,MNG_AGNT_NET_R,MNG_FRANCH_C,MNG_FRANCH_R,ADD_FRANCH_BULK_C,MNG_AGNTS_C,MNG_AGNTS_R,ADD_AGNT_BULK_C,LINK_PAY_MOD_C,RPT_DE_RE_LINK_PAY_R,AGNT_HRCHY_R,MNG_HNDLR_R,MNG_HNDLR_U,MNG_L3_ACT_R,MNG_L3_AMDF_R,MNG_L3_KYC_R,MNG_BULK_AGENT_C">
+
+            <!-- <Item title="Create Sales Hierarchy" name="create_sales_hierarchy" location="createSalesHierarchy.jsf?postBack=false" roles="ADM_GP_C,PG_GP_C,MNG_SALES_HIER_C"/>
+            <Item title="Search Agent Network" name="search_distributor" location="searchDistributors.jsf?postBack=false" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,MNG_AGNT_NET_R"/>
+            <Item title="Add Agent Network" name="add_distributor" location="addDistributor.jsf?postBack=false" roles="ADM_GP_C,PG_GP_C,MNG_AGNT_NET_C"/>
+            <Item title="Search Regional Hierarchy" name="search_regional_hierarchy" location="searchRegionalHierarchy.jsf?postBack=false" roles="ADM_GP_C,PG_GP_C,MNG_REG_HIER_R"/>
+            <Item title="Add Regional Hierarchy" name="add_regional_hierarchy" location="addRegionalHierarchy.jsf?postBack=false" roles="ADM_GP_C,PG_GP_C,MNG_REG_HIER_C,MNG_REG_HIER_U"/>
+            <Item title="Associate Regional Hierarchy" name="associate_regional_hierarchy" location="associateRegionalHierarchy.jsf?postBack=false" roles="ADM_GP_C,PG_GP_C,MNG_REG_HIER_C,MNG_REG_HIER_U"/>
+            <Item title="Search Franchise" name="search_franchise" location="searchFranchise.jsf?postBack=false" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,MNG_FRANCH_R"/>
+            <Item title="Add Franchise" name="add_franchise" location="addFranchise.jsf?postBack=false" roles="ADM_GP_C,PG_GP_C,MNG_FRANCH_C"/>
+            <Item title="Add Franchise Bulk" name="add_franchise_bulk" location="addFranchiseBulk.jsf?postBack=false" roles="ADM_GP_C,PG_GP_C,ADD_FRANCH_BULK_C"/>
+            <Item title="Search Agent" name="search_agent" location="searchAgent.jsf?postBack=false" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,MNG_AGNTS_R"/>
+            <Item title="Add Agent Bulk" name="add_agent" location="addAgentBulk.jsf?postBack=false" roles="ADM_GP_C,PG_GP_C,ADD_AGNT_BULK_C"/> -->
+
+            <Item title="Sales Hierarchy" roles="ADM_GP_C,PG_GP_C,MNG_SALES_HIER_C">
+                <Item title="Create Sales Hierarchy" name="create_sales_hierarchy"
+                      location="createSalesHierarchy.jsf?postBack=false" roles="ADM_GP_C,PG_GP_C,MNG_SALES_HIER_C"/>
+                <Item title="View Sales Hierarchy" name="view_sales_hierarchy"
+                      location="viewSalesHierarchy.jsf?postBack=false" roles="ADM_GP_C,PG_GP_C,MNG_SALES_HIER_R"/>
+            </Item>
+            <Item title="Agent Network"
+                  roles="MNO_GP_R,ADM_GP_R,PG_GP_R,MNG_AGNT_NET_R,ADM_GP_C,PG_GP_C,MNG_AGNT_NET_C">
+                <Item title="Search Agent Network" name="search_distributor"
+                      location="searchDistributors.jsf?postBack=false"
+                      roles="MNO_GP_R,ADM_GP_R,PG_GP_R,MNG_AGNT_NET_R"/>
+                <Item title="Add Agent Network" name="add_distributor" location="addDistributor.jsf?postBack=false"
+                      roles="ADM_GP_C,PG_GP_C,MNG_AGNT_NET_C,MNG_AGNT_NET_R,MNG_AGNT_NET_U"/>
+            </Item>
+            <Item title="Regional Hierarchy" roles="ADM_GP_C,PG_GP_C,MNG_REG_HIER_R,MNG_REG_HIER_C,MNG_REG_HIER_U">
+                <Item title="Search Regional Hierarchy" name="search_regional_hierarchy"
+                      location="searchRegionalHierarchy.jsf?postBack=false" roles="ADM_GP_C,PG_GP_C,MNG_REG_HIER_R"/>
+                <Item title="Add Regional Hierarchy" name="add_regional_hierarchy"
+                      location="addRegionalHierarchy.jsf?postBack=false"
+                      roles="ADM_GP_C,PG_GP_C,MNG_REG_HIER_C,MNG_REG_HIER_U"/>
+                <Item title="Associate Regional Hierarchy" name="associate_regional_hierarchy"
+                      location="associateRegionalHierarchy.jsf?postBack=false"
+                      roles="ADM_GP_C,PG_GP_C,MNG_REG_HIER_C,MNG_REG_HIER_U"/>
+            </Item>
+            <Item title="Franchise"
+                  roles="MNO_GP_R,ADM_GP_R,PG_GP_R,MNG_FRANCH_R,ADM_GP_C,PG_GP_C,MNG_FRANCH_C,ADD_FRANCH_BULK_C">
+                <Item title="Search Franchise" name="search_franchise" location="searchFranchise.jsf?postBack=false"
+                      roles="MNO_GP_R,ADM_GP_R,PG_GP_R,MNG_FRANCH_R"/>
+                <Item title="Add Franchise" name="add_franchise" location="addFranchise.jsf?postBack=false"
+                      roles="ADM_GP_C,PG_GP_C,MNG_FRANCH_C"/>
+                <Item title="Add Franchise Bulk" name="add_franchise_bulk"
+                      location="addFranchiseBulk.jsf?postBack=false" roles="ADM_GP_C,PG_GP_C,ADD_FRANCH_BULK_C"/>
+            </Item>
+            <Item title="L3 Accounts"
+                  roles="ADM_GP_C,ADM_GP_R,PG_GP_C,PG_GP_R,MNG_L3_ACT_C,MNG_L3_ACT_R,MNG_L3_AMDF_C,MNG_L3_AMDF_R,MNG_L3_ACT_R,MNG_L3_AMDF_R,MNG_L3_KYC_R">
+                <Item title="Search Agent/Merchant" location="p_agentmerchantmanagement.html"
+                      roles="ADM_GP_R,PG_GP_R,MNG_L3_AMDF_R,MNG_L3_KYC_R,MNG_L3_ACT_R"/>
+                <Item title="Search L3 Accounts" location="p_l3accountsmanagement.html"
+                      roles="ADM_GP_R,PG_GP_R,MNG_L3_ACT_R,MNG_L3_AMDF_R,MNG_L3_KYC_R"/>
+                <Item title="Add L3 Account" location="p_agentmerchantdetailsform.html"
+                      roles="ADM_GP_C,PG_GP_C,MNG_L3_AMDF_C"/>
+            </Item>
+            <Item title="Agent"
+                  roles="MNO_GP_R,ADM_GP_R,PG_GP_R,MNG_AGNTS_R,ADM_GP_C,PG_GP_C,MNG_AGNTS_C,ADD_AGNT_BULK_C,MNG_BULK_AGENT_C">
+                <Item title="Search Agent" name="search_agent" location="searchAgent.jsf?postBack=false"
+                      roles="MNO_GP_R,ADM_GP_R,PG_GP_R,MNG_AGNTS_R"/>
+                <Item title="Add Agent Bulk" name="add_agent" location="addAgentBulk.jsf?postBack=false"
+                      roles="MNO_GP_R,ADM_GP_R,PG_GP_R,MNG_BULK_AGENT_C"/>
+            </Item>
+            <Item title="Handler" roles="ADM_GP_R,ADM_GP_U,MNO_GP_R,PG_GP_R,PG_GP_U,MNG_HNDLR_R,MNG_HNDLR_U">
+                <Item title="Add Handler" name="add_handler" location="p_addhandler.jsf?postBack=false"
+                      roles="ADM_GP_C,ADM_GP_U,MNO_GP_C,MNO_GP_U,PG_GP_C,PG_GP_U,MNG_HNDLR_C,MNG_HNDLR_U"/>
+                <Item title="Search Handler" name="search_handler" location="searchHandler.jsf?postBack=false"
+                      roles="ADM_GP_R,MNO_GP_R,PG_GP_R,MNG_HNDLR_R"/>
+            </Item>
+            <!-- 				<Item title="Branch Teller" roles="ADM_GP_R,MNO_GP_R,PG_GP_R,PG_GP_U,MNG_HNDLR_R,MNG_HNDLR_U">
+                                <Item title="Cash In (Account Holder)" name="ci_account_holder" location="p_cashInAccountHolder.jsf?postBack=false" roles="ADM_GP_R,MNO_GP_C,MNO_GP_U,PG_GP_C,PG_GP_U,MNG_HNDLR_C,MNG_HNDLR_U"/>
+                                <Item title="Cash In (Waslin Customer)" name="ci_walin_cutomer" location="p_cashInWalkinCustomer.jsf?postBack=false" roles="ADM_GP_R,MNO_GP_C,MNO_GP_U,PG_GP_C,PG_GP_U,MNG_HNDLR_C,MNG_HNDLR_U"/>
+                            </Item>		 -->
+            <Item title="Link New Account" name="link_payment_mode" location="p_allpaylinkpaymentmode.html"
+                  roles="PG_GP_C,LINK_PAY_MOD_C"/>
+            <Item title="De-Link/Re-Link Payment Mode Report" name="delink_relink_payment_mode"
+                  location="p_allpayderelinkpaymentmode.html?actionId=2" roles="PG_GP_R,RPT_DE_RE_LINK_PAY_R"/>
+            <Item title="Agent Hierarchy" name="agent_hierarchy" location="agentHierarchy.jsf?postBack=false"
+                  roles="MNO_GP_R,ADM_GP_R,PG_GP_R,AGNT_HRCHY_R"/>
+        </Menu>
+
+        <Menu name="mng_cash_payments" title="Manage Cash Payments"
+              roles="UPDATE_P2P_DETAILS_R,SENDER_REDEEM_U,SENDER_REDEEM_R,REGENERATE_TX_CODE_U,REGENERATE_TX_CODE_R,TRANSACTION_REDEEM_U,TRANSACTION_REDEEM_R">
+            <Item title="Update P2P Transaction" location="p_updatep2ptxreport.html" roles="UPDATE_P2P_DETAILS_R"/>
+            <Item title="Sender Redeem" location="p_sender_redeem.html" roles="SENDER_REDEEM_U,SENDER_REDEEM_R"/>
+            <Item title="Transaction Redeem" location="p_transaction_redeem.html"
+                  roles="TRANSACTION_REDEEM_U,TRANSACTION_REDEEM_R"/>
+            <Item title="Regenerate Transaction Code" location="p_cashwithdrawaltransdetails.html"
+                  roles="REGENERATE_TX_CODE_U,REGENERATE_TX_CODE_R"/>
+        </Menu>
+
+
+        <Menu name="Compliances"  title="Compliance" roles="UPDATE_P2P_DETAILS_R,SENDER_REDEEM_U,SENDER_REDEEM_R,REGENERATE_TX_CODE_U,REGENERATE_TX_CODE_R,TRANSACTION_REDEEM_U,TRANSACTION_REDEEM_R">
+            <Item title="Wallet Account Opening Tracking" location="p_walletaccountopeningtrackingreports.html"
+                  roles="Upd_Acc_To_Blink_R,Upd_Acc_To_Blink_U,Upd_Acc_To_Blink_C"/>
+            <Item title="Cls Wallet Account Opening Rejected Tracking" location="p_clsscreeningrejectedaccountopeningreports.html"
+                  roles="Upd_Acc_To_Blink_R,Upd_Acc_To_Blink_U,Upd_Acc_To_Blink_C"/>
+            <!--            <Item name="Wallet Customer Screening Report" location="p_walletaccountopeningtrackingreports.html"></Item>-->
+
+        </Menu>
+
+    </Menus>
+</MenuConfig>

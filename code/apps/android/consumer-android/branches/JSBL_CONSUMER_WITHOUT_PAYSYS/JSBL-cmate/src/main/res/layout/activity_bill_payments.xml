@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layoutMarginLarge"
+        android:background="@color/gray_lite"
+        android:orientation="horizontal"
+        android:padding="@dimen/layoutMarginLarge"
+        android:weightSum="2">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+
+            android:layout_weight=".6"
+            android:background="@drawable/box"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/main_icon_js_placeholder" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Electricty" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layoutMarginNormal"
+            android:layout_marginRight="@dimen/layoutMarginSmall"
+            android:layout_weight="1.4"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/textViewMarginSmall"
+                android:text="@string/bill_payee_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textViewTextSizeSmall" />
+
+            <TextView
+
+                android:id="@+id/tvBillCompany"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/box" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/textViewMarginLarge"
+                android:paddingBottom="@dimen/textViewMarginSmall"
+                android:text="@string/reference_number"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textViewTextSizeSmall" />
+
+            <EditText
+
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/box" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

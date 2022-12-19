@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/offwhite"
+    android:orientation="vertical" >
+
+     <include
+		android:id="@+id/container_header"  
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent" 
+		layout="@layout/header_layout" /> 	
+    
+
+    <include
+		android:id="@+id/container_heading"  
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent" 
+		layout="@layout/heading_layout" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none" >
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <com.inov8.agentmate.util.ListViewExpanded
+                android:id="@+id/optionsList"
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:divider="@color/light_gray"
+                android:dividerHeight="5dp"
+                android:footerDividersEnabled="false"
+                android:padding="2dp" />
+            <!---->
+            <!--<ListView-->
+                <!--android:id="@+id/optionsList"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="325dp"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:divider="@color/transparent"-->
+                <!--android:dividerHeight="5dp"-->
+                <!--android:footerDividersEnabled="false"-->
+                <!--android:padding="2dp" />-->
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project>
+  <container path="com.genuitec.runtime.library/com.genuitec.jstl_1.2.1">
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/jaxb-api.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/stax-ex.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/sjsxp.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/jaxws-rt.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/slf4j-api-1.6.4.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.expression-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.jdbc-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/jaxb-impl.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/http.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.transaction-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.aop-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/commons-integration.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/aopalliance-1.0.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/log4j-1.2.16.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.web-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.aspects-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/jsr173_api.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.orm-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.asm-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/saaj-api.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/jsr250-api.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.core-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/activation.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.beans-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/streambuffer.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.web.servlet-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/jaxws-tools.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/jaxb-xjc.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.context-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/jaxws-api.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/slf4j-log4j12-1.6.4.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/FastInfoset.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/jsr181-api.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/resolver.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/org.springframework.context.support-3.0.5.RELEASE.jar"/>
+    <custom-jar path="D:lib/i8 Workspace/IDPVerification/WebRoot/WEB-INF/lib/saaj-impl.jar"/>
+  </container>
+</project>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- DAO -->
+    <bean id="debitCardModelDAO" class="com.inov8.microbank.debitcard.dao.hibernate.DebitCardModelHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="debitCardMailingAddressDAO" class="com.inov8.microbank.debitcard.dao.hibernate.DebitCardMailingAddressHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="debitCardViewModelDAO" class="com.inov8.microbank.debitcard.dao.hibernate.DebitCardViewModelHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="debitCardRequestsViewModelDAO" class="com.inov8.microbank.debitcard.dao.hibernate.DebitCardRequestsViewModelHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="debitCardExportDataViewDAO" class="com.inov8.microbank.debitcard.dao.hibernate.DebitCardExportDataViewHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="cardFeeRuleDAO" class="com.inov8.microbank.cardconfiguration.dao.hibernate.CardFeeRuleHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="cardStateDAO" class="com.inov8.microbank.cardconfiguration.dao.hibernate.CardStateHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="cardStatusDAO" class="com.inov8.microbank.cardconfiguration.dao.hibernate.CardStatusHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="debitCardChargesDAO" class="com.inov8.microbank.server.dao.debitCardChargesmodule.hibernate.DebitCardChargesHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+
+    </bean>
+
+    <!-- Manager -->
+    <bean id="debitCardManager" parent="baseTransactionProxy">
+        <property name="target">
+            <bean class="com.inov8.microbank.debitcard.service.DebitCardManagerImpl">
+                <property name="commandManager" ref="cmdManager" />
+                <property name="debitCardModelDAO">
+                    <ref local="debitCardModelDAO" />
+                </property>
+                <property name="debitCardChargesDAO">
+                    <ref local="debitCardChargesDAO" />
+                </property>
+                <property name="debitCardRequestsViewModelDAO">
+                    <ref local="debitCardRequestsViewModelDAO" />
+                </property>
+                <property name="debitCardMailingAddressDAO">
+                    <ref local="debitCardMailingAddressDAO" />
+                </property>
+                <property name="debitCardViewModelDAO">
+                    <ref local="debitCardViewModelDAO" />
+                </property>
+                <property name="debitCardExportDataViewDAO">
+                    <ref local="debitCardExportDataViewDAO" />
+                </property>
+
+                <property name="cardStateDAO">
+                    <ref local="cardStateDAO" />
+                </property>
+                <property name="cardStatusDAO">
+                    <ref local="cardStatusDAO" />
+                </property>
+                <property name="fetchCardTypeDAO">
+                    <ref local="fetchCardTypeDAO" />
+                </property>
+                <property name="genericDAO">
+                    <ref bean="genericDAOV2"/>
+                </property>
+                <property name="esbAdapter" ref="esbAdapter" />
+                <property name="smsSenderService" ref="smsSenderService" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="cardConfigurationManager" parent="baseTransactionProxy">
+        <property name="target">
+            <bean class="com.inov8.microbank.cardconfiguration.service.CardConfigurationManagerImpl">
+                <property name="cardFeeRuleDAO" ref="cardFeeRuleDAO" />
+                <property name="actionLogManager" ref="actionLogManager" />
+            </bean>
+        </property>
+    </bean>
+
+</beans>

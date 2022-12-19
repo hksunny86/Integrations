@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg"
+              android:orientation="vertical"
+              android:layout_centerInParent="true"
+              android:layout_centerHorizontal="true"
+              android:layout_centerVertical="true">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/selection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/biometric_selection"
+            android:layout_marginTop="@dimen/margin_XXlarge"
+            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/listItemHeight"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_XXlarge">
+
+        <Button
+            android:id="@+id/paysys"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/selection"
+            android:layout_marginTop="@dimen/margin_Xlarge"
+            android:layout_marginBottom="@dimen/margin_Xlarge"
+            android:layout_marginRight="@dimen/margin_XXlarge"
+            android:layout_marginLeft="@dimen/margin_XXlarge"
+            android:text="@string/instascan"/>
+
+        <Button
+            android:id="@+id/biometric"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/paysys"
+            android:layout_marginRight="@dimen/margin_XXlarge"
+            android:layout_marginLeft="@dimen/margin_XXlarge"
+            android:text="@string/sco_device"/>
+
+        <Button
+            android:id="@+id/biometric1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/biometric"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginRight="@dimen/margin_XXlarge"
+            android:layout_marginLeft="@dimen/margin_XXlarge"
+            android:text="@string/suprema_device"/>
+
+        <Button
+            android:id="@+id/p41m2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/biometric"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginRight="@dimen/margin_XXlarge"
+            android:layout_marginLeft="@dimen/margin_XXlarge"
+            android:text="@string/P41M2_device"/>
+
+        <Button
+            android:id="@+id/supremaSlim2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/p41m2"
+            android:layout_marginRight="@dimen/margin_XXlarge"
+            android:layout_marginLeft="@dimen/margin_XXlarge"
+            android:text="@string/suprema_slim_2"/>
+
+    </LinearLayout>
+</LinearLayout>

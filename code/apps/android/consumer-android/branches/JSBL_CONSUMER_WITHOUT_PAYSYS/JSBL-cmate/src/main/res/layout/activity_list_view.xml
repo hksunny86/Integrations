@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout"
+        android:layout_below="@+id/container_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomBar"
+        android:layout_below="@+id/container_heading"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="beforeDescendants"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <View
+                android:id="@+id/topMarginView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layoutMarginSmall" />
+
+            <com.inov8.jsblconsumer.ui.components.ListViewExpanded
+                android:id="@+id/optionsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/topMarginView"
+                android:layout_marginLeft="@dimen/activitySideMarginSmall"
+                android:layout_marginRight="@dimen/activitySideMarginSmall"
+                android:divider="@color/transparent"
+                android:scrollbars="none"
+                android:footerDividersEnabled="false"
+                android:listSelector="@drawable/button_list" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layoutMarginLarge"
+                android:layout_below="@+id/optionsList" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/bottomBar"
+        layout="@layout/layout_bottom_bar" />
+
+    <include
+        android:id="@+id/bottomBarQR"
+        layout="@layout/layout_qr_code" />
+
+</RelativeLayout>

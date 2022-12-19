@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/offwhite"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/container_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_layout" />
+
+    <include
+        android:id="@+id/container_heading"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/heading_layout" />
+
+    <RelativeLayout
+        android:id="@+id/scViewInLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <com.inov8.agentmate.util.ListViewExpanded
+            android:id="@+id/optionsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:divider="@color/offwhite"
+            android:layout_alignParentTop="true"
+            android:dividerHeight="10dp"
+            android:layout_above="@+id/btnNext"
+            android:footerDividersEnabled="false"
+            android:padding="2dp" />
+
+        <!--<ListView-->
+            <!--android:id="@+id/optionsList"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:divider="@color/offwhite"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:dividerHeight="10dp"-->
+            <!--android:layout_above="@+id/btnNext"-->
+            <!--android:footerDividersEnabled="false"-->
+            <!--android:padding="2dp" />-->
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="220dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_next_selector"
+            android:text="@string/ok"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:visibility="gone"
+            android:textStyle="normal" />
+    </RelativeLayout>
+
+</LinearLayout>

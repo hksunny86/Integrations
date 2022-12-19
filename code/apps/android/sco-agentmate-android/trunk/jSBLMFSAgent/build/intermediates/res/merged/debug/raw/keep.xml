@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+           tools:keep="@drawable/main_icon_account_open,
+				@drawable/main_icon_agent_transfer,
+                @drawable/main_icon_bill_payment,
+                @drawable/main_icon_cash_in,
+                @drawable/main_icon_cash_out,
+				@drawable/main_icon_funds_transfer,
+				@drawable/main_icon_my_account,
+				@drawable/main_icon_retail_payment,
+                @drawable/alert_popup_icon" />

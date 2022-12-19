@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutGridItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_list_item"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/menuIconPadding"
+    android:paddingTop="@dimen/menuIconPadding">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/menuItemImgView"
+        android:layout_width="wrap_content"
+        app:srcCompat="@drawable/main_icon_js_placeholder"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/menuItemTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp"
+        android:text=""
+        android:textColor="@color/text_grey"
+        android:visibility="visible" />
+
+</LinearLayout>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical" >-->
+
+    <!--<ImageView-->
+        <!--android:id="@+id/menu_item_imageview"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/main_icon_cash_in" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/menu_item_textview"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:layout_marginBottom="15dp"-->
+        <!--android:text=""-->
+        <!--android:textColor="@color/text_grey"-->
+         <!--/>-->
+
+<!--</LinearLayout>-->

@@ -1,0 +1,2 @@
+Alter table blink_customer
+add comments varchar2(250);

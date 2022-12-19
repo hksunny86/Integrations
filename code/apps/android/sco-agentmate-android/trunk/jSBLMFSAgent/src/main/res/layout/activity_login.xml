@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login"
+    android:gravity="center"
+    android:id="@+id/parent_layout"
+    android:orientation="vertical">
+
+ 	<EditText
+     	android:id="@+id/txtUsername"
+      	android:layout_width="fill_parent"
+      	android:layout_height="wrap_content"
+      	android:layout_marginLeft="20dp"
+      	android:layout_marginRight="20dp"
+      	android:layout_marginTop="200dp"
+     	android:maxLength="7"
+      	android:text=""
+      	android:inputType="number"
+       	android:hint="User ID" />
+
+ 	<EditText
+     	android:id="@+id/txtPassword"
+     	android:layout_width="fill_parent"
+     	android:layout_height="wrap_content"
+      	android:layout_marginLeft="20dp"
+     	android:layout_marginRight="20dp"
+    	android:layout_marginTop="10dp"
+       	android:maxLength="4"
+    	android:minEms="4"
+       	android:hint="@string/password_hint"
+       	android:inputType="number"
+     	android:password="true"/>
+ 	
+ 	<LinearLayout 
+ 	    android:layout_width="fill_parent"
+ 	    android:layout_height="wrap_content"
+ 	    android:orientation="horizontal"
+	    android:layout_marginTop="20dp"
+ 	    android:gravity="center">
+
+	 	<Button
+	     	android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_XXlarge"
+            android:layout_marginRight="@dimen/margin_XXlarge"
+            android:background="@drawable/button_login_selector"
+	      	android:text="@string/login"
+	     	android:textColor="@android:color/white"
+	    	android:textSize="20sp"
+	     	android:textStyle="normal" />
+
+ 	</LinearLayout>
+
+	<TextView
+		android:id="@+id/lblVersion"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="40dp"
+		android:textColor="@color/white"
+		android:textSize="18sp"
+		android:textStyle="normal" />
+ 	
+</LinearLayout>

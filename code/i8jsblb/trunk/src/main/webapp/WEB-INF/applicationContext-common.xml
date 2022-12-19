@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+
+  <!-- DAO -->
+  <bean id="referenceDataDAO" class="com.inov8.framework.server.dao.framework.hibernate.ReferenceDataHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+  <bean id="genericDAO" class="com.inov8.framework.server.dao.framework.hibernate.GenericHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+  <bean id="genericHibernateDAO" class="com.inov8.framework.server.dao.framework.v2.hibernate.GenericHibernateDao">
+    <property name="sessionFactory" ref="sessionFactory"/>
+    <property name="transacted" value="true"/>
+  </bean>  
+
+   <bean id="areaDAO" class="com.inov8.microbank.server.dao.common.hibernate.AreaHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+         <bean id="areaListViewDAO" class="com.inov8.microbank.server.dao.common.hibernate.AreaListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+  <!-- Service -->
+  <bean id="referenceDataManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.framework.server.service.common.ReferenceDataManagerImpl">
+        <property name="referenceDataDAO">
+          <ref local="referenceDataDAO"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+   <bean id="areaManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.inov8.microbank.server.service.common.AreaManagerImpl">
+				<property name="areaDAO">
+					<ref local="areaDAO"/>
+				</property>
+                                <property name="areaListViewDAO">
+					<ref local="areaListViewDAO"/>
+				</property>
+        		<property name="actionLogManager" ref="actionLogManager"/>
+			</bean>
+		</property>
+	</bean>
+
+  <bean id="popupManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.framework.server.service.common.PopupManagerImpl">
+        <property name="genericDAO">
+          <ref local="genericDAO"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <!--Facade-->
+
+  <bean id="commonFacade" class="com.inov8.microbank.server.facade.CommonFacadeImpl">
+
+    <property name="frameworkExceptionTranslator">
+      <ref bean="frameworkExceptionTranslator"/>
+    </property>
+
+    <property name="referenceDataManager">
+      <ref local="referenceDataManager"/>
+    </property>
+    <property name="areaManager">
+			<ref local="areaManager"/>
+		</property>
+
+    <property name="popupManager">
+      <ref local="popupManager"/>
+    </property>
+  </bean>
+  
+  <bean id="exceptionProcessorUtility" class="com.inov8.microbank.common.exception.ExceptionProcessorUtility">
+
+    <property name="workFlowExceptionTranslator">
+      <ref bean="workflowExceptionTranslator"/>
+    </property>
+
+  </bean>
+  <bean id="springContext" class="com.inov8.microbank.common.util.SpringContext"/>
+
+</beans>

@@ -1,0 +1,14 @@
+
+<!-- Customer Cash Withdrawal Info Response-->
+<msg id="185">
+    <params>
+        <param name="TXAM">100.0</param>
+        <param name="TXAMF">100.00</param>
+        <param name="CAMT">0.0</param>
+        <param name="CAMTF">0.00</param>
+        <param name="TPAM">0.0</param>
+        <param name="TPAMF">0.00</param>
+        <param name="TAMT">100.0</param>
+        <param name="TAMTF">100.00</param>
+    </params>
+</msg>

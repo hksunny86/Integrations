@@ -1,0 +1,8 @@
+Insert into command (COMMAND_ID,NAME,CLASS_NAME,DESCRIPTION,IS_ACTIVE) values 
+(304,'Upgrade L2 Account','com.inov8.microbank.server.service.commandmodule.UpgradeL2AccountCommand','Upgrade L2 Account',1);
+
+Insert into picture_type (PICTURE_TYPE_ID,NAME,DESCRIPTION,COMMENTS,CREATED_BY,UPDATED_BY,CREATED_ON,UPDATED_ON,VERSION_NO) 
+values (8,'Source Of Income Photo',null,null,1,1,sysdate,sysdate,0);
+
+ALTER TABLE customer
+ADD ACC_UPDATE NUMBER(1,0);

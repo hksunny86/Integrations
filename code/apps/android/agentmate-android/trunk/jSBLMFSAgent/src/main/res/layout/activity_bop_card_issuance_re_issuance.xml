@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/offwhite"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lbl_mobile_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:shadowColor="@color/white"
+                android:text="@string/mobile_no"
+                android:textColor="@color/text_grey"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/input_mobile_number"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bg"
+                android:inputType="number"
+                android:minHeight="45dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/lbl_cnic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:shadowColor="@color/white"
+                android:text="@string/cnic"
+                android:textColor="@color/text_grey"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/input_cnic"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bg"
+                android:inputType="number"
+                android:minHeight="45dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"/>
+
+            <TextView
+                android:id="@+id/lbl_debit_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:shadowColor="@color/white"
+                android:text="@string/debit_card_number"
+                android:textColor="@color/text_grey"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/input_debit_card"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_bg"
+                android:inputType="number"
+                android:minHeight="45dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"/>
+
+            <TextView
+                android:id="@+id/lbl_spinner_segment_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="2dp"
+                android:shadowColor="@color/white"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="0"
+                android:text="Select Segment"
+                android:textColor="@color/text_grey"
+                android:textSize="18sp"
+                android:textStyle="normal"/>
+
+            <Spinner
+                android:id="@+id/input_spinner_segment_number"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_bg"
+                android:inputType="number"
+                android:maxLength="25"
+                android:minHeight="45dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"/>
+
+            <TextView
+                android:id="@+id/lblAlertmultiple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="5dp"
+                android:shadowColor="@color/white"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="0"
+                android:textColor="@color/skyBlue"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="220dp"
+                android:layout_height="48dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_next_selector"
+                android:text="@string/next"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

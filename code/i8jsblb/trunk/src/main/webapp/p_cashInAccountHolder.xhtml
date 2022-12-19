@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"      
+	  xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+<link rel="stylesheet" href="#{request.contextPath}/styles/wizard_style.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/tpc.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/style_js.css" type="text/css" />
+
+<meta name="title" content="Add/Edit Handler" />
+
+ <style>
+.col {
+    width:100px;
+}
+</style>
+<script type="text/javascript" src="#{request.contextPath}/scripts/commonFormValidator.js"></script>
+<script type="text/javascript" src="#{request.contextPath}/scripts/jquery-1.7.2.min.js"></script>
+
+<script>
+
+
+	function validate() {
+		
+		var flag = validateAmount();
+		
+		if(flag) {
+			flag = validateMobile();
+		}
+				
+		return flag;
+	}	
+
+
+	function validateMobile() {
+	
+		var mobileNo = #{rich:element("mobileNo")};
+		var errorDiv = document.getElementById("errorDiv");
+		var btn = document.getElementById("verifyDetail");
+		var flag = true;
+		
+		if(mobileNo.value == '') {
+			errorDiv.innerHTML="Kindly Enter Mobile #";
+			flag = false;
+		}	
+		
+		if(mobileNo.value.length != 11) {
+			errorDiv.innerHTML="Kindly Enter Valid 11 Digit Mobile #";
+			flag = false;
+		}
+		
+		if(!flag) {
+			btn.disabled = true;
+			errorDiv.innerHTML="";
+		} else {
+			btn.disabled = false;
+		}	
+		
+		return flag;
+	}
+
+
+	function validateAmount() {
+
+		var amount = #{rich:element("amount")};		
+		var errorDiv = document.getElementById("errorDiv");
+		var btn = document.getElementById("verifyDetail");
+		var flag = true;
+	
+		if(amount.value == '') {
+			errorDiv.innerHTML="Kindly Enter Amount";
+			flag = false;
+		}
+		
+		if(!flag) {
+			btn.disabled = true;
+			errorDiv.innerHTML="";
+		} else {
+			btn.disabled = false;
+		}	
+		
+		return flag;
+	}
+	
+	function validateNumber(field){
+			
+		if(field.value==""){
+			return false; 
+		}
+
+		var charpos = field.value.search("[^0-9]"); 
+		
+		if(charpos >= 0) { 
+			return false; 
+		} 
+		return true;
+	}	
+	
+	function clearDetails() {
+		
+		var chr = document.getElementById("myform:chr");		
+		chr.innerHTML = '';
+		var amt = document.getElementById("myform:amt");
+		amt.innerHTML = '';
+		var tamt = document.getElementById("myform:tamt");
+		tamt.innerHTML = '';
+		var nic = document.getElementById("myform:nic");
+		nic.innerHTML = '';
+		var un = document.getElementById("myform:un");
+		un.innerHTML = '';
+		var ut = document.getElementById("myform:ut");
+		ut.innerHTML = '';
+		
+		document.getElementById("content_wrap2").style.visibility = "hidden";
+		
+	}
+	
+	function showDetailRow() {
+
+		var ut = #{rich:element('ut')};	
+		var errorDiv = document.getElementById("myform:j_id_a");
+				
+		if(errorDiv.innerHTML == '') {
+			
+			if(ut.innerHTML != '') {
+		
+				document.getElementById("content_wrap2").style.visibility = "visible";
+			}	
+		}
+	}
+	
+</script>	
+
+</h:head>
+<h:body>
+<f:view >
+
+	<h:form id="myform" >	
+	<div id="wizard_group">
+	
+	<table width="100%" border="0" align="center">
+		<tr>
+	      <td id="header_wizard">
+	      	<h1>
+	       		<h:outputText value="Cash In [By Account Holder]" />
+	       	</h1>
+	     </td>
+        </tr>	
+	
+  <tr>
+    <td align="center">
+		<div class="error_txt" style="margin-left: 30px; font-size: xx-small;" id="errorDiv"><br/>								
+			<a4j:outputPanel ajaxRendered="true">
+				<h:messages id="a4jmsg" globalOnly="true" rendered="#{! empty facesContext.maximumSeverity}" errorClass="error_txt"/>                 				
+			</a4j:outputPanel>
+		</div>  	
+ 	</td>
+  </tr>
+  <tr>
+    <td>
+       <fieldset>
+           <legend>Cash In [By Account Holder]</legend>	
+		   
+		<div align="center">
+		   
+		<table width="50%" border="0" align="center">
+     		<tr>
+     			<td align="right" width="50%"><span class="asterisk"> * </span>Mobile Number : </td>
+     			<td>
+					<h:inputText maxlength="11" id="mobileNo" onkeypress="return maskNumber(this,event)" onchange="clearDetails()" 
+					onblur="return validateMobile()" styleClass="type_txt" 
+					value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.appUserModel.mobileNo}"/>  								
+     			</td>
+     		</tr>  
+     		<tr>
+     			<td align="right"><span class="asterisk"> * </span>Amount : </td>
+     			<td><h:inputText maxlength="5" id="amount" onblur="return validateAmount()"
+			           styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.amount}"/>  								
+     			</td>
+     		</tr> 
+			<tr>
+     			<td align="right">
+     			<input type="hidden" name="_synchronizerToken" value="${sessionScope._synchronizerToken}" />
+     			<h:inputHidden id="productId" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.productId}"/></td>
+     			<td><a4j:commandButton id="verifyDetail" onclick="clearDetails()" value="Verify Detail" execute="@form" oncomplete="showDetailRow()"
+     					action="#{tellerTransactionsManagedBean.verifyDetails()}" render="richPanel,tamt,chr,amt,nic,un,ut" />     									
+     			</td>
+     		</tr>		
+		</table>
+	</div>
+    </fieldset>
+	
+ </td>
+  </tr>
+  
+  
+  <tr>
+    <td>&nbsp;
+      <table width="100%" border="0" id="content_wrap2" align="center" style="visibility:hidden;">
+        <tr>
+          <td>
+		  
+			<fieldset>
+				<legend align="left">Details</legend>
+				
+			      <table width="100%" border="0" align="center">
+			        <tr>
+			          <td align="center">
+				
+                    	<rich:panel id="richPanel" style="align:center;border:0;" >
+                    	
+                    		<table border="0" width="60%" align="center">
+     								<tr>
+     									<td align="right" width="50%">User Type : </td>
+     									<td width="50%">     									
+    	 									<h:outputLabel for="ut" rendered="true" id="ut" name="ut" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.userType}"/> 
+     									</td>
+     								</tr>  
+     								<tr>
+     									<td align="right">Name : </td>
+     									<td>
+			                                <h:outputLabel for="un" rendered="true" id="un" name="nu" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.userName}"/>  								
+     									</td>
+     								</tr>  
+     								<tr>
+     									<td align="right">CNIC : </td>
+     									<td>
+			                                <h:outputText for="nic" rendered="true" id="nic" name="nic" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.cnic}"/>  								
+     									</td>
+     								</tr>  
+     								<tr>
+     									<td align="right">Amount : </td>
+     									<td>
+			                                <h:outputText for="amt" rendered="true" id="amt" name="amt" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.amountFormated}"/>  								
+     									</td>
+     								</tr>  
+     								<tr>
+     									<td align="right">Charges : </td>
+     									<td>
+			                                <h:outputText for="chr" rendered="true" id="chr" name="chr" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.commisttionAmount}"/>  								
+     									</td>
+     								</tr> 
+     								<tr>
+     									<td align="right">Total Amount : </td>
+     									<td>
+			                                <h:outputText rendered="true" id="tamt" name="tamt" styleClass="type_txt" value="#{tellerTransactionsManagedBean.tellerTransactionsBackingBean.totalAmount}"/>  								
+     									</td>
+     								</tr>
+     								<tr>
+     									<td>
+    									
+     									</td>
+     									<td>
+     									 <h:commandButton value="Confirm" action="#{tellerTransactionsManagedBean.execute()}"/>
+     									 <h:button value="Cancel" onclick="return clearDetails()"/>
+     									</td>
+     								</tr>  
+     						</table>	
+                    	</rich:panel>				
+     			</td>
+     		</tr>		
+		</table>
+				
+				
+			</fieldset>
+		  
+		  </td>
+        </tr>
+      </table></td>
+  </tr>
+  
+  
+  
+  
+</table>
+
+	
+	</div>
+	</h:form>
+	<div class="status">
+    	<a4j:status>
+        	<f:facet name="start">
+            	<h:graphicImage url="/images/ah_images/tabs_loader.gif" style="border:0px;"/>
+            </f:facet>
+            <f:facet name="stop"></f:facet>
+        </a4j:status>
+	</div>
+</f:view>
+</h:body>
+</html>

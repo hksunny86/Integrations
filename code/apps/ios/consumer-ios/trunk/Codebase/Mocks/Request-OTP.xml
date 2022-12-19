@@ -1,0 +1,5 @@
+<msg id="-1">
+    <errors>
+        <error code="9025" level="3">A security PIN has been sent to your registered Mobile Number as your device is updated. Please enter your 4 digits Security PIN.</error>
+    </errors>
+</msg>

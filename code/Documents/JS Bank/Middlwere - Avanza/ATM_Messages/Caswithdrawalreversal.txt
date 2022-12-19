@@ -1,0 +1,38 @@
+04020420F23E44952BE0852000000042040000221650417100000308520110000000020000000908134649000343154453090813040908601102100C00000000C0000000006504171245041710000030852=13041010000001427706010100101001000000000000004LILONGWE BRANCH        LILONGWE       MW4540201053454D00000200000000496010100000142773020000034309081344530000050417100000000000000000000000000000000000C00000000C000000000538137015211201213144002
+
+*------------------- Parsed Message Details ------------------------*
+
+ Position               Field Description                  Field Value
+*-------------------------------------------------------------------*
+2        :     PAN                                      : 5041710000030852
+3        :     PROCESSING CODE                          : 011000
+4        :     AMOUNT, TRANSACTION                      : 000002000000
+7        :     TRANSMISSION DATE AND TIME               : 0908134649
+11       :     SYSTEM TRACE AUDIT NUMBER                : 000343
+12       :     TIME, LOCAL TRANSACTION                  : 154453
+13       :     DATE, LOCAL TRANSACTION                  : 0908
+14       :     DATE, EXPIRATION                         : 1304
+15       :     DATE, SETTLEMENT                         : 0908
+18       :     MERCHANTS TYPE                           : 6011
+22       :     POINT OF SERVICE ENTRY MODE              : 021
+25       :     POINT OF SERVICE CONDITION CODE          : 00
+28       :     AMOUNT, TRANSACTION FEE                  : C00000000
+30       :     AMOUNT, TRANSACTION PROCESSING FEE       : C00000000
+32       :     ACQUIRING INSTITUTION IDENT CODE         : 504171
+35       :     TRACK 2 DATA                             : 5041710000030852=1304101
+37       :     RETRIEVAL REFERENCE NUMBER               : 000000142770
+39       :     RESPONSE CODE                            : 60
+40       :     SERVICE RESTRICTION CODE                 : 101
+41       :     CARD ACCEPTOR TERMINAL IDENTIFICACI      : 00101001
+42       :     CARD ACCEPTOR IDENTIFICATION CODE        : 000000000000004
+43       :     CARD ACCEPTOR NAME/LOCATION              : LILONGWE BRANCH        LILONGWE       MW
+49       :     CURRENCY CODE, TRANSACTION               : 454
+54       :     ADDITIONAL AMOUNTS                       : 1053454D000002000000
+56       :     RESERVED ISO                             : 9601
+59       :     RESERVED NATIONAL                        : 0000142773
+90       :     ORIGINAL DATA ELEMENTS                   : 020000034309081344530000050417100000000000
+95       :     REPLACEMENT AMOUNTS                      : 000000000000000000000000C00000000C00000000
+102      :     ACCOUNT IDENTIFICATION 1                 : 38137
+123      :     RESERVED PRIVATE USE                     : 211201213144002
+
+*-------------------------------------------------------------------*

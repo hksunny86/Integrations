@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Light.ttf">
+            <string>Roboto-Light</string>
+        </array>
+        <array key="Roboto-ThinItalic.ttf">
+            <string>Roboto-ThinItalic</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FPAJSAccountOpenSummaryCell" id="f7Z-jE-2tj" customClass="FPAJSAccountOpenSummaryCell" customModule="JSBL_BB" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="63"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f7Z-jE-2tj" id="pZ4-eD-dKE">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="63"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGp-y6-znK">
+                        <rect key="frame" x="8" y="10" width="179.5" height="28.5"/>
+                        <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ig-YB-oue">
+                        <rect key="frame" x="187.5" y="15.5" width="179.5" height="18"/>
+                        <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(dd-mm-yy)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqV-Xe-RUf">
+                        <rect key="frame" x="8" y="38.5" width="59.5" height="14.5"/>
+                        <fontDescription key="fontDescription" name="Roboto-ThinItalic" family="Roboto" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="cqV-Xe-RUf" firstAttribute="leading" secondItem="BGp-y6-znK" secondAttribute="leading" id="2Od-pl-SzO"/>
+                    <constraint firstItem="4ig-YB-oue" firstAttribute="width" secondItem="BGp-y6-znK" secondAttribute="width" id="ARS-NJ-GmK"/>
+                    <constraint firstItem="BGp-y6-znK" firstAttribute="leading" secondItem="pZ4-eD-dKE" secondAttribute="leading" constant="8" id="COc-Lj-Zwp"/>
+                    <constraint firstItem="BGp-y6-znK" firstAttribute="centerY" secondItem="4ig-YB-oue" secondAttribute="centerY" id="LWf-em-Zkf"/>
+                    <constraint firstItem="4ig-YB-oue" firstAttribute="leading" secondItem="BGp-y6-znK" secondAttribute="trailing" id="MOF-Jq-XwY"/>
+                    <constraint firstItem="BGp-y6-znK" firstAttribute="top" secondItem="pZ4-eD-dKE" secondAttribute="top" constant="10" id="UkJ-q9-10e"/>
+                    <constraint firstAttribute="trailing" secondItem="4ig-YB-oue" secondAttribute="trailing" constant="8" id="b8S-Ql-KWO"/>
+                    <constraint firstItem="cqV-Xe-RUf" firstAttribute="top" secondItem="BGp-y6-znK" secondAttribute="bottom" id="oOd-cv-Xal"/>
+                    <constraint firstAttribute="bottom" secondItem="cqV-Xe-RUf" secondAttribute="bottom" constant="10" id="sx2-FO-9BT"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="lblDateFormat" destination="cqV-Xe-RUf" id="rRP-IA-Ibo"/>
+                <outlet property="lblTitle" destination="BGp-y6-znK" id="c8n-fR-7G2"/>
+                <outlet property="lblValue" destination="4ig-YB-oue" id="Zql-Jh-DQu"/>
+            </connections>
+            <point key="canvasLocation" x="13.5" y="105.5"/>
+        </tableViewCell>
+    </objects>
+</document>

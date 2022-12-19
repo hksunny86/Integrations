@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+
+
+	<!--DAO-->
+	<bean id="velocityRuleModelDAO"
+		class="com.inov8.microbank.server.dao.velocitymodule.hibernate.VelocityRuleModelHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="dataSource" ref="dataSource" />
+
+	</bean>
+
+	<!-- Service -->
+	<bean id="VelocityRuleManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean
+				class="com.inov8.microbank.server.service.portal.velocitymodule.VelocityRuleManagerImpl">
+				<property name="velocityRuleModelDAO">
+					<ref local="velocityRuleModelDAO" />	
+				</property>
+				<property name="actionLogManager">
+					<ref bean="actionLogManager" />
+				</property>
+				<property name="productManager" ref="productFacade" />
+			</bean>
+		</property>
+	</bean>
+
+	
+	<!-- Facade -->
+	<bean id="velocityRuleFacade"
+		class="com.inov8.microbank.server.facade.portal.velocityrulemodule.VelocityRuleFacadeImpl">
+		<property name="frameworkExceptionTranslator">
+			<ref bean="frameworkExceptionTranslator" />
+		</property>
+		<property name="VelocityRuleManager">
+			<ref local="VelocityRuleManager" />
+		</property>
+	</bean>
+	<!-- Action -->
+	
+</beans>
+

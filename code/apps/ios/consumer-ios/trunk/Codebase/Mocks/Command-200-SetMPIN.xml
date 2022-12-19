@@ -1,0 +1,13 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<msg id="200" reqTime="1417761314759">-->
+<!--    <params>-->
+<!--        <param name="DTID">5</param>-->
+<!--        <param name="PGR">6tBH5Et3C3b9p7Xzr1YVIQ==</param>-->
+<!--    </params>-->
+<!--</msg>-->
+
+<msg id="200">
+    <mesgs>
+        <mesg level="1"> MPIN is Generated successfully.</mesg>
+    </mesgs>
+</msg>

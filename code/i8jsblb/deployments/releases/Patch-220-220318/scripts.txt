@@ -1,0 +1,2 @@
+Alter table blink_customer
+add action_authorization_id number;

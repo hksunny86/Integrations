@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HeaderBarView" customModule="JSBL_BB" customModuleProvider="target">
+            <connections>
+                <outlet property="backButton" destination="E5T-fK-0Qe" id="2fO-ec-IXy"/>
+                <outlet property="headerLogoImg" destination="c8W-3r-sOt" id="Pk0-0x-r9W"/>
+                <outlet property="headerLogoLeadingConstraint" destination="0N4-bi-P1Q" id="ylX-fi-pT9"/>
+                <outlet property="headerTitle" destination="ptM-y7-a4q" id="ddE-o5-wC0"/>
+                <outlet property="signoutButton" destination="YUl-fn-CPe" id="3wv-2G-Lms"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YUl-fn-CPe">
+                    <rect key="frame" x="271" y="7.5" width="49" height="49"/>
+                    <state key="normal" image="icon_logout_normal"/>
+                    <state key="selected" image="icon_logout_pressed"/>
+                    <state key="highlighted" image="icon_logout_pressed"/>
+                    <connections>
+                        <action selector="actHeaderBtn:" destination="-1" eventType="touchUpInside" id="SSc-Vh-bla"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E5T-fK-0Qe">
+                    <rect key="frame" x="0.0" y="7" width="50" height="50"/>
+                    <state key="normal" image="icon_top_bar_back_normal"/>
+                    <state key="selected" image="icon_top_bar_back_pressed"/>
+                    <state key="highlighted" image="icon_top_bar_back_pressed"/>
+                    <connections>
+                        <action selector="actHeaderBtn:" destination="-1" eventType="touchUpInside" id="8DQ-IV-apc"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ptM-y7-a4q">
+                    <rect key="frame" x="50" y="32.5" width="0.0" height="0.0"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header_logo" translatesAutoresizingMaskIntoConstraints="NO" id="c8W-3r-sOt">
+                    <rect key="frame" x="50" y="6.5" width="57" height="46"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.28235294119999998" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="c8W-3r-sOt" firstAttribute="leading" secondItem="E5T-fK-0Qe" secondAttribute="trailing" id="0N4-bi-P1Q"/>
+                <constraint firstItem="c8W-3r-sOt" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-2.5" id="4Ih-Zh-OTL"/>
+                <constraint firstItem="ptM-y7-a4q" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="727-1q-X79"/>
+                <constraint firstItem="YUl-fn-CPe" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Mxn-6q-A4Z"/>
+                <constraint firstItem="E5T-fK-0Qe" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="My7-La-ISE"/>
+                <constraint firstAttribute="trailing" secondItem="YUl-fn-CPe" secondAttribute="trailing" id="XFl-1I-iwi"/>
+                <constraint firstItem="ptM-y7-a4q" firstAttribute="leading" secondItem="E5T-fK-0Qe" secondAttribute="trailing" id="gH9-yi-edT"/>
+                <constraint firstItem="E5T-fK-0Qe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="hRa-BM-QLP"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="WR3-QP-w9v">
+            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <point key="canvasLocation" x="44" y="160"/>
+        </imageView>
+    </objects>
+    <resources>
+        <image name="header_logo" width="57" height="46"/>
+        <image name="icon_logout_normal" width="49" height="49"/>
+        <image name="icon_logout_pressed" width="49" height="49"/>
+        <image name="icon_top_bar_back_normal" width="50" height="50"/>
+        <image name="icon_top_bar_back_pressed" width="50" height="50"/>
+    </resources>
+</document>

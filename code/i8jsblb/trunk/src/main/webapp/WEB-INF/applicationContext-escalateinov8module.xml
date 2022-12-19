@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+
+<!-- DAO -->
+
+  <bean id="escalateInov8ListViewDAO" class="com.inov8.microbank.server.dao.portal.escalateinov8.hibernate.EscalateInov8ListViewHibernateDAOImpl">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  
+  <bean id="escalateInov8DAO" class="com.inov8.microbank.server.dao.portal.escalateinov8.hibernate.EscalateInov8HibernateDAOImpl">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+  <bean id="issueDAO" class="com.inov8.microbank.server.dao.portal.issuemodule.hibernate.IssueHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+  <bean id="transactionDetailDAO" class="com.inov8.microbank.server.dao.transactionmodule.hibernate.TransactionDetailHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+
+<!-- Service -->
+
+  <bean id="escalateInov8Manager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.portal.escalateinov8module.EscalateInov8ManagerImpl">
+
+        <property name="escalateInov8ListViewDAO" ref="escalateInov8ListViewDAO"/>
+		<property name="escalateInov8DAO" ref="escalateInov8DAO"/>
+        <property name="issueDAO" ref="issueDAO"/>
+        <property name="transactionDetailDAO" ref="transactionDetailDAO"/>
+        <property name="issueManager"  ref="issueManager"/>
+      </bean>
+    </property>
+
+  </bean>
+
+
+<!-- Facade -->
+
+  <bean id="escalateInov8Facade" class="com.inov8.microbank.server.facade.portal.escalateinov8.EscalateInov8FacadeImpl">
+    <property name="frameworkExceptionTranslator">
+      <ref bean="frameworkExceptionTranslator"/>
+    </property>
+    <property name="escalateInov8Manager">
+      <ref local="escalateInov8Manager"/>
+    </property>
+
+  </bean>
+
+</beans>

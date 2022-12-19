@@ -1,0 +1,10 @@
+<msg id="195">
+    <params>
+        <param name="TIMEF">07:47:28 pm</param>
+        <param name="TRXID">194606382546</param>
+        <param name="DATE">Mon Aug 22 19:47:28 PKT 2016</param>
+        <param name="DATEF">22/08/2016 19:47 PM</param>
+        <param name="PROD">Customer Cash Withdrawal</param>
+        <param name="EXPIRY">22/08/2016 20:47 PM</param>
+    </params>
+</msg>

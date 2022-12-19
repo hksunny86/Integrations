@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <EditText
+            android:id="@+id/tv_pass1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/buttonHeightNormal"
+            android:layout_marginBottom="@dimen/textViewFieldMargin"
+            android:layout_marginRight="@dimen/textViewMarginNormal"
+            android:layout_weight="1"
+            android:background="@drawable/mpin_box"
+            android:gravity="center"
+
+            android:imeOptions="actionNext"
+            android:inputType="numberPassword"
+            android:longClickable="false"
+            android:maxLength="1"
+            android:minEms="1"
+            android:singleLine="true"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/tv_pass2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/buttonHeightNormal"
+            android:layout_marginBottom="@dimen/textViewFieldMargin"
+            android:layout_marginRight="@dimen/textViewMarginNormal"
+            android:layout_weight="1"
+            android:background="@drawable/mpin_box"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:inputType="numberPassword"
+            android:longClickable="false"
+            android:maxLength="1"
+            android:minEms="1"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/tv_pass3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/buttonHeightNormal"
+            android:layout_marginBottom="@dimen/textViewFieldMargin"
+            android:layout_marginRight="@dimen/textViewMarginNormal"
+            android:layout_weight="1"
+            android:background="@drawable/mpin_box"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:inputType="numberPassword"
+            android:longClickable="false"
+            android:maxLength="1"
+            android:minEms="1"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/tv_pass4"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/buttonHeightNormal"
+            android:layout_marginBottom="@dimen/textViewFieldMargin"
+            android:layout_weight="1"
+            android:background="@drawable/mpin_box"
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:inputType="numberPassword"
+            android:longClickable="false"
+            android:maxLength="1"
+            android:minEms="1"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+</LinearLayout>

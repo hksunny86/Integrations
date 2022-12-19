@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Main View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="MainViewController" id="BYZ-38-t0r" customClass="MainViewController" customModule="JS_Wallet" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sgA-yl-IeJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZkT-UF-EMh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hM5-Uh-mdS">
+                                <rect key="frame" x="135" y="516" width="50" height="32"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <state key="normal" title="LOGIN">
+                                    <color key="titleColor" red="0.99215686274509807" green="0.70588235294117641" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="c88-wQ-XO3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mAt-wq-vgR">
+                                <rect key="frame" x="20" y="456" width="280" height="40"/>
+                                <color key="backgroundColor" red="0.99215686274509807" green="0.70588235294117641" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="JAN-cF-yYE"/>
+                                </constraints>
+                                <state key="normal" title="CONTINUE"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="highlightedColor">
+                                        <color key="value" red="0.0" green="0.28235294119999998" blue="0.56470588239999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="continuePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xrl-e9-E61"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="hM5-Uh-mdS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SZz-da-Aw1"/>
+                            <constraint firstAttribute="trailing" secondItem="mAt-wq-vgR" secondAttribute="trailing" constant="20" id="X0p-WS-S71"/>
+                            <constraint firstItem="ZkT-UF-EMh" firstAttribute="top" secondItem="hM5-Uh-mdS" secondAttribute="bottom" constant="20" id="ZFu-1o-1Cj"/>
+                            <constraint firstItem="hM5-Uh-mdS" firstAttribute="top" secondItem="mAt-wq-vgR" secondAttribute="bottom" constant="20" id="gIc-TG-sAF"/>
+                            <constraint firstItem="mAt-wq-vgR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="v1S-Q1-vO3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="continueBtn" destination="mAt-wq-vgR" id="skh-f2-p6G"/>
+                        <outlet property="continueBtnBottom" destination="gIc-TG-sAF" id="1tO-1G-TBL"/>
+                        <outlet property="loginBtn" destination="hM5-Uh-mdS" id="eAN-c9-IuW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="117.59999999999999" y="117.39130434782609"/>
+        </scene>
+        <!--First ContentVC-->
+        <scene sceneID="WDf-sH-Too">
+            <objects>
+                <viewController storyboardIdentifier="FirstContentVC" id="JVM-hw-a0D" customClass="FirstContentVC" customModule="JS_Wallet" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jxK-so-Utt"/>
+                        <viewControllerLayoutGuide type="bottom" id="sGT-Ry-G1y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cLM-Mi-UxD">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mVb-sd-pQR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="763" y="117"/>
+        </scene>
+        <!--Second ContentVC-->
+        <scene sceneID="9f9-ZJ-UUl">
+            <objects>
+                <viewController storyboardIdentifier="SecondContentVC" id="f7a-Z0-44c" customClass="SecondContentVC" customModule="JS_Wallet" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4Fb-FE-sEm"/>
+                        <viewControllerLayoutGuide type="bottom" id="ExQ-pp-Bn2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="S0O-Ci-KdO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_slide_1" translatesAutoresizingMaskIntoConstraints="NO" id="fZi-10-38n">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_logo" translatesAutoresizingMaskIntoConstraints="NO" id="02t-aQ-KKg">
+                                <rect key="frame" x="37" y="226.5" width="246" height="75"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="02t-aQ-KKg" firstAttribute="centerX" secondItem="S0O-Ci-KdO" secondAttribute="centerX" id="T7Y-7P-Y5E"/>
+                            <constraint firstItem="ExQ-pp-Bn2" firstAttribute="top" secondItem="fZi-10-38n" secondAttribute="bottom" id="XA9-GR-thX"/>
+                            <constraint firstItem="02t-aQ-KKg" firstAttribute="centerY" secondItem="S0O-Ci-KdO" secondAttribute="centerY" constant="-20" id="Y5b-vi-fho"/>
+                            <constraint firstAttribute="trailing" secondItem="fZi-10-38n" secondAttribute="trailing" id="bwl-EU-cEo"/>
+                            <constraint firstItem="fZi-10-38n" firstAttribute="top" secondItem="4Fb-FE-sEm" secondAttribute="bottom" id="fn5-5B-TZ9"/>
+                            <constraint firstItem="fZi-10-38n" firstAttribute="leading" secondItem="S0O-Ci-KdO" secondAttribute="leading" id="ksf-gT-Oho"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fWT-vB-QGB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1492.5" y="116.19718309859155"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="lAg-6W-HfW">
+            <objects>
+                <viewController storyboardIdentifier="ThirdViewController" id="ocQ-em-BOH" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UYF-XM-F37"/>
+                        <viewControllerLayoutGuide type="bottom" id="6Cg-Td-t1h"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Lus-JT-9vf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="TGc-Y5-0Vj">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QR" translatesAutoresizingMaskIntoConstraints="NO" id="HTc-9c-CCR">
+                                <rect key="frame" x="96" y="75" width="128" height="128"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simply Scan to Pay" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T2Z-nc-rGD">
+                                <rect key="frame" x="30" y="238" width="260" height="20.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go cashless with QR code payments. Scan the retailers QR code, enter the amount payable, and you're done!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nhO-0B-DNA">
+                                <rect key="frame" x="20" y="278.5" width="280" height="54"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="nhO-0B-DNA" firstAttribute="leading" secondItem="Lus-JT-9vf" secondAttribute="leading" constant="20" id="4dS-xj-vYW"/>
+                            <constraint firstItem="T2Z-nc-rGD" firstAttribute="leading" secondItem="Lus-JT-9vf" secondAttribute="leading" constant="30" id="AdT-6M-ZUc"/>
+                            <constraint firstItem="TGc-Y5-0Vj" firstAttribute="top" secondItem="UYF-XM-F37" secondAttribute="bottom" id="Cy6-SB-HMB"/>
+                            <constraint firstItem="HTc-9c-CCR" firstAttribute="centerX" secondItem="Lus-JT-9vf" secondAttribute="centerX" id="FLo-oL-cIE"/>
+                            <constraint firstAttribute="trailing" secondItem="TGc-Y5-0Vj" secondAttribute="trailing" id="OvL-Vn-dDc"/>
+                            <constraint firstItem="TGc-Y5-0Vj" firstAttribute="leading" secondItem="Lus-JT-9vf" secondAttribute="leading" id="Uxk-aT-1BS"/>
+                            <constraint firstItem="6Cg-Td-t1h" firstAttribute="top" secondItem="TGc-Y5-0Vj" secondAttribute="bottom" id="Yit-4C-322"/>
+                            <constraint firstAttribute="trailing" secondItem="nhO-0B-DNA" secondAttribute="trailing" constant="20" id="cd3-Le-woX"/>
+                            <constraint firstItem="HTc-9c-CCR" firstAttribute="top" secondItem="UYF-XM-F37" secondAttribute="bottom" constant="75" id="eyV-9d-xAg"/>
+                            <constraint firstItem="T2Z-nc-rGD" firstAttribute="centerX" secondItem="Lus-JT-9vf" secondAttribute="centerX" id="g0T-VP-dIu"/>
+                            <constraint firstItem="nhO-0B-DNA" firstAttribute="centerX" secondItem="Lus-JT-9vf" secondAttribute="centerX" id="tYa-iD-MX3"/>
+                            <constraint firstItem="T2Z-nc-rGD" firstAttribute="top" secondItem="HTc-9c-CCR" secondAttribute="bottom" constant="35" id="uC1-pG-Cb0"/>
+                            <constraint firstAttribute="trailing" secondItem="T2Z-nc-rGD" secondAttribute="trailing" constant="30" id="xOR-aD-LJf"/>
+                            <constraint firstItem="nhO-0B-DNA" firstAttribute="top" secondItem="T2Z-nc-rGD" secondAttribute="bottom" constant="20" id="xco-2D-b0Q"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AC2-gu-8SL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2136" y="117"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="WjB-aF-TmV">
+            <objects>
+                <viewController storyboardIdentifier="FourthViewController" id="1m7-od-vOG" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="coU-ZY-NkY"/>
+                        <viewControllerLayoutGuide type="bottom" id="eyc-mc-kqK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MeC-og-27f">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="Wfa-XL-mnQ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Wallet" translatesAutoresizingMaskIntoConstraints="NO" id="Yeb-bL-m5e">
+                                <rect key="frame" x="88.5" y="75" width="143" height="126"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open a JS Wallet instantly" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fot-oN-K2s">
+                                <rect key="frame" x="30" y="236" width="260" height="20.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFh-Va-OlB">
+                                <rect key="frame" x="20" y="271.5" width="280" height="125.5"/>
+                                <string key="text">You can open a level-0 account with a daily transaction limit of Rs.25000 in a less than a minute.Simply enter your CNIC, CNIC date of issue,Mobile number and Email Address and start transaction immediately.Account opening has never been this easy.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Wfa-XL-mnQ" secondAttribute="trailing" id="7PX-rb-wCO"/>
+                            <constraint firstItem="Fot-oN-K2s" firstAttribute="leading" secondItem="MeC-og-27f" secondAttribute="leading" constant="30" id="7bQ-Fs-6OE"/>
+                            <constraint firstItem="XFh-Va-OlB" firstAttribute="centerX" secondItem="MeC-og-27f" secondAttribute="centerX" id="EWm-xA-880"/>
+                            <constraint firstItem="Wfa-XL-mnQ" firstAttribute="leading" secondItem="MeC-og-27f" secondAttribute="leading" id="F7V-ja-BIS"/>
+                            <constraint firstItem="Yeb-bL-m5e" firstAttribute="centerX" secondItem="MeC-og-27f" secondAttribute="centerX" id="KOs-do-txR"/>
+                            <constraint firstItem="Fot-oN-K2s" firstAttribute="top" secondItem="Yeb-bL-m5e" secondAttribute="bottom" constant="35" id="Mj8-k9-i3i"/>
+                            <constraint firstItem="XFh-Va-OlB" firstAttribute="top" secondItem="Fot-oN-K2s" secondAttribute="bottom" constant="15" id="MkV-Re-wA4"/>
+                            <constraint firstAttribute="trailing" secondItem="Fot-oN-K2s" secondAttribute="trailing" constant="30" id="OSc-J2-ein"/>
+                            <constraint firstItem="Wfa-XL-mnQ" firstAttribute="top" secondItem="coU-ZY-NkY" secondAttribute="bottom" id="RxN-kO-T2P"/>
+                            <constraint firstItem="Yeb-bL-m5e" firstAttribute="top" secondItem="coU-ZY-NkY" secondAttribute="bottom" constant="75" id="dWQ-ID-Ud6"/>
+                            <constraint firstItem="Fot-oN-K2s" firstAttribute="centerX" secondItem="MeC-og-27f" secondAttribute="centerX" id="hrh-z7-2mZ"/>
+                            <constraint firstItem="XFh-Va-OlB" firstAttribute="leading" secondItem="MeC-og-27f" secondAttribute="leading" constant="20" id="jxA-lI-fgJ"/>
+                            <constraint firstAttribute="trailing" secondItem="XFh-Va-OlB" secondAttribute="trailing" constant="20" id="l2G-EX-vL9"/>
+                            <constraint firstItem="eyc-mc-kqK" firstAttribute="top" secondItem="Wfa-XL-mnQ" secondAttribute="bottom" id="l8i-yl-QXx"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cMr-4y-fEq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2826" y="116"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="QR" width="127.66666412353516" height="127.66666412353516"/>
+        <image name="Wallet" width="142.66667175292969" height="126.33333587646484"/>
+        <image name="background" width="239.5" height="426.5"/>
+        <image name="img_slide_1" width="320" height="480"/>
+        <image name="splash_logo" width="246" height="75.5"/>
+    </resources>
+</document>

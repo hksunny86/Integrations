@@ -1,0 +1,182 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+	margin:0px;
+	padding:0px;
+}
+
+body{}
+
+#header_portal {
+	display:block;
+	width:100%;
+	height:83px;
+	background:url(../slideshow/login-page-header-top-bg.png) no-repeat 0px 0px;
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index: 99;
+}
+#header_portal .logo_portal_login {
+	display:block;
+	background:url(../images/aw/logo-askari-zong.png) no-repeat 0px 14px;
+	width:157px;
+	height:95px;
+	margin:0px auto !important;
+}
+
+
+#footer_portal{
+		display:block;
+		width:100%;
+		height:82px;
+		background:url(../images/aw/footer-bg.png) repeat-x 0px 0px;
+		position:relative;
+	}
+	#footer_portal .logo_inov8 a{
+		display:block;
+		background:url(../images/aw/logo-zindigi.png) no-repeat 0px 0px;
+		width:60px;
+		height:62px;
+		position:absolute;
+		top:12px;
+		right:15px;
+		z-index:99;
+	}
+	#footer_portal span{
+		display:block;
+		font-family:Arial, Helvetica, sans-serif;
+		font-size:13px;
+		color:#222222;
+		position:absolute;
+		top:27px;
+		right:85px;
+		z-index:89;
+		text-align:right;
+	}
+
+#login-footer{
+		display:block;
+		width:371px;
+		height:150px;
+		position:absolute;
+		top:405px;
+		right:100px;
+		z-index:999;
+		font-family:Arial, Helvetica, sans-serif;
+		font-size:13px;
+		text-align:center;
+		color:#ffffff;	
+	}
+	#login-footer .logo_inov8 a{
+		display:block;
+		background:url(../images/aw/logo-zindigi.png) no-repeat 0px 0px;
+		width:60px;
+		height:62px;
+		margin:5px auto;
+	}
+
+
+#portal_login{
+		display:block;
+		width:371px;
+		height:368px;
+		position:absolute;
+		top:30px;
+		right:100px;
+		z-index:999;
+		background:url(../slideshow/login-page-login-panel-bg.png) no-repeat 0px 0px;
+		font-family:Arial, Helvetica, sans-serif;
+		font-size:14px;
+		color:#000000;
+	}
+	#portal_login .login_text{
+		display:block;
+		width:173px;
+		height:71px;
+		margin-top:8px;
+		background:url(../images/login/portal-login-text.png) no-repeat 0px 0px;
+	}
+	#portal_login label{
+		display:block;
+		font-family:Arial, Helvetica, sans-serif;
+		font-size:14px;
+		color:#010101;
+		margin-top:10px;
+	}
+	
+	#portal_login input.login_screen_input_text{
+		display:block;
+		width:100%;
+		height:35px;
+		font-family:Arial, Helvetica, sans-serif;
+		font-size:17px;
+		font-weight:normal;
+		/*color:#010101;*/
+		color:#000000;
+		/*padding-top:10px;*/
+		line-height:35px;
+		text-indent:8px;
+		margin-top:5px;
+		border:1px solid #889ca4;
+	}
+	#portal_login input.user{background:#fff;}
+	#portal_login input.pass{background:none;}
+	#portal_login input.login_screen_submit_button{
+		display:block;
+		width:179px;
+		height:58px;
+		margin:10px auto;
+		background:url(../images/login/portal-login-submit-btn.png) no-repeat 0px 0px;
+		border:none;
+		cursor:pointer;
+	}
+	#portal_login input.login_screen_submit_button:hover{background:url(../images/login/portal-login-submit-btn-hover.png) no-repeat 0px 0px;}
+	#portal_login input.login_screen_submit_button:active{background:url(../images/login/portal-login-submit-btn.png) no-repeat 0px 0px;}
+	
+	
+	
+	
+/**************************************NOTIFICATION DIVS*******************************/
+
+#portal_login .error_parent{
+	display:block;
+	width:80%;
+	padding:0px;
+	margin:95px auto 0px auto;
+}
+
+#portal_login #errorMsg{
+	display:block;
+	width:100%;
+	padding:0px;
+	position:relative;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	color:#555555;
+	margin:0px;
+	text-align: center;
+	}
+	#errorMsg p{margin:0px; padding:0px;}
+	/*
+	#errorMsg a{
+		display:block;
+		width:10px;
+		height:10px;
+		position:absolute;
+		top:5px;
+		right:5px;
+	}
+	#errorMsg.error a{background:url(../images/aw/iocn_close_notice_error.png) no-repeat 0px 0px;}
+	#notice_div.success a{background:url(../images/aw/iocn_close_notice_success.png) no-repeat 0px 0px;}
+	#notice_div.info a{background:url(../images/aw/iocn_close_notice_info.png) no-repeat 0px 0px;}
+	#notice_div.warning a{background:url(../images/aw/iocn_close_notice_warning.png) no-repeat 0px 0px;}
+	*/
+	
+	#errorMsg.error{ background-color:none; border:none; color:#b01112 !important;}
+	/*#notice_div.success{ background-color:#c5eb93; border:1px solid #49c050; color:#518211;}
+	#notice_div.info{ background-color:#d0e4f4; border:1px solid #9bbbd8; color:#4a7ea8;}
+	#notice_div.warning{ background-color:#ffe9a7; border:1px solid #efba6c; color:#97791f;}*/
+
+/**************************************END NOTIFICATION DIVS*******************************/

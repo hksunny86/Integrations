@@ -1,0 +1,1 @@
+selfie param added in l2 account upgrade validation request

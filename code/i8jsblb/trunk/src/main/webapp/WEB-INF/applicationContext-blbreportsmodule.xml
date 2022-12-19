@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="bdeKpiReportDAO" class="com.inov8.microbank.server.dao.blbreports.BdeKpiReportHibernateDAO" autowire="byName">
+        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="debitCardChargesReportDAO" class="com.inov8.microbank.server.dao.blbreports.DebitCardChargesReportHibernateDAO" autowire="byName">
+    </bean>
+
+    <bean id="handlerActivityReportDAO" class="com.inov8.microbank.server.dao.blbreports.HandlerActivityReportHibernateDAO" autowire="byName">
+    </bean>
+
+    <bean id="agentParentChildReportDAO" class="com.inov8.microbank.server.dao.blbreports.AgentParentChildReportHibernateDAO" autowire="byName">
+    </bean>
+
+
+    <bean id="dormancyReportDAO" class="com.inov8.microbank.server.dao.blbreports.DormancyReportHibernateDAO" autowire="byName">
+    </bean>
+
+    <bean id="accountDormancyReportDAO" class="com.inov8.microbank.server.dao.blbreports.AccountDormancyReportHibernateDAO" autowire="byName">
+    </bean>
+
+    <bean id="cnicExpiredReportDAO" class="com.inov8.microbank.server.dao.blbreports.CnicExpiredReportHibernateDAO" autowire="byName">
+    </bean>
+
+    <bean id="blbReportsManager" parent="baseTransactionProxy">
+        <property name="target">
+            <bean class="com.inov8.microbank.server.service.blbreports.BLBReportsManagerImpl" autowire="byName">
+                <property name="bdeKpiReportDAO">
+                    <ref local="bdeKpiReportDAO"/>
+                </property>
+                <property name="debitCardChargesReportDAO">
+                    <ref local="debitCardChargesReportDAO"/>
+                </property>
+                <property name="handlerActivityReportDAO">
+                    <ref local="handlerActivityReportDAO"/>
+                </property>
+                <property name="agentParentChildReportDAO">
+                    <ref local="agentParentChildReportDAO"/>
+                </property>
+                <property name="dormancyReportDAO">
+                    <ref local="dormancyReportDAO"/>
+                </property>
+                <property name="accountDormancyReportDAO">
+                    <ref local="accountDormancyReportDAO"/>
+                </property>
+            </bean>
+        </property>
+    </bean>
+</beans>

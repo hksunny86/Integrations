@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xsi:schemaLocation="http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+       http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://cxf.apache.org/jaxrs
+		http://cxf.apache.org/schemas/jaxrs.xsd
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <!-- ######################################################## -->
+    <!-- SPRING COMPONENT SCANNING TO DETECT ANNOTATED BEANS      -->
+    <!-- ######################################################## -->
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.inov8"/>
+
+    <!-- ######################################################## -->
+    <!-- SPRING ENCRYPTED PROPERTIES LOADER                       -->
+    <!-- ######################################################## -->
+
+    <bean id="applicationProperties" class="org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer">
+        <constructor-arg ref="configurationEncryptor"/>
+        <property name="location" value="classpath:application.properties"/>
+        <property name="searchSystemEnvironment" value="true"/>
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+    </bean>
+
+    <bean id="environmentVariablesConfiguration" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+        <property name="algorithm" value="PBEWithMD5AndDES"/>
+        <property name="password" value="682ede816988e58fb6d057d9d85605e0"/>
+    </bean>
+
+    <bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+        <property name="config" ref="environmentVariablesConfiguration"/>
+    </bean>
+
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="defaultTimeout" value="10"></property>
+    </bean>
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="poolName" value="HikariCP"/>
+        <property name="connectionTestQuery" value="SELECT 1 FROM DUAL"/>
+        <property name="connectionInitSql" value="SELECT 1 FROM DUAL"/>
+        <property name="dataSourceClassName" value="oracle.jdbc.pool.OracleDataSource"/>
+        <property name="maximumPoolSize" value="50"/>
+        <property name="minimumIdle" value="5"/>
+        <property name="idleTimeout" value="60000"/>
+        <property name="connectionTimeout" value="15000"/>
+        <property name="validationTimeout" value="5000"/>
+        <property name="maxLifetime" value="300000"/>
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="url">jdbc:oracle:thin:@${int.db.server}:${int.db.port}/${int.db.service}</prop>
+                <prop key="user">${int.db.username}</prop>
+                <prop key="password">${int.db.password}</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <bean id="defaultLobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler"/>
+
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg ref="hikariConfig"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+    <bean id="inInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor">
+        <property name="prettyLogging" value="true"/>
+    </bean>
+    <bean id="outInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor">
+        <property name="prettyLogging" value="true"/>
+    </bean>
+
+
+    <!-- ######################################################## -->
+    <!-- CXF WEB SERVICE CLIENT                                   -->
+    <!-- ######################################################## -->
+
+
+    <!--&lt;!&ndash; Mock Nadra Configuration &ndash;&gt;-->
+    <jaxws:client id="bioVeriSysMobileBankAccount"
+                  serviceClass="com.inov8.integration.middleware.nadra.biometric.IBioVeriSysMobileBankAccount"
+                  address="http://${nadra.web.url}:${nadra.web.port}/nadra-biometric-integration-mock/ws/Services/BioVeriSysMobileBankAccount">
+    </jaxws:client>
+    <jaxws:client id="ibioVeriSysOTC"
+                  serviceClass="com.inov8.integration.middleware.nadra.otc.IBioVeriSysOTC"
+                  address="http://${nadra.web.url}:${nadra.web.port}/nadra-biometric-integration-mock/ws/Services/BioVeriSysOTCTransaction">
+    </jaxws:client>
+
+
+    <!-- Production/Test Nadra Configuration -->
+
+     <!--<jaxws:client id="bioVeriSysMobileBankAccount"-->
+                  <!--serviceClass="com.inov8.integration.middleware.nadra.biometric.IBioVeriSysMobileBankAccount"-->
+                  <!--address="http://${nadra.web.url}:${nadra.web.port}/Nadra/Services/BioVeriSysMobileBankAccount">-->
+         <!--<jaxws:inInterceptors>-->
+             <!--<ref bean="inInterceptor"/>-->
+         <!--</jaxws:inInterceptors>-->
+         <!--<jaxws:outInterceptors>-->
+             <!--<ref bean="outInterceptor"/>-->
+         <!--</jaxws:outInterceptors>-->
+    <!--</jaxws:client>-->
+    <!--<jaxws:client id="ibioVeriSysOTC"-->
+                  <!--serviceClass="com.inov8.integration.middleware.nadra.otc.IBioVeriSysOTC"-->
+                  <!--address="http://${nadra.web.url}:${nadra.web.port}/Nadra/Services/BioVeriSysOTCTransaction">-->
+        <!--<jaxws:inInterceptors>-->
+            <!--<ref bean="inInterceptor"/>-->
+        <!--</jaxws:inInterceptors>-->
+        <!--<jaxws:outInterceptors>-->
+            <!--<ref bean="outInterceptor"/>-->
+        <!--</jaxws:outInterceptors>-->
+    <!--</jaxws:client>-->
+
+
+
+    <jaxws:client id="jsNadraWebService"
+    serviceClass="com.inov8.integration.middleware.jsnadra.JSNadraWebService"
+    address="http://${nadra.web.url}:${nadra.web.port}/JSNadraWebService">
+    <jaxws:inInterceptors>
+    <ref bean="inInterceptor"/>
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+    <ref bean="outInterceptor"/>
+    </jaxws:outInterceptors>
+    </jaxws:client>
+    <jaxws:client id="jsNadraWebService"
+    serviceClass="com.inov8.integration.middleware.jsnadra.JSNadraWebService"
+    address="http://${nadra.web.url}:${nadra.web.port}/JSNadraWebService">
+    <jaxws:inInterceptors>
+    <ref bean="inInterceptor"/>
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+    <ref bean="outInterceptor"/>
+    </jaxws:outInterceptors>
+    </jaxws:client>
+
+
+
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+    <jaxrs:server id="nadraRestController" address="/">
+        <jaxrs:serviceBeans>
+            <ref bean="nadraIntegrationControllerImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <cxf:logging/>
+        </jaxrs:features>
+        <jaxrs:providers>
+            <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <http-conf:conduit name="*.http-conduit">
+        <http-conf:tlsClientParameters disableCNCheck="true"/>
+        <http-conf:client ConnectionTimeout="100000" ReceiveTimeout="240000"/>
+    </http-conf:conduit>
+
+
+    <aop:aspectj-autoproxy/>
+
+</beans>

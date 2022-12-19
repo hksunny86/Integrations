@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+
+	<!-- DAO -->
+
+	<bean id="custDisputeTransListViewDAO" class="com.inov8.microbank.server.dao.portal.servicecustomerdispute.hibernate.CustDisputeTransListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="customerDisputeServiceListViewDAO" class="com.inov8.microbank.server.dao.portal.servicecustomerdispute.hibernate.CustomerDisputeServiceListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Mapping for Customer Dispute Product Module -->
+
+	<bean id="custDisputeTransVrDcListViewDAO" class="com.inov8.microbank.server.dao.portal.productcustomerdispute.hibernate.CustDisputeTransVrDcListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="customerDisputeProductListViewDAO" class="com.inov8.microbank.server.dao.portal.productcustomerdispute.hibernate.CustomerDisputeProductListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+  <bean id="userDeviceAccountsDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.UserDeviceAccountsHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+
+	<!-- Service -->
+
+	<bean id="customerDisputeManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.inov8.microbank.server.service.portal.servicecustomerdispute.CustomerDisputeManagerImpl">
+				<property name="custDisputeTransListViewDAO" ref="custDisputeTransListViewDAO" />
+				<property name="mnoSupplierListViewDAO" ref="mnoSupplierListViewDAO"/>
+				<property name="salesDAO" ref="salesDAO"/>
+				<property name="issueManager" ref="issueManager"/>
+				<property name="userDeviceAccountsDAO">
+					<ref local="userDeviceAccountsDAO" />
+				</property>
+				<property name="appUserDAO" ref="appUserDAO" />
+			</bean>
+		</property>
+	</bean>
+
+
+	<bean id="customerDisputeproductManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.inov8.microbank.server.service.portal.productcustomerdispute.CustomerDisputeProductManagerImpl">
+				<property name="custDisputeTransVrDcListViewDAO">
+					<ref local="custDisputeTransVrDcListViewDAO" />
+				</property>
+				<property name="mnoSupplierListViewDAO">
+					<ref bean="mnoSupplierListViewDAO" />
+				</property>
+				<property name="salesDAO">
+					<ref bean="salesDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Facade -->
+
+	<bean id="customerDisputeFacade" class="com.inov8.microbank.server.facade.portal.servicecustomerdispute.CustomerDisputeFacadeImpl">
+		<property name="customerDisputeManager">
+			<ref local="customerDisputeManager" />
+		</property>
+		<property name="frameworkExceptionTranslator">
+			<ref bean="frameworkExceptionTranslator" />
+		</property>
+	</bean>
+	
+	<bean id="customerDisputeProductFacade" class="com.inov8.microbank.server.facade.portal.productcustomerdispute.CustomerDisputeProductFacadeImpl">
+		<property name="customerDisputeProductManager">
+			<ref local="customerDisputeproductManager" />
+		</property>
+		<property name="frameworkExceptionTranslator">
+			<ref bean="frameworkExceptionTranslator" />
+		</property>
+	</bean>
+
+</beans>

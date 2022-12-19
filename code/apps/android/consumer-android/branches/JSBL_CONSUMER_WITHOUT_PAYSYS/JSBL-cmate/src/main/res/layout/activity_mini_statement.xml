@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_title"
+        android:layout_below="@+id/container_header"
+        layout="@layout/heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/scViewInLayout"
+        android:layout_above="@+id/bottomBarQR"
+        android:layout_below="@+id/container_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/activitySideMarginNormal"
+        android:layout_marginRight="@dimen/activitySideMarginNormal">
+
+        <com.inov8.jsblconsumer.ui.components.ListViewExpanded
+            android:id="@+id/optionsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnNext"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/layoutMarginLarge"
+            android:divider="@color/offwhite"
+            android:scrollbars="none"
+            android:footerDividersEnabled="false"
+            android:padding="2dp" />
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/buttonHeightNormal"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/buttonBottomMarginSmall"
+            android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+            android:layout_marginRight="@dimen/buttonSideMarginNormal"
+            android:layout_marginTop="@dimen/buttonTopMarginSmall"
+            android:background="@drawable/button_ok"
+            android:text="@string/ok"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/buttonTextNormal"
+            android:textStyle="normal"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/bottomBar"
+        layout="@layout/layout_bottom_bar" />
+
+    <include
+        android:id="@+id/bottomBarQR"
+        layout="@layout/layout_qr_code" />
+
+</RelativeLayout>

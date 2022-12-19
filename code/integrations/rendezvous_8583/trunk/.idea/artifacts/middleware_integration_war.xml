@@ -1,0 +1,64 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="middleware-integration.war">
+    <output-path>$PROJECT_DIR$/classes/artifacts/middleware-integration.war</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="JS Rendezvous 8583" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="module" name="slf4j-api-1.6.4.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="slf4j-log4j12-1.6.4.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="commons-logging-1.1.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="aopalliance-1.0.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="joda-time-2.1.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="commons-dbcp-1.4.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="commons-pool-1.6.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="commons-beanutils-1.7.0.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="commons-collections-3.2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="commons-digester-1.8.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="commons-httpclient-3.0.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="commons-io-1.1.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="commons-lang-2.2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="log4j-1.2.16.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="jstl-1.2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="guava-13.0.1.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="asm-1.5.3.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="asm-attrs-1.5.3.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="cglib-2.1_3.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="ojdbc6.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="bsh-2.0b5.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="commons-cli-1.2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="javatuples-1.2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="jdbm-1.0.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="jdom-1.1.3.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="je-5.0.73.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="jline-1.0.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="jpos-1.9.6-sources.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="jpos-1.9.6.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="org.osgi.core-4.3.1.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="xercesImpl-2.10.0.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="xml-apis-1.4.01.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="commons-codec-1.9.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="commons-validator-1.4.0.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="bonecp-0.8.0.RELEASE.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="spring-aop-4.1.0.RC2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="spring-beans-4.1.0.RC2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="spring-context-4.1.0.RC2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="spring-core-4.1.0.RC2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="spring-expression-4.1.0.RC2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="spring-jdbc-4.1.0.RC2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="spring-orm-4.1.0.RC2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="spring-tx-4.1.0.RC2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="spring-web-4.1.0.RC2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="spring-webmvc-4.1.0.RC2.jar" module-name="JS Rendezvous 8583" />
+          <element id="library" level="module" name="mina-core-2.0.7.jar" module-name="JS Rendezvous 8583" />
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/jasypt/jasypt/1.9.2/jasypt-1.9.2.jar" />
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/org/jasypt/jasypt-spring31/1.9.2/jasypt-spring31-1.9.2.jar" />
+          <element id="file-copy" path="$MAVEN_REPOSITORY$/com/zaxxer/HikariCP/2.4.1/HikariCP-2.4.1.jar" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="JS Rendezvous 8583/web/Web" />
+    </root>
+  </artifact>
+</component>

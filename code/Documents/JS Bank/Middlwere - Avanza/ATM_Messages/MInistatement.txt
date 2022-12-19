@@ -1,0 +1,37 @@
+02950200F23E44D529E081200000000004000022165041710000048888381000000000000000090812372400265014372409081306090860119010012C00000100C0000010006504171245041710000048888=1306101000000142682101LLW00001CC0000010000000CITY CENTRE BRANCH     LILONGWE     00MW026004151001000001426820538083015211201213144002
+
+
+*------------------- Parsed Message Details ------------------------*
+
+ Position               Field Description                  Field Value
+*-------------------------------------------------------------------*
+2        :     PAN                                      : 5041710000048888
+3        :     PROCESSING CODE                          : 381000
+4        :     AMOUNT, TRANSACTION                      : 000000000000
+7        :     TRANSMISSION DATE AND TIME               : 0908123724
+11       :     SYSTEM TRACE AUDIT NUMBER                : 002650
+12       :     TIME, LOCAL TRANSACTION                  : 143724
+13       :     DATE, LOCAL TRANSACTION                  : 0908
+14       :     DATE, EXPIRATION                         : 1306
+15       :     DATE, SETTLEMENT                         : 0908
+18       :     MERCHANTS TYPE                           : 6011
+22       :     POINT OF SERVICE ENTRY MODE              : 901
+25       :     POINT OF SERVICE CONDITION CODE          : 00
+26       :     POINT OF SERVICE PIN CAPTURE CODE        : 12
+28       :     AMOUNT, TRANSACTION FEE                  : C00000100
+30       :     AMOUNT, TRANSACTION PROCESSING FEE       : C00000100
+32       :     ACQUIRING INSTITUTION IDENT CODE         : 504171
+35       :     TRACK 2 DATA                             : 5041710000048888=1306101
+37       :     RETRIEVAL REFERENCE NUMBER               : 000000142682
+40       :     SERVICE RESTRICTION CODE                 : 101
+41       :     CARD ACCEPTOR TERMINAL IDENTIFICACI      : LLW00001
+42       :     CARD ACCEPTOR IDENTIFICATION CODE        : CC0000010000000
+43       :     CARD ACCEPTOR NAME/LOCATION              : CITY CENTRE BRANCH     LILONGWE     00MW
+49       :     CURRENCY CODE, TRANSACTION               : 026
+56       :     RESERVED ISO                             : 1510
+59       :     RESERVED NATIONAL                        : 0000142682
+102      :     ACCOUNT IDENTIFICATION 1                 : 38083
+123      :     RESERVED PRIVATE USE                     : 211201213144002
+
+*-------------------------------------------------------------------*
+Press Enter <-|

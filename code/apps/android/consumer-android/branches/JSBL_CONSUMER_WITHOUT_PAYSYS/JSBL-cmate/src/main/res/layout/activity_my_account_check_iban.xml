@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_title"
+        layout="@layout/heading_layout"
+        android:layout_below="@+id/container_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_above="@+id/bottomBarQR"
+        android:id="@+id/data_layout"
+        android:layout_below="@+id/container_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/activitySideMarginNormal"
+        android:layout_marginRight="@dimen/activitySideMarginNormal"
+        android:visibility="visible">
+
+<!--        <TextView-->
+<!--            android:id="@+id/lblSubHeading1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="@dimen/textViewMarginSmall"-->
+<!--            android:layout_marginTop="@dimen/textViewMarginXLarge"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            android:shadowColor="@color/white"-->
+<!--            android:shadowDx="0"-->
+<!--            android:shadowDy="0"-->
+<!--            android:shadowRadius="0"-->
+<!--            android:text="IBAN NUMBER"-->
+<!--            android:textColor="@color/text_grey"-->
+<!--            android:textSize="@dimen/textViewTextSizeNormal"-->
+<!--            android:textStyle="bold" />-->
+
+        <TextView
+            android:id="@+id/tvMyAccountIbanNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblSubHeading1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/layoutMarginSmall"
+            android:shadowColor="@color/white"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="0"
+            android:text="IBAN NUMBER"
+            android:textColor="@color/text_grey"
+            android:textSize="@dimen/textViewTextSizeLarge"
+            android:textStyle="normal" />
+
+
+
+
+        <Button
+            android:id="@+id/btnokIbanNumber"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/buttonHeightNormal"
+            android:layout_below="@id/tvMyAccountIbanNumber"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+            android:layout_marginRight="@dimen/buttonSideMarginNormal"
+            android:layout_marginTop="@dimen/buttonTopMarginXLarge"
+            android:background="@drawable/button_ok"
+            android:text="OK"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/buttonTextNormal"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/bottomBar"
+        layout="@layout/layout_bottom_bar" />
+
+    <include
+        android:id="@+id/bottomBarQR"
+        layout="@layout/layout_qr_code" />
+
+</RelativeLayout>

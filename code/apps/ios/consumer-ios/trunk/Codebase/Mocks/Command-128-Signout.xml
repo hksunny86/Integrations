@@ -1,0 +1,13 @@
+<!-- Customer Signout Response -->
+<!--<msg id="128">-->
+<!--    <params>-->
+<!--            <param name="You are logged out successfully."></param>-->
+<!--    </params>-->
+<!--</msg>-->
+
+
+<msg id="-1">
+    <errors>
+        <error code="9007" level="3">This session has expired, please login again.</error>
+    </errors>
+</msg>

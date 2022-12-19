@@ -1,0 +1,70 @@
+<!-- Money Transfer Response AccToCash -->
+
+<!--
+BB to Core
+ <msg id="191" reqTime="1470136152361">
+    <params>
+        <param name="DTID">5</param>
+        <param name="PID">50051</param>
+        <param name="CMOB">03212121515</param>
+        <param name="COREACID">10000000099</param>
+        <param name="TXAM">50</param>
+    </params>
+</msg>
+-->
+
+<msg id="191">
+    <params>
+        <param name="CMOB">03212121515</param>
+        <param name="COREACID">10000000099</param>
+        <param name="COREACTL">Humayun&amp;Naveed 085</param>
+        <param name="TXAM">50.0</param>
+        <param name="TXAMF">50.00</param>
+        <param name="CAMT">20.0</param>
+        <param name="CAMTF">20.00</param>
+        <param name="TPAM">0.0</param>
+        <param name="TPAMF">0.00</param>
+        <param name="TAMT">50.0</param>
+        <param name="TAMTF">50.00</param>
+        <param name="PID">50051</param>
+        <param name="NAME">Customer BB To Core</param>
+        <param name="SWMOB"></param>
+        <param name="SWCNIC"></param>
+    </params>
+</msg>
+
+<!--
+ BB to IBFT
+<msg id="191" reqTime="1428841928450">
+    <params>
+        <param name="DTID">5</param>
+        <param name="PID">50054</param>
+        <param name="CMOB">03454254477</param>
+        <param name="COREACID">432100000000444</param>
+        <param name="TXAM">500</param>
+        <param name="BAIMD">639530</param>
+        <param name="PMTTYPE">0</param>
+    </params>
+</msg>
+
+
+<msg id="191">
+    <params>
+        <param name="CMOB">03454254477</param>
+        <param name="COREACID">432100000000444</param>
+        <param name="COREACTL">Umar Saleem</param>
+        <param name="TXAM">500.0</param>
+        <param name="TXAMF">500.00</param>
+        <param name="CAMT">0.0</param>
+        <param name="CAMTF">0.00</param>
+        <param name="TPAM">0.0</param>
+        <param name="TPAMF">0.00</param>
+        <param name="TAMT">500.0</param>
+        <param name="TAMTF">500.00</param>
+        <param name="PID">50054</param>
+        <param name="NAME">Customer BB To IBFT</param>
+        <param name="SWMOB" />
+        <param name="SWCNIC" />
+    </params>
+</msg>
+-->

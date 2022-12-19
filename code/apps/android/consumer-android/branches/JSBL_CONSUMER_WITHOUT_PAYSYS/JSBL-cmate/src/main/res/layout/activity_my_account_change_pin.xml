@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <include
+        android:id="@+id/container_heading"
+        android:layout_below="@+id/container_header"
+        layout="@layout/heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_above="@+id/bottomBarQR"
+        android:layout_below="@+id/container_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/layoutMarginNormal"
+                android:layout_marginLeft="@dimen/activitySideMarginNormal"
+                android:layout_marginRight="@dimen/activitySideMarginNormal"
+                android:layout_marginTop="@dimen/layoutMarginNormal">
+
+                <TextView
+                    android:id="@+id/lblOldPIN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="@string/old_pin"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/txtOldPIN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/lblOldPIN"
+                    android:background="@drawable/input_bg"
+                    android:inputType="numberPassword"
+                    android:maxLength="4"
+                    android:minEms="4"
+                    android:padding="@dimen/editTextFieldPadding"
+                    android:password="true"
+                    android:singleLine="true"
+                    android:textSize="@dimen/textViewTextSizeMedium" />
+
+                <TextView
+                    android:id="@+id/lblNewPIN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtOldPIN"
+                    android:layout_marginTop="@dimen/textViewMarginNormal"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="@string/new_pin"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/txtNewPIN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/lblNewPIN"
+                    android:background="@drawable/input_bg"
+                    android:inputType="numberPassword"
+                    android:maxLength="4"
+                    android:minEms="4"
+                    android:padding="@dimen/editTextFieldPadding"
+                    android:password="true"
+                    android:singleLine="true"
+                    android:textSize="@dimen/textViewTextSizeMedium" />
+
+                <TextView
+                    android:id="@+id/lblConfirmPIN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtNewPIN"
+                    android:layout_marginTop="@dimen/textViewMarginNormal"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="@string/confirm_new_pin"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/txtConfirmPIN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblConfirmPIN"
+                    android:background="@drawable/input_bg"
+                    android:maxLength="4"
+                    android:minEms="4"
+
+                    android:inputType="numberPassword"
+                    android:padding="@dimen/editTextFieldPadding"
+                    android:password="true"
+                    android:singleLine="true"
+                    android:textSize="@dimen/textViewTextSizeMedium" />
+
+                <Button
+                    android:id="@+id/btnChangePIN"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/buttonHeightNormal"
+                    android:layout_below="@id/txtConfirmPIN"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+                    android:layout_marginRight="@dimen/buttonSideMarginNormal"
+                    android:layout_marginTop="@dimen/buttonTopMarginXLarge"
+                    android:background="@drawable/button_ok"
+                    android:text="@string/change_pin"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/buttonTextNormal"
+                    android:textStyle="normal" />
+                <Button
+                    android:id="@+id/btnSetMpinLater"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/buttonHeightNormal"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
+                    android:layout_below="@id/btnChangePIN"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+                    android:layout_marginRight="@dimen/buttonSideMarginNormal"
+                    android:layout_marginTop="@dimen/buttonTopMarginLarge"
+                    android:background="@drawable/button_cancel"
+                    android:text="@string/set_mpin_later"
+                    android:layout_above="@id/bottomBarQR"
+                    android:layout_alignParentBottom="true"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/buttonTextNormal"
+                    android:textStyle="normal" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/bottomBar"
+        android:visibility="gone"
+        layout="@layout/layout_bottom_bar" />
+
+    <include
+        android:id="@+id/bottomBarQR"
+        android:visibility="gone"
+        layout="@layout/layout_qr_code" />
+
+</RelativeLayout>

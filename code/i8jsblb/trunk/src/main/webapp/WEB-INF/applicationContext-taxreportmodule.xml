@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+
+	<!-- DAO -->
+  	<bean id="wHTAgentReportViewDAO" class="com.inov8.microbank.server.dao.portal.reports.tax.hibernate.WHTAgentReportViewHibernateDAO">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+  	</bean>
+  	
+	<bean id="whtStakeholderViewDao" class="com.inov8.microbank.server.dao.portal.reports.tax.hibernate.WHTStakeholderViewDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="fedDetailedReportDAO" class="com.inov8.microbank.tax.dao.hibernate.FedDetailedReportHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="whtDetailedReportDAO" class="com.inov8.microbank.tax.dao.hibernate.WhtDetailedReportHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+  	<bean id="commissionTransactionWhtViewDAO" class="com.inov8.microbank.server.dao.portal.reports.tax.hibernate.CommissionTransactionWhtViewHibernateDAO">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+  	</bean>
+
+	<bean id="fedBreakupDetailListViewDAO" class="com.inov8.microbank.server.dao.portal.reports.tax.hibernate.FedBreakupDetailListViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="cashTransReportViewDAO" class="com.inov8.microbank.server.dao.portal.reports.finance.hibernate.CashTransReportViewHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	
+	<bean id="agentCustWHTSummaryDAO" class="com.inov8.microbank.server.dao.portal.reports.tax.hibernate.AgentCustWHTSummaryHibernateDAO">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+  	</bean>
+  	
+	<!-- Service -->
+    <bean id="taxReportManager" parent="baseTransactionProxy">
+  		<property name="target">
+  			<bean class="com.inov8.microbank.server.service.portal.taxreportmodule.TaxReportManagerImpl" autowire="byName">
+  			</bean>
+  		</property>
+    </bean>
+
+	<!-- Facade -->
+    <bean id="taxReportFacade" class="com.inov8.microbank.server.facade.portal.taxreportmodule.TaxReportFacadeImpl" autowire="byName">
+  	</bean>
+  	
+  	<bean id="targetedWhtDetailViewDAO" class="com.inov8.microbank.tax.dao.hibernate.TargetedWhtDetailReportHibernateDAO">
+  		<property name="sessionFactory" ref="sessionFactory" />
+  	</bean>
+
+</beans>
+

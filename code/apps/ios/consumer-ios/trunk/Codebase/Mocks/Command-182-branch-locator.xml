@@ -1,0 +1,15 @@
+<msg id="207">
+    <params>
+        <param name="TOTAL_COUNT">22</param>
+    </params>
+    <locations>
+        <location ADD="sadfasdf" CONTACT="03652564894" DISTANCE="56.78 KM" LATITUDE="31.50176" LONGITUDE="74.945602" NAME="asdfaaasd" />
+        <location ADD="asdf sa" CONTACT="03998585855" DISTANCE="57.0 KM" LATITUDE="31.52176" LONGITUDE="74.948602" NAME="asdfasdf" />
+        <location ADD="dsa address" CONTACT="03214455874" DISTANCE="76.75 KM" LATITUDE="31.99176" LONGITUDE="74.945602" NAME="applicantnameValapplicantnameVal" />
+        <location ADD="asdf" CONTACT="03989985889" DISTANCE="0.02 KM" LATITUDE="31.5250999" LONGITUDE="74.34732" NAME="asdfasasdfas" />
+        <location ADD="dsgdfg" CONTACT="03314063047" DISTANCE="111.17 KM" LATITUDE="32.5250578" LONGITUDE="74.347602" NAME="headaonezerooneheadaonezeroone" />
+        <location ADD="asdf" CONTACT="03998585885" DISTANCE="56.71 KM" LATITUDE="31.52176" LONGITUDE="74.945602" NAME="saafa" />
+        <location ADD="asdf" CONTACT="03198755441" DISTANCE="72.67 KM" LATITUDE="31.99176" LONGITUDE="74.885602" NAME="asdfasdf" />
+        <location ADD="CA Address" CONTACT="03484509349" DISTANCE="111.17 KM" LATITUDE="32.5250578" LONGITUDE="74.347602" NAME="KKKKKK" />
+    </locations>
+</msg>

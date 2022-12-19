@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="microbank"
+          class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>${microbank.url}</value>
+        </property>
+        <property name="serviceInterface"
+                  value="com.inov8.integration.i8sb.controller.I8SBSwitchController"/>
+    </bean>
+
+</beans>

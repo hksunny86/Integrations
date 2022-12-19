@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:jaxrs-client="http://cxf.apache.org/jaxrs-client"
+       xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+       http://cxf.apache.org/jaxrs-client http://cxf.apache.org/jaxrs-client.xsd
+       http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+       http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd" >
+
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+
+    <context:component-scan base-package="com.inov8"/>
+
+    <bean id="applicationProperties" class="org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer">
+        <constructor-arg ref="configurationEncryptor" />
+        <property name="location" value="classpath:application.properties" />
+        <property name="searchSystemEnvironment" value="true" />
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+    </bean>
+
+    <bean id="environmentVariablesConfiguration" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+        <property name="algorithm" value="PBEWithMD5AndDES" />
+        <property name="password" value="682ede816988e58fb6d057d9d85605e0" />
+    </bean>
+
+    <bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+        <property name="config" ref="environmentVariablesConfiguration" />
+    </bean>
+
+    <jaxws:endpoint id="jsBLBIntegration"
+                    implementor="#JsBLBIntegration"
+                    address="/JsBLBIntegration">
+        <jaxws:inInterceptors>
+            <ref bean="inInterceptor"/>
+        </jaxws:inInterceptors>
+        <jaxws:outInterceptors>
+            <ref bean="outInterceptor"/>
+        </jaxws:outInterceptors>
+    </jaxws:endpoint>
+
+    <jaxws:client id="jsFonePayIntegration"
+                  serviceClass="com.inov8.integration.middleware.controller.hostController.JsBLBIntegration"
+                  address="http://${js.ip}:${js.port}${js.path}">
+        <jaxws:inInterceptors>
+            <ref bean="inInterceptor"/>
+        </jaxws:inInterceptors>
+        <jaxws:outInterceptors>
+            <ref bean="outInterceptor"/>
+        </jaxws:outInterceptors>
+    </jaxws:client>
+
+
+    <http-conf:conduit name="*.http-conduit">
+        <http-conf:client ConnectionTimeout="30000" ReceiveTimeout="1200000"/>
+    </http-conf:conduit>
+
+
+    <bean id="inInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor">
+        <property name="prettyLogging" value="true"/>
+    </bean>
+    <bean id="outInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor">
+        <property name="prettyLogging" value="true"/>
+    </bean>
+
+
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="defaultTimeout" value="10"></property>
+    </bean>
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="poolName" value="HikariCP"/>
+        <property name="connectionTestQuery" value="SELECT 1 FROM DUAL"/>
+        <property name="connectionInitSql" value="SELECT 1 FROM DUAL"/>
+        <property name="dataSourceClassName" value="oracle.jdbc.pool.OracleDataSource"/>
+        <property name="maximumPoolSize" value="50"/>
+        <property name="minimumIdle" value="5"/>
+        <property name="idleTimeout" value="300000"/>
+        <property name="connectionTimeout" value="30000"/>
+        <property name="validationTimeout" value="10000"/>
+        <property name="maxLifetime" value="600000"/>
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="url">jdbc:oracle:thin:@${int.db.server}:${int.db.port}/${int.db.service}</prop>
+                <prop key="user">${int.db.username}</prop>
+                <prop key="password">${int.db.password}</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <bean id="defaultLobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler"/>
+
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg ref="hikariConfig"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+</beans>

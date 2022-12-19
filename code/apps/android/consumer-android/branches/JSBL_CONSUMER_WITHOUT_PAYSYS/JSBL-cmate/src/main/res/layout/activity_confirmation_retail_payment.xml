@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/color_bg">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomBarQR"
+        android:layout_below="@+id/container_header"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:id="@+id/scView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".8"
+            android:isScrollContainer="false"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/activitySideMarginNormal"
+                android:layout_marginRight="@dimen/activitySideMarginNormal"
+                android:layout_marginTop="@dimen/textViewMarginNormal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_item_background"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvPaymentAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/textViewMarginSmall"
+                        android:layout_marginTop="@dimen/textViewMarginNormal"
+                        android:gravity="center"
+                        android:text="@string/payment_amount"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textViewTextSizeSmall"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+
+
+                    <EditText
+                        android:id="@+id/etAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/layoutMarginLarge"
+                        android:layout_marginLeft="@dimen/activitySideMarginNormal"
+                        android:layout_marginRight="@dimen/activitySideMarginNormal"
+                        android:background="@drawable/bg_input"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:longClickable="false"
+                        android:maxLength="7"
+                        android:padding="@dimen/editTextFieldPadding"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textViewTextSizeMedium"
+                        android:visibility="gone" />
+
+
+                    <LinearLayout
+                        android:id="@+id/llAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/layoutMarginNormal"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/tvAmountlbl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="PKR "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/textViewTextSizeSmall" />
+
+                        <TextView
+                            android:id="@+id/tvAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="10,500"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/textViewTextSizeXXXXLarge" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/lblConfirmInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activitySideMarginNormal"
+                    android:layout_marginTop="@dimen/textViewMarginNormal"
+                    android:text="@string/please_confirm_the_following_details"
+                    android:textColor="@color/text_gray_dark"
+                    android:textSize="@dimen/textViewTextSizeNormal"
+                    android:textStyle="italic"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/lblDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/textViewMarginSmall"
+
+                    android:layout_marginLeft="@dimen/textViewMarginNormal"
+                    android:layout_marginTop="@dimen/textViewMarginNormal"
+                    android:text="@string/merchant_details"
+                    android:textColor="@color/text_gray_light"
+                    android:textSize="@dimen/textViewTextSizeSmall"
+                    android:visibility="gone" />
+
+                <com.inov8.jsblconsumer.ui.components.ListViewExpanded
+                    android:id="@+id/listMerchantDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_background"
+                    android:divider="@color/line_light_grey"
+                    android:dividerHeight="1dp"
+                    android:footerDividersEnabled="false"
+                    android:padding="2dp"
+                    android:scrollbars="vertical"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/lblSecond"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/textViewMarginSmall"
+                    android:layout_marginLeft="@dimen/textViewMarginNormal"
+                    android:layout_marginTop="@dimen/textViewMarginNormal"
+                    android:text="@string/payment_details"
+                    android:textColor="@color/text_gray_light"
+                    android:textSize="@dimen/textViewTextSizeSmall"
+                    android:visibility="gone" />
+
+                <com.inov8.jsblconsumer.ui.components.ListViewExpanded
+                    android:id="@+id/listPaymentDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_background"
+                    android:divider="@color/line_light_grey"
+                    android:dividerHeight="1dp"
+                    android:footerDividersEnabled="false"
+                    android:padding="2dp"
+                    android:scrollbars="none"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layoutPaddingNormal" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/layoutBtns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/scroll_view"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_ok"
+                android:text="@string/confirm"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_cancel"
+                android:text="@string/cancel"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/bottomBar"
+        layout="@layout/layout_bottom_bar" />
+
+    <include
+        android:id="@+id/bottomBarQR"
+        layout="@layout/layout_qr_code" />
+
+</RelativeLayout>

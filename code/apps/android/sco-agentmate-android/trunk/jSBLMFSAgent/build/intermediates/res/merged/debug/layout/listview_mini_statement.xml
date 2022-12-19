@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/listview_background_normal"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/layoutData"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+        android:gravity="center_vertical|fill_horizontal" >
+
+        <TextView
+            android:id="@+id/txtLabel"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:shadowColor="@color/white"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.6"
+            android:text="23/2/2222"
+            android:textColor="@color/text_grey"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txtdes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtLabel"
+            android:layout_marginLeft="10dp"
+            android:shadowColor="@color/white"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.6"
+            android:text="IBFT"
+            android:textColor="@color/orange"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/txtData"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/txtLabel"
+            android:gravity="right"
+            android:text="50 pkr"
+            android:textColor="@color/skyBlue"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+</LinearLayout>

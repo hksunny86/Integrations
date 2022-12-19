@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomPickerView" customModule="Timepey" customModuleProvider="target">
+            <connections>
+                <outlet property="myTableView" destination="ipQ-l4-kyj" id="0Yh-Ov-H2Q"/>
+                <outlet property="parentView" destination="cEM-Te-DQr" id="t6Q-6q-TWD"/>
+                <outlet property="parentViewHeightConstraint" destination="s5u-1V-Xjm" id="Qad-TQ-vNB"/>
+                <outlet property="pickerViewLabel" destination="bQK-k8-ldc" id="NmM-ku-mfB"/>
+                <outlet property="transparentView" destination="1sM-kX-ejd" id="BmF-Ep-ChZ"/>
+                <outlet property="view" destination="eM7-oR-55v" id="4Z9-1i-sGc"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="eM7-oR-55v">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1sM-kX-ejd">
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cEM-Te-DQr">
+                    <rect key="frame" x="184" y="342" width="400" height="340"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rJ5-QM-3Xf">
+                            <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQK-k8-ldc">
+                                    <rect key="frame" x="12" y="10" width="323" height="80"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                    <variation key="heightClass=regular-widthClass=regular">
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="36"/>
+                                    </variation>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R9x-rs-iHY">
+                                    <rect key="frame" x="343" y="25" width="50" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="27" id="L9c-XP-JtI">
+                                            <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                                        </constraint>
+                                        <constraint firstAttribute="width" constant="27" id="kmi-EI-hW7">
+                                            <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                                        </constraint>
+                                    </constraints>
+                                    <state key="normal" image="btn_icon_notification_cross_normal"/>
+                                    <state key="selected" image="btn_icon_notification_cross_pressed"/>
+                                    <connections>
+                                        <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="rD3-67-xiL"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.0" green="0.40000000000000002" blue="0.70196078429999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="bQK-k8-ldc" secondAttribute="bottom" constant="19" id="2K1-V2-3c8">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                </constraint>
+                                <constraint firstAttribute="bottom" secondItem="R9x-rs-iHY" secondAttribute="bottom" constant="17" id="KG2-87-qQN">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="25"/>
+                                </constraint>
+                                <constraint firstAttribute="trailing" secondItem="R9x-rs-iHY" secondAttribute="trailing" constant="17" id="QLd-WN-P6A">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="7"/>
+                                </constraint>
+                                <constraint firstItem="R9x-rs-iHY" firstAttribute="top" secondItem="rJ5-QM-3Xf" secondAttribute="top" constant="20" id="hpn-wO-HA7">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="25"/>
+                                </constraint>
+                                <constraint firstItem="bQK-k8-ldc" firstAttribute="leading" secondItem="rJ5-QM-3Xf" secondAttribute="leading" constant="12" id="jvD-HE-P5x"/>
+                                <constraint firstItem="bQK-k8-ldc" firstAttribute="top" secondItem="rJ5-QM-3Xf" secondAttribute="top" constant="18" id="lPm-Ag-Vsd">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="10"/>
+                                </constraint>
+                                <constraint firstAttribute="height" constant="64" id="nfW-Hu-nCf">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="100"/>
+                                </constraint>
+                                <constraint firstItem="R9x-rs-iHY" firstAttribute="leading" secondItem="bQK-k8-ldc" secondAttribute="trailing" constant="51" id="zGh-W9-ffP">
+                                    <variation key="heightClass=regular-widthClass=regular" constant="8"/>
+                                </constraint>
+                            </constraints>
+                        </view>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ipQ-l4-kyj">
+                            <rect key="frame" x="0.0" y="100" width="400" height="240"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="ahk-sl-8ni"/>
+                                <outlet property="delegate" destination="-1" id="cdo-Jp-yu8"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="ipQ-l4-kyj" secondAttribute="trailing" id="3KN-Xa-Rp2">
+                            <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                        </constraint>
+                        <constraint firstItem="ipQ-l4-kyj" firstAttribute="leading" secondItem="cEM-Te-DQr" secondAttribute="leading" id="Hwi-nu-PhT"/>
+                        <constraint firstAttribute="width" constant="260" id="KHp-GV-Eqw">
+                            <variation key="heightClass=regular-widthClass=regular" constant="400"/>
+                        </constraint>
+                        <constraint firstItem="rJ5-QM-3Xf" firstAttribute="leading" secondItem="cEM-Te-DQr" secondAttribute="leading" id="RRb-Bj-dLH"/>
+                        <constraint firstItem="rJ5-QM-3Xf" firstAttribute="top" secondItem="cEM-Te-DQr" secondAttribute="top" constant="-1" id="TEe-ke-44H">
+                            <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                        </constraint>
+                        <constraint firstAttribute="trailing" secondItem="rJ5-QM-3Xf" secondAttribute="trailing" id="XWp-rz-23R">
+                            <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                        </constraint>
+                        <constraint firstItem="ipQ-l4-kyj" firstAttribute="top" secondItem="rJ5-QM-3Xf" secondAttribute="bottom" id="d3I-2V-8ko">
+                            <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                        </constraint>
+                        <constraint firstAttribute="bottom" secondItem="ipQ-l4-kyj" secondAttribute="bottom" id="d9X-DO-a6r">
+                            <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                        </constraint>
+                        <constraint firstAttribute="height" constant="235" id="s5u-1V-Xjm">
+                            <variation key="heightClass=regular-widthClass=regular" constant="340"/>
+                        </constraint>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="1sM-kX-ejd" firstAttribute="top" secondItem="eM7-oR-55v" secondAttribute="top" id="1N9-9h-KmI"/>
+                <constraint firstItem="1sM-kX-ejd" firstAttribute="leading" secondItem="eM7-oR-55v" secondAttribute="leading" id="4MK-xv-98l"/>
+                <constraint firstItem="cEM-Te-DQr" firstAttribute="centerX" secondItem="eM7-oR-55v" secondAttribute="centerX" id="6ST-22-JTJ"/>
+                <constraint firstAttribute="trailing" secondItem="1sM-kX-ejd" secondAttribute="trailing" id="IGr-XT-wrt"/>
+                <constraint firstAttribute="bottom" secondItem="1sM-kX-ejd" secondAttribute="bottom" id="MlW-Wt-j5f"/>
+                <constraint firstItem="cEM-Te-DQr" firstAttribute="centerY" secondItem="eM7-oR-55v" secondAttribute="centerY" id="YJT-La-KQr">
+                    <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                </constraint>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="292" y="326"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="btn_icon_notification_cross_normal" width="27" height="27"/>
+        <image name="btn_icon_notification_cross_pressed" width="27" height="27"/>
+    </resources>
+</document>

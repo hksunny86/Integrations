@@ -1,0 +1,16 @@
+<msg id="209">
+    <params>
+        <param name="PNAME">4434243</param>
+        <param name="CONSUMER">4434243235665</param>
+        <param name="CMOB">03214789746</param>
+        <param name="TXAM">1272.1</param>
+        <param name="TXAMF">1,272.10</param>
+        <param name="TPAM">161.1</param>
+        <param name="TPAMF">161.10</param>
+        <param name="TAMT">1272.1</param>
+        <param name="TAMTF">1,272.10</param>
+        <param name="DUEDATEF">1,272.10</param>
+        <param name="STATUS">UnPaid</param>
+    </params>
+</msg>
+

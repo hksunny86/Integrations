@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+  <!-- DAO -->
+
+  <bean id="logDao" class="com.inov8.verifly.server.dao.logmodule.hibernate.LogHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+  <bean id="logDetailDao" class="com.inov8.verifly.server.dao.logmodule.hibernate.LogDetailHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+  <bean id="logListViewDAO" class="com.inov8.verifly.server.dao.logmodule.hibernate.LogListViewHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <!-- Service -->
+
+  <bean id="logManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.verifly.server.service.logmodule.LogManagerImpl">
+        <property name="logDao">
+          <ref local="logDao"/>
+        </property>
+        <property name="logListViewDAO">
+          <ref local="logListViewDAO"/>
+        </property>
+     </bean>
+    </property>
+  </bean>
+
+</beans>

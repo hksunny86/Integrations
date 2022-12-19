@@ -1,0 +1,1 @@
+error responseCode check in update card status (debit card block)

@@ -1,0 +1,4374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+  <!-- Definition of Bean -->
+
+  <bean id="workFlowController" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.controller.WorkFlowControllerImpl">
+
+        <property name="workFlowTransactionFactory">
+          <ref  bean="workFlowTransactionFactory"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="transactionController" abstract="true" parent="workFlowController">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.controller.TransactionControllerImpl">
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="transactionProcessor" parent="transactionController" abstract="true">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.controller.TransactionProcessor">
+      </bean>
+    </property>
+
+  </bean>
+
+  <bean id="creditTransferTransaction" abstract="true" parent="transactionProcessor">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.CreditTransferTransaction">
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="billSaleTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.BillSaleTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="cashWithdrawalTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.CashWithdrawalTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="hraCashWithdrawalTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.HRACashWithdrawalTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="thirdPartyCashOutTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.ThirdPartyCashOutTransaction">
+        <property name="bispManager" ref="bispManager" />
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="esbAdapter">
+          <ref bean="esbAdapter"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="bopCashOutTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.BOPCashOutTransaction">
+        <property name="bispManager" ref="bispManager" />
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="esbAdapter">
+          <ref bean="esbAdapter"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="thirdPartyAccountOpeningTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.ThirdPartyAccountOpeningTransaction">
+        <property name="thirdPartyAcOpeningDAO" ref="thirdPartAccountOpeningDAO" />
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="esbAdapter">
+          <ref bean="esbAdapter"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="bopCardIssuanceTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.BOPCardIssuanceTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="esbAdapter">
+          <ref bean="esbAdapter"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+        <property name="bopCardIssuanceDAO">
+          <ref bean="bopCardIssuanceDAO"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="proofOfLifeTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.ProofOfLifeTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="esbAdapter">
+          <ref bean="esbAdapter"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+
+
+
+
+
+  <bean id="bookMeTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.BookMeTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+        <property name="actionLogManager">
+          <ref bean="actionLogManager"/>
+        </property>
+        <property name="esbAdapter">
+          <ref bean="esbAdapter"/>
+        </property>
+        <property name="bookMeLogDAO">
+          <ref bean="bookMeLogDAO"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="coreToWalletTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.CoreToWalletTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="transactionReversalManager" ref="transactionReversalFacade" />
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="vcTransferTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.commandmodule.VCTransferTransaction">
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="productManager">
+          <ref bean="productManager"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="esbAdapter" ref="esbAdapter"/>
+        <property name="stakeholderBankInfoManager" ref="stakeholderBankInfoManager"/>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="debitPaymentApiTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.DebitPaymentApiTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+          <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+        <property name="actionLogManager">
+          <ref bean="actionLogManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+
+
+  <bean id="feePaymentApiTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.FeePaymentApiTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+        <property name="actionLogManager">
+          <ref bean="actionLogManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="advanceLoanPaymentTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.AdvanceLoanPaymentTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+        <property name="actionLogManager">
+          <ref bean="actionLogManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+
+
+  <bean id="debitCardCashWithdrawalTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.DebitCardCashWithdrawlTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="otpAuthentication" ref="otpAuthentication"/>
+
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="customerCashWithdrawalLeg2Transaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.CustomerCashWithdrawalLeg2Transaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="otpAuthentication" ref="otpAuthentication"/>
+
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="accountToAccountTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.AccountToAccountTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="customerInternetBillPaymentTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.InternetBillPaymentTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="bulkBillPaymentTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.BulkBillPaymentTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="utilityBillSaleTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.UtilityBillSaleTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+        <property name="actionLogManager">
+          <ref bean="actionLogManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="allPayBillSaleTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.AllPayBillSaleTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+
+
+
+
+  <bean id="customerBillPaymentTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.CustomerBillPaymentTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+        <property name="actionLogManager">
+          <ref bean="actionLogManager"/>
+        </property>
+
+
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="exciseAndTaxationTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.ExciseAndTaxationTransaction">
+        <!--<property name="commissionManager" ref="commissionFacade" />-->
+        <!--<property name="genericDAO" ref="genericHibernateDAO" />-->
+        <property name="userDeviceAccountsManager" ref="userDeviceAccountsManager" />
+        <property name="supplierBankInfoManager" ref="supplierFacade" />
+        <property name="transactionReversalManager" ref="transactionReversalFacade" />
+        <!--<property name="messageSource" ref="messageSource"/>-->
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="otpAuthentication" ref="otpAuthentication"/>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="collectionPaymentTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.CollectionPaymentTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+        <property name="actionLogManager">
+          <ref bean="actionLogManager"/>
+        </property>
+        <property name="transactionReversalManager">
+          <ref bean="transactionReversalManager"/>
+        </property>
+
+
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="customerCollectionPaymentTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.CustomerCollectionPaymentTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+        <property name="actionLogManager">
+          <ref bean="actionLogManager"/>
+        </property>
+        <property name="esbAdapter" ref="esbAdapter"/>
+        <property name="transactionReversalManager">
+          <ref bean="transactionReversalManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="cashDepositTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.CashDepositTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+      </bean>
+    </property>
+
+  </bean>
+
+  <bean id="agentCashDepositTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.AgentCashDepositTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+      </bean>
+    </property>
+
+  </bean>
+
+  <bean id="cnicToBBAccountTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.CnicToBBAccountTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+      </bean>
+    </property>
+
+  </bean>
+
+  <bean id="agentInternetBillPaymentTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.AgentInternetBillPaymentTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="distibutorCreditRechargeTx" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.DistibutorCreditRechargeTx">
+
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+
+
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="distributorContactManager">
+          <ref bean="distributorContactManager"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+
+
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="retailerCreditRechargeTx" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.RetailerCreditRechargeTx">
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="creditCardBillSaleTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.CreditCardBillSaleTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="switchModuleManager">
+          <ref bean="switchManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="agentCreditCardPaymentTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.AgentCreditCardPaymentTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+
+
+  <bean id="operatorToDistributorTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.OperatorToDistributorTransaction">
+        <property name="operatorManager">
+          <ref  bean="operatorFacade"/>
+        </property>
+        <property name="distributorContactManager">
+          <ref bean="distributorFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="inov8DistributorCreditManager">
+          <ref bean="creditFacade"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+
+      </bean>
+
+    </property>
+  </bean>
+
+  <bean id="distributorToDistributorTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.DistributorToDistributorTransaction">
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+
+        <property name="distDistCreditManager">
+          <ref bean="creditFacade"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="distributorContactManager">
+          <ref bean="distributorContactManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+
+      </bean>
+
+    </property>
+  </bean>
+
+  <!--	Account to cash Leg 1 and Leg 2 transactions - addd by mudassir -->
+
+  <bean id="accountToCashTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.AccountToCashTransaction">
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+
+        <property name="distDistCreditManager">
+          <ref bean="creditFacade"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="distributorContactManager">
+          <ref bean="distributorContactManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="mfsAccountManager">
+          <ref bean="mfsAccountManager"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="accountToCashLeg2Transaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.AccountToCashLeg2Transaction">
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="distributorContactManager">
+          <ref bean="distributorContactManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="mfsAccountManager">
+          <ref bean="mfsAccountManager"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="retailerManager">
+          <ref bean="retailerManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="bulkPaymentTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.BulkPaymentTransaction">
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="bulkDisbursementsManager">
+          <ref bean="bulkDisbursementsManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="mfsAccountManager">
+          <ref bean="mfsAccountManager"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="olaVeriflyFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="cashToCashLeg2Transaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.CashToCashLeg2Transaction">
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="distributorContactManager">
+          <ref bean="distributorContactManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="mfsAccountManager">
+          <ref bean="mfsAccountManager"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="retailerManager">
+          <ref bean="retailerFacade"/>
+        </property>
+        <property name="distributorManager">
+          <ref bean="distributorFacade"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+  <!--	end Account to Cash Transactions -->
+
+  <bean id="distributorToRetailerTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.DistributorToRetailerTransaction">
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="distRetCreditManager">
+          <ref bean="creditFacade"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="distributorContactManager">
+          <ref bean="distributorContactManager"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+      </bean>
+
+    </property>
+  </bean>
+
+
+  <bean id="retailerToRetailerTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.RetailerToRetailerTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+      </bean>
+
+    </property>
+  </bean>
+
+  <bean id="rsoToRetailerTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.RsoToRetailerTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+
+        <property name="retRetCreditManager">
+          <ref bean="creditFacade"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+      </bean>
+
+    </property>
+  </bean>
+  <bean id="salesTransaction" abstract="true" parent="transactionProcessor">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.SalesTransaction">
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="discreteProductSaleTransaction" parent="salesTransaction" abstract="true">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.DiscreteProductSaleTransaction">
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="variableProductSaleTransaction" parent="salesTransaction" abstract="true">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.VariableProductSaleTransaction">
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="retailerDiscreteProductSale" parent="discreteProductSaleTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.RetailerDiscreteProductSale">
+        <property name="settlementManager">
+          <ref  bean="settlementManager"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionManager"/>
+        </property>
+        <property name="productManager">
+          <ref bean="productManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="xstream">
+          <ref bean="xstream"/>
+        </property>
+        <property name="txManager">
+          <ref  bean="transactionModuleManager"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="custTransManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="messageFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+      </bean>
+
+    </property>
+  </bean>
+
+  <bean id="workFlowTransactionFactory" parent = "workFlowController">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.factory.WorkFlowTransactionFactoryImpl">
+        <property name="agentWalletToCoreTransaction" ref="agentWalletToCoreTransaction" />
+        <property name="thirdPartyAccountOpeningTransaction" ref="thirdPartyAccountOpeningTransaction" />
+        <property name="bopCardIssuanceTransaction" ref="bopCardIssuanceTransaction" />
+        <property name="bopCashOutTransaction" ref="bopCashOutTransaction" />
+        <property name="hraToWalletTransaction" ref="hraToWalletTransaction" />
+        <property name="debitCardCashWithDrawlTransaction">
+          <ref bean="debitCardCashWithdrawalTransaction" />
+        </property>
+        <property name="operatorToDistributorTransaction">
+          <ref  bean="operatorToDistributorTransaction"/>
+        </property>
+        <property name="distributorToDistributorTransaction">
+          <ref  bean="distributorToDistributorTransaction"/>
+        </property>
+        <property name="distributorToRetailerTransaction">
+          <ref  bean="distributorToRetailerTransaction"/>
+        </property>
+        <property name="retailerToRetailerTransaction">
+          <ref  bean="retailerToRetailerTransaction"/>
+        </property>
+        <property name="billSaleTransaction">
+          <ref  bean="billSaleTransaction"/>
+        </property>
+        <property name="cashWithdrawalTransaction">
+          <ref  bean="cashWithdrawalTransaction"/>
+        </property>
+        <property name="thirdPartyCashOutTransaction">
+          <ref  bean="thirdPartyCashOutTransaction"/>
+        </property>
+        <property name="advanceSalaryLoanTransaction">
+          <ref  bean="advanceSalaryLoanTransaction"/>
+        </property>
+        <property name="proofOfLifeTransaction">
+          <ref  bean="proofOfLifeTransaction"/>
+        </property>
+        <property name="hraCashWithdrawalTransaction">
+          <ref  bean="hraCashWithdrawalTransaction"/>
+        </property>
+        <property name="accountToAccountTransaction">
+          <ref  bean="accountToAccountTransaction"/>
+        </property>
+        <property name="creditCardBillSaleTransaction">
+          <ref  bean="creditCardBillSaleTransaction"/>
+        </property>
+        <property name="agentCreditCardPaymentTransaction">
+          <ref  bean="agentCreditCardPaymentTransaction"/>
+        </property>
+        <property name="customerDiscreteProductSale">
+          <ref  bean="customerDiscreteProductSale"/>
+        </property>
+        <property name="retailerDiscreteProductSale">
+          <ref  bean="retailerDiscreteProductSale"/>
+        </property>
+        <property name="allPayBillSaleTransaction">
+          <ref  bean="allPayBillSaleTransaction"/>
+        </property>
+        <property name="cashDepositTransaction">
+          <ref bean="cashDepositTransaction"/>
+        </property>
+        <property name="agentCashDepositTransaction">
+          <ref bean="agentCashDepositTransaction"/>
+        </property>
+        <property name="cnicToBBAccountTransaction">
+          <ref bean="cnicToBBAccountTransaction"/>
+        </property>
+        <property name="agentInternetBillPaymentTransaction">
+          <ref  bean="agentInternetBillPaymentTransaction"/>
+        </property>
+
+        <property name="bookMeTransaction">
+          <ref  bean="bookMeTransaction"/>
+        </property>
+
+          <property name="debitPaymentApiTransaction">
+              <ref  bean="debitPaymentApiTransaction"/>
+          </property>
+
+        <property name="feePaymentApiTransaction">
+          <ref  bean="feePaymentApiTransaction"/>
+        </property>
+
+        <property name="advanceLoanPaymentTransaction">
+          <ref  bean="advanceLoanPaymentTransaction"/>
+        </property>
+
+
+        <property name="creditPaymentApiTransaction">
+          <ref  bean="creditPaymentApiTransaction"/>
+        </property>
+
+        <property name="customerInternetBillPaymentTransaction">
+          <ref  bean="customerInternetBillPaymentTransaction"/>
+        </property>
+
+
+        <property name="customerVariableProductSale">
+          <ref  bean="customerVariableProductSale"/>
+        </property>
+        <property name="retailerVariableProductSale">
+          <ref  bean="retailerVariableProductSale"/>
+        </property>
+        <property name="distibutorCreditRechargeTx">
+          <ref  bean="distibutorCreditRechargeTx"/>
+        </property>
+        <property name="retailerCreditRechargeTx">
+          <ref  bean="retailerCreditRechargeTx"/>
+        </property>
+
+        <!--		ADDED BY MUDASSIR.. A/C TO CASH TRANSACTION-->
+        <property name="accountToCashTransaction">
+          <ref  bean="accountToCashTransaction"/>
+        </property>
+        <property name="accountToCashLeg2Transaction">
+          <ref bean="accountToCashLeg2Transaction"/>
+        </property>
+        <property name="cashToCashTransaction">
+          <ref  bean="cashToCashTransaction"/>
+        </property>
+        <property name="cashToCashLeg2Transaction">
+          <ref  bean="cashToCashLeg2Transaction"/>
+        </property>
+        <property name="bulkPaymentTransaction">
+          <ref  bean="bulkPaymentTransaction"/>
+        </property>
+        <property name="customerRetailPaymentTransaction">
+          <ref  bean="customerRetailPaymentTransaction"/>
+        </property>
+        <property name="agentRetailPaymentTransaction">
+          <ref  bean="agentRetailPaymentTransaction"/>
+        </property>
+        <property name="utilityBillSaleTransaction">
+          <ref  bean="utilityBillSaleTransaction"/>
+        </property>
+        <property name="bulkBillPaymentTransaction">
+          <ref  bean="bulkBillPaymentTransaction"/>
+        </property>
+
+        <property name="transferInTransaction">
+          <ref  bean="transferInTransaction"/>
+        </property>
+        <property name="transferOutTransaction">
+          <ref  bean="transferOutTransaction"/>
+        </property>
+        <property name="donationPaymentTransaction">
+          <ref bean="donationPaymentTransaction"/>
+        </property>
+        <property name="rsoToRetailerTransaction">
+          <ref  bean="rsoToRetailerTransaction"/>
+        </property>
+        <property name="bulkPaymentLeg2Transaction">
+          <ref  local="bulkPaymentLeg2Transaction"/>
+        </property>
+        <property name="bbToCoreAccountTransaction">
+          <ref  local="bbToCoreAccountTransaction"/>
+        </property>
+        <property name="customerBBToCoreTransaction">
+          <ref  local="customerBBToCoreTransaction"/>
+        </property>
+        <property name="cnicToCoreAccountTransaction">
+          <ref  local="cnicToCoreAccountTransaction"/>
+        </property>
+        <property name="customerCashWithdrawalLeg2Transaction" ref="customerCashWithdrawalLeg2Transaction"/>
+        <property name="initialDepositTransaction" ref="initialDepositTransaction"/>
+        <property name="ibftTransaction" ref="ibftTransaction"/>
+        <property name="tellerCashInTransaction" ref="tellerCashInTransaction"/>
+        <property name="tellerCashOutTransaction" ref="tellerCashOutTransaction"/>
+        <property name="senderRedeemTransaction" ref="senderRedeemTransaction"/>
+        <property name="receiveCashTransaction" ref="receiveCashTransaction"/>
+        <property name="fonepayTransaction" ref="fonepayTransaction"/>
+        <property name="fonepaySettlementTransaction" ref="fonepaySettlementTransaction"/>
+        <property name="customerAccToAccTransaction" ref="customerAccToAccTransaction"/>
+        <property name="customerAccToCashTransaction" ref="customerAccToCashTransaction"/>
+        <property name="customerBillPaymentTransaction" ref="customerBillPaymentTransaction"/>
+        <property name="customerCollectionPaymentTransaction" ref="customerCollectionPaymentTransaction"/>
+        <property name="collectionPaymentTransaction" ref="collectionPaymentTransaction"/>
+        <property name="webServiceCashInTransaction" ref="webServiceCashInTransaction"/>
+        <property name="posRefundTransaction" ref="POSRefundTransaction"/>
+        <property name="exciseAndTaxationTransaction" ref="exciseAndTaxationTransaction" />
+        <property name="coreToWalletTransaction" ref="coreToWalletTransaction" />
+        <property name="vcTransferTransaction" ref="vcTransferTransaction" />
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="xstream" class="com.thoughtworks.xstream.XStream">
+  </bean>
+
+  <bean id="workFlowFacade" class="com.inov8.microbank.server.facade.WorkFlowFacadeImpl">
+
+    <property name="workFlowController">
+      <ref local="workFlowController"/>
+    </property>
+    <property name="workflowExceptionTranslator">
+      <ref bean="workflowExceptionTranslator"/>
+    </property>
+    <property name="txManager">
+      <ref bean="transactionModuleManager"/>
+    </property>
+    <property name="transactionDetailMasterManager">
+      <ref bean="transactionDetailMasterManager"/>
+    </property>
+    <property name="messageSource">
+      <ref bean="messageSource"/>
+    </property>
+    <property name="creditAccountQueingPreProcessor">
+      <ref bean="creditAccountQueingPreProcessor"/>
+    </property>
+    <property name="coreAdviceQueingPreProcessor">
+      <ref bean="coreAdviceQueingPreProcessor"/>
+    </property>
+    <property name="thirdPartyCashOutQueingPreProcessor">
+      <ref bean="thirdPartyCashOutQueingPreProcessor"/>
+    </property>
+  </bean>
+
+  <bean id="creditAccountQueingPreProcessor" class="com.inov8.microbank.server.facade.CreditAccountQueingPreProcessor" >
+
+    <property name="safRepoDao">
+      <ref bean="safRepoDao"/>
+    </property>
+    <property name="walletSafRepoDAO" ref="walletSafRepoDAO"/>
+    <property name="creditAccountQueueSender">
+      <ref bean="creditAccountQueueSender"/>
+    </property>
+    <property name="accountDAO">
+      <ref bean="accountDAO"/>
+    </property>
+    <property name="accountManager">
+      <ref bean="accountManager"/>
+    </property>
+  </bean>
+
+  <bean id="coreAdviceQueingPreProcessor" class="com.inov8.microbank.server.facade.CoreAdviceQueingPreProcessor" >
+    <property name="safRepoCoreDao">
+      <ref bean="safRepoCoreDao"/>
+    </property>
+    <property name="coreAdviceSender">
+      <ref bean="coreAdviceSender"/>
+    </property>
+  </bean>
+
+  <bean id="thirdPartyCashOutQueingPreProcessor" class="com.inov8.microbank.server.facade.ThirdPartyCashOutQueingPreProcessor" >
+    <property name="safRepoCashOutDao">
+      <ref bean="safRepoCashOutDao"/>
+    </property>
+    <property name="esbAdapter">
+      <ref bean="esbAdapter"/>
+    </property>
+    <property name="thirdPartyCashOutAdviceSender">
+      <ref bean="thirdPartyCashOutAdviceSender"/>
+    </property>
+  </bean>
+
+  <bean id="reversalAdviceQueingPreProcessor" class="com.inov8.microbank.server.facade.ReversalAdviceQueingPreProcessor" >
+    <!--<property name="transactionReversalDAO">
+      <ref bean="transactionReversalDAO"/>
+    </property>-->
+    <property name="reversalAdviceSender">
+      <ref bean="reversalAdviceSender"/>
+    </property>
+  </bean>
+
+
+  <bean id="workflowExceptionTranslator" class="com.inov8.microbank.common.exception.WorkFlowExceptionTranslator">
+    <property name="messageSource">
+      <ref bean="messageSource"/>
+    </property>
+  </bean>
+
+
+  <!--
+  <bean id="veriflyDAO" class="com.inov8.microbank.server.dao.veriflymodule.hibernate.VeriflyHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  -->
+
+  <bean id="veriflyController" class="com.inov8.microbank.server.service.financialintegrationmodule.veriflymodule.VeriflyManagerService">
+
+    <property name="veriflyManager">
+      <ref bean="vfVeriflyManager"/>
+    </property>
+    <property name="smartMoneyAccountManager">
+      <ref bean="smartMoneyFacade"/>
+    </property>
+    <property name="bankManager">
+      <ref bean="bankFacade"/>
+    </property>
+    <property name="veriflyDAO">
+      <ref bean="veriflyDAO"/>
+    </property>
+    <property name="auditLogModuleFacade">
+      <ref bean="auditLogModuleFacade"/>
+    </property>
+    <property name="commonsHttpInvokerRequestExecutor">
+      <ref local="commonsHttpInvokerRequestExecutor"/>
+    </property>
+    <property name="xstream">
+      <ref bean="xstream"/>
+    </property>
+    <property name="postedTransactionReportFacade">
+      <ref bean="postedTransactionReportFacade"/>
+    </property>
+  </bean>
+  <bean id="commonsHttpInvokerRequestExecutor" class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor">
+  </bean>
+
+
+
+
+
+  <bean id="cashToCashTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.CashToCashTransaction">
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="distributorContactManager">
+          <ref bean="distributorContactManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="mfsAccountManager">
+          <ref bean="mfsAccountManager"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="customerRetailPaymentTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.CustomerRetailPaymentTransaction">
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+
+        <property name="distributorContactManager">
+          <ref bean="distributorContactManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager" />
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="agentRetailPaymentTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.AgentRetailPaymentTransaction">
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+
+        <property name="distributorContactManager">
+          <ref bean="distributorContactManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager" />
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="transferInTransaction" parent="creditTransferTransaction">
+
+    <property name="target">
+
+      <bean class="com.inov8.microbank.server.service.workflow.sales.TransferInTransaction">
+
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="agentWalletToCoreTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.AgentWalletToCoreTransaction">
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="tellerCashInTransaction" parent="creditTransferTransaction">
+
+    <property name="target">
+
+      <bean class="com.inov8.microbank.server.service.workflow.sales.TellerCashInTransaction">
+
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="tellerCashOutTransaction" parent="creditTransferTransaction">
+
+    <property name="target">
+
+      <bean class="com.inov8.microbank.server.service.workflow.sales.TellerCashOutTransaction">
+
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="transferOutTransaction" parent="creditTransferTransaction">
+
+    <property name="target">
+
+      <bean class="com.inov8.microbank.server.service.workflow.sales.TransferOutTransaction">
+
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="receiveCashTransaction" parent="creditTransferTransaction">
+
+    <property name="target">
+
+      <bean class="com.inov8.microbank.server.service.workflow.sales.ReceiveCashTransaction">
+
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="miniTransactionDAO">
+          <ref bean="miniTransactionDAO"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="donationPaymentTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.DonationPaymentTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="olaVeriflyFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <!--
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+            <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="genericDAO">
+            <ref bean="genericHibernateDAO"/>
+        </property>
+        -->
+
+      </bean>
+    </property>
+  </bean>
+  <bean id="bulkPaymentLeg2Transaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.BulkPaymentLeg2Transaction">
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+
+        <property name="distDistCreditManager">
+          <ref bean="creditFacade"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="distributorContactManager">
+          <ref bean="distributorContactManager"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="mfsAccountManager">
+          <ref bean="mfsAccountManager"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="phoenixFinancialInstitution">
+          <ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="retailerManager">
+          <ref bean="retailerFacade"/>
+        </property>
+        <property name="distributorManager">
+          <ref bean="distributorFacade"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="bbToCoreAccountTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.BBToCoreAccountTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="customerBBToCoreTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.CustomerBBToCoreTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="advanceSalaryLoanTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.AdvanceSalaryLoanTransaction">
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+          <property name="scheduleBillPaymentDao">
+              <ref  bean="scheduleBillPaymentDao"/>
+          </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+  <bean id="cnicToCoreAccountTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.CnicToCoreAccountTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="initialDepositTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.InitialDepositTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager" ref="userDeviceAccountsManager"/>
+        <property name="notificationMessageManager" ref="notificationMessageManager"/>
+        <property name="smsSender" ref="smsSender"/>
+        <property name="commissionManager" ref="commissionFacade"/>
+        <property name="settlementManager" ref="settlementFacade"/>
+        <property name="txManager" ref="transactionFacade"/>
+        <property name="statusCheck" ref="statusCheckFacade"/>
+        <property name="financialIntegrationManager" ref="financialIntegrationManager"/>
+        <property name="genericDAO" ref="genericHibernateDAO"/>
+        <property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"/>
+        <property name="tillBalanceManager" ref="tillBalanceManager"/>
+        <property name="appUserManager" ref="securityFacade"/>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="ibftTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.IBFTTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager" ref="userDeviceAccountsManager"/>
+        <property name="notificationMessageManager" ref="notificationMessageManager"/>
+        <property name="smsSender" ref="smsSender"/>
+        <property name="commissionManager" ref="commissionFacade"/>
+        <property name="settlementManager" ref="settlementFacade"/>
+        <property name="txManager" ref="transactionFacade"/>
+        <property name="statusCheck" ref="statusCheckFacade"/>
+        <property name="financialIntegrationManager" ref="financialIntegrationManager"/>
+        <property name="genericDAO" ref="genericHibernateDAO"/>
+        <property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"/>
+        <property name="tillBalanceManager" ref="tillBalanceManager"/>
+        <property name="appUserManager" ref="securityFacade"/>
+        <property name="customerManager" ref="customerFacade" />
+        <property name="transactionReversalManager" ref="transactionReversalManager" />
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="fonepayTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.fonepay.commands.FonepayTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="commissionManager" ref="commissionFacade"/>
+        <property name="userDeviceAccountsManager" ref="userDeviceAccountsManager"/>
+        <property name="notificationMessageManager" ref="notificationMessageManager"/>
+        <property name="genericDAO" ref="genericHibernateDAO"/>
+        <property name="financialIntegrationManager" ref="financialIntegrationManager"/>
+        <property name="transactionReversalManager" ref="transactionReversalManager" />
+        <property name="statusCheck" ref="statusCheckFacade"/>
+        <property name="txManager" ref="transactionFacade"/>
+        <property name="settlementManager" ref="settlementFacade"/>
+        <property name="customerManager" ref="customerFacade" />
+        <property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"/>
+        <property name="tillBalanceManager" ref="tillBalanceManager"/>
+        <property name="appUserManager" ref="securityFacade"/>
+
+
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="fonepaySettlementTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.fonepay.commands.FonepaySettlementTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="commissionManager" ref="commissionFacade"/>
+        <property name="userDeviceAccountsManager" ref="userDeviceAccountsManager"/>
+        <property name="notificationMessageManager" ref="notificationMessageManager"/>
+        <property name="genericDAO" ref="genericHibernateDAO"/>
+        <property name="financialIntegrationManager" ref="financialIntegrationManager"/>
+        <property name="transactionReversalManager" ref="transactionReversalManager" />
+        <property name="statusCheck" ref="statusCheckFacade"/>
+        <property name="txManager" ref="transactionFacade"/>
+        <property name="settlementManager" ref="settlementFacade"/>
+        <property name="customerManager" ref="customerFacade" />
+        <property name="retailerContactManager" ref="retailerFacade" />
+        <property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"/>
+        <property name="tillBalanceManager" ref="tillBalanceManager"/>
+        <property name="appUserManager" ref="securityFacade"/>
+
+
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="senderRedeemTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.credittransfer.SenderRedeemTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="retailerManager">
+          <ref bean="retailerManager"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="customerAccToAccTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.commandmodule.CustomerInitiatedAccountToAccountTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="commissionManager" ref="commissionFacade"/>
+        <property name="userDeviceAccountsManager" ref="userDeviceAccountsManager"/>
+        <property name="notificationMessageManager" ref="notificationMessageManager"/>
+        <property name="genericDAO" ref="genericHibernateDAO"/>
+        <property name="walletSafRepoDAO" ref="walletSafRepoDAO"/>
+        <property name="financialIntegrationManager" ref="financialIntegrationManager"/>
+        <!-- <property name="transactionReversalManager" ref="transactionReversalManager" />  -->
+        <property name="statusCheck" ref="statusCheckFacade"/>
+        <property name="txManager" ref="transactionFacade"/>
+        <property name="settlementManager" ref="settlementFacade"/>
+        <property name="customerManager" ref="customerFacade" />
+        <property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"/>
+        <property name="tillBalanceManager" ref="tillBalanceManager"/>
+        <property name="appUserManager" ref="securityFacade"/>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+  <bean id="customerAccToCashTransaction" parent="creditTransferTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.commandmodule.CustomerInitiatedAccountToCashTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="appUserManager" ref="securityFacade"/>
+        <property name="txManager" ref="transactionFacade"/>
+        <property name="settlementManager" ref="settlementFacade"/>
+        <property name="tillBalanceManager" ref="tillBalanceManager"/>
+        <property name="statusCheck" ref="statusCheckFacade"/>
+        <property name="commissionManager" ref="commissionFacade"/>
+        <property name="userDeviceAccountsManager" ref="userDeviceAccountsManager"/>
+        <property name="notificationMessageManager" ref="notificationMessageManager"/>
+        <property name="financialIntegrationManager" ref="financialIntegrationManager"/>
+        <!-- <property name="transactionReversalManager" ref="transactionReversalManager" />  -->
+        <property name="transactionDetailMasterManager" ref="transactionDetailMasterManager" />
+        <property name="customerManager" ref="customerFacade" />
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="mfsAccountManager">
+          <ref bean="mfsAccountManager"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="webServiceCashInTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.WebServiceCashInTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+      </bean>
+    </property>
+
+  </bean>
+
+  <bean id="creditPaymentApiTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.CreditPaymentApiTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="stakeholderBankInfoManager">
+          <ref bean="stakeholderBankInfoManager"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="transactionReversalManager" ref="transactionReversalFacade"></property>
+      </bean>
+    </property>
+
+  </bean>
+
+  <bean id="POSRefundTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.POSRefundTransaction">
+        <property name="messageSource" ref="messageSource"/>
+        <property name="supplierManager">
+          <ref  bean="supplierFacade"/>
+        </property>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="retailerContactManager">
+          <ref bean="retailerContactManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="productManager">
+          <ref  bean="productFacade"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="smartMoneyAccountManager">
+          <ref bean="smartMoneyFacade"/>
+        </property>
+        <property name="customerManager">
+          <ref bean="customerFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="supplierBankInfoManager">
+          <ref bean="supplierBankInfoManager"/>
+        </property>
+        <property name="operatorManager">
+          <ref bean="operatorManager" />
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="hraToWalletTransaction" parent="salesTransaction">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.workflow.sales.HRAToWalletTransaction">
+        <!--HRA TO Wallet Trnasaction-->
+        <property name="messageSource" ref="messageSource"/>
+        <property name="userDeviceAccountsManager">
+          <ref bean="userDeviceAccountsManager"/>
+        </property>
+        <property name="notificationMessageManager">
+          <ref bean="notificationMessageManager"/>
+        </property>
+        <property name="smsSender">
+          <ref bean="smsSender"/>
+        </property>
+        <property name="appUserManager">
+          <ref bean="securityFacade"/>
+        </property>
+        <property name="commissionManager">
+          <ref bean="commissionFacade"/>
+        </property>
+        <property name="settlementManager">
+          <ref bean="settlementFacade"/>
+        </property>
+        <property name="txManager">
+          <ref bean="transactionFacade"/>
+        </property>
+        <property name="statusCheck">
+          <ref bean="statusCheckFacade"/>
+        </property>
+        <property name="financialIntegrationManager">
+          <ref bean="financialIntegrationManager"/>
+        </property>
+        <property name="genericDAO">
+          <ref bean="genericHibernateDAO"/>
+        </property>
+        <property name="transactionDetailMasterManager">
+          <ref bean="transactionDetailMasterManager"/>
+        </property>
+        <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+        <property name="ivrAuthenticationRequestQueueSender">
+          <ref bean="ivrAuthenticationRequestQueueSender"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+</beans>

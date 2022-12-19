@@ -1,0 +1,10 @@
+
+
+
+ALTER TABLE operating_hours_rule ADD   (IS_LOC_VRF_REQ  NUMBER(1,0) Default 0 );
+
+
+Alter table operating_hours_rule modify (allowed_starting_hours null);
+Alter table operating_hours_rule modify (allowed_ending_hours null);
+
+commit;

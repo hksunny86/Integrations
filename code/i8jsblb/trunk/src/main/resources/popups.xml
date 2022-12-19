@@ -1,0 +1,610 @@
+<!DOCTYPE popups SYSTEM "popups.dtd">
+<popups>
+	<popupList>
+
+		<!--Commission Stakeholder Popup -->
+
+		<popup>
+			<name>commStakeholderPopup</name>
+			<modelClass>com.inov8.microbank.common.model.CommissionStakeholderModel</modelClass>
+			<title>Commission Stakeholder</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Bank Popup -->
+
+		<popup>
+			<name>bankPopup</name>
+			<modelClass>com.inov8.microbank.common.model.BankModel</modelClass>
+			<title>Bank</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+
+		<!--Switch Popup -->
+		<popup>
+			<name>switchPopup</name>
+			<modelClass>com.inov8.microbank.common.model.SwitchModel</modelClass>
+			<title>Switch</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Payment Mode Popup -->
+
+		<popup>
+			<name>paymentModePopup</name>
+			<modelClass>com.inov8.microbank.common.model.PaymentModeModel</modelClass>
+			<title>Payment Mode</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Product Popup -->
+
+		<popup>
+			<name>productPopup</name>
+			<modelClass>com.inov8.microbank.common.model.ProductModel</modelClass>
+			<title>Product</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+		<!--Device Type Popup -->
+
+		<popup>
+			<name>deviceTypePopup</name>
+			<modelClass>com.inov8.microbank.common.model.DeviceTypeModel</modelClass>
+			<title>Device Type</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Retailer Popup -->
+
+		<popup>
+			<name>retailerPopup</name>
+			<modelClass>com.inov8.microbank.common.model.RetailerModel</modelClass>
+			<title>Retailer</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Retailer Contact Popup -->
+
+		<popup>
+			<name>retailerContactPopup</name>
+			<modelClass>com.inov8.microbank.common.model.RetailerContactModel</modelClass>
+			<title>Retailer Contact</title>
+			<defaultSortedBy>firstName</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>retailerIdRetailerModel.name</propertyName>
+				</column>
+				<column>
+					<propertyName>firstName</propertyName>
+				</column>
+				<column>
+					<propertyName>lastName</propertyName>
+				</column>
+				<column>
+					<propertyName>mobileNo</propertyName>
+				</column>
+
+			</columnList>
+		</popup>
+
+		<!--Instructions Popup -->
+		<popup>
+			<name>instructionsPopup</name>
+			<modelClass>com.inov8.microbank.common.model.NotificationMessageModel</modelClass>
+			<title>Instructions</title>
+			<defaultSortedBy>smsMessageText</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>smsMessageText</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Distributor Contact Popup -->
+		<popup>
+			<name>distributorContactPopup</name>
+			<modelClass>com.inov8.microbank.common.model.distributormodule.ManagingContactListViewModel</modelClass>
+			<title>Distributor Contact</title>
+			<defaultSortedBy>firstName</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>firstName</propertyName>
+				</column>
+				<column>
+					<propertyName>lastName</propertyName>
+				</column>
+				<column>
+					<propertyName>mobileNo</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!-- Queue Name Ppopup added by Asad Hayat on 2/11/2006 and used in Product 
+			Gui -->
+
+		<popup>
+			<name>queueNamePopup</name>
+			<modelClass>com.inov8.microbank.common.model.ProductIntgModuleInfoModel</modelClass>
+			<title>QueueName</title>
+			<defaultSortedBy>queueName</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>queueName</propertyName>
+				</column>
+
+			</columnList>
+		</popup>
+
+
+		<!--Service PopupPopup -->
+
+		<popup>
+			<name>servicePopup</name>
+			<modelClass>com.inov8.microbank.common.model.ServiceModel</modelClass>
+			<title>Service</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>serviceTypeIdServiceTypeModel.name</propertyName>
+					<header>Service Type Name</header>
+				</column>
+				<column>
+					<propertyName>serviceTypeIdServiceTypeModel.serviceTypeId</propertyName>
+					<header>Service Type Name</header>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Service Type Popup -->
+
+		<popup>
+			<name>serviceTypePopup</name>
+			<modelClass>com.inov8.microbank.common.model.ServiceTypeModel</modelClass>
+			<title>Service Type</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Supplier Popup -->
+
+		<popup>
+			<name>supplierPopup</name>
+			<modelClass>com.inov8.microbank.common.model.SupplierModel</modelClass>
+			<title>Supplier</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!-- Retailer Type Ppopup added by Asad Hayat on 4/11/2006 and used in 
+			retailer Gui -->
+		<popup>
+			<name>retailerTypePopup</name>
+			<modelClass>com.inov8.microbank.common.model.RetailerTypeModel</modelClass>
+			<title>RetailerType</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Area Popup -->
+
+		<popup>
+			<name>areaPopup</name>
+			<modelClass>com.inov8.microbank.common.model.AreaModel</modelClass>
+			<title>Area</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Distributor Popup -->
+
+		<popup>
+			<name>distributorPopup</name>
+			<modelClass>com.inov8.microbank.common.model.DistributorModel</modelClass>
+			<title>Distributor</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Distributor Level Popup -->
+
+		<popup>
+			<name>distributorLevelPopup</name>
+			<modelClass>com.inov8.microbank.common.model.DistributorLevelModel</modelClass>
+			<title>Distributor Level</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Shipment Type Popup -->
+
+		<popup>
+			<name>shipmentTypePopup</name>
+			<modelClass>com.inov8.microbank.common.model.ShipmentTypeModel</modelClass>
+			<title>Shipment Type</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+		<!--Shipment Reference Popup -->
+
+		<popup>
+			<name>shipmentReferencePopup</name>
+			<modelClass>com.inov8.microbank.common.model.inventorymodule.ShipmentListViewModel</modelClass>
+			<title>Shipment Reference</title>
+			<defaultSortedBy>shipmentId</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>shipmentId</propertyName>
+					<filterable>false</filterable>
+				</column>
+				<column>
+					<propertyName>productName</propertyName>
+					<header>Product</header>
+				</column>
+				<column>
+					<propertyName>supplierName</propertyName>
+					<header>Supplier</header>
+				</column>
+			</columnList>
+		</popup>
+
+		<popup>
+			<name>userNamePopup</name>
+			<modelClass>com.inov8.microbank.common.model.tickermodule.TickerListViewModel</modelClass>
+			<title>Ticker User</title>
+			<defaultSortedBy>tickerId</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>appUserId</propertyName>
+				</column>
+				<column>
+					<propertyName>username</propertyName>
+				</column>
+			</columnList>
+		</popup>
+
+
+		<popup>
+			<name>mnoPopup</name>
+			<modelClass>com.inov8.microbank.common.model.MnoModel</modelClass>
+			<title>MNO Reference</title>
+			<defaultSortedBy>name</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>name</propertyName>
+					<header>MNO Name</header>
+				</column>
+				<column>
+					<propertyName>description</propertyName>
+				</column>
+			</columnList>
+		</popup>
+		<popup>
+
+			<name>notificationMessagePopup</name>
+
+			<modelClass>com.inov8.microbank.common.model.NotificationMessageModel</modelClass>
+
+			<title>Notification Message</title>
+
+			<defaultSortedBy>notificationMessageId</defaultSortedBy>
+
+			<columnList>
+
+				<column>
+
+					<propertyName>notificationMessageId</propertyName>
+
+				</column>
+
+				<column>
+
+					<propertyName>smsMessageText</propertyName>
+
+				</column>
+
+			</columnList>
+
+		</popup>
+
+		<popup>
+
+			<name>appUserPopup</name>
+			<modelClass>com.inov8.microbank.common.model.AppUserModel</modelClass>
+			<title>App User Reference</title>
+			<defaultSortedBy>appUserId</defaultSortedBy>
+
+			<columnList>
+				<column>
+					<propertyName>appUserId</propertyName>
+					<filterable>false</filterable>
+
+				</column>
+				<column>
+					<propertyName>firstName</propertyName>
+				</column>
+				<column>
+					<propertyName>lastName</propertyName>
+				</column>
+				<column>
+					<propertyName>appUserTypeIdAppUserTypeModel.name</propertyName>
+					<header>User Type</header>
+				</column>
+
+
+			</columnList>
+
+		</popup>
+
+
+		<popup>
+
+			<name>appUserFormListViewPopup</name>
+			<modelClass>com.inov8.microbank.common.model.appversionmodule.AppUserFormListViewModel</modelClass>
+			<title>App User Reference</title>
+			<defaultSortedBy>appUserId</defaultSortedBy>
+
+			<columnList>
+				<column>
+					<propertyName>appUserId</propertyName>
+					<filterable>false</filterable>
+
+				</column>
+				<column>
+					<propertyName>firstName</propertyName>
+				</column>
+				<column>
+					<propertyName>lastName</propertyName>
+				</column>
+				<column>
+					<propertyName>appUserTypeName</propertyName>
+					<header>User Type</header>
+				</column>
+
+
+			</columnList>
+
+		</popup>
+
+
+		<popup>
+
+			<name>userDeviceAccountsListViewPopup</name>
+			<modelClass>com.inov8.microbank.common.model.userdeviceaccountmodule.UserDeviceAccountListViewModel</modelClass>
+			<title>App User Reference</title>
+			<defaultSortedBy>userId</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>appUserId</propertyName>
+					<visible>false</visible>
+				</column>
+				<column>
+					<propertyName>userId</propertyName>
+					<header>MWallet ID</header>
+				</column>
+				<column>
+					<propertyName>firstName</propertyName>
+					<header>First Name</header>
+				</column>
+				<column>
+					<propertyName>lastName</propertyName>
+					<header>Last Name</header>
+				</column>
+
+
+			</columnList>
+
+		</popup>
+
+		<popup>
+			<name>userInfoListViewPopup</name>
+			<modelClass>com.inov8.microbank.common.model.portal.mfsaccountmodule.UserInfoListViewModel</modelClass>
+			<title>App User Reference</title>
+			<defaultSortedBy>userId</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>userId</propertyName>
+					<header>MWallet ID</header>
+				</column>
+				<column>
+					<propertyName>firstName</propertyName>
+					<header>First Name</header>
+				</column>
+				<column>
+					<propertyName>lastName</propertyName>
+					<header>Last Name</header>
+				</column>
+				<column>
+					<propertyName>mobileNo</propertyName>
+					<header>Mobile No</header>
+				</column>
+				<column>
+					<propertyName>nic</propertyName>
+					<header>NIC</header>
+				</column>
+			</columnList>
+
+		</popup>
+
+		<popup>
+			<name>userInfoListViewMfsPopup</name>
+			<modelClass>com.inov8.microbank.common.model.portal.mfsaccountmodule.UserInfoListViewModel</modelClass>
+			<title>MWallet ID Reference</title>
+			<defaultSortedBy>userId</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>userId</propertyName>
+					<header>MWallet ID</header>
+				</column>
+				<column>
+					<propertyName>firstName</propertyName>
+					<header>First Name</header>
+				</column>
+				<column>
+					<propertyName>lastName</propertyName>
+					<header>Last Name</header>
+				</column>
+				<column>
+					<propertyName>mobileNo</propertyName>
+					<header>Mobile No</header>
+				</column>
+				<column>
+					<propertyName>nic</propertyName>
+					<header>NIC</header>
+				</column>
+				<column>
+					<propertyName>appUserId</propertyName>
+					<header>AppUserId</header>
+				</column>
+			</columnList>
+
+		</popup>
+		<popup>
+			<name>allpayUserInfoListViewPopup</name>
+			<modelClass>com.inov8.microbank.common.model.AllpayUserInfoListViewModel</modelClass>
+			<title>Agent ID Reference</title>
+			<defaultSortedBy>userId</defaultSortedBy>
+			<columnList>
+				<column>
+					<propertyName>accountNick</propertyName>
+					<header>Account Nick</header>
+				</column>
+				<column>
+					<propertyName>userId</propertyName>
+					<header>Agent ID</header>
+				</column>
+				<column>
+					<propertyName>firstName</propertyName>
+					<header>First Name</header>
+				</column>
+				<column>
+					<propertyName>lastName</propertyName>
+					<header>Last Name</header>
+				</column>
+				<column>
+					<propertyName>mobileNo</propertyName>
+					<header>Mobile No</header>
+				</column>
+				<column>
+					<propertyName>nic</propertyName>
+					<header>NIC</header>
+				</column>
+				<column>
+					<propertyName>appUserId</propertyName>
+					<header>AppUserId</header>
+				</column>
+			</columnList>
+
+		</popup>
+
+	</popupList>
+</popups>

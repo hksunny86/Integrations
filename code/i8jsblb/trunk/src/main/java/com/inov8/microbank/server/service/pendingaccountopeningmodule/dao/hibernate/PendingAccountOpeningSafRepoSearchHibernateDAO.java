@@ -1,0 +1,10 @@
+package com.inov8.microbank.server.service.pendingaccountopeningmodule.dao.hibernate;
+
+import com.inov8.framework.server.dao.framework.hibernate.BaseHibernateDAO;
+import com.inov8.microbank.common.model.AccountOpeningPendingSafRepoModel;
+import com.inov8.microbank.common.model.AccountOpeningPendingSafRepoVeiwModel;
+import com.inov8.microbank.server.service.pendingaccountopeningmodule.dao.PendingAccountOpeningDAO;
+import com.inov8.microbank.server.service.pendingaccountopeningmodule.dao.PendingAccountOpeningSafRepoSearchDAO;
+
+public class PendingAccountOpeningSafRepoSearchHibernateDAO extends BaseHibernateDAO<AccountOpeningPendingSafRepoVeiwModel,Long, PendingAccountOpeningSafRepoSearchDAO> implements PendingAccountOpeningSafRepoSearchDAO {
+}

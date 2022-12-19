@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/dialogSideMargin"
+    android:layout_marginRight="@dimen/dialogSideMargin"
+    android:background="@drawable/dialog_bg_rounded"
+    android:paddingBottom="20dp" >
+
+    <RelativeLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/header_dialog_bg" >
+
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/imageViewAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_normal"/>
+
+        <!--<ImageView-->
+            <!--android:id="@+id/imageViewAlert"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="10dp" />-->
+
+        <TextView
+            android:id="@+id/textViewAlertHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/imageViewAlert"
+            android:text="@string/alertNotification"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textViewTextSizeXLarge" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/layoutHeader"
+        android:paddingLeft="@dimen/dialogPaddingLarge"
+        android:paddingRight="@dimen/dialogPaddingLarge"
+        android:scrollbars="none" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" >
+
+            <TextView
+                android:id="@+id/txtLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/textViewFieldMargin"
+                android:gravity="center_horizontal"
+                android:singleLine="false"
+                android:text="A security PIN has been sent to your registered Mobile Number. Please enter your 4 digit Security PIN. "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textViewTextSizeNormal" />
+
+            <EditText
+                android:id="@+id/txtPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtLabel"
+                android:background="@drawable/rounded_bg"
+                android:inputType="numberPassword"
+                android:longClickable="false"
+                android:maxLength="4"
+                android:minEms="4"
+                android:padding="@dimen/editTextFieldPadding"
+                android:textSize="@dimen/textViewTextSizeNormal"
+                android:visibility="gone" >
+
+                <requestFocus />
+            </EditText>
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/layoutBtns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scroll_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dialogPaddingNormal"
+        android:paddingLeft="@dimen/dialogPaddingNormal"
+        android:paddingRight="@dimen/dialogPaddingNormal" >
+
+        <LinearLayout
+            android:id="@+id/layoutBtns2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2" >
+
+            <Button
+                android:id="@+id/btnOK"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_marginRight="@dimen/buttonInnerMarginNormal"
+                android:layout_weight="1"
+                android:background="@drawable/button_popup_register_selector"
+                android:text="@string/ok"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/buttonTextSizeNormal"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnRegenerate"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_marginLeft="@dimen/buttonInnerMarginNormal"
+                android:layout_toLeftOf="@+id/btnCancel"
+                android:layout_weight="1"
+                android:background="@drawable/button_popup_register_selector"
+                android:text="@string/regenerate"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/buttonTextSizeNormal"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_marginLeft="@dimen/buttonInnerMarginNormal"
+                android:layout_toRightOf="@id/btnOK"
+                android:layout_weight="1"
+                android:background="@drawable/button_cancel_selector"
+                android:text="@string/cancel"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/buttonTextSizeNormal"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutBtns3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutBtns2"
+            android:gravity="center_horizontal" >
+
+            <Button
+                android:id="@+id/btnResend"
+                android:layout_width="@dimen/dialogButtonWidth"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_popup_register_selector"
+                android:text="@string/resend"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/buttonTextSizeNormal"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<bean id="agentClosingBalanceViewDao" class="com.inov8.microbank.server.dao.portal.reports.finance.hibernate.AgentClosingBalanceViewHibernateDao" autowire="byName"/>
+	
+	<bean id="customerClosingBalanceViewDao" class="com.inov8.microbank.server.dao.portal.reports.finance.hibernate.CustomerClosingBalanceHibernateDAO" autowire="byName"/>
+	
+	<bean id="dailyAccountStatsDao" class="com.inov8.microbank.server.dao.dailyaccountstats.DailyAccountStatsHibernateDao" autowire="byName"/>
+
+	<bean id="customerBalanceReportViewDao" class="com.inov8.microbank.server.dao.portal.reports.finance.hibernate.CustomerBalanceReportViewHibernateDao" autowire="byName"/>
+	
+	<bean id="customerBalanceReportSummaryDao" class="com.inov8.microbank.server.dao.portal.reports.finance.hibernate.CustomerBalanceReportSummaryHibernateDao" autowire="byName"/>
+
+	<bean id="commissionSummaryReportViewDao" class="com.inov8.microbank.server.dao.portal.reports.finance.hibernate.CommissionSummaryReportViewHibernateDao" autowire="byName"/>
+
+	<bean id="bbAccountsByAgentsViewDao" class="com.inov8.microbank.server.dao.portal.reports.agent.hibernate.BbAccountsByAgentsViewHibernateDao" autowire="byName"/>
+
+	<bean id="agentTransactionDetailViewDao" class="com.inov8.microbank.server.dao.portal.reports.agent.hibernate.AgentTransactionDetailViewHibernateDao" autowire="byName"/>
+	
+	<bean id="handlerTransactionDetailViewDao" class="com.inov8.microbank.server.dao.portal.reports.agent.hibernate.HandlerTransactionDetailViewHibernateDao" autowire="byName"/>
+	
+	<bean id="agentTransactionSummaryViewDao" class="com.inov8.microbank.server.dao.portal.reports.agent.hibernate.AgentTransactionSummaryViewHibernateDao" autowire="byName"/>
+
+	<bean id="bbSettlementAccountsViewDAO" class="com.inov8.microbank.server.dao.portal.ola.hibernate.BBSettlementAccountsViewHibernateDAO" autowire="byName"/>
+
+	<!-- atif hussain -->
+	<bean id="settlementClosingBalanceViewDAO" class="com.inov8.microbank.server.dao.portal.reports.finance.hibernate.SettlementClosingBalanceViewHibernateDAO" autowire="byName"/>
+
+	<bean id="financeReportsManager" parent="baseTransactionProxy">
+	 	<property name="target">
+	 		<bean class="com.inov8.microbank.server.service.portal.financereportsmodule.FinanceReportsManagerImpl" autowire="byName">
+	 		</bean>
+	 	</property>
+	</bean>
+
+	<bean id="agentReportsManager" parent="baseTransactionProxy">
+	 	<property name="target">
+	 		<bean class="com.inov8.microbank.server.service.portal.agentreportsmodule.AgentReportsManagerImpl" autowire="byName">
+	 		</bean>
+	 	</property>
+	</bean>
+
+	<bean id="financeReportsFacacde" class="com.inov8.microbank.server.facade.portal.financereportsmodule.FinanceReportsFacacdeImpl" autowire="byName"/>
+
+	<bean id="agentReportsFacade" class="com.inov8.microbank.server.facade.portal.agentreportsmodule.AgentReportsFacadeImpl" autowire="byName"/>
+
+ </beans>

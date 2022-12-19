@@ -1,0 +1,147 @@
+<resources>
+    <string name="app_name" translatable="false">JSBLMFS-Agent</string>
+
+    <string name="email_address_hint" translatable="false">E-mail address</string>
+    <string name="password_hint" translatable="false">PIN</string>
+    <string name="login" translatable="false">Login</string>
+    <string name="welcome" translatable="false">Welcome</string>
+    <string name="name" translatable="false">Name</string>
+    <string name="available_balance" translatable="false">Available Balance</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="confirm_transaction" translatable="false">Confirm Transaction</string>
+    <string name="confirm" translatable="false">Confirm</string>
+    <string name="register" translatable="false">Register</string>
+    <string name="cancel" translatable="false">Cancel</string>
+    <string name="search" translatable="false">Search</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="register_continue" translatable="false">Cancel</string>
+    <string name="verify" translatable="false">Verify</string>
+    <string name="enter_consumer_number" translatable="false">Enter Consumer / Ref No.</string>
+    <string name="pay_by_cash" translatable="false">Pay By Cash</string>
+    <string name="pay_by_account" translatable="false">Pay By Account</string>
+    <string name="old_pin" translatable="false">Old PIN</string>
+    <string name="new_pin" translatable="false">New PIN</string>
+    <string name="confirm_new_pin" translatable="false">Confirm New PIN</string>
+    <string name="change_pin" translatable="false">Change PIN</string>
+    <string name="alertNotification" translatable="false">Alert Notification</string>
+    <string name="regenerate" translatable="false">Regenerate</string>
+    <string name="resend" translatable="false">Resend</string>
+    <string name="selectafinger" translatable="false">Resend</string>
+
+    <!-- BVS Strings  -->
+    <string name="timeout">Fingerprint scan timeout!</string>
+    <string name="enroll_success">Fingerprint Scanned! </string>
+
+    <string name="title_select_device" translatable="false">Select a device to connect</string>
+    <string name="title_address" translatable="false">Address</string>
+    <string name="title_connect" translatable="false">Connect</string>
+    <string name="title_bluetooth_disabled" translatable="false">Bluetooth is disabled</string>
+    <string name="title_scan" translatable="false">Scan for devices</string>
+    <string name="title_scanning" translatable="false">Scanning for devices&#8230;</string>
+    <string name="title_please_wait" translatable="false">Please wait</string>
+    <string name="msg_failed_to_init" translatable="false">Failed to init printer</string>
+    <string name="msg_failed_to_connect" translatable="false">Failed to establish connection</string>
+    <string name="msg_failed_to_print_text" translatable="false">Failed to print text</string>
+    <string name="msg_failed_to_print_image" translatable="false">Failed to print image</string>
+    <string name="msg_failed_to_print_barcode" translatable="false">Failed to print barcode</string>
+    <string name="msg_no_paper" translatable="false">No paper</string>
+    <string name="msg_paper_ready" translatable="false">Paper ready</string>
+    <string name="msg_overheated" translatable="false">Overheated</string>
+    <string name="msg_low_battery" translatable="false">Low battery</string>
+    <string name="msg_connecting" translatable="false">Connecting to device&#8230;</string>
+    <string name="msg_printing_text" translatable="false">Printing text&#8230;</string>
+    <string name="msg_printing_image" translatable="false">Printing image&#8230;</string>
+    <string name="msg_printing_barcode" translatable="false">Printing barcode&#8230;</string>
+    <string name="msg_failed_to_read_card" translatable="false">Failed to read card</string>
+    <string name="msg_failed_to_read_barcode" translatable="false">Failed to read barcode</string>
+    <string name="msg_reading_magstripe" translatable="false">Reading magnetic card&#8230;</string>
+
+    <string name="card_info" translatable="false">Card information</string>
+    <string name="barcode" translatable="false">Barcode</string>
+    <string name="card_no" translatable="false">Card#</string>
+    <string name="holder" translatable="false">Holder</string>
+    <string name="exp_date" translatable="false">Exp date</string>
+    <string name="no_card_read" translatable="false">No card information read</string>
+    <string name="customer_mobile_number">Customer Mobile Number</string>
+    <string name="card_embossing_name">Card Embossing Name</string>
+    <string name="mailing_address_text">Mailing Address</string>
+
+    <string name="account_purpose">Purpose of Account</string>
+    <string name="occupation">Occupation</string>
+    <string name="mobile_no_next_kin">Mobile No(Next of KIN)</string>
+    <string name="mobile_no">Mobile No.</string>
+    <string name="cnic">CNIC</string>
+    <string name="debit_card_number">Debit Card Number</string>
+    <string name="international_remittance_location">International Remittance Location</string>
+    <string name="relationship">Relationship</string>
+    <string name="relationship_with_originator">Relationship With Originator</string>
+
+    <string name="terms_link_js_agentmate" translatable="false">Terms &amp; Conditions</string>
+    <string name="customer_mobile_number_confirm">Confirm Customer Mobile Number</string>
+    <string name="customer_cnic">Customer NIC</string>
+    <string name="customer_cnic_number">Customer CNIC</string>
+    <string name="customer_cnic_confirm">Confirm Customer NIC</string>
+    <string name="customer_card_number">Customer Card Number</string>
+    <string name="account_type">Account Level</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="initial_deposit">Initial Deposit</string>
+    <string name="select_segment">Select segment</string>
+    <string name="income_source">Source of Income</string>
+    <string name="cnic_expiry_date">CNIC Expiry Date (dd-mm-yyyy)</string>
+    <string name="card_number">Card Number</string>
+    <string name="select_date">Select Date</string>
+    <string name="instascan">Instascan</string>
+    <string name="biometric_device">Other</string>
+    <string name="secugen_device">Secugen Device</string>
+    <string name="suprema_device">Suprema Device</string>
+    <string name="suprema_slim_2">Suprema Slim 2</string>
+    <string name="P41M2_device">P41M2 Device</string>
+    <string name="biometric_selection">Select Biometric Process</string>
+    <string name="bluetooth_scanner">Bluetooth Scanner</string>
+
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled.</string>
+    <string name="title_connecting">connecting...</string>
+    <string name="title_connected_to">connected: </string>
+    <string name="title_unable_to_connect">Unable to connect</string>
+    <string name="title_not_connected">not connected</string>
+    <string name="place_finger">Place Finger on Scanner and Press Scan Button.</string>
+
+    <!--  DeviceListActivity -->
+    <string name="scanning">scanning for devices...</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for devices</string>
+
+    <string name="getimage">Get Image</string>
+    <string name="getdata">Get Data</string>
+
+    <string name="captureHost">Capture</string>
+    <string name="enrollHost">Enroll</string>
+
+    <!-- Options Menu -->
+    <string name="connect">Connect Device</string>
+    <string name="discoverable">Make discoverable</string>
+    <string name="scan">Scan</string>
+
+    <string name="accept" translatable="false">Accept</string>
+
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="dob">Date of Birth</string>
+    <string name="cnic_expiry">CNIC Expiry Date</string>
+    <string name="cnic_seen">Is CNIC Seen?</string>
+    <string name="account_level">Account Level</string>
+    <string name="src_of_funds">Source of Funds</string>
+    <string name="comments">Comments</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="retry">Retry</string>
+    <string name="selectfinger">Please tap a finger to select</string>
+    <string name="selectgreenfinger">Please select the green marked fingers</string>
+    <string name="other_relationship">Other Relationship</string>
+    <string name="mobile_network">Mobile Network</string>
+</resources>

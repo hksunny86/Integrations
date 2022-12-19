@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="center"
+              android:background="@color/offwhite"
+              android:orientation="vertical" >
+
+    <include
+        android:id="@+id/container_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_layout" />
+
+    <include
+        android:id="@+id/container_heading"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/heading_layout" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none" >
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <RelativeLayout
+                android:id="@+id/layoutBillConfirmation"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <com.inov8.agentmate.util.ListViewExpanded
+                    android:id="@+id/dataList"
+                    android:layout_width="fill_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_bg"
+                    android:divider="@color/light_gray"
+                    android:dividerHeight="1dp"
+                    android:footerDividersEnabled="false"
+                    android:padding="2dp" >
+                </com.inov8.agentmate.util.ListViewExpanded>
+
+                <com.inov8.agentmate.util.ListViewExpanded
+                    android:id="@+id/picList"
+                    android:layout_width="fill_parent"
+                    android:layout_height="190dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@id/dataList"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/rounded_bg"
+                    android:divider="@color/line_light_grey"
+                    android:dividerHeight="1dp"
+                    android:footerDividersEnabled="false"
+                    android:padding="2dp" >
+                </com.inov8.agentmate.util.ListViewExpanded>
+
+                <Button
+                    android:id="@+id/btnNext"
+                    android:layout_width="198dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="false"
+                    android:layout_below="@id/picList"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/button_blue_selector"
+                    android:text="Confirm"
+                    android:textColor="@android:color/white"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="198dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentRight="false"
+                    android:layout_below="@id/btnNext"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/button_grey_selector"
+                    android:text="Cancel"
+                    android:textColor="@android:color/white"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

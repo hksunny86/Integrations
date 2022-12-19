@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_title"
+        layout="@layout/heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/ivIconTick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/layoutMarginSmall"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/success_receipt_icon" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivIconTick"
+        android:layout_marginTop="@dimen/layoutMarginSmall"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activitySideMarginNormal"
+            android:layout_marginRight="@dimen/activitySideMarginNormal">
+
+            <RelativeLayout
+                android:id="@+id/layoutPaid"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/textViewMarginXXXLarge"
+                android:layout_marginTop="@dimen/textViewMarginXLarge"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/txtMsg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:lineSpacingExtra="@dimen/textViewFieldMargin"
+                    android:padding="1dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="0.6"
+                    android:text="asdddddddddddddnkjsjhkhfgjshkhjghhjhjshgjhjg bsdbsdjsjjjjjj"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textViewTextSizeSmall"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutPaid"
+                android:layout_centerHorizontal="false"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="false"
+                android:layout_marginBottom="@dimen/buttonBottomMarginNormal"
+                android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+                android:layout_marginRight="@dimen/buttonSideMarginNormal"
+                android:layout_marginTop="@dimen/buttonTopMarginXLarge"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnOK"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/buttonHeightNormal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/button_ok"
+                    android:text="OK"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/buttonTextNormal"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

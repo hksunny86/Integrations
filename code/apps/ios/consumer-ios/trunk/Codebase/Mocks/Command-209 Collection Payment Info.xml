@@ -1,0 +1,28 @@
+<!--<msg id="209" reqTime="1406289749947">-->
+<!--	<params>-->
+<!--		<param name="DTID">5</param>-->
+<!--		<param name="PID">5</param>-->
+<!--		<param name="CNSMRNO">5</param>-->
+<!--		<param name="TXAM">5</param>-->
+<!--		<param name="MOBN">5</param>-->
+<!--		<param name="CNIC">5</param>-->
+<!--	</params> -->
+<!--</msg>-->
+
+<!-- response -->
+<msg id="209">
+	<params>
+		<param name="PID">5</param> 		<!-- product id-->
+		<param name="PROD">5</param> 		<!-- product name-->
+		<param name="CNSMRNO">5</param> 	<!-- consumer no, optional-->
+		<param name="TXAM">5</param>  		<!-- transaction amount-->
+		<param name="TXAMF">5</param>  		<!-- transaction amount-->
+		<param name="TPAM">5</param>  		<!-- processing amount-->
+		<param name="TPAMF">5</param>  		<!-- processing amount-->
+		<param name="TAMT">5</param>  		<!-- total amount-->
+		<param name="TAMTF">5</param>  		<!-- total amount-->
+		<param name="MOBN">5</param> 		<!-- mobile no, optional-->
+		<param name="CNIC">5</param> 		<!-- cnic,  optional-->		
+		<param name="DUEDATEF">20/07/2017</param>
+	</params> 
+</msg>

@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+
+	<bean id="mfsReqHandler" class="com.inov8.microbank.mfs.MfsRequestHandler">
+		<property name="cmdManager" ref="cmdManager"/>
+		<property name="deviceTypeCommandManager">
+          <ref  bean="deviceTypeCommandManager"/>
+        </property>
+        <property name="actionLogManager">
+          <ref  bean="actionLogManager"/>
+        </property>
+        <property name="messageSource">
+        	<ref bean="messageSource"/>
+        </property>
+        <property name="allPayWebResponseDataPopulator">
+          <ref bean="allPayWebResponseDataPopulator"/>
+        </property>
+        <property name="productCatalogManager">
+          <ref bean="productCatalogManager"/>
+        </property>
+
+	</bean>
+
+	<bean id="cmdManager" class="com.inov8.microbank.server.service.commandmodule.CommandManagerImpl">
+		<property name="commonCommandManager" ref="commonCommandManager"></property>
+		<property name="messageSource">
+	      <ref bean="messageSource"/>
+	    </property>
+	    <property name="maxTimeForAttempts" value="1800"/>
+	    <property name="numberOfAttempts" value="3"></property>
+	</bean>
+  <!-- DAO -->
+    <bean id="mobileNetworkDAO" class="com.inov8.microbank.mobilenetworks.dao.hibernate.MobileNetworkHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+  <bean id="fetchTransactionListViewDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.FetchTransactionListViewHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="appVersionListViewDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.AppVersionListViewHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="appVersionDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.AppVersionHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+  <bean id="paymentModeDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.PaymentModeHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+  <bean id="commandDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.CommandHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="favoriteNumbersDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.FavoriteNumbersHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="tickerDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.TickerHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="userDeviceAccountsDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.UserDeviceAccountsHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+    <bean id="customerDetailsCommandDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.CustomerDetailsCommandHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+  <bean id="veriflyListViewDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.VeriflyListViewHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="smAcctInfoListViewDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.SMAcctInfoListViewHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="cityDAO" class="com.inov8.microbank.server.dao.portal.citymodule.hibernate.CityHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="businessTypeDAO" class="com.inov8.microbank.server.dao.portal.businesstype.hibernate.BusinessTypeHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="professionDAO" class="com.inov8.microbank.server.dao.portal.professionmodule.hibernate.ProfessionHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="occupationDAO" class="com.inov8.microbank.server.dao.portal.occupationmodule.hibernate.OccupationHibernateDAO">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="paymentTypeDAO" class="com.inov8.microbank.server.dao.mfsmodule.hibernate.PaymentTypeHibernateDAO">
+   <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+  <bean id="kycDAO" class="com.inov8.microbank.server.dao.portal.kycmodule.hibernate.KYCHibernateDAO">
+   <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="acOwnerShipDetailDAO" class="com.inov8.microbank.server.dao.portal.kycmodule.hibernate.ACOwnerShipDetailHibernateDAO">
+   <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="transactionModeDAO" class="com.inov8.microbank.server.dao.portal.kycmodule.hibernate.ApplicantTxModeHibernateDAO">
+   <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+  <!-- Service -->
+   <bean id="userDeviceAccountsManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.mfsmodule.UserDeviceAccountsManagerImpl">
+        <property name="userDeviceAccountsDAO">
+          <ref local="userDeviceAccountsDAO"/>
+        </property>
+       </bean>
+    </property>
+  </bean>
+
+    <bean id="bispManager" parent="baseTransactionProxy">
+    <property name="target">
+    <bean class="com.inov8.microbank.server.service.bispmodule.BISPManagerImpl">
+        <property name="custNadraVerificationDAO" ref="bispCustNadraVerificationDAO" />
+    </bean>
+    </property>
+    </bean>
+
+  <bean id="commonCommandManager" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="com.inov8.microbank.server.service.mfsmodule.CommonCommandManagerImpl">
+          <property name="memberBankDAO" ref="memberBankDAO" />
+          <property name="actionLogDAO" ref="actionLogDAO" />
+          <property name="pendingAccountOpeningDAO" ref="pendingAccountOpeningDAO" />
+          <property name="pendingDebitCardSafRepoDAO" ref="pendingDebitCardSafRepoDAO" />
+          <property name="advanceSalaryLoanDAO" ref="advanceSalaryLoanDao" />
+          <property name="actionAuthorizationManager" ref="ActionAuthorizationManager" />
+          <property name="bankSegmentsDAO" ref="bankSegmentsDAO" />
+          <property name="thirdPartyAcOpeningDAO" ref="thirdPartAccountOpeningDAO" />
+          <property name="fetchThirdPartySegmentsDAO" ref="fetchThirdPartySegmentsDAO" />
+          <property name="thirdPartyCashOutQueingPreProcessor" ref="thirdPartyCashOutQueingPreProcessor" />
+          <property name="taxRegimeDAO" ref="taxRegimeDAO" />
+          <property name="UsecaseDAO" ref="UsecaseDAO" />
+          <property name="cityDAO" ref="cityDAO" />
+          <!--  HRA/Debit-Card Phase-2 -->
+          <property name="cardConfigurationManager" ref="cardConfigurationManager" />
+          <property name="payMtncRequestDAO" ref="payMtncRequestDAO" />
+          <property name="remitanceInfoDAO" ref="remitanceInfoDAO" />
+          <!--  HRA/Debit-Card Phase-2 -->
+
+          <property name="transactionPurposeDAO" ref="transactionPurposeDAO" />
+          <property name="geoLocationDAO" ref="geoLocationDAO" />
+          <property name="bispCustNadraVerificationDAO" ref="bispCustNadraVerificationDAO" />
+          <!--  Debit Card Module -->
+
+          <property name="debitCardModelDAO" ref="debitCardModelDAO" />
+          <property name="debitCardChargesDAO" ref="debitCardChargesDAO" />
+          <property name="fetchCardTypeDAO" ref="fetchCardTypeDAO"></property>
+          <property name="segmentDAO" ref="segmentDAO"></property>
+          <property name="debitCardMailingAddressDAO" ref="debitCardMailingAddressDAO" />
+
+          <property name="actionAuthorizationModelDAO" ref="ActionAuthorizationModelDAO" />
+          <property name="actionAuthorizationFacade" ref="actionAuthorizationFacade" />
+          <!--  Debit Card Module -->
+
+          <property name="esbAdapter" ref="esbAdapter" />
+	    <property name="messageSource">
+	      <ref bean="messageSource"/>
+	    </property>
+        <property name="faqManager" ref="faqManager"/>
+        <property name="otpAuthentication" ref="otpAuthentication"/>
+
+	    <property name="smsSender">
+	      <ref bean="smsSender"/>
+	    </property>
+          <property name="verisysDataHibernateDAO">
+              <ref bean="verisysDataDAO"/>
+          </property>
+          <property name="customerDetailsCommandDAO">
+              <ref bean="customerDetailsCommandDAO"/>
+          </property>
+          <property name="virtualCardHibernateDAO">
+              <ref bean="virtualCardHibernateDAO"/>
+          </property>
+
+          <property name="userDeviceAccountListViewManager">
+              <ref bean="userDeviceAccountListViewManager"/>
+          </property>
+	    
+	    <property name="appUserManager">
+	      <ref bean="securityFacade"/>
+	    </property>
+
+	   <!--  <property name="fonePayManager" ref="fonePayManager"/> -->
+	    
+	    <property name="salesSummaryListViewDAO">
+	      <ref bean="salesSummaryListViewDAO"/>
+	    </property>
+
+	    <property name="userDeviceAccountListViewDAO">
+	      <ref bean="userDeviceAccountListViewDAO"/>
+	    </property>
+
+	    <property name="mfsAccountManager">
+	      <ref bean="mfsAccountManager"/>
+	    </property>
+      
+        <property name="userDeviceAccountsDAO">
+          <ref local="userDeviceAccountsDAO"/>
+        </property>
+        <property name="workFlowFacade">
+          <ref bean="workFlowFacade"/>
+        </property>
+        <property name="customerDAO">
+          <ref bean="customerDAO"/>
+        </property>
+          <property name="accountInfoDAO">
+              <ref bean="accountInfoDao"/>
+          </property>
+
+          <property name="appVersionListViewDAO">
+          <ref local="appVersionListViewDAO"/>
+        </property>
+        <property name="fetchTransactionListViewDAO">
+          <ref local="fetchTransactionListViewDAO"/>
+        </property>
+        <property name="workflowExceptionTranslator">
+          <ref bean="workflowExceptionTranslator"/>
+        </property>
+
+        <property name="paymentModeDAO">
+          <ref local="paymentModeDAO"/>
+        </property>
+        
+        <property name="commissionManager">
+          <ref bean="commissionManager"/>
+        </property>
+
+        <property name="retailerContactDAO">
+          <ref bean="retailerContactDAO"/>
+        </property>
+        
+        <property name="addressDAO">
+          <ref bean="addressDAO"/>
+        </property>
+        
+        <property name="customerAddressesDAO">
+          <ref bean="customerAddressesDAO"/>
+        </property>
+        
+        
+        <property name="operatorDAO">
+          <ref bean="operatorDAO"/>
+        </property>
+        
+        <property name="productDAO">
+          <ref bean="productDAO"/>
+        </property>
+        <property name="productDispenseController">
+          <ref bean="productDispenseController"/>
+        </property>
+        <property name="distributorContactDAO">
+          <ref bean="distributorContactDAO"/>
+        </property>
+        <property name="retailerDAO">
+          <ref bean="retailerDAO"/>
+        </property>
+        <property name="distributorDAO">
+          <ref bean="distributorDAO"/>
+        </property>
+	    <property name="appVersionDAO">
+          <ref local="appVersionDAO"/>
+        </property>
+        <property name="tickerDAO">
+          <ref local="tickerDAO"/>
+        </property>
+        <property name="favoriteNumbersDAO">
+          <ref local="favoriteNumbersDAO"/>
+        </property>
+        <property name="commandDAO">
+          <ref local="commandDAO"/>
+        </property>
+        <property name="appUserDAO">
+          <ref bean="appUserDAO"/>
+        </property>
+        <property name="veriflyListViewDAO">
+          <ref local="veriflyListViewDAO"/>
+        </property>
+        <property name="catalogServiceListViewDAO">
+          <ref bean="catalogServiceListViewDAO"/>
+        </property>
+        <property name="smartMoneyAccountDAO">
+          <ref bean="smartMoneyAccountDAO"/>
+        </property>
+		<property name="genericDao">
+			<ref bean="genericHibernateDAO"/>
+		</property>
+        <property name="prodCatalogDetailListViewDAO">
+          <ref bean="prodCatalogDetailListViewDAO"/>
+        </property>
+        <property name="smAcctInfoListViewDAO">
+          <ref local="smAcctInfoListViewDAO"/>
+        </property>
+        <property name="veriflyController">
+          <ref bean="veriflyController"/>
+        </property>
+        <property name="switchController">
+          <ref bean="switchController"/>
+        </property>
+        <property name="favoriteNumberListViewDAO">
+          <ref bean="favoriteNumberListViewDAO"/>
+        </property>
+		
+		<property name="minExpiryYear" value="1"/>
+		<property name="maxExpiryYear" value="2"/>
+		
+		<property name="financialIntegrationManager">
+			<ref bean="financialIntegrationManager"/>
+		</property>
+		
+		<property name="miniCommandLogDAO">
+          <ref bean="miniCommandLogDAO"/>
+        </property>
+
+       <property name="fonePayManager">
+          <ref bean="fonePayManager"/>
+        </property>
+          <property name="agentSegmentRestrictionManager">
+              <ref bean="agentSegmentRestrictionManager"/>
+          </property>
+        <property name="miniCommandKeywordDAO">
+          <ref bean="miniCommandKeywordDAO"/>
+        </property>
+        <property name="miniHelpKeywordDAO">
+          <ref bean="miniHelpKeywordDAO"/>
+        </property>
+        
+        <property name="miniTransactionDAO">
+          <ref bean="miniTransactionDAO"/>
+        </property>
+        
+        <property name="transactionManager">
+          <ref bean="transactionModuleManager"/>
+        </property>
+        
+        <property name="customerPendingTrxManager">
+          <ref bean="customerPendingTrxManager"/>
+        </property>
+        
+        <property name="allPayTransactionInfoListViewDAO">
+          <ref bean="allPayTransactionInfoListViewDAO"/>
+        </property>
+         <property name="transactionDAO">
+          <ref bean="transactionDAO"/>
+        </property>
+        <property name="transactionDetailDAO" ref="transactionDetailDAO"/>
+	     <property name="phoenixFinancialInstitution">
+	    	<ref bean="com.inov8.microbank.server.service.financialintegrationmodule.PhoenixFinancialInstitutionImpl"/>
+	    </property>
+	    
+	     <property name="tillBalanceManager">
+          <ref bean="tillBalanceManager"/>
+        </property>
+	     <property name="veriflyManager">
+          <ref bean="vfVeriflyManager"/>
+        </property>
+	     <property name="commissionRateDAO">
+          <ref bean="commissionRateDAO"/>
+        </property>
+	     <property name="miniStatementListViewDAO">
+          <ref bean="miniStatementListViewDAO"/>
+        </property>
+ 		<property name="productManager">
+          <ref bean="productManager"/>
+        </property>
+	    <property name="velocityRuleViewDAO">
+          <ref bean="velocityRuleViewDAO"/>
+        </property>
+          <property name="operatingHoursRuleModelDAO">
+              <ref bean="operatingHoursRuleModelDAO"/>
+          </property>
+          <property name="transactionDetailMasterDAO">
+          <ref bean="transactionDetailMasterDAO"/>
+        </property>
+        <property name="billStatusDAO">
+          <ref bean="billStatusDAO"/>
+        </property>
+        <property name="categoryDAO">
+          <ref bean="categoryDAO"/>
+        </property>
+		<property name="stakeholderBankInfoManager" ref="stakeholderFacade" />
+        <property name="supplierBankInfoManager" ref="supplierFacade" />
+        <property name="registrationStateDAO" ref="registrationStateDAO"/>
+        <property name="actionLogManager" ref="actionLogManager"/>
+        <property name="sequenceGenerator" ref="deviceApplicationNoGenerator"/>
+        <property name="deviceApplicationNoGenerator" ref="deviceApplicationNoGenerator"/>
+        <property name="arbitraryResourceLoader" ref="arbitraryResourceLoader"/>
+        <property name="goldenNosDAO" ref="goldenNosDAO"/>
+          <property name="customerPictureDAO" ref="customerPictureDAO"/>
+          <property name="blinkCustomerModelDAO" ref="blinkCustomerModelDAO"/>
+          <property name="blinkCustomerPictureDAO" ref="blinkCustomerPictureDAO"/>
+        <property name="bankDAO" ref="bankDAO"/>
+        <property name="olaVeriflyFinancialInstitution" ref="com.inov8.microbank.server.service.financialintegrationmodule.OLAVeriflyFinancialInstitutionImpl"/>
+        <property name="linkPaymentModeDAO" ref="linkPaymentModeDAO"/>
+        <property name="handlerDAO">
+          <ref bean="handlerDAO"/>
+        </property>
+        <property name="accountManager" ref="accountManager"/>
+        <property name="smartMoneyAccountManager" ref="smartMoneyAccountManager"/>
+        <property name="ivrAuthenticationRequestQueueSender" ref="ivrAuthenticationRequestQueueSender"/>
+        <property name="creditAccountQueingPreProcessor" ref="creditAccountQueingPreProcessor"/>
+        <property name="miniTransactionManager" ref="miniTransactionManager"/>
+        <property name="demographicsManager" ref="demographicsManager"/>
+        <property name="appManager" ref="appManager"/>
+        <property name="agentTransferRuleDAO" ref="agentTransferRuleDAO"/>
+         <property name="accountControlManager" ref="accountControlManager"/>
+          <property name="custTransManager" ref="custTransManager"/>
+          <property name="olaCustomerAccountTypeDao" ref="olaCustomerAccountTypeDao"/>
+          <property name="apiCityDAO" ref="apiCityDAO"/>
+          <property name="walletSafRepoDAO" ref="walletSafRepoDAO"/>
+          <property name="agentBvsStatManager" ref ="agentBvsStatManager"/>
+          <property name="agentBvsStatDAO" ref ="agentBvsStatDAO"/>
+          <property name="agentLocationStatManager" ref ="agentLocationStatManager"/>
+          <property name="debitCardRequestsViewModelDAO" ref ="debitCardRequestsViewModelDAO"/>
+          <property name="blinkCustomerRegistrationStateDAO" ref="blinkCustomerRegistrationStateDAO"/>
+          <property name="clsDebitCreditDAO" ref="clsDebitCreditDAO"/>
+          <property name="offlineBillersConfigDAO" ref="offlineBillersConfigDAO"/>
+      </bean>
+    </property>
+
+  </bean>
+  <bean id="goldenNosDAO" class="com.inov8.microbank.server.dao.portal.mfsaccountmodule.GoldenNosDAO">
+    	 <property name="sessionFactory" ref="sessionFactory"/>
+  </bean> 
+  <bean id="arbitraryResourceLoader" class="com.inov8.microbank.server.service.fileloader.ArbitraryResourceLoader"/>
+  <bean id="actionLogManager" class="com.inov8.microbank.server.service.actionlogmodule.ActionLogManager"/>
+  <bean id="deviceApplicationNoGenerator" class="com.inov8.framework.server.dao.framework.jdbc.OracleSequenceGeneratorJdbcDAO" init-method="initDao">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="sequenceName" value="DEVICE_APPLICATION_NOS_SEQ"/>
+  </bean>
+  
+  <bean id="registrationStateDAO" class="com.inov8.microbank.server.dao.customermodule.hibernate.RegistrationStateHibernateDAO">
+  	<property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+
+    <bean id="amaBvsConfigurationsDAO" class="com.inov8.microbank.server.dao.configurations.hibernate.AmaBvsConfigurationsHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="blinkCustomerRegistrationStateDAO" class="com.inov8.microbank.server.dao.customermodule.hibernate.BlinkCustomerRegistrationStateHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+  
+  <bean id="velocityRuleViewDAO" class="com.inov8.microbank.server.dao.velocitymodule.hibernate.VelocityRuleViewHibernateDAO">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  
+  <bean id="miniCommandLogDAO" class="com.inov8.microbank.server.dao.commandmodule.hibernate.MiniCommandLogHibernateDAO">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  
+   <bean id="miniHelpKeywordDAO" class="com.inov8.microbank.server.dao.commandmodule.hibernate.MiniHelpKeywordHibernateDAO">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  
+  <bean id="miniCommandKeywordDAO" class="com.inov8.microbank.server.dao.commandmodule.hibernate.MiniCommandKeywordHibernateDAO">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  
+   <bean id="appInfoDAO" class="com.inov8.microbank.app.dao.hibernate.AppInfoHibernateDAO">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+
+    <bean id="apiCityDAO" class="com.inov8.microbank.server.dao.portal.apicitymodule.hibernate.ApiCityHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="walletSafRepoDAO" class="com.inov8.microbank.server.dao.safrepo.hibernate.WalletSafRepoHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+
+    </bean>
+
+    <bean id="vcFileDAO" class="com.inov8.microbank.server.dao.safrepo.hibernate.VCFileHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+
+    </bean>
+
+    <bean id="merchantDiscountCardDAO" class="com.inov8.microbank.server.dao.safrepo.hibernate.MerchantDiscountCardHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+
+    </bean>
+
+    <bean id="vcFileReportDAO" class="com.inov8.microbank.server.dao.safrepo.hibernate.VCFileReportHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+
+    </bean>
+</beans>

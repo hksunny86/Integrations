@@ -1,0 +1,162 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Manifest Merging:
+-----------------
+Your project uses libraries that provide manifests, and your Eclipse
+project did not explicitly turn on manifest merging. In Android Gradle
+projects, manifests are always merged (meaning that contents from your
+libraries' manifests will be merged into the app manifest. If you had
+manually copied contents from library manifests into your app manifest
+you may need to remove these for the app to build correctly.
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+From JSBLMFS-Agent:
+* .idea\
+* .idea\.name
+* .idea\JSBLMFS-Agent.iml
+* .idea\compiler.xml
+* .idea\copyright\
+* .idea\copyright\profiles_settings.xml
+* .idea\encodings.xml
+* .idea\misc.xml
+* .idea\modules.xml
+* .idea\vcs.xml
+* .idea\workspace.xml
+* build.xml
+* proguard.cfg
+* proguard\
+* proguard\dump.txt
+* proguard\mapping.txt
+* proguard\seeds.txt
+* proguard\usage.txt
+From form-validation:
+* library\
+* library\.classpath
+* library\.project
+* library\AndroidManifest.xml
+* library\bin\
+* library\bin\classes\
+* library\bin\classes\com\
+* library\bin\classes\com\andreabaccega\
+* library\bin\classes\com\andreabaccega\formedittext\
+* library\bin\classes\com\andreabaccega\formedittext\BuildConfig.class
+* library\bin\classes\com\andreabaccega\formedittext\R$attr.class
+* library\bin\classes\com\andreabaccega\formedittext\R$id.class
+* library\bin\classes\com\andreabaccega\formedittext\R$string.class
+* library\bin\classes\com\andreabaccega\formedittext\R$styleable.class
+* library\bin\classes\com\andreabaccega\formedittext\R.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\
+* library\bin\classes\com\andreabaccega\formedittextvalidator\AlphaNumericValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\AlphaValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\AndValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\CreditCardValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\DomainValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\DummyValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\EmailValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\EmptyValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\IpAddressValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\MultiValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\NotValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\NumericValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\OrValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\PatternValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\PhoneValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\RegexpValidator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\Validator.class
+* library\bin\classes\com\andreabaccega\formedittextvalidator\WebUrlValidator.class
+* library\bin\classes\com\andreabaccega\widget\
+* library\bin\classes\com\andreabaccega\widget\FormEditText$1.class
+* library\bin\classes\com\andreabaccega\widget\FormEditText.class
+* library\bin\formedittext.jar
+* library\gen\
+* library\gen\com\
+* library\gen\com\andreabaccega\
+* library\gen\com\andreabaccega\formedittext\
+* library\gen\com\andreabaccega\formedittext\BuildConfig.java
+* library\gen\com\andreabaccega\formedittext\R.java
+* library\proguard-project.txt
+* library\project.properties
+* library\res\
+* library\res\values\
+* library\res\values\fet_attrs.xml
+* library\res\values\strings.xml
+* library\src\
+* library\src\com\
+* library\src\com\andreabaccega\
+* library\src\com\andreabaccega\formedittextvalidator\
+* library\src\com\andreabaccega\formedittextvalidator\AlphaNumericValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\AlphaValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\AndValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\CreditCardValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\DomainValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\DummyValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\EmailValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\EmptyValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\IpAddressValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\MultiValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\NotValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\NumericValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\OrValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\PatternValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\PhoneValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\RegexpValidator.java
+* library\src\com\andreabaccega\formedittextvalidator\Validator.java
+* library\src\com\andreabaccega\formedittextvalidator\WebUrlValidator.java
+* library\src\com\andreabaccega\widget\
+* library\src\com\andreabaccega\widget\FormEditText.java
+* proguard-project.txt
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:18.0.0
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+In form-validation:
+* AndroidManifest.xml => formvalidation\src\main\AndroidManifest.xml
+* lint.xml => formvalidation\lint.xml
+* res\ => formvalidation\src\main\res\
+* src\ => formvalidation\src\main\java\
+In JSBLMFS-Agent:
+* AndroidManifest.xml => jSBLMFSAgent\src\main\AndroidManifest.xml
+* assets\ => jSBLMFSAgent\src\main\assets
+* libs\bcprov-jdk15on-148.jar => jSBLMFSAgent\libs\bcprov-jdk15on-148.jar
+* libs\common-lang3.jar => jSBLMFSAgent\libs\common-lang3.jar
+* libs\httpmime-4.2.1.jar => jSBLMFSAgent\libs\httpmime-4.2.1.jar
+* libs\kxml2-min-2.2.3.jar => jSBLMFSAgent\libs\kxml2-min-2.2.3.jar
+* lint.xml => jSBLMFSAgent\lint.xml
+* proguard-project.txt => jSBLMFSAgent\proguard-project.txt
+* res\ => jSBLMFSAgent\src\main\res\
+* src\ => jSBLMFSAgent\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

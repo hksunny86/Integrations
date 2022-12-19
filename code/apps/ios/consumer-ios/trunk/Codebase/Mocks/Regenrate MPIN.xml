@@ -1,0 +1,17 @@
+<!-- Regenrate MPIN -->
+
+<!--Request -->
+<!--<msg id="216">-->
+<!--    <params>-->
+<!--        <param name="DTID">5</param>-->
+<!--        <param name="MOBN">03009874456</param>-->
+<!--    </params>-->
+<!--</msg>-->
+ 
+<!-- Response -->
+<msg id="216">
+	<mesgs>
+		<mesg level="1">An IVR call has been routed to your mobile successfully</mesg>
+	</mesgs>
+</msg>
+ 

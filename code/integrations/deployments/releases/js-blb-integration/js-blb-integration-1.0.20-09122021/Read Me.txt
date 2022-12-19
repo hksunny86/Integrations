@@ -1,0 +1,1 @@
+applying rule on pin combination in loginPinSet, loginPinChange, loginPinReset

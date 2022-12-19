@@ -1,0 +1,7 @@
+
+<!-- Customer Cash Withdrawal payment Response -->
+<msg id="186">
+<trans>
+    <trn TXAM="200.0" TXAMF="200.00" CAMT="153.55" CAMTF="153.55" TPAM="10.0" TPAMF="10.00" TAMT="190.0" TAMTF="190.00" PROD="Customer Cash Withdrawal" TRXID="830083830546" DATEF="20/06/2016 12:18 PM" DATE="Mon Jun 20 12:18:32 PKT 2016" TIMEF="12:18 PM" BALF="0.00"/>
+</trans>
+</msg>

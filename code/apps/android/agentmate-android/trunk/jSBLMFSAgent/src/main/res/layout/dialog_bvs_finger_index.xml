@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dialogBvsHeight"
+    android:paddingBottom="@dimen/margin_standard"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/dialogSideMargin"
+    android:layout_marginRight="@dimen/dialogSideMargin"
+    android:background="@drawable/bg">
+
+    <RelativeLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialogHeaderHeightNormal"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/header_dialog_bg">
+
+        <TextView
+            android:id="@+id/textViewAlertHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_toRightOf="@+id/imageViewAlert"
+            android:text="Select Finger Index"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textViewTextSizeXLarge" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutHeader"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/fingerIndex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:src="@drawable/finger_index_icon"/>
+
+            <Spinner
+                android:id="@+id/fingersSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_toRightOf="@+id/fingerIndex"
+                android:layout_marginLeft="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginRight="@dimen/margin_small">
+            </Spinner>
+
+            <TextView
+                android:id="@+id/txtLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/textViewFieldMargin"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textViewTextSizeNormal"
+                android:text=""
+                android:singleLine="false"/>
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scroll_view"
+        android:layout_above="@+id/bottom_layout"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:id="@+id/layoutBtns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_standard"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/btnContinue"
+                android:layout_width="@dimen/dialogButtonWidth"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_marginRight="@dimen/margin_small"
+                android:background="@drawable/button_next_selector"
+                android:text="Continue"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/buttonTextSizeNormal" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

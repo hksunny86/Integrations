@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/dialogSideMargin"
+    android:layout_marginRight="@dimen/dialogSideMargin"
+    android:background="@drawable/dialog_bg_rounded">
+
+    <RelativeLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialogHeaderHeightNormal"
+        android:background="@drawable/header_dialog_bg"
+        android:paddingLeft="@dimen/dialogPaddingNormal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageViewAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/info_popup_icon" />
+
+        <TextView
+            android:id="@+id/textViewAlertHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/textViewMarginNormal"
+            android:layout_toRightOf="@id/imageViewAlert"
+            android:text="@string/alertNotification"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textViewTextSizeXXLarge" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutHeader"
+        android:layout_marginLeft="@dimen/dialogPaddingLarge"
+        android:layout_marginRight="@dimen/dialogPaddingLarge"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layoutScView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dialogScrollHeightNormal"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/textViewMarginNormal"
+            android:layout_marginTop="@dimen/textViewMarginNormal"
+            android:gravity="center">
+
+            <ScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:scrollbars="none">
+
+                <TextView
+                    android:id="@+id/textViewMessage"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:gravity="center_horizontal"
+                    android:paddingBottom="@dimen/textViewMarginSmall"
+                    android:paddingTop="@dimen/textViewMarginSmall"
+                    android:text="bcjlsdhbbjh"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal" />
+            </ScrollView>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutBtns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dialogPaddingLarge"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnYes"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_marginRight="@dimen/buttonInnerMarginNormal"
+                android:layout_weight="1"
+                android:background="@drawable/button_ok"
+                android:text="@string/yes"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/buttonTextSizeMedium" />
+
+            <Button
+                android:id="@+id/btnNo"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_marginLeft="@dimen/buttonInnerMarginNormal"
+                android:layout_toRightOf="@+id/btnYes"
+                android:layout_weight="1"
+                android:background="@drawable/button_cancel"
+                android:text="@string/no"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/buttonTextSizeMedium" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

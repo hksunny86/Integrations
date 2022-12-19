@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+
+    <include
+        android:id="@+id/layoutTopBar"
+        layout="@layout/header_layout" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutTopBar" />
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/container_heading"
+        android:layout_marginLeft="@dimen/activitySideMarginNormal"
+        android:layout_marginRight="@dimen/activitySideMarginNormal"
+        android:layout_marginTop="@dimen/layoutMarginXXLarge"
+        card_view:cardCornerRadius="@dimen/cornerRadiusNormal"
+        card_view:cardElevation="@dimen/card_elevation_normal"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/yellow_rounded_bg"
+            android:paddingBottom="@dimen/layoutPaddingXXSmall">
+
+            <RelativeLayout
+                android:id="@+id/layout_contact_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_top_rounded_bg"
+                android:paddingBottom="@dimen/layoutPaddingLarge"
+                android:paddingTop="@dimen/layoutPaddingLarge">
+
+                <TextView
+                    android:id="@+id/lblPhoneBanking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/textViewMarginNormal"
+                    android:text="@string/phone_banking"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textViewTextSizeNormal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/contactUs"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lblPhoneBanking"
+                    android:layout_marginTop="@dimen/layoutMarginSmall"
+                    android:gravity="center_vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/contactPhoneIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/textViewMarginNormal"
+                        app:srcCompat="@drawable/contact_phone_icon" />
+
+                    <TextView
+                        android:id="@+id/contactNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/textViewMarginNormal"
+                        android:layout_toRightOf="@+id/contactPhoneIcon"
+                        android:text="@string/contact_value"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textViewTextSizeNormal"  />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/contactUs"
+                    android:layout_marginTop="@dimen/layoutMarginSmall"
+                    android:visibility="gone"
+                    android:gravity="center_vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/contactPhoneIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/textViewMarginNormal"
+                        app:srcCompat="@drawable/contact_phone_icon" />
+
+                    <TextView
+                        android:id="@+id/contactNoOther"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/textViewMarginNormal"
+                        android:layout_toRightOf="@+id/contactPhoneIcon"
+                        android:text="@string/contact_value_other"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textViewTextSizeNormal"  />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/email"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/contactUs"
+                    android:layout_marginTop="@dimen/layoutMarginNormal"
+                    android:visibility="visible"
+                    android:gravity="center_vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/contactPhoneIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/textViewMarginNormal"
+                        app:srcCompat="@drawable/contact_mail_icon" />
+
+                    <TextView
+                        android:id="@+id/contactEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/textViewMarginNormal"
+                        android:layout_toRightOf="@+id/contactPhoneIcon"
+                        android:text="@string/email"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/textViewTextSizeNormal"  />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/email"
+                    android:layout_marginTop="@dimen/layoutMarginNormal"
+                    android:visibility="visible"
+                    android:gravity="center_vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/contactPhoneIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/textViewMarginNormal"
+                        app:srcCompat="@drawable/contact_web_icon" />
+
+                    <TextView
+                        android:id="@+id/contactNoOther"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/textViewMarginNormal"
+                        android:textColor="@android:color/black"
+                        android:autoLink="web"
+                        android:textColorLink="@android:color/black"
+                        android:layout_toRightOf="@+id/contactPhoneIcon"
+                        android:text="@string/website"
+                        android:textSize="@dimen/textViewTextSizeNormal"  />
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_background"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/layoutData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/textViewMarginNormal"
+        android:gravity="center_vertical|fill_horizontal">
+
+        <TextView
+            android:id="@+id/txtLabel"
+            android:layout_width="@dimen/listItemTextWidth"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:shadowColor="@color/white"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.6"
+            android:text="Name"
+            android:textColor="@color/text_grey"
+            android:textSize="@dimen/textViewTextSizeNormal"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtData"
+            android:layout_width="@dimen/listItemTextWidth"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/txtLabel"
+            android:gravity="right"
+            android:text="shahzd hemani saleem zaeem nadeem ahmad hussian"
+            android:textColor="@color/text_grey"
+            android:textSize="@dimen/textViewTextSizeNormal" />
+
+    </RelativeLayout>
+
+</LinearLayout>

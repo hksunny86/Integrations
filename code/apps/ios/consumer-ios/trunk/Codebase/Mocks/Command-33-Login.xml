@@ -1,0 +1,399 @@
+<!--<msg id="-1">-->
+<!--    <errors>-->
+<!--        <error code="9096" level="2">A security PIN has been regenereted and sent to you on your registered Mobile number. Please Enter 4 digit security PIN.</error>-->
+<!--    </errors>-->
+<!--</msg>-->
+
+<!--<msg id="-1">-->
+<!--    <errors>-->
+<!--        <error code="9009" level="1">App Version issue 9022.</error>-->
+<!--    </errors>-->
+<!--</msg>-->
+
+
+<msg id="33">
+    <params>
+        <param name="USTY">2</param>
+        <param name="ATYPE">2</param>
+        <param name="FNAME">Ahsan</param>
+        <param name="LNAME">Ahsan</param>
+        <param name="BVSE">null</param>
+        <param name="AGENT_AREA_NAME">null</param>
+        <param name="IS_CNIC_EXPIRY_REQUIRED">0</param>
+        <param name="IPCR">0</param>
+        <param name="TSTR">Dear Customer! Welcome to Branchless Banking</param>
+        <param name="APUL">1</param>
+        <param name="APPV">2.0.9.0</param>
+        <param name="BAL">183880.0</param>
+        <param name="BALF">183,880.00</param>
+        <param name="IMPCR">0</param>
+        <param name="MOBN">03006976489</param>
+        <param name="ADTYPE">1</param>
+        <param name="VIDEOLINK">http://www.androidbegin.com/tutorial/AndroidCommercial.3gp</param>
+        <param name="IS_MIGRATED">1</param>
+        <param name="CNIC">3338683467686</param>
+        <param name="IS_SET_MPIN_LATER">1</param>
+        <param name="SENDER_IBAN">135439984358939435</param>
+        
+    </params>
+    <cat version="1332">
+        <categories>
+            <category cid="101" name="Money Transfer" icon="main_money_transfer.png" isProduct="0" pcid="-1">
+                <prds>
+                    <prd id="10245160" cid="101" fid="44" label="" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="25000.0" maxamtf="25,000" consumerMaxLength="" consumerMinLength="" name="Customer BB to IBFT" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="50054" cid="101" fid="10" label="" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="25000.0" maxamtf="25,000" consumerMaxLength="" consumerMinLength="" name="Retail Payment" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="10245125" cid="101" fid="34" label="" amtrequired="1" dovalidate="1" type="" multiple="" minamt="1.0" minamtf="1" maxamt="10000.0" maxamtf="10,000" consumerMaxLength="" consumerMinLength="" name="Transfer in - HRA to Wallet" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="50052" cid="101" fid="15" label="" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="25000.0" maxamtf="25,000" consumerMaxLength="" consumerMinLength="" name="Wallet to CNIC" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="50053" cid="101" fid="4" label="" amtrequired="0" dovalidate="0" type="" multiple="" minamt="100.0" minamtf="100" maxamt="40000.0" maxamtf="40,000" consumerMaxLength="" consumerMinLength="" name="Wallet to Core" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="50050" cid="101" fid="3" label="" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="25000.0" maxamtf="25,000" consumerMaxLength="" consumerMinLength="" name="Wallet to Wallet" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                </prds>
+            </category>
+            <category cid="102" name="Withdraw Money" icon="main_icon_cash_withdrawal.png" isProduct="1" pcid="-1">
+                <prds>
+                    <prd id="50051" cid="102" fid="2" label="" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="25000.0" maxamtf="25,000" consumerMaxLength="" consumerMinLength="" name="Cash Withdrawal" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                </prds>
+            </category>
+            <category cid="281" name="Advance Loan" icon="hra_registration.png" isProduct="1" pcid="-1">
+                <prds>
+                    <prd id="10245168" cid="281" fid="49" label="" amtrequired="1" dovalidate="1" type="" multiple="" minamt="0.0" minamtf="0" maxamt="10000.0" maxamtf="10,000" consumerMaxLength="" consumerMinLength="" name="Advance Loan" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                </prds>
+            </category>
+            <category cid="103" name="Mobile Load" icon="main_icon_mobile_load.png" isProduct="0" pcid="-1">
+                <category cid="104" name="Mobile Postpaid" icon="main_icon_mobile_postpaid.png" isProduct="0" pcid="103">
+                    <prds>
+                        <prd id="60039" cid="104" fid="6" label="Mobile Number" amtrequired="1" dovalidate="1" type="" multiple="" minamt="500.0" minamtf="500" maxamt="100000.0" maxamtf="100,000" consumerMaxLength="11.0" consumerMinLength="11.0" name="Mobilink Postpaid" inrequired="0" ppallowed="0" url="mobilink.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60037" cid="104" fid="6" label="Mobile Number" amtrequired="1" dovalidate="1" type="" multiple="" minamt="30.0" minamtf="30" maxamt="5000.0" maxamtf="5,000" consumerMaxLength="11.0" consumerMinLength="11.0" name="Telenor Postpaid" inrequired="0" ppallowed="0" url="telenor.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60035" cid="104" fid="6" label="Mobile Number" amtrequired="1" dovalidate="1" type="" multiple="" minamt="500.0" minamtf="500" maxamt="5000.0" maxamtf="5,000" consumerMaxLength="11.0" consumerMinLength="11.0" name="Ufone Postpaid" inrequired="0" ppallowed="0" url="ufone.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60033" cid="104" fid="6" label="Mobile Number" amtrequired="1" dovalidate="1" type="" multiple="" minamt="500.0" minamtf="500" maxamt="20000.0" maxamtf="20,000" consumerMaxLength="11.0" consumerMinLength="11.0" name="Warid Postpaid" inrequired="0" ppallowed="0" url="warid.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60028" cid="104" fid="6" label="Mobile Number" amtrequired="1" dovalidate="1" type="" multiple="" minamt="20.0" minamtf="20" maxamt="20000.0" maxamtf="20,000" consumerMaxLength="11.0" consumerMinLength="11.0" name="Zong Postpaid" inrequired="0" ppallowed="0" url="zong.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    </prds>
+                </category>
+                <category cid="105" name="Mobile Prepaid" icon="main_icon_mobile_prepaid.png" isProduct="0" pcid="103">
+                    <prds>
+                        <prd id="60038" cid="105" fid="6" label="Mobile Number" amtrequired="1" dovalidate="1" type="" multiple="" minamt="20.0" minamtf="20" maxamt="5000.0" maxamtf="5,000" consumerMaxLength="11.0" consumerMinLength="11.0" name="Mobilink Prepaid" inrequired="0" ppallowed="0" url="mobilink.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60036" cid="105" fid="6" label="Mobile Number" amtrequired="1" dovalidate="1" type="" multiple="" minamt="30.0" minamtf="30" maxamt="5000.0" maxamtf="5,000" consumerMaxLength="11.0" consumerMinLength="11.0" name="Telenor Prepaid" inrequired="0" ppallowed="0" url="telenor.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60034" cid="105" fid="6" label="Mobile Number" amtrequired="1" dovalidate="1" type="" multiple="" minamt="200.0" minamtf="200" maxamt="5000.0" maxamtf="5,000" consumerMaxLength="11.0" consumerMinLength="11.0" name="Ufone Prepaid" inrequired="0" ppallowed="0" url="ufone.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60032" cid="105" fid="6" label="Mobile Number" amtrequired="1" dovalidate="1" type="" multiple="" minamt="100.0" minamtf="100" maxamt="2000.0" maxamtf="2,000" consumerMaxLength="11.0" consumerMinLength="11.0" name="Warid Prepaid" inrequired="0" ppallowed="0" url="warid.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60027" cid="105" fid="6" label="Mobile Number" amtrequired="1" dovalidate="1" type="" multiple="" minamt="20.0" minamtf="20" maxamt="5000.0" maxamtf="5,000" consumerMaxLength="11.0" consumerMinLength="11.0" name="Zong Prepaid" inrequired="0" ppallowed="0" url="zong.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    </prds>
+                </category>
+                <prds>
+                    <prd id="2511348" cid="103" fid="56" label="Consumer #" amtrequired="0" dovalidate="1" type="" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="UFONE SUPERCARD" inrequired="1" ppallowed="0" url="ufone.jpg" prodDenom="999,599,570,330,130,130,50,499" denomFlag="1" denomString="Super Card Gold Rs.999,Super Card Plus Rs. 599,Super Card Rs. 570,Mini Super Card Rs. 330,Super Minutes Rs. 130,Super Internet Rs. 130,Super Recharge Rs. 50,Super Internet Plus Rs. 499" />
+                </prds>
+            </category>
+            <category cid="999" name="Buses" icon="Bus.png" isProduct="1" pcid="122">
+                <prds>
+                    <prd id="10245127" cid="999" fid="55" label="Buses" amtrequired="" dovalidate="" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="24.0" consumerMinLength="1.0" name="KP Challan Collection" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                </prds>
+            </category>
+            <category cid="271" name="Pay Bill" icon="main_icon_pay_bill.png" isProduct="0" pcid="-1">
+                <category cid="279" name="Others" icon="main_icon_others.png" isProduct="0" pcid="271">
+                    <prds>
+                        <prd id="2511244" cid="279" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="DAEWOO" inrequired="1" ppallowed="0" url="daewoo.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="2511246" cid="279" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="SHAHEEN AIR INTERNATIONAL" inrequired="1" ppallowed="0" url="shaheen_international_air.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    </prds>
+                </category>
+                <category cid="265" name="Credit Cards" icon="credit_card.png" isProduct="0" pcid="271">
+                    <prds>
+                        <prd id="2511350" cid="265" fid="6" label="Credit Card #" amtrequired="1" dovalidate="1" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="16.0" name="FAYSAL BANK CREDIT CARD" inrequired="1" ppallowed="1" url="faysal_bank.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="2511358" cid="265" fid="6" label="Credit Card #" amtrequired="1" dovalidate="1" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="16.0" name="HBL CREDIT CARD" inrequired="1" ppallowed="1" url="hbl.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="2511356" cid="265" fid="6" label="Credit Card #" amtrequired="1" dovalidate="1" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="16.0" name="JS BANK CREDIT CARD" inrequired="1" ppallowed="1" url="jsb.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="2511364" cid="265" fid="6" label="Credit Card #" amtrequired="1" dovalidate="1" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="16.0" name="MCB CREDIT CARD" inrequired="1" ppallowed="1" url="mcb_bank.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="2511366" cid="265" fid="6" label="Credit Card #" amtrequired="1" dovalidate="1" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="16.0" name="SILK BANK CREDIT CARD" inrequired="1" ppallowed="1" url="silk_bank.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="2511354" cid="265" fid="6" label="Credit Card #" amtrequired="1" dovalidate="1" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="16.0" name="UBL CREDIT CARD" inrequired="1" ppallowed="1" url="ubl_logo.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    </prds>
+                </category>
+                <category cid="277" name="Internet" icon="main_icon_internet.png" isProduct="0" pcid="271">
+                    <category cid="273" name="Qubee" icon="main_icon_qubee.png" isProduct="0" pcid="277">
+                        <prds>
+                            <prd id="60040" cid="273" fid="6" label="Consumer Number" amtrequired="1" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="17.0" consumerMinLength="17.0" name="Qubee Consumer" inrequired="0" ppallowed="0" url="qubee.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                            <prd id="60041" cid="273" fid="6" label="Consumer Number" amtrequired="1" dovalidate="0" type="" multiple="" minamt="5000.0" minamtf="5,000" maxamt="50000.0" maxamtf="50,000" consumerMaxLength="17.0" consumerMinLength="17.0" name="Qubee Distributor" inrequired="0" ppallowed="0" url="qubee.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        </prds>
+                    </category>
+                    <prds>
+                        <prd id="2511330" cid="277" fid="6" label="Consumer Number" amtrequired="1" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="NAYATEL" inrequired="1" ppallowed="1" url="nayatel.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="2511262" cid="277" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="OPTIX" inrequired="1" ppallowed="0" url="optix.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60030" cid="277" fid="6" label="MDN" amtrequired="0" dovalidate="0" type="" multiple="" minamt="200.0" minamtf="200" maxamt="25000.0" maxamtf="25,000" consumerMaxLength="10.0" consumerMinLength="10.0" name="PTCL EVO Postpaid" inrequired="1" ppallowed="0" url="ptcl.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60029" cid="277" fid="6" label="MDN" amtrequired="1" dovalidate="0" type="" multiple="" minamt="200.0" minamtf="200" maxamt="25000.0" maxamtf="25,000" consumerMaxLength="10.0" consumerMinLength="10.0" name="PTCL EVO Prepaid" inrequired="0" ppallowed="0" url="ptcl.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="2511332" cid="277" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="TRANSWORLD" inrequired="1" ppallowed="0" url="transworld_home.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60024" cid="277" fid="6" label="Account ID" amtrequired="0" dovalidate="0" type="" multiple="" minamt="200.0" minamtf="200" maxamt="25000.0" maxamtf="25,000" consumerMaxLength="10.0" consumerMinLength="10.0" name="Vfone" inrequired="1" ppallowed="0" url="vfone.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="2511334" cid="277" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="WORLD CALL" inrequired="1" ppallowed="0" url="world_call.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60025" cid="277" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="100.0" minamtf="100" maxamt="100000.0" maxamtf="100,000" consumerMaxLength="6.0" consumerMinLength="6.0" name="Wateen Internet" inrequired="1" ppallowed="0" url="wateen.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60026" cid="277" fid="6" label="Account Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="10.0" consumerMinLength="10.0" name="WiTribe" inrequired="1" ppallowed="0" url="witribe.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    </prds>
+                </category>
+                <category cid="109" name="Electricity" icon="main_icon_electricity.png" isProduct="0" pcid="271">
+                    <prds>
+                        <prd id="60010" cid="109" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="14.0" consumerMinLength="14.0" name="FESCO" inrequired="1" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60006" cid="109" fid="6" label="Account Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="14.0" consumerMinLength="14.0" name="GEPCO" inrequired="1" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60005" cid="109" fid="6" label="Customer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="14.0" consumerMinLength="14.0" name="HESCO" inrequired="1" ppallowed="0" url="hesco.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60007" cid="109" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="14.0" consumerMinLength="14.0" name="IESCO" inrequired="1" ppallowed="0" url="iesco.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60008" cid="109" fid="6" label="Account Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="13.0" consumerMinLength="13.0" name="KESC" inrequired="1" ppallowed="0" url="kelectric.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60004" cid="109" fid="6" label="Reference Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="14.0" consumerMinLength="14.0" name="LESCO" inrequired="1" ppallowed="0" url="lesco.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60009" cid="109" fid="6" label="Customer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="14.0" consumerMinLength="14.0" name="MEPCO" inrequired="1" ppallowed="0" url="mepco.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60011" cid="109" fid="6" label="Customer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="14.0" consumerMinLength="14.0" name="PESCO" inrequired="1" ppallowed="0" url="pesco.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60012" cid="109" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="14.0" consumerMinLength="14.0" name="QESCO" inrequired="1" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60014" cid="109" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="14.0" consumerMinLength="14.0" name="SEPCO" inrequired="1" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    </prds>
+                </category>
+                <category cid="108" name="Water" icon="main_icon_water.png" isProduct="0" pcid="271">
+                    <prds>
+                        <prd id="60019" cid="108" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="15.0" consumerMinLength="" name="BWASA" inrequired="1" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60020" cid="108" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="8.0" consumerMinLength="" name="FWASA" inrequired="1" ppallowed="0" url="fwasa.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60021" cid="108" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="6.0" consumerMinLength="" name="GWASA" inrequired="1" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60015" cid="108" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="11.0" consumerMinLength="" name="KWSB" inrequired="1" ppallowed="0" url="kwsb.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60016" cid="108" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="10.0" consumerMinLength="" name="LWASA" inrequired="1" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60018" cid="108" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="10.0" consumerMinLength="" name="MWASA" inrequired="1" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60017" cid="108" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="8.0" consumerMinLength="" name="RWASA" inrequired="1" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    </prds>
+                </category>
+                <category cid="107" name="Gas" icon="main_icon_gas.png" isProduct="0" pcid="271">
+                    <prds>
+                        <prd id="60003" cid="107" fid="6" label="Customer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="" consumerMinLength="" name="SNGPL" inrequired="1" ppallowed="0" url="productPurchase.aw?PID=60003" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60002" cid="107" fid="6" label="Customer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="" consumerMinLength="" name="SSGC" inrequired="1" ppallowed="0" url="ssgc.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    </prds>
+                </category>
+                <category cid="106" name="Telephone" icon="main_icon_telephone.png" isProduct="0" pcid="271">
+                    <prds>
+                        <prd id="60031" cid="106" fid="6" label="Account ID" amtrequired="0" dovalidate="0" type="" multiple="" minamt="200.0" minamtf="200" maxamt="25000.0" maxamtf="25,000" consumerMaxLength="10.0" consumerMinLength="10.0" name="PTCL Defaulter" inrequired="1" ppallowed="0" url="ptcl.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                        <prd id="60001" cid="106" fid="6" label="Account ID" amtrequired="0" dovalidate="0" type="" multiple="" minamt="200.0" minamtf="200" maxamt="25000.0" maxamtf="25,000" consumerMaxLength="10.0" consumerMinLength="10.0" name="PTCL Landline" inrequired="1" ppallowed="0" url="ptcl.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    </prds>
+                </category>
+            </category>
+            <category cid="122" name="Government Payments " icon="main_icon_government_payments.png" isProduct="0" pcid="-1">
+                <category cid="123" name="KP Challan Collection" icon="kp_challan.png" isProduct="1" pcid="122">
+                    <prds>
+                        <prd id="10245127" cid="123" fid="21" label="Challan Number" amtrequired="" dovalidate="" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="24.0" consumerMinLength="1.0" name="KP Challan Collection" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    </prds>
+                </category>
+                <category cid="124" name="KP Driving License fee collection " icon="kp_driving_fee.png" isProduct="1" pcid="122">
+                    <prds>
+                        <prd id="10245129" cid="124" fid="21" label="Payment ID" amtrequired="" dovalidate="" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="24.0" consumerMinLength="1.0" name="KP Driving License Fee Collection" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    </prds>
+                </category>
+                <category cid="111" name="ITP Challan Collection" icon="main_icon_challan_collection" isProduct="1" pcid="122">
+                    <prds>
+                        <prd id="50055" cid="111" fid="21" label="Challan Number" amtrequired="" dovalidate="" type="" multiple="" minamt="1.0" minamtf="1" maxamt="100000.0" maxamtf="100,000" consumerMaxLength="24.0" consumerMinLength="1.0" name="ITP Challan Collection" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    </prds>
+                </category>
+                <prds>
+                    <prd id="60023" cid="122" fid="6" label="Consumer Number" amtrequired="0" dovalidate="0" type="" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="14.0" consumerMinLength="14.0" name="CDGK" inrequired="1" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511372" cid="122" fid="6" label="PSID" amtrequired="" dovalidate="" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="24.0" consumerMinLength="1.0" name="FAISALABAD TRAFFIC CHALLAN" inrequired="0" ppallowed="0" url="faisalabad.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511340" cid="122" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="FBR PRAL" inrequired="1" ppallowed="0" url="fbr.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511346" cid="122" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="GOPb" inrequired="1" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511370" cid="122" fid="6" label="PSID" amtrequired="" dovalidate="" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="24.0" consumerMinLength="1.0" name="GUJRANWALA TRAFFIC CHALLAN" inrequired="0" ppallowed="0" url="gujranwala.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511368" cid="122" fid="6" label="PSID" amtrequired="" dovalidate="" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="24.0" consumerMinLength="1.0" name="LAHORE TRAFFIC CHALLAN" inrequired="0" ppallowed="0" url="lahore.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511374" cid="122" fid="6" label="PSID" amtrequired="" dovalidate="" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="24.0" consumerMinLength="1.0" name="MULTAN TRAFFIC CHALLAN" inrequired="0" ppallowed="0" url="multan.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511344" cid="122" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="PRA Govt of Punjab" inrequired="1" ppallowed="0" url="pragov.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511380" cid="122" fid="6" label="PSID" amtrequired="" dovalidate="" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="24.0" consumerMinLength="1.0" name="Punjab Route Permit" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511376" cid="122" fid="6" label="PSID" amtrequired="" dovalidate="" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="24.0" consumerMinLength="1.0" name="Punjab Token Tax" inrequired="0" ppallowed="0" url="punjab_token_tax.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511378" cid="122" fid="6" label="PSID" amtrequired="" dovalidate="" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="24.0" consumerMinLength="16.0" name="Punjab Vehicle Fitness" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511342" cid="122" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="SECP" inrequired="1" ppallowed="0" url="secp.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511338" cid="122" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="SRB" inrequired="1" ppallowed="0" url="srb.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                </prds>
+            </category>
+            <category cid="253" name="Investment" icon="main_icon_investment.png" isProduct="0" pcid="-1">
+                <prds>
+                    <prd id="2511300" cid="253" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="ABL ASSET MANAGEMENT" inrequired="1" ppallowed="0" url="abl_asset_management.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511288" cid="253" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="ABL-AMC" inrequired="1" ppallowed="0" url="abl_amc_financial_planner.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511294" cid="253" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="CDC INVESTOR ACCOUNT" inrequired="1" ppallowed="0" url="central_depoistory_company.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511302" cid="253" fid="6" label="Consumer Number" amtrequired="1" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="CENTRAL DEPOSITORY COMPANY CDC" inrequired="1" ppallowed="1" url="central_depoistory_company.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511304" cid="253" fid="6" label="Consumer Number" amtrequired="1" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="MCB ARIF-HABIB INVESTMENTS" inrequired="1" ppallowed="1" url="mcb" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511306" cid="253" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="PAK QATAR TAKAFUL FAMILY 1" inrequired="1" ppallowed="0" url="pak_qatar_takaful.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511308" cid="253" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="PAK QATAR TAKAFUL FAMILY 2" inrequired="1" ppallowed="0" url="pak_qatar_takaful.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511310" cid="253" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="PAK QATAR TAKAFUL FAMILY 3" inrequired="1" ppallowed="0" url="pak_qatar_takaful.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511298" cid="253" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="UBLFUND" inrequired="1" ppallowed="0" url="ubl_funds.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                </prds>
+            </category>
+            <category cid="247" name="Corporate Payments" icon="main_icon_corporate_payment.png" isProduct="0" pcid="-1">
+                <prds>
+                    <prd id="2511284" cid="247" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="CONNECTPAY" inrequired="1" ppallowed="0" url="connect_pay.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511382" cid="247" fid="6" label="Consumer Number" amtrequired="" dovalidate="" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="20.0" consumerMinLength="6.0" name="Careem" inrequired="0" ppallowed="0" url="careem.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511248" cid="247" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="DHA ISLAMABAD-RAWALPIND" inrequired="1" ppallowed="0" url="dha_islamabad_rawalpindi.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511274" cid="247" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="DHAIR" inrequired="1" ppallowed="0" url="dha_islamabad_rawalpindi.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511250" cid="247" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="DP WORLD" inrequired="1" ppallowed="0" url="dp_world.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511252" cid="247" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="ENGRO" inrequired="1" ppallowed="0" url="engro.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511280" cid="247" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="FINJA" inrequired="1" ppallowed="0" url="finja.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511282" cid="247" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="HABALL" inrequired="1" ppallowed="0" url="haball.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511276" cid="247" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="IMC" inrequired="1" ppallowed="0" url="indus_motor_company.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511264" cid="247" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="INDUS MOTORS COMPANY" inrequired="1" ppallowed="0" url="indus_motor_company.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511260" cid="247" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="KARACHI ELECTRIC NEW CONNECTION KENC" inrequired="1" ppallowed="0" url="kenc.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511286" cid="247" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="KEENU" inrequired="1" ppallowed="0" url="keenu.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511270" cid="247" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="Kuickpay" inrequired="1" ppallowed="0" url="kuickpay.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511272" cid="247" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="PAYPRO" inrequired="1" ppallowed="0" url="paypro.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511268" cid="247" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="SINDH WORKER WELFARE FUND" inrequired="1" ppallowed="0" url="swwf.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                </prds>
+            </category>
+            <category cid="275" name="Top-Ups" icon="main_icon_topups.png" isProduct="0" pcid="-1">
+                <prds>
+                    <prd id="2511336" cid="275" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="JAZZ CASH" inrequired="1" ppallowed="0" url="jazzcash.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511278" cid="275" fid="6" label="Consumer Number" amtrequired="1" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="ONELOAD" inrequired="1" ppallowed="1" url="oneload.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                </prds>
+            </category>
+            <category cid="243" name="Education" icon="main_icon_education.png" isProduct="0" pcid="-1">
+                <prds>
+                    <prd id="2511266" cid="243" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="BSS" inrequired="1" ppallowed="0" url="beacon_house.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511384" cid="243" fid="6" label="Consumer Number" amtrequired="" dovalidate="" type="NUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="9999999.0" maxamtf="9,999,999" consumerMaxLength="20.0" consumerMinLength="6.0" name="DNK" inrequired="0" ppallowed="0" url="dnk.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511238" cid="243" fid="6" label="Consumer Number" amtrequired="1" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="IBA" inrequired="1" ppallowed="1" url="iba.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511240" cid="243" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="LUMS" inrequired="1" ppallowed="0" url="lums.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511242" cid="243" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="LUMS_PGC" inrequired="1" ppallowed="0" url="lums.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                </prds>
+            </category>
+            <category cid="255" name="Insurances" icon="main_icon_Insurance_payments.png" isProduct="0" pcid="-1">
+                <prds>
+                    <prd id="2511316" cid="255" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="EASTERN FEDERAL UNION ISLAMIC (EFU)" inrequired="1" ppallowed="0" url="efu.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511314" cid="255" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="EFU" inrequired="1" ppallowed="0" url="efu.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511324" cid="255" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="EFU Insurance - Conventional" inrequired="1" ppallowed="0" url="efu.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511326" cid="255" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="EFU Insurance - Takaful" inrequired="1" ppallowed="0" url="efu.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511254" cid="255" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="JUBILEE LIFE INSURANCE ADHOC (JLIADH)" inrequired="1" ppallowed="0" url="jubilee.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511256" cid="255" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="JUBILEE LIFE INSURANCE IND" inrequired="1" ppallowed="0" url="jubilee.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511258" cid="255" fid="6" label="Consumer Number" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="30.0" consumerMinLength="5.0" name="JUBILEE LIFE INSURANCE NIND" inrequired="1" ppallowed="0" url="jubilee.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511318" cid="255" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="Jubilee Life Insurance - ADHOC" inrequired="1" ppallowed="0" url="jubilee.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511320" cid="255" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="Jubilee Life Insurance - INDEX" inrequired="1" ppallowed="0" url="jubilee.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                    <prd id="2511322" cid="255" fid="6" label="Consumer #" amtrequired="0" dovalidate="1" type="ALPHANUMERIC" multiple="" minamt="1.0" minamtf="1" maxamt="1000.0" maxamtf="1,000" consumerMaxLength="20.0" consumerMinLength="6.0" name="Jubilee Life Insurance - NONINDEX" inrequired="1" ppallowed="0" url="jubilee.jpg" prodDenom="null" denomFlag="0" denomString="null" />
+                </prds>
+            </category>
+            <category cid="269" name="HRA Registration" icon="main_icon_hra_registration.png" isProduct="1" pcid="-1">
+                <prds>
+                    <prd id="10037" cid="269" fid="113" label="" amtrequired="1" dovalidate="1" type="" multiple="" minamt="0.0" minamtf="0" maxamt="10000.0" maxamtf="10,000" consumerMaxLength="" consumerMinLength="" name="HRA Registration" inrequired="0" ppallowed="0" url="null" prodDenom="null" denomFlag="0" denomString="null" />
+                </prds>
+            </category>
+        </categories>
+    </cat>
+    <banks>
+        <bank id="50050" isBank="0" name="OLA JS Bank Limited" pinLevel="1" key="117130940722358865944076735715016871148960803304334901248996815419815052552875336322790410991392433604701394608500231884113911915168625416296669114728862690539451024021812353340986348428958506523689933432584403548435474622224828221548841371083486321081622447517054022904372023020885356296462823306439795173749" mod="65537">
+            <acc id="2593545" nick="i8_bb_10007620" isBPinReq="1" isDef="1" pinChReq="0" cvv="0" tpin="0" mpin="0" />
+            <acc id="2593547" nick="i8_hra_10007622" isBPinReq="1" isDef="1" pinChReq="0" cvv="0" tpin="0" mpin="0" />
+        </bank>
+    </banks>
+    <ads>
+        <ad  TYPE="1"  name="banner_110334.png" />
+        <ad  TYPE="1"  name="L3Account_111001.png" />
+    </ads>
+</msg>
+
+
+
+
+<!--<msg id="33">-->
+<!--    <params>-->
+<!--        <param name="USTY">2</param>-->
+<!--        <param name="ATYPE">2</param>-->
+<!--        <param name="FNAME">03161616191</param>-->
+<!--        <param name="LNAME">03161616191</param>-->
+<!--        <param name="BVSE">null</param>-->
+<!--        <param name="AGENT_AREA_NAME">null</param>-->
+<!--        <param name="IS_CNIC_EXPIRY_REQUIRED">0</param>-->
+<!--        <param name="IPCR">0</param>-->
+<!--        <param name="TSTR">Dear Customer! Welcome to Branchless Banking</param>-->
+<!--        <param name="APUL">0</param>-->
+<!--        <param name="APPV">2.0.9.0</param>-->
+<!--        <param name="BAL">2357.0</param>-->
+<!--        <param name="BALF">2,357.00</param>-->
+<!--        <param name="IMPCR">0</param>-->
+<!--        <param name="MOBN">03456940505</param>-->
+<!--        <param name="ADTYPE">1</param>-->
+<!--        <param name="VIDEOLINK">http://www.androidbegin.com/tutorial/AndroidCommercial.3gp</param>-->
+<!--    </params>-->
+<!--    <cat version="114">-->
+<!--        <categories>-->
+<!--            <category cid="101" icon="main_money_transfer.png" isProduct="0" name="Send Money" pcid="-1">-->
+<!--                <prds>-->
+<!--                    <prd amtrequired="0" cid="101" consumerMaxLength="" consumerMinLength="" dovalidate="0" fid="3" id="50050" inrequired="0" label="" maxamt="25000.0" maxamtf="25,000" minamt="1.0" minamtf="1" multiple="" name="Customer Wallet to Wallet" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="101" consumerMaxLength="" consumerMinLength="" dovalidate="0" fid="15" id="50052" inrequired="0" label="" maxamt="25000.0" maxamtf="25,000" minamt="1.0" minamtf="1" multiple="" name="Customer Wallet to CNIC" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="101" consumerMaxLength="" consumerMinLength="" dovalidate="0" fid="10" id="50054" inrequired="0" label="" maxamt="25000.0" maxamtf="25,000" minamt="1.0" minamtf="1" multiple="" name="Customer Retail Payment" ppallowed="0" type="" url="null" />-->
+<!--                </prds>-->
+<!--            </category>-->
+<!--            <category cid="102" icon="main_icon_cash_withdrawal.png" isProduct="1" name="Withdraw Money" pcid="-1">-->
+<!--                <prds>-->
+<!--                    <prd amtrequired="0" cid="102" consumerMaxLength="" consumerMinLength="" dovalidate="0" fid="2" id="50051" inrequired="0" label="" maxamt="25000.0" maxamtf="25,000" minamt="1.0" minamtf="1" multiple="" name="Customer Cash Withdrawal" ppallowed="0" type="" url="null" />-->
+<!--                </prds>-->
+<!--            </category>-->
+<!--            <category cid="111" icon="main_icon_challan_collection.png" isProduct="1" name="Challan Collection" pcid="-1">-->
+<!--                    <prds>-->
+<!--                        <prd amtrequired="0" cid="107" consumerMaxLength="12" consumerMinLength="10" dovalidate="0" fid="21" id="60003" inrequired="1" label="Challan No" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="ISL Ticketing" ppallowed="0" type="" url="" />-->
+<!--                    </prds>-->
+<!--                </category>-->
+<!--            <category cid="103" icon="main_icon_mobile_load.png" isProduct="0" name="Mobile Load" pcid="-1">-->
+<!--                <category cid="105" icon="main_icon_mobile_prepaid.png" isProduct="0" name="Mobile Prepaid" pcid="103">-->
+<!--                    <prds>-->
+<!--                        <prd amtrequired="1" cid="105" consumerMaxLength="" consumerMinLength="" dovalidate="1" fid="6" id="60027" inrequired="0" label="Mobile Number" maxamt="5000.0" maxamtf="5,000" minamt="20.0" minamtf="20" multiple="" name="Zong Prepaid Bill" ppallowed="0" type="" url="null" />-->
+<!--                        <prd amtrequired="1" cid="105" consumerMaxLength="" consumerMinLength="" dovalidate="1" fid="6" id="60032" inrequired="0" label="Mobile Number" maxamt="2000.0" maxamtf="2,000" minamt="100.0" minamtf="100" multiple="" name="Warid Prepaid Bill" ppallowed="0" type="" url="null" />-->
+<!--                        <prd amtrequired="1" cid="105" consumerMaxLength="" consumerMinLength="" dovalidate="1" fid="6" id="60034" inrequired="0" label="Mobile Number" maxamt="5000.0" maxamtf="5,000" minamt="200.0" minamtf="200" multiple="" name="Ufone Prepaid Bill" ppallowed="0" type="" url="null" />-->
+<!--                        <prd amtrequired="1" cid="105" consumerMaxLength="" consumerMinLength="" dovalidate="1" fid="6" id="60036" inrequired="0" label="Mobile Number" maxamt="5000.0" maxamtf="5,000" minamt="30.0" minamtf="30" multiple="" name="Telenor Prepaid Bill" ppallowed="0" type="" url="null" />-->
+<!--                        <prd amtrequired="1" cid="105" consumerMaxLength="" consumerMinLength="" dovalidate="1" fid="6" id="60038" inrequired="0" label="Mobile Number" maxamt="5000.0" maxamtf="5,000" minamt="20.0" minamtf="20" multiple="" name="Mobilink Prepaid Bill" ppallowed="0" type="" url="null" />-->
+<!--                    </prds>-->
+<!--                </category>-->
+<!--                <category cid="104" icon="main_icon_mobile_postpaid.png" isProduct="0" name="Mobile Postpaid" pcid="103">-->
+<!--                    <prds>-->
+<!--                        <prd amtrequired="1" cid="104" consumerMaxLength="" consumerMinLength="" dovalidate="1" fid="6" id="60028" inrequired="0" label="Mobile Number" maxamt="20000.0" maxamtf="20,000" minamt="20.0" minamtf="20" multiple="" name="Zong Postpaid Bill" ppallowed="0" type="" url="null" />-->
+<!--                        <prd amtrequired="1" cid="104" consumerMaxLength="" consumerMinLength="" dovalidate="1" fid="6" id="60033" inrequired="0" label="Mobile Number" maxamt="20000.0" maxamtf="20,000" minamt="500.0" minamtf="500" multiple="" name="Warid Postpaid Bill" ppallowed="0" type="" url="null" />-->
+<!--                        <prd amtrequired="1" cid="104" consumerMaxLength="" consumerMinLength="" dovalidate="1" fid="6" id="60035" inrequired="0" label="Mobile Number" maxamt="5000.0" maxamtf="5,000" minamt="500.0" minamtf="500" multiple="" name="Ufone Postpaid Bill" ppallowed="0" type="" url="null" />-->
+<!--                        <prd amtrequired="1" cid="104" consumerMaxLength="" consumerMinLength="" dovalidate="1" fid="6" id="60037" inrequired="0" label="Mobile Number" maxamt="5000.0" maxamtf="5,000" minamt="30.0" minamtf="30" multiple="" name="Telenor Postpaid Bill" ppallowed="0" type="" url="null" />-->
+<!--                        <prd amtrequired="1" cid="104" consumerMaxLength="" consumerMinLength="" dovalidate="1" fid="6" id="60039" inrequired="0" label="Mobile Number" maxamt="100000.0" maxamtf="100,000" minamt="500.0" minamtf="500" multiple="" name="Mobilink Postpaid Bill" ppallowed="0" type="" url="null" />-->
+<!--                    </prds>-->
+<!--                </category>-->
+<!--            </category>-->
+<!--            <category cid="106" icon="main_icon_telephone.png" isProduct="0" name="Telephone" pcid="-1">-->
+<!--                <prds>-->
+<!--                    <prd amtrequired="0" cid="106" consumerMaxLength="10.0" consumerMinLength="10.0" dovalidate="0" fid="6" id="60026" inrequired="1" label="Account Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="WiTribe Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="106" consumerMaxLength="10.0" consumerMinLength="10.0" dovalidate="0" fid="6" id="60001" inrequired="1" label="Account ID" maxamt="25000.0" maxamtf="25,000" minamt="200.0" minamtf="200" multiple="" name="PTCL Landline Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="106" consumerMaxLength="10.0" consumerMinLength="10.0" dovalidate="0" fid="6" id="60024" inrequired="1" label="Account ID" maxamt="25000.0" maxamtf="25,000" minamt="200.0" minamtf="200" multiple="" name="Vfone Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="106" consumerMaxLength="6.0" consumerMinLength="6.0" dovalidate="0" fid="6" id="60025" inrequired="1" label="Consumer Number" maxamt="100000.0" maxamtf="100,000" minamt="100.0" minamtf="100" multiple="" name="Wateen Internet Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="1" cid="106" consumerMaxLength="10.0" consumerMinLength="10.0" dovalidate="0" fid="6" id="60029" inrequired="0" label="MDN" maxamt="25000.0" maxamtf="25,000" minamt="200.0" minamtf="200" multiple="" name="PTCL EVO Prepaid Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="106" consumerMaxLength="10.0" consumerMinLength="10.0" dovalidate="0" fid="6" id="60030" inrequired="1" label="MDN" maxamt="25000.0" maxamtf="25,000" minamt="200.0" minamtf="200" multiple="" name="PTCL EVO Postpaid Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="106" consumerMaxLength="10.0" consumerMinLength="10.0" dovalidate="0" fid="6" id="60031" inrequired="1" label="Account ID" maxamt="25000.0" maxamtf="25,000" minamt="200.0" minamtf="200" multiple="" name="PTCL Defaulter Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="1" cid="106" consumerMaxLength="17.0" consumerMinLength="17.0" dovalidate="0" fid="6" id="60040" inrequired="0" label="Consumer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="Qubee Consumer Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="1" cid="106" consumerMaxLength="17.0" consumerMinLength="17.0" dovalidate="0" fid="6" id="60041" inrequired="0" label="Consumer Number" maxamt="50000.0" maxamtf="50,000" minamt="5000.0" minamtf="5,000" multiple="" name="Qubee Distributor Bill" ppallowed="0" type="" url="null" />-->
+<!--                </prds>-->
+<!--            </category>-->
+<!--            <category cid="107" icon="main_icon_gas.png" isProduct="0" name="Gas" pcid="-1">-->
+<!--                <prds>-->
+<!--                    <prd amtrequired="0" cid="107" consumerMaxLength="" consumerMinLength="" dovalidate="0" fid="6" id="60003" inrequired="1" label="Customer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="SNGPL Bill" ppallowed="0" type="" url="productPurchase.aw?PID=60003" />-->
+<!--                    <prd amtrequired="0" cid="107" consumerMaxLength="" consumerMinLength="" dovalidate="0" fid="6" id="60002" inrequired="1" label="Customer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="SSGC Bill" ppallowed="0" type="" url="null" />-->
+<!--                </prds>-->
+<!--            </category>-->
+<!--            <category cid="108" icon="main_icon_water.png" isProduct="0" name="Water" pcid="-1">-->
+<!--                <prds>-->
+<!--                    <prd amtrequired="0" cid="108" consumerMaxLength="10.0" consumerMinLength="" dovalidate="0" fid="6" id="60016" inrequired="1" label="Consumer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="LWASA Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="108" consumerMaxLength="8.0" consumerMinLength="" dovalidate="0" fid="6" id="60017" inrequired="1" label="Consumer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="RWASA Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="108" consumerMaxLength="10.0" consumerMinLength="" dovalidate="0" fid="6" id="60018" inrequired="1" label="Consumer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="MWASA Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="108" consumerMaxLength="15.0" consumerMinLength="" dovalidate="0" fid="6" id="60019" inrequired="1" label="Consumer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="BWASA Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="108" consumerMaxLength="8.0" consumerMinLength="" dovalidate="0" fid="6" id="60020" inrequired="1" label="Consumer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="FWASA Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="108" consumerMaxLength="6.0" consumerMinLength="" dovalidate="0" fid="6" id="60021" inrequired="1" label="Consumer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="GWASA Bill" ppallowed="0" type="" url="null" />-->
+<!--                </prds>-->
+<!--            </category>-->
+<!--            <category cid="109" icon="main_icon_electricity.png" isProduct="0" name="Electricity" pcid="-1">-->
+<!--                <prds>-->
+<!--                    <prd amtrequired="0" cid="109" consumerMaxLength="14.0" consumerMinLength="14.0" dovalidate="0" fid="6" id="60004" inrequired="1" label="Reference Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="LESCO Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="109" consumerMaxLength="14.0" consumerMinLength="14.0" dovalidate="0" fid="6" id="60005" inrequired="1" label="Customer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="HESCO Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="109" consumerMaxLength="14.0" consumerMinLength="14.0" dovalidate="0" fid="6" id="60006" inrequired="1" label="Account Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="GEPCO Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="109" consumerMaxLength="14.0" consumerMinLength="14.0" dovalidate="0" fid="6" id="60007" inrequired="1" label="Consumer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="IESCO Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="109" consumerMaxLength="14.0" consumerMinLength="14.0" dovalidate="0" fid="6" id="60008" inrequired="1" label="Account Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="KESC Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="109" consumerMaxLength="14.0" consumerMinLength="14.0" dovalidate="0" fid="6" id="60009" inrequired="1" label="Customer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="MEPCO Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="109" consumerMaxLength="14.0" consumerMinLength="14.0" dovalidate="0" fid="6" id="60010" inrequired="1" label="Consumer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="FESCO Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="109" consumerMaxLength="14.0" consumerMinLength="14.0" dovalidate="0" fid="6" id="60011" inrequired="1" label="Customer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="PESCO Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="109" consumerMaxLength="14.0" consumerMinLength="14.0" dovalidate="0" fid="6" id="60012" inrequired="1" label="Consumer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="QESCO Bill" ppallowed="0" type="" url="null" />-->
+<!--                    <prd amtrequired="0" cid="109" consumerMaxLength="14.0" consumerMinLength="14.0" dovalidate="0" fid="6" id="60014" inrequired="1" label="Consumer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="SEPCO Bill" ppallowed="0" type="" url="null" />-->
+<!--                </prds>-->
+<!--            </category>-->
+<!--            <category cid="110" icon="main_icon_city_government.png" isProduct="0" name="City Government" pcid="-1">-->
+<!--                <prds>-->
+<!--                    <prd amtrequired="0" cid="110" consumerMaxLength="14.0" consumerMinLength="14.0" dovalidate="0" fid="6" id="60023" inrequired="1" label="Consumer Number" maxamt="9999999.0" maxamtf="9,999,999" minamt="1.0" minamtf="1" multiple="" name="CDGK Bill" ppallowed="0" type="" url="null" />-->
+<!--                </prds>-->
+<!--            </category>-->
+<!--        </categories>-->
+<!--    </cat>-->
+<!--    <banks>-->
+<!--        <bank id="50050" isBank="0" key="117130940722358865944076735715016871148960803304334901248996815419815052552875336322790410991392433604701394608500231884113911915168625416296669114728862690539451024021812353340986348428958506523689933432584403548435474622224828221548841371083486321081622447517054022904372023020885356296462823306439795173749" mod="65537" name="OLA JS Bank Limited" pinLevel="1">-->
+<!--            <acc cvv="0" id="2586481" isBPinReq="1" isDef="1" mpin="0" nick="i8_bb_10000016439" pinChReq="0" tpin="0" />-->
+<!--        </bank>-->
+<!--    </banks>-->
+<!--    <ads>-->
+<!--        <ad TYPE="1" name="banner_1" />-->
+<!--        <ad TYPE="1" name="banner_2" />-->
+<!--        <ad TYPE="1" name="banner_3" />-->
+<!--        <ad TYPE="1" name="banner_4" />-->
+<!--        <ad TYPE="1" name="banner_5" />-->
+<!--    </ads>-->
+<!--</msg>-->

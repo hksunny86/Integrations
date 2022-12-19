@@ -1,0 +1,15 @@
+<!-- Response -->
+<msg id="6">
+    <params>
+	<param name="BAL">92393.7</param>
+	<param name="BALF">92,393.72</param>
+    <param name="DATEF">07/10/2016 12:09 PM</param>
+    </params>
+</msg>
+
+<!--<msg id="-1">-->
+<!--    <errors>-->
+<!--        <error code="9096" level="3">A Login PIN has been sent to your registered Mobile Number. Please enter your 4 digits Login PIN.</error>-->
+<!--    </errors>-->
+<!--</msg>-->
+

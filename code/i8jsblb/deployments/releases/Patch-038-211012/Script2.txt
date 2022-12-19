@@ -1,0 +1,25 @@
+BEGIN
+    DBMS_SCHEDULER.CREATE_JOB (
+            job_name => 'CLEAN_IBFT_STATUS_JOB',
+            job_type => 'PLSQL_BLOCK',
+            job_action => 'DELETE FROM IBFT_STATUS WHERE CREATED_ON < SYSTIMESTAMP - INTERVAL ''235'' second; commit;',
+            number_of_arguments => 0,
+            start_date => systimestamp,
+            repeat_interval => 'freq=secondly; INTERVAL=240',
+            end_date =>null,
+            enabled => FALSE,
+            auto_drop => FALSE,
+            comments => 'Removes Data from bill status after 4 minutes');
+
+         
+     
+ 
+    DBMS_SCHEDULER.SET_ATTRIBUTE( 
+             name => 'CLEAN_IBFT_STATUS_JOB', 
+             attribute => 'logging_level', value => DBMS_SCHEDULER.LOGGING_OFF);
+      
+  
+    
+    DBMS_SCHEDULER.enable(
+             name => 'CLEAN_BILL_STATUS_JOB');
+END;

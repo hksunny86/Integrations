@@ -1,0 +1,2 @@
+
+update category set icon_location = 'main_icon_dormancy_removal.png' where category_id = '290';

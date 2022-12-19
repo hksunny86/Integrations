@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/container_header"
+        layout="@layout/header_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading1"
+        android:layout_below="@+id/container_heading"
+        layout="@layout/heading_layout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/container_heading"
+        layout="@layout/heading_layout"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:id="@+id/scView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/scViewInLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/layoutInputs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/lblField1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="First Name"
+                    android:textColor="@color/text_grey"
+                    android:textSize="@dimen/textViewTextSizeNormal"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/input1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField1"
+                    android:background="@drawable/input_bg"
+                    android:inputType="textCapSentences"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                    android:imeOptions="actionNext"
+                    android:maxLength="12"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:singleLine="true">
+
+                    <requestFocus />
+                </EditText>
+
+                <TextView
+                    android:id="@+id/lblField2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input1"
+                    android:layout_marginTop="10dp"
+                    android:padding="2dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="Last Name"
+                    android:textColor="@color/text_grey"
+                    android:textSize="@dimen/textViewTextSizeNormal"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/input2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lblField2"
+                    android:background="@drawable/input_bg"
+                    android:inputType="textCapSentences"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                    android:imeOptions="actionDone"
+                    android:maxLength="12"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:singleLine="true"/>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/input2"
+                    android:layout_marginTop="@dimen/layoutMarginNormal">
+
+                    <TextView
+                        android:id="@+id/date_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/textViewFieldMargin"
+                        android:text="Date of Birth"
+                        android:textColor="@color/text_grey"
+                        android:textSize="@dimen/textViewTextSizeNormal"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="28dp"
+                        android:layout_below="@id/date_heading"
+                        android:gravity="center_vertical"
+                        android:hint="dd-mm-yyyy" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/textViewMarginNormal"
+                        app:srcCompat="@drawable/bookme_date_icon" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/tv_date"
+                        android:background="@color/black" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_cnic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_date"
+                    android:layout_marginTop="@dimen/layoutMarginNormal">
+
+                    <TextView
+                        android:id="@+id/expiry_date_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/textViewFieldMargin"
+                        android:text="CNIC Expiry Date"
+                        android:textColor="@color/text_grey"
+                        android:textSize="@dimen/textViewTextSizeNormal"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_dateExpiry"
+                        android:layout_width="match_parent"
+                        android:layout_height="28dp"
+                        android:layout_below="@id/expiry_date_heading"
+                        android:gravity="center_vertical"
+                        android:hint="dd/mm/yyyy" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivDateExpiry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/textViewMarginNormal"
+                        app:srcCompat="@drawable/bookme_date_icon" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/tv_dateExpiry"
+                        android:background="@color/black" />
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/buttonHeightNormal"
+                android:layout_below="@id/layoutInputs"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/textViewMarginXXXLarge"
+                android:layout_marginLeft="@dimen/buttonSideMarginNormal"
+                android:layout_marginRight="@dimen/buttonSideMarginNormal"
+                android:background="@drawable/button_ok"
+                android:text="@string/next"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/textViewTextSizeNormal"
+                android:textStyle="normal"
+                android:gravity="center_horizontal" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

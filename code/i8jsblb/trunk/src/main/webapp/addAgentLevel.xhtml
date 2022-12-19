@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+<h:head>
+<link rel="stylesheet" href="#{request.contextPath}/styles/wizard_style.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/tpc.css" type="text/css" />
+<link rel="stylesheet" href="#{request.contextPath}/styles/style_js.css" type="text/css" />
+<meta name="title" content="Add Agent Level" />
+ <style>
+.col {
+    width: 33%;
+}
+.centercol {
+    width: 33%;
+    text-align: center;
+}
+</style>
+<script type="text/javascript" src="#{request.contextPath}/scripts/commonFormValidator.js"></script>
+<script type="text/javascript" src="#{request.contextPath}/scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" >
+	function invokeEdit()
+	{
+		var rowIndex = document.getElementById("myform:rowIndex").value;
+		document.getElementById("myform:agentLevelDataTable:" + rowIndex + ":edit").click();
+	}
+	
+	function invokeDelete()
+	{
+		var rowIndex = document.getElementById("myform:rowIndex").value;
+		document.getElementById("myform:agentLevelDataTable:" + rowIndex + ":delete").click();
+	}
+	
+	function saveRowIndex(id)
+	{
+		var prefix = id.substring(0,id.lastIndexOf(":"));
+		 var index = prefix.substring(prefix.lastIndexOf(":")+1, prefix.length);
+		 document.getElementById("myform:rowIndex").value = index;
+	}
+
+	var jq = jQuery.noConflict();
+	jq(document).ready(function() {
+	    document.getElementById("myform:regionCmb").focus();
+
+		var hasReadOnlyRights = #{!agentLevelBean.securityCheck and !agentLevelBean.editSecurityCheck};
+		if( hasReadOnlyRights )
+		{
+			jq("#content_wrap").find("input, textarea, button, select, img").attr("disabled", true);
+		}
+	});
+	
+	function focustOnYes(id)
+	{
+		document.getElementById(id).focus();
+	}
+</script>
+
+</h:head>
+<h:body>
+<f:view>
+	<h:form id="myform">
+		<h:inputHidden id="rowIndex" value="" />
+		<div id="wizard_group"> 
+    		
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+	                <td id="header_wizard"><h1>Add Agent Level</h1></td>
+                </tr>
+            	<tr>
+                	<td>
+                        <div id="status_bar_top">
+                        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                  <td width="70%" valign="top" align="left">
+                                  	<div id="ah_nav">
+                                        <ul>
+                                            <li><a href="#">Regional Hierarchy</a></li>
+                                            <li><a href="#">Region</a></li>
+                                            <li><a href="#">Area Levels</a></li>
+                                            <li><a href="#" class="selectd">Agent Levels</a></li>
+                                            <li><a href="#">Area Names</a></li>
+                                        </ul>
+                                    </div>
+                                  </td>
+                                  <td width="30%" valign="top" align="right">
+                                  	<a4j:outputPanel id="icons_div" styleClass="icons_div" style="display:block;float:right;" >
+                                        <a4j:commandLink  actionListener="#{agentLevelBean.clearDistributorLevelForm}" id="clearbtn" title="Clear"
+                                                    rendered="#{!regionalHierarchyActionBean.regionalHierarchyModel.editMode}"
+                                                    render="levelName,regionCmb,levelCmb,description,comment,active">
+                                            <h:graphicImage url="/images/ah_images/icon_clear.png" />
+                                       	</a4j:commandLink>
+                                       	
+                                       	<h:commandLink action="#{agentLevelBean.exportToExcel}" rendered="#{agentLevelBean.listSize != 0}"
+                                      			 id="exportToExcel" title="Export To Excel" >
+                                        	<h:graphicImage url="/images/ah_images/xls.png" />
+                                   		</h:commandLink>
+                                       	
+                                    </a4j:outputPanel>
+                                  </td>
+                              </tr>
+                            </table>
+                        </div>
+                        
+                        
+                        <div class="clear"></div>
+                    </td>
+                </tr>
+            	
+                <tr>
+                	<td >
+                    	<div id="content_wrap">
+                          <div class="row,error_text_red" style="margin-left: 30px" >
+                                <a4j:outputPanel ajaxRendered="true" >
+                                     <a4j:outputPanel styleClass="error_cont" rendered="#{! empty facesContext.maximumSeverity}">
+                                          <a4j:outputPanel styleClass="error_txt" >
+                                              <h:messages globalOnly="true" />
+                                          </a4j:outputPanel>
+                                  </a4j:outputPanel>                
+                            </a4j:outputPanel>
+                             </div>
+                             
+                             
+                            <table width="" border="0" align="center" cellpadding="0" cellspacing="10">
+                                  <tr>
+                                    <td width="170" valign="top">Regional Hierarchy Name:</td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:outputText  styleClass="txt_value" value="#{agentLevelBean.regionalHierarchyModel.regionalHierarchyName}" />
+                                    </td>
+                                    <td width="40" align="left">&nbsp;</td>
+                                    <td width="170" valign="top">&nbsp;</td>
+                                    <td width="200" align="left" valign="top">&nbsp;
+                                    	
+                                    </td>
+                              </tr>
+                                  
+                                  <tr>
+                                    <td width="170" valign="top">Region<span class="asterisk">*:</span></td>
+                                    <td width="200" align="left" valign="top">
+                                   	  <h:selectOneMenu styleClass="type_list" value="#{agentLevelBean.levelModel.regionModelId}" title="Region" id="regionCmb" disabled="#{agentLevelBean.levelModel.editMode}">
+                                            <f:selectItem itemValue="0" itemLabel="[Select]"/>
+                                            <f:selectItems value="#{agentLevelBean.regionItems}" />
+                                            <a4j:ajax event="change" listener="#{agentLevelBean.onChangeRegion}" render="ultimatelevelCmb levelCmb active" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td width="40" rowspan="2" align="left">&nbsp;</td>
+                                    <td width="170" rowspan="2" valign="top">Description:</td>
+                                    <td width="200" rowspan="2" align="left" valign="top">
+                                   	  <h:inputTextarea styleClass="type_txt" rows="3" value="#{agentLevelBean.levelModel.description}" id="description" 
+	                                    onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);" title="Description"/>	
+                                    </td>
+                              </tr>
+                                  <tr>
+                                    <td valign="top">Agent Level Name<span class="asterisk">*:</span></td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:inputText  id="levelName" styleClass="type_txt" value="#{agentLevelBean.levelModel.name}" maxlength="50" title="Agent Level Name"
+                                    	 onkeypress="return maskAlphaNumericWithSpdashforAH(this,event)" onkeydown="return disablePasteOption(event)"/>  
+                                    </td>
+                                  </tr>
+                                  
+                                  <tr>
+                                    <td valign="top">Ultimate Agent Level<span class="asterisk">*:</span></td>
+                                    <td width="200" align="left" valign="top">
+                                    	<h:selectOneMenu styleClass="type_list" disabled="#{agentLevelBean.levelModel.editMode}" value="#{agentLevelBean.levelModel.ultimateManagingLevelId}" title="Ultimate Agent Level" id="ultimatelevelCmb">
+                                            <f:selectItem itemValue="0" itemLabel="[Select]"/>
+                                            <f:selectItems value="#{agentLevelBean.ultimateLevelItems}"/>
+                                            <a4j:ajax event="change" listener="#{agentLevelBean.onChangeUltimateAgentLevel}" render="levelCmb active" />
+                                        </h:selectOneMenu>  
+                                    </td>
+                                  </tr>
+                                  
+                                  <tr>
+                                    <td width="170" valign="top">Parent Agent Level:</td>
+                                    <td width="200" rowspan="2" align="left" valign="top">
+                                   	  <h:selectOneMenu styleClass="type_list" value="#{agentLevelBean.levelModel.managingLevelId}" title="Parent Agent Level" id="levelCmb" disabled="#{agentLevelBean.levelModel.editMode}">
+                                            <f:selectItem itemValue="0" itemLabel="[Select]"/>
+                                            <f:selectItems value="#{agentLevelBean.levelItems}"/>
+                                            <a4j:ajax event="change" listener="#{agentLevelBean.onChangeParentLevel}" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td width="40" rowspan="2" align="left">&nbsp;</td>
+                                    <td width="170" rowspan="2" valign="top">Comments:</td>
+                                    <td width="200" rowspan="2" align="left" valign="top">
+                                   	  <h:inputTextarea styleClass="type_txt" rows="3" value="#{agentLevelBean.levelModel.comments}" id="comment" 
+	                                    onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);" title="Comments"/>
+                                    </td>
+                              </tr>
+                                  <tr>
+                                    <td valign="top">
+                                    	<h:selectBooleanCheckbox id="active" styleClass="type_check" value="#{agentLevelBean.levelModel.active}" 
+                                        disabled="#{!agentLevelBean.regionalHierarchyActive}" title="Active">
+                                        <a4j:ajax event="click" listener="#{agentLevelBean.onChangeActive}" render="active"/> 
+                                        </h:selectBooleanCheckbox>
+                                        <label for="check_active">Active</label>
+                                    </td>
+                                  </tr>
+                                  
+                                  <tr>
+                                    <td width="170" valign="top">&nbsp;</td>
+                                    <td width="200" align="left" valign="top">&nbsp;</td>
+                                    <td width="40" align="left">&nbsp;</td>
+                                    <td width="170" valign="top">&nbsp;</td>
+                                    <td width="200" align="right" valign="top">
+                                   	 <a4j:outputPanel id="btnDiv"  rendered="#{agentLevelBean.securityCheck or agentLevelBean.editSecurityCheck}">
+						                <a4j:commandButton styleClass="submit_btn" style="margin-right:20px;" value="Add" action="#{agentLevelBean.addDistributorLevels}" 
+						    		    render="agentLevelDataTable,dataScroller,levelName,regionCmb,active,levelCmb,description,clearbtn,comment,agentLevelDataTable,icons_div,btnDiv,ultimatelevelCmb" title="Add"
+						    		    rendered="#{!(agentLevelBean.levelModel.editMode) and agentLevelBean.securityCheck}"/>
+
+						                <a4j:commandButton styleClass="submit_btn" style="margin-right:20px;" value="Update" action="#{agentLevelBean.addDistributorLevels}" 
+						    		    render="agentLevelDataTable,dataScroller,levelName,regionCmb,active,levelCmb,description,clearbtn,comment,agentLevelDataTable,icons_div,btnDiv,ultimatelevelCmb" title="Add"
+						    		    rendered="#{agentLevelBean.levelModel.editMode and agentLevelBean.editSecurityCheck}"/>
+						    		 </a4j:outputPanel>
+                                    </td>
+                              </tr>
+                                  
+                                  
+                          </table>
+                             
+                              <div class="row" style="width:90%; margin:0px; margin:15px auto !important;overflow-x:auto; overflow-y:hidden; border: 1px solid #c4c0c9;">
+                                        <rich:dataTable id="agentLevelDataTable" rows="5" width="100%" styleClass="datagrid" headerClass="table_header"
+                                            rowClasses="rowodd, roweven" columnClasses="col" rowKeyVar="rowIndex" value="#{agentLevelBean.leveList}" var="model">
+                                            <h:column>
+                                                <f:facet name="header" >
+                                                <h:outputText value="	Name" rendered="#{agentLevelBean.listSize == 0}" />
+                                                <a4j:commandLink style="vertical-align:bottom;" rendered="#{agentLevelBean.listSize != 0}" value="Region Name" render="agentLevelDataTable" actionListener="#{agentLevelBean.sortByRegionName}" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{agentLevelBean.regionNameSortingOrder == 1}" url="/images/ah_images/down.png" />
+	                                            <h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{agentLevelBean.regionNameSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                                </f:facet>
+                                                <h:outputText value="#{model.regionModel.regionName}"/>
+                                            </h:column>			            
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Agent Level Name" rendered="#{agentLevelBean.listSize == 0}" />
+                                                    <a4j:commandLink style="vertical-align:bottom;" rendered="#{agentLevelBean.listSize != 0}" value="Agent Level Name" render="agentLevelDataTable" actionListener="#{agentLevelBean.sortByAgentLevelName}" />
+	                                            	<h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{agentLevelBean.agentLevelNameSortingOrder == 1}" url="/images/ah_images/down.png" />
+	                                            	<h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{agentLevelBean.agentLevelNameSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                                </f:facet>
+                                                <h:outputText value="#{model.name}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header" >
+                                                    <h:outputText value="Parent Agent Level Name" rendered="#{agentLevelBean.listSize == 0}" />
+                                                    <a4j:commandLink style="vertical-align:bottom;" rendered="#{agentLevelBean.listSize != 0}" value="Parent Agent Level Name" render="agentLevelDataTable" actionListener="#{agentLevelBean.sortByParentAgentLevelName}" />
+	                                            	<h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{agentLevelBean.parentAgentLevelNameSortingOrder == 1}" url="/images/ah_images/down.png" />
+	                                            	<h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{agentLevelBean.parentAgentLevelNameSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                                </f:facet>
+                                                <h:outputText value="#{model.managingLevelIdDistributorLevelModel.name}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Status" rendered="#{agentLevelBean.listSize == 0}" />
+                                                    <a4j:commandLink style="vertical-align:bottom;" rendered="#{agentLevelBean.listSize != 0}" value="Status" render="agentLevelDataTable" actionListener="#{agentLevelBean.sortByStatus}" />
+	                                            	<h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{agentLevelBean.statusSortingOrder == 1}" url="/images/ah_images/down.png" />
+	                                            	<h:graphicImage style="margin-left: 10px;margin-bottom: 3px;" rendered="#{agentLevelBean.statusSortingOrder == 2}" url="/images/ah_images/up.png" />
+                                                </f:facet>
+                                                <h:graphicImage rendered="#{model.active}" url="/images/ah_images/active.png" style="border:0px;"/>
+                                                <h:graphicImage rendered="#{!model.active}" url="/images/ah_images/inactive.png" style="border:0px;"/>
+                                            </h:column>
+                                            <h:column rendered="#{agentLevelBean.editSecurityCheck}">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Edit"/>
+                                                </f:facet>
+                                                 <h:commandLink title="Edit Agent Level" rendered="#{!model.editMode}" >
+			                                        	<h:graphicImage id="editImage" url="/images/ah_images/edit.png" onclick="saveRowIndex(this.id);" />
+			                                            <rich:componentControl target="editpopup" operation="show" />
+			    									</h:commandLink>
+                                                    <a4j:commandLink id="edit" style="display:none;"
+                                                        actionListener="#{agentLevelBean.editDistributorLevels(model)}"
+                                                        render="agentLevelDataTable,dataScroller,levelName,regionCmb,active,levelCmb,description,clearbtn,comment,icons_div,agentLevelDataTable,btnDiv,ultimatelevelCmb">
+                                                        <f:param name="rowIndexValue" value="#{rowIndex}" />
+                                                    </a4j:commandLink>
+                                                    <a4j:commandLink id="save"
+                                                        actionListener="#{agentLevelBean.addDistributorLevels}"
+                                                        rendered="#{model.editMode}"
+                                                        render="agentLevelDataTable,dataScroller,levelName,regionCmb,active,levelCmb,description,clearbtn,comment,icons_div,btnDiv,ultimatelevelCmb">
+                                                        <h:graphicImage url="/images/ah_images/save.png" />
+                                                        <f:param name="rowIndexValue" value="#{rowIndex}" />
+                                                    </a4j:commandLink>
+                                            </h:column>
+                                             <h:column rendered="#{agentLevelBean.deleteSecurityCheck}">
+                                             	<a4j:jsFunction name="submit"></a4j:jsFunction>
+                                                <f:facet name="header">
+                                                    <h:outputText value="Delete"/>
+                                                </f:facet>
+                                                <h:commandLink title="Delete Agent Level" >
+			                                        	<h:graphicImage id="deleteImage" url="/images/ah_images/delete.png" onclick="saveRowIndex(this.id);" />
+			                                            <rich:componentControl target="deletepopup" operation="show" />
+			    									</h:commandLink>
+                                                <a4j:commandLink id="delete" style="display:none;"
+                                                        actionListener="#{agentLevelBean.deleteDistributorLevels(model)}"
+                                                        render="agentLevelDataTable,dataScroller,levelName,regionCmb,active,levelCmb,description,clearbtn,comment,icons_div,btnDiv,ultimatelevelCmb">
+                                                </a4j:commandLink>
+                                            </h:column> 
+                                        </rich:dataTable>
+                          	</div>
+                            <div align="center"><rich:dataScroller id="dataScroller" for="agentLevelDataTable" render="agentLevelDataTable" /></div>
+                        </div>
+                    </td>
+                </tr>
+		    
+
+		    	<tr>
+                	<td id="status_bar_bottom">
+                    	<div>
+                          <a4j:outputPanel styleClass="infoMessage" ajaxRendered="true">
+                            <h:outputText style="color:#ed1c24;" value="#{infoMessage}"/>
+                          </a4j:outputPanel>
+                        </div>
+                    </td>
+                </tr>
+                
+                
+		    	<tr>
+                	<td>
+                    	<div id="footer">
+                    	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    	    <tr>
+                    	      <td width="50%" valign="top" align="left"><h:commandLink styleClass="btn_cancel" value="" action="#{agentLevelBean.cancel}" /></td>
+                    	      <td width="50%" valign="top" align="right">
+                              	<h:commandLink styleClass="btn_prev" value="" action="#{agentLevelBean.previous }" />
+                              	<h:commandLink styleClass="btn_next" value="" action="#{agentLevelBean.next }" />
+					        	
+                              </td>
+                  	      </tr>
+                  	    </table>
+                    	</div>
+                  </td>
+                </tr>
+            </table>
+	</div>
+	</h:form>
+					<div class="status">
+                          <a4j:status>
+                            <f:facet name="start">
+                              <h:graphicImage url="/images/ah_images/tabs_loader.gif" style="border:0px;"/>  
+                            </f:facet>
+                            <f:facet name="stop"></f:facet>
+                          </a4j:status>
+                        </div>
+                        <rich:popupPanel id="editpopup" modal="true" autosized="true" resizeable="false" onshow="focustOnYes('editYes');" >
+        <f:facet name="header">
+            <h:outputText value="Confirm" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('editpopup')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:panelGroup>
+        	<p>Are you sure you want to edit?</p>
+        	<h:commandButton styleClass="submit_btn" label="Yes" value="Yes" id="editYes" onclick="invokeEdit();#{rich:component('editpopup')}.hide(); return false;" />
+        	<h:commandButton styleClass="submit_btn" label="No" value="No" onclick="#{rich:component('editpopup')}.hide(); return false;" />
+       	</h:panelGroup>
+        
+	</rich:popupPanel>
+	<rich:popupPanel id="deletepopup" modal="true" autosized="true" resizeable="false" onshow="focustOnYes('deleteYes');" >
+        <f:facet name="header">
+            <h:outputText value="Confirm" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('deletepopup')}.hide(); return false;">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:panelGroup>
+        	<p>Are you sure you want to delete?</p>
+        	<h:commandButton styleClass="submit_btn" id="deleteYes" label="Yes" value="Yes" onclick="invokeDelete();#{rich:component('deletepopup')}.hide(); return false;" />
+        	<h:commandButton styleClass="submit_btn" label="No" value="No" onclick="#{rich:component('deletepopup')}.hide(); return false;" />
+       	</h:panelGroup>
+	</rich:popupPanel>
+</f:view>
+		
+</h:body>
+</html>

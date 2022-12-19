@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:sws="http://www.springframework.org/schema/web-services"
+	xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd 
+		http://www.springframework.org/schema/web-services 
+        http://www.springframework.org/schema/web-services/web-services-2.0.xsd 
+        http://www.springframework.org/schema/oxm 
+        http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd 
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<!-- ######################################################## -->
+	<!-- SPRING COMPONENT SCANNING TO DETECT ANNOTATED BEANS -->
+	<!-- ######################################################## -->
+	<context:annotation-config />
+	<context:component-scan base-package="com.inov8" />
+	
+	
+	<!-- Load in application properties reference ${propertyname} -->
+ 	<bean id="applicationProperties" 
+  			class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+  	<property name="location" value="classpath:application.properties" />
+ 	</bean>
+ 	 	
+	<!-- <import resource="jax-ws.xml" /> -->
+
+	<bean id="serviceSoap"
+		class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean"
+		p:serviceInterface="com.inov8.integration.m3.client.ServiceSoap"
+		p:wsdlDocumentUrl="http://${ip}:${port}/Service.asmx?WSDL"
+		p:namespaceUri="http://tempuri.org/" p:serviceName="Service"
+		p:portName="ServiceSoap"
+		p:customProperties-ref="jaxwsCustomProperties"></bean>
+		
+		
+
+		<!--  p:wsdlDocumentUrl="http://${ip}:${port}/Service.asmx?WSDL"   -->
+		<!--  p:wsdlDocumentUrl="http://lhr-spg-005223l:8088/mockServiceSoap?WSDL" -->
+	<util:map id="jaxwsCustomProperties">
+		<entry key="com.sun.xml.ws.request.timeout">
+			<value type="java.lang.Integer">20000</value>
+		</entry>
+		<entry key="com.sun.xml.ws.connect.timeout">
+			<value type="java.lang.Integer">${connection_timeout}</value>
+		</entry>
+	</util:map>
+
+
+</beans>

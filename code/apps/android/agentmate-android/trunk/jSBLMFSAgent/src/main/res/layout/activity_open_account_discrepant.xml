@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/offwhite"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/container_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_layout" />
+
+    <include
+        android:id="@+id/container_heading"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/heading_layout" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ScrollView
+            android:id="@+id/scView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnNext"
+            android:layout_alignParentTop="true"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbars="none" >
+
+            <RelativeLayout
+                android:id="@+id/scViewInLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/lblComments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:shadowColor="@color/white"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:text="sdsdsdsdeyieyiew e ueyeiwuyeuiyew euyewiueywuie e uieye ewuiyewie iueyei eyeiewuyei ewiyewiyew"
+                    android:textColor="@color/skyBlue"
+                    android:textSize="29sp" />
+            </RelativeLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/mid"
+            android:background="@drawable/button_next_selector"
+            android:text="Continue"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="normal" />
+
+        <View
+            android:id="@+id/mid"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/mid"
+            android:background="@drawable/button_cancel_selector"
+            android:text="@string/cancel"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:textStyle="normal" />
+    </RelativeLayout>
+
+</LinearLayout>

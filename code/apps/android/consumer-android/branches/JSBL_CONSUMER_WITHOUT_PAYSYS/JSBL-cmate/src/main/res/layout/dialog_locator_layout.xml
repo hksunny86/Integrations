@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialogLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/dialogSideMargin"
+    android:layout_marginBottom="@dimen/layoutMarginXXLarge"
+    android:layout_marginRight="@dimen/dialogSideMargin"
+    android:background="@drawable/dialog_bg_rounded">
+
+    <RelativeLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialogHeaderHeightNormal"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/header_dialog_bg"
+        android:paddingLeft="@dimen/dialogPaddingNormal">
+
+        <TextView
+            android:id="@+id/textViewAlertHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/textViewMarginNormal"
+            android:text="@string/alertNotification"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textViewTextSizeXLarge" />
+
+        <ImageButton
+            android:id="@+id/btnCross"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dialogPaddingNormal"
+            android:background="@drawable/button_cross" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_view_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutHeader"
+        android:layout_marginLeft="@dimen/dialogPaddingNormal"
+        android:layout_marginRight="@dimen/dialogPaddingNormal"
+        android:scrollbars="none">
+
+        <RadioGroup
+            android:id="@+id/rgDistanceOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <RadioButton
+                android:id="@+id/radio_5km"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:drawableLeft="@drawable/button_radio"
+                android:drawablePadding="@dimen/dialogPaddingNormal"
+                android:padding="@dimen/dialogPaddingNormal"
+                android:text="5 KM"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textViewTextSizeXLarge" />
+
+            <View
+                android:id="@+id/middleBar1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_light_grey" />
+
+            <RadioButton
+                android:id="@+id/radio_10km"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:drawableLeft="@drawable/button_radio"
+                android:drawablePadding="@dimen/dialogPaddingNormal"
+                android:padding="@dimen/dialogPaddingNormal"
+                android:text="10 KM"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textViewTextSizeXLarge" />
+
+            <View
+                android:id="@+id/middleBar2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_light_grey" />
+
+            <RadioButton
+                android:id="@+id/radio_15km"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:drawableLeft="@drawable/button_radio"
+                android:drawablePadding="@dimen/dialogPaddingNormal"
+                android:padding="@dimen/dialogPaddingNormal"
+                android:text="15 KM"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textViewTextSizeXLarge" />
+
+            <View
+                android:id="@+id/middleBar3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_light_grey" />
+
+            <RadioButton
+                android:id="@+id/radio_20km"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:drawableLeft="@drawable/button_radio"
+                android:drawablePadding="@dimen/dialogPaddingNormal"
+                android:padding="@dimen/dialogPaddingNormal"
+                android:text="20 KM"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textViewTextSizeXLarge" />
+        </RadioGroup>
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/scroll_view_locator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutHeader"
+        android:layout_marginLeft="@dimen/dialogPaddingNormal"
+        android:layout_marginRight="@dimen/dialogPaddingNormal"
+        android:scrollbars="none">
+
+        <RadioGroup
+            android:id="@+id/rgLocatorOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <RadioButton
+                android:id="@+id/radio_branch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:drawableLeft="@drawable/button_radio"
+                android:drawablePadding="@dimen/dialogPaddingNormal"
+                android:padding="@dimen/dialogPaddingNormal"
+                android:text="@string/branch"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textViewTextSizeXLarge" />
+
+            <View
+                android:id="@+id/middleBar4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_light_grey" />
+
+            <RadioButton
+                android:id="@+id/radio_atm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:drawableLeft="@drawable/button_radio"
+                android:drawablePadding="@dimen/dialogPaddingNormal"
+                android:padding="@dimen/dialogPaddingNormal"
+                android:text="@string/atm"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textViewTextSizeXLarge" />
+
+            <View
+                android:id="@+id/middleBar5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_light_grey" />
+
+            <RadioButton
+                android:id="@+id/radio_agent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:drawableLeft="@drawable/button_radio"
+                android:drawablePadding="@dimen/dialogPaddingNormal"
+                android:padding="@dimen/dialogPaddingNormal"
+                android:text="@string/agent"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textViewTextSizeXLarge" />
+
+        </RadioGroup>
+    </ScrollView>
+
+</RelativeLayout>

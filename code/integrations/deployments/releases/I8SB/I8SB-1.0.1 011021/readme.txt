@@ -1,0 +1,1 @@
+decimel amount format in challan payment

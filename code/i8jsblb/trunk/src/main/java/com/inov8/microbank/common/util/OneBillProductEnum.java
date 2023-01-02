@@ -135,7 +135,9 @@ public enum OneBillProductEnum {
     CUST_CITY_SCHOOL("10245227"),
     CUST_KPK_EXCISE_TAXATION("10245259"),
     KPK_EXCISE_TAXATION("10245261"),
-    CUST_PASSPORT_FEE("10245371");
+    CUST_PASSPORT_FEE("10245371"),
+    CUST_REIT("10245380");
+
 
     private static final Map<String, OneBillProductEnum> lookup = new HashMap<String, OneBillProductEnum>();
 

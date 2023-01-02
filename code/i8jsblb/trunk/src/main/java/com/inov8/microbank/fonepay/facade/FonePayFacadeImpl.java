@@ -43,6 +43,11 @@ public class FonePayFacadeImpl implements FonePayFacade {
 	}
 
 	@Override
+	public WebServiceVO verifyLoginCustomer(WebServiceVO webServiceVO) {
+		return fonePayManager.verifyLoginCustomer(webServiceVO);
+	}
+
+	@Override
 	public WebServiceVO makeVirtualCardTagging(WebServiceVO integrationMessageVO) {
 		return fonePayManager.makeVirtualCardTagging(integrationMessageVO);
 	}

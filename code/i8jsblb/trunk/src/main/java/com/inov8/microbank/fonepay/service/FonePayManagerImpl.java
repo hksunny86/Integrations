@@ -575,30 +575,36 @@ public class FonePayManagerImpl implements FonePayManager {
                         if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("1")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Minor_segment_id")));
 
-                        } else if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("MERCHANT")) {
+                        }
+                        else if (webServiceVO.getReserved3() != null && webServiceVO.getReserved3().equals("MERCHANT")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Merchant_segment_id")));
 
-                        } else {
+                        }
+                        else {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("SegmentId")));
                         }
                     } else if (isConsumerApp || MessageUtil.getMessage("EcofinChannelId").equals(webServiceVO.getChannelId())) {
                         if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("1")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Minor_segment_id")));
 
-                        } else if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("MERCHANT")) {
+                        }
+                        else if (webServiceVO.getReserved3() != null && webServiceVO.getReserved4().equals("MERCHANT")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Merchant_segment_id")));
 
-                        } else {
+                        }
+                        else {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("EcofinSegmentId")));
                         }
                     } else if (isConsumerApp || MessageUtil.getMessage("AmaChannelId").equals(webServiceVO.getChannelId())) {
                         if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("1")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Minor_segment_id")));
 
-                        } else if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("MERCHANT")) {
+                        }
+                        else if (webServiceVO.getReserved3() != null && webServiceVO.getReserved4().equals("MERCHANT")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Merchant_segment_id")));
 
-                        } else {
+                        }
+                        else {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("AmaSegmentId")));
                             customerModel.setAccountOpenedByAma(true);
                             customerModel.setAmaCustomerContsent("1");
@@ -608,22 +614,28 @@ public class FonePayManagerImpl implements FonePayManager {
                         if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("1")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Minor_segment_id")));
 
-                        } else if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("Merchant")) {
+                        }
+                        else if (webServiceVO.getReserved3() != null && webServiceVO.getReserved4().equals("Merchant")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Merchant_segment_id")));
 
-                        } else {
+                        }
+                        else {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("PayFastSegmentId")));
                         }
                     } else if (isConsumerApp || MessageUtil.getMessage("BrandVerseChannelId").equals(webServiceVO.getChannelId())) {
                         if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("1")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Minor_segment_id")));
 
-                        } else if (webServiceVO.getReserved3() != null && webServiceVO.getReserved3().equals("MERCHANT")) {
+                        }
+                        else if (webServiceVO.getReserved3() != null && webServiceVO.getReserved3().equals("MERCHANT")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Merchant_segment_id")));
-                        } else {
+                        }
+                        else {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("BrandVerseSegmentId")));
                         }
-                    } else {
+                    }
+
+                    else {
                         customerModel.setSegmentId(CommissionConstantsInterface.FONEPAY_SEGMENT_ID);
                     }
                     customerModel.setCustomerTypeId(CustomerTypeConstants.CUSTOMER_TYPE_MARKETED);
@@ -1105,9 +1117,15 @@ public class FonePayManagerImpl implements FonePayManager {
                             (!StringUtil.isNullOrEmpty(errorMessage) && (errorMessage.contains("Hibernate")
                                     || errorMessage.contains("Exception")
                                     || errorMessage.contains("SQLException")))) {
+//                        if (errorMessage.equals(WorkFlowErrorCodeConstants.CNIC_ALREARY_EXIST)) {
+//                            webServiceVO.setResponseCode(FonePayResponseCodes.CUSTOMER_CNIC_ALREADY_EXIST);
+//                            webServiceVO.setResponseCodeDescription(FonePayUtils.getResponceCodeDescription(errorMessage));
+//                        }
+//                        else {
 
-                        webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_FAILED);
-                        webServiceVO.setResponseCodeDescription(FonePayUtils.getResponceCodeDescription(FonePayResponseCodes.ACCOUNT_OPENING_FAILED));
+                            webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_FAILED);
+                            webServiceVO.setResponseCodeDescription(FonePayUtils.getResponceCodeDescription(FonePayResponseCodes.ACCOUNT_OPENING_FAILED));
+//                        }
                     } else if (errorMessage == null ||
                             (!StringUtil.isNullOrEmpty(errorMessage) && (errorMessage.equals(MessageUtil.getMessage("MINOR.ACCOUNT.OPENING"))))) {
                         webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_AGE_LIMIT_FAILED);
@@ -1117,7 +1135,12 @@ public class FonePayManagerImpl implements FonePayManager {
                         webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_CNIC_EXPIRY_FAILED);
                         webServiceVO.setResponseCodeDescription(errorMessage);
 
-                    } else {
+                    }
+//                    else  if (errorMessage.equals(WorkFlowErrorCodeConstants.CNIC_ALREARY_EXIST)) {
+//                        webServiceVO.setResponseCode(FonePayResponseCodes.CUSTOMER_CNIC_ALREADY_EXIST);
+//                        webServiceVO.setResponseCodeDescription(FonePayUtils.getResponceCodeDescription(errorMessage));
+//                    }
+                    else {
                         webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_FAILED);
                         webServiceVO.setResponseCodeDescription(errorMessage);
                     }
@@ -1175,7 +1198,12 @@ public class FonePayManagerImpl implements FonePayManager {
                 webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_CNIC_EXPIRY_FAILED);
                 webServiceVO.setResponseCodeDescription(errorMessage);
 
-            } else {
+            }
+//            else  if (errorMessage.equals(MessageUtil.getMessage("fonepay.error.24"))) {
+//                webServiceVO.setResponseCode(FonePayResponseCodes.CUSTOMER_CNIC_ALREADY_EXIST);
+//                webServiceVO.setResponseCodeDescription(WorkFlowErrorCodeConstants.CNIC_ALREARY_EXIST);
+//            }
+            else {
                 webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_FAILED);
                 webServiceVO.setResponseCodeDescription(errorMessage);
             }
@@ -2052,6 +2080,18 @@ public class FonePayManagerImpl implements FonePayManager {
                 }
                 return webServiceVO;
             }
+//            else if (customerAppUserModel != null) {
+//                AppUserModel aUserModel = null;
+//                aUserModel = this.isCNICUnique(webServiceVO.getCnicNo());
+//                if (aUserModel != null) {
+//                    webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_CNIC_ALREADY_EXIST_AS_CUSTOMER);
+//                } else {
+//                    webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_MOBILE_ALREADY_EXIST_AS_CUSTOMER);
+//
+//                }
+//                return webServiceVO;
+//            }
+
             AppUserModel customerAppUserModelbyCnic = getCommonCommandManager().loadAppUserByCnicAndType(webServiceVO.getCnicNo());
             if (customerAppUserModelbyCnic == null) {
                 AppUserModel aUserModel = null;
@@ -2061,6 +2101,18 @@ public class FonePayManagerImpl implements FonePayManager {
                 }
                 return webServiceVO;
             }
+//            else if (customerAppUserModelbyCnic != null) {
+//                AppUserModel aUserModel = null;
+//                aUserModel = this.isMobileNumUnique(webServiceVO.getMobileNo());
+//                if (aUserModel != null) {
+//                    webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_MOBILE_ALREADY_EXIST_AS_CUSTOMER);
+//                } else {
+//                    webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_CNIC_ALREADY_EXIST_AS_CUSTOMER);
+//
+//                }
+//                return webServiceVO;
+//
+//            }
             SearchBaseWrapper searchBaseWrapper = new SearchBaseWrapperImpl();
             SmartMoneyAccountModel smartMoneyAccountModel = new SmartMoneyAccountModel();
             smartMoneyAccountModel.setCustomerId(customerAppUserModel.getCustomerId());
@@ -2221,6 +2273,7 @@ public class FonePayManagerImpl implements FonePayManager {
                     }
                 }
 
+
                 //Is CNIC Unique - Validation
                 AppUserModel aUserModel = null;
                 aUserModel = this.isCNICUnique(cnic);
@@ -2281,6 +2334,149 @@ public class FonePayManagerImpl implements FonePayManager {
 
         return webServiceVO;
 
+    }
+
+
+    @Override
+    public WebServiceVO verifyLoginCustomer(WebServiceVO webServiceVO) {
+        String mobileNumber = webServiceVO.getMobileNo();
+
+        CustomerModel customerModel = new CustomerModel();
+        AppUserModel appUserModel = new AppUserModel();
+
+        SmartMoneyAccountModel smartMoneyAccountModel = new SmartMoneyAccountModel();
+
+        try {
+
+            AppUserModel testModel1 = new AppUserModel();
+            List<AppUserModel> modelList = new ArrayList<>();
+            AppUserModel testModel = null;
+            testModel1.setMobileNo(mobileNumber);
+            testModel1.setAppUserTypeId(UserTypeConstantsInterface.CUSTOMER);
+            testModel1.setAccountClosedSettled(false);
+            modelList = appUserHibernateDAO.findByExample(testModel1).getResultsetList();
+            if (modelList != null && modelList.size() > 0) {
+                testModel = modelList.get(0);
+
+                SearchBaseWrapper searchBaseWrapper = new SearchBaseWrapperImpl();
+                smartMoneyAccountModel.setCustomerId(testModel.getCustomerId());
+                searchBaseWrapper.setBasePersistableModel(smartMoneyAccountModel);
+
+                searchBaseWrapper = getCommonCommandManager().loadSmartMoneyAccount(searchBaseWrapper);
+                smartMoneyAccountModel = (SmartMoneyAccountModel) searchBaseWrapper.getCustomList().getResultsetList().get(0);
+
+                if (smartMoneyAccountModel == null) {
+                    return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.SMA_NOT_LOADED);
+                } else if (!smartMoneyAccountModel.getActive()) {
+                    return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.SMA_NOT_ACTIVE);
+                }
+
+                customerModel = getCommonCommandManager().getCustomerModelById(testModel.getCustomerId());
+
+//            if (testModel != null && RegistrationStateConstants.DISCREPANT.equals(testModel.getRegistrationStateId())) {
+//
+//                List<CustomerPictureModel> customerPictureModelList = new ArrayList<>();
+//                webServiceVO.setFirstName(testModel.getFirstName());
+//                webServiceVO.setLastName(testModel.getLastName());
+//                if (testModel.getNicExpiryDate() != null) {
+//                    webServiceVO.setCnicExpiry(dateFormat.format(testModel.getNicExpiryDate()));
+//                }
+//                webServiceVO.setDateOfBirth(dateFormat.format(testModel.getDob()));
+//                if (testModel.getCustomerIdCustomerModel().getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)) {
+//                    webServiceVO.setAccountType(FonePayConstants.L0_CUSTOMER);
+//                } else if (testModel.getCustomerIdCustomerModel().getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_1)) {
+//                    webServiceVO.setAccountType(FonePayConstants.L1_CUSTOMER);
+//                }
+//                webServiceVO.setAccountType("0" + testModel.getCustomerIdCustomerModel().getCustomerAccountTypeId().toString());
+//                CustomerPictureModel customerPictureModel = new CustomerPictureModel();
+//                customerPictureModel.setCustomerId(testModel.getCustomerId());
+//                customerPictureModel.setDiscrepant(true);
+//                customerPictureModelList = this.customerPictureDAO.findByExample(customerPictureModel).getResultsetList();
+//                if (customerPictureModelList != null && customerPictureModelList.size() > 0) {
+//                    if (customerPictureModelList.size() >= 2) {
+//                        webServiceVO.setCustomerStatus("4");
+//                    } else {
+//                        if (PictureTypeConstants.ID_FRONT_SNAPSHOT.equals(customerPictureModelList.get(0).getPictureTypeId())) {
+//                            webServiceVO.setCustomerStatus("3");
+//                        } else {
+//                            webServiceVO.setCustomerStatus("2");
+//                        }
+//                    }
+//                }
+//            }
+//            else {
+//                //Is MOBILE No Unique - Validation
+//                AppUserModel apUserModel = this.isMobileNumUnique(mobileNumber);
+//
+//                if (null != apUserModel) {
+//                    if (apUserModel.getAppUserTypeId().longValue() == UserTypeConstantsInterface.CUSTOMER) {
+//                        return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_MOBILE_ALREADY_EXIST_AS_CUSTOMER);
+//                    } else if (apUserModel.getAppUserTypeId().longValue() == UserTypeConstantsInterface.RETAILER) {
+//                        return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_MOBILE_ALREADY_EXIST_AS_RETAILER);
+//                    }
+//                    if (apUserModel.getAppUserTypeId().longValue() == UserTypeConstantsInterface.HANDLER) {
+//                        return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_MOBILE_ALREADY_EXIST_AS_HANDLER);
+//                    }
+//                }
+//
+//
+//                //Is CNIC Unique - Validation
+//                AppUserModel aUserModel = null;
+//                aUserModel = this.isCNICUnique(testModel.getNic());
+//
+//                if (null != aUserModel) {
+//                    if (aUserModel.getAppUserTypeId().longValue() == UserTypeConstantsInterface.CUSTOMER) {
+//                        return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_CNIC_ALREADY_EXIST_AS_CUSTOMER);
+//                    } else if (aUserModel.getAppUserTypeId().longValue() == UserTypeConstantsInterface.RETAILER) {
+//                        return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_CNIC_ALREADY_EXIST_AS_RETAILER);
+//                    }
+//                    if (aUserModel.getAppUserTypeId().longValue() == UserTypeConstantsInterface.HANDLER) {
+//                        return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_CNIC_ALREADY_EXIST_AS_HANDLER);
+//                    }
+//                }
+//            }
+
+
+                //Is CNIC Blacklisted - Validation
+//            if (getCommonCommandManager().isCnicBlacklisted(testModel.getNic())) {
+//                return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_CNIC_BLACKLISTED);
+//            }
+
+                //Prepare SUCCESS MESSAGE
+                if (smartMoneyAccountModel.getChangePinRequired().equals(false)) {
+                    webServiceVO.setOtpPin("true");
+                } else {
+                    webServiceVO.setOtpPin("false");
+
+
+                }
+                webServiceVO.setAccountStatus(String.valueOf(testModel.getAccountStateId()));
+                webServiceVO.setAccountTitle(testModel.getFirstName() + " " + testModel.getLastName());
+                if (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)) {
+                    webServiceVO.setAccountType("L0");
+                } else if (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_1)) {
+                    webServiceVO.setAccountType("L1");
+                } else if (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.BLINK)) {
+                    webServiceVO.setAccountType("blink");
+                } else if (customerModel.getCustomerAccountTypeId().equals(56L)) {
+                    webServiceVO.setAccountType("Ultra-Signature");
+
+                }
+
+                webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
+                webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
+            }else {
+                webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_NOT_FOUND);
+
+            }
+        } catch (Exception e) {
+            logger.error("[FonePayManagerImpl.verifyNewCustomer] Exception occured: " + e.getMessage(), e);
+            webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR);
+        }
+
+        logger.info("[FonePayManagerImpl.verifyNewCustomer] Sending Response Code: " + webServiceVO.getResponseCode());
+
+        return webServiceVO;
     }
 
     @Override
@@ -3252,8 +3448,7 @@ public class FonePayManagerImpl implements FonePayManager {
             if ((txDetailMaster.getSupProcessingStatusId().equals(SupplierProcessingStatusConstants.COMPLETED) && (txDetailMaster.getProductId().equals(Long.parseLong(MessageUtil.getMessage("ChecqueBook.productid")))))) {
                 webServiceVO.setResponseCode("00");
                 webServiceVO.setResponseCodeDescription("SuccessFull");
-            }
-            else {
+            } else {
                 logger.info("[FonePayManagerImpl.makeChecqueBookStatus] Trx Code Not Found: ");
                 webServiceVO.setResponseCode("10");
                 webServiceVO.setResponseCodeDescription("Trx Code Not Found ");
@@ -3450,7 +3645,7 @@ public class FonePayManagerImpl implements FonePayManager {
                         prepareAndSaveSettlementTransaction(transactionId, productId, creditOlaInfo.getBalance(), PoolAccountConstantsInterface.JSBL_OF_SETTLEMENT_POOL_ACCOUNT_ID, toAccountInfoId, creditOlaInfo.getIsAgent(), false);
                     }
                 }
-                if (MessageUtil.getMessage("WEBSERVICE.SENDSMS.CHANNEL").contains(webServiceVO.getChannelId())) {
+                if ((MessageUtil.getMessage("WEBSERVICE.SENDSMS.CHANNEL").contains(webServiceVO.getChannelId())) && !(txDetailMaster.getProductId().equals(Long.parseLong(MessageUtil.getMessage("Z-Spin.product.id"))))) {
                     DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
                     DateTimeFormatter tf = DateTimeFormat.forPattern("h:mm a");
                     String smsText = MessageUtil.getMessage("trxreversal.sms", new String[]{
@@ -3459,7 +3654,7 @@ public class FonePayManagerImpl implements FonePayManager {
                             tf.print(new LocalTime()),});
                     SmsMessage smsMessage = new SmsMessage(mobileNo, smsText);
                     smsSender.send(smsMessage);
-                } else if (webServiceVO.getChannelId().equals("NOVA")) {
+                } else if ((webServiceVO.getChannelId().equals("NOVA")) && !(txDetailMaster.getProductId().equals(Long.parseLong(MessageUtil.getMessage("Z-spin.Product.Id"))))) {
                     String smsText = MessageUtil.getMessage("trxreversal.sender.sms", new String[]{
                             trxId,
                             String.valueOf(wrapper.getTransactionDetailMasterModel().getTransactionAmount()),

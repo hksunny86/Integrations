@@ -27,7 +27,7 @@ import java.util.Date;
 
 public class UpdateCnicExpiryController extends AjaxController {
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
+    DateFormat dateFormat1 = new SimpleDateFormat("MM-dd-yyyy");
 
     private AppUserManager appUserManager;
 
@@ -49,8 +49,8 @@ public class UpdateCnicExpiryController extends AjaxController {
             NadraIntegrationVO iVo = new NadraIntegrationVO();
             String mobileNo = appUserModel.getMobileNo();
             String cnic = appUserModel.getNic();
-            Date cnicIssueDate = appUserModel.getCnicIssuanceDate();
-            iVo.setCnicIssuanceDate(String.valueOf(cnicIssueDate));
+            String cnicIssueDate = getDate(appUserModel.getCnicIssuanceDate());
+            iVo.setCnicIssuanceDate(cnicIssueDate);
             iVo.setContactNo(mobileNo);
             iVo.setCitizenNumber(cnic);
             iVo.setAreaName("Punjab");
@@ -64,8 +64,10 @@ public class UpdateCnicExpiryController extends AjaxController {
                 baseWrapper.setBasePersistableModel(appUserModel);
                 appUserManager.saveOrUpdateAppUser(baseWrapper);
                 buffer.append("Cnic Update SuccessFully");
-            } catch (Exception e) {
-                buffer.append("Error occured on Update Customer Cnic");
+            } catch (CommandException e) {
+                buffer.append("Error occured on Update Customer Cnic " +e.getMessage());
+            }catch (Exception ex){
+                buffer.append("Error occured on Update Customer Cnic " +ex.getMessage());
             }
         } else {
             buffer.append("Customer Not Found");
@@ -88,6 +90,13 @@ public class UpdateCnicExpiryController extends AjaxController {
     public CommonCommandManager getCommonCommandManager() {
         ApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
         return (CommonCommandManager) applicationContext.getBean("commonCommandManager");
+    }
+
+    public String getDate(Date issaunceDate) {
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String strDate = dateFormat.format(issaunceDate);
+
+        return strDate;
     }
 
 

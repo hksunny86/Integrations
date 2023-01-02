@@ -634,7 +634,7 @@ public class CheckCustomerExistanceCommand extends BaseCommand {
                                 messageSource
                                         .getMessage(
                                                 "checkCustomerExistanceCommand.declinedCustomer", null, null));
-                    } else if (isUpgrade.equals("1") && registrationStateId.equals(RegistrationStateConstants.VERIFIED)) {
+                    } else if (isUpgrade.equals("1") && (registrationStateId.equals(RegistrationStateConstants.VERIFIED)||registrationStateId.equals(RegistrationStateConstants.CLSPENDING))) {
                         appUserModel.setRegistrationStateModel(this.commonCommandManager.getRegistrationStateById(registrationStateId));
                         regStateModel = appUserModel.getRegistrationStateModel();
                         if (regStateModel != null) {

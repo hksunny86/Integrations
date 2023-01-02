@@ -612,7 +612,7 @@ public class OpenCustomerL0AccountCommand extends BaseCommand {
                     Long customerId = appUserModel.getCustomerId();
 
                     CustomerModel customerModel = this.commonCommandManager.getCustomerModelById(customerId);
-                    if(customerModel.getSegmentId().equals(Long.valueOf(MessageUtil.getMessage("Minor_segment_id"))))
+                    if (customerModel.getSegmentId().equals(Long.valueOf(MessageUtil.getMessage("Minor_segment_id"))))
                         throw new CommandException("Minor Account Cannot be Upgerade to L1", ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, new Throwable());
                     customerModel.setCustomerAccountTypeId(CustomerAccountTypeConstants.LEVEL_1);
 
@@ -705,7 +705,6 @@ public class OpenCustomerL0AccountCommand extends BaseCommand {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             baseWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_PICTURES_COLLECTION, arrayCustomerPictures);
 
             /***************************************************************************************
@@ -1017,7 +1016,7 @@ public class OpenCustomerL0AccountCommand extends BaseCommand {
                     userDeviceAccountsModel.setCredentialsExpired(false);
                     userDeviceAccountsModel.setPasswordChangeRequired(false);
                     userDeviceAccountsModel.setUserId(mfsId);
-                    userDeviceAccountsModel.setPin(randomPinEncrypted);
+//                    userDeviceAccountsModel.setPin(randomPinEncrypted);
                     if (isHRA) {
                         userDeviceAccountsModel.setProdCatalogId(PortalConstants.HRA_CUSTOMER_CATALOG);
                     } else {
@@ -1039,7 +1038,8 @@ public class OpenCustomerL0AccountCommand extends BaseCommand {
                     smartMoneyAccountModel.setActive(true);
                     smartMoneyAccountModel.setStatusId(OlaStatusConstants.ACCOUNT_STATUS_ACTIVE);
                     smartMoneyAccountModel.setAccountStateId(AccountStateConstantsInterface.ACCOUNT_STATE_COLD);
-                    smartMoneyAccountModel.setChangePinRequired(false);
+                    //pehla ya false tha ab ya true kar raha hu ta ka zindigi app sa mpin set ho saka as per waqar bahi
+                    smartMoneyAccountModel.setChangePinRequired(true);
                     smartMoneyAccountModel.setDefAccount(true);
                     smartMoneyAccountModel.setDeleted(false);
                     smartMoneyAccountModel.setName("i8_bb_" + mfsId);
@@ -1209,15 +1209,26 @@ public class OpenCustomerL0AccountCommand extends BaseCommand {
 
             String generatedPin = (String) baseWrapper.getObject(CommandFieldConstants.KEY_PIN);
             logger.info("System Generated Pin: " + generatedPin);
+//            BaseWrapper bWrapper = new BaseWrapperImpl();
+//            this.logger.info("Third Party MPIN Registration for Mobile # :: " + appUserModel.getMobileNo());
+//            bWrapper.putObject(CommandFieldConstants.KEY_DEVICE_TYPE_ID, DeviceTypeConstantsInterface.MOBILE.toString());
+//            bWrapper.putObject(CommandFieldConstants.KEY_NEW_PIN, EncryptionUtil.encryptWithAES("682ede816988e58fb6d057d9d85605e0", randomPin));
+//            bWrapper.putObject(CommandFieldConstants.KEY_CONF_PIN, EncryptionUtil.encryptWithAES("682ede816988e58fb6d057d9d85605e0", randomPin));
+//            bWrapper.putObject(CommandFieldConstants.KEY_ENCRYPTION_TYPE, "1");
+//            ThreadLocalAppUser.setAppUserModel(appUserModel);
+//            bWrapper.putObject("IS_FORCEFUL", "1");
+//            getCommandManager().executeCommand(bWrapper, CommandFieldConstants.CMD_MIGRATED_PIN_CHG);
             if (accountUpdated == false) {
                 // This would be new account creation scenario, so ivr call would be generated
 
                 //Sending SMS (with links android/iOS) to Users
                 if (appUserModel.getRegistrationStateId().equals(RegistrationStateConstants.CLSPENDING)) {
-                    sendSMSToUsers(mfsId, generatedPin, appUserModel.getRegistrationStateId());
+                    sendSMSToUsers(mfsId, "", appUserModel.getRegistrationStateId());
                 } else {
-                    commonCommandManager.getAppManager().sendSMSToUsers(appUserModel.getMobileNo(), randomPin, false);
+                    commonCommandManager.getAppManager().sendSMSToUsers(appUserModel.getMobileNo(), "", false);
                 }
+
+
 //			IvrRequestDTO ivrDTO = new IvrRequestDTO();
 //	    	ivrDTO.setCustomerMobileNo(appUserModel.getMobileNo());
 //			ivrDTO.setPin(generatedPin);
@@ -1230,6 +1241,23 @@ public class OpenCustomerL0AccountCommand extends BaseCommand {
 //				throw new CommandException( e.getLocalizedMessage() ,ErrorCodes.COMMAND_EXECUTION_ERROR,ErrorLevel.MEDIUM, null ) ;
 //			}
             }
+//            if (ThreadLocalAppUser.getAppUserModel().getAppUserId() == PortalConstants.WEB_SERVICE_APP_USER_ID) {
+//                AppUserModel agentAppUserModel = new AppUserModel();
+//                try {
+//                    agentAppUserModel = getCommonCommandManager().loadAppUserByMobileAndType(agentMobileNo);
+//                } catch (FrameworkCheckedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                if (appUserModel != null) {
+//                    logger.debug("[FonepayPaymentCommand.execute] AppUserModel loader wil AppUserId:" + appUserModel.getAppUserId());
+//                    ThreadLocalAppUser.setAppUserModel(agentAppUserModel);
+//                }
+//            } else {
+//                AppUserModel agentAppUserModel = getCommonCommandManager().loadAppUserByMobileAndType(agentMobileNo);
+//                ThreadLocalAppUser.setAppUserModel(agentAppUserModel);
+//
+//            }
 
 
             File imageFile = null;
@@ -1600,7 +1628,9 @@ public class OpenCustomerL0AccountCommand extends BaseCommand {
             }
 
             if (registrationStateId == RegistrationStateConstants.CLSPENDING) {
-                customerSMS = this.getMessageSource().getMessage("smsCommand.act_sms_jsbl_con_app.pending", new Object[]{cMsisdn, pin}, null);
+                customerSMS = MessageUtil.getMessage("smsCommand.act_sms_jsbl_con_app.pending.agentMate");
+
+//                this.getMessageSource().getMessage("smsCommand.act_sms_jsbl_con_app.pending.agentMate", new Object[]{cMsisdn, pin}, null);
             }
 
             baseWrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGE, new SmsMessage(cMsisdn, customerSMS));

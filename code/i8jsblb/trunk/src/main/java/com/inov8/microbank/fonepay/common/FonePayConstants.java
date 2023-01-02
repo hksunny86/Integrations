@@ -103,6 +103,16 @@ public interface FonePayConstants {
     public static final String ECOFIN_CHANNEL="ECOFIN";
     public static final String TELEMART_CHANNEL="TELEMART";
     public static final String RAHPER_CHANNEL= "RAHPER";
+    public static final String GOLOOTLO_CHANNEL= "GOLOOTLO";
+    public static final String  MARHAM_CHANNEL= "MARHAM";
+    public static final String AIGENIX_CHANNEL= "AIGENIX";
+    public static final String VOUCH365_CHANNEL= "VOUCH365";
+    public static final String PUBLISHEX_CHANNEL= "PUBLISHEX";
+    public static final String TAPMAD_CHANNEL= "TAPMAD";
+
+
+
+
 
 
 

@@ -39,7 +39,13 @@ public class FonePayOTPVerificationCommand extends BaseCommand {
                 ||this.getCommandParameter(baseWrapper,CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.BRANDVERSE_CHANNEL)
         ||this.getCommandParameter(baseWrapper,CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.ECOFIN_CHANNEL)
                 ||this.getCommandParameter(baseWrapper,CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.TELEMART_CHANNEL)
-        ||this.getCommandParameter(baseWrapper,CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.RAHPER_CHANNEL)){
+        ||this.getCommandParameter(baseWrapper,CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.RAHPER_CHANNEL)
+                ||this.getCommandParameter(baseWrapper,CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.GOLOOTLO_CHANNEL)
+                ||this.getCommandParameter(baseWrapper,CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.MARHAM_CHANNEL)
+                ||this.getCommandParameter(baseWrapper,CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.AIGENIX_CHANNEL)
+                ||this.getCommandParameter(baseWrapper,CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.VOUCH365_CHANNEL)
+                ||this.getCommandParameter(baseWrapper,CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.PUBLISHEX_CHANNEL)
+                ||this.getCommandParameter(baseWrapper,CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.TAPMAD_CHANNEL)){
             pin=ThirdPartyEncryptionUtil.decryptWithAES(XMLConstants.THIRD_PARTY_ENCRYPTION_KEY,pin);
         }
         else {

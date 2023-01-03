@@ -172,16 +172,16 @@
     </authz:authorize>
     <ec:row>
         <ec:column property="agentID" title="AGENT ID" escapeAutoFormat="true"/>
-        <ec:column property="segmentId" title="Segment ID" escapeAutoFormat="true"/>
-        <ec:column property="name" title="Segment Name" escapeAutoFormat="true"/>
-        <ec:column property="productId" title="Product ID" escapeAutoFormat="true"/>
-        <ec:column property="productName" title="Product Name" escapeAutoFormat="true"/>
-        <ec:column property="retailerId" title="Retailer ID" escapeAutoFormat="true"/>
-        <ec:column property="retailerContactId" title="Retailer Contact ID" escapeAutoFormat="true"/>
-        <ec:column property="createdOn" title="Created On" escapeAutoFormat="true"/>
-        <ec:column property="updatedOn" title="Updated On" escapeAutoFormat="true"/>
-        <ec:column property="createdBy" title="Created By" escapeAutoFormat="true"/>
-        <ec:column property="updatedBy" title="Updated By" escapeAutoFormat="true"/>
+        <ec:column property="segmentId" title="SEGMENT ID" escapeAutoFormat="true"/>
+        <ec:column property="name" title="SEGMENT NAME" escapeAutoFormat="true"/>
+        <ec:column property="productId" title="PRODUCT ID" escapeAutoFormat="true"/>
+        <ec:column property="productName" title="PRODUCT NAME" escapeAutoFormat="true"/>
+        <ec:column property="retailerId" title="RETAILER ID" escapeAutoFormat="true"/>
+        <ec:column property="retailerContactId" title="RETAILER CONTACT ID" escapeAutoFormat="true"/>
+        <ec:column property="createdOn" title="CREATED ON" escapeAutoFormat="true"/>
+        <ec:column property="updatedOn" title="Updated ON" escapeAutoFormat="true"/>
+        <ec:column property="createdBy" title="CREATED BY" escapeAutoFormat="true"/>
+        <ec:column property="updatedBy" title="UPDATED BY" escapeAutoFormat="true"/>
 
 
 

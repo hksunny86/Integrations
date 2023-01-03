@@ -41,7 +41,7 @@ public class WalletIncomingReqQueueListener implements MessageListener {
 
             logger.info("Message Recieved at WalletIncomingReqQueueListener... mobile no:" + ((messageVO != null) ? messageVO.getAccountNo2() : ""));
 
-            boolean isAlreadyDone = transactionReversalManager.checkAlreadySuccessful(messageVO.getStan(), messageVO.getRequestTime(),PortalConstants.IBFT_ADVICE_TYPE);
+            boolean isAlreadyDone = transactionReversalManager.checkAlreadySuccessful(messageVO.getStan(), messageVO.getRequestTime());
 
             if (isAlreadyDone) {
 

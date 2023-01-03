@@ -42,7 +42,7 @@ public interface TransactionReversalManager
 
     /*IBFT related stuff*/
     void saveNewIBFTRecord(MiddlewareAdviceVO messageVO) throws FrameworkCheckedException;
-    boolean checkAlreadySuccessful(String stan, Date requestTime, String portalConstant) throws FrameworkCheckedException;
+    boolean checkAlreadySuccessful(String stan, Date requestTime) throws FrameworkCheckedException;
     void updateIBFTStatus(String stan, Date requestTime, String status, String transactionCode) throws FrameworkCheckedException;
     void saveOrUpdateAccountOpeningStatus(String mobileNo, String cnic, Long accountOpeningStatus, Long isValid, String rrn, String responseCode) throws FrameworkCheckedException;
 	public SearchBaseWrapper findIBFTRetryAdviceListView(SearchBaseWrapper wrapper) throws FrameworkCheckedException;

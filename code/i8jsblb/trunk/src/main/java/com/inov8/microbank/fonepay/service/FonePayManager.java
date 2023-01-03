@@ -20,6 +20,8 @@ public interface FonePayManager {
 
 	public WebServiceVO makeExistingCustomerVerification(WebServiceVO webServiceVO);
 	public WebServiceVO verifyNewCustomer(WebServiceVO webServiceVO);
+	public WebServiceVO verifyLoginCustomer(WebServiceVO webServiceVO);
+
 	public WebServiceVO makeLinkDelinkAccount(WebServiceVO webServiceVO) throws FrameworkCheckedException;
 	public WebServiceVO makeVirtualCardTagging(WebServiceVO integrationMessageVO);
 	public CustomList<VirtualCardReportModel> searchCards(SearchBaseWrapper wrapper);

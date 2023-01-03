@@ -85,9 +85,9 @@ public class MfsAccountDetailsController extends AdvanceFormController {
             ex.printStackTrace();
         }
         req.setAttribute("veriflyRequired", veriflyRequired);
-
         Long id = null;
         if (null != appUserId && appUserId.trim().length() > 0) {
+//            id = new Long(EncryptionUtil.decryptForAppUserId(appUserId));
             BaseWrapper baseWrapper = new BaseWrapperImpl();
             AppUserModel appUserModel = new AppUserModel();
             appUserModel.setAppUserId(Long.valueOf(appUserId));
@@ -117,7 +117,6 @@ public class MfsAccountDetailsController extends AdvanceFormController {
             mfsAccountModel.setNicExpiryDate(appUserModel.getNicExpiryDate());
             mfsAccountModel.setCountry(appUserModel.getCountry());
             mfsAccountModel.setMotherMaidenName(appUserModel.getMotherMaidenName());
-
             mfsAccountModel.setAccountClosedUnsettled(appUserModel.getAccountClosedUnsettled());
             mfsAccountModel.setAccountClosedSettled(appUserModel.getAccountClosedSettled());
             if (null != appUserModel.getClosedByAppUserModel()) {
@@ -165,7 +164,7 @@ public class MfsAccountDetailsController extends AdvanceFormController {
 
                 req.setAttribute("isCustomerUSSDEnabled", isUssdEnabled);
 
-                CustomerPictureModel customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeIdAndStatus(
+                CustomerPictureModel customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeId(
                         PictureTypeConstants.CUSTOMER_PHOTO, customerModel.getCustomerId().longValue());
 
                 if (customerPictureModel != null && customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.CUSTOMER_PHOTO) {
@@ -193,97 +192,97 @@ public class MfsAccountDetailsController extends AdvanceFormController {
                     }
                 }
 
-                if(mfsAccountModel.getUsecaseId().equals(PortalConstants.MFS_ACCOUNT_UPDATE_USECASE_ID)){
-                    customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeIdAndStatus(
-                            PictureTypeConstants.PARENT_CNIC_SNAPSHOT, customerModel.getCustomerId().longValue());
-
-                    if (customerPictureModel != null && customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.PARENT_CNIC_SNAPSHOT) {
-                        if (customerPictureModel.getPicture() != null && customerPictureModel.getPicture().length > 1) {
-                            //Converting File bytes from db to input stream
-                            InputStream in = new ByteArrayInputStream(customerPictureModel.getPicture());
-                            ImageInputStream iis = ImageIO.createImageInputStream(in);
-
-                            Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(iis);
-                            String fileFormat = "";
-                            while (imageReaders.hasNext()) {
-                                ImageReader reader = (ImageReader) imageReaders.next();
-                                System.out.printf("formatName: %s%n", reader.getFormatName());
-                                fileFormat = reader.getFormatName();
-                            }
-                            //generating path for bytes to write on
-                            String filePath = getServletContext().getRealPath("images") + "/upload_dir/parentCnicPic_" + mfsAccountModel.getAppUserId() + "." + fileFormat;
-
-                            //String filePath = getServletContext().getRealPath("images")+"/upload_dir/cnicFrontPic_"+mfsAccountModel.getAppUserId()+".png";
-                            FileOutputStream fos = new FileOutputStream(filePath);
-                            fos.write(customerPictureModel.getPicture());
-                            fos.flush();
-                            fos.close();
-                            logger.info("Picture Extracted : " + filePath);
-                            mfsAccountModel.setParentCnicPicDiscrepant(customerPictureModel.getDiscrepant());
-                            mfsAccountModel.setParentCnicPicExt(fileFormat);
-                        }
-                    }
-
-                    customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeIdAndStatus(
-                            PictureTypeConstants.B_FORM_SNAPSHOT, customerModel.getCustomerId().longValue());
-
-                    if (customerPictureModel != null && customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.B_FORM_SNAPSHOT) {
-                        if (customerPictureModel.getPicture() != null && customerPictureModel.getPicture().length > 1) {
-                            //Converting File bytes from db to input stream
-                            InputStream in = new ByteArrayInputStream(customerPictureModel.getPicture());
-                            ImageInputStream iis = ImageIO.createImageInputStream(in);
-
-                            Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(iis);
-                            String fileFormat = "";
-                            while (imageReaders.hasNext()) {
-                                ImageReader reader = (ImageReader) imageReaders.next();
-                                System.out.printf("formatName: %s%n", reader.getFormatName());
-                                fileFormat = reader.getFormatName();
-                            }
-                            //generating path for bytes to write on
-                            String filePath = getServletContext().getRealPath("images") + "/upload_dir/bFormPic_" + mfsAccountModel.getAppUserId() + "." + fileFormat;
-
-                            //String filePath = getServletContext().getRealPath("images")+"/upload_dir/cnicFrontPic_"+mfsAccountModel.getAppUserId()+".png";
-                            FileOutputStream fos = new FileOutputStream(filePath);
-                            fos.write(customerPictureModel.getPicture());
-                            fos.flush();
-                            fos.close();
-                            logger.info("Picture Extracted : " + filePath);
-                            mfsAccountModel.setbFormPicDiscrepant(customerPictureModel.getDiscrepant());
-                            mfsAccountModel.setbFormPicExt(fileFormat);
-                        }
-                    }
-
-                    customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeIdAndStatus(
-                            PictureTypeConstants.PARENT_CNIC_BACK_SNAPSHOT, customerModel.getCustomerId().longValue());
-
-                    if (customerPictureModel != null && customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.PARENT_CNIC_BACK_SNAPSHOT) {
-                        if (customerPictureModel.getPicture() != null && customerPictureModel.getPicture().length > 1) {
-                            //Converting File bytes from db to input stream
-                            InputStream in = new ByteArrayInputStream(customerPictureModel.getPicture());
-                            ImageInputStream iis = ImageIO.createImageInputStream(in);
-
-                            Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(iis);
-                            String fileFormat = "";
-                            while (imageReaders.hasNext()) {
-                                ImageReader reader = (ImageReader) imageReaders.next();
-                                System.out.printf("formatName: %s%n", reader.getFormatName());
-                                fileFormat = reader.getFormatName();
-                            }
-                            //generating path for bytes to write on
-                            String filePath = getServletContext().getRealPath("images") + "/upload_dir/parentCnicBackPic_" + mfsAccountModel.getAppUserId() + "." + fileFormat;
-
-                            //String filePath = getServletContext().getRealPath("images")+"/upload_dir/cnicFrontPic_"+mfsAccountModel.getAppUserId()+".png";
-                            FileOutputStream fos = new FileOutputStream(filePath);
-                            fos.write(customerPictureModel.getPicture());
-                            fos.flush();
-                            fos.close();
-                            logger.info("Picture Extracted : " + filePath);
-                            mfsAccountModel.setParentCnicBackPicDiscrepant(customerPictureModel.getDiscrepant());
-                            mfsAccountModel.setParentCnicBackPicExt(fileFormat);
-                        }
-                    }
-                }
+//                if(mfsAccountModel.getUsecaseId()!=null&&mfsAccountModel.getUsecaseId().equals(PortalConstants.MFS_ACCOUNT_UPDATE_USECASE_ID)){
+//                    customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeIdAndStatus(
+//                            PictureTypeConstants.PARENT_CNIC_SNAPSHOT, customerModel.getCustomerId().longValue());
+//
+//                    if (customerPictureModel != null && customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.PARENT_CNIC_SNAPSHOT) {
+//                        if (customerPictureModel.getPicture() != null && customerPictureModel.getPicture().length > 1) {
+//                            //Converting File bytes from db to input stream
+//                            InputStream in = new ByteArrayInputStream(customerPictureModel.getPicture());
+//                            ImageInputStream iis = ImageIO.createImageInputStream(in);
+//
+//                            Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(iis);
+//                            String fileFormat = "";
+//                            while (imageReaders.hasNext()) {
+//                                ImageReader reader = (ImageReader) imageReaders.next();
+//                                System.out.printf("formatName: %s%n", reader.getFormatName());
+//                                fileFormat = reader.getFormatName();
+//                            }
+//                            //generating path for bytes to write on
+//                            String filePath = getServletContext().getRealPath("images") + "/upload_dir/parentCnicPic_" + mfsAccountModel.getAppUserId() + "." + fileFormat;
+//
+//                            //String filePath = getServletContext().getRealPath("images")+"/upload_dir/cnicFrontPic_"+mfsAccountModel.getAppUserId()+".png";
+//                            FileOutputStream fos = new FileOutputStream(filePath);
+//                            fos.write(customerPictureModel.getPicture());
+//                            fos.flush();
+//                            fos.close();
+//                            logger.info("Picture Extracted : " + filePath);
+//                            mfsAccountModel.setParentCnicPicDiscrepant(customerPictureModel.getDiscrepant());
+//                            mfsAccountModel.setParentCnicPicExt(fileFormat);
+//                        }
+//                    }
+//
+//                    customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeIdAndStatus(
+//                            PictureTypeConstants.B_FORM_SNAPSHOT, customerModel.getCustomerId().longValue());
+//
+//                    if (customerPictureModel != null && customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.B_FORM_SNAPSHOT) {
+//                        if (customerPictureModel.getPicture() != null && customerPictureModel.getPicture().length > 1) {
+//                            //Converting File bytes from db to input stream
+//                            InputStream in = new ByteArrayInputStream(customerPictureModel.getPicture());
+//                            ImageInputStream iis = ImageIO.createImageInputStream(in);
+//
+//                            Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(iis);
+//                            String fileFormat = "";
+//                            while (imageReaders.hasNext()) {
+//                                ImageReader reader = (ImageReader) imageReaders.next();
+//                                System.out.printf("formatName: %s%n", reader.getFormatName());
+//                                fileFormat = reader.getFormatName();
+//                            }
+//                            //generating path for bytes to write on
+//                            String filePath = getServletContext().getRealPath("images") + "/upload_dir/bFormPic_" + mfsAccountModel.getAppUserId() + "." + fileFormat;
+//
+//                            //String filePath = getServletContext().getRealPath("images")+"/upload_dir/cnicFrontPic_"+mfsAccountModel.getAppUserId()+".png";
+//                            FileOutputStream fos = new FileOutputStream(filePath);
+//                            fos.write(customerPictureModel.getPicture());
+//                            fos.flush();
+//                            fos.close();
+//                            logger.info("Picture Extracted : " + filePath);
+//                            mfsAccountModel.setbFormPicDiscrepant(customerPictureModel.getDiscrepant());
+//                            mfsAccountModel.setbFormPicExt(fileFormat);
+//                        }
+//                    }
+//
+//                    customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeIdAndStatus(
+//                            PictureTypeConstants.PARENT_CNIC_BACK_SNAPSHOT, customerModel.getCustomerId().longValue());
+//
+//                    if (customerPictureModel != null && customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.PARENT_CNIC_BACK_SNAPSHOT) {
+//                        if (customerPictureModel.getPicture() != null && customerPictureModel.getPicture().length > 1) {
+//                            //Converting File bytes from db to input stream
+//                            InputStream in = new ByteArrayInputStream(customerPictureModel.getPicture());
+//                            ImageInputStream iis = ImageIO.createImageInputStream(in);
+//
+//                            Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(iis);
+//                            String fileFormat = "";
+//                            while (imageReaders.hasNext()) {
+//                                ImageReader reader = (ImageReader) imageReaders.next();
+//                                System.out.printf("formatName: %s%n", reader.getFormatName());
+//                                fileFormat = reader.getFormatName();
+//                            }
+//                            //generating path for bytes to write on
+//                            String filePath = getServletContext().getRealPath("images") + "/upload_dir/parentCnicBackPic_" + mfsAccountModel.getAppUserId() + "." + fileFormat;
+//
+//                            //String filePath = getServletContext().getRealPath("images")+"/upload_dir/cnicFrontPic_"+mfsAccountModel.getAppUserId()+".png";
+//                            FileOutputStream fos = new FileOutputStream(filePath);
+//                            fos.write(customerPictureModel.getPicture());
+//                            fos.flush();
+//                            fos.close();
+//                            logger.info("Picture Extracted : " + filePath);
+//                            mfsAccountModel.setParentCnicBackPicDiscrepant(customerPictureModel.getDiscrepant());
+//                            mfsAccountModel.setParentCnicBackPicExt(fileFormat);
+//                        }
+//                    }
+//                }
                 /**
                  * End
                  * *******************************************************************************************************
@@ -391,7 +390,7 @@ public class MfsAccountDetailsController extends AdvanceFormController {
                 }
 
 
-                customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeIdAndStatus(
+                customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeId(
                         PictureTypeConstants.ID_FRONT_SNAPSHOT, customerModel.getCustomerId().longValue());
 
                 if (customerPictureModel != null && customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.ID_FRONT_SNAPSHOT) {
@@ -453,7 +452,7 @@ public class MfsAccountDetailsController extends AdvanceFormController {
 //                }
 
 
-                customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeIdAndStatus(
+                customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeId(
                         PictureTypeConstants.ID_BACK_SNAPSHOT, customerModel.getCustomerId().longValue());
 
                 if (customerPictureModel != null && customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.ID_BACK_SNAPSHOT) {
@@ -726,8 +725,9 @@ public class MfsAccountDetailsController extends AdvanceFormController {
                 }
                 if (appUserModel.getRegistrationStateId() != null)
                     mfsAccountModel.setRegistrationStateId(appUserModel.getRegistrationStateId());
-                UserDeviceAccountsModel deviceAccountModel = this.mfsAccountManager.getDeviceAccountByAppUserId(id, DeviceTypeConstantsInterface.MOBILE);
+                UserDeviceAccountsModel deviceAccountModel = this.mfsAccountManager.getDeviceAccountByAppUserId(Long.valueOf(appUserId), DeviceTypeConstantsInterface.MOBILE);
                 if (deviceAccountModel != null && deviceAccountModel.getUserDeviceAccountsId() != null) {
+
                     // Set Device Account ID
                     mfsAccountModel.setCustomerId(deviceAccountModel.getUserId());
                     req.setAttribute("deviceAccId", deviceAccountModel.getUserDeviceAccountsId());

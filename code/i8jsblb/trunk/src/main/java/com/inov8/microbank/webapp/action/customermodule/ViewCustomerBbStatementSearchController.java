@@ -158,7 +158,8 @@ public class ViewCustomerBbStatementSearchController extends BaseFormSearchContr
 		     	
 		      BaseWrapper baseWrapper = new BaseWrapperImpl();
 		      AppUserModel appUserModel = new AppUserModel();
-	          appUserModel.setAppUserId(Long.valueOf(EncryptionUtil.decryptForAppUserId( appUserId)));
+//	          appUserModel.setAppUserId(Long.valueOf(EncryptionUtil.decryptForAppUserId( appUserId)));
+				appUserModel.setAppUserId(Long.valueOf(appUserId));
 	          baseWrapper.setBasePersistableModel(appUserModel);
 		      baseWrapper = this.mfsAccountManager.searchAppUserByPrimaryKey(baseWrapper);
 		      
@@ -169,8 +170,10 @@ public class ViewCustomerBbStatementSearchController extends BaseFormSearchContr
 		      CustomerModel customerModel = appUserModel.getCustomerIdCustomerModel();
 
 		      if(customerModel != null){		    	 
-			      UserDeviceAccountsModel deviceAccountModel = this.mfsAccountManager.getDeviceAccountByAppUserId(Long.valueOf(EncryptionUtil.decryptForAppUserId( appUserId)),DeviceTypeConstantsInterface.MOBILE);
-		    	  if(deviceAccountModel != null && deviceAccountModel.getUserDeviceAccountsId() != null){ 
+//			      UserDeviceAccountsModel deviceAccountModel = this.mfsAccountManager.getDeviceAccountByAppUserId(Long.valueOf(EncryptionUtil.decryptForAppUserId( appUserId)),DeviceTypeConstantsInterface.MOBILE);
+				  UserDeviceAccountsModel deviceAccountModel = this.mfsAccountManager.getDeviceAccountByAppUserId(Long.valueOf(appUserId),DeviceTypeConstantsInterface.MOBILE);
+
+				  if(deviceAccountModel != null && deviceAccountModel.getUserDeviceAccountsId() != null){
 		    		  customerId=deviceAccountModel.getUserId(); 
 		    	  }			     
 		    	  customerName=customerModel.getName();		    			    	  		   
@@ -237,10 +240,10 @@ public class ViewCustomerBbStatementSearchController extends BaseFormSearchContr
 
         String appUserIdEncrypted = ServletRequestUtils.getRequiredStringParameter(request, "appUserId");
         String appUserIdDecrypted =  appUserIdEncrypted ;
-        Long appUserId = null;
+		Long appUserId = null;
         if(null != appUserIdDecrypted && !"".equals(appUserIdDecrypted)){
-        appUserId = Long.valueOf(EncryptionUtil.decryptForAppUserId( appUserIdDecrypted) );
-        customerBbStatementViewModel.setAppUserId( appUserId );
+        appUserId = Long.valueOf(appUserIdEncrypted);
+        customerBbStatementViewModel.setAppUserId(appUserId);
         }
 
 		String accountType = ServletRequestUtils.getRequiredStringParameter(request, "paymentModeId");

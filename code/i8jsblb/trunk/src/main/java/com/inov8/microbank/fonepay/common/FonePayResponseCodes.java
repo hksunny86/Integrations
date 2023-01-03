@@ -124,4 +124,10 @@ public interface FonePayResponseCodes {
     String CUSTOMER_EMAIL_ADDRESS_ALREADY_EXISTS = "161"; //CNIC is already in use as a customer
     String AMA_CHANNEL = "25"; //This response code is set for account opening via AMA channel
     String DEBIT_BLOCKED="26";
+    String FINGER_DOES_NOT_EXIT="111";
+    String NADRA_FINGER_EXAUST_ERROR="118";
+    String INVALID_INPUT_FINGER_TEMPLETE="120";
+    String FINGER_PRINT_NOT_MATCHED="121";
+    String INVALID_FINGER_INDEX="122";
+    String INVALID_FINGER_TEMPLETE_TYPE="123";
 }

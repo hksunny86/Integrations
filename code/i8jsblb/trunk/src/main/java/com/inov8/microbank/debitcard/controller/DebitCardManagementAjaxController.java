@@ -14,6 +14,7 @@ import com.inov8.microbank.common.model.portal.authorizationmodule.ActionAuthori
 import com.inov8.microbank.common.util.CommandFieldConstants;
 import com.inov8.microbank.common.util.MessageUtil;
 import com.inov8.microbank.common.util.StringUtil;
+import com.inov8.microbank.common.util.UserUtils;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapper;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapperImpl;
 import com.inov8.microbank.debitcard.model.DebitCardModel;
@@ -76,6 +77,8 @@ public class DebitCardManagementAjaxController extends AjaxController {
                             debitCardModel.setCardStatusId(CardConstantsInterface.CARD_STATUS_APPROVED);
                             debitCardModel.setUpdatedOn(new Date());
                             debitCardModel.setIsApproved("1");
+                            debitCardModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+                            debitCardModel.setCheckedById(UserUtils.getCurrentUser().getAppUserId());
                             debitCardModel.setApprovedOn(new Date());
                             commonCommandManager.getDebitCardModelDao().saveOrUpdate(debitCardModel);
                             msgToText = MessageUtil.getMessage("debit.card.req.successful");
@@ -121,6 +124,7 @@ public class DebitCardManagementAjaxController extends AjaxController {
                         debitCardModel.setApprovedOn(new Date());
                         debitCardModel.setCardStatusId(CardConstantsInterface.CARD_STATUS_APPROVED);
                         debitCardModel.setUpdatedOn(new Date());
+                        debitCardModel.setCheckedById(UserUtils.getCurrentUser().getAppUserId());
                         commonCommandManager.getDebitCardModelDao().saveOrUpdate(debitCardModel);
                         msgToText = MessageUtil.getMessage("debit.card.req.successful");
                     }

@@ -69,7 +69,7 @@ public class CustomerBillPaymentsInfoCommand extends BaseCommand {
     protected String commissionAmount;
 
     protected String billAmount;
-    I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
+    I8SBSwitchControllerResponseVO responseVO = null;
 
     public CustomerBillPaymentsInfoCommand() {
 

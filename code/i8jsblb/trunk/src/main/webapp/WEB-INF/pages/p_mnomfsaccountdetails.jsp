@@ -900,6 +900,60 @@
         />
         <!--Ahsan Raza End-->
 
+        <!--UnBlock JS Wallet Device-->
+
+        <c:choose>
+            <c:when test="${mfsAccountModel.deviceStatus==('UN-Locked')}">
+                <input type="button" class="button" value="UnBlock JS Wallet Device"
+                       id="btn_unblockjswallet${isCustomerUSSDEnabled}"  disabled="disabled"/>
+            </c:when>
+            <c:otherwise>
+                <input type="button" class="button" value="UnBlock JS Wallet Device"
+                       id="btn_unblockjswallet${isCustomerUSSDEnabled}"/>
+            </c:otherwise>
+        </c:choose>
+        <input type="hidden" value="${param.appUserId}" name="appUser${param.appUserId}"
+               id="appUser${param.appUserId}"/>
+        <ajax:htmlContent baseUrl="${contextPath}/unBlockJsWallet.html"
+                          eventType="click"
+                          source="btn_unblockjswallet${isCustomerUSSDEnabled}"
+                          target="successMsg"
+                          parameters="appUserId={appUser${param.appUserId}},mfsId=${mfsAccountModel.mfsId},isEnabled=${isCustomerUSSDEnabled},customerAppUserId=${param.appUserId}"
+                          errorFunction="globalAjaxErrorFunction"
+                          preFunction="initProgress"
+                          postFunction="resetProgressWebService"
+        />
+
+        <!--UnBlock JS Wallet Device-->
+
+
+
+        <!--UnBlock JS Wallet Device-->
+
+        <c:choose>
+            <c:when test="${isCustomerUSSDEnabled}">
+                <input type="button" class="button" value="UnBlock Zindigi Device"
+                       id="btn_unblockzindigi${isCustomerUSSDEnabled}"/>
+            </c:when>
+            <c:otherwise>
+                <input type="button" class="button" value="UnBlock Zindigi Device"
+                       id="btn_unblockzindigi${isCustomerUSSDEnabled}"/>
+            </c:otherwise>
+        </c:choose>
+        <input type="hidden" value="${param.appUserId}" name="appUser${param.appUserId}"
+               id="appUser${param.appUserId}"/>
+        <ajax:htmlContent baseUrl="${contextPath}/unBlockZindigi.html"
+                          eventType="click"
+                          source="btn_unblockzindigi${isCustomerUSSDEnabled}"
+                          target="successMsg"
+                          parameters="appUserId={appUser${param.appUserId}},mfsId=${mfsAccountModel.mfsId},isEnabled=${isCustomerUSSDEnabled},customerAppUserId=${param.appUserId}"
+                          errorFunction="globalAjaxErrorFunction"
+                          preFunction="initProgress"
+                          postFunction="resetProgressWebService"
+        />
+
+        <!--UnBlock JS Wallet Device-->
+
         <c:choose>
             <c:when test="${isCustomerUSSDEnabled}">
                 <input type="button" class="button" value="Disable Customer USSD"
@@ -1084,6 +1138,11 @@
                             Seen:
                         </td>
                         <td width="60%" align="left" bgcolor="FBFBFB">Yes</td>
+                    </tr>
+
+                    <tr>
+                        <td width="40%" height="32" align="right" bgcolor="F3F3F3" class="formText">Device Status:</td>
+                        <td width="60%" align="left" bgcolor="FBFBFB">${mfsAccountModel.deviceStatus}</td>
                     </tr>
                 </table>
             </fieldset>

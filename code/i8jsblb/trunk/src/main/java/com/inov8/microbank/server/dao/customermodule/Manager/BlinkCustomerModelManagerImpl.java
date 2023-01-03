@@ -12,6 +12,8 @@ import com.inov8.framework.common.wrapper.SearchBaseWrapper;
 import com.inov8.microbank.common.model.BlinkCustomerModel;
 import com.inov8.microbank.server.dao.customermodule.BlinkCustomerModelDAO;
 
+import java.util.List;
+
 public class BlinkCustomerModelManagerImpl implements BlinkCustomerModelManager{
 private BlinkCustomerModelDAO blinkCustomerModelDAO;
 
@@ -23,6 +25,11 @@ private BlinkCustomerModelDAO blinkCustomerModelDAO;
             searchBaseWrapper.setCustomList(list);
         }
         return searchBaseWrapper;
+    }
+
+    @Override
+    public List<BlinkCustomerModel> loadAllClsPendingBlinkCustomer() throws FrameworkCheckedException {
+        return null;
     }
 
 

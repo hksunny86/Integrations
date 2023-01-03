@@ -266,7 +266,7 @@
 					url = 'p-updatefranchiseauthorizationdetailform.html?actionAuthorizationId='+actionAuthorizationId+'&escalateRequest=true&resolveRequest=false';	
 				else if (usecaseId ==<%=PortalConstants.MFS_ACCOUNT_CREATE_USECASE_ID%>)
 					url = 'p-createcustomerauthorizationdetail.html?actionAuthorizationId='+actionAuthorizationId+'&escalateRequest=true&resolveRequest=false';	
-				else if (usecaseId ==<%=PortalConstants.MFS_ACCOUNT_UPDATE_USECASE_ID%>)
+				else if (usecaseId ==<%=PortalConstants.MFS_ACCOUNT_UPDATE_USECASE_ID%> || usecaseId ==<%=PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID%>)
 					url = 'p-updatecustomerauthorizationdetail.html?actionAuthorizationId='+actionAuthorizationId+'&escalateRequest=true&resolveRequest=false';	
 				else if (usecaseId ==<%=PortalConstants.UPDATE_ACCOUNT_TO_BLINK_USECASE_ID%>)
 					url = 'p-updatecustomerauthorizationdetail.html?actionAuthorizationId='+actionAuthorizationId+'&escalateRequest=true&resolveRequest=false';

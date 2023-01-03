@@ -19,7 +19,8 @@
     </facet>
     <facet type="Spring" name="Spring">
       <configuration>
-        <fileset id="fileset2" name="Spring Application Context (2)" removed="false">
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/export-zip-1.0-SNAPSHOT.jar!/applicationContext-export.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/action-servlet.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-accounttypemodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-actionlogmodule.xml</file>
@@ -41,11 +42,14 @@
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-authorizationmodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-availablepaymentmodesmodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-bankmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-blbnewreportsmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-blbreportsmodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-bookmetransactiondetailmodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-bulkdisbursement.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-changemobilemodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-changepasswordmodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-chargebackmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-chequebookstatusmodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-clspendingblinkcustomermodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-collectionpaymentmodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-commandmodule.xml</file>
@@ -57,6 +61,7 @@
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-configuration.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-coretowalletmodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-creditmodule.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-creditPaymentmodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-currencycodemodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-customerdisputemodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-customermodule.xml</file>
@@ -67,7 +72,6 @@
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-digidormancyaccount.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-disbursement.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-distributormodule.xml</file>
-          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-ecofinmodule.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-escalateinov8module.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-esctoinov8.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/applicationContext-export.xml</file>
@@ -160,15 +164,6 @@
         </fileset>
       </configuration>
     </facet>
-    <facet type="jpa" name="JPA">
-      <configuration>
-        <setting name="validation-enabled" value="true" />
-        <datasource-mapping>
-          <factory-entry name="Entities" />
-        </datasource-mapping>
-        <naming-strategy-map />
-      </configuration>
-    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -182,7 +177,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="javax.ejb" level="project" />
+    <orderEntry type="library" name="itextpdf-5.0.6" level="project" />
     <orderEntry type="library" name="activation-1.1" level="project" />
   </component>
 </module>

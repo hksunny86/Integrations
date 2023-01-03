@@ -185,6 +185,24 @@ public class ESBAdapter {
         return requestVO;
     }
 
+
+    public static I8SBSwitchControllerRequestVO prepareCustomerDeviceVerificationRequest(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_CUSTOMER_DEVICE_VERIFICATION);
+        requestVO.setRequestType(requestType);
+
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+        requestVO.setSTAN(String.valueOf((100000 + new Random().nextInt(900000))));
+        requestVO.setRRN(requestVO.getSTAN() + requestVO.getTransmissionDateAndTime());
+
+        logCompleteObject("I8SB Device Verification Customer - params", requestVO);
+
+        return requestVO;
+    }
+
+
     //getAssessmentDetails
     public static I8SBSwitchControllerRequestVO prepareGetAssessmentDetailsRequest(String vehicleRegNo, String chesisNo, String mobileNo, String bankMnemonic) {
 

@@ -578,7 +578,7 @@ public class DebitCardManagerImpl implements DebitCardManager {
                     DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
                     String dateStr = null;
 
-                    dateStr = format.format(date);
+//                    dateStr = format.format(date);
 
                     model.setLastInstallmentDateForIssuance(new Date());
                     model.setNewInstallmentDateForIssuance(startDate);
@@ -592,7 +592,7 @@ public class DebitCardManagerImpl implements DebitCardManager {
                     DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
                     String dateStr = null;
 
-                    dateStr = format.format(date);
+//                    dateStr = format.format(date);
 
                     model.setLastInstallmentDateForIssuance(new Date());
                     model.setNoOfInstallments(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments());
@@ -639,7 +639,7 @@ public class DebitCardManagerImpl implements DebitCardManager {
                     DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
                     String dateStr = null;
 
-                    dateStr = format.format(date);
+//                    dateStr = format.format(date);
 
                     model.setLastInstallmentDateForReIssuance(new Date());
 //                    model.setNewInstallmentDateForReIssuance(startDate);

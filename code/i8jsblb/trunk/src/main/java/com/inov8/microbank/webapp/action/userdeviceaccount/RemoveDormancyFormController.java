@@ -142,6 +142,7 @@ public class RemoveDormancyFormController extends AdvanceFormController {
             {
                 smartMoneyAccountModel.setRegistrationStateId(appUserModel.getRegistrationStateId());
                 smartMoneyAccountModel.setPreviousRegStateId(appUserModel.getPrevRegistrationStateId());
+                smartMoneyAccountModel.setComments(comments);
             }
             SmartMoneyAccountVO smartMoneyAccountVO = this.convertModelToVO(smartMoneyAccountModel);
             //
@@ -282,6 +283,7 @@ public class RemoveDormancyFormController extends AdvanceFormController {
         smartMoneyAccountVO.setPrevRegistrationStateId(smartMoneyAccountModel.getRegistrationStateId());
         smartMoneyAccountVO.setRegistrationStateId(smartMoneyAccountModel.getPreviousRegStateId());
         smartMoneyAccountVO.setAccountStateId(AccountStateConstantsInterface.ACCOUNT_STATE_COLD);
+        smartMoneyAccountVO.setComments(smartMoneyAccountModel.getComments());
         return smartMoneyAccountVO;
     }
 }

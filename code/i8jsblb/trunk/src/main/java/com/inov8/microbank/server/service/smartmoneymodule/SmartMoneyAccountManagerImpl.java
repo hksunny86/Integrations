@@ -462,6 +462,7 @@ public class SmartMoneyAccountManagerImpl
     smartMoneyAccountModel.setRegistrationStateId(smartMoneyAccountVO.getRegistrationStateId());
     smartMoneyAccountModel.setPreviousRegStateId(RegistrationStateConstantsInterface.DORMANT);
     smartMoneyAccountModel.setAccountStateId(smartMoneyAccountVO.getAccountStateId());
+    smartMoneyAccountModel.setComments(smartMoneyAccountVO.getComments());
     //
     return smartMoneyAccountModel;
   }
@@ -485,6 +486,8 @@ public class SmartMoneyAccountManagerImpl
       }
       appUserModel.setRegistrationStateId(smartMoneyAccountModel.getRegistrationStateId());
       appUserModel.setPrevRegistrationStateId(RegistrationStateConstantsInterface.DORMANT);
+      appUserModel.setClosingComments(smartMoneyAccountVO.getComments());
+      appUserModel.setDormancyRemovedBy(UserUtils.getCurrentUser().getAppUserId());
       appUserModel.setDormancyRemovedOn(new Date());
       BaseWrapper appUserWrapper = new BaseWrapperImpl();
       appUserWrapper.setBasePersistableModel(appUserModel);

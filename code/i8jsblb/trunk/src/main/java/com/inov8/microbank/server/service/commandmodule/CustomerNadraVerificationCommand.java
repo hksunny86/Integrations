@@ -6,9 +6,7 @@ import com.inov8.framework.common.wrapper.BaseWrapperImpl;
 import com.inov8.integration.middleware.controller.NadraIntegrationController;
 import com.inov8.integration.vo.NadraIntegrationVO;
 import com.inov8.microbank.common.exception.CommandException;
-import com.inov8.microbank.common.model.AppUserModel;
-import com.inov8.microbank.common.model.RetailerContactModel;
-import com.inov8.microbank.common.model.TaxRegimeModel;
+import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.util.*;
 import com.inov8.microbank.server.service.mfsmodule.CommonCommandManager;
 
@@ -26,9 +24,9 @@ import static com.inov8.microbank.common.util.XMLConstants.*;
 /**
  * @author Abu Turab Munir
  * @Dated  April 12, 2016
- * @Description: purpose of the document is to check whether customer's mobile number and CNIC already exists in MicroBank or not, 
+ * @Description: purpose of the document is to check whether customer's mobile number and CNIC already exists in MicroBank or not,
  *               and fetch the details from NADRA regarding the customer's CNIC, Mobile and Thumb Impression
- * 
+ *
  */
 
 public class CustomerNadraVerificationCommand extends BaseCommand {
@@ -36,7 +34,7 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 			.getLog(CustomerNadraVerificationCommand.class);
 	protected AppUserModel appUserModel;
 	protected BaseWrapper preparedBaseWrapper;
-	
+
 	private String cMsisdn, cNic, cFingerIndex;
 	private String  customerRegistrationStateId;
 	private Date cnicExpiry;
@@ -54,11 +52,15 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 	private String templateType;
 	private String template;
 	private String isUpgradeAccount = "";
-	
+	private String productId = "";
+	private String remittanceType = "";
+	ProductModel productModel;
+	BaseWrapper baseWrapper;
+
 	public void prepare(BaseWrapper baseWrapper) {
 		if (this.logger.isDebugEnabled())
 			this.logger.debug("Start of CustomerNadraVerificationCommand.prepare()");
-		
+
 		this.cMsisdn = getCommandParameter(baseWrapper, "CMOB");
 		this.cNic = getCommandParameter(baseWrapper, "CNIC");
 		this.cFingerIndex = getCommandParameter(baseWrapper, "FINGER_INDEX");
@@ -66,10 +68,12 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 		this.template = getCommandParameter(baseWrapper, "FINGER_TEMPLATE");
 		this.templateType =getCommandParameter(baseWrapper, "TEMPLATE_TYPE");
 		this.isUpgradeAccount = this.getCommandParameter(baseWrapper,"IS_UPGRADE");
-		
+		this.productId = this.getCommandParameter(baseWrapper,"PID");
+		this.remittanceType = this.getCommandParameter(baseWrapper, CommandFieldConstants.KEY_REMITTANCE_TYPE);
+
 		iVo.setFranchiseeID(MessageUtil.getMessage("NadraFranchiseeID"));
 		iVo.setUserName(MessageUtil.getMessage("NadraUserName"));
-		
+
 		AppUserModel agentAppUserModel = ThreadLocalAppUser.getAppUserModel();
 		String areaName = getCommandParameter(baseWrapper,CommandFieldConstants.KEY_SENDER_CITY);
 
@@ -93,10 +97,14 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 		iVo.setPassword(MessageUtil.getMessage("NadraPassword"));
 		iVo.setAreaName(areaName);
 		iVo.setCitizenNumber(cNic);
+		iVo.setSecondaryCitizenNumber(cNic);
 		iVo.setContactNo(cMsisdn);
+		iVo.setSecondaryContactNo(cMsisdn);
 		iVo.setFingerIndex(cFingerIndex);
 		iVo.setFingerTemplate(template);
 		iVo.setTemplateType(templateType);
+		iVo.setRemittanceType(remittanceType);
+		iVo.setAreaName("Punjab");
 
 		this.preparedBaseWrapper = baseWrapper;
 		this.deviceTypeId = getCommandParameter(baseWrapper, "DTID");
@@ -110,7 +118,7 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 		if (this.logger.isDebugEnabled())
 			this.logger.debug("Start of CustomerNadraVerificationCommand.validate()");
 		ValidationErrors validationErrors = new ValidationErrors();
-		
+
 		/*if(this.thumbImpressionPath == null || !"".equals(this.thumbImpressionPath)){
 			this.thumbImpressionFile = new File(thumbImpressionPath);
 			if(!thumbImpressionFile.exists())
@@ -120,20 +128,20 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 				throw new CommandException(validationErrors.getErrors(),ErrorCodes.FILE_UPLOAD_ERROR,ErrorLevel.HIGH,new Throwable());
 			}
 		}*/
-		
+
 		validationErrors = ValidatorWrapper.doRequired(this.cMsisdn, validationErrors, "MSISDN");
 		validationErrors = ValidatorWrapper.doRequired(this.cNic, validationErrors, "CNIC");
 		validationErrors = ValidatorWrapper.doRequired(this.deviceTypeId, validationErrors, "Device Type");
 		validationErrors = ValidatorWrapper.doRequired(this.template, validationErrors, "Template");
 		validationErrors = ValidatorWrapper.doRequired(this.templateType, validationErrors, "Template Type");
-		
+
 		validationErrors = ValidatorWrapper.doValidateCNIC(this.cNic, validationErrors, "CNIC");
-		
+
 		if(validationErrors.hasValidationErrors())
-		{	
+		{
 			throw new CommandException(validationErrors.getErrors(),ErrorCodes.VALIDATION_ERROR,ErrorLevel.HIGH,new Throwable());
 		}
-		
+
 		if (this.logger.isDebugEnabled())
 			this.logger.debug("End of CustomerNadraVerificationCommand.validate()");
 	}
@@ -143,15 +151,15 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 	{
 		return new ValidationErrors();
 	}
-	
-	
+
+
 	public void execute() throws CommandException {
 		if (this.logger.isDebugEnabled())
 			this.logger.debug("Start of CustomerNadraVerificationCommand.execute()");
-		
+
 		String retVal = null;
 		this.commonCommandManager = getCommonCommandManager();
-		
+
 		messageSource = getMessageSource();
 
 		Long error_code = ErrorCodes.COMMAND_EXECUTION_ERROR;
@@ -166,43 +174,59 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 				// MSISDN is not Unique.
 				appUserId1 = appUserModel.getAppUserId();
 				appUserType = appUserModel.getAppUserTypeId();
-				
+
 				if (appUserType == UserTypeConstantsInterface.RETAILER.longValue()) { // Throw exception if MSISDN is of Retailers/Agents
 					throw new FrameworkCheckedException(messageSource.getMessage("checkCustomerExistanceCommand.MsisdnNotUnique",null, null));
 				}
 				else if(appUserModel.getRegistrationStateId().equals(RegistrationStateConstants.DECLINE) || appUserModel.getRegistrationStateId().equals(RegistrationStateConstants.REJECTED)) //added new check for decline to allow again for account opening May 02, 2016 - resending to server
 				{
-					flagMsisdn = true; //allow in decline/rejected state	
+					flagMsisdn = true; //allow in decline/rejected state
 				}
-			} 
-			else 
+			}
+			else
 			{ // MSISDN is Unique. Going to Check CNIC and Registration State.
 				flagCNic = isCNICUnique(this.cNic);
 				if(!flagCNic && isUpgradeAccount.equals(""))
 				{
 					appUserId1 = appUserModel.getAppUserId();
 					appUserType = appUserModel.getAppUserTypeId();
-					
+
 					if (appUserType == UserTypeConstantsInterface.RETAILER.longValue()) { // Throw exception if MSISDN is of Retailers/Agents
 						throw new FrameworkCheckedException(messageSource.getMessage("checkCustomerExistanceCommand.CnicNotUnique",null, null));
 					}
 					else if(appUserModel.getRegistrationStateId().equals(RegistrationStateConstants.DECLINE) || appUserModel.getRegistrationStateId().equals(RegistrationStateConstants.REJECTED)) //added new check for decline to allow again for account opening May 02, 2016 - resending to server
 					{
-						flagCNic = true; //allow in decline/rejected state	
+						flagCNic = true; //allow in decline/rejected state
 					}
 				}
-				
+
 			}
-			
+
 			if((flagCNic && flagMsisdn) || isUpgradeAccount.equals("1"))
 			{
-				iVo = this.getNadraIntegrationController().fingerPrintVerification(iVo);
+				if(productId != null && (productId.equals("50002") || productId.equals("50006"))){
+					iVo = this.getNadraIntegrationController().otcFingerPrintVerification(iVo);
+				}
+				else {
+					iVo = this.getNadraIntegrationController().fingerPrintVerification(iVo);
+				}
 				iVo.setContactNo(cMsisdn);
-				if(null == iVo.getResponseCode() || !iVo.getResponseCode().equals("100"))
-				{
-					throw new FrameworkCheckedException(messageSource
-					.getMessage(
-							"NADRA.noRecordFound",null, null)); 
+				if(null == iVo.getResponseCode() || !iVo.getResponseCode().equals("100")) {
+					if (iVo.getResponseCode().equals("111")) {
+						throw new FrameworkCheckedException(messageSource.getMessage("i8sb.response.payment.111", null, null));
+					} else if (iVo.getResponseCode().equals("118")) {
+						throw new FrameworkCheckedException(messageSource.getMessage("i8sb.response.payment.118", null, null));
+					} else if (iVo.getResponseCode().equals("120")) {
+						throw new FrameworkCheckedException(messageSource.getMessage("i8sb.response.payment.120", null, null));
+					} else if (iVo.getResponseCode().equals("121")) {
+						throw new FrameworkCheckedException(messageSource.getMessage("i8sb.response.payment.121", null, null));
+					} else if (iVo.getResponseCode().equals("122")) {
+						throw new FrameworkCheckedException(messageSource.getMessage("i8sb.response.payment.122", null, null));
+					} else if (iVo.getResponseCode().equals("123")) {
+						throw new FrameworkCheckedException(messageSource.getMessage("i8sb.response.payment.123", null, null));
+					} else {
+						throw new FrameworkCheckedException(messageSource.getMessage("NADRA.noRecordFound", null, null));
+					}
 				}
 			}
 			else
@@ -212,9 +236,29 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 								.getMessage(
 										"checkCustomerExistanceCommand.AlreadyRegistered",null, null));
 			}
-			
+
 		} catch (FrameworkCheckedException ex) {
-			error_code = ErrorCodes.INVALID_USER;
+			if(ex.getMessage().equals(MessageUtil.getMessage("i8sb.response.payment.111"))){
+				error_code = ErrorCodes.FINGER_NOT_EXIT;
+			}
+			else if(ex.getMessage().equals(MessageUtil.getMessage("i8sb.response.payment.118"))){
+				error_code = ErrorCodes.NADRA_FINGER_EXAUST_ERROR;
+			}
+			else if(ex.getMessage().equals(MessageUtil.getMessage("i8sb.response.payment.120"))){
+				error_code = ErrorCodes.INVALID_INPUT_FINGER_TEMPLETE;
+			}
+			else if(ex.getMessage().equals(MessageUtil.getMessage("i8sb.response.payment.121"))){
+				error_code = ErrorCodes.FINGER_NOT_MATCHED;
+			}
+			else if(ex.getMessage().equals(MessageUtil.getMessage("i8sb.response.payment.122"))){
+				error_code = ErrorCodes.INVALID_FINGER_INDEX;
+			}
+			else if(ex.getMessage().equals(MessageUtil.getMessage("i8sb.response.payment.123"))){
+				error_code = ErrorCodes.INVALID_FINGER_TEMPLETE_TYPE;
+			}
+			else {
+				error_code = ErrorCodes.INVALID_USER;
+			}
 			retVal = ex.getMessage();
 		} catch (Exception e) {
 			retVal = e.getMessage();
@@ -241,59 +285,59 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 		StringBuilder strBuilder = new StringBuilder();
 		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAMS)
 				.append(TAG_SYMBOL_CLOSE);
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_DEVICE_TYPE_ID)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.deviceTypeId).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
-			
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_CREG_STATE_ID)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.customerRegistrationStateId)
-					.append(TAG_SYMBOL_OPEN).append(TAG_SYMBOL_SLASH)
-					.append(TAG_PARAM).append(TAG_SYMBOL_CLOSE);
-					
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_CUSTOMER_MOBILE)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.iVo.getContactNo()).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
-					
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_CNIC)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.iVo.getCitizenNumber()).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
-					
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_BIRTH_PLACE)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.iVo.getBirthPlace()).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
-					
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_RESPONSE)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.iVo.getResponseCode()).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_DEVICE_TYPE_ID)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.deviceTypeId).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
+
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_CREG_STATE_ID)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.customerRegistrationStateId)
+				.append(TAG_SYMBOL_OPEN).append(TAG_SYMBOL_SLASH)
+				.append(TAG_PARAM).append(TAG_SYMBOL_CLOSE);
+
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_CUSTOMER_MOBILE)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.iVo.getContactNo()).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
+
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_CNIC)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.iVo.getCitizenNumber()).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
+
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_BIRTH_PLACE)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.iVo.getBirthPlace()).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
+
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_RESPONSE)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.iVo.getResponseCode()).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
 //
 //					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
 //					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
@@ -305,105 +349,105 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 //					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
 //					.append(TAG_SYMBOL_CLOSE);
 //
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_CNAME)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.iVo.getFullName()).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
-					
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_MOTHER_MAIDEN)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.iVo.getMotherName()).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_CNAME)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.iVo.getFullName()).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
 
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_CNIC_EXPIRY)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.iVo.getCardExpire()).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_MOTHER_MAIDEN)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.iVo.getMotherName()).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
 
-					
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_CDOB)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.iVo.getDateOfBirth()).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
-					
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_CNIC_STATUS)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.iVo.getCardExpire()).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
-					
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_PRESENT_ADDR)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.iVo.getPresentAddress()).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
-					
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_PERMANENT_ADDR)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(this.iVo.getPresentAddress()).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
-					
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_RETAKE_IMAGES)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(imageRetakeAllowed).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE);
-					
-					strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_MOBILE_UPDATE_ALLOWED)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(isMobileUpadetAllowed).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE)
-					
-					.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-					.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-					.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-					.append(CommandFieldConstants.KEY_INITIAL_DEPOSIT_REQUIRED)
-					.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-					.append(initialDepositAllowed).append(TAG_SYMBOL_OPEN)
-					.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-					.append(TAG_SYMBOL_CLOSE)
-		
-							.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
-							.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
-							.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
-							.append("GENDER")
-							.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
-							.append(iVo.getGender()).append(TAG_SYMBOL_OPEN)
-							.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
-							.append(TAG_SYMBOL_CLOSE);;
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_CNIC_EXPIRY)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.iVo.getCardExpire()).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
+
+
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_CDOB)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.iVo.getDateOfBirth()).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
+
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_CNIC_STATUS)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.iVo.getCardExpire()).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
+
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_PRESENT_ADDR)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.iVo.getPresentAddress()).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
+
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_PERMANENT_ADDR)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(this.iVo.getPresentAddress()).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
+
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_RETAKE_IMAGES)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(imageRetakeAllowed).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);
+
+		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_MOBILE_UPDATE_ALLOWED)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(isMobileUpadetAllowed).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE)
+
+				.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append(CommandFieldConstants.KEY_INITIAL_DEPOSIT_REQUIRED)
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(initialDepositAllowed).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE)
+
+				.append(TAG_SYMBOL_OPEN).append(TAG_PARAM)
+				.append(TAG_SYMBOL_SPACE).append(ATTR_PARAM_NAME)
+				.append(TAG_SYMBOL_EQUAL).append(TAG_SYMBOL_QUOTE)
+				.append("GENDER")
+				.append(TAG_SYMBOL_QUOTE).append(TAG_SYMBOL_CLOSE)
+				.append(iVo.getGender()).append(TAG_SYMBOL_OPEN)
+				.append(TAG_SYMBOL_SLASH).append(TAG_PARAM)
+				.append(TAG_SYMBOL_CLOSE);;
 
 		strBuilder.append(TAG_SYMBOL_OPEN).append(TAG_SYMBOL_SLASH)
 				.append(TAG_PARAMS).append(TAG_SYMBOL_CLOSE);
@@ -414,7 +458,7 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 
 		return strBuilder.toString();
 	}
-				
+
 
 
 	private boolean isMobileNumUnique(String mobileNo) {
@@ -447,7 +491,7 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 		return HttpInvokerUtil.getHttpInvokerFactoryBean(NadraIntegrationController.class,
 				MessageUtil.getMessage("NadraIntegrationURL"));
 	}
-	
+
 	private void populateNadraResponse(NadraIntegrationVO iVo){
 		this.iVo.setFullName("dummy name");
 		this.iVo.setBirthPlace("1");
@@ -459,6 +503,4 @@ public class CustomerNadraVerificationCommand extends BaseCommand {
 		this.iVo.setMotherName("Mama");
 		this.iVo.setResponseCode("100");
 	}
-
-	
 }

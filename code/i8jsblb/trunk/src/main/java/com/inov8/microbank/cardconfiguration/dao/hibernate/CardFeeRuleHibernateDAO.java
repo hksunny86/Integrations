@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 public class CardFeeRuleHibernateDAO extends BaseHibernateDAO<CardFeeRuleModel,Long,CardFeeRuleDAO>
-    implements CardFeeRuleDAO{
+        implements CardFeeRuleDAO{
 
     private JdbcTemplate jdbcTemplate;
 
@@ -67,14 +67,39 @@ public class CardFeeRuleHibernateDAO extends BaseHibernateDAO<CardFeeRuleModel,L
         sb.append(" AND SERVICE_OP_ID = ").append(cardFeeRuleModel.getMnoId());
         sb.append(" AND IS_DELETED=0 ");
         //if(cardFeeRuleModel.getSegmentId() != null)
-            sb.append(" AND (SEGMENT_ID IS NULL OR SEGMENT_ID = " + cardFeeRuleModel.getSegmentId() + " )");
+        sb.append(" AND (SEGMENT_ID IS NULL OR SEGMENT_ID = " + cardFeeRuleModel.getSegmentId() + " )");
 
         //if(cardFeeRuleModel.getDistributorId() != null)
-            sb.append(" AND (DISTRIBUTOR_ID IS NULL OR DISTRIBUTOR_ID = " + cardFeeRuleModel.getDistributorId() + " )");
+        sb.append(" AND (DISTRIBUTOR_ID IS NULL OR DISTRIBUTOR_ID = " + cardFeeRuleModel.getDistributorId() + " )");
 
         //if(null != cardFeeRuleModel.getAccountTypeId())
-            sb.append(" AND (ACCOUNT_TYPE_ID IS NULL OR ACCOUNT_TYPE_ID = " + cardFeeRuleModel.getAccountTypeId() + " )");
-            sb.append("ORDER BY CARD_TYPE_ID,CARD_FEE_TYPE_ID,SEGMENT_ID,DISTRIBUTOR_ID");
+        sb.append(" AND (ACCOUNT_TYPE_ID IS NULL OR ACCOUNT_TYPE_ID = " + cardFeeRuleModel.getAccountTypeId() + " )");
+        sb.append("ORDER BY CARD_TYPE_ID,CARD_FEE_TYPE_ID,SEGMENT_ID,DISTRIBUTOR_ID");
+
+        logger.info("Loading Debit Card Fee Rule with Criteria: " + sb.toString());
+        List<CardFeeRuleModel> list = (List<CardFeeRuleModel>) jdbcTemplate.query(sb.toString(),new CardFeeRuleModel());
+        if(!list.isEmpty())
+            return list.get(0);
+        return null;
+    }
+
+    @Override
+    public void saveCardFeeRuleModel(CardFeeRuleModel cardFeeRuleModel) throws FrameworkCheckedException {
+        String query = "UPDATE CARD_FEE_RULE set NO_OF_INSTALLMENTS ="+cardFeeRuleModel.getNoOfInstallments()
+                + " ,IS_INSTALLMENTS = " + 1L + ""
+                + " ,INSTALLMENT_PLAN = '" + cardFeeRuleModel.getInstallmentPlan() + "'"
+                + " ,INSTALLMENT_AMOUNT = " + cardFeeRuleModel.getInstallmentAmount() + ""
+                +" WHERE CARD_FEE_RULE_ID = " + cardFeeRuleModel.getCardFeeRuleId();
+
+        int updatedRows = this.getSession().createSQLQuery(query).executeUpdate();
+        this.getHibernateTemplate().flush();
+    }
+
+    @Override
+    public CardFeeRuleModel searchCardFeeRule(CardFeeRuleModel cardFeeRuleModel) throws FrameworkCheckedException {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("SELECT * FROM CARD_FEE_RULE WHERE CARD_FEE_RULE_ID= ").append(cardFeeRuleModel.getCardFeeRuleId());
 
         logger.info("Loading Debit Card Fee Rule with Criteria: " + sb.toString());
         List<CardFeeRuleModel> list = (List<CardFeeRuleModel>) jdbcTemplate.query(sb.toString(),new CardFeeRuleModel());

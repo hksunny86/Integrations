@@ -30,4 +30,7 @@ public interface DebitCardModelDAO extends BaseDAO<DebitCardModel,Long> {
     List<DebitCardModel> loadAllCardsOnReIssuanceRequired() throws FrameworkCheckedException;
 
     void updateDebitCardFeeDeductionDate(DebitCardModel model) throws FrameworkCheckedException;
+    void updateDebitCardFeeDeductionDateForAnnualFee(DebitCardModel model) throws FrameworkCheckedException;
+    void updateDebitCardFeeDeductionDateForReIssuanceFee(DebitCardModel model) throws FrameworkCheckedException;
+    void updateDebitCardFeeDeductionDateForIssuanceFee(DebitCardModel model) throws FrameworkCheckedException;
 }

@@ -108,11 +108,16 @@ public class RemoveDormancyFormController extends AdvanceFormController {
         try{
             // getting parameters from request
             Long appUserId = new Long(ServletRequestUtils.getStringParameter(httpServletRequest, "appUserId"));
+            String comments = ServletRequestUtils.getStringParameter(httpServletRequest, "closingComments");
             String acType= ServletRequestUtils.getStringParameter(httpServletRequest, "acType");
             Long paymentModeId=null;
 
             appUserModel=appUserManager.loadAppUser(appUserId);
             appUserModel.setAccountStateId(AccountStateConstantsInterface.ACCOUNT_STATE_COLD);
+            appUserModel.setClosingComments(comments);
+            appUserModel.setDormancyRemovedBy(UserUtils.getCurrentUser().getAppUserId());
+            appUserModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+            appUserModel.setUpdatedOn(new Date());
 
             if(acType.equals("HRA"))
                 paymentModeId= PaymentModeConstantsInterface.HOME_REMMITTANCE_ACCOUNT;
@@ -163,7 +168,7 @@ public class RemoveDormancyFormController extends AdvanceFormController {
                 }
                 else if(exp.getMessage().contains("Action authorization request already exist with  Action ID")){
                     httpServletRequest.setAttribute("message",exp.getMessage());
-                   // super.saveMessage(httpServletRequest,"authorization request already exist with  Action ID");
+                    // super.saveMessage(httpServletRequest,"authorization request already exist with  Action ID");
                 }
                 else if("notExists".equalsIgnoreCase(exp.getMessage()))
                 {

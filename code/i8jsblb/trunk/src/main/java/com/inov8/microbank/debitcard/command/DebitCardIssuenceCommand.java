@@ -83,7 +83,7 @@ public class DebitCardIssuenceCommand extends BaseCommand {
             cnic = ThreadLocalAppUser.getAppUserModel().getNic();
         } else {
 
-                agentAppUserModel = ThreadLocalAppUser.getAppUserModel();
+            agentAppUserModel = ThreadLocalAppUser.getAppUserModel();
 
         }
         fee = getCommandParameter(baseWrapper, CommandFieldConstants.KEY_AMOUNT);
@@ -137,7 +137,7 @@ public class DebitCardIssuenceCommand extends BaseCommand {
         return new ValidationErrors();
     }
 
-    private void executeIssuanceFee(String productId) throws CommandException {
+    private void executeIssuanceFee(String productId, BaseWrapper baseWrapper) throws CommandException {
         logger.info("Start of executeIssuanceFee() in DebitCardIssuanceCommand.execute() for Customer Mobile # :: " + mobileNo);
 
 //        Double cardFee = 0.0D;
@@ -154,9 +154,15 @@ public class DebitCardIssuenceCommand extends BaseCommand {
                         CardConstantsInterface.CARD_FEE_TYPE_ISSUANCE, Long.valueOf(cardTypeId), Long.parseLong(deviceTypeId), null);
             }
             else{
-                workFlowWrapper = getCommonCommandManager().calculateDebitCardFee(mobileNo, cnic, null, null, null,
+                workFlowWrapper = getCommonCommandManager().calculateDebitCardFeeForAPI(mobileNo, cnic, null, null, null,
                         Long.valueOf(productId),
-                        CardConstantsInterface.CARD_FEE_TYPE_ISSUANCE, Long.parseLong(deviceTypeId), null);
+                        CardConstantsInterface.CARD_FEE_TYPE_ISSUANCE,Long.valueOf(cardTypeId), Long.parseLong(deviceTypeId), null);
+            }
+
+            if(workFlowWrapper.getCardFeeRuleModel() != null && workFlowWrapper.getCardFeeRuleModel().getIsInstallments()) {
+                baseWrapper.putObject("cardFeeRuleModel", workFlowWrapper.getCardFeeRuleModel());
+                baseWrapper.putObject("noOfInstallments", workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments());
+                baseWrapper.putObject("isInstallments", workFlowWrapper.getCardFeeRuleModel().getIsInstallments());
             }
         }
         catch (CommandException ce) {
@@ -418,15 +424,15 @@ public class DebitCardIssuenceCommand extends BaseCommand {
                         e.printStackTrace();
                     }
                     if (retailerContactModel.getIsDebitCardFeeEnabled() != null && retailerContactModel.getIsDebitCardFeeEnabled()) {
-                        executeIssuanceFee(productId);
+                        executeIssuanceFee(productId, baseWrapper);
                     }
                 } else {
                     if (transactiontype.equals("02") && deviceTypeId.equals(DeviceTypeConstantsInterface.WEB_SERVICE.toString())) {
                         productId = ProductConstantsInterface.DEBIT_CARD_RE_ISSUANCE.toString();
-                        executeIssuanceFee(productId);
+                        executeIssuanceFee(productId, baseWrapper);
                     } else {
                         productId = ProductConstantsInterface.CUSTOMER_DEBIT_CARD_ISSUANCE.toString();
-                        executeIssuanceFee(productId);
+                        executeIssuanceFee(productId, baseWrapper);
                     }
                 }
                 try {
@@ -436,6 +442,7 @@ public class DebitCardIssuenceCommand extends BaseCommand {
                     DebitCardVO debitCardVO = this.prepareDebitCardIssuanceVO();
                     baseWrapper.setBasePersistableModel(debitCardVO);
                     baseWrapper.putObject("segmentId", segmentId);
+                    baseWrapper.putObject("productId", productId);
                     baseWrapper.putObject(CommandFieldConstants.KEY_TRANSACTION_TYPE, transactiontype);
                     baseWrapper = commonCommandManager.saveOrUpdateDebitCardIssuenceRequest(baseWrapper);
                 } catch (FrameworkCheckedException e) {
@@ -523,20 +530,20 @@ public class DebitCardIssuenceCommand extends BaseCommand {
                     e.printStackTrace();
                 }
                 if (retailerContactModel.getIsDebitCardFeeEnabled() != null && retailerContactModel.getIsDebitCardFeeEnabled()) {
-                    executeIssuanceFee(productId);
+                    executeIssuanceFee(productId, baseWrapper);
                 }
             }
             else if(appId.equals("1")){
                 productId = ProductConstantsInterface.CUSTOMER_DEBIT_CARD_ISSUANCE.toString();
-                executeIssuanceFee(productId);
+                executeIssuanceFee(productId, baseWrapper);
             }
             else {
                 if (transactiontype.equals("02") && deviceTypeId.equals(DeviceTypeConstantsInterface.WEB_SERVICE.toString())) {
                     productId = ProductConstantsInterface.DEBIT_CARD_RE_ISSUANCE.toString();
-                    executeIssuanceFee(productId);
+                    executeIssuanceFee(productId, baseWrapper);
                 } else {
                     productId = ProductConstantsInterface.CUSTOMER_DEBIT_CARD_ISSUANCE.toString();
-                    executeIssuanceFee(productId);
+                    executeIssuanceFee(productId, baseWrapper);
                 }
             }
             try {
@@ -545,6 +552,7 @@ public class DebitCardIssuenceCommand extends BaseCommand {
                 DebitCardVO debitCardVO = this.prepareDebitCardIssuanceVO();
                 baseWrapper.setBasePersistableModel(debitCardVO);
                 baseWrapper.putObject("segmentId", segmentId);
+                baseWrapper.putObject("productId", productId);
 //                String cardNo = debitCardVO.getCardNo();
                 baseWrapper.putObject("debitCardVo", debitCardVO);
                 baseWrapper.putObject(CommandFieldConstants.KEY_TRANSACTION_TYPE, transactiontype);

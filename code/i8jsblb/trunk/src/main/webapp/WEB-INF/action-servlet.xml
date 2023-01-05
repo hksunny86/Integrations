@@ -1605,9 +1605,9 @@
 				<prop key="/p_accountdormancyreport.html">accountDormancyReportController</prop>
 				<prop key="/p_expiredcnicreport.html">cnicExpiredReportController</prop>
 
-				<!--				<prop key="/p_debitcardannualfeeinstallments.html">-->
-				<!--					debitCardAnnualFeeInstallmentsController-->
-				<!--				</prop>-->
+								<prop key="/p_debitcardannualfeeinstallments.html">
+									debitCardAnnualFeeInstallmentsController
+								</prop>
 
 				<!--				blb new  ops reports-->
 
@@ -6761,12 +6761,12 @@
 		<property name="successView" value="debit-card/cardfeeconfiguration"/>
 	</bean>
 
-	<!--	<bean id="debitCardAnnualFeeInstallmentsController" class="com.inov8.microbank.cardconfiguration.controller.DebitCardAnnualFeeInstallmentsController"-->
-	<!--		  parent="baseFormSearchController" autowire="byName">-->
-	<!--		<property name="commonFacade" ref="commonFacade" />-->
-	<!--		<property name="formView" value="p_debitcardannualfeeinstallments"/>-->
-	<!--		<property name="successView" value="p_debitcardannualfeeinstallments"/>-->
-	<!--	</bean>-->
+		<bean id="debitCardAnnualFeeInstallmentsController" class="com.inov8.microbank.cardconfiguration.controller.DebitCardAnnualFeeInstallmentsController"
+			  parent="baseFormSearchController" autowire="byName">
+			<property name="commonFacade" ref="commonFacade" />
+			<property name="formView" value="p_debitcardannualfeeinstallments"/>
+			<property name="successView" value="p_debitcardannualfeeinstallments"/>
+		</bean>
 
 	<bean id="debitCardSchedulerController" class="com.inov8.microbank.debitcard.controller.DebitCardSchedulerController">
 		<property name="debitCardManager" ref="debitCardManager" />

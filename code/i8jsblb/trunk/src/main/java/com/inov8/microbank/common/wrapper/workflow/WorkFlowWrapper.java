@@ -1,6 +1,7 @@
 package com.inov8.microbank.common.wrapper.workflow;
 
 import com.inov8.framework.common.wrapper.BaseWrapper;
+import com.inov8.microbank.cardconfiguration.model.CardFeeRuleModel;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.bankmodule.MemberBankModel;
 import com.inov8.microbank.common.model.productdeviceflowmodule.ProductDeviceFlowListViewModel;
@@ -401,4 +402,7 @@ public interface WorkFlowWrapper extends BaseWrapper {
 
 	public void setConsumerNumber(String consumerNumber);
 	public String getConsumerNumber();
+
+	public void setCardFeeRuleModel(CardFeeRuleModel cardFeeRuleModel);
+	public CardFeeRuleModel getCardFeeRuleModel();
 }

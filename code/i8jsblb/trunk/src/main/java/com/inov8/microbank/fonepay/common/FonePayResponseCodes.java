@@ -60,10 +60,10 @@ public interface FonePayResponseCodes {
     String RDV_DOWN="134";
     String CONSUMER_NUMBER_INVALID="135";
 
-    String CUSTOMER_MOBILE_ALREADY_EXIST_AS_CUSTOMER = "67"; //Mobile No is already in use as a customer 
+    String CUSTOMER_MOBILE_ALREADY_EXIST_AS_CUSTOMER = "67"; //Mobile No is already in use as a customer
     String CUSTOMER_MOBILE_ALREADY_EXIST_AS_RETAILER = "68"; //Mobile No is already in use as a retailer
     String CUSTOMER_MOBILE_ALREADY_EXIST_AS_HANDLER = "69"; //Mobile No is already in use as a handler
-    
+
     String CUSTOMER_CNIC_ALREADY_EXIST_AS_CUSTOMER = "70"; //CNIC is already in use as a customer
     String CUSTOMER_CNIC_ALREADY_EXIST_AS_RETAILER = "71"; //CNIC is already in use as a retailer
     String CUSTOMER_CNIC_ALREADY_EXIST_AS_HANDLER = "72"; //CNIC is already in use as a handler
@@ -90,7 +90,7 @@ public interface FonePayResponseCodes {
     String INTERNATIONAL_TRANSACTION_NOT_ALLOWED_DESCRIPTION="Transaction Not Allowed For Level 1";
 
 
-            Long APIGEE_RRN_ALREADY_EXISTS = 88L;
+    Long APIGEE_RRN_ALREADY_EXISTS = 88L;
     String APIGEE_RRN_ALREADY_EXISTS_DESCRIPTION = "APIGEE RRN Already Exists.";
 
     String DAILY_DEBIT_LIMIT_BUSTED = "140" ;
@@ -124,6 +124,7 @@ public interface FonePayResponseCodes {
     String CUSTOMER_EMAIL_ADDRESS_ALREADY_EXISTS = "161"; //CNIC is already in use as a customer
     String AMA_CHANNEL = "25"; //This response code is set for account opening via AMA channel
     String DEBIT_BLOCKED="26";
+
     String FINGER_DOES_NOT_EXIT="111";
     String NADRA_FINGER_EXAUST_ERROR="118";
     String INVALID_INPUT_FINGER_TEMPLETE="120";

@@ -2412,7 +2412,7 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
 //                customerModel.setNicBackPicMakerComments(mfsAccountModel.getNicBackPicMakerComments());
 //                customerModel.setpNicBackPicMakerComments(mfsAccountModel.getpNicBackPicMakerComments());
 //            }
-                customerModel.setComments(mfsAccountModel.getComments());
+            customerModel.setComments(mfsAccountModel.getComments());
             if (mfsAccountModel.getCustomerAccountTypeId() != 53) {
                 //segment id update disable as per waqar-ul hassan and azher
 //                customerModel.setSegmentId(mfsAccountModel.getSegmentId());
@@ -4303,6 +4303,9 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
             appUserModel.setPrevRegistrationStateId(appUserModel.getRegistrationStateId());
             appUserModel.setRegistrationStateId(RegistrationStateConstantsInterface.VERIFIED);
             appUserModel.setDormancyRemovedOn(new Date());
+            appUserModel.setUpdatedOn(new Date());
+            appUserModel.setUpdatedBy(ThreadLocalAppUser.getAppUserModel().getAppUserId());
+            appUserModel.setDormancyRemovedBy(ThreadLocalAppUser.getAppUserModel().getAppUserId());
             this.appUserDAO.saveOrUpdate(appUserModel);
             smartMoneyAccountModel.setPreviousRegStateId(smartMoneyAccountModel.getRegistrationStateId());
             smartMoneyAccountModel.setRegistrationStateId(AccountStateConstantsInterface.ACCOUNT_STATE_COLD);

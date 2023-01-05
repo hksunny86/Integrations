@@ -932,7 +932,7 @@
 
 		<value>com.inov8.microbank.cardconfiguration.model.CardFeeTypeModel</value>
 		<value>com.inov8.microbank.cardconfiguration.model.CardFeeRuleModel</value>
-		<value>com.inov8.microbank.cardconfiguration.model.CardFeeRuleInstallmentModel</value>
+<!--		<value>com.inov8.microbank.cardconfiguration.model.CardFeeRuleInstallmentModel</value>-->
 
 		<value>com.inov8.microbank.common.model.TransactionReversalModel</value>
 		<value>com.inov8.microbank.common.model.AgentGroupChildrenViewModel</value>

@@ -1,5 +1,7 @@
 package com.inov8.microbank.server.service.commandmodule;
 
+import com.inov8.microbank.server.service.consumercommandmodule.CustomerSelfRegistrationBaseCommand;
+import com.inov8.microbank.server.service.consumercommandmodule.VerifyCustomerSelfRegistetrationCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.MessageSource;
@@ -15,7 +17,7 @@ import com.inov8.microbank.common.util.ErrorCodes;
 import com.inov8.microbank.common.util.ErrorLevel;
 import com.inov8.microbank.server.service.mfsmodule.CommonCommandManager;
 
-public class CommandManagerImpl implements CommandManager 
+public class CommandManagerImpl implements CommandManager
 {
 	private CommonCommandManager commonCommandManager;
 	private MessageSource messageSource;
@@ -23,9 +25,9 @@ public class CommandManagerImpl implements CommandManager
 	private int maxTimeForAttempts;
 	private static OperatorModel operatorModel;
 
-	
+
 	protected final Log logger = LogFactory.getLog(CommandManagerImpl.class);
-	
+
 	public String executeCommand(BaseWrapper baseWrapper) throws CommandException
 	{
 		if(logger.isDebugEnabled())
@@ -42,9 +44,12 @@ public class CommandManagerImpl implements CommandManager
 		{
 			logger.debug("End of CommandManagerImpl.executeCommand(BaseWrapper baseWrapper)");
 		}
+		if(!commandModel.getActive()){
+			throw new CommandException("Command is not active",ErrorCodes.VALIDATION_ERROR,ErrorLevel.HIGH,new Throwable());
+		}
 		return runCommand(baseCommand,baseWrapper);
 	}
-	
+
 	public String executeCommand(BaseWrapper baseWrapper, String action) throws CommandException
 	{
 		if(logger.isDebugEnabled())
@@ -54,16 +59,16 @@ public class CommandManagerImpl implements CommandManager
 		BaseCommand baseCommand;
 		CommandModel commandModel = new CommandModel();
 		commandModel.setCommandId(Long.parseLong(action));
-		commandModel = loadCommand(commandModel);	
+		commandModel = loadCommand(commandModel);
 		baseCommand = createObjectThroughReflection(commandModel,Long.parseLong(action));
 		if(logger.isDebugEnabled())
 		{
 			logger.debug("End of CommandManagerImpl.executeCommand(BaseWrapper baseWrapper, String action)");
 		}
 		return runCommand(baseCommand,baseWrapper);
-		
+
 	}
-	
+
 	private String runCommand(BaseCommand baseCommand, BaseWrapper baseWrapper) throws CommandException
 	{
 		if(logger.isDebugEnabled())
@@ -81,7 +86,7 @@ public class CommandManagerImpl implements CommandManager
 		}
 		return resultedCommandString;
 	}
-	
+
 	private CommandModel loadCommand(CommandModel commandModel) throws CommandException
 	{
 		if(logger.isDebugEnabled())
@@ -103,9 +108,9 @@ public class CommandManagerImpl implements CommandManager
 		{
 			throw new CommandException(ex.getMessage(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, ex);
 		}
-		
+
 	}
-	
+
 	private BaseCommand createObjectThroughReflection(CommandModel commandModel, long commandId) throws CommandException
 	{
 		if(logger.isDebugEnabled())
@@ -135,7 +140,7 @@ public class CommandManagerImpl implements CommandManager
 			throw new CommandException(ex.getMessage(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, ex);
 		}
 	}
-	
+
 	private OperatorModel loadOperator() throws CommandException
 	{
 		if(logger.isDebugEnabled())
@@ -182,7 +187,7 @@ public class CommandManagerImpl implements CommandManager
 		}
 		return operatorModel;
 	}
-	
+
 
 	public void setCommonCommandManager(CommonCommandManager commonCommandManager)
 	{

@@ -17,6 +17,9 @@ public interface DebitCardManager {
                                                          String nic) throws FrameworkCheckedException;
     public DebitCardMailingAddressModel saveOrUpdateDebitCardMailingAddress(DebitCardMailingAddressModel debitCardMailingAddressModel) throws FrameworkCheckedException;
     public DebitCardModel saveOrUpdateDebitCardModel(DebitCardModel debitCardModel) throws FrameworkCheckedException;
+    public DebitCardModel saveOrUpdateDebitCardModelForAnnualFee(DebitCardModel debitCardModel) throws FrameworkCheckedException;
+    public DebitCardModel saveOrUpdateDebitCardModelForReIssuanceFee(DebitCardModel debitCardModel) throws FrameworkCheckedException;
+    public DebitCardModel saveOrUpdateDebitCardModelForIssuanceFee(DebitCardModel debitCardModel) throws FrameworkCheckedException;
     public DebitCardModel saveOrUpdateReIssuanceDebitCardModel(DebitCardModel debitCardModel) throws FrameworkCheckedException;
     public DebitCardChargesSafRepoModel saveOrUpdateDebitChargesSafRepoCardModel(DebitCardChargesSafRepoModel debitCardChargesSafRepoModel) throws FrameworkCheckedException;
     public BaseWrapper updateDebitCardIssuenceRequestWithAuthorization(BaseWrapper baseWrapper) throws FrameworkCheckedException;
@@ -30,7 +33,7 @@ public interface DebitCardManager {
 
     public List<DebitCardViewModel> searchDebitCardData(SearchBaseWrapper searchBaseWrapper) throws FrameworkCheckedException;
 
-//Added by Abubakar
+    //Added by Abubakar
     public List<DebitCardRequestsViewModel> searchDebitCardRequestsData(SearchBaseWrapper searchBaseWrapper) throws FrameworkCheckedException;
 
     public List<DebitCardModel> getDebitCardModelByState(Long cardStateId) throws FrameworkCheckedException;

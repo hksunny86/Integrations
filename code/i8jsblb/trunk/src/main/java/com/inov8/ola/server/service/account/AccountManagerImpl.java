@@ -193,7 +193,7 @@ public class AccountManagerImpl implements AccountManager {
 //						&& ! olaVO.getReasonId().equals(ReasonConstants.RETAIL_PAYMENT)
 //						&& ! olaVO.getReasonId().equals(ReasonConstants.DONATION_PAYMENT)
                                 && !olaVO.getReasonId().equals(ReasonConstants.REVERSE_BILL_PAYMENT)
-                                && !olaVO.getReasonId().equals(ReasonConstants.FUND_CUSTOMER_BB_CORE_AC)) {
+                && !olaVO.getReasonId().equals(ReasonConstants.FUND_CUSTOMER_BB_CORE_AC)) {
                     OLAVO debitLimitsVO = verifyDebitLimits(olaVO);
                     if (debitLimitsVO.getResponseCode().equals("00")) {
                         Double finalBalance = Double.valueOf(Formatter.formatDouble(balance - olaVO.getBalance())); // formatting to up to 2 decimal places
@@ -573,7 +573,7 @@ public class AccountManagerImpl implements AccountManager {
                 && !olaVO.getReasonId().equals(ReasonConstants.REVERSE_BILL_PAYMENT)
                 && !olaVO.getReasonId().equals(ReasonConstants.ROLLBACK_WALKIN_CUSTOMER)
                 && !olaVO.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.SETTLEMENT)
-                &&!olaVO.getReasonId().equals(ReasonConstants.FUND_CUSTOMER_BB_CORE_AC)) {
+        &&!olaVO.getReasonId().equals(ReasonConstants.FUND_CUSTOMER_BB_CORE_AC)) {
 
             OLAVO creditLimitsVO = verifyCreditLimits(olaVO);
             olaVO.setResponseCode(creditLimitsVO.getResponseCode());
@@ -599,8 +599,7 @@ public class AccountManagerImpl implements AccountManager {
         String responseCode = null;
 
         try {
-            if (!olaVO.getReasonId().equals(ReasonConstants.BULK_PAYMENT) && !olaVO.getReasonId().equals(ReasonConstants.SALARY_DISBURSEMENT)
-                    && !olaVO.getReasonId().equals(ReasonConstants.REVERSAL)) {
+            if (!olaVO.getReasonId().equals(ReasonConstants.SALARY_DISBURSEMENT) && !olaVO.getReasonId().equals(ReasonConstants.REVERSAL)) {
 
                 if (isLimitApplicable(olaVO, true, false)) {
                     responseCode = verifyDailyLimitForCredit(olaVO.getTransactionDateTime(), olaVO.getBalance(), olaVO.getReceivingAccountId(), olaVO.getCustomerAccountTypeId(), null);
@@ -1619,7 +1618,7 @@ public class AccountManagerImpl implements AccountManager {
                     limitModel.setCustomerAccountTypeId(blinkCustomerLimitModel.getCustomerAccTypeId());
                 }
             }else {
-                limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.DAILY, customerAccountTypeId);
+                 limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.DAILY, customerAccountTypeId);
             }
             if (limitModel != null) {
 
@@ -1663,7 +1662,7 @@ public class AccountManagerImpl implements AccountManager {
                 }
             }else {
 
-                limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.MONTHLY, customerAccountTypeId);
+                 limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.MONTHLY, customerAccountTypeId);
             }
             if (limitModel != null) {
                 if (limitModel.getIsApplicable() && limitModel.getMaximum() != null) {
@@ -1765,7 +1764,7 @@ public class AccountManagerImpl implements AccountManager {
                     limitModel.setCustomerAccountTypeId(blinkCustomerLimitModel.getCustomerAccTypeId());
                 }
             }else {
-                limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.MAXIMUM, customerAccountTypeId);
+                 limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.MAXIMUM, customerAccountTypeId);
 
             }
             if (limitModel != null) {
@@ -1806,7 +1805,7 @@ public class AccountManagerImpl implements AccountManager {
                     limitModel.setCustomerAccountTypeId(blinkCustomerLimitModel.getCustomerAccTypeId());
                 }
             } else {
-                limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.DEBIT, LimitTypeConstants.DAILY, customerAccountTypeId);
+                   limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.DEBIT, LimitTypeConstants.DAILY, customerAccountTypeId);
             }
             if (limitModel != null) {
                 if (limitModel.getIsApplicable() && limitModel.getMaximum() != null) {
@@ -1847,7 +1846,7 @@ public class AccountManagerImpl implements AccountManager {
                     limitModel.setCustomerAccountTypeId(blinkCustomerLimitModel.getCustomerAccTypeId());
                 }
             }else {
-                limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.DEBIT, LimitTypeConstants.MONTHLY, customerAccountTypeId);
+                 limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.DEBIT, LimitTypeConstants.MONTHLY, customerAccountTypeId);
             }
             if (limitModel != null) {
                 if (limitModel.getIsApplicable() && limitModel.getMaximum() != null) {

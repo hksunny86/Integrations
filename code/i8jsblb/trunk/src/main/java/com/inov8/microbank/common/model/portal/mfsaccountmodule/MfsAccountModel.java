@@ -328,7 +328,6 @@ public class MfsAccountModel implements Serializable, Cloneable {
     private String nicBackPicCheckerComments;
     private String pNicBackPicMakerComments;
     private String pNicBackPicCheckerComments;
-    private String deviceStatus;
 
     public Boolean getNameApp() {
         return nameApp;
@@ -2839,13 +2838,5 @@ public class MfsAccountModel implements Serializable, Cloneable {
 
     public void setFatherBvs(boolean fatherBvs) {
         this.fatherBvs = fatherBvs;
-    }
-
-    public String getDeviceStatus() {
-        return deviceStatus;
-    }
-
-    public void setDeviceStatus(String deviceStatus) {
-        this.deviceStatus = deviceStatus;
     }
 }

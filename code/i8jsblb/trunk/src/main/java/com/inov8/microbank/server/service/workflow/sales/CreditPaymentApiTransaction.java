@@ -402,10 +402,10 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
             //*****************************************************************
             //****  Update status of from 'Pushed to SAF' to 'Successful'  ****
             //*****************************************************************
-                transactionReversalManager.updateIBFTStatus(wrapper.getObject(CommandFieldConstants.KEY_STAN).toString(),
-                        (Date) wrapper.getObject(CommandFieldConstants.KEY_TX_DATE),
-                        PortalConstants.IBFT_STATUS_SUCCESS,
-                        wrapper.getTransactionCodeModel().getCode());
+//                transactionReversalManager.updateIBFTStatus(wrapper.getObject(CommandFieldConstants.KEY_STAN).toString(),
+//                        (Date) wrapper.getObject(CommandFieldConstants.KEY_TX_DATE),
+//                        PortalConstants.IBFT_STATUS_SUCCESS,
+//                        wrapper.getTransactionCodeModel().getCode());
 
 
             sendCashDepositSMS(wrapper);

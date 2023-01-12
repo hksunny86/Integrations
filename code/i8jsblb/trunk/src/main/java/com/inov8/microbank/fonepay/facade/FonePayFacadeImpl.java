@@ -28,6 +28,11 @@ public class FonePayFacadeImpl implements FonePayFacade {
 	}
 
 	@Override
+	public WebServiceVO bulkCreateCustomer(WebServiceVO webServiceVO, long segmentId) throws FrameworkCheckedException {
+		return fonePayManager.bulkCreateCustomer(webServiceVO, segmentId);
+	}
+
+	@Override
 	public WebServiceVO createL2Customer(WebServiceVO webServiceVO, boolean isConsumerApp) throws FrameworkCheckedException {
 		return fonePayManager.createL2Customer(webServiceVO,isConsumerApp);
 	}

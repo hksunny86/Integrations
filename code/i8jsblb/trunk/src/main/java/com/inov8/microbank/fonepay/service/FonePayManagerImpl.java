@@ -1225,6 +1225,529 @@ public class FonePayManagerImpl implements FonePayManager {
     }
 
     @Override
+    public WebServiceVO bulkCreateCustomer(WebServiceVO webServiceVO, long segmentId) throws FrameworkCheckedException {
+        FonePayMessageVO messageVO = new FonePayMessageVO();
+        VerisysDataModel verisysDataModel = new VerisysDataModel();
+        if (StringUtil.isNullOrEmpty(webServiceVO.getCnicExpiry())) {
+            webServiceVO.setCnicExpiry("2099-01-01");
+        }
+
+        if(webServiceVO.getEmailAddress() != null) {
+            AppUserModel appEmailUserModel = null;
+            appEmailUserModel = this.isEmailUnique(webServiceVO.getEmailAddress());
+
+            if (null != appEmailUserModel) {
+                throw new CommandException("Email Address Already Exists", ErrorCodes.EMAIL_ADDRESS_ALREADY_EXISTS, ErrorLevel.MEDIUM, null);
+            }
+        }
+
+        AppUserModel existingAppUserModel = new AppUserModel();
+        existingAppUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
+
+        if(existingAppUserModel != null){
+            throw new CommandException("Mobile Number Already Exists", ErrorCodes.INVALID_USER, ErrorLevel.MEDIUM, null);
+        }
+
+        AppUserModel existingNicAppUserModel = new AppUserModel();
+        existingNicAppUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByCnicAndType(webServiceVO.getCnicNo());
+
+        if(existingNicAppUserModel != null){
+            throw new CommandException("Cnic Already Exists", ErrorCodes.INVALID_USER, ErrorLevel.MEDIUM, null);
+        }
+
+        boolean isConventional = false, accountUpdated = false, accountCreated = false;
+        Date nowDate = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        long accountType = CustomerAccountTypeConstants.LEVEL_0;
+        ArrayList<CustomerPictureModel> arrayCustomerPictures = new ArrayList<CustomerPictureModel>();
+        AppUserModel testModel1 = new AppUserModel();
+        List<AppUserModel> modelList = new ArrayList<>();
+        AppUserModel aUserModel = null;
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
+        try {
+//            accountType = NumberUtils.toLong(webServiceVO.getAccountType());
+            ExampleConfigHolderModel exampleHolder = new ExampleConfigHolderModel();
+            exampleHolder.setMatchMode(MatchMode.EXACT);
+            testModel1.setMobileNo(webServiceVO.getMobileNo());
+            testModel1.setNic(webServiceVO.getCnicNo());
+            testModel1.setAppUserTypeId(UserTypeConstantsInterface.CUSTOMER);
+            modelList = appUserHibernateDAO.findByExample(testModel1, null, null, exampleHolder).getResultsetList();
+            if (modelList != null && modelList.size() > 0) {
+                aUserModel = modelList.get(0);
+            }
+
+            isConventional = true;
+
+            logger.info("Account Opening Method id is : " + AccountOpeningMethodConstantsInterface.FONEPAY);
+            logger.info("[FonePayManagerImpl.createCustomer] Conventional Account Opening Flow started based on given accountType:" + webServiceVO.getAccountType());
+
+            NadraIntegrationVO iVo = new NadraIntegrationVO();
+//                if (newAccountFlag.equals("1")) {
+            String mobileNo = webServiceVO.getMobileNo();
+            String cnic = webServiceVO.getCnicNo();
+            String cnicIssueDate = webServiceVO.getCnicIssuanceDate();
+            iVo.setCnicIssuanceDate(cnicIssueDate);
+            iVo.setContactNo(mobileNo);
+            iVo.setCitizenNumber(cnic);
+            iVo.setAreaName("Punjab");
+            logger.info("Nadra Info: ");
+
+//            messageVO.setCustomerName("ahsan khan");
+//            messageVO.setDob("1990-08-19");
+//            iVo.setResponseCode("100");
+//            messageVO.setPresentAddress("bahwalpur house no 8g");
+//            messageVO.setBirthPlace("bahwalpur");
+//            messageVO.setFatherHusbandName("javed");
+//            messageVO.setCnicExpiry("2025-01-01");
+//            messageVO.setPermanentAddress("bahwalpur");
+//            messageVO.setMotherName("Nusrat bano");
+//            iVo.setDateOfBirth("1990-08-19");
+//            iVo.setCardExpire("2020-05-01");
+//            iVo.setMotherName("Nusrat Bano");
+//            iVo.setFullName("Ahsan Raza");
+//            iVo.setGender("MALE");
+
+            iVo = this.getNadraIntegrationController().getCitizenData(iVo);
+            if (!iVo.getResponseCode().equals("100"))
+                throw new CommandException(iVo.getResponseDescription(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, null);
+            logger.info("Nadra Verfication data for NIC: " + cnic + " Mother Name: " + iVo.getMotherName());
+            messageVO.setCustomerName(iVo.getFullName());
+            messageVO.setDob(iVo.getDateOfBirth());
+            messageVO.setPresentAddress(iVo.getPresentAddress());
+            messageVO.setBirthPlace(iVo.getBirthPlace());
+            messageVO.setFatherHusbandName(iVo.getFatherName());
+            messageVO.setCnicExpiry(iVo.getCardExpire());
+            messageVO.setPermanentAddress(iVo.getPermanentAddress());
+            messageVO.setMotherName(iVo.getMotherName());
+
+            if (iVo.getMotherName() == null) {
+                iVo.setMotherName("Mother");
+            }
+//                    //temp
+            messageVO.setCustomerAccountyType(String.valueOf(accountType));
+            messageVO.setCnic(webServiceVO.getCnicNo());
+            String customerMobileNetwork = null;
+            if (webServiceVO.getMobileNo().contains("/")) {
+                String[] parts = webServiceVO.getMobileNo().split("/");
+                customerMobileNetwork = parts[1];
+                webServiceVO.setMobileNo(parts[0]);
+            }
+            messageVO.setMobileNo(webServiceVO.getMobileNo());
+            messageVO.setCustomerName(webServiceVO.getConsumerName());
+
+
+            if (accountType == CustomerAccountTypeConstants.LEVEL_0) {
+//                    if (newAccountFlag.equals("1")) {
+                messageVO.setCustomerName(iVo.getFullName());
+                messageVO.setPresentAddress(iVo.getPresentAddress());
+                messageVO.setBirthPlace(iVo.getBirthPlace());
+                messageVO.setFatherHusbandName(iVo.getFatherName());
+                messageVO.setMotherName(iVo.getMotherName());
+
+            }
+
+            messageVO.setDob(iVo.getDateOfBirth());
+
+            messageVO.setCnicExpiry(iVo.getCardExpire());
+
+            if (!isConventional) {
+                messageVO.setBirthPlace(webServiceVO.getBirthPlace());
+                messageVO.setMotherName(webServiceVO.getMotherMaiden());
+                messageVO.setPresentAddress(webServiceVO.getPresentAddress());
+                verisysDataModel.setCnic(webServiceVO.getCnicNo());
+                verisysDataModel.setPlaceOfBirth(webServiceVO.getBirthPlace());
+                verisysDataModel.setMotherMaidenName(webServiceVO.getMotherMaiden());
+                verisysDataModel.setName(webServiceVO.getConsumerName());
+                verisysDataModel.setCurrentAddress(webServiceVO.getPresentAddress());
+                verisysDataModel.setPermanentAddress(webServiceVO.getPresentAddress());
+                verisysDataModel.setTranslated(false);
+                verisysDataModel.setCreatedOn(new Date());
+                verisysDataModel.setUpdatedOn(new Date());
+                //messageVO.setPermanentAddress(webServiceVO.getPermanentAddress());
+            }
+            BaseWrapper baseWrapper = new BaseWrapperImpl();
+
+
+            /*****************************************************************************************
+             * Validating input params
+             */
+
+
+            try {
+                this.validateInstantAccOpeningRequest(messageVO);
+
+                if (isConventional) {
+                    if (accountType != CustomerAccountTypeConstants.LEVEL_0) {
+                        if (StringUtil.isNullOrEmpty(webServiceVO.getCustomerPhoto())) {
+                            throw new CommandException("Customer picture is required", ErrorCodes.VALIDATION_ERROR, ErrorLevel.MEDIUM);
+                        }
+                        if (StringUtil.isNullOrEmpty(webServiceVO.getCnicFrontPhoto())) {
+                            throw new CommandException("CNIC front picture is required", ErrorCodes.VALIDATION_ERROR, ErrorLevel.MEDIUM);
+                        }
+                    }
+                }
+            } catch (CommandException e) {
+//                    if (isConsumerApp) {
+                logger.error("[FonePayManagerImpl.createCustomer] Validation Failed:" + e.getMessage());
+//                    } else {
+//                        logger.error("[FonePayManagerImpl.createCustomer] Validation Failed:" + e.getMessage());
+//                    }
+                webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_VALIDATION_FAILED);
+                webServiceVO.setResponseCodeDescription(e.getMessage());
+                throw new FrameworkCheckedException(e.getMessage());
+            }
+
+            try {
+                UserDeviceAccountsModel userDeviceAccountsModel = new UserDeviceAccountsModel();
+
+                //***************************************************************************************
+                // * Populating the Customer Model
+
+                CustomerModel customerModel = new CustomerModel();
+                customerModel.setNadraTrackingId(webServiceVO.getTrackingId());
+                customerModel.setRegister(true);
+                customerModel.setCreatedBy(UserUtils.getCurrentUser().getAppUserId());
+                customerModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+                customerModel.setCreatedOn(nowDate);
+                customerModel.setUpdatedOn(nowDate);
+                customerModel.setCustomerAccountTypeId(Long.valueOf(messageVO.getCustomerAccountyType()));
+                customerModel.setApplicationN0(getCommonCommandManager().getDeviceApplicationNoGenerator().nextLongValue().toString());
+                customerModel.setContactNo(messageVO.getMobileNo());
+                customerModel.setName(messageVO.getCustomerName());
+                customerModel.setMobileNo(messageVO.getMobileNo());
+                customerModel.setFatherHusbandName(messageVO.getFatherHusbandName());
+                customerModel.setRelationAskari(0);
+                customerModel.setRelationZong(0);
+                customerModel.setBirthPlace(messageVO.getBirthPlace());
+                customerModel.setEmail(webServiceVO.getEmailAddress());
+
+                customerModel.setCompanyName(webServiceVO.getReserved2());
+
+                customerModel.setSegmentId(segmentId);
+                customerModel.setCustomerTypeId(CustomerTypeConstants.CUSTOMER_TYPE_MARKETED);
+                customerModel.setIsCnicSeen(false);
+                customerModel.setClsResponseCode(responseVO.getCaseStatus());
+
+                customerModel.setWebServiceEnabled(true);
+
+                customerModel.setScreeningPerformed(Boolean.FALSE);
+                customerModel.setIsMPINGenerated(Boolean.FALSE);
+
+                if (isConventional) {
+                    customerModel.setVerisysDone(false);
+                } else {
+                    customerModel.setVerisysDone(true);
+                }
+
+//                    if (isConsumerApp) {
+                customerModel.setAccountMethodId(AccountOpeningMethodConstantsInterface.SELF_REGISTERATION);
+
+                if (iVo.getGender().toUpperCase().equals("FEMALE") || iVo.getGender().toUpperCase().equals("F")) {
+                    customerModel.setGender("F");
+                } else if (iVo.getGender().toUpperCase().equals("MALE") || iVo.getGender().toUpperCase().equals("M")) {
+                    customerModel.setGender("M");
+                } else if (iVo.getGender().toUpperCase().startsWith("K") || iVo.getGender().toUpperCase().equals("K")) {
+                    customerModel.setGender("K");
+                }
+//                    }
+
+                customerModel.setTaxRegimeId(TaxRegimeConstants.FEDERAL);
+                TaxRegimeModel taxRegimeModel = new TaxRegimeModel();
+                taxRegimeModel = this.taxRegimeDAO.findByPrimaryKey(TaxRegimeConstants.FEDERAL);
+                if (taxRegimeModel != null) {
+                    customerModel.setFed(taxRegimeModel.getFed());
+                }
+
+
+                baseWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_MODEL, customerModel);
+
+                //***************************************************************************************
+                // * Populating the AppUserModel Model
+
+                AppUserModel appUserModel = new AppUserModel();
+
+                String[] nameArray = messageVO.getCustomerName().split(" ");
+                appUserModel.setFirstName(nameArray[0]);
+                if (nameArray.length > 1) {
+                    appUserModel.setLastName(messageVO.getCustomerName().substring(
+                            appUserModel.getFirstName().length() + 1));
+                } else {
+                    appUserModel.setLastName(nameArray[0]);
+                }
+                appUserModel.setAddress1(messageVO.getPresentAddress());
+                appUserModel.setAddress2(messageVO.getPermanentAddress());
+//                    if (newAccountFlag.equals("1")) {
+//                        appUserModel.setCustomerMobileNetwork(webServiceVO.getCustomerMobileNetwork());
+//                    } else {
+                appUserModel.setCustomerMobileNetwork(customerMobileNetwork);
+//                    }
+                appUserModel.setMobileNo(messageVO.getMobileNo());
+                String nicWithoutHyphins = messageVO.getCnic().replace("-", "");
+                appUserModel.setNic(nicWithoutHyphins);
+                appUserModel.setNicExpiryDate(dateFormat.parse(messageVO.getCnicExpiry()));
+                appUserModel.setMobileTypeId(1L);
+                appUserModel.setPasswordChangeRequired(true);
+                appUserModel.setDob(dateFormat.parse(iVo.getDateOfBirth()));
+
+                appUserModel.setCreatedByAppUserModel(UserUtils.getCurrentUser());
+//                    }
+                appUserModel.setCreatedOn(nowDate);
+                appUserModel.setAppUserTypeId(UserTypeConstantsInterface.CUSTOMER);
+                appUserModel.setMotherMaidenName(messageVO.getMotherName());
+                appUserModel.setEmail(webServiceVO.getEmailAddress());
+                //Below parameter are set to change cnic issuance Date format change  for api dd-mm-yyyy to yyyy-mm-dd
+
+                appUserModel.setCnicIssuanceDate(dateFormat1.parse(webServiceVO.getCnicIssuanceDate()));
+
+                appUserModel.setVerified(true);
+                appUserModel.setRegistrationStateId(RegistrationStateConstants.VERIFIED);
+                appUserModel.setAccountStateId(AccountStateConstantsInterface.ACCOUNT_STATE_COLD);
+                appUserModel.setCountryId(1L);
+                appUserModel.setAccountEnabled(true);
+                appUserModel.setAccountExpired(false);
+                appUserModel.setAccountLocked(false);
+                appUserModel.setCredentialsExpired(false);
+                appUserModel.setAccountClosedUnsettled(false);
+                appUserModel.setAccountClosedSettled(false);
+
+                appUserModel.setUpdatedByAppUserModel(UserUtils.getCurrentUser());
+                appUserModel.setUpdatedOn(nowDate);
+
+                String mfsId = computeMfsId();
+                String username = mfsId;
+
+                String password = "1231";
+                String randomPin = "";
+//                    if (isConsumerApp) {
+//                        randomPin = RandomUtils.generateRandom(4, false, true);
+                password = com.inov8.microbank.common.util.EncryptionUtil.encryptWithAES(XMLConstants.AES_ENCRYPTION_KEY, randomPin);//EncoderUtils.encodeToSha(randomPin);
+
+                appUserModel.setUsername(username);
+                appUserModel.setPassword(password);
+
+                //As per new implementation suggested by Sir Zulfiqar
+
+                baseWrapper.putObject(CommandFieldConstants.KEY_APP_USER_MODEL, appUserModel);
+
+                if (messageVO.getPresentAddress() != null && !"".equals(messageVO.getPresentAddress())) {
+                    AddressModel customerPresentAddressModel = new AddressModel();
+                    customerPresentAddressModel.setHouseNo(messageVO.getPresentAddress());
+                    customerPresentAddressModel.setFullAddress(messageVO.getPresentAddress());
+                    baseWrapper.putObject(CommandFieldConstants.KEY_PRESENT_ADDR, customerPresentAddressModel);
+                }
+                if (messageVO.getPermanentAddress() != null && !"".equals(messageVO.getPermanentAddress())) {
+                    AddressModel customerPermanentAddressModel = new AddressModel();
+                    customerPermanentAddressModel.setHouseNo(messageVO.getPermanentAddress());
+                    customerPermanentAddressModel.setFullAddress(messageVO.getPermanentAddress());
+                    baseWrapper.putObject(CommandFieldConstants.KEY_PERMANENT_ADDR, customerPermanentAddressModel);
+                }
+
+                //***************************************************************************************
+                //** Populating the UserDeviceAccountsModel
+
+                userDeviceAccountsModel.setAccountEnabled(true);
+
+                userDeviceAccountsModel.setCommissioned(false);
+                userDeviceAccountsModel.setAccountExpired(false);
+                userDeviceAccountsModel.setAccountLocked(false);
+                userDeviceAccountsModel.setCreatedByAppUserModel(UserUtils.getCurrentUser());
+                userDeviceAccountsModel.setCreatedOn(nowDate);
+                userDeviceAccountsModel.setUpdatedByAppUserModel(UserUtils.getCurrentUser());
+                userDeviceAccountsModel.setUpdatedOn(nowDate);
+                userDeviceAccountsModel.setPinChangeRequired(true);
+                userDeviceAccountsModel.setDeviceTypeId(DeviceTypeConstantsInterface.MOBILE);
+                userDeviceAccountsModel.setCredentialsExpired(false);
+                userDeviceAccountsModel.setPasswordChangeRequired(false);
+                userDeviceAccountsModel.setUserId(mfsId);
+                userDeviceAccountsModel.setPin(password);
+                userDeviceAccountsModel.setProdCatalogId(PortalConstants.CUSTOMER_DEFAULT_CATALOG);
+
+                baseWrapper.putObject(CommandFieldConstants.KEY_USER_DEVICE_ACCOUNT_MODEL, userDeviceAccountsModel);
+
+                Long bankId = getCommonCommandManager().getOlaBankMadal().getBankId();
+
+                SmartMoneyAccountModel smartMoneyAccountModel = new SmartMoneyAccountModel();
+                smartMoneyAccountModel.setBankId(bankId);
+                smartMoneyAccountModel.setPaymentModeId(PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT);
+                smartMoneyAccountModel.setCreatedOn(new Date());
+                smartMoneyAccountModel.setUpdatedOn(new Date());
+                smartMoneyAccountModel.setCreatedByAppUserModel(UserUtils.getCurrentUser());
+                smartMoneyAccountModel.setUpdatedByAppUserModel(UserUtils.getCurrentUser());
+                smartMoneyAccountModel.setActive(true);
+                smartMoneyAccountModel.setStatusId(OlaStatusConstants.ACCOUNT_STATUS_ACTIVE);
+                smartMoneyAccountModel.setChangePinRequired(true);
+                smartMoneyAccountModel.setDefAccount(true);
+                smartMoneyAccountModel.setDeleted(false);
+                smartMoneyAccountModel.setName("i8_bb_" + mfsId);
+                smartMoneyAccountModel.setAccountClosedUnsetteled(0L);
+                smartMoneyAccountModel.setAccountClosedSetteled(0L);
+
+                baseWrapper.putObject(CommandFieldConstants.KEY_SMART_MONEY_ACCOUNT_MODEL, smartMoneyAccountModel);
+
+                OLAVO olaVo = new OLAVO();
+                olaVo.setFirstName(appUserModel.getFirstName());
+                olaVo.setMiddleName(" ");
+                olaVo.setLastName(appUserModel.getLastName());
+                olaVo.setFatherName(appUserModel.getLastName());
+                olaVo.setCnic(appUserModel.getNic());
+                olaVo.setCustomerAccountTypeId(customerModel.getCustomerAccountTypeId());
+                olaVo.setAddress("Lahore");
+                olaVo.setLandlineNumber(appUserModel.getMobileNo());
+                olaVo.setMobileNumber(appUserModel.getMobileNo());
+//                    if (newAccountFlag.equals("1")) {
+                olaVo.setDob(dateFormat.parse(iVo.getDateOfBirth()));
+//                    } else {
+//                        olaVo.setDob(dateFormat.parse(messageVO.getDob()));
+//
+//                    }
+                olaVo.setStatusId(1l);
+                baseWrapper.putObject(CommandFieldConstants.KEY_ONLINE_ACCOUNT_MODEL, olaVo);
+
+                AccountInfoModel accountInfoModel = new AccountInfoModel();
+
+                accountInfoModel.setAccountNick(smartMoneyAccountModel.getName());
+                accountInfoModel.setActive(smartMoneyAccountModel.getActive());
+
+                accountInfoModel.setCreatedOn(smartMoneyAccountModel.getCreatedOn());
+                accountInfoModel.setUpdatedOn(smartMoneyAccountModel.getUpdatedOn());
+                accountInfoModel.setCustomerMobileNo(appUserModel.getMobileNo());
+                accountInfoModel.setFirstName(appUserModel.getFirstName());
+                accountInfoModel.setLastName(appUserModel.getLastName());
+                accountInfoModel.setPaymentModeId(smartMoneyAccountModel.getPaymentModeId());
+                accountInfoModel.setDeleted(Boolean.FALSE);
+                accountInfoModel.setIsMigrated(1L);
+                //Added after HSM Integration
+                accountInfoModel.setPan(PanGenerator.generatePAN());
+                // End HSM Integration Change
+
+                baseWrapper.putObject(CommandFieldConstants.KEY_ACCOUNT_INFO_MODEL, accountInfoModel);
+
+//                    if (isConventional) {
+                baseWrapper.putObject("isBvsAccount", Boolean.FALSE); // PAYSYS Not Performed
+
+                if (!isConventional) {
+                    baseWrapper.putObject(CommandFieldConstants.KEY_VARISYS_DATA_MODEL, verisysDataModel);
+                }
+
+//                    SimpleDateFormat formatter1 = new SimpleDateFormat("d");
+//                    SimpleDateFormat formatter2 = new SimpleDateFormat("M");
+//                    SimpleDateFormat formatter3 = new SimpleDateFormat("yyyy");
+//                    String d = formatter1.format(appUserModel.getDob());
+//                    String m = formatter2.format(appUserModel.getDob());
+//                    String y = formatter3.format(appUserModel.getDob());
+//                    System.out.println(y + "," + m + "," + d);
+//                    if (!(webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("1"))) {
+//                        CommonUtils.checkAgeLimit(y, m, d, 18);
+//                    }
+
+                baseWrapper = getCommonCommandManager().saveOrUpdateAccountOpeningL0Request(baseWrapper);
+
+                //data insertion on cls pending account opening Table
+                accountCreated = true;
+
+                String customerSMS = this.getMessageSource().getMessage("smsCommand.act_sms_jsbl_nova", null, null);
+                baseWrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGE, new SmsMessage(webServiceVO.getMobileNo(), customerSMS));
+                getCommonCommandManager().sendSMSToUser(baseWrapper);
+
+            } catch (Exception ex) {
+                String errorMessage = ex.getMessage();
+                if (accountCreated) {
+//                        if (isConsumerApp) {
+                    logger.error("Customer Creation via Self Registeration - Successful , but exception occurred... Customer Mobile No:" + messageVO.getMobileNo() + " errorMessage:" + errorMessage + "\n Exception: ", ex);
+//                        } else {
+//                            logger.error("Customer Creation via FonePay - Successful , but exception occurred... Customer Mobile No:" + messageVO.getMobileNo() + " errorMessage:" + errorMessage + "\n Exception: ", ex);
+//                        }
+
+                } else {
+                    logger.error("Customer Creation via FonePay - Failed ... Customer Mobile No:" + messageVO.getMobileNo() + " errorMessage:" + errorMessage + "\n Exception: ", ex);
+                }
+
+                if (errorMessage == null ||
+                        (!StringUtil.isNullOrEmpty(errorMessage) && (errorMessage.contains("Hibernate")
+                                || errorMessage.contains("Exception")
+                                || errorMessage.contains("SQLException")))) {
+
+                    webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_FAILED);
+                    webServiceVO.setResponseCodeDescription(FonePayUtils.getResponceCodeDescription(FonePayResponseCodes.ACCOUNT_OPENING_FAILED));
+
+                } else if (errorMessage == null ||
+                        (!StringUtil.isNullOrEmpty(errorMessage) && (errorMessage.equals(MessageUtil.getMessage("MINOR.ACCOUNT.OPENING"))))) {
+                    webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_AGE_LIMIT_FAILED);
+                    webServiceVO.setResponseCodeDescription(errorMessage);
+                } else if (errorMessage == null ||
+                        (!StringUtil.isNullOrEmpty(errorMessage) && (errorMessage.equals(MessageUtil.getMessage("CNIC.EXPIRE.ACCOUNT.OPENING"))))) {
+                    webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_CNIC_EXPIRY_FAILED);
+                    webServiceVO.setResponseCodeDescription(errorMessage);
+
+                }
+                else {
+                    webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_FAILED);
+                    webServiceVO.setResponseCodeDescription(errorMessage);
+                }
+            }
+
+            if (accountCreated) {
+                webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
+                webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
+            } else {
+                throw new FrameworkCheckedException(FonePayUtils.getResponceCodeDescription(webServiceVO.getResponseCode()));
+            }
+//            }
+        } catch (CommandException ce) {
+            throw new CommandException(ce.getMessage(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, null);
+        }
+
+        catch (Exception ex) {
+            String errorMessage = ex.getMessage();
+
+            if (accountUpdated) {
+//                if (isConsumerApp) {
+                logger.error("Customer Updation via Self Registeration - Successful , but exception occurred... Customer Mobile No:" + messageVO.getMobileNo() + " errorMessage:" + errorMessage + "\n Exception: ", ex);
+
+            } else {
+                logger.error("Customer Updation via FonePay - Failed ... Customer Mobile No:" + messageVO.getMobileNo() + " errorMessage:" + errorMessage + "\n Exception: ", ex);
+            }
+
+            if (errorMessage == null ||
+                    (!StringUtil.isNullOrEmpty(errorMessage) && (errorMessage.contains("Hibernate")
+                            || errorMessage.contains("Exception")
+                            || errorMessage.contains("SQLException")))) {
+
+                webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+                webServiceVO.setResponseCodeDescription(FonePayUtils.getResponceCodeDescription(FonePayResponseCodes.ACCOUNT_OPENING_FAILED));
+            } else if (errorMessage == null || (!StringUtil.isNullOrEmpty(errorMessage) && (errorMessage.equals(MessageUtil.getMessage("MINOR.ACCOUNT.OPENING"))))) {
+                webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_AGE_LIMIT_FAILED);
+                webServiceVO.setResponseCodeDescription(errorMessage);
+            } else if (errorMessage == null ||
+                    (!StringUtil.isNullOrEmpty(errorMessage) && (errorMessage.equals(MessageUtil.getMessage("CNIC.EXPIRE.ACCOUNT.OPENING"))))) {
+                webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_CNIC_EXPIRY_FAILED);
+                webServiceVO.setResponseCodeDescription(errorMessage);
+
+            }
+
+            else {
+                webServiceVO.setResponseCode(FonePayResponseCodes.ACCOUNT_OPENING_FAILED);
+                webServiceVO.setResponseCodeDescription(errorMessage);
+            }
+        }
+
+        if (accountCreated) {
+
+        } else {
+            if (accountUpdated) {
+                webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
+                webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
+            } else {
+                throw new FrameworkCheckedException(FonePayUtils.getResponceCodeDescription(webServiceVO.getResponseCode()));
+            }
+        }
+
+
+        return webServiceVO;
+    }
+
+    @Override
     public WebServiceVO createL2Customer(WebServiceVO webServiceVO, boolean isConsumerApp) throws FrameworkCheckedException {
         FonePayMessageVO messageVO = new FonePayMessageVO();
         VerisysDataModel verisysDataModel = new VerisysDataModel();

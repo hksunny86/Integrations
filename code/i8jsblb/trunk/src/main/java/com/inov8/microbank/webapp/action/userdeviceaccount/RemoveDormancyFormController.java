@@ -114,7 +114,8 @@ public class RemoveDormancyFormController extends AdvanceFormController {
 
             appUserModel=appUserManager.loadAppUser(appUserId);
             appUserModel.setAccountStateId(AccountStateConstantsInterface.ACCOUNT_STATE_COLD);
-            appUserModel.setClosingComments(comments);
+            appUserModel.setRegistrationStateId(RegistrationStateConstants.VERIFIED);
+            appUserModel.setDormantRestoringComments(comments);
             appUserModel.setDormancyRemovedBy(UserUtils.getCurrentUser().getAppUserId());
             appUserModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
             appUserModel.setUpdatedOn(new Date());

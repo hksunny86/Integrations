@@ -262,6 +262,7 @@ public class AppUserModel extends BasePersistableModel implements UserDetails {
    private String closingComments;
    private Date settledOn;
    private String settlementComments;
+   private String dormantRestoringComments;
    private Integer versionNo;
    private Date dob;
    private java.sql.Timestamp lastLoginAttemptTime;
@@ -10027,5 +10028,14 @@ public class AppUserModel extends BasePersistableModel implements UserDetails {
 
    public void setDormancyRemovedBy(Long dormancyRemovedBy) {
       this.dormancyRemovedBy = dormancyRemovedBy;
+   }
+
+   @Column(name = "DORMANT_RESTORING_COMMENTS")
+   public String getDormantRestoringComments() {
+      return dormantRestoringComments;
+   }
+
+   public void setDormantRestoringComments(String dormantRestoringComments) {
+      this.dormantRestoringComments = dormantRestoringComments;
    }
 }

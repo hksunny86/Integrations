@@ -482,11 +482,11 @@ public class SmartMoneyAccountManagerImpl
       if(appUserModel == null)
       {
           appUserModel = this.appUserManager.loadAppUser(smartMoneyAccountVO.getAppUserId());
-          appUserModel.setAccountStateId(AccountStateConstants.ACCOUNT_STATE_COLD);
+        appUserModel.setAccountStateId(AccountStateConstants.ACCOUNT_STATE_COLD);
       }
-      appUserModel.setRegistrationStateId(smartMoneyAccountModel.getRegistrationStateId());
+      appUserModel.setRegistrationStateId(RegistrationStateConstantsInterface.VERIFIED);
       appUserModel.setPrevRegistrationStateId(RegistrationStateConstantsInterface.DORMANT);
-      appUserModel.setClosingComments(smartMoneyAccountVO.getComments());
+      appUserModel.setDormantRestoringComments(smartMoneyAccountVO.getComments());
       appUserModel.setDormancyRemovedBy(UserUtils.getCurrentUser().getAppUserId());
       appUserModel.setDormancyRemovedOn(new Date());
       BaseWrapper appUserWrapper = new BaseWrapperImpl();

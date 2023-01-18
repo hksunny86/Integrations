@@ -134,6 +134,7 @@
 				<prop key="/schedulersmanagement.html">schedulersManagement</prop>
 				<prop key="/debitCardSchedulersController.html">debitCardSchedulerController</prop>
 				<prop key="/debitCardFeeSchedulersController.html">debitCardFeeSchedulerController</prop>
+				<prop key="/debitCardAnnualFeeSchedulerController.html">debitCardAnnualFeeSchedulerController</prop>
 				<prop key="/acHolderDisbursementSchedulersController.html">acHolderDisbursementSchedulerController</prop>
 				<!-- Popup Mapping -->
 				<prop key="/allpay.me">frontController</prop>
@@ -6775,6 +6776,12 @@
 	<bean id="debitCardFeeSchedulerController" class="com.inov8.microbank.debitcard.controller.DebitCardFeeSchedulerController">
 		<property name="debitCardManager" ref="debitCardManager" />
 		<property name="debitCardFeeDeductionScheduler" ref="debitCardFeeDeductionScheduler" />
+
+	</bean>
+
+	<bean id="debitCardAnnualFeeSchedulerController" class="com.inov8.microbank.debitcard.controller.DebitCardAnnualFeeSchedulerController">
+		<property name="debitCardManager" ref="debitCardManager" />
+		<property name="debitCardAnnualFeeDeductionScheduler" ref="debitCardAnnualFeeDeductionScheduler" />
 
 	</bean>
 

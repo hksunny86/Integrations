@@ -133,6 +133,8 @@
                                         access="PG_GP_R,MNG_BATCH_JOBS_R,MNG_BATCH_JOBS_U"/>
                 <security:intercept-url pattern="/**/debitCardFeeSchedulersController.html*"
                                         access="PG_GP_R,MNG_BATCH_JOBS_R,MNG_BATCH_JOBS_U"/>
+                <security:intercept-url pattern="/**/debitCardAnnualFeeSchedulerController.html*"
+                                        access="PG_GP_R,MNG_BATCH_JOBS_R,MNG_BATCH_JOBS_U"/>
                 <security:intercept-url pattern="/**/acHolderDisbursementSchedulersController.html*"
                                         access="PG_GP_R,MNG_BATCH_JOBS_R,MNG_BATCH_JOBS_U"/>
                 <!--Debit Card End -->

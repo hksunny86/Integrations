@@ -42,7 +42,17 @@ import com.inov8.verifly.common.constants.CardTypeConstants;
 import com.inov8.verifly.common.model.AccountInfoModel;
 import org.apache.log4j.Logger;
 import org.springframework.util.StopWatch;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+import java.io.StringReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,6 +80,8 @@ public class DebitCardManagerImpl implements DebitCardManager {
     private RetailerDAO retailerDAO;
     private ArrayList<SmsMessage> validCardSmsList = new ArrayList<>(0);
     private ArrayList<SmsMessage> rejectedCardSmsList = new ArrayList<>(0);
+    DocumentBuilderFactory domFactory = null;
+    private String transactionCode;
 
     @Override
     public List<DebitCardModel> getDebitCardModelByMobileAndNIC(String mobileNo, String nic) throws FrameworkCheckedException {
@@ -491,6 +503,22 @@ public class DebitCardManagerImpl implements DebitCardManager {
         if (fee != null && !fee.equals("") && !fee.equals("0.0"))
             response = commandManager.executeCommand(dWrapper, CommandFieldConstants.CMD_DEBIT_CARD_CW);
 
+        if(workFlowWrapper.getCommissionAmountsHolder() != null) {
+            fee = String.valueOf(workFlowWrapper.getCommissionAmountsHolder().getTransactionAmount());
+            if (workFlowWrapper.getCommissionAmountsHolder().getExclusivePercentAmount() > 0.0 || workFlowWrapper.getCommissionAmountsHolder().getExclusiveFixAmount() > 0.0) {
+                fee = String.valueOf(Double.valueOf(fee) + workFlowWrapper.getCommissionAmountsHolder().getStakeholderCommissionsMap().get(CommissionConstantsInterface.FED_STAKE_HOLDER_ID));
+            }
+            else{
+                fee = String.valueOf(workFlowWrapper.getCommissionAmountsHolder().getTransactionAmount());
+            }
+        }
+        else{
+            fee = "0.0";
+        }
+
+        if (response != null)
+            this.populateXMLParams(response);
+
         Calendar date = Calendar.getInstance();
         Date startDate = null;
 
@@ -555,6 +583,7 @@ public class DebitCardManagerImpl implements DebitCardManager {
 
 //                    model.setNewInstallmentDateForAnnual(dateStr);
                 }
+                model.setIsInstallments(workFlowWrapper.getCardFeeRuleModel().getIsInstallments());
             }
             else if(productId.equals(ProductConstantsInterface.CUSTOMER_DEBIT_CARD_ISSUANCE) || productId.equals(ProductConstantsInterface.DEBIT_CARD_ISSUANCE)){
                 if(workFlowWrapper.getCardFeeRuleModel().getInstallmentPlan().equals("QUARTERLY")){
@@ -648,6 +677,8 @@ public class DebitCardManagerImpl implements DebitCardManager {
                 }
             }
 //            debitCardModelDAO.saveOrUpdateDebitCard(model);
+            model.setTransactionCode(transactionCode);
+            model.setFee(fee);
         }
 
 
@@ -1115,6 +1146,11 @@ public class DebitCardManagerImpl implements DebitCardManager {
     }
 
     @Override
+    public List<DebitCardModel> loadAllCardsOnRenewRequiredForAnnualFee() throws FrameworkCheckedException {
+        return debitCardModelDAO.loadAllCardsOnRenewRequiredForAnnualFee();
+    }
+
+    @Override
     public List<DebitCardModel> loadAllCardsOnReIssuanceRequired() throws FrameworkCheckedException {
         return debitCardModelDAO.loadAllCardsOnReIssuanceRequired();
     }
@@ -1123,6 +1159,42 @@ public class DebitCardManagerImpl implements DebitCardManager {
     @Override
     public List<DebitCardChargesSafRepoModel> loadAllDebitCardFeeChargesRequired() throws FrameworkCheckedException {
         return debitCardChargesDAO.loadAllDebitCardCharges();
+    }
+
+    public void populateXMLParams(String xml) {
+        LOGGER.info("populateProductPurchase(...) in DebitCardIssuanceCommand " + xml);
+        NodeList nodeList = this.executeXPathQuery(xml, "//trans/*");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            transactionCode = nodeList.item(0).getAttributes().getNamedItem(CommandFieldConstants.KEY_TX_ID).getNodeValue();
+            /*NodeList childNodeList = nodeList.item(i).getChildNodes();
+            for (int j = 0; j < childNodeList.getLength(); j++) {
+                NodeList nList = childNodeList.item(j).getChildNodes();
+                if (nList != null && nList.getLength() == 0) {
+                    NamedNodeMap namedNodeMap = childNodeList.item(0).getAttributes();
+                    if (namedNodeMap != null) {
+                        if (namedNodeMap.getNamedItem("ID") != null && !namedNodeMap.getNamedItem("ID").getNodeValue().equals(""))
+                            transactionCode = namedNodeMap.getNamedItem("ID").getNodeValue();
+                    }
+                }
+            }*/
+        }
+    }
+
+    private NodeList executeXPathQuery(String xml, String xpathExpression) {
+        Object result = null;
+        try {
+            domFactory = DocumentBuilderFactory.newInstance();
+            domFactory.setNamespaceAware(true); // never forget this!
+            DocumentBuilder builder = domFactory.newDocumentBuilder();
+            Document doc = builder.parse(new InputSource(new StringReader(xml)));
+            XPathFactory factory = XPathFactory.newInstance();
+            XPath xpath = factory.newXPath();
+            XPathExpression expr = xpath.compile(xpathExpression);
+            result = expr.evaluate(doc, XPathConstants.NODESET);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return (NodeList) result;
     }
 
     public void setDebitCardModelDAO(DebitCardModelDAO debitCardModelDAO) {

@@ -1255,6 +1255,10 @@ public class FonePayManagerImpl implements FonePayManager {
             throw new CommandException("Cnic Already Exists", ErrorCodes.INVALID_USER, ErrorLevel.MEDIUM, null);
         }
 
+        if (this.getCommonCommandManager().isCnicBlacklisted(webServiceVO.getCnicNo())) {
+            throw new CommandException("Cnic is Blacklisted", ErrorCodes.INVALID_USER, ErrorLevel.MEDIUM, null);
+        }
+
         boolean isConventional = false, accountUpdated = false, accountCreated = false;
         Date nowDate = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");

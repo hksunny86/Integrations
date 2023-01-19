@@ -8336,6 +8336,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
                 bWrapper = this.prepareNadraRequest(customerAppUserModel, webServiceVO);
                 bWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, PID);
+                bWrapper.putObject(CommandFieldConstants.KEY_REMITTANCE_TYPE, "MONEY_TRANSFER_RECEIVE");
                 response = getCommandManager().executeCommand(bWrapper, CommandFieldConstants.CMD_CUSTOMER_NADRA_VERIFICATION);
                 if (MfsWebUtil.isErrorXML(response)) {
                     logger.info("CustomerNadraVerificationCommand response for Mobile # :: " + appUserModel.getMobileNo() + "\n" + response);
@@ -8720,6 +8721,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
                 bWrapper = this.prepareNadraRequest(customerAppUserModel, webServiceVO);
                 bWrapper.putObject("PID", PID);
+                bWrapper.putObject(CommandFieldConstants.KEY_REMITTANCE_TYPE, "MONEY_TRANSFER_SEND");
                 response = getCommandManager().executeCommand(bWrapper, CommandFieldConstants.CMD_CUSTOMER_NADRA_VERIFICATION);
                 if (MfsWebUtil.isErrorXML(response)) {
                     logger.info("CustomerNadraVerificationCommand response for Mobile # :: " + appUserModel.getMobileNo() + "\n" + response);

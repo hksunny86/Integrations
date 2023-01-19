@@ -747,7 +747,7 @@ public class DebitPaymentApiTransaction extends SalesTransaction {
 
                 if(_workFlowWrapper.getProductModel().getProductId().equals(ProductConstantsInterface.STOCK_PURCHASED)){
                     customerMsgString = "nova.stock.product.msg";//{0}\nTrx ID: {1}\nYou have successfully paid your bill for {2} {3}\nRs.{4}\nfrom {5} agent at {6}\non {7}\nAvl Bal: Rs.{8}
-                    customerSMSParam = new Object[]{brandName, trxCode, productName, totalAmount, charges, time, date, customerBalance};
+                    customerSMSParam = new Object[]{brandName, trxCode, totalAmount, time, date, customerBalance};
                 }
 
             }

@@ -292,7 +292,7 @@ public class AllPayBillInfoCommand extends BaseCommand {
 
                         sma.setPaymentModeId(PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT);
 
-                        SmartMoneyAccountModel customerSMA = commonCommandManager.getSmartMoneyAccountByCustomerIdAndPaymentModeId(sma);
+//                        SmartMoneyAccountModel customerSMA = commonCommandManager.getSmartMoneyAccountByCustomerIdAndPaymentModeId(sma);
 //                        commonCommandManager.validateBalance(customerAppUserModel, customerSMA, commissionAmountsHolder.getTotalAmount(), true);
 
                         reasonId = (commissionAmountsHolder.getIsInclusiveCharges() ? 4L : 5L);

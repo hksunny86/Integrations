@@ -29,7 +29,7 @@ import com.inov8.verifly.common.model.AccountInfoModel;
 import com.inov8.verifly.common.wrapper.VeriflyBaseWrapper;
 
 /**
- * 
+ *
  * @author Jawwad Farooq
  * @version 1.0
  */
@@ -74,7 +74,7 @@ public class SwitchWrapperImpl extends BaseWrapperImpl implements SwitchWrapper 
 	public String toAccountNo;
 	public String toAccountType;
 	public String toCurrencyCode;
-	
+
 	public Double transactionAmount;
 	public String currencyCode;
 
@@ -104,13 +104,13 @@ public class SwitchWrapperImpl extends BaseWrapperImpl implements SwitchWrapper 
 
 	private OLALedgerVO ledgerVO;
 	private List<LedgerModel> ledgerModelList;
-	
+
 	private double agentBalance;
 
 	private PhoenixTransactionVO phoenixTransactionVO;
 	private List<PhoenixTransactionVO> phoenixTransactionList;
 
-	private boolean isAccountToCashLeg2;	
+	private boolean isAccountToCashLeg2;
 	private boolean isCashToCashLeg2;
 	private Double inclusiveCharges;
 	private int ftOrder;
@@ -123,9 +123,10 @@ public class SwitchWrapperImpl extends BaseWrapperImpl implements SwitchWrapper 
 	private String toAccountBB;
 	private String fromAccountBB;
 	private boolean skipPostedTrxEntry;
+	private boolean isOfflineBiller;
 
-    private I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
-    private I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO;
+	private I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
+	private I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO;
 
 	// private String encryptionKey;
 
@@ -418,7 +419,7 @@ public class SwitchWrapperImpl extends BaseWrapperImpl implements SwitchWrapper 
 	public void setUtilityCompanyId(String utilityCompanyId) {
 		this.utilityCompanyId = utilityCompanyId;
 	}
-	
+
 	public String getUtilityCompanyCategoryId() {
 		return utilityCompanyCategoryId;
 	}
@@ -617,7 +618,7 @@ public class SwitchWrapperImpl extends BaseWrapperImpl implements SwitchWrapper 
 
 	public void setIsAccountToCashLeg2(boolean isAccountToCashLeg2) {
 		this.isAccountToCashLeg2 = isAccountToCashLeg2;
-		
+
 	}
 
 	public boolean isCashToCashLeg2() {
@@ -653,7 +654,7 @@ public class SwitchWrapperImpl extends BaseWrapperImpl implements SwitchWrapper 
 	public void setTransactionTypeId(Long transactionTypeId) {
 		this.transactionTypeId = transactionTypeId;
 	}
-	
+
 	public boolean getSkipAccountInfoLoading() {
 		return skipAccountInfoLoading;
 	}
@@ -672,7 +673,7 @@ public class SwitchWrapperImpl extends BaseWrapperImpl implements SwitchWrapper 
 	public MiddlewareMessageVO getMiddlewareIntegrationMessageVO() {
 		return middlewareMessageVO;
 	}
-	
+
 	public String getSenderCNIC() {
 		return senderCNIC;
 	}
@@ -687,7 +688,7 @@ public class SwitchWrapperImpl extends BaseWrapperImpl implements SwitchWrapper 
 
 	public void setIntgTransactionTypeId(Long intgTransactionTypeId) {
 		this.intgTransactionTypeId = intgTransactionTypeId;
-	}	
+	}
 	public String getToAccountBB() {
 		return toAccountBB;
 	}
@@ -703,7 +704,7 @@ public class SwitchWrapperImpl extends BaseWrapperImpl implements SwitchWrapper 
 	public void setFromAccountBB(String fromAccountBB) {
 		this.fromAccountBB = fromAccountBB;
 	}
-	
+
 	public boolean getSkipPostedTrxEntry() {
 		return skipPostedTrxEntry;
 	}
@@ -712,20 +713,30 @@ public class SwitchWrapperImpl extends BaseWrapperImpl implements SwitchWrapper 
 		this.skipPostedTrxEntry = skipPostedTrxEntry;
 	}
 
-    public I8SBSwitchControllerRequestVO getI8SBSwitchControllerRequestVO() {
-        return i8SBSwitchControllerRequestVO;
-    }
+	public I8SBSwitchControllerRequestVO getI8SBSwitchControllerRequestVO() {
+		return i8SBSwitchControllerRequestVO;
+	}
 
-    public void setI8SBSwitchControllerRequestVO(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
-        this.i8SBSwitchControllerRequestVO = i8SBSwitchControllerRequestVO;
-    }
+	public void setI8SBSwitchControllerRequestVO(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
+		this.i8SBSwitchControllerRequestVO = i8SBSwitchControllerRequestVO;
+	}
 
-    public I8SBSwitchControllerResponseVO getI8SBSwitchControllerResponseVO() {
-        return i8SBSwitchControllerResponseVO;
-    }
+	public I8SBSwitchControllerResponseVO getI8SBSwitchControllerResponseVO() {
+		return i8SBSwitchControllerResponseVO;
+	}
 
-    public void setI8SBSwitchControllerResponseVO(I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO) {
-        this.i8SBSwitchControllerResponseVO = i8SBSwitchControllerResponseVO;
-    }
+	public void setI8SBSwitchControllerResponseVO(I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO) {
+		this.i8SBSwitchControllerResponseVO = i8SBSwitchControllerResponseVO;
+	}
+
+	@Override
+	public Boolean getIsOfflineBiller() {
+		return isOfflineBiller;
+	}
+
+	@Override
+	public void setIsOfflineBiller(Boolean isOfflineBiller) {
+		this.isOfflineBiller = isOfflineBiller;
+	}
 
 }

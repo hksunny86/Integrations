@@ -12,4 +12,7 @@ public interface CardFeeRuleDAO extends BaseDAO<CardFeeRuleModel,Long> {
     public int removeAllCardFeeRules();
 
     public CardFeeRuleModel loadCardFeeRuleModel(CardFeeRuleModel cardFeeRuleModel) throws FrameworkCheckedException;
+    public void saveCardFeeRuleModel(CardFeeRuleModel cardFeeRuleModel) throws FrameworkCheckedException;
+    public CardFeeRuleModel searchCardFeeRule(CardFeeRuleModel cardFeeRuleModel) throws FrameworkCheckedException;
+
 }

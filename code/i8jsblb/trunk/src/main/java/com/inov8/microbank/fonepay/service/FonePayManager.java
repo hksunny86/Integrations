@@ -16,6 +16,8 @@ import com.inov8.microbank.fonepay.model.VirtualCardReportModel;
 public interface FonePayManager {
 
 	public WebServiceVO createCustomer(WebServiceVO webServiceVO,boolean isConsumerApp) throws FrameworkCheckedException;
+	public WebServiceVO bulkCreateCustomer(WebServiceVO webServiceVO, long segmentId) throws FrameworkCheckedException;
+
 	public WebServiceVO createL2Customer(WebServiceVO webServiceVO,boolean isConsumerApp) throws FrameworkCheckedException;
 
 	public WebServiceVO makeExistingCustomerVerification(WebServiceVO webServiceVO);

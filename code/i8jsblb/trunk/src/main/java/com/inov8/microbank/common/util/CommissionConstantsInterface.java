@@ -31,6 +31,8 @@ public interface CommissionConstantsInterface
 	public static final Long HRA_SEGMENT_ID = 3L;
 	public static final Long DEFAULT_SEGMENT_ID = 10001L;
 	public static final Long MINOR_SEGMENT = 10319L;
+//for prod
+//	public static final Long MINOR_SEGMENT = 10394L;
 
 	public static final Long SCO_STAKE_HOLDER_ID = 50034L;
 

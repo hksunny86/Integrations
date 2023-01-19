@@ -25,11 +25,12 @@ public class MerchantDiscountCardModel extends BasePersistableModel implements S
     private double balanceAfterTransaction;
     private String segmentName;
     private String status;
-
+    private Date createDate;
     private Date createdOnEndDate;
     private Date createdOnStartDate;
     private Date start;
     private Date end;
+
     public MerchantDiscountCardModel() {
     }
 
@@ -151,7 +152,8 @@ public class MerchantDiscountCardModel extends BasePersistableModel implements S
     public void setMerchanName(String merchanName) {
         this.merchanName = merchanName;
     }
-    @Column(name = "BALANCE_AFTER_TRANSACTION")
+
+    @Column(name = "BALANCE_AFTER_TRANSACTION",nullable = false)
 
     public double getBalanceAfterTransaction() {
         return balanceAfterTransaction;
@@ -160,6 +162,7 @@ public class MerchantDiscountCardModel extends BasePersistableModel implements S
     public void setBalanceAfterTransaction(double balanceAfterTransaction) {
         this.balanceAfterTransaction = balanceAfterTransaction;
     }
+
     @Column(name = "SEGMENT_NAME")
 
     public String getSegmentName() {
@@ -169,6 +172,7 @@ public class MerchantDiscountCardModel extends BasePersistableModel implements S
     public void setSegmentName(String segmentName) {
         this.segmentName = segmentName;
     }
+
     @Column(name = "STATUS")
 
     public String getStatus() {
@@ -198,12 +202,14 @@ public class MerchantDiscountCardModel extends BasePersistableModel implements S
         this.transactionDate = transactionDate;
     }
 
+    @Column(name = "CREATEDATE")
+    public Date getCreateDate() {
+        return createDate;
+    }
 
-
-
-
-
-
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
     @Override
     public Object mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -219,6 +225,7 @@ public class MerchantDiscountCardModel extends BasePersistableModel implements S
         model.setTransactionAmount(resultSet.getDouble("TRANSACTION_AMOUNT"));
         model.setTransactionDate(resultSet.getDate("TRANSACTION_DATE"));
         model.setBalanceAfterTransaction(resultSet.getDouble("BALANCE_AFTER_TRANSACTION"));
+        model.setCreateDate(resultSet.getDate("CREATEDATE"));
         return model;
     }
 }

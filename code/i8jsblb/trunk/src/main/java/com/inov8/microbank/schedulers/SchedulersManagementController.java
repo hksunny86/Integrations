@@ -33,6 +33,7 @@ public class SchedulersManagementController extends BaseSearchController {
         SchedulersManagementModel model = new SchedulersManagementModel();
         SchedulersManagementModel model2 = new SchedulersManagementModel();
         SchedulersManagementModel model3 = new SchedulersManagementModel();
+        SchedulersManagementModel model4 = new SchedulersManagementModel();
         model.setJobName("Debit Card Import Export Scheduler");
         model.setJobType("Cron");
         model.setCronExpression("0 0 0/3 1/1 * ? *");
@@ -45,10 +46,15 @@ public class SchedulersManagementController extends BaseSearchController {
         model3.setJobType("Cron");
         model3.setCronExpression("0 0 0/3 1/1 * ? *");
         model3.setAction("Run Now");
+        model4.setJobName("Debit Card Issuance/Re-Issuance Fee Scheduler");
+        model4.setJobType("Cron");
+        model4.setCronExpression("0 0 0/3 1/1 * ? *");
+        model4.setAction("Run Now");
         List<SchedulersManagementModel> list = new ArrayList<>();
         list.add(model);
         list.add(model2);
         list.add(model3);
+        list.add(model4);
         Integer totalRecordsCount = list.size();
         if (linkedHashMap.isEmpty()) {
             linkedHashMap.put("jobName", SortingOrder.ASC);

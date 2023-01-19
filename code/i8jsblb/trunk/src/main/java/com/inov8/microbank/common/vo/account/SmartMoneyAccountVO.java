@@ -30,6 +30,7 @@ public class SmartMoneyAccountVO extends BasePersistableModel {
     private Boolean deleted;
     //
     private Long appUserId;
+    private String comments;
 
     public Long getSmartMoneyAccountId() {
         return smartMoneyAccountId;
@@ -209,5 +210,13 @@ public class SmartMoneyAccountVO extends BasePersistableModel {
 
     public void setPrevRegistrationStateId(Long prevRegistrationStateId) {
         this.prevRegistrationStateId = prevRegistrationStateId;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

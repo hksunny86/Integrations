@@ -27,7 +27,7 @@ public class DebitCardFeeSchedulerController {
     @RequestMapping(value = "/debitCardFeeSchedulersController")
     public ModelAndView runSchedulerManually(HttpServletRequest request, Model model)
     {
-        LOGGER.info("*********** Starting Manually DebitCard Fee Scheduler ***********");
+        LOGGER.info("*********** Starting Manually DebitCard Issuance/ReIssuance Fee Scheduler ***********");
         try
         {
             debitCardFeeDeductionScheduler.init();
@@ -37,7 +37,7 @@ public class DebitCardFeeSchedulerController {
             model.addAttribute("messages", "Unable perform selected operation.");
             LOGGER.error("Unable perform selected operation." + ex.getMessage(),ex);
         }
-        LOGGER.info("*********** End of Manually DebitCard Fee Scheduler ***********");
+        LOGGER.info("*********** End of Manually DebitCard Issuance/ReIssuance Fee Scheduler ***********");
         request.setAttribute("isManual", "true");
         String view = "redirect:schedulersmanagement.html";
         ModelAndView modelAndView = new ModelAndView(view);

@@ -1314,9 +1314,9 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                     }
                 } else if (model.getActionStatusId().longValue() == ActionAuthorizationConstantsInterface.ACTION_STATUS_APPROVAL_DENIED.longValue() && actionAuthorizationModel.getActionStatusId().equals(ActionAuthorizationConstantsInterface.ACTION_STATUS_PENDING_APPROVAL)) {
 
-                if ((!isValidChecker) || (actionAuthorizationModel.getCreatedById().equals(currentUserId))) {
-                    throw new FrameworkCheckedException("You are not authorized to update action status.");
-                }
+                    if ((!isValidChecker) || (actionAuthorizationModel.getCreatedById().equals(currentUserId))) {
+                        throw new FrameworkCheckedException("You are not authorized to update action status.");
+                    }
                     XStream xstream = new XStream();
                     MfsAccountModel mfsAccountModel = (MfsAccountModel) xstream.fromXML(actionAuthorizationModel.getReferenceData());
 
@@ -2546,7 +2546,9 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
             mfsAccountModel.setCreatedOn(customerModel.getCreatedOn());
             mfsAccountModel.setComments(customerModel.getComments());
             mfsAccountModel.setCnicSeen(customerModel.getIsCnicSeen());
-            mfsAccountModel.setFatherBvs(customerModel.getBvs());
+            if(customerModel.getBvs() != null) {
+                mfsAccountModel.setFatherBvs(customerModel.getBvs());
+            }
             mfsAccountModel.setVerisysDone(customerModel.getVerisysDone());
             mfsAccountModel.setScreeningPerformed(customerModel.isScreeningPerformed());
 
@@ -2941,7 +2943,9 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
             mfsAccountModel.setCreatedOn(customerModel.getCreatedOn());
             mfsAccountModel.setComments(customerModel.getComments());
             mfsAccountModel.setCnicSeen(customerModel.getIsCnicSeen());
-            mfsAccountModel.setFatherBvs(customerModel.getBvs());
+            if(customerModel.getBvs() != null) {
+                mfsAccountModel.setFatherBvs(customerModel.getBvs());
+            }
             mfsAccountModel.setVerisysDone(customerModel.getVerisysDone());
             mfsAccountModel.setScreeningPerformed(customerModel.isScreeningPerformed());
 

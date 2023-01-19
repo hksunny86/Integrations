@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta name="decorator" content="decorator">
-    <meta name="title" content="Agent Segment De-Activate" />
+    <meta name="title" content="Customer Device Activate/De-Activate" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/commonFormValidator.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/calendar_new.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/calendar-setup.js"></script>
@@ -120,95 +120,125 @@
 <div id="successMsg" class="infoMsg" style="display:none;"></div>
 <div id="errorMsg" class="errorMsg" style="display:none;"></div>
 <input id="message" value="777" type="hidden" />
-<html:form name="gentSegmentForm" commandName="AgentSegmentDeActiveController"  method="post" action="p_agentsegmentactivedeactive.html"
+<html:form name="refferalCustomerForm" commandName="CustomerDeviceVerificationUpdateController"  method="post" action="p_deviceverificationUpdate.html"
            onsubmit="return validateForm(this);" >
     <table width="850px" border="0">
         <tr>
-            <td class="formText">
-            <td align="right" class="formText">
-                Agent ID:</td>
-            <td align="left"><html:input path="agentID" onkeypress="return maskCommon(this,event)" cssClass="textBox" maxlength="13" tabindex="3" /></td>
+            <td align="right" class="formText">Mobile #:</td>
+            <td align="left">
+                <html:input path="mobileNo" onkeypress="return maskCommon(this,event)" cssClass="textBox" maxlength="11" tabindex="4" readonly="true"/>
             </td>
 
+            <td align="right" class="formText">Status:</td>
+            <td align="left">
+                <html:select path="approvalStatus" cssClass="textBox" tabindex="9">
+                    <html:option value="">---All---</html:option>
+                    <html:option value="ACTIVE">ACTIVE</html:option>
+                    <html:option value="IN-ACTIVE">IN-ACTIVE</html:option>
+                </html:select>
+            </td>
+        <tr>
 
-                <%--<td height="16" align="right" class="formText">Active:</td>--%>
-                <%--<td width="58%" align="left"><html:checkbox path="IsActive" tabindex="15"/>--%>
+        <tr>
+            <td align="right" class="formText">Device ID #:</td>
+            <td align="left">
+                <html:input path="id" onkeypress="return maskCommon(this,event)" cssClass="textBox" maxlength="11" tabindex="4" readonly="true"/>
+            </td>
+
+        <td height="16" align="right" class="formText"
+            width="25%">
+            Comments:
+        </td>
+        <td align="left"class="formText" width="25%">
+            <html:textarea style="height:50px;" path="remarks" tabindex="41" cssClass="textBox"
+                           maxlength="250"/>
+        </td>
+
+        <tr>
+
+
 
         </tr>
+
+        <tr> <td height="16" align="right" class="formText"
+                 width="25%">
+            Device Name:
+        </td>
+            <td align="left"  class="formText" width="25%">
+                <html:input  path="deviceName" tabindex="4" cssClass="textBox"
+                               maxlength="250" readonly="true"/>
+            </td></tr>
 
 
         <tr>
-            <td class="formText" align="right">
-            </td>
+            <td class="formText" align="right"></td>
             <td align="left">
-                <input name="_search" type="submit" class="button" value="Search" tabindex="12"/>
-                <input name="reset" type="reset"
-                       onclick="javascript: window.location='p_agentsegmentactivedeactive.html?actionId=${retriveAction}'"
-                       class="button" value="Cancel" tabindex="13" />
-            </td>
 
+                <input name="_save" type="submit" class="button" value="Save"/>
+                <input type="hidden" name="<%=PortalConstants.KEY_ACTION_ID%>"
+                       value="<%=PortalConstants.ACTION_CREATE%>"/>
+                <input type="button" name="cancel" value="Cancel" class="button"
+                       onclick="javascript:window.location='p_deviceverificationUpdate.html?actionId=2'"/>
+
+            </td>
             <td class="formText" align="right">
+
             </td>
-            <td align="left">
-            </td>
+            <td align="left">&nbsp;</td>
         </tr>
+        <input type="hidden" name="<%=PortalConstants.KEY_ACTION_ID%>" value="<%=PortalConstants.ACTION_RETRIEVE%>">
     </table>
 </html:form>
 <!-- data table result -->
-<ec:table items="reqList" var="model" action="${contextPath}/p_agentsegmentactivedeactive.html" title="" retrieveRowsCallback="limit"
-          filterRowsCallback="limit" sortRowsCallback="limit" filterable="false">
-    <authz:authorize ifAnyGranted="<%=PortalConstants.PERMS_EXPORT_XLS_READ%>">
-        <ec:exportXls fileName="Agent_Segment_De_Activate.xls" tooltip="Export Excel" />
-    </authz:authorize>
-    <authz:authorize ifAnyGranted="<%=PortalConstants.PERMS_EXPORT_XLSX_READ%>">
-        <ec:exportXlsx fileName="Agent_Segment_De_Activate.xlsx" tooltip="Export Excel" />
-    </authz:authorize>
-    <authz:authorize ifAnyGranted="<%=PortalConstants.PERMS_EXPORT_PDF_READ%>">
-        <ec:exportPdf view="com.inov8.microbank.common.util.CustomPdfView" headerBackgroundColor="#b6c2da" headerTitle="View Transactions"
-                      fileName="Agent_Segment_De_Activate.pdf" tooltip="Export PDF" />
-    </authz:authorize>
-    <authz:authorize ifAnyGranted="<%=PortalConstants.PERMS_EXPORT_CSV_READ%>">
-        <ec:exportCsv fileName="Agent_Segment_De_Activate.csv" tooltip="Export CSV"></ec:exportCsv>
-    </authz:authorize>
-    <ec:row>
-        <ec:column property="agentID" title="AGENT ID" escapeAutoFormat="true"/>
-        <ec:column property="segmentId" title="SEGMENT ID" escapeAutoFormat="true"/>
-        <ec:column property="name" title="SEGMENT NAME" escapeAutoFormat="true"/>
-        <ec:column property="productId" title="PRODUCT ID" escapeAutoFormat="true"/>
-        <ec:column property="productName" title="PRODUCT NAME" escapeAutoFormat="true"/>
-        <ec:column property="retailerId" title="RETAILER ID" escapeAutoFormat="true"/>
-        <ec:column property="retailerContactId" title="RETAILER CONTACT ID" escapeAutoFormat="true"/>
-        <ec:column property="createdOn" title="CREATED ON" escapeAutoFormat="true"/>
-        <ec:column property="updatedOn" title="Updated ON" escapeAutoFormat="true"/>
-        <ec:column property="createdBy" title="CREATED BY" escapeAutoFormat="true"/>
-        <ec:column property="updatedBy" title="UPDATED BY" escapeAutoFormat="true"/>
+<%--<ec:table items="reqList" var="model"--%>
+<%--          action="${contextPath}/p_deviceverification.html?actionId=${retriveAction}"--%>
+<%--          title="" retrieveRowsCallback="limit" filterRowsCallback="limit" sortRowsCallback="limit" filterable="false">--%>
+
+<%--    <authz:authorize ifAnyGranted="<%=PortalConstants.PERMS_EXPORT_XLS_READ%>">--%>
+<%--        <ec:exportXls fileName="Salary Disbursement.xls" tooltip="Export Excel" />--%>
+<%--    </authz:authorize>--%>
+<%--    <authz:authorize ifAnyGranted="<%=PortalConstants.PERMS_EXPORT_XLSX_READ%>">--%>
+<%--        <ec:exportXlsx fileName="Salary Disbursement.xlsx" tooltip="Export Excel" />--%>
+<%--    </authz:authorize>--%>
+<%--    <authz:authorize ifAnyGranted="<%=PortalConstants.PERMS_EXPORT_PDF_READ%>">--%>
+<%--        <ec:exportPdf view="com.inov8.microbank.common.util.CustomPdfView" headerBackgroundColor="#b6c2da" headerTitle="List Authorizations"--%>
+<%--                      fileName="Salary Disbursement Requests.pdf" tooltip="Export PDF" />--%>
+<%--    </authz:authorize>--%>
+<%--    <authz:authorize ifAnyGranted="<%=PortalConstants.PERMS_EXPORT_CSV_READ%>">--%>
+<%--        <ec:exportCsv fileName="Salary Disbursement.csv" tooltip="Export CSV"></ec:exportCsv>--%>
+<%--    </authz:authorize>--%>
+
+
+<%--    <ec:row>--%>
+
+<%--        <ec:column property="mobileNo" title="Mobile Number" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="id" title="Device ID" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="unquieIdentifier" title="Unquie Identifier" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="deviceName" title="Device Name" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="requestType" title="Request Type" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="approvalStatus" title="Approval Status" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="remarks" title="Remarks" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="requestedDate" title="Request Date" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="requestedTime" title="Request Time" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="fullName" title="Custmer Name" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="fatherHusbandName" title="Father Husband Name" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="address" title="Address" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="cnic" title="Cnic" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="dob"  filterable="false" cell="date" format="dd/MM/yyyy" title="Dob" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="cnicIssuanceDate"  filterable="false" cell="date"	format="dd/MM/yyyy" title="Cnic Issuance Date" escapeAutoFormat="true"/>--%>
+<%--        <ec:column property="cnicExpiryDate"  filterable="false" cell="date"	format="dd/MM/yyyy" title="Cnic Expiry Date" escapeAutoFormat="true"/>--%>
 
 
 
 
-        <ec:column alias="" title="" viewsAllowed="html">
-            <authz:authorize ifAnyGranted="<%=PortalConstants.IBFT_RETRY_ADVICE_UPDATE%>">
-                <c:choose>
-                    <c:when test="${model.isActive eq true}">
-                        <input type="button" class="button" value="De-Active Segment" id="btnclear_${model.agentSegmentExceptionId}"/>
-                    </c:when>
-                    <c:otherwise>
-                        <input type="button" class="button" disabled="disabled" value="De-Active Segment" id="btnclear_${model.agentSegmentExceptionId}" />
-                    </c:otherwise>
-                </c:choose>
-                <ajax:updateField baseUrl="${contextPath}/p_deactiveagentsegmentajaxrequest.html"
-                                  source="btnclear_${model.agentSegmentExceptionId}" eventType="click"
-                                  target="message" action="btnclear_${model.agentSegmentExceptionId}"
-                                  parameters="ibftRetryAdviceId=${model.agentSegmentExceptionId}"
-                                  parser="new ResponseXmlParser()"
-                                  errorFunction="ajaxErrorFunction"
-                                  preFunction="initProgress"
-                                  postFunction="resetProgressWebService" />
-            </authz:authorize>
-        </ec:column>
 
-    </ec:row>
-</ec:table>
+<%--        <ec:column alias="" title=""  style="text-align: center" sortable="false" viewsAllowed="html">--%>
+<%--            <input type="button" class="button" style="width='90px'" value="Change Info"--%>
+<%--                   onclick="javascript:changeInfo('${contextPath}/p-savesalarydisbursementform.html?appUserId=${model.appUserId}');" />--%>
+<%--        </ec:column>--%>
+
+<%--    </ec:row>--%>
+<%--</ec:table>--%>
 <script type="text/javascript">
     // Calendar.setup({
     //     inputField : "startDate", // id of the input field

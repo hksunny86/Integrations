@@ -790,7 +790,9 @@ public class MfsAccountController extends AdvanceAuthorizationFormController {
                 mfsAccountModel.setComments(customerModel.getComments());
                 mfsAccountModel.setInitialDeposit(customerModel.getInitialDeposit());
                 mfsAccountModel.setCnicSeen(customerModel.getIsCnicSeen());
-                mfsAccountModel.setFatherBvs(customerModel.getBvs());
+                if(customerModel.getBvs() != null) {
+                    mfsAccountModel.setFatherBvs(customerModel.getBvs());
+                }
                 mfsAccountModel.setVerisysDone(customerModel.getVerisysDone());
                 mfsAccountModel.setExpectedMonthlyTurnOver(customerModel.getMonthlyTurnOver());
                 mfsAccountModel.setScreeningPerformed(customerModel.isScreeningPerformed());

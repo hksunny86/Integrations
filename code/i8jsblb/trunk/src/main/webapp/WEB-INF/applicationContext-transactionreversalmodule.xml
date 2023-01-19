@@ -99,8 +99,8 @@
 					<property name="coreAdviceSender" ref="coreAdviceSender"/>
 					<property name="iBFTIncomingRequestQueue" ref="iBFTIncomingRequestQueue"/>
 					<property name="walletIncomingRequestQueue" ref="walletIncomingRequestQueue"/>
-				<property name="creditPaymentRequestQueue" ref="creditPaymentRequestQueue"></property>
-				<property name="debitPaymentRequestQueue" ref="debitPaymentRequestQueue"></property>
+<!--				<property name="creditPaymentRequestQueue" ref="creditPaymentRequestQueue"></property>-->
+<!--				<property name="debitPaymentRequestQueue" ref="debitPaymentRequestQueue"></property>-->
 					<property name="middlewareRetryAdviceDAO" ref="middlewareRetryAdviceDAO"/>
 					<property name="ibftRetryAdviceDAO" ref="ibftRetryAdviceDAO"/>
 					<property name="iBFTRetryAdviceListViewDAO" ref="iBFTRetryAdviceListViewDAO"/>

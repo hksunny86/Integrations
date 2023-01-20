@@ -198,6 +198,7 @@ public class DebitCardModelHibernateDAO extends BaseHibernateDAO<DebitCardModel,
                     ",NEW_INSTALLMENT_DATE_ANNUAL = '" + newInstallmentDateAnnual + "'" +
                     ",LAST_INSTALLMENT_DATE_ANNUAL = '" + updatedOn + "'" +
                     ",TRANSACTION_CODE = " + model.getTransactionCode() +
+                    ",IS_INSTALLMENT = " + 1L +
                     ",FEE = " + model.getFee() +
                     " WHERE DEBIT_CARD_ID = " + model.getDebitCardId();
 //        }

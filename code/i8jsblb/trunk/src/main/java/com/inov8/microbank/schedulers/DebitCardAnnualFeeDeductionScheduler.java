@@ -66,7 +66,7 @@ public class DebitCardAnnualFeeDeductionScheduler {
                         model.setUpdatedOn(new Date());
                         model.setFeeDeductionDate(new Date());
                         model.setFeeDeductionDateAnnual(new Date());
-                        if(model.getNoOfInstallments() != null) {
+                        if(model.getNoOfInstallmentsAnnual() != null) {
                             debitCardManager.saveOrUpdateDebitCardModelForAnnualFee(model);
                         }
                         else{

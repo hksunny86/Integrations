@@ -310,6 +310,7 @@ public class IBFTTransaction extends SalesTransaction {
 		wrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGES, messageList);
 		
 		return wrapper;
+
 	}
 	
 

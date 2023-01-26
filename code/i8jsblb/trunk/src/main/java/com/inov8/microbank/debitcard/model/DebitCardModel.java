@@ -665,6 +665,7 @@ public class DebitCardModel extends BasePersistableModel implements Serializable
         model.setNewInstallmentDateForAnnual(resultSet.getDate("NEW_INSTALLMENT_DATE_ANNUAL"));
         model.setRemainingNoOfInstallments(resultSet.getLong("REMAINING_NO_OF_INSTALLMENTS"));
         model.setNoOfInstallments(resultSet.getLong("NO_OF_INSTALLMENT"));
+        model.setIsInstallments(resultSet.getBoolean("IS_INSTALLMENT"));
         model.setRemainingNoOfInstallmentsAnnual(resultSet.getLong("REMAINING_NO_OF_INSTALL_ANNUAL"));
         return model;
     }

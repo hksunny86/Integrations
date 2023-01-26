@@ -46,6 +46,7 @@ public interface DebitCardManager {
     public DebitCardModel getDebitCradModelByNicAndState(String cnic, Long cardStausId) throws FrameworkCheckedException;
 
     List<DebitCardModel> loadAllCardsOnRenewRequired() throws FrameworkCheckedException;
+    List<DebitCardModel> loadAllCardsOnRenewRequiredForAnnualFee() throws FrameworkCheckedException;
     List<DebitCardModel> loadAllCardsOnReIssuanceRequired() throws FrameworkCheckedException;
     List<DebitCardChargesSafRepoModel> loadAllDebitCardFeeChargesRequired() throws FrameworkCheckedException;
 

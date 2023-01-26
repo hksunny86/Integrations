@@ -6890,7 +6890,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
             debitCardModel.setFee(debitCardVo.getFee());
             debitCardModel.setUpdatedOn(new Date());
 //            debitCardModel.setAnnualFeeDate(startDate);
-            debitCardModel.setLastInstallmentDateForReIssuance(new Date());
             debitCardModel.setReIssuanceDate(new Date());
 
             if(baseWrapper.getObject("cardFeeRuleModel") != null){
@@ -6930,6 +6929,7 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
                 debitCardModel.setNoOfInstallments(Long.valueOf((String.valueOf(baseWrapper.getObject("noOfInstallments")))));
 
                 debitCardModel.setRemainingNoOfInstallments(Long.parseLong((String.valueOf(baseWrapper.getObject("noOfInstallments")))) - 1);
+                debitCardModel.setLastInstallmentDateForReIssuance(new Date());
             }
 
             debitCardModel = debitCardModelDAO.saveOrUpdate(debitCardModel);
@@ -6966,7 +6966,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
             if(baseWrapper.getObject("productId").equals(ProductConstantsInterface.DEBIT_CARD_ISSUANCE)){
                 debitCardModel.setIssuanceByAgent("1");
             }
-            debitCardModel.setLastInstallmentDateForIssuance(new Date());
 
             if(baseWrapper.getObject("cardFeeRuleModel") != null){
                 if(String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("QUARTERLY")){
@@ -7005,6 +7004,7 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
                 debitCardModel.setNoOfInstallments(Long.valueOf((String.valueOf(baseWrapper.getObject("noOfInstallments")))));
 
                 debitCardModel.setRemainingNoOfInstallments(Long.parseLong((String.valueOf(baseWrapper.getObject("noOfInstallments")))) - 1);
+                debitCardModel.setLastInstallmentDateForIssuance(new Date());
             }
 
             debitCardModel = debitCardModelDAO.saveOrUpdate(debitCardModel);

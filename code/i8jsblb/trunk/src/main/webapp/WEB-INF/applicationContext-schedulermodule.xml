@@ -174,6 +174,25 @@
 
     <!-- debitCardFeeDeductionScheduler -->
 
+    <!-- debitCardAnnualFeeDeductionScheduler -->
+
+    <bean id="debitCardAnnualFeeDeductionJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="debitCardAnnualFeeDeductionScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="debitCardAnnualFeeDeductiontCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="debitCardAnnualFeeDeductionJob"/>
+        <property name="cronExpression" value="0 0/5 * 1/1 * ? *"/>
+    </bean>
+    <bean id="debitCardAnnualFeeDeductionScheduler" class="com.inov8.microbank.schedulers.DebitCardAnnualFeeDeductionScheduler">
+        <property name="debitCardManager" ref="debitCardManager"/>
+        <property name="commandManager" ref="cmdManager"/>
+    </bean>
+
+    <!-- debitCardAnnualFeeDeductionScheduler -->
+
 
     <!-- Start of debitcardReissuanceScheduler bean-->
     <bean id="debitcardReissuanceScheduler" class="com.inov8.microbank.schedulers.DebitCardReIssuanceScheduler">

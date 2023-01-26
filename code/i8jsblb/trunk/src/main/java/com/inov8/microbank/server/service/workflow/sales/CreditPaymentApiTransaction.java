@@ -502,6 +502,20 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
                         },
                         null);
             }
+             else if (wrapper.getProductModel().getProductId().equals(ProductConstantsInterface.STOCK_PURCHASED)) {
+                Double charges = wrapper.getCommissionAmountsHolder().getTransactionProcessingAmount();
+                customerSMS = this.getMessageSource().getMessage(
+                        "stockSold.SMS",
+                        new Object[]{
+                                brandName,
+                                wrapper.getTransactionCodeModel().getCode(),
+                                Formatter.formatDouble(wrapper.getCommissionAmountsHolder().getTransactionAmount()),
+                                tf.print(new LocalTime()),
+                                dtf.print(new DateTime()),
+                                Formatter.formatDouble(wrapper.getOLASwitchWrapper().getOlavo().getToBalanceAfterTransaction())
+                        },
+                        null);
+            }
             else {
                 Double charges = wrapper.getCommissionAmountsHolder().getTransactionProcessingAmount();
                 customerSMS = this.getMessageSource().getMessage(

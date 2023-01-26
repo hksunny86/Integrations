@@ -80,25 +80,8 @@ public class DebitCardFeeDeductionScheduler {
                 for(DebitCardModel model : toBeRenewedList)
                 {
                     try{
-                        if(Days.daysBetween(new DateTime(model.getIssuanceDate()),new DateTime(new Date())).getDays() >= 365 &&
-                                Days.daysBetween(new DateTime(model.getFeeDeductionDate()),new DateTime(new Date())).getDays() >= 365)
-                        {
-                            debitCardManager.makeFeeDeductionCommand(null,model,
-                                    ProductConstantsInterface.DEBIT_CARD_ANNUAL_FEE, CardConstantsInterface.CARD_FEE_TYPE_ANNUAL, DeviceTypeConstantsInterface.MOBILE);
-                            model.setUpdatedOn(new Date());
-                            model.setFeeDeductionDate(new Date());
-                            model.setFeeDeductionDateAnnual(new Date());
-//                            model.setLastInstallmentDateForAnnual(new Date());
-//                            model.setNewInstallmentDateForAnnual();
-//                            model.setAnnualFeeDate(dateStr);
-                            if(model.getNoOfInstallments() != null) {
-                                debitCardManager.saveOrUpdateDebitCardModelForAnnualFee(model);
-                            }
-                            else{
-                                debitCardManager.saveOrUpdateDebitCardModel(model);
-                            }
-                        }
-                        else if(model.getReissuance() != null && model.getReissuance().equals("1")){
+                        if(model.getReissuance() != null && model.getReissuance().equals("1")){
+                            LOGGER.info("*********** Processing Debit Card ReIssuance ***********");
                             debitCardManager.makeFeeDeductionCommand(null,model,
                                     ProductConstantsInterface.DEBIT_CARD_RE_ISSUANCE, CardConstantsInterface.CARD_FEE_TYPE_RE_ISSUANCE, DeviceTypeConstantsInterface.MOBILE);
                             model.setUpdatedOn(new Date());
@@ -107,6 +90,7 @@ public class DebitCardFeeDeductionScheduler {
                         }
                         else{
                             if(model.getIssuanceByAgent() != null && model.getIssuanceByAgent().equals("1")){
+                                LOGGER.info("*********** Processing Debit Card Issuance by Agent ***********");
                                 debitCardManager.makeFeeDeductionCommand(null,model,
                                         ProductConstantsInterface.DEBIT_CARD_ISSUANCE, CardConstantsInterface.CARD_FEE_TYPE_ISSUANCE, DeviceTypeConstantsInterface.MOBILE);
                                 model.setUpdatedOn(new Date());
@@ -114,6 +98,7 @@ public class DebitCardFeeDeductionScheduler {
                                 debitCardManager.saveOrUpdateDebitCardModelForIssuanceFee(model);
                             }
                             else{
+                                LOGGER.info("*********** Processing Debit Card Issuance ***********");
                                 debitCardManager.makeFeeDeductionCommand(null,model,
                                         ProductConstantsInterface.CUSTOMER_DEBIT_CARD_ISSUANCE, CardConstantsInterface.CARD_FEE_TYPE_ISSUANCE, DeviceTypeConstantsInterface.MOBILE);
                                 model.setUpdatedOn(new Date());

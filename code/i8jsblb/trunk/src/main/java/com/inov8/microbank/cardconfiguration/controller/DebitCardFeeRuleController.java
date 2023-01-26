@@ -72,7 +72,7 @@ public class DebitCardFeeRuleController extends AdvanceFormController
         List<CardFeeTypeModel> cardFeeTypeModelList = null;
         List<DistributorModel> distributorModelList =null;
 
-            CardTypeModel cardTypeModel = new CardTypeModel();
+        CardTypeModel cardTypeModel = new CardTypeModel();
         refDataWrapper = new ReferenceDataWrapperImpl(cardTypeModel, "name", SortingOrder.ASC);
         refDataWrapper = commonFacade.getReferenceData(refDataWrapper);
         cardTypeModelList = refDataWrapper.getReferenceDataList();
@@ -204,6 +204,10 @@ public class DebitCardFeeRuleController extends AdvanceFormController
                 boolean isExist = false;
                 for(CardFeeRuleModel model : cardFeeRuleModelList){
                     if( model.getCardFeeRuleId() != null && existingModel.getCardFeeRuleId().longValue() == model.getCardFeeRuleId().longValue()){
+                        model.setInstallmentAmount(existingModel.getInstallmentAmount());
+                        model.setInstallmentPlan(existingModel.getInstallmentPlan());
+                        model.setIsInstallments(existingModel.getIsInstallments());
+                        model.setNoOfInstallments(existingModel.getNoOfInstallments());
                         isExist = true;
                         break;
                     }
@@ -277,6 +281,3 @@ public class DebitCardFeeRuleController extends AdvanceFormController
         this.cardConfigurationManager = cardConfigurationManager;
     }
 }
-
-
-

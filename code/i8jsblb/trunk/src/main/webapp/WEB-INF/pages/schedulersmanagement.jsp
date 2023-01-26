@@ -99,6 +99,9 @@
 			else if (jobName=="Ac Holder Disbursement Scheduler"){
 				var action = "acHolderDisbursementSchedulersController.html";
 			}
+			else if (jobName=="Debit Card Annual Fee Scheduler") {
+				var action = "debitCardAnnualFeeSchedulerController.html";
+			}
 			else {
                 var action = "debitCardFeeSchedulersController.html";
             }

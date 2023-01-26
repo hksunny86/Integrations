@@ -57,7 +57,7 @@ public class SendPushNotificationService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.sendPushNotificationURL);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Access-Token", this.accessToken);
+            headers.add("Access_token", this.accessToken);
             String requestJSON = JSONUtil.getJSON(sendPushNotificationRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
             Iterator res = this.restTemplate.getMessageConverters().iterator();
@@ -72,7 +72,7 @@ public class SendPushNotificationService {
             try {
                 logger.info("Sending Push Notification Request to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
-                logger.info("Response Code received from client " + httpEntity.getBody().toString());
+                logger.info("Response Code received from client " + res1.getStatusCode().toString());
                 if (res1.getStatusCode().toString().equals("200")) {
                     response = (String) res1.getBody();
                     sendPushNotificationResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
+import io.grpc.netty.shaded.io.netty.util.internal.StringUtil;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -47,37 +48,41 @@ public class SendPushNotificationsRequest extends Request {
         SendPushNotification request = new SendPushNotification();
         sendPushNotificationsRequestList = new ArrayList();
 
-        request.setToken(PropertyReader.getProperty("sendPushNotification.token"));
+//        request.setToken(PropertyReader.getProperty("sendPushNotification.token"));
         request.setMobile(i8SBSwitchControllerRequestVO.getMobileNumber());
         request.setTitle(i8SBSwitchControllerRequestVO.getTitle());
         request.setMessage(i8SBSwitchControllerRequestVO.getMessage());
-        request.setType(i8SBSwitchControllerRequestVO.getMessageType());
+        if (StringUtil.isNullOrEmpty(i8SBSwitchControllerRequestVO.getMessageType())) {
+            request.setType("ZINDIGI");
+        } else {
+            request.setType(i8SBSwitchControllerRequestVO.getMessageType());
+        }
         sendPushNotificationsRequestList.add(request);
 
         this.setSendPushNotifications(sendPushNotificationsRequestList);
     }
 
     public boolean validateRequest() throws I8SBValidationException {
-//        I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
-//        List<SendPushNotification> sendPushNotifications = this.getSendPushNotifications();
-//        SendPushNotification sendPushNotification = new SendPushNotification();
-//        sendPushNotifications.forEach( volist -> {
-//            sendPushNotification.setMobile(volist.getMobile());
-//            sendPushNotification.setMessage(volist.getMessage());
-//        });
-//
-//        if (StringUtils.isEmpty(sendPushNotification.getMobile())) {
-//            throw new I8SBValidationException("[Failed] Mobile Number:" + sendPushNotification.getMobile());
-//        }
-//        if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getMessage())) {
-//            throw new I8SBValidationException("[Failed] Message:" + i8SBSwitchControllerRequestVO.getMessage());
-//        }
-//        if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getTitle())) {
-//            throw new I8SBValidationException("[Failed] Title:" + i8SBSwitchControllerRequestVO.getTitle());
-//        }
-//        if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getType())) {
-//            throw new I8SBValidationException("[Failed] Type:" + i8SBSwitchControllerRequestVO.getType());
-//        }
+
+        List<SendPushNotification> sendPushNotifications = this.getSendPushNotifications();
+        SendPushNotification sendPushNotification = new SendPushNotification();
+        sendPushNotifications.forEach(volist -> {
+            sendPushNotification.setMobile(volist.getMobile());
+            sendPushNotification.setMessage(volist.getMessage());
+            sendPushNotification.setTitle(volist.getTitle());
+            sendPushNotification.setType(volist.getType());
+        });
+
+        if (StringUtils.isEmpty(sendPushNotification.getMobile())) {
+            throw new I8SBValidationException("[Failed] Mobile Number:" + sendPushNotification.getMobile());
+        }
+        if (StringUtils.isEmpty(sendPushNotification.getMessage())) {
+            throw new I8SBValidationException("[Failed] Transaction Message:" + sendPushNotification.getMessage());
+        }
+        if (StringUtils.isEmpty(sendPushNotification.getTitle())) {
+            throw new I8SBValidationException("[Failed] Message Title:" + sendPushNotification.getTitle());
+        }
+
         return true;
     }
 }

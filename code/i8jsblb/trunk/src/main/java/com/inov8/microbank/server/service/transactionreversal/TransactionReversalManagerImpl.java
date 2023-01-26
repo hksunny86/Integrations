@@ -79,8 +79,8 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
     private CoreAdviceSender coreAdviceSender;
     private IBFTIncomingRequestQueue iBFTIncomingRequestQueue;
     private WalletIncomingRequestQueue walletIncomingRequestQueue;
-    private CreditPaymentRequestQueue creditPaymentRequestQueue;
-    private DebitPaymentRequestQueue debitPaymentRequestQueue;
+//    private CreditPaymentRequestQueue creditPaymentRequestQueue;
+//    private DebitPaymentRequestQueue debitPaymentRequestQueue;
 
     private MiddlewareRetryAdviceDAO middlewareRetryAdviceDAO;
     private IBFTRetryAdviceDAO ibftRetryAdviceDAO;
@@ -889,10 +889,10 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
     public BaseWrapper makeIBFTRetryAdvice(Long ibftRetryAdviceId) throws FrameworkCheckedException {
 
         IBFTRetryAdviceModel model = ibftRetryAdviceDAO.findByPrimaryKey(ibftRetryAdviceId);
-        String names = MessageUtil.getMessage("Credit.Payment.advice.Product.Ids");
-        List<String> creditPaymentProductIds = Arrays.asList(names.split("\\s*,\\s*"));
-        String debitnames = MessageUtil.getMessage("debit.Payment.advice.Product.Ids");
-        List<String> debitPaymentProductIds = Arrays.asList(debitnames.split("\\s*,\\s*"));
+//        String names = MessageUtil.getMessage("Credit.Payment.advice.Product.Ids");
+//        List<String> creditPaymentProductIds = Arrays.asList(names.split("\\s*,\\s*"));
+//        String debitnames = MessageUtil.getMessage("debit.Payment.advice.Product.Ids");
+//        List<String> debitPaymentProductIds = Arrays.asList(debitnames.split("\\s*,\\s*"));
         if (model.getStatus() == null) {
             throw new FrameworkCheckedException("You cannot retry this advice.");
         } else if (model.getStatus().equals(PortalConstants.IBFT_STATUS_IN_PROGRESS)) {
@@ -937,7 +937,6 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
             middlewareAdviceVO.setAccountNo1(model.getMobileNo());
             middlewareAdviceVO.setAccountNo2(model.getAccountNo());
             middlewareAdviceVO.setProductId(model.getProductId());
-            middlewareAdviceVO.setMicrobankTransactionCode(model.getTransactionCode());
         }
         middlewareAdviceVO.setTransactionAmount(model.getTransactionAmount().toString());
         middlewareAdviceVO.setRequestTime(model.getRequestTime());
@@ -957,18 +956,19 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
                 middlewareAdviceVO.setAccountNo2(model.getMobileNo());
                 saveNewIBFTRecord(middlewareAdviceVO);
                 this.walletIncomingRequestQueue.sentWalletRequest(middlewareAdviceVO);
-            }else if (model.getProductId()!=null&& creditPaymentProductIds.contains(model.getProductId().toString())){
-                middlewareAdviceVO.setAccountNo1(model.getAccountNo());
-                middlewareAdviceVO.setAccountNo2(model.getMobileNo());
-                saveNewIBFTRecord(middlewareAdviceVO);
-                this.creditPaymentRequestQueue.sentWalletRequest(middlewareAdviceVO);
             }
-            else if (model.getProductId()!=null&& debitPaymentProductIds.contains(model.getProductId().toString())){
-                middlewareAdviceVO.setAccountNo1(model.getAccountNo());
-                middlewareAdviceVO.setAccountNo2(model.getMobileNo());
-                saveNewIBFTRecord(middlewareAdviceVO);
-                this.debitPaymentRequestQueue.sentWalletRequest(middlewareAdviceVO);
-            }
+//            else if (model.getProductId()!=null&& creditPaymentProductIds.contains(model.getProductId().toString())){
+//                middlewareAdviceVO.setAccountNo1(model.getAccountNo());
+//                middlewareAdviceVO.setAccountNo2(model.getMobileNo());
+//                saveNewIBFTRecord(middlewareAdviceVO);
+//                this.creditPaymentRequestQueue.sentWalletRequest(middlewareAdviceVO);
+//            }
+//            else if (model.getProductId()!=null&& debitPaymentProductIds.contains(model.getProductId().toString())){
+//                middlewareAdviceVO.setAccountNo1(model.getAccountNo());
+//                middlewareAdviceVO.setAccountNo2(model.getMobileNo());
+//                saveNewIBFTRecord(middlewareAdviceVO);
+//                this.debitPaymentRequestQueue.sentWalletRequest(middlewareAdviceVO);
+//            }
             else {
                 saveNewIBFTRecord(middlewareAdviceVO);
                 this.iBFTIncomingRequestQueue.sentIBFTRequest(middlewareAdviceVO);
@@ -1145,7 +1145,7 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
     /*
      * To check whether the IBFT Credit advice request (with certian STAN and Date(upto seconds)) is already performed or not
      */
-    public boolean checkAlreadySuccessful(String stan, Date requestTime,String portalConstant) throws FrameworkCheckedException {
+    public boolean checkAlreadySuccessful(String stan, Date requestTime) throws FrameworkCheckedException {
         boolean result = false;
 
         if (StringUtil.isNullOrEmpty(stan) || requestTime == null) {
@@ -1154,7 +1154,8 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
 
         IBFTRetryAdviceModel iBFTRetryAdviceModel = new IBFTRetryAdviceModel();
         iBFTRetryAdviceModel.setStan(stan);
-        iBFTRetryAdviceModel.setStatus(portalConstant);
+//        iBFTRetryAdviceModel.setStatus(portalConstant);
+        iBFTRetryAdviceModel.setStatus("Successful");
 
         Calendar c = Calendar.getInstance();
         c.setTime(requestTime);
@@ -1293,7 +1294,7 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
 
             } else if (productId.equals(ProductConstantsInterface.AGENT_ET_COLLECTION)
                     || productId.equals(ProductConstantsInterface.AGENT_KP_CHALLAN_COLLECTION)
-                    || productId.equals(ProductConstantsInterface.AGENT_VALLENCIA_COLLECTION)
+//                    || productId.equals(ProductConstantsInterface.AGENT_VALLENCIA_COLLECTION)
 
                     || productId.equals(ProductConstantsInterface.AGENT_KP_CHALLAN_COLLECTION_BY_ACCOUNT)
                     || productId.equals(ProductConstantsInterface.AGENT_LICENSE_FEE_COLLECTION)
@@ -1301,7 +1302,7 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
                     || productId.equals(ProductConstantsInterface.AGENT_E_LEARNING_MANAGEMENT_SYSTEM)
                     || productId.equals(ProductConstantsInterface.CUSTOMER_ET_COLLECTION)
                     || productId.equals(ProductConstantsInterface.CUSTOMER_KP_CHALLAN_COLLECTION)
-                    || productId.equals(ProductConstantsInterface.CUSTOMER_VALLENCIA_COLLECTION)
+//                    || productId.equals(ProductConstantsInterface.CUSTOMER_VALLENCIA_COLLECTION)
                     || productId.equals(ProductConstantsInterface.CUSTOMER_BALUCHISTAN_ET_COLLECTION)
                     || productId.equals(ProductConstantsInterface.CUSTOMER_E_LEARNING_MANAGEMENT_SYSTEM)
                     || productId.equals(ProductConstantsInterface.CUST_IHL_ISLAMABAD_CAMP)
@@ -1511,13 +1512,13 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
     }
 
 
-    public void setCreditPaymentRequestQueue(CreditPaymentRequestQueue creditPaymentRequestQueue) {
-        this.creditPaymentRequestQueue = creditPaymentRequestQueue;
-    }
-
-    public void setDebitPaymentRequestQueue(DebitPaymentRequestQueue debitPaymentRequestQueue) {
-        this.debitPaymentRequestQueue = debitPaymentRequestQueue;
-    }
+//    public void setCreditPaymentRequestQueue(CreditPaymentRequestQueue creditPaymentRequestQueue) {
+//        this.creditPaymentRequestQueue = creditPaymentRequestQueue;
+//    }
+//
+//    public void setDebitPaymentRequestQueue(DebitPaymentRequestQueue debitPaymentRequestQueue) {
+//        this.debitPaymentRequestQueue = debitPaymentRequestQueue;
+//    }
 
     public void setOlaManager(OLAManager olaManager) {
         this.olaManager = olaManager;

@@ -145,6 +145,11 @@
                                 <td align="center">
                                     <html:input path="cardFeeRuleModelList[${iterationStatus.index}].amount" cssClass="textBox" maxlength="10" onkeypress="return maskNumber(this,event)" cell="currency"  format="###,###,##0.00" style="text-align: right"/>
                                 </td>
+                                <td>
+                                    <input type="button" value="Installments" class="button"
+                                           onClick="return openDebitCardFeeAnnualWindow('${cardFeeRuleModel.cardFeeRuleId}')"/>
+                                </td>
+
                                 <authz:authorize ifAnyGranted="<%= PortalConstants.MNG_CARD_FEE_UPDATE %>">
                                     <td align="right">
                                         <input type="button" id="cardFeeRuleModelList${iterationStatus.index}.add" class="addRow" value="+" style="font-weight:bold;padding: 0px 12px;height: 29px;font-size:20px;" title="Add row" />
@@ -152,6 +157,7 @@
                                     </td>
                                 </authz:authorize>
                             </tr>
+
                         </c:forEach>
                         </tbody>
                     </table>
@@ -181,20 +187,30 @@
     </table>
 </html:form>
 
-<%--<div style="visibility: hidden">
-    <select id="customerAccountTypes">
-        <option label="--All--"></option>
-        <c:forEach var="customerAccountTypeModel" items="${customerAccountTypeModelList}">
-            <option label="${customerAccountTypeModel.name}" value="${customerAccountTypeModel.customerAccountTypeId}"></option>
-        </c:forEach>
-    </select>
-    <select id="agentAccountTypes">
-        <option label="--All--"></option>
-        <c:forEach var="agentAccountTypeModel" items="${agentAccountTypeModelList}">
-            <option label="${agentAccountTypeModel.name}" value="${agentAccountTypeModel.customerAccountTypeId}"></option>
-        </c:forEach>
-    </select>
-</div>--%>
+<script type="text/javascript" language="javascript">
+
+    function openDebitCardFeeAnnualWindow(cardFeeRuleId) {
+
+        newWindow=window.open('p_debitcardannualfeeinstallments.html?cardFeeRuleId='+cardFeeRuleId);
+        if(window.focus) newWindow.focus();
+        return false;
+    }
+    <%--<div style="visibility: hidden">
+        <select id="customerAccountTypes">
+            <option label="--All--"></option>
+            <c:forEach var="customerAccountTypeModel" items="${customerAccountTypeModelList}">
+                <option label="${customerAccountTypeModel.name}" value="${customerAccountTypeModel.customerAccountTypeId}"></option>
+            </c:forEach>
+        </select>
+        <select id="agentAccountTypes">
+            <option label="--All--"></option>
+            <c:forEach var="agentAccountTypeModel" items="${agentAccountTypeModelList}">
+                <option label="${agentAccountTypeModel.name}" value="${agentAccountTypeModel.customerAccountTypeId}"></option>
+            </c:forEach>
+        </select>
+    </div>--%>
+</script>
+
 <div id="dialog-confirm" title="Confirmation" style="display: none;">
     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Are you sure you want to Remove all rules?</p>
 </div>

@@ -45,7 +45,8 @@ public class CreditPaymentReqQueueListener implements MessageListener {
             if (!isAlreadyExists) {
                 transactionReversalManager.saveNewIBFTRecord(messageVO);
             }
-            boolean isAlreadyDone = transactionReversalManager.checkAlreadySuccessful(messageVO.getStan(), messageVO.getRequestTime(),PortalConstants.CREDIT_PAYMENT_ADVICE_TYPE);
+            boolean isAlreadyDone =
+                    transactionReversalManager.checkAlreadySuccessful(messageVO.getStan(), messageVO.getRequestTime());
 
             if (isAlreadyDone) {
 

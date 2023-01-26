@@ -50,7 +50,7 @@ public class DebitPaymentReqQueueListener implements MessageListener {
             if (!isAlreadyExists) {
                 transactionReversalManager.saveNewIBFTRecord(messageVO);
             }
-            boolean isAlreadyDone = transactionReversalManager.checkAlreadySuccessful(messageVO.getStan(), messageVO.getRequestTime(), PortalConstants.DEBIT_PAYMENT_ADVICE_TYPE);
+            boolean isAlreadyDone = transactionReversalManager.checkAlreadySuccessful(messageVO.getStan(), messageVO.getRequestTime());
 
             if (isAlreadyDone) {
 

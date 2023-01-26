@@ -37,6 +37,7 @@ public class DebitCardModel extends BasePersistableModel implements Serializable
     private Integer versionNo;
     private AppModel appIdAppModel;
     private Date importedOn;
+    private Date feeDeductionDateAnnual;
     private Date feeDeductionDate;
     private String reissuance;
     private Long reIssuanceStatus;
@@ -69,6 +70,23 @@ public class DebitCardModel extends BasePersistableModel implements Serializable
     private Date hotOn;
     private Date coldOn;
     private Date deActiveOn;
+    private Date lastInstallmentDateForIssuance;
+    private Date newInstallmentDateForIssuance;
+    private Date lastInstallmentDateForReIssuance;
+    private Date newInstallmentDateForReIssuance;
+    private Date lastInstallmentDateForAnnual;
+    private Date newInstallmentDateForAnnual;
+    private Boolean isInstallments;
+    private Long noOfInstallments;
+    private Long noOfInstallmentsAnnual;
+    private Long remainingNoOfInstallments;
+    private Long remainingNoOfInstallmentsAnnual;
+
+    //    private Date issuanceDate;
+//    private Date reissuanceDate;
+    private Date annualFeeDate;
+    private String issuanceByAgent;
+
 // Constructors
 
     /**
@@ -631,13 +649,24 @@ public class DebitCardModel extends BasePersistableModel implements Serializable
         model.setCreatedOn(resultSet.getTimestamp("CREATED_ON"));
         model.setUpdatedBy(resultSet.getLong("UPDATED_BY"));
         model.setUpdatedOn(resultSet.getTimestamp("UPDATED_ON"));
-        model.setFeeDeductionDate(resultSet.getDate("REISSUANCE_DATE"));
+        model.setFeeDeductionDate(resultSet.getDate("FEE_DEDUCTION_DATE"));
+        model.setAnnualFeeDate(resultSet.getDate("ANNUAL_FEE_DATE"));
         model.setSmartMoneyAccountId(resultSet.getLong("SMART_MONEY_ACCOUNT_ID"));
         model.setMailingAddressId(resultSet.getLong("MAILING_ADDRESS_ID"));
         model.setAppId(resultSet.getLong("CHANNEL_ID"));
         model.setImportedOn(resultSet.getTimestamp("IMPORTED_ON"));
         model.setReissuance(resultSet.getString("RE_ISSUANCE"));
         model.setReIssuanceStatus(resultSet.getLong("RE_ISSUANCE_STATUS"));
+        model.setNewInstallmentDateForReIssuance(resultSet.getDate("NEW_INSTALL_DATE_REISSUANCE"));
+        model.setLastInstallmentDateForReIssuance(resultSet.getDate("LAST_INSTALL_DATE_REISSUANCE"));
+        model.setLastInstallmentDateForIssuance(resultSet.getDate("LAST_INSTALLMENT_DATE_ISSUANCE"));
+        model.setNewInstallmentDateForIssuance(resultSet.getDate("NEW_INSTALLMENT_DATE_ISSUANCE"));
+        model.setLastInstallmentDateForAnnual(resultSet.getDate("LAST_INSTALLMENT_DATE_ANNUAL"));
+        model.setNewInstallmentDateForAnnual(resultSet.getDate("NEW_INSTALLMENT_DATE_ANNUAL"));
+        model.setRemainingNoOfInstallments(resultSet.getLong("REMAINING_NO_OF_INSTALLMENTS"));
+        model.setNoOfInstallments(resultSet.getLong("NO_OF_INSTALLMENT"));
+        model.setIsInstallments(resultSet.getBoolean("IS_INSTALLMENT"));
+        model.setRemainingNoOfInstallmentsAnnual(resultSet.getLong("REMAINING_NO_OF_INSTALL_ANNUAL"));
         return model;
     }
 
@@ -800,5 +829,131 @@ public class DebitCardModel extends BasePersistableModel implements Serializable
 
     public void setDeActiveOn(Date deActiveOn) {
         this.deActiveOn = deActiveOn;
+    }
+
+    @Column(name = "IS_INSTALLMENT")
+    public Boolean getIsInstallments() {
+        return isInstallments;
+    }
+
+    public void setIsInstallments(Boolean isInstallments) {
+        this.isInstallments = isInstallments;
+    }
+
+    @Column(name = "NO_OF_INSTALLMENT")
+    public Long getNoOfInstallments() {
+        return noOfInstallments;
+    }
+
+    public void setNoOfInstallments(Long noOfInstallments) {
+        this.noOfInstallments = noOfInstallments;
+    }
+
+    @Column(name = "REMAINING_NO_OF_INSTALLMENTS")
+    public Long getRemainingNoOfInstallments() {
+        return remainingNoOfInstallments;
+    }
+
+    public void setRemainingNoOfInstallments(Long remainingNoOfInstallments) {
+        this.remainingNoOfInstallments = remainingNoOfInstallments;
+    }
+
+    @Column(name = "ANNUAL_FEE_DATE")
+    public Date getAnnualFeeDate() {
+        return annualFeeDate;
+    }
+
+    public void setAnnualFeeDate(Date annualFeeDate) {
+        this.annualFeeDate = annualFeeDate;
+    }
+
+    @Column(name = "ISSUANCE_BY_AGENT")
+    public String getIssuanceByAgent() {
+        return issuanceByAgent;
+    }
+
+    public void setIssuanceByAgent(String issuanceByAgent) {
+        this.issuanceByAgent = issuanceByAgent;
+    }
+
+    @Column(name = "LAST_INSTALLMENT_DATE_ISSUANCE")
+    public Date getLastInstallmentDateForIssuance() {
+        return lastInstallmentDateForIssuance;
+    }
+
+    public void setLastInstallmentDateForIssuance(Date lastInstallmentDateForIssuance) {
+        this.lastInstallmentDateForIssuance = lastInstallmentDateForIssuance;
+    }
+
+    @Column(name = "NEW_INSTALLMENT_DATE_ISSUANCE")
+    public Date getNewInstallmentDateForIssuance() {
+        return newInstallmentDateForIssuance;
+    }
+
+    public void setNewInstallmentDateForIssuance(Date newInstallmentDateForIssuance) {
+        this.newInstallmentDateForIssuance = newInstallmentDateForIssuance;
+    }
+
+    @Column(name = "LAST_INSTALL_DATE_REISSUANCE")
+    public Date getLastInstallmentDateForReIssuance() {
+        return lastInstallmentDateForReIssuance;
+    }
+
+    public void setLastInstallmentDateForReIssuance(Date lastInstallmentDateForReIssuance) {
+        this.lastInstallmentDateForReIssuance = lastInstallmentDateForReIssuance;
+    }
+
+    @Column(name = "NEW_INSTALL_DATE_REISSUANCE")
+    public Date getNewInstallmentDateForReIssuance() {
+        return newInstallmentDateForReIssuance;
+    }
+
+    public void setNewInstallmentDateForReIssuance(Date newInstallmentDateForReIssuance) {
+        this.newInstallmentDateForReIssuance = newInstallmentDateForReIssuance;
+    }
+
+    @Column(name = "LAST_INSTALLMENT_DATE_ANNUAL")
+    public Date getLastInstallmentDateForAnnual() {
+        return lastInstallmentDateForAnnual;
+    }
+
+    public void setLastInstallmentDateForAnnual(Date lastInstallmentDateForAnnual) {
+        this.lastInstallmentDateForAnnual = lastInstallmentDateForAnnual;
+    }
+
+    @Column(name = "NEW_INSTALLMENT_DATE_ANNUAL")
+    public Date getNewInstallmentDateForAnnual() {
+        return newInstallmentDateForAnnual;
+    }
+
+    public void setNewInstallmentDateForAnnual(Date newInstallmentDateForAnnual) {
+        this.newInstallmentDateForAnnual = newInstallmentDateForAnnual;
+    }
+
+    @Column(name = "NO_OF_INSTALLMENTS_ANNUAL")
+    public Long getNoOfInstallmentsAnnual() {
+        return noOfInstallmentsAnnual;
+    }
+
+    public void setNoOfInstallmentsAnnual(Long noOfInstallmentsAnnual) {
+        this.noOfInstallmentsAnnual = noOfInstallmentsAnnual;
+    }
+
+    @Column(name = "REMAINING_NO_OF_INSTALL_ANNUAL")
+    public Long getRemainingNoOfInstallmentsAnnual() {
+        return remainingNoOfInstallmentsAnnual;
+    }
+
+    public void setRemainingNoOfInstallmentsAnnual(Long remainingNoOfInstallmentsAnnual) {
+        this.remainingNoOfInstallmentsAnnual = remainingNoOfInstallmentsAnnual;
+    }
+
+    @Column(name = "FEE_DEDUCTION_DATE_ANNUAL")
+    public Date getFeeDeductionDateAnnual() {
+        return feeDeductionDateAnnual;
+    }
+
+    public void setFeeDeductionDateAnnual(Date feeDeductionDateAnnual) {
+        this.feeDeductionDateAnnual = feeDeductionDateAnnual;
     }
 }

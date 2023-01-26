@@ -1,6 +1,8 @@
 package com.inov8.microbank.common.wrapper.workflow;
 
+import com.inov8.framework.common.wrapper.BaseWrapper;
 import com.inov8.framework.common.wrapper.BaseWrapperImpl;
+import com.inov8.microbank.cardconfiguration.model.CardFeeRuleModel;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.bankmodule.MemberBankModel;
 import com.inov8.microbank.common.model.productdeviceflowmodule.ProductDeviceFlowListViewModel;
@@ -197,6 +199,8 @@ public class WorkFlowWrapperImpl extends BaseWrapperImpl implements WorkFlowWrap
 	private String recipientAccountNo;
 	private String consumerNumber;
 	private MiddlewareAdviceVO middlewareAdviceVO;
+	private CardFeeRuleModel cardFeeRuleModel;
+	private BaseWrapper baseWrapper;
 
 	public ProductDeviceFlowListViewModel getProductDeviceFlowModel()
 	{
@@ -1386,7 +1390,7 @@ public class WorkFlowWrapperImpl extends BaseWrapperImpl implements WorkFlowWrap
 		WorkFlowWrapper workFlowWrapper = new WorkFlowWrapperImpl();
 
 //		workFlowWrapper.setBusinessDate(this.getBusinessDate());
-    	workFlowWrapper.setTaxRegimeModel(this.getTaxRegimeModel());
+		workFlowWrapper.setTaxRegimeModel(this.getTaxRegimeModel());
 		workFlowWrapper.setSegmentModel(this.getSegmentModel());
 		workFlowWrapper.setTransactionTypeModel(this.getTransactionTypeModel());
 		workFlowWrapper.setDeviceTypeModel(this.getDeviceTypeModel());
@@ -1428,7 +1432,7 @@ public class WorkFlowWrapperImpl extends BaseWrapperImpl implements WorkFlowWrap
 
 	@Override
 	public void setWHTDedTransactionDate(Date transaction_date) {
-      		this.WHTDedTransactionDate = transaction_date;
+		this.WHTDedTransactionDate = transaction_date;
 	}
 
 	@Override
@@ -1557,6 +1561,16 @@ public class WorkFlowWrapperImpl extends BaseWrapperImpl implements WorkFlowWrap
 	@Override
 	public String getConsumerNumber() {
 		return consumerNumber;
+	}
+
+	@Override
+	public void setCardFeeRuleModel(CardFeeRuleModel cardFeeRuleModel) {
+		this.cardFeeRuleModel = cardFeeRuleModel;
+	}
+
+	@Override
+	public CardFeeRuleModel getCardFeeRuleModel() {
+		return cardFeeRuleModel;
 	}
 
 	@Override

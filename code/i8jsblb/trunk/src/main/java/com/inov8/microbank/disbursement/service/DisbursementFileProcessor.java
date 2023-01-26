@@ -336,8 +336,7 @@ public class DisbursementFileProcessor implements Runnable {
                 CustomerModel customerModel = getCommonCommandManager().getCustomerModelById(appUserModel.getCustomerId());
 
                 if (isValid) {
-                    if (appUserModel.getAccountStateId().equals(AccountStateConstants.ACCOUNT_STATE_COLD) ||
-                            appUserModel.getAccountStateId().equals(AccountStateConstants.ACCOUNT_STATE_DORMANT)) {
+                    if (!appUserModel.getAccountStateId().equals(AccountStateConstants.ACCOUNT_STATE_CLOSED)) {
                         isValid = true;
                     } else {
                         isValid = false;

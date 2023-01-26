@@ -16,6 +16,7 @@ import com.inov8.integration.common.model.AccountModel;
 import com.inov8.integration.common.model.AccountsWithStatsListViewModel;
 import com.inov8.integration.common.model.OlaCustomerAccountTypeModel;
 import com.inov8.microbank.common.util.Formatter;
+import com.inov8.microbank.common.util.ProductConstantsInterface;
 import com.inov8.ola.integration.vo.LedgerModel;
 import com.inov8.ola.integration.vo.OLALedgerVO;
 import com.inov8.ola.integration.vo.OLAVO;
@@ -1432,6 +1433,7 @@ public class OLAServiceImpl implements OLAService
 			olaVO.setReceivingAccountId(accountModel.getAccountId());
 			olaVO.setAccountId(accountModel.getAccountId());
 			olaVO.setCustomerAccountTypeId(accountModel.getCustomerAccountTypeId());
+			olaVO.setProductId(ProductConstantsInterface.IBFT);
 			olaVO.setTransactionDateTime(new Date());
 			try
 			{			

@@ -402,10 +402,10 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
             //*****************************************************************
             //****  Update status of from 'Pushed to SAF' to 'Successful'  ****
             //*****************************************************************
-                transactionReversalManager.updateIBFTStatus(wrapper.getObject(CommandFieldConstants.KEY_STAN).toString(),
-                        (Date) wrapper.getObject(CommandFieldConstants.KEY_TX_DATE),
-                        PortalConstants.IBFT_STATUS_SUCCESS,
-                        wrapper.getTransactionCodeModel().getCode());
+//                transactionReversalManager.updateIBFTStatus(wrapper.getObject(CommandFieldConstants.KEY_STAN).toString(),
+//                        (Date) wrapper.getObject(CommandFieldConstants.KEY_TX_DATE),
+//                        PortalConstants.IBFT_STATUS_SUCCESS,
+//                        wrapper.getTransactionCodeModel().getCode());
 
 
             sendCashDepositSMS(wrapper);
@@ -498,6 +498,20 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
                                 tf.print(new LocalTime()),
                                 dtf.print(new DateTime()),
                                 senderAccNumber,
+                                Formatter.formatDouble(wrapper.getOLASwitchWrapper().getOlavo().getToBalanceAfterTransaction())
+                        },
+                        null);
+            }
+             else if (wrapper.getProductModel().getProductId().equals(ProductConstantsInterface.STOCK_PURCHASED)) {
+                Double charges = wrapper.getCommissionAmountsHolder().getTransactionProcessingAmount();
+                customerSMS = this.getMessageSource().getMessage(
+                        "stockSold.SMS",
+                        new Object[]{
+                                brandName,
+                                wrapper.getTransactionCodeModel().getCode(),
+                                Formatter.formatDouble(wrapper.getCommissionAmountsHolder().getTransactionAmount()),
+                                tf.print(new LocalTime()),
+                                dtf.print(new DateTime()),
                                 Formatter.formatDouble(wrapper.getOLASwitchWrapper().getOlavo().getToBalanceAfterTransaction())
                         },
                         null);

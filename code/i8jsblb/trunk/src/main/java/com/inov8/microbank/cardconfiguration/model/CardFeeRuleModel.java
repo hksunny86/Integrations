@@ -25,6 +25,7 @@ import com.inov8.framework.common.model.BasePersistableModel;
 import com.inov8.integration.common.model.OlaCustomerAccountTypeModel;
 import com.inov8.microbank.common.model.*;
 import org.springframework.jdbc.core.RowMapper;
+import org.testng.remote.strprotocol.IStringMessage;
 
 /**
  * DebitCard entity. @author Atieq ur Rehman
@@ -47,6 +48,7 @@ public class CardFeeRuleModel extends BasePersistableModel implements Serializab
     private MnoModel mnoIdMnoModel;
 
     private Double amount;
+    private Double installmentAmount;
     private Long versionNo;
 
     private AppUserModel createdByAppUserModel;
@@ -54,6 +56,9 @@ public class CardFeeRuleModel extends BasePersistableModel implements Serializab
     private AppUserModel updatedByAppUserModel;
     private Date updatedOn;
     private Boolean isDeleted;
+    private Boolean isInstallments;
+    private Long noOfInstallments;
+    private String installmentPlan;
 
 
     // Constructors
@@ -512,6 +517,43 @@ public class CardFeeRuleModel extends BasePersistableModel implements Serializab
         this.isDeleted = isDeleted;
     }
 
+
+    @Column(name = "IS_INSTALLMENTS")
+    public Boolean getIsInstallments() {
+        return isInstallments;
+    }
+
+    public void setIsInstallments(Boolean isInstallments) {
+        this.isInstallments = isInstallments;
+    }
+
+    @Column(name = "NO_OF_INSTALLMENTS")
+    public Long getNoOfInstallments() {
+        return noOfInstallments;
+    }
+
+    public void setNoOfInstallments(Long noOfInstallments) {
+        this.noOfInstallments = noOfInstallments;
+    }
+
+    @Column(name = "INSTALLMENT_PLAN")
+    public String getInstallmentPlan() {
+        return installmentPlan;
+    }
+
+    @Column(name = "INSTALLMENT_AMOUNT")
+    public Double getInstallmentAmount() {
+        return installmentAmount;
+    }
+
+    public void setInstallmentAmount(Double installmentAmount) {
+        this.installmentAmount = installmentAmount;
+    }
+
+    public void setInstallmentPlan(String installmentPlan) {
+        this.installmentPlan = installmentPlan;
+    }
+
     @Override
     public Object mapRow(ResultSet resultSet, int i) throws SQLException {
         CardFeeRuleModel model = new CardFeeRuleModel();
@@ -525,9 +567,14 @@ public class CardFeeRuleModel extends BasePersistableModel implements Serializab
         model.setCardFeeTypeId(resultSet.getLong("CARD_FEE_TYPE_ID"));
         model.setAmount(resultSet.getDouble("AMOUNT"));
         model.setIsDeleted(resultSet.getBoolean("IS_DELETED"));
+        model.setIsInstallments(resultSet.getBoolean("IS_INSTALLMENTS"));
+        model.setNoOfInstallments(resultSet.getLong("NO_OF_INSTALLMENTS"));
+        model.setInstallmentPlan(resultSet.getString("INSTALLMENT_PLAN"));
+        model.setInstallmentAmount(resultSet.getDouble("INSTALLMENT_AMOUNT"));
         model.setMnoId(resultSet.getLong("SERVICE_OP_ID"));
         model.setCreatedOn(resultSet.getTimestamp("CREATED_ON"));
         model.setUpdatedOn(resultSet.getTimestamp("UPDATED_ON"));
         return model;
     }
+
 }

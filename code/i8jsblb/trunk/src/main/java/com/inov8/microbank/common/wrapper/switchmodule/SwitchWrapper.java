@@ -26,27 +26,27 @@ import java.util.List;
  * <p>
  * Title:
  * </p>
- * 
+ *
  * <p>
  * Description:
  * </p>
- * 
+ *
  * <p>
  * Copyright: Copyright (c) 2006
  * </p>
- * 
+ *
  * <p>
  * Company: inov8 Limited
  * </p>
- * 
+ *
  * @author Jawwad Farooq
  * @version 1.0
  */
 public interface SwitchWrapper extends BaseWrapper {
-	
-	
+
+
 	public void setCustomerPoolAccountNumber(String customerPool);
-	
+
 	public String getCustomerPoolAccountNumber();
 
 	public void setPaymentModePaymentModeModel(PaymentModeModel paymentModePaymentModeModel);
@@ -72,8 +72,8 @@ public interface SwitchWrapper extends BaseWrapper {
 	public double getBalance();
 
 	public void setBalance(double balance);
-	
-	
+
+
 	public double getAgentBalance();
 
 	public void setAgentBalance(double balance);
@@ -116,7 +116,7 @@ public interface SwitchWrapper extends BaseWrapper {
 	public String getToCurrencyCode();
 
 	public void setToCurrencyCode(String attr);
-	
+
 	//OTHER PARAMETERS
 
 	public Double getTransactionAmount();
@@ -126,7 +126,7 @@ public interface SwitchWrapper extends BaseWrapper {
 	public String getCurrencyCode();
 
 	public void setCurrencyCode(String attr);
-	
+
 	public void setUtilityCompanyId(String utilityCompanyId);
 
 	public void setConsumerNumber(String consumerNumber);
@@ -136,7 +136,7 @@ public interface SwitchWrapper extends BaseWrapper {
 
 	// ASKARI PHOENIX INTEGRATIN - BILLING SERVICE
 	// REQUEST PARAMETERS
-	
+
 	public String getUtilityCompanyId();
 
 	public String getConsumerNumber();
@@ -209,9 +209,9 @@ public interface SwitchWrapper extends BaseWrapper {
 	public void setISO8583VO(ISO8583VO iso8583VO);
 
 	public void setIntegrationMessageVO(IntegrationMessageVO integrationMessageVO);
-	
+
 	public void setMiddlewareIntegrationMessageVO(MiddlewareMessageVO middlewareMessageVO);
-	
+
 	public MiddlewareMessageVO getMiddlewareIntegrationMessageVO();
 
 	public IntegrationMessageVO getIntegrationMessageVO();
@@ -312,17 +312,17 @@ public interface SwitchWrapper extends BaseWrapper {
 	public boolean getSkipAccountInfoLoading();
 
 	public void setSkipAccountInfoLoading(boolean skipAccountInfoLoading);
-	
+
 	public String getSenderCNIC();
 
 	public void setSenderCNIC(String senderCNIC);
-	
+
 	public String getUtilityCompanyCategoryId();
 
 	public void setUtilityCompanyCategoryId(String utilityCompanyCategoryId);
 	public Long getIntgTransactionTypeId();
 	public void setIntgTransactionTypeId(Long intgTransactionTypeId) ;
-	
+
 	public String getToAccountBB();
 	public void setToAccountBB(String toAccountBB);
 	public String getFromAccountBB();
@@ -330,8 +330,11 @@ public interface SwitchWrapper extends BaseWrapper {
 	public boolean getSkipPostedTrxEntry();
 	public void setSkipPostedTrxEntry(boolean skipPostedTrxEntry);
 
-    public I8SBSwitchControllerRequestVO getI8SBSwitchControllerRequestVO();
-    public void setI8SBSwitchControllerRequestVO(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO);
-    public I8SBSwitchControllerResponseVO getI8SBSwitchControllerResponseVO();
-    public void setI8SBSwitchControllerResponseVO(I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO);
+	public I8SBSwitchControllerRequestVO getI8SBSwitchControllerRequestVO();
+	public void setI8SBSwitchControllerRequestVO(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO);
+	public I8SBSwitchControllerResponseVO getI8SBSwitchControllerResponseVO();
+	public void setI8SBSwitchControllerResponseVO(I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO);
+
+	public Boolean getIsOfflineBiller();
+	public void setIsOfflineBiller(Boolean isOfflineBiller);
 }

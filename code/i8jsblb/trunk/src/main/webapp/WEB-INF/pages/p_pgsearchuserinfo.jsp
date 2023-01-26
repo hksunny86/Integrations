@@ -473,7 +473,7 @@
 		<ec:column  property="accountUpdatedOn" filterable="false" cell="date"	format="dd/MM/yyyy" title="A/C Updated On" />
 		<ec:column  property="accountUpdatedBy" title="Updated By" />
 		<ec:column  property="stockTrading" title="Stock Trading" />
-		<ec:column  property="MutualFunds" title="Mutual Funds" />
+		<ec:column  property="mutualFunds" title="Mutual Funds" />
 		<ec:column  property="clsResponseCode" title="CLS Response Code" />
 
 
@@ -488,7 +488,7 @@
 			<c:if test="${userInfoListViewModel.isAccountLocked=='UNLOCKED'}">
 				<c:if test="${userInfoListViewModel.isAccountClosed=='OPEN'}">
 					<c:choose>
-						<c:when test="${userInfoListViewModel.customerAccountTypeId==1 || userInfoListViewModel.customerAccountTypeId==2 || userInfoListViewModel.customerAccountTypeId==4 ||userInfoListViewModel.customerAccountTypeId==53}">
+						<c:when test="${userInfoListViewModel.customerAccountTypeId==1 || userInfoListViewModel.customerAccountTypeId==2 || userInfoListViewModel.customerAccountTypeId==4 ||userInfoListViewModel.customerAccountTypeId==53 || userInfoListViewModel.customerAccountTypeId==56}">
 							<authz:authorize ifAnyGranted="<%=updatePermission%>">
 								<input type="button" class="button" style="width='90px'" value="Change Info"
 									   onclick="javascript:changeInfo('${contextPath}/p_mnonewmfsaccountform.html?appUserId=${userInfoListViewModel.appUserId}');" />
@@ -539,7 +539,7 @@
 		<c:if test="${isNotRetailer}">
 			<ec:column alias=" " viewsAllowed="html" filterable="false" sortable="false">
 				<c:choose>
-					<c:when test="${userInfoListViewModel.customerAccountTypeId==1 || userInfoListViewModel.customerAccountTypeId==2 || userInfoListViewModel.customerAccountTypeId==4 || userInfoListViewModel.customerAccountTypeId==53}">
+					<c:when test="${userInfoListViewModel.customerAccountTypeId==1 || userInfoListViewModel.customerAccountTypeId==2 || userInfoListViewModel.customerAccountTypeId==4 || userInfoListViewModel.customerAccountTypeId==53 || userInfoListViewModel.customerAccountTypeId==56}">
 						<input type="button" class="button" style="width='90px'" value="View Details" onclick="javascript:window.location.href='${pageContext.request.contextPath}/p_mnomfsaccountdetails.html?appUserId=${userInfoListViewModel.appUserId}&actionId=2';" />
 					</c:when>
 					<c:otherwise>

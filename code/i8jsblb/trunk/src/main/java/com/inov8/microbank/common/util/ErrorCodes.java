@@ -12,14 +12,14 @@ public class ErrorCodes
 	public static final Long UNKNOWN_ERROR = 9006L;
 	public static final Long INVALID_LOGIN = 9007L;
 	public static final Long FILE_UPLOAD_ERROR = 9011L;
-	public static final Long ACCOUNT_EXPIRED_ERROR = 9012L;	 
-	public static final Long ACCOUNT_DISABLED_ERROR = 9013L;		 
-	public static final Long PIN_CHANGE_ERROR = 9014L;	
-	public static final Long CREDENTIALS_EXPIRED = 9015L;	
-	public static final Long ACCOUNT_BLOCKED = 9016L;	
-	public static final Long ACCOUNT_LOCKED= 9017L;	
+	public static final Long ACCOUNT_EXPIRED_ERROR = 9012L;
+	public static final Long ACCOUNT_DISABLED_ERROR = 9013L;
+	public static final Long PIN_CHANGE_ERROR = 9014L;
+	public static final Long CREDENTIALS_EXPIRED = 9015L;
+	public static final Long ACCOUNT_BLOCKED = 9016L;
+	public static final Long ACCOUNT_LOCKED= 9017L;
 	public static final Long FILE_NOT_FOUND = 9018L;
-	
+
 	public static final Long OTP_EXPIRED = 9019L;
 	public static final Long OTP_INVALID = 9023L;
 	public static final Long TERMINATE_EXECUTION_FLOW = 9999L;
@@ -36,24 +36,24 @@ public class ErrorCodes
 	//***********************************************
 	public static final Long CATALOG_ERROR = 9031L;
 	//***********************************************
-	
-	
+
+
 	/**
-	 * Send this message to client (Microbank) to notify that the 
-	 * current connection creation mechanism is not supported 
-	 * hence change the connection scheme for future requests  
+	 * Send this message to client (Microbank) to notify that the
+	 * current connection creation mechanism is not supported
+	 * hence change the connection scheme for future requests
 	 */
 	public static final Long INVALID_MSG = 9008L;
 
 	/**
-	 * Send this to client (Microbank) when using Blacklist or Obsolete 
+	 * Send this to client (Microbank) when using Blacklist or Obsolete
 	 * Applicaion Version.
 	 */
-		
+
 	public static final Long APP_VERSION_BLACKLIST_OBSOLETE = 9009L;
-	
+
 	public static final String ERROR_MESSAGE_CODE = "-1";
-	
+
 	public static final Long INVALID_PIN = 9010L;
 	public static final Long ERROR_INVALID_PIN = 9011L;
 
@@ -68,6 +68,10 @@ public class ErrorCodes
 	public static final Long UPGRADE_LEVEL_0_TO_LEVEL_1 = 9041L;
 	public static final Long HRA_CW_LEVEL_1_NOT_FOUND = 9042L;
 	public static final Long MEMBER_BANK_NOT_FOUND = 9045L;
+
+	public static final Long INVALID_INPUT_FINGER_TEMPLETE = 120L;
+	public static final Long INVALID_FINGER_TEMPLETE_TYPE = 123L;
+	public static final Long FINGER_NOT_EXIT = 111L;
 
 	public static final Long INSUFFICIENT_BALANCE_FOR_DEBIT_CARD_ISSUANCE = 9044L;
 	public static final Long INSUFFICIENT_BALANCE_FOR_FEE_PAYMENT_API = 9047L;
@@ -86,7 +90,5 @@ public class ErrorCodes
 	public static final Long DEBIT_CARD_REISSUANCE_EXISTS=9097L;
 	public static final Long EMAIL_ADDRESS_ALREADY_EXISTS=9098L;
 	public static final Long ACCOUNT_OPENING_FAILED=9099L;
-
-
 
 }

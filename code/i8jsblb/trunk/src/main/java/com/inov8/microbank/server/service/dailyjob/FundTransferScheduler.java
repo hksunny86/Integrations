@@ -102,14 +102,18 @@ public class FundTransferScheduler {
 		for(StakeholderBankInfoModel stakeholderBankInfoModel : stakeholderBankInfoModelList) {
 
 			List<SettlementTransactionModel> stmListCr = settlementTransactionDAO.getPendingSettlementTransactionList(stakeholderBankInfoModel, currentDateTime, Boolean.TRUE);
+			logger.info("credit List size"+stmListCr.size());
 			stmList.addAll(stmListCr);
 			List<SettlementTransactionModel> stmListDr = settlementTransactionDAO.getPendingSettlementTransactionList(stakeholderBankInfoModel, currentDateTime, Boolean.FALSE);
+			logger.info("credit List size"+stmListCr.size());
+
 			stmList.addAll(stmListDr);			
 		}
 
 		Set<Date> dateSet = new HashSet<Date>(0);
 		
 		for(SettlementTransactionModel settlementTransactionModel : stmList) {
+			logger.info("settlement transaction List"+stmList.size());
 
 			DateTime toDate = new DateTime(settlementTransactionModel.getCreatedOn()).withTime(0, 0, 0, 0);
 			dateSet.add(toDate.toDate());			
@@ -163,8 +167,10 @@ public class FundTransferScheduler {
 			SettlementSchedulerVO settlementSchedulerVO = processSettlementTransaction(stakeholderBankInfoModel, createdOn);
 			
 			if(!settlementSchedulerVO.getSettlementTransactionIdList().isEmpty()) {
-				
+
 				settlementSchedulerVOList.add(settlementSchedulerVO);
+			}else {
+				logger.info("settlement transaction list "+settlementSchedulerVO.getSettlementTransactionIdList().size());
 			}
 		}
 		
@@ -382,6 +388,7 @@ public class FundTransferScheduler {
  		    schedulerVO.setTotalAmountCredit(totalAmountCredit);
 		    schedulerVO.setTotalAmountDebit(totalAmountDebit);
 		    schedulerVO.setDate(dateFormat.format(createdOn));
+		    logger.info("settlement Scheduler list  "+settlementSchedulerVOList.size());
 		    schedulerVO.setTotalSeq(settlementSchedulerVOList.size());
 		    schedulerVO.setFileCreationStatus(this.FILE_CREATED);
 		    		
@@ -495,7 +502,7 @@ public class FundTransferScheduler {
 	 */
 	private SettlementSchedulerVO processSettlementTransaction(StakeholderBankInfoModel stakeholderBankInfoModel, Date createdOn) throws FrameworkCheckedException {
 		
-		//logger.info("StakeholderBankInfoId : "+stakeholderBankInfoModel.getStakeholderBankInfoId());
+		logger.info("StakeholderBankInfoId : "+stakeholderBankInfoModel.getStakeholderBankInfoId());
 		
 		List<SettlementTransactionModel> creditResultList = null;
 		List<SettlementTransactionModel> debitResultList = null;
@@ -503,10 +510,10 @@ public class FundTransferScheduler {
 		try {
 
 			creditResultList = settlementManager.getSettlementTransactionModelList(stakeholderBankInfoModel.getStakeholderBankInfoId(), Boolean.TRUE, createdOn);
-			//logger.info("creditResultList "+ creditResultList.size());
+			logger.info("creditResultList "+ creditResultList.size());
 		
 			debitResultList = settlementManager.getSettlementTransactionModelList(stakeholderBankInfoModel.getStakeholderBankInfoId(), Boolean.FALSE, createdOn);
-			//logger.info("debitResultList "+ debitResultList.size());
+			logger.info("debitResultList "+ debitResultList.size());
 		
 			
 		} catch (Exception e) {
@@ -541,7 +548,7 @@ public class FundTransferScheduler {
 		settlementSchedulerVO.setAmountDebit(totalAmountDr);
 		settlementSchedulerVO.setDate(dateFormat.format(createdOn));
 		settlementSchedulerVO.setBranch("9001"); //Shaheen Complex Branch
-		settlementSchedulerVO.setRm("124");
+		settlementSchedulerVO.setRm("900");
 		settlementSchedulerVO.setCompany("1");
 		settlementSchedulerVO.setProductCode("1001");
 		settlementSchedulerVO.setCurrency("PKR");

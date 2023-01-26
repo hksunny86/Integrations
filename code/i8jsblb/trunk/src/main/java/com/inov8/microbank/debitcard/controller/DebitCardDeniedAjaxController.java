@@ -9,10 +9,7 @@ import com.inov8.microbank.cardconfiguration.common.CardConstantsInterface;
 import com.inov8.microbank.common.model.TransactionDetailMasterModel;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.model.portal.authorizationmodule.ActionAuthorizationModel;
-import com.inov8.microbank.common.util.CommandFieldConstants;
-import com.inov8.microbank.common.util.MessageUtil;
-import com.inov8.microbank.common.util.PortalConstants;
-import com.inov8.microbank.common.util.StringUtil;
+import com.inov8.microbank.common.util.*;
 import com.inov8.microbank.debitcard.model.DebitCardModel;
 import com.inov8.microbank.server.service.mfsmodule.CommonCommandManager;
 import com.inov8.microbank.server.service.transactionreversal.TransactionReversalManager;
@@ -109,6 +106,9 @@ public class DebitCardDeniedAjaxController extends AjaxController {
                                     msgToText = MessageUtil.getMessage("debit.card.req.rejected");
                                 }
                                 debitCardModel.setUpdatedOn(new Date());
+                                debitCardModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+                                debitCardModel.setCheckedById(UserUtils.getCurrentUser().getAppUserId());
+                                debitCardModel.setCheckedByName(UserUtils.getCurrentUser().getUsername());
                                 commonCommandManager.getDebitCardModelDao().saveOrUpdate(debitCardModel);
 
                                 ajaxXmlBuilder.addItem("mesg", "Debit Card request has been denied");
@@ -130,6 +130,9 @@ public class DebitCardDeniedAjaxController extends AjaxController {
                             msgToText = MessageUtil.getMessage("debit.card.req.rejected");
                         }
                         debitCardModel.setUpdatedOn(new Date());
+                        debitCardModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+                        debitCardModel.setCheckedById(UserUtils.getCurrentUser().getAppUserId());
+                        debitCardModel.setCheckedByName(UserUtils.getCurrentUser().getUsername());
                         commonCommandManager.getDebitCardModelDao().saveOrUpdate(debitCardModel);
                         ajaxXmlBuilder.addItem("mesg", "Debit Card request has been denied");
                     }

@@ -8,10 +8,12 @@ import com.inov8.microbank.cardconfiguration.model.CardFeeRuleModel;
 public interface CardConfigurationManager {
 
     public SearchBaseWrapper searchCardFeeRuleConfiguration(SearchBaseWrapper searchBaseWrapper) throws FrameworkCheckedException;
+    public CardFeeRuleModel searchCardFeeRule(CardFeeRuleModel cardFeeRuleModel) throws FrameworkCheckedException;
 
     public void saveOrUpdateAllCardFeeRules(BaseWrapper baseWrapper) throws FrameworkCheckedException;
 
     public int removeAllCardFeeRules(BaseWrapper baseWrapper) throws FrameworkCheckedException;
 
     public CardFeeRuleModel loadCardFeeRuleModel(CardFeeRuleModel cardFeeRuleModel) throws FrameworkCheckedException;
+    public void saveCardFeeRuleModel(CardFeeRuleModel cardFeeRuleModel) throws FrameworkCheckedException;
 }

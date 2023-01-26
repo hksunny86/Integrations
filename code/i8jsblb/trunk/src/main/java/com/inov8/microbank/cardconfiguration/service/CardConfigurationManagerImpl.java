@@ -33,6 +33,11 @@ public class CardConfigurationManagerImpl implements CardConfigurationManager {
     }
 
     @Override
+    public CardFeeRuleModel searchCardFeeRule(CardFeeRuleModel cardFeeRuleModel) throws FrameworkCheckedException {
+        return cardFeeRuleDAO.searchCardFeeRule(cardFeeRuleModel);
+    }
+
+    @Override
     public void saveOrUpdateAllCardFeeRules(BaseWrapper baseWrapper) throws FrameworkCheckedException {
         /*ActionLogModel actionLogModel = this.actionLogManager.createActionLogRequiresNewTransaction(baseWrapper);
         ThreadLocalActionLog.setActionLogId(actionLogModel.getActionLogId());*/
@@ -64,6 +69,11 @@ public class CardConfigurationManagerImpl implements CardConfigurationManager {
     @Override
     public CardFeeRuleModel loadCardFeeRuleModel(CardFeeRuleModel cardFeeRuleModel) throws FrameworkCheckedException {
         return cardFeeRuleDAO.loadCardFeeRuleModel(cardFeeRuleModel);
+    }
+
+    @Override
+    public void saveCardFeeRuleModel(CardFeeRuleModel cardFeeRuleModel) throws FrameworkCheckedException {
+        cardFeeRuleDAO.saveCardFeeRuleModel(cardFeeRuleModel);
     }
 
     public void setCardFeeRuleDAO(CardFeeRuleDAO cardFeeRuleDAO) {

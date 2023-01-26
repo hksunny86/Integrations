@@ -189,9 +189,9 @@ public class TransactionReversalFacadeImpl implements TransactionReversalFacade
 	}
 
 	@Override
-	public boolean checkAlreadySuccessful(String stan, Date requestTime, String portalConstant) throws FrameworkCheckedException {
+	public boolean checkAlreadySuccessful(String stan, Date requestTime) throws FrameworkCheckedException {
 	    try{
-			return transactionReversalManager.checkAlreadySuccessful(stan, requestTime ,portalConstant);
+			return transactionReversalManager.checkAlreadySuccessful(stan, requestTime );
         }catch( Exception ex ){
             throw frameworkExceptionTranslator.translate( ex, FrameworkExceptionTranslator.UPDATE_ACTION );
         }

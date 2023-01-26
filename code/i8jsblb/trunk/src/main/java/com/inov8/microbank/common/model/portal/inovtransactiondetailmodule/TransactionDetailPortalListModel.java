@@ -166,6 +166,13 @@ public class TransactionDetailPortalListModel extends BasePersistableModel imple
     private String reserved3;
     private String reserved4;
     private String reserved5;
+    private String reserved1;
+    private String reserved2;
+    private String reserved6;
+    private String reserved7;
+    private String reserved8;
+    private String reserved9;
+    private String reserved10;
 
     @Column(name = "BANK_INCOME")
     public Double getBankIncome() {
@@ -1710,5 +1717,68 @@ public class TransactionDetailPortalListModel extends BasePersistableModel imple
 
     public void setReserved5(String reserved5) {
         this.reserved5 = reserved5;
+    }
+
+    @Column(name = "RESERVED1")
+    public String getReserved1() {
+        return reserved1;
+    }
+
+    public void setReserved1(String reserved1) {
+        this.reserved1 = reserved1;
+    }
+
+    @Column(name = "RESERVED2")
+    public String getReserved2() {
+        return reserved2;
+    }
+
+    public void setReserved2(String reserved2) {
+        this.reserved2 = reserved2;
+    }
+
+    @Column(name = "RESERVED6")
+    public String getReserved6() {
+        return reserved6;
+    }
+
+    public void setReserved6(String reserved6) {
+        this.reserved6 = reserved6;
+    }
+
+    @Column(name = "RESERVED7")
+    public String getReserved7() {
+        return reserved7;
+    }
+
+    public void setReserved7(String reserved7) {
+        this.reserved7 = reserved7;
+    }
+
+    @Column(name = "RESERVED8")
+    public String getReserved8() {
+        return reserved8;
+    }
+
+    public void setReserved8(String reserved8) {
+        this.reserved8 = reserved8;
+    }
+
+    @Column(name = "RESERVED9")
+    public String getReserved9() {
+        return reserved9;
+    }
+
+    public void setReserved9(String reserved9) {
+        this.reserved9 = reserved9;
+    }
+
+    @Column(name = "RESERVED10")
+    public String getReserved10() {
+        return reserved10;
+    }
+
+    public void setReserved10(String reserved10) {
+        this.reserved10 = reserved10;
     }
 }

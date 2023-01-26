@@ -359,7 +359,11 @@ public class DebitCardIssuenceInfoCommand extends BaseCommand {
                         || debitCardModel.getReIssuanceStatus().equals(CardConstantsInterface.CARD_STATUS_INTITATED))) {
                     throw new CommandException(MessageUtil.getMessage("debit.card.req.in.process"),
                             ErrorCodes.INVALID_INPUT, ErrorLevel.MEDIUM, new Throwable());
-                } else {
+                }
+                else if(debitCardModel.getRemainingNoOfInstallments() != 0){
+                    throw new CommandException("Kindly clear your remaining installments first.",ErrorCodes.INVALID_INPUT, ErrorLevel.MEDIUM, new Throwable());
+                }
+                else {
                     logger.info("*** Customer Validation Successful for Debit Card Re-Issuance ***");
                 }
             } else if (debitCardModel.getCardStatusId() != null && !debitCardModel.getCardStatusId().equals(CardConstantsInterface.CARD_STATUS_REJECTED)

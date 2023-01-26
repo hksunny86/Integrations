@@ -31,7 +31,7 @@ private static Log logger = LogFactory.getLog(IBFTIncomingReqQueueListener.class
 			
 			logger.info("Message Recieved at IBFTIncomingReqQueueListener... mobile no:" + ((messageVO != null)?messageVO.getAccountNo2():""));
 			
-			boolean isAlreadyDone = transactionReversalManager.checkAlreadySuccessful(messageVO.getStan(),messageVO.getRequestTime(),PortalConstants.IBFT_ADVICE_TYPE);
+			boolean isAlreadyDone = transactionReversalManager.checkAlreadySuccessful(messageVO.getStan(),messageVO.getRequestTime());
 
 			if( isAlreadyDone ){
 				

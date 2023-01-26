@@ -42,11 +42,21 @@ import com.inov8.verifly.common.constants.CardTypeConstants;
 import com.inov8.verifly.common.model.AccountInfoModel;
 import org.apache.log4j.Logger;
 import org.springframework.util.StopWatch;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+import java.io.StringReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class DebitCardManagerImpl implements DebitCardManager {
 
@@ -70,6 +80,8 @@ public class DebitCardManagerImpl implements DebitCardManager {
     private RetailerDAO retailerDAO;
     private ArrayList<SmsMessage> validCardSmsList = new ArrayList<>(0);
     private ArrayList<SmsMessage> rejectedCardSmsList = new ArrayList<>(0);
+    DocumentBuilderFactory domFactory = null;
+    private String transactionCode;
 
     @Override
     public List<DebitCardModel> getDebitCardModelByMobileAndNIC(String mobileNo, String nic) throws FrameworkCheckedException {
@@ -85,6 +97,24 @@ public class DebitCardManagerImpl implements DebitCardManager {
     @Override
     public DebitCardModel saveOrUpdateDebitCardModel(DebitCardModel debitCardModel) throws FrameworkCheckedException {
         debitCardModelDAO.updateDebitCardFeeDeductionDate(debitCardModel);
+        return debitCardModel;
+    }
+
+    @Override
+    public DebitCardModel saveOrUpdateDebitCardModelForAnnualFee(DebitCardModel debitCardModel) throws FrameworkCheckedException {
+        debitCardModelDAO.updateDebitCardFeeDeductionDateForAnnualFee(debitCardModel);
+        return debitCardModel;
+    }
+
+    @Override
+    public DebitCardModel saveOrUpdateDebitCardModelForReIssuanceFee(DebitCardModel debitCardModel) throws FrameworkCheckedException {
+        debitCardModelDAO.updateDebitCardFeeDeductionDateForReIssuanceFee(debitCardModel);
+        return debitCardModel;
+    }
+
+    @Override
+    public DebitCardModel saveOrUpdateDebitCardModelForIssuanceFee(DebitCardModel debitCardModel) throws FrameworkCheckedException {
+        debitCardModelDAO.updateDebitCardFeeDeductionDateForIssuanceFee(debitCardModel);
         return debitCardModel;
     }
 
@@ -422,6 +452,8 @@ public class DebitCardManagerImpl implements DebitCardManager {
         String mobileNo = model.getMobileNo();
         String cNic = model.getCnic();
         StringBuilder sb = new StringBuilder();
+        WorkFlowWrapper workFlowWrapper = new WorkFlowWrapperImpl();
+
         if (fee == null || (fee != null && fee.equals(""))) {
             sb.append("Start of calculateDebitCardFee() in DebitCardManagerImpl.executeIssuanceFeeCommand() for Product :: ").append(productId.toString());
             sb.append("\nand Mobile # :: " + mobileNo + " and CNIC :: " + cNic + " and FeeType :: " + cardFeeTypeId.toString()).append(" at Time ::" + new Date());
@@ -431,15 +463,15 @@ public class DebitCardManagerImpl implements DebitCardManager {
             SmartMoneyAccountModel sma = commandManager.getCommonCommandManager().getSmartMoneyAccountByAppUserModelAndPaymentModId(appUserModel,
                     PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT);
 
-            WorkFlowWrapper workFlowWrapper = new WorkFlowWrapperImpl();
+            workFlowWrapper = new WorkFlowWrapperImpl();
 
-            if (productId == ProductConstantsInterface.DEBIT_CARD_RE_ISSUANCE) {
-                workFlowWrapper = commandManager.getCommonCommandManager().calculateDebitCardFeeForAPI(mobileNo, cNic, null, null, null,
-                        productId, cardFeeTypeId, sma.getCardProdId(), DeviceTypeConstantsInterface.MOBILE, model);
-            } else {
-                workFlowWrapper = commandManager.getCommonCommandManager().calculateDebitCardFee(mobileNo, cNic, null, null, null,
-                        productId, cardFeeTypeId, DeviceTypeConstantsInterface.MOBILE, model);
-            }
+//            if (productId == ProductConstantsInterface.DEBIT_CARD_RE_ISSUANCE) {
+            workFlowWrapper = commandManager.getCommonCommandManager().calculateDebitCardFeeForAPI(mobileNo, cNic, null, null, null,
+                    productId, cardFeeTypeId, sma.getCardProdId(), DeviceTypeConstantsInterface.MOBILE, model);
+//            } else {
+//                workFlowWrapper = commandManager.getCommonCommandManager().calculateDebitCardFee(mobileNo, cNic, null, null, null,
+//                        productId, cardFeeTypeId, DeviceTypeConstantsInterface.MOBILE, model);
+//            }
             fee = String.valueOf(workFlowWrapper.getCommissionAmountsHolder().getTransactionAmount());
             sb.append("End of calculateDebitCardFee() in DebitCardManagerImpl.executeIssuanceFeeCommand() for Product :: ").append(productId.toString());
             sb.append("\nand Mobile # :: " + mobileNo + " and CNIC :: " + cNic + " and FeeType :: " + cardFeeTypeId.toString()).append(" at Time ::" + new Date());
@@ -471,14 +503,191 @@ public class DebitCardManagerImpl implements DebitCardManager {
         if (fee != null && !fee.equals("") && !fee.equals("0.0"))
             response = commandManager.executeCommand(dWrapper, CommandFieldConstants.CMD_DEBIT_CARD_CW);
 
+        if(workFlowWrapper.getCommissionAmountsHolder() != null) {
+            fee = String.valueOf(workFlowWrapper.getCommissionAmountsHolder().getTransactionAmount());
+            if (workFlowWrapper.getCommissionAmountsHolder().getExclusivePercentAmount() > 0.0 || workFlowWrapper.getCommissionAmountsHolder().getExclusiveFixAmount() > 0.0) {
+                fee = String.valueOf(Double.valueOf(fee) + workFlowWrapper.getCommissionAmountsHolder().getStakeholderCommissionsMap().get(CommissionConstantsInterface.FED_STAKE_HOLDER_ID));
+            }
+            else{
+                fee = String.valueOf(workFlowWrapper.getCommissionAmountsHolder().getTransactionAmount());
+            }
+        }
+        else{
+            fee = "0.0";
+        }
+
+        if (response != null)
+            this.populateXMLParams(response);
+
+        Calendar date = Calendar.getInstance();
+        Date startDate = null;
+
+        if(workFlowWrapper.getCardFeeRuleModel() != null) {
+            if(productId.equals(ProductConstantsInterface.DEBIT_CARD_ANNUAL_FEE)){
+                if(workFlowWrapper.getCardFeeRuleModel().getInstallmentPlan().equals("QUARTERLY")) {
+                    date.setTime(new Date());
+                    date.add(Calendar.MONTH, 3);
+                    startDate = date.getTime();
+                    DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
+                    String dateStr = null;
+
+//                    dateStr = format.format(date);
+
+                    model.setLastInstallmentDateForAnnual(new Date());
+                    model.setNewInstallmentDateForAnnual(startDate);
+                    model.setNoOfInstallmentsAnnual(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments());
+                    if(model.getRemainingNoOfInstallmentsAnnual() != 0) {
+                        model.setRemainingNoOfInstallmentsAnnual(model.getRemainingNoOfInstallmentsAnnual() - 1);
+                    }
+                    else{
+                        model.setRemainingNoOfInstallmentsAnnual(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments() - 1);
+                    }
+                }
+                else if(workFlowWrapper.getCardFeeRuleModel().getInstallmentPlan().equals("BI-ANNUAL")){
+                    date.setTime(new Date());
+                    date.add(Calendar.MONTH, 6);
+                    startDate = date.getTime();
+                    DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
+                    String dateStr = null;
+
+//                    dateStr = format.format(date);
+
+                    model.setLastInstallmentDateForAnnual(new Date());
+                    model.setNewInstallmentDateForAnnual(startDate);
+                    model.setNoOfInstallmentsAnnual(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments());
+                    if(model.getRemainingNoOfInstallmentsAnnual() != 0) {
+                        model.setRemainingNoOfInstallmentsAnnual(model.getRemainingNoOfInstallmentsAnnual() - 1);
+                    }
+                    else{
+                        model.setRemainingNoOfInstallmentsAnnual(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments() - 1);
+                    }
+
+                }
+                else{
+                    date.setTime(new Date());
+                    date.add(Calendar.MONTH, 12);
+                    startDate = date.getTime();
+                    DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
+                    String dateStr = null;
+
+//                    dateStr = format.format(date);
+
+                    model.setLastInstallmentDateForAnnual(new Date());
+                    model.setNoOfInstallmentsAnnual(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments());
+                    if(model.getRemainingNoOfInstallmentsAnnual() != 0) {
+                        model.setRemainingNoOfInstallmentsAnnual(model.getRemainingNoOfInstallmentsAnnual() - 1);
+                    }
+                    else{
+                        model.setRemainingNoOfInstallmentsAnnual(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments() - 1);
+                    }
+
+//                    model.setNewInstallmentDateForAnnual(dateStr);
+                }
+                model.setIsInstallments(workFlowWrapper.getCardFeeRuleModel().getIsInstallments());
+            }
+            else if(productId.equals(ProductConstantsInterface.CUSTOMER_DEBIT_CARD_ISSUANCE) || productId.equals(ProductConstantsInterface.DEBIT_CARD_ISSUANCE)){
+                if(workFlowWrapper.getCardFeeRuleModel().getInstallmentPlan().equals("QUARTERLY")){
+                    date.setTime(new Date());
+                    date.add(Calendar.MONTH, 3);
+                    startDate = date.getTime();
+                    DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
+                    String dateStr = null;
+
+//                    dateStr = format.format(date);
+
+                    model.setLastInstallmentDateForIssuance(new Date());
+                    model.setNewInstallmentDateForIssuance(startDate);
+                    model.setNoOfInstallments(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments());
+                    model.setRemainingNoOfInstallments(model.getRemainingNoOfInstallments() - 1);
+                }
+                else if(workFlowWrapper.getCardFeeRuleModel().getInstallmentPlan().equals("BI-ANNUAL")){
+                    date.setTime(new Date());
+                    date.add(Calendar.MONTH, 6);
+                    startDate = date.getTime();
+                    DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
+                    String dateStr = null;
+
+//                    dateStr = format.format(date);
+
+                    model.setLastInstallmentDateForIssuance(new Date());
+                    model.setNewInstallmentDateForIssuance(startDate);
+                    model.setNoOfInstallments(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments());
+                    model.setRemainingNoOfInstallments(model.getRemainingNoOfInstallments() - 1);
+
+                }
+                else{
+                    date.setTime(new Date());
+                    date.add(Calendar.MONTH, 12);
+                    DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
+                    String dateStr = null;
+
+//                    dateStr = format.format(date);
+
+                    model.setLastInstallmentDateForIssuance(new Date());
+                    model.setNoOfInstallments(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments());
+                    model.setRemainingNoOfInstallments(model.getRemainingNoOfInstallments() - 1);
+
+                }
+            }
+            else{
+                if(workFlowWrapper.getCardFeeRuleModel().getInstallmentPlan().equals("QUARTERLY")){
+                    startDate = null;
+                    date.setTime(new Date());
+                    date.add(Calendar.MONTH, 3);
+                    startDate = date.getTime();
+//                    DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
+//                    String dateStr = null;
+//
+//                    dateStr = format.format(String.valueOf(date));
+
+                    model.setLastInstallmentDateForReIssuance(new Date());
+                    model.setNewInstallmentDateForReIssuance(startDate);
+                    model.setNoOfInstallments(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments());
+                    model.setRemainingNoOfInstallments(model.getRemainingNoOfInstallments() - 1);
+
+                }
+                else if(workFlowWrapper.getCardFeeRuleModel().getInstallmentPlan().equals("BI-ANNUAL")){
+                    startDate = null;
+                    date.setTime(new Date());
+                    date.add(Calendar.MONTH, 6);
+                    startDate = date.getTime();
+//                    DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
+//                    String dateStr = null;
+//
+//                    dateStr = format.format(String.valueOf(date));
+
+                    model.setLastInstallmentDateForReIssuance(new Date());
+                    model.setNewInstallmentDateForReIssuance(startDate);
+                    model.setNoOfInstallments(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments());
+                    model.setRemainingNoOfInstallments(model.getRemainingNoOfInstallments() - 1);
+
+                }
+                else{
+                    date.setTime(new Date());
+                    date.add(Calendar.MONTH, 12);
+                    DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
+                    String dateStr = null;
+
+//                    dateStr = format.format(date);
+
+                    model.setLastInstallmentDateForReIssuance(new Date());
+//                    model.setNewInstallmentDateForReIssuance(startDate);
+                    model.setNoOfInstallments(workFlowWrapper.getCardFeeRuleModel().getNoOfInstallments());
+                    model.setRemainingNoOfInstallments(model.getRemainingNoOfInstallments() - 1);
+                }
+            }
+//            debitCardModelDAO.saveOrUpdateDebitCard(model);
+            model.setTransactionCode(transactionCode);
+            model.setFee(fee);
+        }
+
+
         sb.append("End of executeIssuanceFee() in DebitCardManagerImpl for Product :: ").append(productId.toString());
         sb.append("\nand Mobile # :: " + mobileNo + " and CNIC :: " + cNic + " and FeeType :: " + cardFeeTypeId.toString()).append(" at Time ::" + new Date());
         sb.append("\n Response :: " + response);
         LOGGER.info(sb.toString());
         return response;
     }
-
-
     private String customerbalance(String cnic) throws FrameworkCheckedException {
         AppUserModel appUserModel = new AppUserModel();
         appUserModel = commandManager.getCommonCommandManager().getAppUserModelByCNIC(cnic);
@@ -937,6 +1146,11 @@ public class DebitCardManagerImpl implements DebitCardManager {
     }
 
     @Override
+    public List<DebitCardModel> loadAllCardsOnRenewRequiredForAnnualFee() throws FrameworkCheckedException {
+        return debitCardModelDAO.loadAllCardsOnRenewRequiredForAnnualFee();
+    }
+
+    @Override
     public List<DebitCardModel> loadAllCardsOnReIssuanceRequired() throws FrameworkCheckedException {
         return debitCardModelDAO.loadAllCardsOnReIssuanceRequired();
     }
@@ -945,6 +1159,42 @@ public class DebitCardManagerImpl implements DebitCardManager {
     @Override
     public List<DebitCardChargesSafRepoModel> loadAllDebitCardFeeChargesRequired() throws FrameworkCheckedException {
         return debitCardChargesDAO.loadAllDebitCardCharges();
+    }
+
+    public void populateXMLParams(String xml) {
+        LOGGER.info("populateProductPurchase(...) in DebitCardIssuanceCommand " + xml);
+        NodeList nodeList = this.executeXPathQuery(xml, "//trans/*");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            transactionCode = nodeList.item(0).getAttributes().getNamedItem(CommandFieldConstants.KEY_TX_ID).getNodeValue();
+            /*NodeList childNodeList = nodeList.item(i).getChildNodes();
+            for (int j = 0; j < childNodeList.getLength(); j++) {
+                NodeList nList = childNodeList.item(j).getChildNodes();
+                if (nList != null && nList.getLength() == 0) {
+                    NamedNodeMap namedNodeMap = childNodeList.item(0).getAttributes();
+                    if (namedNodeMap != null) {
+                        if (namedNodeMap.getNamedItem("ID") != null && !namedNodeMap.getNamedItem("ID").getNodeValue().equals(""))
+                            transactionCode = namedNodeMap.getNamedItem("ID").getNodeValue();
+                    }
+                }
+            }*/
+        }
+    }
+
+    private NodeList executeXPathQuery(String xml, String xpathExpression) {
+        Object result = null;
+        try {
+            domFactory = DocumentBuilderFactory.newInstance();
+            domFactory.setNamespaceAware(true); // never forget this!
+            DocumentBuilder builder = domFactory.newDocumentBuilder();
+            Document doc = builder.parse(new InputSource(new StringReader(xml)));
+            XPathFactory factory = XPathFactory.newInstance();
+            XPath xpath = factory.newXPath();
+            XPathExpression expr = xpath.compile(xpathExpression);
+            result = expr.evaluate(doc, XPathConstants.NODESET);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return (NodeList) result;
     }
 
     public void setDebitCardModelDAO(DebitCardModelDAO debitCardModelDAO) {

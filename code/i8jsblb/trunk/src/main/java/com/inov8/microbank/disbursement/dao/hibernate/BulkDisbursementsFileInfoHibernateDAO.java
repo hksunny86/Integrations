@@ -7,6 +7,9 @@ import com.inov8.microbank.disbursement.dao.BulkDisbursementsFileInfoDAO;
 import com.inov8.microbank.disbursement.model.BulkDisbursementsFileInfoModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import java.util.List;
 
 public class BulkDisbursementsFileInfoHibernateDAO extends BaseHibernateDAO<BulkDisbursementsFileInfoModel, Long, BulkDisbursementsFileInfoDAO> implements BulkDisbursementsFileInfoDAO {
 
@@ -65,5 +68,21 @@ public class BulkDisbursementsFileInfoHibernateDAO extends BaseHibernateDAO<Bulk
         stringBuilder.append(" WHERE BATCH_NUMBER = " + batchNumber);
         int updatedRows =this.getSession().createSQLQuery(String.valueOf(stringBuilder)).executeUpdate();
         return updatedRows;
+    }
+
+    @Override
+    public BulkDisbursementsFileInfoModel getBulkDisbursementsDataByBatchNumber(String batchNumber) throws FrameworkCheckedException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(BulkDisbursementsFileInfoModel.class);
+        criteria.add( Restrictions.eq("batchNumber", batchNumber));
+
+        List<BulkDisbursementsFileInfoModel> list = getHibernateTemplate().findByCriteria(criteria);
+
+        BulkDisbursementsFileInfoModel bulkDisbursementsFileInfoModel = null;
+
+        if(list != null && !list.isEmpty()) {
+            bulkDisbursementsFileInfoModel = list.get(0);
+        }
+
+        return bulkDisbursementsFileInfoModel;
     }
 }

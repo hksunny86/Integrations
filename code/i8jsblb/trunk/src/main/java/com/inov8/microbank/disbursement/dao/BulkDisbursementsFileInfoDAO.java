@@ -14,4 +14,6 @@ public interface BulkDisbursementsFileInfoDAO extends BaseDAO<BulkDisbursementsF
 
     public int updateDisbursementFileStatusAndApprove(String batchNumber, Integer status, String isApproved) throws FrameworkCheckedException;
 
+    public BulkDisbursementsFileInfoModel getBulkDisbursementsDataByBatchNumber(String batchNumber) throws FrameworkCheckedException;
+
 }

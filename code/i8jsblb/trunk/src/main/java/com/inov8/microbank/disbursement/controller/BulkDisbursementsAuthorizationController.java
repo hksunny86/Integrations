@@ -21,6 +21,7 @@ import com.inov8.microbank.disbursement.dao.DisbursementFileInfoViewDAO;
 import com.inov8.microbank.disbursement.model.BulkDisbursementsFileInfoModel;
 import com.inov8.microbank.disbursement.model.DisbursementFileInfoViewModel;
 import com.inov8.microbank.disbursement.service.BulkDisbursementsManager;
+import com.inov8.microbank.disbursement.service.DisbursementFileFacade;
 import com.inov8.microbank.disbursement.util.DisbursementStatusConstants;
 import com.inov8.microbank.disbursement.vo.BulkDisbursementsVOModel;
 import com.inov8.microbank.server.service.manualadjustmentmodule.ManualAdjustmentManager;
@@ -30,6 +31,7 @@ import com.inov8.microbank.webapp.action.portal.manualadjustmentmodule.ManualAdj
 import com.thoughtworks.xstream.XStream;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -53,6 +55,8 @@ public class BulkDisbursementsAuthorizationController  extends AdvanceAuthorizat
     private ReferenceDataManager referenceDataManager;
     private DisbursementFileInfoViewDAO disbursementFileInfoViewDAO;
     private BulkDisbursementsFileInfoDAO bulkDisbursementsFileInfoDAO;
+    @Autowired
+    private DisbursementFileFacade disbursementFacade;
 
     public BulkDisbursementsAuthorizationController() {
         setCommandName("actionAuthorizationModel");
@@ -210,10 +214,15 @@ public class BulkDisbursementsAuthorizationController  extends AdvanceAuthorizat
                 long nextAuthorizationLevel = usecaseFacade.getNextAuthorizationLevel(PortalConstants.UPDATE_BULK_DISBURSEMENT_USECASE_ID,
                         actionAuthorizationModel.getEscalationLevel());
                 if (nextAuthorizationLevel < 1) {
+                    BulkDisbursementsFileInfoModel bulkDisbursementsFileInfoModel1 = bulkDisbursementsFileInfoDAO.getBulkDisbursementsDataByBatchNumber(batchNumber);
+                    disbursementFacade.processBatch(bulkDisbursementsFileInfoModel1.getFileInfoId());
+
                     bulkDisbursementsManager.updateIsApprovedForBatch(batchNumber);
 
                     bulkDisbursementsFileInfoDAO.updateDisbursementFileStatusAndApprove(bulkDisbursementsFileInfoModel.getBatchNumber(),
                             DisbursementStatusConstants.STATUS_READY_TO_DISBURSE, "1");
+
+
 //                    List<BulkDisbursementsModel> bulkDisbursementsModelList = loadBulkDisbursementsModelList(batchNumber);
 //                    if (CollectionUtils.isNotEmpty(bulkDisbursementsModelList)) {
 //                        for (BulkDisbursementsModel bulkModel : bulkDisbursementsModelList) {
@@ -396,5 +405,9 @@ public class BulkDisbursementsAuthorizationController  extends AdvanceAuthorizat
 
     public void setBulkDisbursementsFileInfoDAO(BulkDisbursementsFileInfoDAO bulkDisbursementsFileInfoDAO) {
         this.bulkDisbursementsFileInfoDAO = bulkDisbursementsFileInfoDAO;
+    }
+
+    public void setDisbursementFacade(DisbursementFileFacade disbursementFacade) {
+        this.disbursementFacade = disbursementFacade;
     }
 }

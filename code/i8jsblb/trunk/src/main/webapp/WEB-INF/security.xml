@@ -298,6 +298,9 @@
                 <security:intercept-url pattern="/**/bopcardissuancereport.html*"
                                         access="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R"/>
 
+                <security:intercept-url pattern="/**/p_ivrMpinVerificationReport.html*"
+                                        access="CSR_GP_R,ADM_GP_R,PG_GP_R,MNO_GP_R,RPT_TX_DETAIL_R"/>
+
                 <security:intercept-url pattern="/**/p_IntegratedSystemActivityReport.html*"
                                         access="ADM_GP_R,PG_GP_R,RPT_INTGRT_SYS_LOGS_R"/>
                 <security:intercept-url pattern="/**/p_mnosearchmfsuser.html*" access="MNO_GP_R"/>

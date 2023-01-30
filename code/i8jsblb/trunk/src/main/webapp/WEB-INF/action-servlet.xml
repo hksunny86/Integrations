@@ -1614,6 +1614,7 @@
 
 				<prop key="/p_digidebitcardannualreport.html">digiDebitCardAnnualReportController</prop>
 				<prop key="/p_digipostedrdvreport.html">digiPostedRdvReportController</prop>
+				<prop key="/p_ivrMpinVerificationReport.html">ivrMpinVerificationController</prop>
 
 
 
@@ -6910,6 +6911,13 @@
 		<property name="successView" value="p_expiredcnicreport" />
 		<property name="commonFacade" ref="commonFacade"/>
 		<property name="blbReportsManager" ref="blbReportsManager"/>
+	</bean>
+	<bean id="ivrMpinVerificationController"
+		  class="com.inov8.microbank.ivr.controller.IVRMpinVerificationReportController"
+		  parent="baseFormSearchController" autowire="byName">
+		<property name="ivrMpinVerificationManager">
+			<ref bean="ivrMpinVerificationManager"/>
+		</property>
 	</bean>
 
 	<!--<bean id="displayActionLogXML" class="com.inov8.microbank.webapp.action.portal.mnologsmodule.DisplayActionLogXMLController"

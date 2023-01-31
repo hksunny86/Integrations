@@ -14,6 +14,7 @@ import com.inov8.microbank.common.wrapper.commission.CommissionWrapper;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapper;
 import com.inov8.microbank.common.wrapper.workflow.WorkFlowWrapper;
 import com.inov8.microbank.common.wrapper.workflow.WorkFlowWrapperImpl;
+import com.inov8.microbank.disbursement.dao.BulkDisbursementsFileInfoDAO;
 import com.inov8.microbank.disbursement.model.BulkDisbursementsFileInfoModel;
 import com.inov8.microbank.disbursement.model.DisbursementFileInfoViewModel;
 import com.inov8.microbank.disbursement.util.DisbursementStatusConstants;
@@ -41,6 +42,7 @@ public class BulkDisbursementsFacadeImpl implements BulkDisbursementsFacade {
     private FrameworkExceptionTranslator frameworkExceptionTranslator;
     private CreditAccountQueingPreProcessor creditAccountQueingPreProcessor;
     private StakeholderBankInfoManager stakeholderBankInfoManager;
+    private BulkDisbursementsFileInfoDAO bulkDisbursementsFileInfoDAO;
 
     @Override
     public BulkDisbursementsModel saveOrUpdateBulkDisbursement(BulkDisbursementsModel bulkDisbursementsModel) throws FrameworkCheckedException {
@@ -166,6 +168,14 @@ public class BulkDisbursementsFacadeImpl implements BulkDisbursementsFacade {
             WorkFlowWrapper workFlowWrapper = null;
             for (DisbursementWrapper wrapper : wrappers) {
                 try {
+                    logger.info("Checking if any batch is already in process.");
+                    BulkDisbursementsFileInfoModel bulkDisbursementsFileInfoModel = bulkDisbursementsFileInfoDAO.getBulkDisbursementsDataByStatus
+                            (DisbursementStatusConstants.STATUS_DISBURSEMENT_IN_PROGRESS);
+                    if(bulkDisbursementsFileInfoModel != null){
+                        logger.error("Some Batch is already in process. " + bulkDisbursementsFileInfoModel.getBatchNumber());
+                        throw new Exception("Some Batch is already in process " + bulkDisbursementsFileInfoModel.getBatchNumber());
+                    }
+
                     workFlowWrapper = new WorkFlowWrapperImpl();
                     workFlowWrapper.setProductModel(wrapper.getProductModel());
                     this.setProductAccounts(workFlowWrapper);
@@ -187,9 +197,9 @@ public class BulkDisbursementsFacadeImpl implements BulkDisbursementsFacade {
                     updatePostedRecordsForT24(wrapper.getBatchNumber());
 
                     creditAccountQueingPreProcessor.startProcessing(workFlowWrapper);
-
                 } catch (Exception e) {
                     logger.error("Exception occurred on posting for Batch Number : " + wrapper.getBatchNumber() + " Product " + wrapper.getProductName(), e);
+                    throw new Exception("Exception occurred on posting for Batch Number",e);
                 }
             }
         }
@@ -252,6 +262,14 @@ public class BulkDisbursementsFacadeImpl implements BulkDisbursementsFacade {
             WorkFlowWrapper workFlowWrapper = null;
             for (DisbursementWrapper wrapper : wrappers) {
                 try {
+                    logger.info("Checking if any batch is already in process.");
+                    BulkDisbursementsFileInfoModel bulkDisbursementsFileInfoModel = bulkDisbursementsFileInfoDAO.getBulkDisbursementsDataByStatus
+                            (DisbursementStatusConstants.STATUS_DISBURSEMENT_IN_PROGRESS);
+                    if(bulkDisbursementsFileInfoModel != null){
+                        logger.error("Some Batch is already in process.");
+                        throw new Exception("Some Batch is already in process");
+                    }
+
                     workFlowWrapper = new WorkFlowWrapperImpl();
                     workFlowWrapper.setProductModel(wrapper.getProductModel());
 
@@ -291,6 +309,7 @@ public class BulkDisbursementsFacadeImpl implements BulkDisbursementsFacade {
                     }
                 } catch (Exception e) {
                     logger.error("Exception occurred on posting for Batch Number : " + wrapper.getBatchNumber() + " Product " + wrapper.getProductName(), e);
+                    throw new Exception("Exception occurred on posting for Batch Number",e);
                 }
             }
         }
@@ -329,6 +348,7 @@ public class BulkDisbursementsFacadeImpl implements BulkDisbursementsFacade {
 
         WorkFlowWrapper workFlowWrapper;
         for (DisbursementWrapper wrapper : wrappers) {
+            bulkDisbursementsManager.updateDisbursementFileStatus(wrapper.getDisbursementFileInfoId(), DisbursementStatusConstants.STATUS_DISBURSEMENT_IN_PROGRESS);
             try {
                 long start = System.currentTimeMillis();
 
@@ -447,6 +467,9 @@ public class BulkDisbursementsFacadeImpl implements BulkDisbursementsFacade {
 
     public void setStakeholderBankInfoManager(StakeholderBankInfoManager stakeholderBankInfoManager) {
         this.stakeholderBankInfoManager = stakeholderBankInfoManager;
+    }
+    public void setBulkDisbursementsFileInfoDAO(BulkDisbursementsFileInfoDAO bulkDisbursementsFileInfoDAO) {
+        this.bulkDisbursementsFileInfoDAO = bulkDisbursementsFileInfoDAO;
     }
 
     @Override

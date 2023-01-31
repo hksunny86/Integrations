@@ -20,9 +20,8 @@ public class AcHolderDisbursementScheduler{
 	private BulkDisbursementsFacade bulkDisbursementsFacade;
 	private StatusCheckManager statusCheckManager;
 
-	public void startExecution() throws JobExecutionException {
+	public void startExecution() throws Exception {
 		logger.info("********** STARTING - BULK DISBURSEMENT (to Acc Holder) *****************");
-		
 		try {
 			statusCheckManager.checkActiveMQStatus();
 		} catch (Exception e) {
@@ -35,6 +34,7 @@ public class AcHolderDisbursementScheduler{
 			bulkDisbursementsFacade.makeCoreFundTransfer(ServiceConstantsInterface.BULK_DISB_ACC_HOLDER, currentDateTime);
 		} catch (Exception e) {
 			logger.error("Exception occurred while AcHolderDisbursementScheduler.makeCoreFundTransfer --> Message:"+e.getMessage(),e);
+			throw new Exception("Exception occurred while AcHolderDisbursementScheduler.makeCoreFundTransfer --> Message:"+e.getMessage(),e);
 		}
 		
 		
@@ -42,6 +42,7 @@ public class AcHolderDisbursementScheduler{
 			bulkDisbursementsFacade.makeBLBFundTransfer(ServiceConstantsInterface.BULK_DISB_ACC_HOLDER, currentDateTime);
 		} catch (Exception e) {
 			logger.error("Exception occurred while AcHolderDisbursementScheduler.makeBLBFundTransfer --> Message:"+e.getMessage(),e);
+			throw new Exception("Exception occurred while AcHolderDisbursementScheduler.makeBLBFundTransfer --> Message:"+e.getMessage(),e);
 		}
 		logger.info("********** ENDING - BULK DISBURSEMENT (to Acc Holder) *****************");
 		

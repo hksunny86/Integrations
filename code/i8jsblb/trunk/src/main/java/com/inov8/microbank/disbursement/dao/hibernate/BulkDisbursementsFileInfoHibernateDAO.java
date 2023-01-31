@@ -85,4 +85,20 @@ public class BulkDisbursementsFileInfoHibernateDAO extends BaseHibernateDAO<Bulk
 
         return bulkDisbursementsFileInfoModel;
     }
+
+    @Override
+    public BulkDisbursementsFileInfoModel getBulkDisbursementsDataByStatus(int status) throws FrameworkCheckedException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(BulkDisbursementsFileInfoModel.class);
+        criteria.add( Restrictions.eq("status", status));
+
+        List<BulkDisbursementsFileInfoModel> list = getHibernateTemplate().findByCriteria(criteria);
+
+        BulkDisbursementsFileInfoModel bulkDisbursementsFileInfoModel = null;
+
+        if(list != null && !list.isEmpty()) {
+            bulkDisbursementsFileInfoModel = list.get(0);
+        }
+
+        return bulkDisbursementsFileInfoModel;
+    }
 }

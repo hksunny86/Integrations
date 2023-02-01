@@ -5195,8 +5195,9 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
                 message.setMessageType("ZINDIGI");
                 message.setTitle("Push Notification");
                 this.smsSender.pushNotification(message);
-                if(!StringUtil.isNullOrEmpty(baseWrapper.getObject("RCMobileNo").toString())
-                        && baseWrapper.getObject("RCMobileNo") == 1L){
+                if (!StringUtil.isNullOrEmpty(String.valueOf(baseWrapper.getObject("RCMobileNo")))
+                        && baseWrapper.getObject("RCMobileNo") != null
+                        && baseWrapper.getObject("RCMobileNo").equals(true)) {
                     message.setMobileNo((String) baseWrapper.getObject(CommandFieldConstants.KEY_RECEIVING_CUSTOMER_MOBILE));
                     this.smsSender.send(message);
                     message.setMessageType("ZINDIGI");
@@ -6903,8 +6904,8 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 //            debitCardModel.setAnnualFeeDate(startDate);
             debitCardModel.setReIssuanceDate(new Date());
 
-            if(baseWrapper.getObject("cardFeeRuleModel") != null){
-                if(String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("QUARTERLY")){
+            if (baseWrapper.getObject("cardFeeRuleModel") != null) {
+                if (String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("QUARTERLY")) {
                     date.setTime(new Date());
                     date.add(Calendar.MONTH, 3);
                     startDate = date.getTime();
@@ -6913,8 +6914,7 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 //                    dateStr1 = format.format(startDate);
 
                     debitCardModel.setNewInstallmentDateForReIssuance(startDate);
-                }
-                else if(String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("BI-ANNUAL")){
+                } else if (String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("BI-ANNUAL")) {
                     date.setTime(new Date());
                     date.add(Calendar.MONTH, 6);
                     startDate = date.getTime();
@@ -6923,8 +6923,7 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 //                    dateStr1 = format.format(dateStr1);
 
                     debitCardModel.setNewInstallmentDateForReIssuance(startDate);
-                }
-                else{
+                } else {
                     date.setTime(new Date());
                     date.add(Calendar.MONTH, 12);
                     startDate = date.getTime();
@@ -6974,12 +6973,12 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
             debitCardModel.setTransactionCode(debitCardModel.getTransactionCode());
             debitCardModel.setFee(debitCardModel.getFee());
 //            debitCardModel.setAnnualFeeDate(startDate);
-            if(baseWrapper.getObject("productId").equals(ProductConstantsInterface.DEBIT_CARD_ISSUANCE)){
+            if (baseWrapper.getObject("productId").equals(ProductConstantsInterface.DEBIT_CARD_ISSUANCE)) {
                 debitCardModel.setIssuanceByAgent("1");
             }
 
-            if(baseWrapper.getObject("cardFeeRuleModel") != null){
-                if(String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("QUARTERLY")){
+            if (baseWrapper.getObject("cardFeeRuleModel") != null) {
+                if (String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("QUARTERLY")) {
                     date.setTime(new Date());
                     date.add(Calendar.MONTH, 3);
                     startDate = date.getTime();
@@ -6989,8 +6988,7 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 //                    dateStr1 = format.format(startDate);
 
                     debitCardModel.setNewInstallmentDateForIssuance(startDate);
-                }
-                else if(String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("BI-ANNUAL")){
+                } else if (String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("BI-ANNUAL")) {
                     date.setTime(new Date());
                     date.add(Calendar.MONTH, 6);
                     startDate = date.getTime();
@@ -6999,8 +6997,7 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 //                    dateStr1 = format.format(String.valueOf(startDate));
 
                     debitCardModel.setNewInstallmentDateForIssuance(startDate);
-                }
-                else{
+                } else {
                     date.setTime(new Date());
                     date.add(Calendar.MONTH, 12);
                     startDate = date.getTime();

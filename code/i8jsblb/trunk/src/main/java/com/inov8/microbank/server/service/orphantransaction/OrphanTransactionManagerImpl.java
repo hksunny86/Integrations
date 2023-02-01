@@ -171,6 +171,11 @@ public class OrphanTransactionManagerImpl implements OrphanTransactionManager {
 			SmsMessage message = new SmsMessage(transaction.getCustomerMobileNo(), notification);
 			try {
 				smsSender.send(message);
+				message.setTitle("Orphan Account to Cash");
+				message.setMessageType("ZINDIGI");
+				message.setMessageText(notification);
+				message.setMobileNo(transaction.getCustomerMobileNo());
+				this.smsSender.pushNotification(message);
 			} catch (Exception e) {
 				logger.error("OrphanTransactionManagerImpl - error while sending sms to customer:", e);
 			}
@@ -236,6 +241,11 @@ public class OrphanTransactionManagerImpl implements OrphanTransactionManager {
 			SmsMessage message = new SmsMessage(receiverMobileNo, notification);
 			try {
 				smsSender.send(message);
+				message.setTitle("Orphan Cash to Cash Reversal");
+				message.setMessageType("ZINDIGI");
+				message.setMessageText(notification);
+				message.setMobileNo(receiverMobileNo);
+				this.smsSender.pushNotification(message);
 			} catch (FrameworkCheckedException e) {
 				e.printStackTrace();
 			}
@@ -299,6 +309,11 @@ public class OrphanTransactionManagerImpl implements OrphanTransactionManager {
 			SmsMessage message = new SmsMessage(receiverMobileNo, notification);
 			try {
 				smsSender.send(message);
+				message.setTitle("Orphan Cash to Cash Reversal");
+				message.setMessageType("ZINDIGI");
+				message.setMessageText(notification);
+				message.setMobileNo(receiverMobileNo);
+				this.smsSender.pushNotification(message);
 			} catch (FrameworkCheckedException e) {
 				e.printStackTrace();
 			}

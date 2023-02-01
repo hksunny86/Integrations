@@ -165,7 +165,7 @@ public class CustomerInitiatedAccountToAccountCommand extends BaseCommand  {
 					productModel = workFlowWrapper.getProductModel();
 					senderCustomerBalance = CommonUtils.getDoubleOrDefaultValue(workFlowWrapper.getOLASwitchWrapper().getOlavo().getFromBalanceAfterTransaction()); // Sender balance
 					
-					
+					workFlowWrapper.putObject("RCMobileNo",1L);
 					commonCommandManager.sendSMS(workFlowWrapper);
 				}
 				else

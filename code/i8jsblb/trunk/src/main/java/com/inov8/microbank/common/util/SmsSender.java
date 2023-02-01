@@ -11,5 +11,6 @@ public interface SmsSender
 	public abstract void send(SmsMessage smsMessage) throws FrameworkCheckedException;
 	public abstract void send(ArrayList<SmsMessage> smsMessageList) throws FrameworkCheckedException;
 	public abstract void sendDelayed(SmsMessage smsMessage) throws FrameworkCheckedException;
+	public abstract void pushNotification(SmsMessage smsMessage) throws FrameworkCheckedException;
 
 }

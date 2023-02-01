@@ -799,6 +799,11 @@ public class AllPayBillSaleTransaction extends SalesTransaction {
 									null);
 					wrapper.getTransactionDetailModel().setCustomField4(agentSMS);
 					this.smsSender.send(new SmsMessage(wrapper.getAppUserModel().getMobileNo(), agentSMS));
+					SmsMessage message=new SmsMessage(wrapper.getAppUserModel().getMobileNo(), agentSMS);
+					message.setMobileNo(wrapper.getAppUserModel().getMobileNo());
+					message.setMessageType("ZINDIGI");
+					message.setTitle("Agent Bill Payment");
+					this.smsSender.pushNotification(message);
 				}
 
 				if(wrapper.getHandlerModel() != null && wrapper.getHandlerModel().getSmsToHandler()){
@@ -833,6 +838,12 @@ public class AllPayBillSaleTransaction extends SalesTransaction {
 				wrapper.getTransactionModel().setNotificationMobileNo(wrapper.getWalkInCustomerMob());
 				wrapper.getTransactionModel().setConfirmationMessage(customerSMS);
 				this.smsSender.send(new SmsMessage(wrapper.getWalkInCustomerMob(), customerSMS));
+				SmsMessage message = new SmsMessage(wrapper.getWalkInCustomerMob(), customerSMS);
+				message.setMessageText(customerSMS);
+				message.setMobileNo(wrapper.getWalkInCustomerMob());
+				message.setMessageType("ZINDIGI");
+				message.setTitle("Customer Bill Payment");
+				this.smsSender.pushNotification(message);
 			}
 				
 				//End moving SMS before Bill Payment 22nd May 2013
@@ -1208,6 +1219,12 @@ public class AllPayBillSaleTransaction extends SalesTransaction {
 			+ ". For more information please call helpline XXX-XXX-XXX" ;*/
 		wrapper.getTransactionDetailModel().setCustomField4(agentSMS);
 		this.smsSender.send(new SmsMessage(wrapper.getAppUserModel().getMobileNo(), agentSMS));
+		SmsMessage message = new SmsMessage(wrapper.getAppUserModel().getMobileNo(), agentSMS);
+		message.setMessageText(agentSMS);
+		message.setMobileNo(wrapper.getAppUserModel().getMobileNo());
+		message.setMessageType("ZINDIGI");
+		message.setTitle("Agent Cash Deposit");
+		this.smsSender.pushNotification(message);
 		
 		
 //		Dear Customer, 

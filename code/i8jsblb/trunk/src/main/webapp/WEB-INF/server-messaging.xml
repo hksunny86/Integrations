@@ -319,6 +319,7 @@
 
     <bean id="smsSender" class="com.inov8.microbank.common.util.SmsSenderImpl">
         <property name="jmsProducer" ref="jmsProducer"/>
+        <property name="esbAdapter" ref="esbAdapter"/>
     </bean>
 
     <bean id="nonTransactedSmsSender" class="com.inov8.microbank.common.util.SmsSenderImpl">

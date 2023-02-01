@@ -9,8 +9,26 @@ public class SmsMessage implements Serializable
 	private String messageText;
 	private String sender;
 	private String from;
-	
-	
+	private String title;
+	private String messageType;
+
+
+	public String getMessageType() {
+		return this.messageType;
+	}
+
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public String getFrom() {
 		return from;
 	}

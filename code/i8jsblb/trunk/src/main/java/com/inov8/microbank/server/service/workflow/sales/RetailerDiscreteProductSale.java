@@ -168,6 +168,12 @@ public RetailerDiscreteProductSale()
     if(!(wrapper.getCustomerAppUserModel().getMobileNo().trim().equals(wrapper.getAppUserModel().getMobileNo())))
     {
     	smsSender.send(new SmsMessage(wrapper.getCustomerAppUserModel().getMobileNo(), wrapper.getTransactionModel().getConfirmationMessage())) ;
+        SmsMessage message = new SmsMessage(wrapper.getCustomerAppUserModel().getMobileNo(), wrapper.getTransactionModel().getConfirmationMessage());
+        message.setMessageText(wrapper.getTransactionModel().getConfirmationMessage());
+        message.setMobileNo(wrapper.getCustomerAppUserModel().getMobileNo());
+        message.setMessageType("ZINDIGI");
+        message.setTitle("Transaction Confirmation");
+        this.smsSender.pushNotification(message);
     }
     else
     {

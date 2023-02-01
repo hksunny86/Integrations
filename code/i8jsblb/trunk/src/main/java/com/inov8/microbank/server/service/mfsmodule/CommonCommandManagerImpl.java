@@ -5191,7 +5191,18 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
         if (messageList != null && !messageList.isEmpty()) {
             for (SmsMessage message : messageList) {
-                smsSender.send(message);
+                this.smsSender.send(message);
+                message.setMessageType("ZINDIGI");
+                message.setTitle("Push Notification");
+                this.smsSender.pushNotification(message);
+                if(!StringUtil.isNullOrEmpty(baseWrapper.getObject("RCMobileNo").toString())
+                        && baseWrapper.getObject("RCMobileNo") == 1L){
+                    message.setMobileNo((String) baseWrapper.getObject(CommandFieldConstants.KEY_RECEIVING_CUSTOMER_MOBILE));
+                    this.smsSender.send(message);
+                    message.setMessageType("ZINDIGI");
+                    message.setTitle("Push Notification");
+                    this.smsSender.pushNotification(message);
+                }
             }
         }
 

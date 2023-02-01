@@ -210,6 +210,11 @@ public class BulkDisbursementsScheduler {
 						
 						SmsMessage smsMessage = new SmsMessage(disbursement.getMobileNo(), salaryDisbursementNotification);
 						this.smsSender.send(smsMessage);
+						smsMessage.setMessageText(salaryDisbursementNotification);
+						smsMessage.setMobileNo(disbursement.getMobileNo());
+						smsMessage.setMessageType("ZINDIGI");
+						smsMessage.setTitle("Bulk Sallery Disbursement");
+						this.smsSender.pushNotification(smsMessage);
 					}
 					catch (Exception e)
 					{

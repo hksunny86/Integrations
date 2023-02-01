@@ -746,6 +746,7 @@ public class BillSaleTransaction extends SalesTransaction
 
 			String agentSMS = "";
 			String customerSMS = "";
+			SmsMessage message;
 			
 			if(workFlowWrapper!=null && workFlowWrapper.getProductModel() != null && UtilityCompanyEnum.contains(String.valueOf(workFlowWrapper.getProductModel().getProductId()))){
 					String companyName = UtilityCompanyEnum.lookup(String.valueOf(workFlowWrapper.getProductModel().getProductId())).name();
@@ -765,6 +766,12 @@ public class BillSaleTransaction extends SalesTransaction
 
 					workFlowWrapper.getTransactionModel().setConfirmationMessage(customerSMS);
 					this.smsSender.send(new SmsMessage(workFlowWrapper.getAppUserModel().getMobileNo(), customerSMS));
+					message = new SmsMessage(workFlowWrapper.getAppUserModel().getMobileNo(), customerSMS);
+					message.setMessageText(customerSMS);
+					message.setMobileNo(workFlowWrapper.getAppUserModel().getMobileNo());
+					message.setMessageType("ZINDIGI");
+					message.setTitle("Customer Bill Payment");
+					this.smsSender.pushNotification(message);
 					
 				} else if(workFlowWrapper.getAppUserModel()!=null && workFlowWrapper.getAppUserModel().getAppUserTypeId().longValue() == UserTypeConstantsInterface.RETAILER.longValue()) {//Agent Utility Bill payment
 				
@@ -778,6 +785,12 @@ public class BillSaleTransaction extends SalesTransaction
 
 					workFlowWrapper.getTransactionModel().setConfirmationMessage(agentSMS);
 					this.smsSender.send(new SmsMessage(workFlowWrapper.getAppUserModel().getMobileNo(), agentSMS));
+					message = new SmsMessage(workFlowWrapper.getAppUserModel().getMobileNo(), agentSMS);
+					message.setMessageText(agentSMS);
+					message.setMobileNo(workFlowWrapper.getAppUserModel().getMobileNo());
+					message.setMessageType("ZINDIGI");
+					message.setTitle("Customer Bill Payment");
+					this.smsSender.pushNotification(message);
 				}
 			}
 		}

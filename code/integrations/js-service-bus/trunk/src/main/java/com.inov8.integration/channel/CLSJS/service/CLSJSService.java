@@ -1,4 +1,5 @@
 package com.inov8.integration.channel.CLSJS.service;
+
 import com.inov8.integration.channel.CLSJS.client.ScreenMSPortType;
 import com.inov8.integration.channel.CLSJS.mock.CLSJSMock;
 import com.inov8.integration.channel.CLSJS.request.ImportScreeningRequest;
@@ -40,6 +41,7 @@ public class CLSJSService {
         importScreeningRequest.setRequestID(request.getRequestID());
         importScreeningRequest.setCNIC(request.getCnic());
         importScreeningRequest.setCustomerName(request.getCustomerName());
+        importScreeningRequest.setFatherName(request.getFatherName());
         importScreeningRequest.setDateOfBirth(request.getDateOfBirth());
         importScreeningRequest.setNationality(request.getNationality());
         importScreeningRequest.setCity(request.getCity());

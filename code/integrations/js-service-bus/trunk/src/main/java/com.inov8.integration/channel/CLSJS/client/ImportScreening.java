@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for ImportScreening complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="ImportScreening"&gt;
  *   &lt;complexContent&gt;
@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://tempuri.org/Screen_MS}RequestID"/&gt;
  *         &lt;element ref="{http://tempuri.org/Screen_MS}CNIC"/&gt;
  *         &lt;element ref="{http://tempuri.org/Screen_MS}CustomerName"/&gt;
+ *         &lt;element ref="{http://tempuri.org/Screen_MS}FatherName"/&gt;
  *         &lt;element ref="{http://tempuri.org/Screen_MS}DateOfBirth"/&gt;
  *         &lt;element ref="{http://tempuri.org/Screen_MS}Nationality"/&gt;
  *         &lt;element ref="{http://tempuri.org/Screen_MS}City"/&gt;
@@ -31,23 +32,21 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ImportScreening", propOrder = {
-    "requestID",
-    "cnic",
-    "customerName",
-    "dateOfBirth",
-    "nationality",
-    "city",
-    "customerNumber",
-    "userId"
+        "requestID",
+        "cnic",
+        "customerName",
+        "fatherName",
+        "dateOfBirth",
+        "nationality",
+        "city",
+        "customerNumber",
+        "userId"
 })
 public class ImportScreening
-    implements Serializable
-{
+        implements Serializable {
 
     private final static long serialVersionUID = 1L;
     @XmlElement(name = "RequestID", required = true)
@@ -56,6 +55,8 @@ public class ImportScreening
     protected String cnic;
     @XmlElement(name = "CustomerName", required = true)
     protected String customerName;
+    @XmlElement(name = "FatherName", required = true)
+    protected String fatherName;
     @XmlElement(name = "DateOfBirth", required = true)
     protected String dateOfBirth;
     @XmlElement(name = "Nationality", required = true)
@@ -69,11 +70,9 @@ public class ImportScreening
 
     /**
      * Gets the value of the requestID property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getRequestID() {
         return requestID;
@@ -81,11 +80,9 @@ public class ImportScreening
 
     /**
      * Sets the value of the requestID property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setRequestID(String value) {
         this.requestID = value;
@@ -93,11 +90,9 @@ public class ImportScreening
 
     /**
      * Gets the value of the cnic property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCNIC() {
         return cnic;
@@ -105,23 +100,39 @@ public class ImportScreening
 
     /**
      * Sets the value of the cnic property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCNIC(String value) {
         this.cnic = value;
     }
 
     /**
+     * Gets the value of the fatherName property.
+     *
+     * @return possible object is
+     * {@link String }
+     */
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    /**
+     * Sets the value of the fatherName property.
+     *
+     * @param value allowed object is
+     *              {@link String }
+     */
+    public void setFatherName(String value) {
+        this.fatherName = value;
+    }
+
+    /**
      * Gets the value of the customerName property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCustomerName() {
         return customerName;
@@ -129,11 +140,9 @@ public class ImportScreening
 
     /**
      * Sets the value of the customerName property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCustomerName(String value) {
         this.customerName = value;
@@ -141,11 +150,9 @@ public class ImportScreening
 
     /**
      * Gets the value of the dateOfBirth property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getDateOfBirth() {
         return dateOfBirth;
@@ -153,11 +160,9 @@ public class ImportScreening
 
     /**
      * Sets the value of the dateOfBirth property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setDateOfBirth(String value) {
         this.dateOfBirth = value;
@@ -165,11 +170,9 @@ public class ImportScreening
 
     /**
      * Gets the value of the nationality property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getNationality() {
         return nationality;
@@ -177,11 +180,9 @@ public class ImportScreening
 
     /**
      * Sets the value of the nationality property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setNationality(String value) {
         this.nationality = value;
@@ -189,11 +190,9 @@ public class ImportScreening
 
     /**
      * Gets the value of the city property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCity() {
         return city;
@@ -201,11 +200,9 @@ public class ImportScreening
 
     /**
      * Sets the value of the city property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCity(String value) {
         this.city = value;
@@ -213,11 +210,9 @@ public class ImportScreening
 
     /**
      * Gets the value of the customerNumber property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getCustomerNumber() {
         return customerNumber;
@@ -225,11 +220,9 @@ public class ImportScreening
 
     /**
      * Sets the value of the customerNumber property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setCustomerNumber(String value) {
         this.customerNumber = value;
@@ -237,11 +230,9 @@ public class ImportScreening
 
     /**
      * Gets the value of the userId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     public String getUserId() {
         return userId;
@@ -249,11 +240,9 @@ public class ImportScreening
 
     /**
      * Sets the value of the userId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     public void setUserId(String value) {
         this.userId = value;

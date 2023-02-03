@@ -12,7 +12,7 @@ import static com.inov8.integration.enums.DateFormatEnum.TIME_LOCAL_TRANSACTION;
 import static com.inov8.integration.enums.DateFormatEnum.TRANSACTION_DATE;
 
 @XmlRootElement
-public class ImportScreeningRequest extends Request{
+public class ImportScreeningRequest extends Request {
 
     @XmlElement(name = "RequestID")
     private String requestID;
@@ -20,6 +20,8 @@ public class ImportScreeningRequest extends Request{
     private String cnic;
     @XmlElement(name = "CustomerName")
     private String customerName;
+    @XmlElement(name = "FatherName")
+    private String fatherName;
     @XmlElement(name = "DateOfBirth")
     private String dateOfBirth;
     @XmlElement(name = "Nationality")
@@ -53,6 +55,14 @@ public class ImportScreeningRequest extends Request{
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
     }
 
     public String getDateOfBirth() {
@@ -98,17 +108,18 @@ public class ImportScreeningRequest extends Request{
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        this.setRequestID((DateUtil.formatCurrentDate(TRANSACTION_DATE.getValue()))+(DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue())));
+        this.setRequestID((DateUtil.formatCurrentDate(TRANSACTION_DATE.getValue())) + (DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue())));
         this.setCnic(i8SBSwitchControllerRequestVO.getCNIC());
         this.setCustomerName(i8SBSwitchControllerRequestVO.getName());
+        this.setFatherName(i8SBSwitchControllerRequestVO.getFatherName());
         this.setDateOfBirth(i8SBSwitchControllerRequestVO.getDateOfBirth());
-        if(i8SBSwitchControllerRequestVO.getNationality().equalsIgnoreCase("Pakistan")){
+        if (i8SBSwitchControllerRequestVO.getNationality().equalsIgnoreCase("Pakistan")) {
             this.setNationality("Pakistani");
-        }else {
+        } else {
             this.setNationality("");
         }
-        if (i8SBSwitchControllerRequestVO.getCity() != null){
-            if(i8SBSwitchControllerRequestVO.getCity().isEmpty()){
+        if (i8SBSwitchControllerRequestVO.getCity() != null) {
+            if (i8SBSwitchControllerRequestVO.getCity().isEmpty()) {
                 this.setCity("");
             } else {
                 this.setCity(i8SBSwitchControllerRequestVO.getCity());
@@ -143,6 +154,10 @@ public class ImportScreeningRequest extends Request{
 
         if (StringUtils.isEmpty(this.getCustomerName())) {
             throw new I8SBValidationException("[Failed] Customer Name " + this.getCustomerName());
+        }
+
+        if (StringUtils.isEmpty(this.getFatherName())) {
+            throw new I8SBValidationException("[Failed] Father Name " + this.getFatherName());
         }
 
         return true;

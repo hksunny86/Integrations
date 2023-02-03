@@ -14,6 +14,7 @@ import com.inov8.microbank.common.util.*;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapper;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapperImpl;
 import com.inov8.microbank.debitcard.dao.DebitCardModelDAO;
+import com.inov8.microbank.nadraVerisys.model.VerisysDataModel;
 import com.inov8.microbank.server.dao.configurations.AmaBvsConfigurationsDAO;
 import com.inov8.microbank.server.dao.customermodule.CustomerDAO;
 import com.inov8.microbank.server.dao.securitymodule.AppUserDAO;
@@ -100,9 +101,10 @@ public class ClsPendingAccountOpeningScheduler {
                         if (clsPendingAccountOpeningModel == null) {
 
                             CustomerModel customerModel = new CustomerModel();
+                            VerisysDataModel verisysDataModel;
 
-                                customerModel = customerDAO.loadCustomerModelByCustomerId(model.getCustomerId());
-                            if (customerModel.getSegmentId().equals(Long.parseLong(MessageUtil.getMessage("Minor_segment_id")))){
+                            customerModel = customerDAO.loadCustomerModelByCustomerId(model.getCustomerId());
+                            if (customerModel.getSegmentId().equals(Long.parseLong(MessageUtil.getMessage("Minor_segment_id")))) {
                                 clsPendingAccountOpeningModel = new ClsPendingAccountOpeningModel();
                                 I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
                                 I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
@@ -117,7 +119,14 @@ public class ClsPendingAccountOpeningScheduler {
                                 requestVO.setNationality("Pakistan");
                                 requestVO.setRequestId(transmissionDateTime + stan);
                                 requestVO.setMobileNumber(customerModel.getFatherMotherMobileNo());
-                                requestVO.setCity("");
+                                requestVO.setFatherName(customerModel.getFatherHusbandName());
+                                new VerisysDataModel();
+                                verisysDataModel = this.getCommonCommandManager().getVerisysDataHibernateDAO().loadVerisysDataModel(this.appUserModel.getAppUserId());
+                                if (verisysDataModel != null) {
+                                    requestVO.setCity(verisysDataModel.getCurrentAddress());
+                                } else {
+                                    requestVO.setCity(this.appUserModel.getAddress1());
+                                }
 
                                 SwitchWrapper sWrapper = new SwitchWrapperImpl();
                                 sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
@@ -215,7 +224,7 @@ public class ClsPendingAccountOpeningScheduler {
                                     clsPendingAccountOpeningModel.setIsCompleted("1");
                                 }
                                 clsPendingAccountOpeningModel = getCommonCommandManager().clsPendingAccountOpening(clsPendingAccountOpeningModel);
-                            }else {
+                            } else {
                                 customerModel = customerDAO.loadCustomerModelByCustomerId(model.getCustomerId());
                                 I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
                                 I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
@@ -230,7 +239,14 @@ public class ClsPendingAccountOpeningScheduler {
                                 requestVO.setNationality("Pakistan");
                                 requestVO.setRequestId(transmissionDateTime + stan);
                                 requestVO.setMobileNumber(model.getMobileNo());
-                                requestVO.setCity("");
+                                requestVO.setFatherName(customerModel.getFatherHusbandName());
+                                new VerisysDataModel();
+                                verisysDataModel = this.getCommonCommandManager().getVerisysDataHibernateDAO().loadVerisysDataModel(this.appUserModel.getAppUserId());
+                                if (verisysDataModel != null) {
+                                    requestVO.setCity(verisysDataModel.getCurrentAddress());
+                                } else {
+                                    requestVO.setCity(this.appUserModel.getAddress1());
+                                }
 
                                 SwitchWrapper sWrapper = new SwitchWrapperImpl();
                                 sWrapper.setI8SBSwitchControllerRequestVO(requestVO);

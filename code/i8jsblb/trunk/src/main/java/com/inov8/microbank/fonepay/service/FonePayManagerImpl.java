@@ -1876,6 +1876,7 @@ public class FonePayManagerImpl implements FonePayManager {
                     requestVO.setNationality("Pakistan");
                     requestVO.setRequestId(transmissionDateTime + stan);
                     requestVO.setMobileNumber(webServiceVO.getMobileNo());
+                    requestVO.setFatherName(UserUtils.getCurrentUser().getCustomerIdCustomerModel().getFatherHusbandName());
 
                     SwitchWrapper sWrapper = new SwitchWrapperImpl();
                     sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
@@ -1898,6 +1899,7 @@ public class FonePayManagerImpl implements FonePayManager {
                         requestVO.setNationality("Pakistan");
                         requestVO.setRequestId(transmissionDateTime + stan);
                         requestVO.setMobileNumber(webServiceVO.getMobileNo());
+                        requestVO.setFatherName(UserUtils.getCurrentUser().getCustomerIdCustomerModel().getFatherHusbandName());
 
                         SwitchWrapper sWrapper = new SwitchWrapperImpl();
                         sWrapper.setI8SBSwitchControllerRequestVO(requestVO);

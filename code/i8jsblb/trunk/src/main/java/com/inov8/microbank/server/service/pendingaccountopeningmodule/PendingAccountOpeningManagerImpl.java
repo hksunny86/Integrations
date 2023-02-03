@@ -73,6 +73,7 @@ public class PendingAccountOpeningManagerImpl implements PendingAccountOpeningMa
         requestVO.setCity("");
         requestVO.setMobileNumber(appUserModel.getMobileNo());
         requestVO.setUserId("");
+        requestVO.setFatherName(appUserModel.getCustomerIdCustomerModel().getFatherHusbandName());
         SwitchWrapper sWrapper = new SwitchWrapperImpl();
         sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
         sWrapper.setI8SBSwitchControllerResponseVO(responseVO);

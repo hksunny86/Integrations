@@ -837,6 +837,7 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                                 requestVOCLS.setNationality("Pakistan");
                                 requestVOCLS.setRequestId(transmissionDateTime + stan);
                                 requestVOCLS.setMobileNumber(mfsAccountModel.getMobileNo());
+                                requestVOCLS.setFatherName(UserUtils.getCurrentUser().getCustomerIdCustomerModel().getFatherHusbandName());
 
                                 if (mfsAccountModel.getCity() == null) {
                                     requestVOCLS.setCity("");

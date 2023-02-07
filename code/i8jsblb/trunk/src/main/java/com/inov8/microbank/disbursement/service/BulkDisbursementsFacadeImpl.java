@@ -169,8 +169,7 @@ public class BulkDisbursementsFacadeImpl implements BulkDisbursementsFacade {
             for (DisbursementWrapper wrapper : wrappers) {
                 try {
                     logger.info("Checking if any batch is already in process.");
-                    BulkDisbursementsFileInfoModel bulkDisbursementsFileInfoModel = bulkDisbursementsFileInfoDAO.getBulkDisbursementsDataByStatus
-                            (DisbursementStatusConstants.STATUS_DISBURSEMENT_IN_PROGRESS);
+                    BulkDisbursementsFileInfoModel bulkDisbursementsFileInfoModel = bulkDisbursementsFileInfoDAO.getBulkDisbursementsDataByStatus("In-Process");
                     if(bulkDisbursementsFileInfoModel != null){
                         logger.error("Some Batch is already in process. " + bulkDisbursementsFileInfoModel.getBatchNumber());
                         throw new Exception("Some Batch is already in process " + bulkDisbursementsFileInfoModel.getBatchNumber());
@@ -263,8 +262,7 @@ public class BulkDisbursementsFacadeImpl implements BulkDisbursementsFacade {
             for (DisbursementWrapper wrapper : wrappers) {
                 try {
                     logger.info("Checking if any batch is already in process.");
-                    BulkDisbursementsFileInfoModel bulkDisbursementsFileInfoModel = bulkDisbursementsFileInfoDAO.getBulkDisbursementsDataByStatus
-                            (DisbursementStatusConstants.STATUS_DISBURSEMENT_IN_PROGRESS);
+                    BulkDisbursementsFileInfoModel bulkDisbursementsFileInfoModel = bulkDisbursementsFileInfoDAO.getBulkDisbursementsDataByStatus("In-Process");
                     if(bulkDisbursementsFileInfoModel != null){
                         logger.error("Some Batch is already in process.");
                         throw new Exception("Some Batch is already in process");
@@ -348,7 +346,7 @@ public class BulkDisbursementsFacadeImpl implements BulkDisbursementsFacade {
 
         WorkFlowWrapper workFlowWrapper;
         for (DisbursementWrapper wrapper : wrappers) {
-            bulkDisbursementsManager.updateDisbursementFileStatus(wrapper.getDisbursementFileInfoId(), DisbursementStatusConstants.STATUS_DISBURSEMENT_IN_PROGRESS);
+            bulkDisbursementsManager.updateDisbursementFileProcessingStatus(wrapper.getDisbursementFileInfoId(), "In-Process");
             try {
                 long start = System.currentTimeMillis();
 
@@ -377,6 +375,7 @@ public class BulkDisbursementsFacadeImpl implements BulkDisbursementsFacade {
                     BigDecimal validRecords = (BigDecimal) results[4];
                     if (validRecords.longValue() == totalSettled.longValue()) {
                         bulkDisbursementsManager.updateDisbursementFileStatus(wrapper.getDisbursementFileInfoId(), DisbursementStatusConstants.STATUS_DISBURSED);
+                        bulkDisbursementsManager.updateDisbursementFileProcessingStatus(wrapper.getDisbursementFileInfoId(), "Completed");
 
                         logger.info("Batch : " + wrapper.getBatchNumber() + " Size " + wrapper.getDisbursementVOList().size() +
                                 " Completed in " + (System.currentTimeMillis() - start) / 1000.d + " seconds.");
@@ -507,5 +506,10 @@ public class BulkDisbursementsFacadeImpl implements BulkDisbursementsFacade {
         }
    		 catch(Exception ex){
         }
+    }
+
+    @Override
+    public int updateDisbursementFileProcessingStatus(Long fileInfoId, String processingStatus) {
+        return bulkDisbursementsManager.updateDisbursementFileProcessingStatus(fileInfoId, processingStatus);
     }
 }

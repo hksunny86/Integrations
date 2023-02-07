@@ -87,9 +87,9 @@ public class BulkDisbursementsFileInfoHibernateDAO extends BaseHibernateDAO<Bulk
     }
 
     @Override
-    public BulkDisbursementsFileInfoModel getBulkDisbursementsDataByStatus(int status) throws FrameworkCheckedException {
+    public BulkDisbursementsFileInfoModel getBulkDisbursementsDataByStatus(String processingStatus) throws FrameworkCheckedException {
         DetachedCriteria criteria = DetachedCriteria.forClass(BulkDisbursementsFileInfoModel.class);
-        criteria.add( Restrictions.eq("status", status));
+        criteria.add( Restrictions.eq("processingStatus", processingStatus));
 
         List<BulkDisbursementsFileInfoModel> list = getHibernateTemplate().findByCriteria(criteria);
 
@@ -100,5 +100,14 @@ public class BulkDisbursementsFileInfoHibernateDAO extends BaseHibernateDAO<Bulk
         }
 
         return bulkDisbursementsFileInfoModel;
+    }
+
+    @Override
+    public int updateDisbursementFileProcessingStatus(Long fileInfoId, String processingStatus) {
+        Query query = this.getSession().createQuery("update BulkDisbursementsFileInfoModel au set au.processingStatus=:processingStatus where au.fileInfoId =:fileInfoId");
+        query.setParameter("processingStatus", processingStatus);
+        query.setParameter("fileInfoId", fileInfoId);
+
+        return  query.executeUpdate();
     }
 }

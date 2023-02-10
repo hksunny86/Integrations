@@ -312,6 +312,16 @@
                     </html:select>
 
                 </td>
+
+                <td height="16" align="right"  class="formText">Debit Card Printing City</td>
+                <td width="58%" align="left">
+
+                    <html:select path="city" cssClass="textBox"  tabindex="13" onkeypress="return maskNumber(this,event)"  >
+                        <html:option value="">---All---</html:option>
+                        <html:option value="Islamabad" label="Islamabad"/>
+                        <html:option value="Karachi" label="Karachi"/>
+                    </html:select>
+                </td>
             </tr>
 
             <tr>

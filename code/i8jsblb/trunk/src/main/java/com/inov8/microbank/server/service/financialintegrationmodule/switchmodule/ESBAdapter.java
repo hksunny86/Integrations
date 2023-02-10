@@ -565,6 +565,7 @@ public class ESBAdapter {
             customerVO.setFatherName(model.getFatherHusbandName());
             customerVO.setOfficeAddress1(model.getDebitCardMailingAddress());
             customerVO.setOfficeAddress2(model.getDebitCardMailingAddress());
+            customerVO.setHomeCity(model.getCustomerCity());
             customerVO.setHomeAddress1(model.getDebitCardMailingAddress());
             customerVO.setHomeAddress2(model.getDebitCardMailingAddress());
             customerVO.setTempAddress1(model.getDebitCardMailingAddress());

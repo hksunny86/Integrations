@@ -57,6 +57,7 @@
         <property name="clsPendingAccountOpeningDAO" ref="clsPendingAccountOpeningDAO"></property>
         <property name="customerPictureDAO" ref="customerPictureDAO"></property>
         <property name="esbAdapter" ref="esbAdapter"></property>
+        <property name="reversalAdviceQueingPreProcessor" ref="reversalAdviceQueingPreProcessor"/>
 <!--        <property name="ibftRetryAdviceDAO" ref="ibftRetryAdviceDAO"></property>-->
 
         <!--		<property name="chequeBookDAO" ref="chequeBookDAO"></property>-->

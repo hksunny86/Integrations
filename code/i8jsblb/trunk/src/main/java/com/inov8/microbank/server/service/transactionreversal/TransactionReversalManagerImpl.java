@@ -12,10 +12,8 @@ import com.inov8.framework.common.wrapper.BaseWrapperImpl;
 import com.inov8.framework.common.wrapper.SearchBaseWrapper;
 import com.inov8.framework.common.wrapper.SearchBaseWrapperImpl;
 import com.inov8.framework.server.dao.framework.v2.GenericDao;
-import com.inov8.integration.controller.IBFTSwitchController;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
-import com.inov8.integration.vo.MiddlewareMessageVO;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.util.*;
@@ -829,7 +827,8 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
                 || model.getProductId().equals(ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_ON_US)
                 || model.getProductId().equals(ProductConstantsInterface.POS_DEBIT_CARD_CASH_WITHDRAWAL)
                 || model.getProductId().equals(ProductConstantsInterface.INTERNATIONAL_DEBIT_CARD_CASH_WITHDRAWAL_OFF_US)
-                || model.getProductId().equals(ProductConstantsInterface.International_POS_DEBIT_CARD_CASH_WITHDRAWAL))) {
+                || model.getProductId().equals(ProductConstantsInterface.International_POS_DEBIT_CARD_CASH_WITHDRAWAL)
+                || model.getProductId().equals(10245364L))) {
             DebitCardReversalVO debitCardReversalVO = new DebitCardReversalVO();
             debitCardReversalVO.setCardPan(model.getConsumerNo());
             debitCardReversalVO.setOriginalStan(model.getStan());
@@ -847,7 +846,8 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
             MiddlewareAdviceVO middlewareAdviceVO = CoreAdviceUtil.prepareMiddlewareAdviceVO(model);
             if (model.getProductId() == null || (model.getProductId() != null && model.getProductId().equals(ProductConstantsInterface.ACCOUNT_OPENING)
                     || model.getProductId().equals(ProductConstantsInterface.CUST_ACCOUNT_OPENING)
-                    || model.getProductId().equals(ProductConstantsInterface.PORTAL_ACCOUNT_OPENING))) {
+                    || model.getProductId().equals(ProductConstantsInterface.PORTAL_ACCOUNT_OPENING)
+            )) {
                 middlewareAdviceVO.setWorkFlowWrapper(workFlowWrapper);
             }
             coreAdviceSender.send(middlewareAdviceVO);

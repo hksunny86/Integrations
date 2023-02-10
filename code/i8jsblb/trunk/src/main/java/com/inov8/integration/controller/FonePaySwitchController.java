@@ -33,6 +33,7 @@ import com.inov8.microbank.common.wrapper.workflow.WorkFlowWrapper;
 import com.inov8.microbank.common.wrapper.workflow.WorkFlowWrapperImpl;
 import com.inov8.microbank.debitcard.model.DebitCardModel;
 import com.inov8.microbank.debitcard.util.DebitCardUtill;
+import com.inov8.microbank.debitcard.vo.DebitCardReversalVO;
 import com.inov8.microbank.fonepay.common.*;
 import com.inov8.microbank.fonepay.model.EcofinSubAgentModel;
 import com.inov8.microbank.fonepay.model.VirtualCardModel;
@@ -46,6 +47,7 @@ import com.inov8.microbank.server.dao.productmodule.ProductCatalogDAO;
 import com.inov8.microbank.server.dao.securitymodule.AppUserDAO;
 import com.inov8.microbank.server.dao.securitymodule.EcofinSubAgentDAO;
 import com.inov8.microbank.server.dao.smartmoneymodule.SmartMoneyAccountDAO;
+import com.inov8.microbank.server.facade.ReversalAdviceQueingPreProcessor;
 import com.inov8.microbank.server.facade.portal.mfsaccountmodule.MfsAccountClosureFacade;
 import com.inov8.microbank.server.service.actionlogmodule.ActionLogManager;
 import com.inov8.microbank.server.service.clspendingblinkcustomermodule.dao.ClsPendingAccountOpeningDAO;
@@ -115,7 +117,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
     private CustomerPictureDAO customerPictureDAO;
     //    private IBFTSwitchController ibftSwitchController;
     private ESBAdapter esbAdapter;
-//    private IBFTRetryAdviceDAO ibftRetryAdviceDAO;
+    //    private IBFTRetryAdviceDAO ibftRetryAdviceDAO;
+    private ReversalAdviceQueingPreProcessor reversalAdviceQueingPreProcessor;
+
 
     private boolean defaultUserLogin() {
         BaseWrapper baseWrapper = new BaseWrapperImpl();
@@ -5681,30 +5685,66 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             if ("00".equals(webServiceVO.getResponseCode())) {
                 xml = getCommandManager().executeCommand(baseWrapper, CommandFieldConstants.CMD_DEBIT_PAYMENT_API);
                 String transactionAmount = (MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_AMOUNT_NODEREF));
-                if (transactionAmount.contains(",")) {
-                    tranAmount = Double.parseDouble(transactionAmount.replace(",", ""));
-                } else {
-                    tranAmount = Double.valueOf(transactionAmount);
-                }
-                String totalAmount = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRAN_TOTAL_AMT_NODEREF);
+                String transactionCode = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_ID_NODEREF);
                 String balanceAfterTransaction = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRAN_BAL_NODEREF);
 
-                charges = Double.valueOf(MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_SERVICE_CHARGES_NODEREF));
-                if (charges == null || charges.equals(0.0)) {
-                    charges = Double.valueOf(MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_COMMISSION_CHARGES_NODEREF));
-                    tranAmount = tranAmount - charges;
+                if (xml != null && webServiceVO.getProductID().equals("10245364")) {
+                    DebitCardReversalVO debitCardReversalVO = new DebitCardReversalVO();
+//                    debitCardReversalVO.setRrn(webServiceVO.getRetrievalReferenceNumber());
+                    debitCardReversalVO.setCardPan(webServiceVO.getMobileNo());
+                    debitCardReversalVO.setOriginalStan(webServiceVO.getRetrievalReferenceNumber());
+                    debitCardReversalVO.setReversalAmount(Double.valueOf(webServiceVO.getTransactionAmount()));
+                    debitCardReversalVO.setRetryCount(0L);
+                    debitCardReversalVO.setTransactionCodeId(Long.valueOf(transactionCode));
+                    debitCardReversalVO.setTransactionCode(transactionCode);
+                    debitCardReversalVO.setReversalRequestTime(webServiceVO.getDateTime());
+                    debitCardReversalVO.setAdviceType(CoreAdviceUtil.ADVICE_TYPE_REVERSAL);
+                    debitCardReversalVO.setProductId(Long.valueOf(webServiceVO.getProductID()));
+                    this.loadAndForwardCoreAdviceToQueue(debitCardReversalVO);
 
+                    if (transactionAmount.contains(",")) {
+                        tranAmount = Double.parseDouble(transactionAmount.replace(",", ""));
+                    } else {
+                        tranAmount = Double.valueOf(transactionAmount);
+                    }
+                    String totalAmount = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRAN_TOTAL_AMT_NODEREF);
+                    charges = Double.valueOf(MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_SERVICE_CHARGES_NODEREF));
+                    if (charges == null || charges.equals(0.0)) {
+                        charges = Double.valueOf(MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_COMMISSION_CHARGES_NODEREF));
+                        tranAmount = tranAmount - charges;
+
+                    }
+
+                    webServiceVO.setResponseContentXML(xml);
+                    webServiceVO.setResponseCode("00");
+                    webServiceVO.setResponseCodeDescription("Successfull");
+                    webServiceVO.setCommissionAmount(String.valueOf(charges));
+                    webServiceVO.setTransactionAmount(String.valueOf(tranAmount));
+                    webServiceVO.setTotalAmount(totalAmount);
+                    webServiceVO.setTransactionId(transactionCode);
+                } else {
+                    if (transactionAmount.contains(",")) {
+                        tranAmount = Double.parseDouble(transactionAmount.replace(",", ""));
+                    } else {
+                        tranAmount = Double.valueOf(transactionAmount);
+                    }
+                    String totalAmount = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRAN_TOTAL_AMT_NODEREF);
+                    charges = Double.valueOf(MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_SERVICE_CHARGES_NODEREF));
+                    if (charges == null || charges.equals(0.0)) {
+                        charges = Double.valueOf(MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_COMMISSION_CHARGES_NODEREF));
+                        tranAmount = tranAmount - charges;
+
+                    }
+
+
+                    webServiceVO.setResponseContentXML(xml);
+                    webServiceVO.setResponseCode("00");
+                    webServiceVO.setResponseCodeDescription("Successfull");
+                    webServiceVO.setCommissionAmount(String.valueOf(charges));
+                    webServiceVO.setTransactionAmount(String.valueOf(tranAmount));
+                    webServiceVO.setTotalAmount(totalAmount);
+                    webServiceVO.setTransactionId(transactionCode);
                 }
-                String transactionCode = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_ID_NODEREF);
-
-
-                webServiceVO.setResponseContentXML(xml);
-                webServiceVO.setResponseCode("00");
-                webServiceVO.setResponseCodeDescription("Successfull");
-                webServiceVO.setCommissionAmount(String.valueOf(charges));
-                webServiceVO.setTransactionAmount(String.valueOf(tranAmount));
-                webServiceVO.setTotalAmount(totalAmount);
-                webServiceVO.setTransactionId(transactionCode);
                 String channelId = MessageUtil.getMessage("merchantCamping.channel.ids");
                 List<String> channelIds = Arrays.asList(channelId.split("\\s*,\\s*"));
                 if (channelIds.contains(webServiceVO.getChannelId())) {
@@ -5731,28 +5771,30 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             }
 
         } catch (CommandException e) {
+            String channelId = MessageUtil.getMessage("merchantCamping.channel.ids");
+            List<String> channelIds = Arrays.asList(channelId.split("\\s*,\\s*"));
+            if (channelIds.contains(webServiceVO.getChannelId())) {
+                I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+                I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
+                requestVO = ESBAdapter.prepareMerchantCampingRequest(I8SBConstants.RequestType_TransactionStatus);
+                requestVO.setUserId(String.valueOf(appUserModel.getAppUserId()));
+                requestVO.setTransactionCode("");
+                requestVO.setAvailableBalance("");
+                requestVO.setMobileNumber(appUserModel.getMobileNo());
+                requestVO.setTransactionDate(String.valueOf(new Date()));
+                requestVO.setRRN(webServiceVO.getRetrievalReferenceNumber());
+                requestVO.setSTAN(webServiceVO.getReserved2());
+                requestVO.setTransactionAmount(merchantTransactionAmount);
+                requestVO.setTransactionType("M");
+                requestVO.setStatus("U");
+                SwitchWrapper sWrapper = new SwitchWrapperImpl();
+                sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
+                sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
+                sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
+                responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
 
-            I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
-            I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
-            requestVO = ESBAdapter.prepareMerchantCampingRequest(I8SBConstants.RequestType_TransactionStatus);
-            requestVO.setUserId(String.valueOf(appUserModel.getAppUserId()));
-            requestVO.setTransactionCode("");
-            requestVO.setAvailableBalance("");
-            requestVO.setMobileNumber(appUserModel.getMobileNo());
-            requestVO.setTransactionDate(String.valueOf(new Date()));
-            requestVO.setRRN(webServiceVO.getRetrievalReferenceNumber());
-            requestVO.setSTAN(webServiceVO.getReserved2());
-            requestVO.setTransactionAmount(merchantTransactionAmount);
-            requestVO.setTransactionType("M");
-            requestVO.setStatus("U");
-            SwitchWrapper sWrapper = new SwitchWrapperImpl();
-            sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
-            sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
-            sWrapper = esbAdapter.makeI8SBCall(sWrapper);
-            ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
-            responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
-
-
+            }
             if (e.getErrorCode() == 9023) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.DEVICE_OTP_INVALID.toString());
             } else if (e.getErrorCode() == 9029) {
@@ -5785,38 +5827,58 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             }
         } catch (Exception e) {
             logger.error("[FonePaySwitchController.debitPayment] Error occured: " + e.getMessage(), e);
+            String channelId = MessageUtil.getMessage("merchantCamping.channel.ids");
+            List<String> channelIds = Arrays.asList(channelId.split("\\s*,\\s*"));
+            if (channelIds.contains(webServiceVO.getChannelId())) {
+                I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+                I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
+                requestVO = ESBAdapter.prepareMerchantCampingRequest(I8SBConstants.RequestType_TransactionStatus);
+                requestVO.setUserId(String.valueOf(appUserModel.getAppUserId()));
+                requestVO.setTransactionCode("");
+                requestVO.setAvailableBalance("");
+                requestVO.setMobileNumber(appUserModel.getMobileNo());
+                requestVO.setTransactionDate(String.valueOf(new Date()));
+                requestVO.setRRN(webServiceVO.getRetrievalReferenceNumber());
+                requestVO.setSTAN(webServiceVO.getReserved2());
+                requestVO.setStatus("U");
+                SwitchWrapper sWrapper = new SwitchWrapperImpl();
+                sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
+                sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
+                sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
+                responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
+            }
+//            if (StringUtil.isNullOrEmpty(webServiceVO.getResponseCode())) {
+//                this.logger.error("[FonePaySwitchController.debitPayment] Error occured: " + e.getMessage(), e);
+//                webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+//                webServiceVO.setResponseCodeDescription(e.getMessage());
+//                if (e instanceof NullPointerException
+//                        || e instanceof HibernateException
+//                        || e instanceof SQLException
+//                        || e instanceof DataAccessException
+//                        || (e.getMessage() != null && e.getMessage().indexOf("Exception") != -1)) {
+//
+//                    logger.error("Converting Exception (" + e.getClass() + ") to generic error message...");
+//                    webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR.toString());
+//                }
 
-            I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
-            I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
-            requestVO = ESBAdapter.prepareMerchantCampingRequest(I8SBConstants.RequestType_TransactionStatus);
-            requestVO.setUserId(String.valueOf(appUserModel.getAppUserId()));
-            requestVO.setTransactionCode("");
-            requestVO.setAvailableBalance("");
-            requestVO.setMobileNumber(appUserModel.getMobileNo());
-            requestVO.setTransactionDate(String.valueOf(new Date()));
-            requestVO.setRRN(webServiceVO.getRetrievalReferenceNumber());
-            requestVO.setSTAN(webServiceVO.getReserved2());
-            requestVO.setStatus("U");
-            SwitchWrapper sWrapper = new SwitchWrapperImpl();
-            sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
-            sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
-            sWrapper = esbAdapter.makeI8SBCall(sWrapper);
-            ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
-            responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
 
-            if (StringUtil.isNullOrEmpty(webServiceVO.getResponseCode())) {
-                this.logger.error("[FonePaySwitchController.debitPayment] Error occured: " + e.getMessage(), e);
+            this.logger.error("[FonePaySwitchController.DebitPayment] Error occured: " + e.getMessage(), e);
+            if (e.getMessage().equals("Your account is debit blocked.")) {
+                FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.DEBIT_BLOCKED);
+            } else {
                 webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
                 webServiceVO.setResponseCodeDescription(e.getMessage());
-                if (e instanceof NullPointerException
-                        || e instanceof HibernateException
-                        || e instanceof SQLException
-                        || e instanceof DataAccessException
-                        || (e.getMessage() != null && e.getMessage().indexOf("Exception") != -1)) {
+            }
+            if (e instanceof NullPointerException
+                    || e instanceof HibernateException
+                    || e instanceof SQLException
+                    || e instanceof DataAccessException
+                    || (e.getMessage() != null && e.getMessage().indexOf("Exception") != -1)) {
 
-                    logger.error("Converting Exception (" + e.getClass() + ") to generic error message...");
-                    webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR.toString());
-                }
+                logger.error("Converting Exception (" + e.getClass() + ") to generic error message...");
+                webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR.toString());
+
             }
         } finally {
             ThreadLocalAppUser.remove();
@@ -5827,6 +5889,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         return webServiceVO;
 
     }
+
 
     @Override
     public WebServiceVO agentBillPaymentInquiry(WebServiceVO webServiceVO) {
@@ -6548,89 +6611,6 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         return webServiceVO;
     }
 
-//    public MiddlewareMessageVO creditPaymentAdvice(MiddlewareMessageVO middlewareMessageVO) throws RuntimeException {
-//        MiddlewareAdviceVO middlewareAdviceVO = new MiddlewareAdviceVO();
-//
-//        middlewareAdviceVO.setAccountNo1(middlewareMessageVO.getAccountNo1());
-//        middlewareAdviceVO.setAccountNo2(middlewareMessageVO.getAccountNo2());
-//        middlewareAdviceVO.setTransactionAmount(middlewareMessageVO.getTransactionAmount());
-//        middlewareAdviceVO.setRequestTime(middlewareMessageVO.getRequestTime());
-//        middlewareAdviceVO.setStan(middlewareMessageVO.getStan());
-//        middlewareAdviceVO.setRetrievalReferenceNumber(middlewareMessageVO.getRetrievalReferenceNumber());
-//        middlewareAdviceVO.setAdviceType(PortalConstants.CREDIT_PAYMENT_ADVICE_TYPE); // Used in DLQ
-//        middlewareAdviceVO.setBankIMD(middlewareMessageVO.getBankIMD());
-//        middlewareAdviceVO.setProductId(middlewareMessageVO.getProductId());
-//
-//        try {
-//            logger.info("FonePaySwitchController.creditPayment checking if already STAN exists: ");
-//            boolean isAlreadyExists = this.checkAlreadyExists(middlewareMessageVO.getStan(), middlewareMessageVO.getRequestTime());
-//            if (isAlreadyExists) {
-//                logger.info("FonePaySwitchController.creditPayment Error occured while checking STAN: ");
-//                middlewareMessageVO.setResponseCode(IBFTErrorCodes.SUCCESS);
-//                logger.info("FonePaySwitchController.creditPayment Response: " + middlewareMessageVO.getResponseCode());
-//            }
-//        } catch (FrameworkCheckedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        logger.info("FonePaySwitchController.creditPayment (In Start) Account Number 1: " + middlewareMessageVO.getAccountNo1() + " - Account Number 2: " + middlewareMessageVO.getAccountNo2());
-//        logger.info("FonePaySwitchController.creditPayment (In Start) Trx Amount: " + middlewareMessageVO.getTransactionAmount());
-//        ActionLogModel actionLogModel = new ActionLogModel();
-//        CreditPaymentRequestQueue creditPaymentRequestQueue = getCreditPaymentRequestQueue();
-//        try {
-//            /* save new IBFT record in IBFT_RETRY_ADVICE table (status = 'Pushed to SAF')
-//             * - will be marked as 'Successful' in IBFTTransaction.doSale
-//             * - will be marked as 'Failed' in DlqMessageListener.onMessage
-//             */
-//            boolean isAlreadyExists = this.checkAlreadyExists(middlewareMessageVO.getStan(), middlewareMessageVO.getRequestTime());
-//            if (!isAlreadyExists) {
-//                getTransactionReversalManager().saveNewIBFTRecord(middlewareAdviceVO);
-//            }
-//            creditPaymentRequestQueue.sentWalletRequest(middlewareAdviceVO);
-//
-//            middlewareMessageVO.setResponseCode(IBFTErrorCodes.SUCCESS);
-//            middlewareMessageVO.setAccountBalance("0.0");
-//        } catch (Exception e) {
-//            logger.error("IBFTSwitchController.coreToWalletAdvice Error occured: ", e);
-//            middlewareMessageVO.setResponseCode(IBFTErrorCodes.GENERAL_ERROR);
-//        }
-//        logger.info("IBFTSwitchController.coreToWalletAdvice (In End) Response: " + middlewareMessageVO.getResponseCode());
-//        return middlewareMessageVO;
-//    }
-//
-//    private boolean checkAlreadyExists(String stan, Date requestTime) throws FrameworkCheckedException {
-//        boolean result = false;
-//
-//        if (StringUtil.isNullOrEmpty(stan) || requestTime == null) {
-//            throw new FrameworkCheckedException("Invalid Input for IBFT Credit Advice. STAN:" + stan + " , Request Time:" + requestTime);
-//        }
-//
-//        IBFTRetryAdviceModel iBFTRetryAdviceModel = new IBFTRetryAdviceModel();
-//        iBFTRetryAdviceModel.setStan(stan);
-//        iBFTRetryAdviceModel.setRequestTime(requestTime);
-//
-//        Calendar c = Calendar.getInstance();
-//        c.setTime(requestTime);
-//        c.set(Calendar.MILLISECOND, 0);
-//
-//        DateRangeHolderModel dateRangeHolderModel = new DateRangeHolderModel("requestTime", c.getTime(), c.getTime());
-//
-//        LinkedHashMap<String, SortingOrder> sortingOrderMap = new LinkedHashMap<String, SortingOrder>();
-//        sortingOrderMap.put("ibftRetryAdviceId", SortingOrder.DESC);
-//
-//
-//        CustomList<IBFTRetryAdviceModel> customList = ibftRetryAdviceDAO.findByExample(
-//                iBFTRetryAdviceModel, null, sortingOrderMap, dateRangeHolderModel, PortalConstants.EXACT_CONFIG_HOLDER_MODEL);
-//
-//        List<IBFTRetryAdviceModel> list = customList.getResultsetList();
-//
-//        if (list != null && list.size() > 0) {
-//            result = true;
-//        }
-//
-//        return result;
-//    }
-
     @Override
     public WebServiceVO hraCashWithDrawl(WebServiceVO webServiceVO) {
         String mobileNo = webServiceVO.getMobileNo();
@@ -6844,12 +6824,18 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     webServiceVO.setAccountTitle(appUserModel.getFirstName() + " " + appUserModel.getLastName());
                     if (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)) {
                         webServiceVO.setAccountType("L0");
+//                        webServiceVO.setIsBVSAccount("0");
                     } else if (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_1)) {
                         webServiceVO.setAccountType("L1");
+//                        webServiceVO.setIsBVSAccount("1");
                     } else if (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.BLINK)) {
                         webServiceVO.setAccountType("blink");
-                    }
-                    else if (customerModel.getCustomerAccountTypeId().equals(56L)) {
+//                        if (customerModel.getBlinkBvs().equals(true)){
+//                            webServiceVO.setReserved3("1");
+//                        }else {
+//                            webServiceVO.setReserved3("0");
+//                        }
+                    } else if (customerModel.getCustomerAccountTypeId().equals(56L)) {
                         webServiceVO.setAccountType("Zindigi Ultra");
                     }
 
@@ -8332,7 +8318,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 return webServiceVO;
 
             String response = null;
-            if(webServiceVO.getReserved4().equals("1")){
+            if (webServiceVO.getReserved4().equals("1")) {
                 AppUserModel customerAppUserModel = new AppUserModel();
                 customerAppUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
                 if (customerAppUserModel == null) {
@@ -8369,8 +8355,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 bWrapper.putObject(FonePayConstants.KEY_EXTERNAL_PRODUCT_NAME, webServiceVO.getPaymentMode());
 
                 xml = getCommandManager().executeCommand(bWrapper, CommandFieldConstants.CMD_CASH_DEPOSIT);
-            }
-            else {
+            } else {
                 bWrapper.putObject("CMOB", mobileNo);
                 bWrapper.putObject("TPAM", txProcessingAmount);
                 bWrapper.putObject("CAMT", commissionAmount);
@@ -8429,26 +8414,19 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.DEVICE_OTP_EXPIRED.toString());
             } else if (e.getErrorCode() == 9000) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.PIN_IS_NUMERIC.toString());
-            }
-            else if (e.getErrorCode() == 111) {
+            } else if (e.getErrorCode() == 111) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.FINGER_DOES_NOT_EXIT.toString());
-            }
-            else if (e.getErrorCode() == 118) {
+            } else if (e.getErrorCode() == 118) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.NADRA_FINGER_EXAUST_ERROR.toString());
-            }
-            else if (e.getErrorCode() == 120) {
+            } else if (e.getErrorCode() == 120) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.INVALID_INPUT_FINGER_TEMPLETE.toString());
-            }
-            else if (e.getErrorCode() == 121) {
+            } else if (e.getErrorCode() == 121) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.FINGER_PRINT_NOT_MATCHED.toString());
-            }
-            else if (e.getErrorCode() == 122) {
+            } else if (e.getErrorCode() == 122) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.INVALID_FINGER_INDEX.toString());
-            }
-            else if (e.getErrorCode() == 123) {
+            } else if (e.getErrorCode() == 123) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.INVALID_FINGER_TEMPLETE_TYPE.toString());
-            }
-            else {
+            } else {
                 logger.error("[FonePaySwitchController.agentCashDepositPayment] Command Exception Error occured:" + e.getMessage(), e);
                 webServiceVO.setResponseCode(FonePayResponseCodes.COMMAND_GENERAL_EXCEPTION);
                 webServiceVO.setResponseCodeDescription(e.getMessage());
@@ -8719,7 +8697,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             this.logger.info("[FonePay agentCashWithdrawalPayment] [Mobile:" + custMobileNumber + ", Trx Amount:" + txAmount + "]");
 
             String response = null;
-            if(webServiceVO.getReserved4().equals("1")) {
+            if (webServiceVO.getReserved4().equals("1")) {
                 AppUserModel customerAppUserModel = new AppUserModel();
                 customerAppUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
                 if (customerAppUserModel == null) {
@@ -8762,8 +8740,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 bWrapper.putObject(CommandFieldConstants.KEY_TERMINAL_ID, webServiceVO.getTerminalId());
 
                 xml = getCommandManager().executeCommand(bWrapper, CommandFieldConstants.CMD_CASH_OUT);
-            }
-            else {
+            } else {
                 bWrapper.putObject("DATE", transactionDateTime);
                 bWrapper.putObject("RRN", rrn);
                 bWrapper.putObject("CHANNELID", channelId);
@@ -8828,23 +8805,17 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.DEVICE_OTP_INVALID.toString());
             } else if (e.getErrorCode() == 9029) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.DEVICE_OTP_EXPIRED.toString());
-            }
-            else if (e.getErrorCode() == 111) {
+            } else if (e.getErrorCode() == 111) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.FINGER_DOES_NOT_EXIT.toString());
-            }
-            else if (e.getErrorCode() == 118) {
+            } else if (e.getErrorCode() == 118) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.NADRA_FINGER_EXAUST_ERROR.toString());
-            }
-            else if (e.getErrorCode() == 120) {
+            } else if (e.getErrorCode() == 120) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.INVALID_INPUT_FINGER_TEMPLETE.toString());
-            }
-            else if (e.getErrorCode() == 121) {
+            } else if (e.getErrorCode() == 121) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.FINGER_PRINT_NOT_MATCHED.toString());
-            }
-            else if (e.getErrorCode() == 122) {
+            } else if (e.getErrorCode() == 122) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.INVALID_FINGER_INDEX.toString());
-            }
-            else if (e.getErrorCode() == 123) {
+            } else if (e.getErrorCode() == 123) {
                 FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.INVALID_FINGER_TEMPLETE_TYPE.toString());
             } else {
                 logger.error("[FonePaySwitchController.agentCashWithdrawalPayment] Command Exception Error occured:" + e.getMessage(), e);
@@ -9668,7 +9639,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         customerModel.setCustomerId(appUserModel.getCustomerId());
         try {
             customerModel = getCommonCommandManager().getCustomerModelById(appUserModel.getCustomerId());
-            if (blinkCustomerModelList.get(0) == null || !(customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.BLINK))) {
+            if (blinkCustomerModelList.get(0) == null || !(customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.BLINK) || customerModel.getCustomerAccountTypeId().equals(56L))) {
                 webServiceVO.setResponseCodeDescription("No Blink Customer Found Against This CNIC and Mobile Number");
                 webServiceVO.setResponseCode("172");
                 return webServiceVO;
@@ -9878,7 +9849,8 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
                         } else if (debitCardModel.getReIssuanceStatus().equals(CardConstantsInterface.CARD_STATUS_IN_PROCESS)) {
                             webServiceVO.setCardDescription("Printing" + " " + debitCardModel.getInProgressDate());
-
+                        } else if (debitCardModel.getReIssuanceStatus().equals(CardConstantsInterface.CARD_STATUS_ACTIVE)) {
+                            webServiceVO.setCardDescription("Printing" + " " + debitCardModel.getInProgressDate());
                         }
 
                     } else {
@@ -10660,25 +10632,16 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         this.customerPictureDAO = customerPictureDAO;
     }
 
-    //    public void setIbftSwitchController(IBFTSwitchController ibftSwitchController) {
-//        this.ibftSwitchController = ibftSwitchController;
-//    }
-//
     public void setEsbAdapter(ESBAdapter esbAdapter) {
         this.esbAdapter = esbAdapter;
     }
-//
-//    public void setIbftRetryAdviceDAO(IBFTRetryAdviceDAO ibftRetryAdviceDAO) {
-//        this.ibftRetryAdviceDAO = ibftRetryAdviceDAO;
-//    }
 
-//    public CreditPaymentRequestQueue getCreditPaymentRequestQueue() {
-//        ApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
-//        return (CreditPaymentRequestQueue) applicationContext.getBean("creditPaymentRequestQueue");
-//    }
-//
-//    public TransactionReversalManager getTransactionReversalManager() {
-//        ApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
-//        return (TransactionReversalManager) applicationContext.getBean("transactionReversalManager");
-//    }
+    private void loadAndForwardCoreAdviceToQueue(final Object workFlowWrapper) throws InterruptedException {
+        reversalAdviceQueingPreProcessor.startProcessing(workFlowWrapper);
+    }
+
+    public void setReversalAdviceQueingPreProcessor(ReversalAdviceQueingPreProcessor reversalAdviceQueingPreProcessor) {
+        this.reversalAdviceQueingPreProcessor = reversalAdviceQueingPreProcessor;
+    }
+
 }

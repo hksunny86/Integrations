@@ -556,7 +556,7 @@ public class FonePayManagerImpl implements FonePayManager {
                     customerModel.setContactNo(messageVO.getMobileNo());
                     customerModel.setName(messageVO.getCustomerName());
                     customerModel.setMobileNo(messageVO.getMobileNo());
-                    customerModel.setFatherHusbandName(messageVO.getFatherHusbandName());
+                    customerModel.setFatherHusbandName(webServiceVO.getFatherHusbandName());
                     customerModel.setRelationAskari(0);
                     customerModel.setRelationZong(0);
                     customerModel.setBirthPlace(messageVO.getBirthPlace());
@@ -2027,7 +2027,7 @@ public class FonePayManagerImpl implements FonePayManager {
                     customerModel.setContactNo(messageVO.getMobileNo());
                     customerModel.setName(messageVO.getCustomerName());
                     customerModel.setMobileNo(messageVO.getMobileNo());
-                    customerModel.setFatherHusbandName(messageVO.getFatherHusbandName());
+                    customerModel.setFatherHusbandName(webServiceVO.getFatherHusbandName());
                     customerModel.setRelationAskari(0);
                     customerModel.setRelationZong(0);
                     customerModel.setAccountPurposeId(1l);

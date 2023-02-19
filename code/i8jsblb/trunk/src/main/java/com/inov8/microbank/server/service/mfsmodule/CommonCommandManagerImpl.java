@@ -6154,12 +6154,15 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
             if (nameArray.length > 1) {
                 lName = vo.getName().substring(
                         fName.length() + 1);
-            } else {
-                lName = nameArray[0];
+            }
+            else {
+                lName = " ";
             }
 
             fName = escapeUnicode(fName);
-            lName = escapeUnicode(lName);
+            if (!(lName.equals(" "))) {
+                lName = escapeUnicode(lName);
+            }
             String motherMaidenName = escapeUnicode(vo.getMotherMaidenName());
             if (appUserModel.getAddress1() != null)
                 address = escapeUnicode(vo.getCurrentAddress());

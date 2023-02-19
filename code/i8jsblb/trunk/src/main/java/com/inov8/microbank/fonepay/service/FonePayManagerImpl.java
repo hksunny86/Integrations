@@ -706,8 +706,10 @@ public class FonePayManagerImpl implements FonePayManager {
                     if (nameArray.length > 1) {
                         appUserModel.setLastName(messageVO.getCustomerName().substring(
                                 appUserModel.getFirstName().length() + 1));
-                    } else {
-                        appUserModel.setLastName(nameArray[0]);
+                    }
+
+                    else {
+                        appUserModel.setLastName(" ");
                     }
                     appUserModel.setAddress1(messageVO.getPresentAddress());
                     appUserModel.setAddress2(messageVO.getPermanentAddress());
@@ -2123,8 +2125,10 @@ public class FonePayManagerImpl implements FonePayManager {
                     if (nameArray.length > 1) {
                         appUserModel.setLastName(messageVO.getCustomerName().substring(
                                 appUserModel.getFirstName().length() + 1));
-                    } else {
-                        appUserModel.setLastName(nameArray[0]);
+                    }
+
+                    else {
+                        appUserModel.setLastName(" ");
                     }
                     appUserModel.setAddress1(messageVO.getPresentAddress());
                     appUserModel.setAddress2(messageVO.getPermanentAddress());

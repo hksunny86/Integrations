@@ -328,6 +328,25 @@ public class MfsAccountModel implements Serializable, Cloneable {
     private String nicBackPicCheckerComments;
     private String pNicBackPicMakerComments;
     private String pNicBackPicCheckerComments;
+    private String deviceStatus;
+    private String reasonOfBlock;
+
+
+    public String getReasonOfBlock() {
+        return reasonOfBlock;
+    }
+
+    public void setReasonOfBlock(String reasonOfBlock) {
+        this.reasonOfBlock = reasonOfBlock;
+    }
+
+    public String getDeviceStatus() {
+        return deviceStatus;
+    }
+
+    public void setDeviceStatus(String deviceStatus) {
+        this.deviceStatus = deviceStatus;
+    }
 
     public Boolean getNameApp() {
         return nameApp;

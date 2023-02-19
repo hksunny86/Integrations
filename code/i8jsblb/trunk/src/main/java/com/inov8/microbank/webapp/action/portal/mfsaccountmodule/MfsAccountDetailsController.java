@@ -729,6 +729,7 @@ public class MfsAccountDetailsController extends AdvanceFormController {
                 if (deviceAccountModel != null && deviceAccountModel.getUserDeviceAccountsId() != null) {
 
                     // Set Device Account ID
+                    mfsAccountModel.setReasonOfBlock(deviceAccountModel.getComments());
                     mfsAccountModel.setCustomerId(deviceAccountModel.getUserId());
                     req.setAttribute("deviceAccId", deviceAccountModel.getUserDeviceAccountsId());
                     req.setAttribute("deviceAccEnabled", deviceAccountModel.getAccountEnabled());

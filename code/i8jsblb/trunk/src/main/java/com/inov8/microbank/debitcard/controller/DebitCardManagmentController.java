@@ -93,12 +93,15 @@ public class DebitCardManagmentController extends BaseFormSearchController {
     @Override
     protected ModelAndView onSearch(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, PagingHelperModel pagingHelperModel, LinkedHashMap<String, SortingOrder> linkedHashMap) throws Exception {
         SearchBaseWrapper searchBaseWrapper = new SearchBaseWrapperImpl();
+        DateRangeHolderModel dateRangeHolderModel=new DateRangeHolderModel();
         DebitCardRequestsViewModel debitCardRequestsViewModel = (DebitCardRequestsViewModel) o;
         searchBaseWrapper.setBasePersistableModel(debitCardRequestsViewModel);
         searchBaseWrapper.setSortingOrderMap( linkedHashMap );
         searchBaseWrapper.setPagingHelperModel(pagingHelperModel);
-        DateRangeHolderModel dateRangeHolderModel = new DateRangeHolderModel( "createdOn", debitCardRequestsViewModel.getCreatedOnStartDate(),
+         dateRangeHolderModel = new DateRangeHolderModel( "createdOn", debitCardRequestsViewModel.getCreatedOnStartDate(),
                 debitCardRequestsViewModel.getCreatedOnEndDate());
+         dateRangeHolderModel = new DateRangeHolderModel( "reissuanceRequestDate", debitCardRequestsViewModel.getReIssuancecreatedOnStartDate(),
+                debitCardRequestsViewModel.getReIssuancecreatedOnEndDate());
         searchBaseWrapper.setDateRangeHolderModel( dateRangeHolderModel );
 
         List<DebitCardRequestsViewModel> list = debitCardManager.searchDebitCardRequestsData(searchBaseWrapper);

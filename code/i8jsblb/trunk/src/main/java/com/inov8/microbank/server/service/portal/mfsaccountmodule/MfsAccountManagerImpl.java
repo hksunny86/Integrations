@@ -2381,7 +2381,7 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
             customerModel.setUpdatedOn(new Date());
             customerModel.setName(mfsAccountModel.getName());
 
-            if (mfsAccountModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)) {
+            if (mfsAccountModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)||mfsAccountModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_1)) {
                 if (oldAccountTypeId.equals(CustomerAccountTypeConstants.LEVEL_1)) {
                     customerModel.setCustomerAccountTypeId(oldAccountTypeId);
                 } else {

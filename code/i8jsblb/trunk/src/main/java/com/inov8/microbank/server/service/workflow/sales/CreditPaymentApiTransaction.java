@@ -502,7 +502,7 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
                         },
                         null);
             }
-             else if (wrapper.getProductModel().getProductId().equals(ProductConstantsInterface.STOCK_PURCHASED)) {
+             else if (wrapper.getProductModel().getProductId().equals(ProductConstantsInterface.STOCK_WITHDRAWAL)) {
                 Double charges = wrapper.getCommissionAmountsHolder().getTransactionProcessingAmount();
                 customerSMS = this.getMessageSource().getMessage(
                         "stockSold.SMS",

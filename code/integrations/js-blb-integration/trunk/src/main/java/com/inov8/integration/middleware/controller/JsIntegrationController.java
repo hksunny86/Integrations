@@ -2630,6 +2630,11 @@ public class JsIntegrationController implements WebServiceSwitchController {
     }
 
     @Override
+    public WebServiceVO advanceLoanPaymentSettlement(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
     public WebServiceVO feePaymentInquiry(WebServiceVO webServiceVO) {
         return null;
     }
@@ -2639,4 +2644,106 @@ public class JsIntegrationController implements WebServiceSwitchController {
         return null;
     }
 
+    @Override
+    public WebServiceVO fundWalletToCoreInquiry(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO fundWalletToCore(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO updateMinorAccount(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+//    @Override
+//    public WebServiceVO minorFatherBvsVerification(WebServiceVO webServiceVO) {
+//        return null;
+//    }
+//
+//
+//
+//    @Override
+//    public WebServiceVO checqueBookStatus(WebServiceVO webServiceVO) {
+//        return null;
+//    }
+
+    @Override
+    public WebServiceVO verifyLoginAccount(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO minorFatherBvsVerification(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO checqueBookStatus(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO cnicTo256(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO transactionStatus(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO profileStatus(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO lienStatus(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO initiateLoan(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO selectLoanOffer(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO selectLoan(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO payLoan(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO outstandingLoanStatus(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+
+    @Override
+    public WebServiceVO loanPlan(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO loanHistory(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO transactionActive(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

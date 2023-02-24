@@ -68,7 +68,6 @@ public class HostRequestValidator {
     public static void validateVerifyAccount(VerifyAccountRequest integrationVO) {
 
 
-
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
         }
@@ -85,8 +84,24 @@ public class HostRequestValidator {
         }
     }
 
-    public static void validateM0VerifyAccount(M0VerifyAccountRequest integrationVO) {
+    public static void validateVerifyLoginAccount(VerifyLoginAccountRequest integrationVO) {
 
+
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+    }
+
+
+    public static void validateM0VerifyAccount(M0VerifyAccountRequest integrationVO) {
 
 
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
@@ -106,7 +121,6 @@ public class HostRequestValidator {
     }
 
     public static void validateChequeBook(ChequeBookRequest integrationVO) {
-
 
 
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
@@ -742,6 +756,30 @@ public class HostRequestValidator {
     }
 
 
+//    public static void validateMinorFatherBVSVerfication(FatherBvsVerification fatherBvsVerification) {
+//
+//        if (StringUtils.isEmpty(fatherBvsVerification.getMobileNumber())) {
+//            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + fatherBvsVerification.getMobileNumber());
+//        }
+//
+//        if (StringUtils.isEmpty(fatherBvsVerification.getDateTime())) {
+//            throw new ValidationException("[FAILED] Validation Failed Date Time: " + fatherBvsVerification.getDateTime());
+//        }
+//
+//        if (StringUtils.isEmpty(fatherBvsVerification.getTerminalId())) {
+//            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + fatherBvsVerification.getTerminalId());
+//        }
+//        if (StringUtils.isEmpty(fatherBvsVerification.getChannelId())) {
+//            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + fatherBvsVerification.getChannelId());
+//        }
+//        if (StringUtils.isEmpty(fatherBvsVerification.getRrn())) {
+//            throw new ValidationException("[FAILED] Validation Failed Rrn: " + fatherBvsVerification.getRrn());
+//        }
+//
+//
+//    }
+
+
     public static void validateWalletToWalletPaymentInquiry(WalletToWalletPaymentInquiryRequest walletToWalletPaymentInquiryRequest) {
 
         if (StringUtils.isEmpty(walletToWalletPaymentInquiryRequest.getMobileNumber())) {
@@ -917,6 +955,7 @@ public class HostRequestValidator {
             throw new ValidationException("[FAILED] Validation Failed Reserved1: " + upgradeAccountInquiryRequest.getReserved1());
         }
     }
+
     public static void walletToCnic(WalletToCnicRequest integrationVO) {
 
         if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
@@ -1603,6 +1642,26 @@ public class HostRequestValidator {
     }
 
     public static void validateLoginAuthenticationRequest(LoginAuthenticationRequest integrationVO) {
+
+        if (StringUtils.isEmpty(integrationVO.getPin())) {
+            throw new ValidationException("[FAILED] Validation Failed Pin: " + integrationVO.getPin());
+        }
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+
+    }
+
+
+    public static void validateZindigiLoginAuthenticationRequest(ZindigiLoginAuthenticationRequest integrationVO) {
 
         if (StringUtils.isEmpty(integrationVO.getPin())) {
             throw new ValidationException("[FAILED] Validation Failed Pin: " + integrationVO.getPin());
@@ -3541,6 +3600,468 @@ public class HostRequestValidator {
 //            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
 //        }
 
+    }
+
+    public static void validateOptasiaCreditInquiry(OptasiaCreditInquiryRequest integrationVO) throws Exception {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getProductId())) {
+            throw new ValidationException("[FAILED] Validation Product ID: " + integrationVO.getProductId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getPinType())) {
+            throw new ValidationException("[FAILED] Validation Failed Pin  Type: " + integrationVO.getPinType());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTransactionAmount())) {
+            throw new ValidationException("[FAILED] Validation Transaction Amount : " + integrationVO.getTransactionAmount());
+        }
+    }
+
+    public static void validateOptasiaCredit(OptasiaCreditRequest integrationVO) {
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number : " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getProductId())) {
+            throw new ValidationException("[FAILED] Validation Product ID: " + integrationVO.getProductId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getPinType())) {
+            throw new ValidationException("[FAILED] Validation Failed Pin  Type: " + integrationVO.getPinType());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTransactionAmount())) {
+            throw new ValidationException("[FAILED] Validation Transaction Amount : " + integrationVO.getTransactionAmount());
+        }
+    }
+
+    public static void validateOptasiadebitInquiry(OptasiaDebitInquiryRequest integrationVO) {
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number : " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getProductId())) {
+            throw new ValidationException("[FAILED] Validation Product ID: " + integrationVO.getProductId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getPinType())) {
+            throw new ValidationException("[FAILED] Validation Failed Pin  Type: " + integrationVO.getPinType());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTransactionAmount())) {
+            throw new ValidationException("[FAILED] Validation Transaction Amount : " + integrationVO.getTransactionAmount());
+        }
+    }
+
+    public static void validateOptasiaDebit(OptasiaDebitRequest integrationVO) {
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number : " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getProductId())) {
+            throw new ValidationException("[FAILED] Validation Product ID: " + integrationVO.getProductId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getPinType())) {
+            throw new ValidationException("[FAILED] Validation Failed Pin  Type: " + integrationVO.getPinType());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTransactionAmount())) {
+            throw new ValidationException("[FAILED] Validation Transaction Amount : " + integrationVO.getTransactionAmount());
+        }
+    }
+
+    public static void validateTransactionStatus(TransactionStatusRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+
+    }
+
+    public static void validateProfileStatus(ProfileStatusRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+
+    }
+
+    public static void validateLienStatus(LienStatusRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+
+    }
+
+    public static void validateSelectLoan(LoanOfferRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getAmount())) {
+            throw new ValidationException("[FAILED] Validation Failed Amount: " + integrationVO.getAmount());
+        }
+
+    }
+
+    public static void validateOutstanding(LoansRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+
+    }
+
+    public static void validateCustomerOutstandingLoanStatus(OutstandingRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+
+    }
+
+    public static void validateLoanPayment(LoanPaymentRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getAmount())) {
+            throw new ValidationException("[FAILED] Validation Failed Amount: " + integrationVO.getAmount());
+        }
+        if (StringUtils.isEmpty(integrationVO.getCurrencyCode())) {
+            throw new ValidationException("[FAILED] Validation Failed Currency Code: " + integrationVO.getCurrencyCode());
+        }
+
+    }
+
+    public static void validateLoanStatus(LoanStatusRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+
+    }
+
+    public static void validateLoanCallBack(LoanCallBackRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+
+    }
+
+    public static void validateInitiateLoan(OfferListForCommodityRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+
+    }
+
+    public static void validateSelectLoanOffer(ProjectionRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+
+
+    }
+
+    public static void validateCustomerAnalytics(CustomerAnalyticsRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getLoanAmount())) {
+            throw new ValidationException("[FAILED] Validation Failed Loan Amount: " + integrationVO.getLoanAmount());
+        }
+
+    }
+
+    public static void validateLoanHistory(LoansHistoryRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(String.valueOf(integrationVO.getFromDate()))) {
+            throw new ValidationException("[FAILED] Validation Failed From Date: " + integrationVO.getFromDate());
+        }
+
+        if (StringUtils.isEmpty(String.valueOf(integrationVO.getToDate()))) {
+            throw new ValidationException("[FAILED] Validation Failed To Date: " + integrationVO.getToDate());
+        }
+    }
+
+    public static void validateLoanPlan(LoansPlanRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(String.valueOf(integrationVO.getFromDate()))) {
+            throw new ValidationException("[FAILED] Validation Failed From Date: " + integrationVO.getFromDate());
+        }
+
+        if (StringUtils.isEmpty(String.valueOf(integrationVO.getToDate()))) {
+            throw new ValidationException("[FAILED] Validation Failed To Date: " + integrationVO.getToDate());
+        }
+        if (StringUtils.isEmpty(integrationVO.getAmount())) {
+            throw new ValidationException("[FAILED] Validation Failed Amount: " + integrationVO.getAmount());
+        }
+    }
+
+    public static void validateTransactionActive(TransactionActiveRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(String.valueOf(integrationVO.getFromDate()))) {
+            throw new ValidationException("[FAILED] Validation Failed From Date: " + integrationVO.getFromDate());
+        }
+
+        if (StringUtils.isEmpty(String.valueOf(integrationVO.getToDate()))) {
+            throw new ValidationException("[FAILED] Validation Failed To Date: " + integrationVO.getToDate());
+        }
     }
 
     public static boolean authenticate(String userName, String password, String channelID) {

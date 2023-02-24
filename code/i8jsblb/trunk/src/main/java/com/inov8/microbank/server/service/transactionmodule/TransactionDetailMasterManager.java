@@ -6,6 +6,7 @@ import com.inov8.microbank.common.model.AppUserModel;
 import com.inov8.microbank.common.model.ProductModel;
 import com.inov8.microbank.common.model.TransactionDetailMasterModel;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,4 +43,9 @@ public interface TransactionDetailMasterManager{
 	public int  findAgentPendingTrxByCNIC(String customerCNIC);
 	int getCustomerChallanCount(String mobileNo);
 	public long getPaidChallan(String consumerNo,String productId);
+
+	TransactionDetailMasterModel loadTransactionDetailMasterModelByRRN(String rrn) throws FrameworkCheckedException;
+	TransactionDetailMasterModel loadTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException;
+//	List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, String startDate, String endDate) throws FrameworkCheckedException;
+
 }

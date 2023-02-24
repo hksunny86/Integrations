@@ -1366,6 +1366,21 @@ public class AppUserHibernateDAO
         return appUserModel;
     }
 
+    @Override
+    public AppUserModel loadAppUserByCnic256(String shaCnic) throws FrameworkCheckedException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(AppUserModel.class);
+        criteria.add(Restrictions.eq("nic", shaCnic));
+        List<AppUserModel> list = getHibernateTemplate().findByCriteria(criteria);
+
+        AppUserModel appUserModel = null;
+
+        if (list != null && !list.isEmpty()) {
+            appUserModel = list.get(0);
+        }
+
+        return appUserModel;
+    }
+
     private final class CountToBooleanExtractor implements ResultSetExtractor<Boolean> {
         @Override
         public Boolean extractData(ResultSet resultSet) throws SQLException, DataAccessException {

@@ -164,6 +164,11 @@ public class AppUserManagerImpl implements AppUserManager
 	}
 
 	@Override
+	public AppUserModel loadAppUserByCnic256(String cnic256) throws FrameworkCheckedException {
+		return appUserDAO.loadAppUserByCnic256(cnic256);
+	}
+
+	@Override
  public List<Object []> getAppUserCNICsToMarkDormant() throws FrameworkCheckedException{
 	  
 	return appUserDAO.getCNICsToMarkAccountDormant();

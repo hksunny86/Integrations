@@ -1,11 +1,14 @@
 package com.inov8.microbank.server.dao.transactionmodule.hibernate;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.inov8.framework.common.exception.FrameworkCheckedException;
 import com.inov8.framework.common.wrapper.BaseWrapper;
 import com.inov8.integration.common.model.AccountModel;
 import com.inov8.microbank.common.model.MiniTransactionModel;
+import com.inov8.microbank.common.model.WalletSafRepoModel;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -13,7 +16,9 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
 
 import com.inov8.framework.common.util.CustomList;
@@ -278,6 +283,54 @@ public class TransactionDetailMasterHibernateDAO
             }
         }
         return result;
+    }
+
+    @Override
+    public TransactionDetailMasterModel loadTDMbyRRN(String rrn) {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(TransactionDetailMasterModel.class);
+
+        detachedCriteria.add(Restrictions.eq("fonepayTransactionCode", rrn));
+
+        List<TransactionDetailMasterModel> list = this.getHibernateTemplate().findByCriteria(detachedCriteria);
+
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+
+        return list.get(0);
+    }
+
+    @Override
+    public TransactionDetailMasterModel loadTDMbyMobileNumber(String mobileNo, String productId) {
+        //query to be added
+        StringBuilder sb = new StringBuilder();
+
+        String query = "select * from TRANSACTION_DETAIL_MASTER where SALE_MOBILE_NO='" + mobileNo + "' " +
+                "and PRODUCT_ID='" + productId + "'" + "and trunc(CREATED_ON) between trunc(sysdate) and trunc(sysdate)";
+
+        //        List<TransactionDetailMasterModel> result = jdbcTemplate.query
+//                (query, new BeanPropertyRowMapper<TransactionDetailMasterModel>(TransactionDetailMasterModel.class));
+        return jdbcTemplate.queryForObject(query, TransactionDetailMasterModel.class);
+    }
+
+    @Override
+    public List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, Date startDate, Date endDate, String productId) {
+        StringBuilder sb = new StringBuilder();
+//        sb.append("SELECT * FROM WALLET_SAF_REPO");
+//        sb.append(" where IS_COMPLETE=0");
+        DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
+        String dateStr = format.format(startDate) ;
+        String endStr = format.format(endDate);
+
+        String query = "select * from TRANSACTION_DETAIL_MASTER where SALE_MOBILE_NO='" + mobileNo + "' " +
+                "and PRODUCT_ID='" + productId + "'" + "and trunc(CREATED_ON) between '" + dateStr + "'and'" + endStr + "'";
+
+        List<TransactionDetailMasterModel> result = jdbcTemplate.query
+                (query, new BeanPropertyRowMapper<TransactionDetailMasterModel>(TransactionDetailMasterModel.class));
+        if(!result.isEmpty()) {
+            return result;
+        }
+        return null;
     }
 
     @Override

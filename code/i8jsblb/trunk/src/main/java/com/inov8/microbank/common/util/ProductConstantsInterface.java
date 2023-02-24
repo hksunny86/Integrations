@@ -31,7 +31,7 @@ public interface ProductConstantsInterface {
     Long DAWAT_E_ISLAMI_SADQA = 2510797L;
     Long ML_TRANSFER_TO_RETAILER = 2510798L;
     Long ML_TRANSFER_TO_CUSTOMER = 2510800L;
-    Long BULK_PAYMENT = 2510801L;
+    Long BULK_PAYMENT = 2510801L; //    Long BULK_PAYMENT = 2510816L;
     Long BB_TO_CORE_ACCOUNT = 50026L;
     Long CNIC_TO_CORE_ACCOUNT = 50028L;
     Long CNIC_TO_BB_ACCOUNT = 50030L;
@@ -172,7 +172,6 @@ public interface ProductConstantsInterface {
 
     Long VC_TRANSFER_PRODUCT = 10245343L;
     Long RELIEF_FUND_PRODUCT = 10245355L;
-
-
+    Long LOAN_XTRA_CASH = 10245400L;
 
 }

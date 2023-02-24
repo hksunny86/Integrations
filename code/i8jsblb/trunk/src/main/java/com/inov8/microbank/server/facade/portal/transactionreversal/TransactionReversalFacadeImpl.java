@@ -294,6 +294,21 @@ public class TransactionReversalFacadeImpl implements TransactionReversalFacade
 	}
 
 	@Override
+	public TransactionDetailMasterModel loadTDMbyThridPartyRRN(String rrn) throws Exception {
+		return transactionReversalManager.loadTDMForReversalByTransactionCode(rrn);
+	}
+
+	@Override
+	public TransactionDetailMasterModel loadTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException {
+		return transactionReversalManager.loadTDMbyMobileNumber(mobileNo, productId);
+	}
+
+//	@Override
+//	public List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, String startDate, String endDate) throws FrameworkCheckedException {
+//		return transactionReversalManager.loadTDMbyMobileandDateRange(mobileNo, startDate, endDate);
+//	}
+
+	@Override
 	public BaseWrapper makeCoreRetryAdviceSkipped(BaseWrapper baseWrapper) throws FrameworkCheckedException {
 	    try{
 			return transactionReversalManager.makeCoreRetryAdviceSkipped(baseWrapper);

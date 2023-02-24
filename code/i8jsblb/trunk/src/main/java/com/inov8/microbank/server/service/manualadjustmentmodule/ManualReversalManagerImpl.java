@@ -6,10 +6,12 @@ import java.util.*;
 
 import com.inov8.microbank.common.jms.DestinationConstants;
 import com.inov8.microbank.common.model.*;
+import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.model.portal.authorizationreferencedata.BulkManualAdjustmentRefDataModel;
 import com.inov8.microbank.common.model.portal.authorizationreferencedata.BulkReversalRefDataModel;
 import com.inov8.microbank.common.model.portal.bulkdisbursements.BulkAutoReversalModel;
 import com.inov8.microbank.common.model.portal.bulkdisbursements.BulkManualAdjustmentModel;
+import com.inov8.microbank.common.util.*;
 import com.inov8.microbank.server.dao.portal.manualadjustmentmodule.BulkReversalDAO;
 import com.inov8.microbank.server.dao.safrepo.WalletSafRepoDAO;
 import com.inov8.microbank.server.service.jms.JmsProducer;
@@ -28,23 +30,6 @@ import com.inov8.framework.common.wrapper.BaseWrapperImpl;
 import com.inov8.framework.common.wrapper.SearchBaseWrapper;
 import com.inov8.framework.common.wrapper.SearchBaseWrapperImpl;
 import com.inov8.microbank.common.model.portal.ola.BbStatementAllViewModel;
-import com.inov8.microbank.common.util.ActionStatusConstantsInterface;
-import com.inov8.microbank.common.util.BankConstantsInterface;
-import com.inov8.microbank.common.util.DeviceTypeConstantsInterface;
-import com.inov8.microbank.common.util.EncryptionUtil;
-import com.inov8.microbank.common.util.PaymentModeConstantsInterface;
-import com.inov8.microbank.common.util.PoolAccountConstantsInterface;
-import com.inov8.microbank.common.util.PortalConstants;
-import com.inov8.microbank.common.util.ProductConstantsInterface;
-import com.inov8.microbank.common.util.ReasonConstants;
-import com.inov8.microbank.common.util.StringUtil;
-import com.inov8.microbank.common.util.SupplierConstants;
-import com.inov8.microbank.common.util.SupplierProcessingStatusConstants;
-import com.inov8.microbank.common.util.ThreadLocalActionLog;
-import com.inov8.microbank.common.util.ThreadLocalAppUser;
-import com.inov8.microbank.common.util.TransactionConstantsInterface;
-import com.inov8.microbank.common.util.TransactionTypeConstantsInterface;
-import com.inov8.microbank.common.util.UserUtils;
 import com.inov8.microbank.common.vo.transactionreversal.ManualReversalVO;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapper;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapperImpl;
@@ -63,6 +48,7 @@ import com.inov8.ola.integration.vo.OLAInfo;
 import com.inov8.ola.integration.vo.OLAVO;
 import com.inov8.ola.util.CustomerAccountTypeConstants;
 import com.inov8.ola.util.TransactionTypeConstants;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ManualReversalManagerImpl implements ManualReversalManager {
 
@@ -80,6 +66,8 @@ public class ManualReversalManagerImpl implements ManualReversalManager {
 	private XmlMarshaller<BulkReversalRefDataModel> bulkAutoReversalModelXmlMarshaller;
 	private JmsProducer jmsProducer;
 	private TransactionCodeDAO transactionCodeDAO;
+	@Autowired
+	private SmsSender smsSender;
 
 	public SearchBaseWrapper loadManualAdjustments(SearchBaseWrapper searchBaseWrapper) throws FrameworkCheckedException {
 		CustomList<ManualAdjustmentModel>
@@ -229,6 +217,21 @@ public class ManualReversalManagerImpl implements ManualReversalManager {
 			wsrm.setTransactionStatus(SupplierProcessingStatusConstants.REVERSE_COMPLETED_NAME);
 			walletSafRepoDAO.updateWalletSafRepo(wsrm);
 		}
+		String trxId;
+		String mobileNo=workFlowWrapper.getTransactionDetailMasterModel().getSaleMobileNo();
+		String smsText = MessageUtil.getMessage("trxreversal.sender.sms", new String[]{
+				 trxId = workFlowWrapper.getTransactionDetailMasterModel().getTransactionCode(),
+
+				String.valueOf(workFlowWrapper.getTransactionDetailMasterModel().getTransactionAmount()),
+				workFlowWrapper.getTransactionDetailMasterModel().getSaleMobileNo(),
+				workFlowWrapper.getTransactionDetailMasterModel().getProductName(),
+				PortalDateUtils.formatDate(workFlowWrapper.getTransactionModel().getCreatedOn(), PortalDateUtils.SHORT_TIME_FORMAT),
+				PortalDateUtils.formatDate(workFlowWrapper.getTransactionModel().getCreatedOn(), PortalDateUtils.SHORT_DATE_FORMAT),
+
+		});
+		SmsMessage smsMessage = new SmsMessage(mobileNo, smsText);
+		smsSender.send(smsMessage);
+
 	}
 
 	private void prepareAndSaveSettlementTransaction(Long transactionId,Long productId,Double amount,Long fromAccountInfoId, Long toAccountInfoId, Boolean isAgent, boolean debitPoolAcc) throws Exception{
@@ -584,6 +587,9 @@ public class ManualReversalManagerImpl implements ManualReversalManager {
 		String xml = bulkAutoReversalModelXmlMarshaller.marshal(bulkReversalRefDataModel);
 		jmsProducer.produce(xml , DestinationConstants.BULK_REVERSAL_DESTINATION);
 
+	}
+	public void setSmsSender(SmsSender smsSender) {
+		this.smsSender = smsSender;
 	}
 
 	@Override

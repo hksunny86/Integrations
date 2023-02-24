@@ -791,8 +791,10 @@ public class OpenCustomerL0AccountCommand extends BaseCommand {
             if (nameArray.length > 1) {
                 appUserModel.setLastName(this.cName.substring(
                         appUserModel.getFirstName().length() + 1));
-            } else {
-                appUserModel.setLastName(nameArray[0]);
+            }
+
+            else {
+                appUserModel.setLastName(" ");
             }
             appUserModel.setAddress1(" ");
             appUserModel.setAddress2(" ");

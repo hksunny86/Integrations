@@ -127,13 +127,13 @@ public class ESBAdapter {
         String bankMnemonic = productModel.getProductCode();
         I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
         requestVO.setConsumerNumber(consumerNumber);
-        if (bankMnemonic.equalsIgnoreCase(MessageUtil.getMessage("VALLENCIA_BANK_MNEMONIC"))) {
-            requestVO.setUserId(MessageUtil.getMessage("VALLENCIA_USERNAME"));
-            requestVO.setPassword(MessageUtil.getMessage("VALLENCIA_PASSWORD"));
-        } else {
-            requestVO.setUserId(MessageUtil.getMessage("VRG_USERNAME"));
-            requestVO.setPassword(MessageUtil.getMessage("VRG_PASSWORD"));
-        }
+//        if (bankMnemonic.equalsIgnoreCase(MessageUtil.getMessage("VALLENCIA_BANK_MNEMONIC"))) {
+//            requestVO.setUserId(MessageUtil.getMessage("VALLENCIA_USERNAME"));
+//            requestVO.setPassword(MessageUtil.getMessage("VALLENCIA_PASSWORD"));
+//        } else {
+        requestVO.setUserId(MessageUtil.getMessage("VRG_USERNAME"));
+        requestVO.setPassword(MessageUtil.getMessage("VRG_PASSWORD"));
+//        }
         requestVO.setBankMnemonic(bankMnemonic);
         requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
         requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
@@ -565,6 +565,7 @@ public class ESBAdapter {
             customerVO.setFatherName(model.getFatherHusbandName());
             customerVO.setOfficeAddress1(model.getDebitCardMailingAddress());
             customerVO.setOfficeAddress2(model.getDebitCardMailingAddress());
+            customerVO.setHomeCity(model.getCustomerCity());
             customerVO.setHomeAddress1(model.getDebitCardMailingAddress());
             customerVO.setHomeAddress2(model.getDebitCardMailingAddress());
             customerVO.setTempAddress1(model.getDebitCardMailingAddress());
@@ -650,13 +651,13 @@ public class ESBAdapter {
         I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
         requestVO.setConsumerNumber(consumerNumber);
         requestVO.setTransactionAmount(billAmount);
-        if (bankMnemonic.equalsIgnoreCase(MessageUtil.getMessage("VALLENCIA_BANK_MNEMONIC"))) {
-            requestVO.setUserId(MessageUtil.getMessage("VALLENCIA_USERNAME"));
-            requestVO.setPassword(MessageUtil.getMessage("VALLENCIA_PASSWORD"));
-        } else {
-            requestVO.setUserId(MessageUtil.getMessage("VRG_USERNAME"));
-            requestVO.setPassword(MessageUtil.getMessage("VRG_PASSWORD"));
-        }
+//        if (bankMnemonic.equalsIgnoreCase(MessageUtil.getMessage("VALLENCIA_BANK_MNEMONIC"))) {
+//            requestVO.setUserId(MessageUtil.getMessage("VALLENCIA_USERNAME"));
+//            requestVO.setPassword(MessageUtil.getMessage("VALLENCIA_PASSWORD"));
+//        } else {
+        requestVO.setUserId(MessageUtil.getMessage("VRG_USERNAME"));
+        requestVO.setPassword(MessageUtil.getMessage("VRG_PASSWORD"));
+//        }
         requestVO.setBankMnemonic(bankMnemonic);
         requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
         requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
@@ -730,6 +731,149 @@ public class ESBAdapter {
         requestVO.setSTAN(String.valueOf((100000 + new Random().nextInt(900000))));
         requestVO.setRRN(requestVO.getSTAN() + requestVO.getTransmissionDateAndTime());
         requestVO.setRequestType(requestType);
+
+        return requestVO;
+    }
+
+    public static I8SBSwitchControllerRequestVO loanProjection(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_OPTASIA);
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyMMHHss").format(new Date()));
+        requestVO.setRequestType(requestType);
+
+        logCompleteObject("I8SB loanProjection request - params", requestVO);
+
+        return requestVO;
+    }
+
+    public static I8SBSwitchControllerRequestVO offerListForCommodity(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_OPTASIA);
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyMMHHss").format(new Date()));
+        requestVO.setRequestType(requestType);
+
+        logCompleteObject("I8SB loanProjection request - params", requestVO);
+
+        return requestVO;
+    }
+
+    public static I8SBSwitchControllerRequestVO ecibData(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_TASDEEQ);
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyMMHHss").format(new Date()));
+        requestVO.setRequestType(requestType);
+
+        logCompleteObject("I8SB loanProjection request - params", requestVO);
+
+        return requestVO;
+    }
+
+    public static I8SBSwitchControllerRequestVO loanOffer(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_OPTASIA);
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyMMHHss").format(new Date()));
+        requestVO.setRequestType(requestType);
+
+        logCompleteObject("I8SB loanProjection request - params", requestVO);
+
+        return requestVO;
+    }
+
+    public static I8SBSwitchControllerRequestVO loanSummary(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_OPTASIA);
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyMMHHss").format(new Date()));
+        requestVO.setRequestType(requestType);
+
+        logCompleteObject("I8SB loanProjection request - params", requestVO);
+
+        return requestVO;
+    }
+
+    public static I8SBSwitchControllerRequestVO payLoan(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_OPTASIA);
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyMMHHss").format(new Date()));
+        requestVO.setRequestType(requestType);
+
+        logCompleteObject("I8SB loanProjection request - params", requestVO);
+
+        return requestVO;
+    }
+
+    public static I8SBSwitchControllerRequestVO loanStatus(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_OPTASIA);
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyMMHHss").format(new Date()));
+        requestVO.setRequestType(requestType);
+
+        logCompleteObject("I8SB loanProjection request - params", requestVO);
+
+        return requestVO;
+    }
+
+    public static I8SBSwitchControllerRequestVO loanOutstanding(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_OPTASIA);
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyMMHHss").format(new Date()));
+        requestVO.setRequestType(requestType);
+
+        logCompleteObject("I8SB loanProjection request - params", requestVO);
+
+        return requestVO;
+    }
+
+    public static I8SBSwitchControllerRequestVO loans(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_OPTASIA);
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyMMHHss").format(new Date()));
+        requestVO.setRequestType(requestType);
+
+        logCompleteObject("I8SB loanProjection request - params", requestVO);
+
+        return requestVO;
+    }
+
+    public static I8SBSwitchControllerRequestVO repayment(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_OPTASIA);
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyMMHHss").format(new Date()));
+        requestVO.setRequestType(requestType);
+
+        logCompleteObject("I8SB loanProjection request - params", requestVO);
+
+        return requestVO;
+    }
+
+    public static I8SBSwitchControllerRequestVO transactions(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_OPTASIA);
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyMMHHss").format(new Date()));
+        requestVO.setRequestType(requestType);
+
+        logCompleteObject("I8SB loanProjection request - params", requestVO);
 
         return requestVO;
     }

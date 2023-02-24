@@ -202,6 +202,28 @@
                 <img id="CreatedToDate" tabindex="10" title="Clear Date" name="popcal" onclick="javascript:$('createdOnToDate').value=''" align="middle" style="cursor:pointer" src="images/refresh.png" border="0" />
             </td>
         </tr>
+
+
+
+        <tr>
+            <td class="formText" align="right">
+                Re-Issuance From Date:
+            </td>
+            <td align="left">
+                <html:input path="reIssuancecreatedOnStartDate" id="reissuanceCreatedOnFromDate" readonly="true" tabindex="-1"  cssClass="textBox" maxlength="10"/>
+                <img id="ReIssuanceCreatedFromDate" tabindex="11" name="popcal" align="top" style="cursor:pointer" src="images/cal.gif" border="0" />
+                <img id="ReIssuanceCreatedFromDate" tabindex="13" title="Clear Date" name="popcal" onclick="javascript:$('reissuanceCreatedOnFromDate').value=''" align="middle" style="cursor:pointer" src="images/refresh.png" border="0" />
+            </td>
+            <td class="formText" align="right">
+               Re-Issuance To Date:
+            </td>
+            <td align="left">
+                <html:input path="reIssuancecreatedOnEndDate" id="reissuanceCreatedOnToDate" readonly="true" tabindex="-1" cssClass="textBox" maxlength="10"/>
+                <img id="ReIssuanceCreatedToDate" tabindex="13" name="popcal" align="top" style="cursor:pointer" src="images/cal.gif" border="0" />
+                <img id="ReIssuanceCreatedToDate" tabindex="14" title="Clear Date" name="popcal" onclick="javascript:$('reissuanceCreatedOnToDate').value=''" align="middle" style="cursor:pointer" src="images/refresh.png" border="0" />
+            </td>
+        </tr>
+
             <%--<tr>--%>
             <%--<td class="formText" align="right">--%>
             <%--Updated On From Date:--%>
@@ -477,10 +499,27 @@
             button      : "CreatedFromDate",    // id of the button
         }
     );
+
+
+    Calendar.setup(
+        {
+            inputField  : "reissuanceCreatedOnFromDate", // id of the input field
+            button      : "ReIssuanceCreatedFromDate",    // id of the button
+        }
+    );
     Calendar.setup(
         {
             inputField  : "createdOnToDate", // id of the input field
             button      : "CreatedToDate",    // id of the button
+            isEndDate: true
+        }
+    );
+
+
+    Calendar.setup(
+        {
+            inputField  : "reissuanceCreatedOnToDate", // id of the input field
+            button      : "ReIssuanceCreatedToDate",    // id of the button
             isEndDate: true
         }
     );

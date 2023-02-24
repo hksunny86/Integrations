@@ -240,6 +240,7 @@ public class AppUserModel extends BasePersistableModel implements UserDetails {
    private String country;
    private String zip;
    private String nic;
+   private String shaNic;
    private String email;
    private String fax;
    private String motherMaidenName;
@@ -10037,5 +10038,14 @@ public class AppUserModel extends BasePersistableModel implements UserDetails {
 
    public void setDormantRestoringComments(String dormantRestoringComments) {
       this.dormantRestoringComments = dormantRestoringComments;
+   }
+
+   @Column(name = "SHA_NIC")
+   public String getShaNic() {
+      return shaNic;
+   }
+
+   public void setShaNic(String shaNic) {
+      this.shaNic = shaNic;
    }
 }

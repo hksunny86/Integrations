@@ -677,4 +677,9 @@ public boolean isMobileNumberCNICUnique(BaseWrapper baseWrapper) throws Framewor
 	public AppUserModel getAppUserWithRegistrationStates(String mobileNo, String cnic, Long ...registrationStates) throws FrameworkCheckedException {
 		return appUserManager.getAppUserWithRegistrationStates(mobileNo, cnic, registrationStates);
 	}
+
+	@Override
+	public AppUserModel loadAppUserByCnic256(String shaCnic) throws FrameworkCheckedException {
+		return appUserManager.loadAppUserByCnic256(shaCnic);
+	}
 }

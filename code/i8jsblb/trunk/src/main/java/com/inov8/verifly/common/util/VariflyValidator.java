@@ -189,7 +189,7 @@ public class VariflyValidator {
         if (accountInfoModel.getCustomerId() == null ||
             (accountInfoModel.getAccountNick()== null || accountInfoModel.getAccountNick().trim().length() < 1) ||
             (accountInfoModel.getFirstName() == null || accountInfoModel.getFirstName().trim().length() < 1) ||
-            (accountInfoModel.getLastName() == null || accountInfoModel.getLastName().trim().length() < 1) ||
+            (accountInfoModel.getLastName() == null) ||
             (accountInfoModel.getCustomerMobileNo() == null || accountInfoModel.getCustomerMobileNo().trim().length() < 1)) {
 
         	throw new InvalidDataException (String.valueOf(FailureReasonConstants.INSUFFICIENT_DATA));

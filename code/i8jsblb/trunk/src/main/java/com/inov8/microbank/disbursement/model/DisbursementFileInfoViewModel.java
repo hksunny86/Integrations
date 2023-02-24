@@ -40,6 +40,7 @@ public class DisbursementFileInfoViewModel extends BasePersistableModel {
     private Date createdOnStart;
     private Date createdOnEnd;
     private String action;
+    private String processingStatus;
 
     public DisbursementFileInfoViewModel() {
     }
@@ -297,4 +298,12 @@ public class DisbursementFileInfoViewModel extends BasePersistableModel {
         this.appUserTypeName = appUserTypeName;
     }
 
+    @Column(name = "PROCESSING_STATUS")
+    public String getProcessingStatus() {
+        return processingStatus;
+    }
+
+    public void setProcessingStatus(String processingStatus) {
+        this.processingStatus = processingStatus;
+    }
 }

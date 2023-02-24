@@ -1960,7 +1960,7 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
                 CustomerPictureModel customerPictureModel = this.getCustomerPictureByTypeId(
                         PictureTypeConstants.CUSTOMER_PHOTO, customerModel.getCustomerId().longValue());
 
-                if(mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
+                if (mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
                     customerPictureModel = this.getCustomerPictureByTypeIdAndStatus(
                             PictureTypeConstants.CUSTOMER_PHOTO, customerModel.getCustomerId().longValue());
                 }
@@ -2023,11 +2023,10 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
 						    */
 
                     //**************************************************************************************************
-                    if(mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
+                    if (mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
                         customerPictureModel = this.getCustomerPictureByTypeIdAndStatus(
                                 PictureTypeConstants.ID_FRONT_SNAPSHOT, customerModel.getCustomerId().longValue());
-                    }
-                    else {
+                    } else {
                         customerPictureModel = this.getCustomerPictureByTypeId(
                                 PictureTypeConstants.ID_FRONT_SNAPSHOT, customerModel.getCustomerId().longValue());
                     }
@@ -2043,7 +2042,7 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
                         customerPictureModel = (CustomerPictureModel) customerPictureDAO.saveOrUpdate(customerPictureModel);
                     }
 
-                    if(mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
+                    if (mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
 
                         customerPictureModel = this.getCustomerPictureByTypeIdAndStatus(
                                 PictureTypeConstants.PARENT_CNIC_SNAPSHOT, customerModel.getCustomerId().longValue());
@@ -2091,7 +2090,7 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
                         }
                     }
 
-                    if(mfsAccountModel.getUsecaseId() != PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
+                    if (mfsAccountModel.getUsecaseId() != PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
                         customerPictureModel = this.getCustomerPictureByTypeId(
                                 PictureTypeConstants.TERMS_AND_CONDITIONS_COPY, customerModel.getCustomerId().longValue());
                         if (null != customerPictureModel && customerPictureModel.getPictureTypeId() != null) {
@@ -2111,11 +2110,10 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
                     }
                     //****************************************************************************
 
-                    if(mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
+                    if (mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
                         customerPictureModel = this.getCustomerPictureByTypeIdAndStatus(
                                 PictureTypeConstants.ID_BACK_SNAPSHOT, customerModel.getCustomerId().longValue());
-                    }
-                    else {
+                    } else {
                         customerPictureModel = this.getCustomerPictureByTypeId(
                                 PictureTypeConstants.ID_BACK_SNAPSHOT, customerModel.getCustomerId().longValue());
                     }
@@ -2131,7 +2129,7 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
                         customerPictureModel = (CustomerPictureModel) customerPictureDAO.saveOrUpdate(customerPictureModel);
                     }
 
-                    if(mfsAccountModel.getUsecaseId() != PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
+                    if (mfsAccountModel.getUsecaseId() != PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
                         //****************************************************************************
                         //Customer's Picture is migrated from BlinkCustomerPictureModel to CustomerPictureModel
                         if (mfsAccountModel.getUsecaseId() == PortalConstants.UPDATE_ACCOUNT_TO_BLINK_USECASE_ID) {
@@ -2425,12 +2423,12 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
             customerModel.setLatitude(mfsAccountModel.getLatitude());
             customerModel.setLongitude(mfsAccountModel.getLongitude());
             customerModel.setMonthlyTurnOver(mfsAccountModel.getExpectedMonthlyTurnOver());
-            if(mfsAccountModel.getUsecaseId() != null && !mfsAccountModel.getUsecaseId().equals(PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID)) {
+            if (mfsAccountModel.getUsecaseId() != null && !mfsAccountModel.getUsecaseId().equals(PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID)) {
                 customerModel.setClsResponseCode(mfsAccountModel.getClsResponseCode());
             }
             customerModel.setDualNationality(mfsAccountModel.getDualNationality());
             customerModel.setUsCitizen(mfsAccountModel.getUsCitizen());
-            if(mfsAccountModel.getUsecaseId() != null && mfsAccountModel.getUsecaseId().equals(PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID)) {
+            if (mfsAccountModel.getUsecaseId() != null && mfsAccountModel.getUsecaseId().equals(PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID)) {
                 customerModel.setCustPicCheckerComments(mfsAccountModel.getCustPicCheckerComments());
                 customerModel.setpNicPicCheckerComments(mfsAccountModel.getpNicPicCheckerComments());
                 customerModel.setbFormPicCheckerComments(mfsAccountModel.getbFormPicCheckerComments());
@@ -2637,16 +2635,15 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
             }
         }
 
-        if(mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID){
-            if(mfsAccountModel.getCustomerPicDiscrepant().equals(true) || mfsAccountModel.getCnicFrontPicDiscrepant().equals(true) ||
+        if (mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
+            if (mfsAccountModel.getCustomerPicDiscrepant().equals(true) || mfsAccountModel.getCnicFrontPicDiscrepant().equals(true) ||
                     mfsAccountModel.getParentCnicPicDiscrepant().equals(true) || mfsAccountModel.getbFormPicDiscrepant().equals(true) ||
-                    mfsAccountModel.getParentCnicBackPicDiscrepant().equals(true) || mfsAccountModel.getCnicBackPicDiscrepant().equals(true)){
+                    mfsAccountModel.getParentCnicBackPicDiscrepant().equals(true) || mfsAccountModel.getCnicBackPicDiscrepant().equals(true)) {
                 smartMoneyAccountModel.setIsDebitBlocked(true);
                 smartMoneyAccountModel.setDebitBlockAmount(99999999d);
 
                 appUserModel.setRegistrationStateId(RegistrationStateConstants.DISCREPANT);
-            }
-            else{
+            } else {
                 smartMoneyAccountModel.setIsDebitBlocked(false);
                 smartMoneyAccountModel.setDebitBlockAmount(0d);
             }
@@ -3219,6 +3216,7 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
             customerModel.setName(mfsDebitCardModel.getNadraName());
 
             customerModel.setMobileNo(mfsDebitCardModel.getMobileNo());
+
 //            customerModel.setSegmentId(mfsDebitCardModel.getSegmentId());
             /**
              * Saving the CustomerModel
@@ -3230,6 +3228,27 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
 
         // Updating Address Fields
         try {
+            boolean isNokAddressAlreadySaved = false;
+
+            Collection<CustomerAddressesModel> customerAddresses = customerModel.getCustomerIdCustomerAddressesModelList();
+            if (customerAddresses != null && customerAddresses.size() > 0) {
+                for (CustomerAddressesModel custAdd : customerAddresses) {
+                    AddressModel addressModel = custAdd.getAddressIdAddressModel();
+                    if (custAdd.getAddressTypeId() == 1) {
+                        if (mfsDebitCardModel.getCity() != null) {
+                            if (mfsDebitCardModel.getCity().equals("Islamabad")){
+                                addressModel.setCityId(271L);
+
+                            }else {
+                                addressModel.setCityId(109L);
+
+                            }
+                        }
+                        this.addressDAO.saveOrUpdate(addressModel);
+                    }
+                }
+            }
+
 //            DebitCardMailingAddressModel debitCardMailingAddressModel = new DebitCardMailingAddressModel();
 ////            debitCardMailingAddressModel.setMailingAddressId(mfsDebitCardModel.getMailingAddressId());
             Criterion criteriaOne = Restrictions.eq("mailingAddressId", mfsDebitCardModel.getMailingAddressId());
@@ -8253,6 +8272,7 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
     public void setBlinkDefaultLimitDAO(BlinkDefaultLimitDAO blinkDefaultLimitDAO) {
         this.blinkDefaultLimitDAO = blinkDefaultLimitDAO;
     }
+
     public void setMinorUserInfoListViewDAO(MinorUserListViewDAO minorUserInfoListViewDAO) {
         this.minorUserInfoListViewDAO = minorUserInfoListViewDAO;
     }

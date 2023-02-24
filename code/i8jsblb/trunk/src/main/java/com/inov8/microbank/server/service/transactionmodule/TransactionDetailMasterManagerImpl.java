@@ -16,6 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.MatchMode;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -241,6 +242,36 @@ public class TransactionDetailMasterManagerImpl implements TransactionDetailMast
 	public long getPaidChallan(String consumerNo,String productCode) {
 		return transactionDetailMasterDAO.getPaidChallan(consumerNo,productCode);
 	}
+
+	@Override
+	public TransactionDetailMasterModel loadTransactionDetailMasterModelByRRN(String rrn) throws FrameworkCheckedException {
+		TransactionDetailMasterModel tdm = new TransactionDetailMasterModel();
+		tdm.setFonepayTransactionCode(rrn);
+
+//		ExampleConfigHolderModel exampleHolder = new ExampleConfigHolderModel();
+//		exampleHolder.setEnableLike(Boolean.TRUE);
+//		exampleHolder.setMatchMode(MatchMode.EXACT);
+//
+		tdm = this.transactionDetailMasterDAO.loadTDMbyRRN(rrn);
+
+		return tdm;
+	}
+
+	@Override
+	public TransactionDetailMasterModel loadTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException {
+		TransactionDetailMasterModel tdm = new TransactionDetailMasterModel();
+		tdm = this.transactionDetailMasterDAO.loadTDMbyMobileNumber(mobileNo, productId);
+
+		return tdm;
+	}
+
+//	@Override
+//	public List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, String startDate, String endDate) throws FrameworkCheckedException {
+//		TransactionDetailMasterModel tdm = new TransactionDetailMasterModel();
+//		tdm = this.transactionDetailMasterDAO.loadTDMbyMobileandDateRange(mobileNo, startDate, endDate);
+//
+//		return tdm;
+//	}
 
 	public void setTransactionDetailMasterDAO(
 			TransactionDetailMasterDAO transactionDetailMasterDAO) {

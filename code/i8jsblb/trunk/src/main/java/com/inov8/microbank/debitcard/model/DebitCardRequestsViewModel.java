@@ -39,6 +39,8 @@ public class DebitCardRequestsViewModel extends BasePersistableModel implements 
     private Date updatedOn;
     private Date createdOnStartDate;
     private Date createdOnEndDate;
+    private Date reIssuancecreatedOnStartDate;
+    private Date reIssuancecreatedOnEndDate;
     private Long cardStateId;
     private Long cardStatusId;
     private Long cardProductCodeId;
@@ -220,6 +222,23 @@ public class DebitCardRequestsViewModel extends BasePersistableModel implements 
     }
     public void setCreatedOnEndDate(Date createdOnEndDate) {
         this.createdOnEndDate = createdOnEndDate;
+    }
+
+    @javax.persistence.Transient
+    public Date getReIssuancecreatedOnStartDate() {
+        return reIssuancecreatedOnStartDate;
+    }
+
+    public void setReIssuancecreatedOnStartDate(Date reIssuancecreatedOnStartDate) {
+        this.reIssuancecreatedOnStartDate = reIssuancecreatedOnStartDate;
+    }
+    @javax.persistence.Transient
+    public Date getReIssuancecreatedOnEndDate() {
+        return reIssuancecreatedOnEndDate;
+    }
+
+    public void setReIssuancecreatedOnEndDate(Date reIssuancecreatedOnEndDate) {
+        this.reIssuancecreatedOnEndDate = reIssuancecreatedOnEndDate;
     }
 
     @Override

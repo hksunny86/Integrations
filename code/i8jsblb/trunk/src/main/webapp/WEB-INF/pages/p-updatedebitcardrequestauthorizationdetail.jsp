@@ -295,6 +295,18 @@
                 <td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Card Product Type</td>
                 <td width="13%" height="16" align="left"  class="formText">${currentMfsDebitCardModel.cardProductType }</td>
             </tr>
+
+
+            <tr>
+                <td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Debit Card Printing Site</td>
+                <td width="13%" height="16" align="left"  class="formText">${mfsDebitCardModel.city }</td>
+
+                <td width="12%" height="16" align="left"  class="formText"></td>
+                <td width="13%" height="16" align="left"  class="formText"></td>
+
+                <td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Debit Card Printing Site</td>
+                <td width="13%" height="16" align="left"  class="formText">${currentMfsDebitCardModel.city }</td>
+            </tr>
             <tr>
                 <td colspan="9" align="center" bgcolor="FBFBFB">
                     <h3>

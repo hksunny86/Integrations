@@ -364,6 +364,7 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     private AgentBvsStatDAO agentBvsStatDAO;
     private AgentLocationStatManager agentLocationStatManager;
     private DebitCardRequestsViewModelDAO debitCardRequestsViewModelDAO;
+    private TasdeeqDataDAO tasdeeqDataDAO;
 
     //private AgentLocationStatDAO agentLocationStatDAO;
     //	private ScheduleBillPaymentDao scheduleBillPaymentDao;
@@ -5192,6 +5193,17 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         if (messageList != null && !messageList.isEmpty()) {
             for (SmsMessage message : messageList) {
                 this.smsSender.send(message);
+//                message.setMessageType("ZINDIGI");
+//                message.setTitle("Push Notification");
+//                this.smsSender.pushNotification(message);
+//                if(!StringUtil.isNullOrEmpty(baseWrapper.getObject("RCMobileNo").toString())
+//                        && baseWrapper.getObject("RCMobileNo") == 1L){
+//                    message.setMobileNo((String) baseWrapper.getObject(CommandFieldConstants.KEY_RECEIVING_CUSTOMER_MOBILE));
+//                    this.smsSender.send(message);
+//                    message.setMessageType("ZINDIGI");
+//                    message.setTitle("Push Notification");
+//                    this.smsSender.pushNotification(message);
+//                }
                 message.setMessageType("ZINDIGI");
                 message.setTitle("Push Notification");
                 this.smsSender.pushNotification(message);
@@ -6154,12 +6166,15 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
             if (nameArray.length > 1) {
                 lName = vo.getName().substring(
                         fName.length() + 1);
-            } else {
-                lName = nameArray[0];
+            }
+            else {
+                lName = " ";
             }
 
             fName = escapeUnicode(fName);
-            lName = escapeUnicode(lName);
+            if (!(lName.equals(" "))) {
+                lName = escapeUnicode(lName);
+            }
             String motherMaidenName = escapeUnicode(vo.getMotherMaidenName());
             if (appUserModel.getAddress1() != null)
                 address = escapeUnicode(vo.getCurrentAddress());
@@ -6357,11 +6372,12 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
             cardFeeRuleModel.setMnoId(50027L);
         CardFeeRuleModel model = getCardConfigurationManager().loadCardFeeRuleModel(cardFeeRuleModel);
         if (model != null) {
-            if (model.getIsInstallments() != null && model.getIsInstallments()) {
-                fee = model.getInstallmentAmount();
-            } else {
-                fee = model.getAmount();
-            }
+            fee = model.getAmount();
+//            if (model.getIsInstallments() != null && model.getIsInstallments()) {
+//                fee = model.getInstallmentAmount();
+//            } else {
+//                fee = model.getAmount();
+//            }
         }
 
 //		if(Double.parseDouble(customerBalance) < fee)
@@ -6545,12 +6561,13 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
             cardFeeRuleModel.setMnoId(50027L);
         CardFeeRuleModel model = getCardConfigurationManager().loadCardFeeRuleModel(cardFeeRuleModel);
         if (model != null) {
-            if (model.getIsInstallments() != null && model.getIsInstallments()) {
-                fee = model.getInstallmentAmount();
-                workFlowWrapper.setCardFeeRuleModel(model);
-            } else {
-                fee = model.getAmount();
-            }
+            fee = model.getAmount();
+//            if (model.getIsInstallments() != null && model.getIsInstallments()) {
+//                fee = model.getInstallmentAmount();
+//                workFlowWrapper.setCardFeeRuleModel(model);
+//            } else {
+//                fee = model.getAmount();
+//            }
         }
 //		if(Double.parseDouble(customerBalance) < fee)
 //			throw new CommandException(MessageUtil.getMessage("debit.card.req.low.balance"),ErrorCodes.INSUFFICIENT_BALANCE_FOR_DEBIT_CARD_ISSUANCE, ErrorLevel.MEDIUM, new Throwable());
@@ -6858,13 +6875,13 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
     @Override
     public BaseWrapper saveOrUpdateDebitCardIssuenceRequest(BaseWrapper baseWrapper) throws FrameworkCheckedException {
-        Calendar date = Calendar.getInstance();
-        Date startDate = null;
-        date.setTime(new Date());
-        date.add(Calendar.YEAR, 1);
-        startDate = date.getTime();
-
-        DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
+//        Calendar date = Calendar.getInstance();
+//        Date startDate = null;
+//        date.setTime(new Date());
+//        date.add(Calendar.YEAR, 1);
+//        startDate = date.getTime();
+//
+//        DateFormat format = new SimpleDateFormat("dd/MMM/yyyy");
 //        String dateStr = format.format(startDate);
 
         if (baseWrapper.getObject(CommandFieldConstants.KEY_TRANSACTION_TYPE).equals("02")) {
@@ -6902,45 +6919,72 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
             debitCardModel.setFee(debitCardVo.getFee());
             debitCardModel.setUpdatedOn(new Date());
 //            debitCardModel.setAnnualFeeDate(startDate);
-            debitCardModel.setReIssuanceDate(new Date());
+//            debitCardModel.setReIssuanceDate(new Date());
 
-            if (baseWrapper.getObject("cardFeeRuleModel") != null) {
-                if (String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("QUARTERLY")) {
-                    date.setTime(new Date());
-                    date.add(Calendar.MONTH, 3);
-                    startDate = date.getTime();
+//            if(baseWrapper.getObject("cardFeeRuleModel") != null){
+//                if(String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("QUARTERLY")){
+//                    date.setTime(new Date());
+//                    date.add(Calendar.MONTH, 3);
+//                    startDate = date.getTime();
+////                    format = new SimpleDateFormat("dd/MMM/yyyy");
+////                    String dateStr1 = null;
+////                    dateStr1 = format.format(startDate);
+//
+//                    debitCardModel.setNewInstallmentDateForReIssuance(startDate);
+//                }
+//                else if(String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("BI-ANNUAL")){
+//                    date.setTime(new Date());
+//                    date.add(Calendar.MONTH, 6);
+//                    startDate = date.getTime();
+////                    format = new SimpleDateFormat("dd/MMM/yyyy");
+////                    String dateStr1 = null;
+////                    dateStr1 = format.format(dateStr1);
+//
+//                    debitCardModel.setNewInstallmentDateForReIssuance(startDate);
+//                }
+//                else{
+//                    date.setTime(new Date());
+//                    date.add(Calendar.MONTH, 12);
+//                    startDate = date.getTime();
+////                    format = new SimpleDateFormat("dd/MMM/yyyy");
+////                    String dateStr1 = null;
+////
+////                    dateStr1 = format.format(dateStr1);
+//
+//                    debitCardModel.setNewInstallmentDateForReIssuance(startDate);
+//                }
+//
+//                debitCardModel.setIsInstallments(Boolean.valueOf(String.valueOf(baseWrapper.getObject("isInstallments"))));
+//                debitCardModel.setNoOfInstallments(Long.valueOf((String.valueOf(baseWrapper.getObject("noOfInstallments")))));
+//            if (baseWrapper.getObject("cardFeeRuleModel") != null) {
+//                if (String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("QUARTERLY")) {
+//                    date.setTime(new Date());
+//                    date.add(Calendar.MONTH, 3);
+//                    startDate = date.getTime();
 //                    format = new SimpleDateFormat("dd/MMM/yyyy");
 //                    String dateStr1 = null;
 //                    dateStr1 = format.format(startDate);
 
-                    debitCardModel.setNewInstallmentDateForReIssuance(startDate);
-                } else if (String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("BI-ANNUAL")) {
-                    date.setTime(new Date());
-                    date.add(Calendar.MONTH, 6);
-                    startDate = date.getTime();
+//                    debitCardModel.setNewInstallmentDateForReIssuance(startDate);
+//                } else if (String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("BI-ANNUAL")) {
+//                    date.setTime(new Date());
+//                    date.add(Calendar.MONTH, 6);
+//                    startDate = date.getTime();
 //                    format = new SimpleDateFormat("dd/MMM/yyyy");
 //                    String dateStr1 = null;
 //                    dateStr1 = format.format(dateStr1);
 
-                    debitCardModel.setNewInstallmentDateForReIssuance(startDate);
-                } else {
-                    date.setTime(new Date());
-                    date.add(Calendar.MONTH, 12);
-                    startDate = date.getTime();
+//                    debitCardModel.setNewInstallmentDateForReIssuance(startDate);
+//                } else {
+//                    date.setTime(new Date());
+//                    date.add(Calendar.MONTH, 12);
+//                    startDate = date.getTime();
 //                    format = new SimpleDateFormat("dd/MMM/yyyy");
 //                    String dateStr1 = null;
 //
-//                    dateStr1 = format.format(dateStr1);
-
-                    debitCardModel.setNewInstallmentDateForReIssuance(startDate);
-                }
-
-                debitCardModel.setIsInstallments(Boolean.valueOf(String.valueOf(baseWrapper.getObject("isInstallments"))));
-                debitCardModel.setNoOfInstallments(Long.valueOf((String.valueOf(baseWrapper.getObject("noOfInstallments")))));
-
-                debitCardModel.setRemainingNoOfInstallments(Long.parseLong((String.valueOf(baseWrapper.getObject("noOfInstallments")))) - 1);
-                debitCardModel.setLastInstallmentDateForReIssuance(new Date());
-            }
+//                debitCardModel.setRemainingNoOfInstallments(Long.parseLong((String.valueOf(baseWrapper.getObject("noOfInstallments")))) - 1);
+//                debitCardModel.setLastInstallmentDateForReIssuance(new Date());
+//            }
 
             debitCardModel = debitCardModelDAO.saveOrUpdate(debitCardModel);
             baseWrapper.setBasePersistableModel(debitCardModel);
@@ -6967,53 +7011,86 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 //                debitCardModel.setCardStatusId(CardConstantsInterface.CARD_STATUS_PENDING);
 //            } else {
             debitCardModel.setCardStatusId(CardConstantsInterface.CARD_STATUS_INTITATED);
-            debitCardModel.setCardStateId(CardConstantsInterface.CARD_STATE_WARM);
-            debitCardModel.setIssuanceDate(new Date());
+//            debitCardModel.setCardStateId(CardConstantsInterface.CARD_STATE_WARM);
+//            debitCardModel.setIssuanceDate(new Date());
 //            }
             debitCardModel.setTransactionCode(debitCardModel.getTransactionCode());
             debitCardModel.setFee(debitCardModel.getFee());
 //            debitCardModel.setAnnualFeeDate(startDate);
+//            if(baseWrapper.getObject("productId").equals(ProductConstantsInterface.DEBIT_CARD_ISSUANCE)){
+//                debitCardModel.setIssuanceByAgent("1");
+//            }
             if (baseWrapper.getObject("productId").equals(ProductConstantsInterface.DEBIT_CARD_ISSUANCE)) {
                 debitCardModel.setIssuanceByAgent("1");
             }
 
-            if (baseWrapper.getObject("cardFeeRuleModel") != null) {
-                if (String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("QUARTERLY")) {
-                    date.setTime(new Date());
-                    date.add(Calendar.MONTH, 3);
-                    startDate = date.getTime();
-                    format = new SimpleDateFormat("dd/MMM/yyyy");
-                    String dateStr1 = null;
+//            if (baseWrapper.getObject("cardFeeRuleModel") != null) {
+//                if (String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("QUARTERLY")) {
+//                    date.setTime(new Date());
+//                    date.add(Calendar.MONTH, 3);
+//                    startDate = date.getTime();
+//                    format = new SimpleDateFormat("dd/MMM/yyyy");
+//                    String dateStr1 = null;
 
 //                    dateStr1 = format.format(startDate);
 
-                    debitCardModel.setNewInstallmentDateForIssuance(startDate);
-                } else if (String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("BI-ANNUAL")) {
-                    date.setTime(new Date());
-                    date.add(Calendar.MONTH, 6);
-                    startDate = date.getTime();
-                    format = new SimpleDateFormat("dd/MMM/yyyy");
-                    String dateStr1 = null;
+//                    debitCardModel.setNewInstallmentDateForIssuance(startDate);
+//                } else if (String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("BI-ANNUAL")) {
+//                    date.setTime(new Date());
+//                    date.add(Calendar.MONTH, 6);
+//                    startDate = date.getTime();
+//                    format = new SimpleDateFormat("dd/MMM/yyyy");
+//                    String dateStr1 = null;
 //                    dateStr1 = format.format(String.valueOf(startDate));
 
-                    debitCardModel.setNewInstallmentDateForIssuance(startDate);
-                } else {
-                    date.setTime(new Date());
-                    date.add(Calendar.MONTH, 12);
-                    startDate = date.getTime();
-                    format = new SimpleDateFormat("dd/MMM/yyyy");
-                    String dateStr1 = null;
+//                    debitCardModel.setNewInstallmentDateForIssuance(startDate);
+//                } else {
+//                    date.setTime(new Date());
+//                    date.add(Calendar.MONTH, 12);
+//                    startDate = date.getTime();
+//                    format = new SimpleDateFormat("dd/MMM/yyyy");
+//                    String dateStr1 = null;
 //                    dateStr1 = format.format(startDate);
 
-                    debitCardModel.setNewInstallmentDateForIssuance(startDate);
-                }
-
-                debitCardModel.setIsInstallments(Boolean.valueOf(String.valueOf(baseWrapper.getObject("isInstallments"))));
-                debitCardModel.setNoOfInstallments(Long.valueOf((String.valueOf(baseWrapper.getObject("noOfInstallments")))));
-
-                debitCardModel.setRemainingNoOfInstallments(Long.parseLong((String.valueOf(baseWrapper.getObject("noOfInstallments")))) - 1);
-                debitCardModel.setLastInstallmentDateForIssuance(new Date());
-            }
+//            if(baseWrapper.getObject("cardFeeRuleModel") != null){
+//                if(String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("QUARTERLY")){
+//                    date.setTime(new Date());
+//                    date.add(Calendar.MONTH, 3);
+//                    startDate = date.getTime();
+//                    format = new SimpleDateFormat("dd/MMM/yyyy");
+//                    String dateStr1 = null;
+//
+////                    dateStr1 = format.format(startDate);
+//
+//                    debitCardModel.setNewInstallmentDateForIssuance(startDate);
+//                }
+//                else if(String.valueOf(((CardFeeRuleModel) baseWrapper.getObject("cardFeeRuleModel")).getInstallmentPlan()).equals("BI-ANNUAL")){
+//                    date.setTime(new Date());
+//                    date.add(Calendar.MONTH, 6);
+//                    startDate = date.getTime();
+//                    format = new SimpleDateFormat("dd/MMM/yyyy");
+//                    String dateStr1 = null;
+////                    dateStr1 = format.format(String.valueOf(startDate));
+//
+//                    debitCardModel.setNewInstallmentDateForIssuance(startDate);
+//                }
+//                else{
+//                    date.setTime(new Date());
+//                    date.add(Calendar.MONTH, 12);
+//                    startDate = date.getTime();
+//                    format = new SimpleDateFormat("dd/MMM/yyyy");
+//                    String dateStr1 = null;
+////                    dateStr1 = format.format(startDate);
+//
+//                    debitCardModel.setNewInstallmentDateForIssuance(startDate);
+//                }
+//
+//                debitCardModel.setIsInstallments(Boolean.valueOf(String.valueOf(baseWrapper.getObject("isInstallments"))));
+//                debitCardModel.setNoOfInstallments(Long.valueOf((String.valueOf(baseWrapper.getObject("noOfInstallments")))));
+//
+//                debitCardModel.setRemainingNoOfInstallments(Long.parseLong((String.valueOf(baseWrapper.getObject("noOfInstallments")))) - 1);
+//                debitCardModel.setLastInstallmentDateForIssuance(new Date());
+//            }
 
             debitCardModel = debitCardModelDAO.saveOrUpdate(debitCardModel);
             baseWrapper.setBasePersistableModel(debitCardModel);
@@ -7702,6 +7779,16 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return offlineBillersConfigDAO.loadOfflineBillersModelByProductId(productId);
     }
 
+    @Override
+    public TasdeeqDataModel saveOrUpdateTasdeeqDataModel(TasdeeqDataModel tasdeeqDataModel) {
+        return this.genericDao.createEntity(tasdeeqDataModel);
+    }
+
+    @Override
+    public TasdeeqDataModel loadTasdeeqDataModelByMobile(String mobileNo) throws FrameworkCheckedException {
+        return tasdeeqDataDAO.loadTasdeeqDataByMobile(mobileNo);
+    }
+
     public void setAdvanceSalaryLoanDAO(AdvanceSalaryLoanDAO advanceSalaryLoanDAO) {
         this.advanceSalaryLoanDAO = advanceSalaryLoanDAO;
     }
@@ -7760,4 +7847,7 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.offlineBillersConfigDAO = offlineBillersConfigDAO;
     }
 
+    public void setTasdeeqDataDAO(TasdeeqDataDAO tasdeeqDataDAO) {
+        this.tasdeeqDataDAO = tasdeeqDataDAO;
+    }
 }

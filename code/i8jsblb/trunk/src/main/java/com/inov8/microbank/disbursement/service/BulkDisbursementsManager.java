@@ -116,4 +116,6 @@ public interface BulkDisbursementsManager {
 
     void updateIsApprovedForBatch(String batchNumber) throws Exception;
 
+    int updateDisbursementFileProcessingStatus(Long fileInfoId, String processingStatus);
+
 }

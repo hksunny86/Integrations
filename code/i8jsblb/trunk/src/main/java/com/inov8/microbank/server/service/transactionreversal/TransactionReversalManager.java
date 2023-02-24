@@ -59,4 +59,11 @@ public interface TransactionReversalManager
     void updateTransactionDetailMaster(BaseWrapper baseWrapper) throws FrameworkCheckedException;
 
     IBFTRetryAdviceModel findIBFTRetryByStanAndStatus(MiddlewareAdviceVO adviceVO) throws FrameworkCheckedException;
+
+    TransactionDetailMasterModel loadTDMbyThridPartyRRN(String rrn) throws Exception;
+
+    TransactionDetailMasterModel loadTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException;
+
+//    List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, String startDate, String endDate) throws FrameworkCheckedException;
+
 }

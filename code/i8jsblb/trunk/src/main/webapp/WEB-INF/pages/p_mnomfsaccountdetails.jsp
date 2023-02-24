@@ -1140,6 +1140,13 @@
                         <td width="60%" align="left" bgcolor="FBFBFB">Yes</td>
                     </tr>
 
+
+                    <tr>
+                        <td width="40%" height="32" align="right" bgcolor="F3F3F3" class="formText">Reason Of Blocking:
+                        </td>
+                        <td width="60%" align="left" bgcolor="FBFBFB">${mfsAccountModel.reasonOfBlock}</td>
+                    </tr>
+
                     <tr>
                         <td width="40%" height="32" align="right" bgcolor="F3F3F3" class="formText">Device Status:</td>
                         <td width="60%" align="left" bgcolor="FBFBFB">${mfsAccountModel.deviceStatus}</td>

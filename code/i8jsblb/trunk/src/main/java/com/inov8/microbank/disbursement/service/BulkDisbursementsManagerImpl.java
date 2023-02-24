@@ -468,7 +468,6 @@ public class BulkDisbursementsManagerImpl implements BulkDisbursementsManager, A
 */
     public void makeAcHolderTransferFund(DisbursementVO disbursementVO, WorkFlowWrapper workFlowWrapper) throws Exception {
         try {
-
             ActionLogModel actionLogModel = new ActionLogModel();
             XStream xstream = new XStream();
 
@@ -965,7 +964,8 @@ public class BulkDisbursementsManagerImpl implements BulkDisbursementsManager, A
             populateCommissionWrapper(disbursementVO, workFlowWrapper);
 
             StakeholderBankInfoModel blbSundryStakeholderBankInfoModel = (StakeholderBankInfoModel) workFlowWrapper.getObject("SUNDRY_ACCOUNT");
-            StakeholderBankInfoModel productStakeholderBankInfoModel = (StakeholderBankInfoModel) workFlowWrapper.getObject(StakeholderBankInfoModel.ACCOUNT_TYPE_BLB);
+//            StakeholderBankInfoModel productStakeholderBankInfoModel = (StakeholderBankInfoModel) workFlowWrapper.getObject(StakeholderBankInfoModel.ACCOUNT_TYPE_BLB);
+            StakeholderBankInfoModel productStakeholderBankInfoModel = stakeholderBankInfoManager.loadStakeholderBankInfoModel(PoolAccountConstantsInterface.BULK_DISBURSEMENT_SETTLEMENT_ACCOUNT_OLA);
 
             SwitchWrapper switchWrapper = new SwitchWrapperImpl();
             switchWrapper.setFromAccountNo(productStakeholderBankInfoModel.getAccountNo());
@@ -1576,6 +1576,11 @@ public class BulkDisbursementsManagerImpl implements BulkDisbursementsManager, A
             }
             bulkDisbursementHibernateDAO.saveOrUpdateCollection(updatedBulkDisbursementsList);
 //        }
+    }
+
+    @Override
+    public int updateDisbursementFileProcessingStatus(Long fileInfoId, String processingStatus) {
+        return bulkDisbursementsFileInfoDAO.updateDisbursementFileProcessingStatus(fileInfoId, processingStatus);
     }
 
     public CommonCommandManager getCommonCommandManager() {

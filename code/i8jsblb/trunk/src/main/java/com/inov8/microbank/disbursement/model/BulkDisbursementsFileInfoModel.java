@@ -70,6 +70,7 @@ public class BulkDisbursementsFileInfoModel extends BasePersistableModel {
 	private transient String parseStatus;
 	private String isApproved;
 	private Boolean isValid;
+	private String processingStatus;
 
 	/**
 	 * Return the primary key.
@@ -370,5 +371,14 @@ public class BulkDisbursementsFileInfoModel extends BasePersistableModel {
 
 	public void setIsValid(Boolean isValid) {
 		this.isValid = isValid;
+	}
+
+	@Column(name="PROCESSING_STATUS	")
+	public String getProcessingStatus() {
+		return processingStatus;
+	}
+
+	public void setProcessingStatus(String processingStatus) {
+		this.processingStatus = processingStatus;
 	}
 }

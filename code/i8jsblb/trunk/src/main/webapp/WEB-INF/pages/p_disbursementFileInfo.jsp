@@ -169,7 +169,9 @@
 				<ec:column title="Status" property="statusStr" sortable="false" escapeAutoFormat="true" />
 				<ec:column title="Total Amount" property="totalAmount" cell="currency" format="#,###.##" style="text-align:right;" escapeAutoFormat="true" />
 				<ec:column title="Total Charges" property="totalCharges" cell="currency" format="#,###.##" style="text-align:right;" escapeAutoFormat="true" />
-				<ec:column title="Total FED" property="totalFed" cell="currency" format="#,###.##" style="text-align:right;" escapeAutoFormat="true" />
+			    <ec:column title="Total FED" property="totalFed" cell="currency" format="#,###.##" style="text-align:right;" escapeAutoFormat="true" />
+				<ec:column title="Batch Processing Status" property="processingStatus" sortable="false" escapeAutoFormat="true" />
+
 			</ec:row>
 		</ec:table>
 

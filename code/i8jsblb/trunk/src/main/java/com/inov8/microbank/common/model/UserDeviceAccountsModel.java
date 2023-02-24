@@ -83,8 +83,13 @@ public class UserDeviceAccountsModel extends BasePersistableModel implements Ser
    private Boolean commissioned;
    @XmlElement
    private String password;
+
+   @XmlElement
+   private String comments;
    @XmlElement
    private Boolean passwordChangeRequired;
+
+
 
    /**
     * Default constructor.
@@ -102,7 +107,23 @@ public class UserDeviceAccountsModel extends BasePersistableModel implements Ser
         return getUserDeviceAccountsId();
     }
 
-    /**
+
+   @Column(name = "Comments")
+   public String getComments() {
+      return comments;
+   }
+
+   public void setComments(String comments) {
+      this.comments = comments;
+   }
+
+
+
+
+
+
+
+   /**
      * Set the primary key.
      *
      * @param primaryKey the primary key

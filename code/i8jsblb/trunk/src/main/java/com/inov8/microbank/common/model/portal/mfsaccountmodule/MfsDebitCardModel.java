@@ -31,10 +31,20 @@ public class MfsDebitCardModel implements Serializable,Cloneable{
     private String withAuthFlag;
     private Long segmentId;
     private Long mailingAddressId;
+    private String city;
 
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getMobileNo() {return mobileNo;}

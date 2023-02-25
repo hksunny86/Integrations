@@ -594,230 +594,230 @@ public class JSController {
         return feePaymentResponse;
     }
 
-    @RequestMapping(value = "api/transactionStatus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    TransactionStatusResponse transactionStatusResponse(@RequestBody TransactionStatusRequest request) {
-        TransactionStatusResponse transactionStatusResponse = new TransactionStatusResponse();
-
-        long start = System.currentTimeMillis();
-
-        logger.info("Transaction Status Request Received at Controller at time: " + start);
-        String requestXML = JSONUtil.getJSON(request);
-//        requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Transaction Status Request with {}", requestXML);
-
-        StringBuilder stringText = new StringBuilder()
-                .append(request.getUserName())
-                .append(request.getPassword())
-                .append(request.getCustomerId())
-                .append(request.getDateTime())
-                .append(request.getRrn())
-                .append(request.getChannelId())
-                .append(request.getTerminalId())
-                .append(request.getReserved1())
-                .append(request.getReserved2())
-                .append(request.getReserved3())
-                .append(request.getReserved4())
-                .append(request.getReserved5())
-                .append(request.getReserved6())
-                .append(request.getReserved7())
-                .append(request.getReserved8())
-                .append(request.getReserved9())
-                .append(request.getReserved10());
-
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateTransactionStatus(request);
-                    transactionStatusResponse = integrationService.transactionStatusResponse(request);
-
-                } catch (ValidationException ve) {
-                    transactionStatusResponse.setResponseCode("420");
-                    transactionStatusResponse.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    transactionStatusResponse.setResponseCode("220");
-                    transactionStatusResponse.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-
-                logger.info("******* DEBUG LOGS FOR  Transaction Status Request *********");
-                logger.info("ResponseCode: " + transactionStatusResponse.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR  Transaction Status Request AUTHENTICATION *********");
-                transactionStatusResponse = new TransactionStatusResponse();
-                transactionStatusResponse.setResponseCode("420");
-                transactionStatusResponse.setResponseDescription("Request is not authenticated");
-                transactionStatusResponse.setRrn(request.getRrn());
-                transactionStatusResponse.setResponseDateTime(request.getDateTime());
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-
-            }
-        } else {
-            logger.info("******* DEBUG LOGS FOR Transaction Status Request *********");
-            transactionStatusResponse = new TransactionStatusResponse();
-            transactionStatusResponse.setResponseCode("111");
-            transactionStatusResponse.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
-
-        long end = System.currentTimeMillis() - start;
-        logger.info("Transaction Status Request Processed in : {} ms {}", end, transactionStatusResponse);
-
-        return transactionStatusResponse;
-    }
-
-    @RequestMapping(value = "api/profileStatus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    ProfileStatusResponse profileStatusResponse(@RequestBody ProfileStatusRequest request) {
-        ProfileStatusResponse profileStatusResponse = new ProfileStatusResponse();
-
-        long start = System.currentTimeMillis();
-
-        logger.info("Profile Status Request Received at Controller at time: " + start);
-        String requestXML = JSONUtil.getJSON(request);
-//        requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Profile Status Request with {}", requestXML);
-
-        StringBuilder stringText = new StringBuilder()
-                .append(request.getUserName())
-                .append(request.getPassword())
-                .append(request.getCustomerId())
-                .append(request.getDateTime())
-                .append(request.getRrn())
-                .append(request.getChannelId())
-                .append(request.getTerminalId())
-                .append(request.getReserved1())
-                .append(request.getReserved2())
-                .append(request.getReserved3())
-                .append(request.getReserved4())
-                .append(request.getReserved5())
-                .append(request.getReserved6())
-                .append(request.getReserved7())
-                .append(request.getReserved8())
-                .append(request.getReserved9())
-                .append(request.getReserved10());
-
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateProfileStatus(request);
-                    profileStatusResponse = integrationService.profileStatusResponse(request);
-
-                } catch (ValidationException ve) {
-                    profileStatusResponse.setResponseCode("420");
-                    profileStatusResponse.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    profileStatusResponse.setResponseCode("220");
-                    profileStatusResponse.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-
-                logger.info("******* DEBUG LOGS FOR Profile Status Request *********");
-                logger.info("ResponseCode: " + profileStatusResponse.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR Profile Status Request AUTHENTICATION *********");
-                profileStatusResponse = new ProfileStatusResponse();
-                profileStatusResponse.setResponseCode("420");
-                profileStatusResponse.setResponseDescription("Request is not authenticated");
-                profileStatusResponse.setRrn(request.getRrn());
-                profileStatusResponse.setResponseDateTime(request.getDateTime());
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-
-            }
-        } else {
-            logger.info("******* DEBUG LOGS FOR Profile Status Request *********");
-            profileStatusResponse = new ProfileStatusResponse();
-            profileStatusResponse.setResponseCode("111");
-            profileStatusResponse.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
-
-        long end = System.currentTimeMillis() - start;
-        logger.info("Profile Status Request Processed in : {} ms {}", end, profileStatusResponse);
-
-        return profileStatusResponse;
-    }
-
-    @RequestMapping(value = "api/lienStatus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    LienStatusResponse lienStatusResponse(@RequestBody LienStatusRequest request) {
-        LienStatusResponse lienStatusResponse = new LienStatusResponse();
-
-        long start = System.currentTimeMillis();
-
-        logger.info("Lien Status Request Received at Controller at time: " + start);
-        String requestXML = JSONUtil.getJSON(request);
-//        requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Lien Status Request with {}", requestXML);
-
-        StringBuilder stringText = new StringBuilder()
-                .append(request.getUserName())
-                .append(request.getPassword())
-                .append(request.getCustomerId())
-                .append(request.getDateTime())
-                .append(request.getRrn())
-                .append(request.getChannelId())
-                .append(request.getTerminalId())
-                .append(request.getReserved1())
-                .append(request.getReserved2())
-                .append(request.getReserved3())
-                .append(request.getReserved4())
-                .append(request.getReserved5())
-                .append(request.getReserved6())
-                .append(request.getReserved7())
-                .append(request.getReserved8())
-                .append(request.getReserved9())
-                .append(request.getReserved10());
-
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateLienStatus(request);
-                    lienStatusResponse = integrationService.lienStatusResponse(request);
-
-                } catch (ValidationException ve) {
-                    lienStatusResponse.setResponseCode("420");
-                    lienStatusResponse.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    lienStatusResponse.setResponseCode("220");
-                    lienStatusResponse.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-
-                logger.info("******* DEBUG LOGS FOR Lien Status Request *********");
-                logger.info("ResponseCode: " + lienStatusResponse.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR Lien Status Request AUTHENTICATION *********");
-                lienStatusResponse = new LienStatusResponse();
-                lienStatusResponse.setResponseCode("420");
-                lienStatusResponse.setResponseDescription("Request is not authenticated");
-                lienStatusResponse.setRrn(request.getRrn());
-                lienStatusResponse.setResponseDateTime(request.getDateTime());
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-
-            }
-        } else {
-            logger.info("******* DEBUG LOGS FOR Lien Status Request *********");
-            lienStatusResponse = new LienStatusResponse();
-            lienStatusResponse.setResponseCode("111");
-            lienStatusResponse.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
-
-        long end = System.currentTimeMillis() - start;
-        logger.info("Lien Status Request Processed in : {} ms {}", end, lienStatusResponse);
-
-        return lienStatusResponse;
-    }
+//    @RequestMapping(value = "api/transactionStatus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseBody
+//    TransactionStatusResponse transactionStatusResponse(@RequestBody TransactionStatusRequest request) {
+//        TransactionStatusResponse transactionStatusResponse = new TransactionStatusResponse();
+//
+//        long start = System.currentTimeMillis();
+//
+//        logger.info("Transaction Status Request Received at Controller at time: " + start);
+//        String requestXML = JSONUtil.getJSON(request);
+////        requestXML = XMLUtil.maskPassword(requestXML);
+//        logger.info("Start Processing Transaction Status Request with {}", requestXML);
+//
+//        StringBuilder stringText = new StringBuilder()
+//                .append(request.getUserName())
+//                .append(request.getPassword())
+//                .append(request.getCustomerId())
+//                .append(request.getDateTime())
+//                .append(request.getRrn())
+//                .append(request.getChannelId())
+//                .append(request.getTerminalId())
+//                .append(request.getReserved1())
+//                .append(request.getReserved2())
+//                .append(request.getReserved3())
+//                .append(request.getReserved4())
+//                .append(request.getReserved5())
+//                .append(request.getReserved6())
+//                .append(request.getReserved7())
+//                .append(request.getReserved8())
+//                .append(request.getReserved9())
+//                .append(request.getReserved10());
+//
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+//                try {
+//                    HostRequestValidator.validateTransactionStatus(request);
+//                    transactionStatusResponse = integrationService.transactionStatusResponse(request);
+//
+//                } catch (ValidationException ve) {
+//                    transactionStatusResponse.setResponseCode("420");
+//                    transactionStatusResponse.setResponseDescription(ve.getMessage());
+//
+//                    logger.error("ERROR: Request Validation", ve);
+//                } catch (Exception e) {
+//                    transactionStatusResponse.setResponseCode("220");
+//                    transactionStatusResponse.setResponseDescription(e.getMessage());
+//                    logger.error("ERROR: General Processing ", e);
+//                }
+//
+//                logger.info("******* DEBUG LOGS FOR  Transaction Status Request *********");
+//                logger.info("ResponseCode: " + transactionStatusResponse.getResponseCode());
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR  Transaction Status Request AUTHENTICATION *********");
+//                transactionStatusResponse = new TransactionStatusResponse();
+//                transactionStatusResponse.setResponseCode("420");
+//                transactionStatusResponse.setResponseDescription("Request is not authenticated");
+//                transactionStatusResponse.setRrn(request.getRrn());
+//                transactionStatusResponse.setResponseDateTime(request.getDateTime());
+//                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+//
+//            }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR Transaction Status Request *********");
+//            transactionStatusResponse = new TransactionStatusResponse();
+//            transactionStatusResponse.setResponseCode("111");
+//            transactionStatusResponse.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
+//
+//        long end = System.currentTimeMillis() - start;
+//        logger.info("Transaction Status Request Processed in : {} ms {}", end, transactionStatusResponse);
+//
+//        return transactionStatusResponse;
+//    }
+//
+//    @RequestMapping(value = "api/profileStatus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseBody
+//    ProfileStatusResponse profileStatusResponse(@RequestBody ProfileStatusRequest request) {
+//        ProfileStatusResponse profileStatusResponse = new ProfileStatusResponse();
+//
+//        long start = System.currentTimeMillis();
+//
+//        logger.info("Profile Status Request Received at Controller at time: " + start);
+//        String requestXML = JSONUtil.getJSON(request);
+////        requestXML = XMLUtil.maskPassword(requestXML);
+//        logger.info("Start Processing Profile Status Request with {}", requestXML);
+//
+//        StringBuilder stringText = new StringBuilder()
+//                .append(request.getUserName())
+//                .append(request.getPassword())
+//                .append(request.getCustomerId())
+//                .append(request.getDateTime())
+//                .append(request.getRrn())
+//                .append(request.getChannelId())
+//                .append(request.getTerminalId())
+//                .append(request.getReserved1())
+//                .append(request.getReserved2())
+//                .append(request.getReserved3())
+//                .append(request.getReserved4())
+//                .append(request.getReserved5())
+//                .append(request.getReserved6())
+//                .append(request.getReserved7())
+//                .append(request.getReserved8())
+//                .append(request.getReserved9())
+//                .append(request.getReserved10());
+//
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+//                try {
+//                    HostRequestValidator.validateProfileStatus(request);
+//                    profileStatusResponse = integrationService.profileStatusResponse(request);
+//
+//                } catch (ValidationException ve) {
+//                    profileStatusResponse.setResponseCode("420");
+//                    profileStatusResponse.setResponseDescription(ve.getMessage());
+//
+//                    logger.error("ERROR: Request Validation", ve);
+//                } catch (Exception e) {
+//                    profileStatusResponse.setResponseCode("220");
+//                    profileStatusResponse.setResponseDescription(e.getMessage());
+//                    logger.error("ERROR: General Processing ", e);
+//                }
+//
+//                logger.info("******* DEBUG LOGS FOR Profile Status Request *********");
+//                logger.info("ResponseCode: " + profileStatusResponse.getResponseCode());
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Profile Status Request AUTHENTICATION *********");
+//                profileStatusResponse = new ProfileStatusResponse();
+//                profileStatusResponse.setResponseCode("420");
+//                profileStatusResponse.setResponseDescription("Request is not authenticated");
+//                profileStatusResponse.setRrn(request.getRrn());
+//                profileStatusResponse.setResponseDateTime(request.getDateTime());
+//                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+//
+//            }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR Profile Status Request *********");
+//            profileStatusResponse = new ProfileStatusResponse();
+//            profileStatusResponse.setResponseCode("111");
+//            profileStatusResponse.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
+//
+//        long end = System.currentTimeMillis() - start;
+//        logger.info("Profile Status Request Processed in : {} ms {}", end, profileStatusResponse);
+//
+//        return profileStatusResponse;
+//    }
+//
+//    @RequestMapping(value = "api/lienStatus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseBody
+//    LienStatusResponse lienStatusResponse(@RequestBody LienStatusRequest request) {
+//        LienStatusResponse lienStatusResponse = new LienStatusResponse();
+//
+//        long start = System.currentTimeMillis();
+//
+//        logger.info("Lien Status Request Received at Controller at time: " + start);
+//        String requestXML = JSONUtil.getJSON(request);
+////        requestXML = XMLUtil.maskPassword(requestXML);
+//        logger.info("Start Processing Lien Status Request with {}", requestXML);
+//
+//        StringBuilder stringText = new StringBuilder()
+//                .append(request.getUserName())
+//                .append(request.getPassword())
+//                .append(request.getCustomerId())
+//                .append(request.getDateTime())
+//                .append(request.getRrn())
+//                .append(request.getChannelId())
+//                .append(request.getTerminalId())
+//                .append(request.getReserved1())
+//                .append(request.getReserved2())
+//                .append(request.getReserved3())
+//                .append(request.getReserved4())
+//                .append(request.getReserved5())
+//                .append(request.getReserved6())
+//                .append(request.getReserved7())
+//                .append(request.getReserved8())
+//                .append(request.getReserved9())
+//                .append(request.getReserved10());
+//
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+//                try {
+//                    HostRequestValidator.validateLienStatus(request);
+//                    lienStatusResponse = integrationService.lienStatusResponse(request);
+//
+//                } catch (ValidationException ve) {
+//                    lienStatusResponse.setResponseCode("420");
+//                    lienStatusResponse.setResponseDescription(ve.getMessage());
+//
+//                    logger.error("ERROR: Request Validation", ve);
+//                } catch (Exception e) {
+//                    lienStatusResponse.setResponseCode("220");
+//                    lienStatusResponse.setResponseDescription(e.getMessage());
+//                    logger.error("ERROR: General Processing ", e);
+//                }
+//
+//                logger.info("******* DEBUG LOGS FOR Lien Status Request *********");
+//                logger.info("ResponseCode: " + lienStatusResponse.getResponseCode());
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Lien Status Request AUTHENTICATION *********");
+//                lienStatusResponse = new LienStatusResponse();
+//                lienStatusResponse.setResponseCode("420");
+//                lienStatusResponse.setResponseDescription("Request is not authenticated");
+//                lienStatusResponse.setRrn(request.getRrn());
+//                lienStatusResponse.setResponseDateTime(request.getDateTime());
+//                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+//
+//            }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR Lien Status Request *********");
+//            lienStatusResponse = new LienStatusResponse();
+//            lienStatusResponse.setResponseCode("111");
+//            lienStatusResponse.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
+//
+//        long end = System.currentTimeMillis() - start;
+//        logger.info("Lien Status Request Processed in : {} ms {}", end, lienStatusResponse);
+//
+//        return lienStatusResponse;
+//    }
 
     @RequestMapping(value = "api/initiateLoan", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
@@ -843,6 +843,10 @@ public class JSController {
                 .append(request.getIdentityValue())
                 .append(request.getOrigSource())
                 .append(request.getCommodityType())
+                .append(request.getSourceRequestId())
+                .append(request.getOfferName())
+                .append(request.getAmount())
+                .append(request.getFed())
                 .append(request.getReserved1())
                 .append(request.getReserved2())
                 .append(request.getReserved3())
@@ -1081,6 +1085,10 @@ public class JSController {
                 .append(request.getRrn())
                 .append(request.getChannelId())
                 .append(request.getTerminalId())
+                .append(request.getSourceRequestId())
+                .append(request.getAmount())
+                .append(request.getCurrencyCode())
+                .append(request.getReason())
                 .append(request.getIdentityType())
                 .append(request.getOrigSource())
                 .append(request.getIdentityValue())
@@ -1217,298 +1225,298 @@ public class JSController {
         return loansResponse;
     }
 
-    @RequestMapping(value = "api/optasiaCreditInquiry", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    OptasiaCreditInquiryResponse optasiaCreditInuqiryResponse(@RequestBody OptasiaCreditInquiryRequest request) {
-        OptasiaCreditInquiryResponse optasiaCreditInquiryResponse = new OptasiaCreditInquiryResponse();
-
-        long start = System.currentTimeMillis();
-
-        logger.info("Optasia Credit Inquiry Request Received at Controller at time: " + start);
-        String requestXML = JSONUtil.getJSON(request);
-//        requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Optasia Credit Inquiry Request with {}", requestXML);
-
-        StringBuilder stringText = new StringBuilder()
-                .append(request.getUserName())
-                .append(request.getPassword())
-                .append(request.getCustomerId())
-                .append(request.getDateTime())
-                .append(request.getRrn())
-                .append(request.getChannelId())
-                .append(request.getTerminalId())
-                .append(request.getProductId())
-                .append(request.getPinType())
-                .append(request.getTransactionAmount())
-                .append(request.getReserved1())
-                .append(request.getReserved2())
-                .append(request.getReserved3())
-                .append(request.getReserved4())
-                .append(request.getReserved5())
-                .append(request.getReserved6())
-                .append(request.getReserved7())
-                .append(request.getReserved8())
-                .append(request.getReserved9())
-                .append(request.getReserved10());
-
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateOptasiaCreditInquiry(request);
-                    optasiaCreditInquiryResponse = integrationService.optasiaCreditInquiryResponse(request);
-
-                } catch (ValidationException ve) {
-                    optasiaCreditInquiryResponse.setResponseCode("420");
-                    optasiaCreditInquiryResponse.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    optasiaCreditInquiryResponse.setResponseCode("220");
-                    optasiaCreditInquiryResponse.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-
-                logger.info("******* DEBUG LOGS FOR  Optasia Credit Inquiry Request *********");
-                logger.info("ResponseCode: " + optasiaCreditInquiryResponse.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR  Optasia Credit Inquiry Request AUTHENTICATION *********");
-                optasiaCreditInquiryResponse = new OptasiaCreditInquiryResponse();
-                optasiaCreditInquiryResponse.setResponseCode("420");
-                optasiaCreditInquiryResponse.setResponseDescription("Request is not authenticated");
-                optasiaCreditInquiryResponse.setRrn(request.getRrn());
-                optasiaCreditInquiryResponse.setResponseDateTime(request.getDateTime());
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-
-            }
-        } else {
-            logger.info("******* DEBUG LOGS FOR Optasia Credit Inquiry Request *********");
-            optasiaCreditInquiryResponse = new OptasiaCreditInquiryResponse();
-            optasiaCreditInquiryResponse.setResponseCode("111");
-            optasiaCreditInquiryResponse.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
-
-        long end = System.currentTimeMillis() - start;
-        logger.info("Optasia Credit Inquiry Request Processed in : {} ms {}", end, optasiaCreditInquiryResponse);
-
-        return optasiaCreditInquiryResponse;
-    }
-
-    @RequestMapping(value = "api/optasiaCredit", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    OptasiaCreditResponse optasiaCredit(@RequestBody OptasiaCreditRequest request) {
-        long start = System.currentTimeMillis();
-        OptasiaCreditResponse response = null;
-        String requestXML = JSONUtil.getJSON(request);
-//        requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Optasia Credit Transaction Request with {}", requestXML);
-        StringBuilder stringText = new StringBuilder()
-                .append(request.getUserName())
-                .append(request.getPassword())
-                .append(request.getMobileNumber())
-                .append(request.getDateTime())
-                .append(request.getRrn())
-                .append(request.getChannelId())
-                .append(request.getTerminalId())
-                .append(request.getProductId())
-                .append(request.getPin())
-                .append(request.getPinType())
-                .append(request.getTransactionAmount())
-                .append(request.getReserved1())
-                .append(request.getReserved2())
-                .append(request.getReserved3())
-                .append(request.getReserved4())
-                .append(request.getReserved5())
-                .append(request.getReserved6())
-                .append(request.getReserved7())
-                .append(request.getReserved8())
-                .append(request.getReserved9())
-                .append(request.getReserved10());
-
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateOptasiaCredit(request);
-                    response = integrationService.optasiaCreditResponse(request);
-
-                } catch (ValidationException ve) {
-                    response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-
-                logger.info("******* DEBUG LOGS FOR Optasia Credit PAYMENT TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR Optasia Credit Payment TRANSACTION AUTHENTICATION *********");
-                response = new OptasiaCreditResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-            }
-        } else {
-            logger.info("******* DEBUG LOGS FOR Optasia Credit PAYMENT TRANSACTION *********");
-            response = new OptasiaCreditResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
-
-        long end = System.currentTimeMillis() - start;
-        logger.info("Optasia Credit Payment Request  Processed in : {} ms {}", end, response);
-
-        return response;
-    }
-
-    @RequestMapping(value = "api/optasiaDebitInquiry", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    OptasiaDebitInquiryResponse optasiaDebitInquiry(@RequestBody OptasiaDebitInquiryRequest request) {
-        long start = System.currentTimeMillis();
-        OptasiaDebitInquiryResponse response = null;
-        String requestXML = JSONUtil.getJSON(request);
-//        requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Optasia Debit Inquiry Transaction Request with {}", requestXML);
-        StringBuilder stringText = new StringBuilder()
-                .append(request.getUserName())
-                .append(request.getPassword())
-                .append(request.getMobileNumber())
-                .append(request.getDateTime())
-                .append(request.getRrn())
-                .append(request.getChannelId())
-                .append(request.getTerminalId())
-                .append(request.getProductId())
-                .append(request.getPinType())
-                .append(request.getTransactionAmount())
-                .append(request.getReserved1())
-                .append(request.getReserved2())
-                .append(request.getReserved3())
-                .append(request.getReserved4())
-                .append(request.getReserved5())
-                .append(request.getReserved6())
-                .append(request.getReserved7())
-                .append(request.getReserved8())
-                .append(request.getReserved9())
-                .append(request.getReserved10());
-
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateOptasiadebitInquiry(request);
-                    response = integrationService.optasiaDebitInquiryResponse(request);
-
-                } catch (ValidationException ve) {
-                    response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-
-                logger.info("******* DEBUG LOGS FOR Optasia Debit Inquiry PAYMENT TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR Optasia Debit Inquiry Payment TRANSACTION AUTHENTICATION *********");
-                response = new OptasiaDebitInquiryResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-            }
-        } else {
-            logger.info("******* DEBUG LOGS FOR  Optasia Debit Inquiry PAYMENT TRANSACTION *********");
-            response = new OptasiaDebitInquiryResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
-
-        long end = System.currentTimeMillis() - start;
-        logger.info("Optasia Debit Inquiry Payment Request  Processed in : {} ms {}", end, response);
-
-        return response;
-    }
-
-    @RequestMapping(value = "api/optasiaDebit", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    OptasiaDebitResponse optasiaDebit(@RequestBody OptasiaDebitRequest request) {
-        long start = System.currentTimeMillis();
-        OptasiaDebitResponse response = null;
-        String requestXML = JSONUtil.getJSON(request);
-//        requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Optasia Debit Transaction Request with {}", requestXML);
-        StringBuilder stringText = new StringBuilder()
-                .append(request.getUserName())
-                .append(request.getPassword())
-                .append(request.getMobileNumber())
-                .append(request.getDateTime())
-                .append(request.getRrn())
-                .append(request.getChannelId())
-                .append(request.getTerminalId())
-                .append(request.getProductId())
-                .append(request.getPin())
-                .append(request.getPinType())
-                .append(request.getTransactionAmount())
-                .append(request.getReserved1())
-                .append(request.getReserved2())
-                .append(request.getReserved3())
-                .append(request.getReserved4())
-                .append(request.getReserved5())
-                .append(request.getReserved6())
-                .append(request.getReserved7())
-                .append(request.getReserved8())
-                .append(request.getReserved9())
-                .append(request.getReserved10());
-
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateOptasiaDebit(request);
-                    response = integrationService.optasiaDebitResponse(request);
-
-                } catch (ValidationException ve) {
-                    response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-
-                logger.info("******* DEBUG LOGS FOR Optasia Debit PAYMENT TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR Optasia Debit Payment TRANSACTION AUTHENTICATION *********");
-                response = new OptasiaDebitResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-            }
-        } else {
-            logger.info("******* DEBUG LOGS FOR  Optasia Debit PAYMENT TRANSACTION *********");
-            response = new OptasiaDebitResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
-
-        long end = System.currentTimeMillis() - start;
-        logger.info("Optasia Debit Payment Request  Processed in : {} ms {}", end, response);
-
-        return response;
-    }
+//    @RequestMapping(value = "api/optasiaCreditInquiry", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseBody
+//    OptasiaCreditInquiryResponse optasiaCreditInuqiryResponse(@RequestBody OptasiaCreditInquiryRequest request) {
+//        OptasiaCreditInquiryResponse optasiaCreditInquiryResponse = new OptasiaCreditInquiryResponse();
+//
+//        long start = System.currentTimeMillis();
+//
+//        logger.info("Optasia Credit Inquiry Request Received at Controller at time: " + start);
+//        String requestXML = JSONUtil.getJSON(request);
+////        requestXML = XMLUtil.maskPassword(requestXML);
+//        logger.info("Start Processing Optasia Credit Inquiry Request with {}", requestXML);
+//
+//        StringBuilder stringText = new StringBuilder()
+//                .append(request.getUserName())
+//                .append(request.getPassword())
+//                .append(request.getCustomerId())
+//                .append(request.getDateTime())
+//                .append(request.getRrn())
+//                .append(request.getChannelId())
+//                .append(request.getTerminalId())
+//                .append(request.getProductId())
+//                .append(request.getPinType())
+//                .append(request.getTransactionAmount())
+//                .append(request.getReserved1())
+//                .append(request.getReserved2())
+//                .append(request.getReserved3())
+//                .append(request.getReserved4())
+//                .append(request.getReserved5())
+//                .append(request.getReserved6())
+//                .append(request.getReserved7())
+//                .append(request.getReserved8())
+//                .append(request.getReserved9())
+//                .append(request.getReserved10());
+//
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+//                try {
+//                    HostRequestValidator.validateOptasiaCreditInquiry(request);
+//                    optasiaCreditInquiryResponse = integrationService.optasiaCreditInquiryResponse(request);
+//
+//                } catch (ValidationException ve) {
+//                    optasiaCreditInquiryResponse.setResponseCode("420");
+//                    optasiaCreditInquiryResponse.setResponseDescription(ve.getMessage());
+//
+//                    logger.error("ERROR: Request Validation", ve);
+//                } catch (Exception e) {
+//                    optasiaCreditInquiryResponse.setResponseCode("220");
+//                    optasiaCreditInquiryResponse.setResponseDescription(e.getMessage());
+//                    logger.error("ERROR: General Processing ", e);
+//                }
+//
+//                logger.info("******* DEBUG LOGS FOR  Optasia Credit Inquiry Request *********");
+//                logger.info("ResponseCode: " + optasiaCreditInquiryResponse.getResponseCode());
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR  Optasia Credit Inquiry Request AUTHENTICATION *********");
+//                optasiaCreditInquiryResponse = new OptasiaCreditInquiryResponse();
+//                optasiaCreditInquiryResponse.setResponseCode("420");
+//                optasiaCreditInquiryResponse.setResponseDescription("Request is not authenticated");
+//                optasiaCreditInquiryResponse.setRrn(request.getRrn());
+//                optasiaCreditInquiryResponse.setResponseDateTime(request.getDateTime());
+//                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+//
+//            }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR Optasia Credit Inquiry Request *********");
+//            optasiaCreditInquiryResponse = new OptasiaCreditInquiryResponse();
+//            optasiaCreditInquiryResponse.setResponseCode("111");
+//            optasiaCreditInquiryResponse.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
+//
+//        long end = System.currentTimeMillis() - start;
+//        logger.info("Optasia Credit Inquiry Request Processed in : {} ms {}", end, optasiaCreditInquiryResponse);
+//
+//        return optasiaCreditInquiryResponse;
+//    }
+//
+//    @RequestMapping(value = "api/optasiaCredit", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseBody
+//    OptasiaCreditResponse optasiaCredit(@RequestBody OptasiaCreditRequest request) {
+//        long start = System.currentTimeMillis();
+//        OptasiaCreditResponse response = null;
+//        String requestXML = JSONUtil.getJSON(request);
+////        requestXML = XMLUtil.maskPassword(requestXML);
+//        logger.info("Start Processing Optasia Credit Transaction Request with {}", requestXML);
+//        StringBuilder stringText = new StringBuilder()
+//                .append(request.getUserName())
+//                .append(request.getPassword())
+//                .append(request.getMobileNumber())
+//                .append(request.getDateTime())
+//                .append(request.getRrn())
+//                .append(request.getChannelId())
+//                .append(request.getTerminalId())
+//                .append(request.getProductId())
+//                .append(request.getPin())
+//                .append(request.getPinType())
+//                .append(request.getTransactionAmount())
+//                .append(request.getReserved1())
+//                .append(request.getReserved2())
+//                .append(request.getReserved3())
+//                .append(request.getReserved4())
+//                .append(request.getReserved5())
+//                .append(request.getReserved6())
+//                .append(request.getReserved7())
+//                .append(request.getReserved8())
+//                .append(request.getReserved9())
+//                .append(request.getReserved10());
+//
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+//                try {
+//                    HostRequestValidator.validateOptasiaCredit(request);
+//                    response = integrationService.optasiaCreditResponse(request);
+//
+//                } catch (ValidationException ve) {
+//                    response.setResponseCode("420");
+//                    response.setResponseDescription(ve.getMessage());
+//
+//                    logger.error("ERROR: Request Validation", ve);
+//                } catch (Exception e) {
+//                    response.setResponseCode("220");
+//                    response.setResponseDescription(e.getMessage());
+//                    logger.error("ERROR: General Processing ", e);
+//                }
+//
+//                logger.info("******* DEBUG LOGS FOR Optasia Credit PAYMENT TRANSACTION *********");
+//                logger.info("ResponseCode: " + response.getResponseCode());
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Optasia Credit Payment TRANSACTION AUTHENTICATION *********");
+//                response = new OptasiaCreditResponse();
+//                response.setResponseCode("420");
+//                response.setResponseDescription("Request is not authenticated");
+//                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+//            }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR Optasia Credit PAYMENT TRANSACTION *********");
+//            response = new OptasiaCreditResponse();
+//            response.setResponseCode("111");
+//            response.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
+//
+//        long end = System.currentTimeMillis() - start;
+//        logger.info("Optasia Credit Payment Request  Processed in : {} ms {}", end, response);
+//
+//        return response;
+//    }
+//
+//    @RequestMapping(value = "api/optasiaDebitInquiry", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseBody
+//    OptasiaDebitInquiryResponse optasiaDebitInquiry(@RequestBody OptasiaDebitInquiryRequest request) {
+//        long start = System.currentTimeMillis();
+//        OptasiaDebitInquiryResponse response = null;
+//        String requestXML = JSONUtil.getJSON(request);
+////        requestXML = XMLUtil.maskPassword(requestXML);
+//        logger.info("Start Processing Optasia Debit Inquiry Transaction Request with {}", requestXML);
+//        StringBuilder stringText = new StringBuilder()
+//                .append(request.getUserName())
+//                .append(request.getPassword())
+//                .append(request.getMobileNumber())
+//                .append(request.getDateTime())
+//                .append(request.getRrn())
+//                .append(request.getChannelId())
+//                .append(request.getTerminalId())
+//                .append(request.getProductId())
+//                .append(request.getPinType())
+//                .append(request.getTransactionAmount())
+//                .append(request.getReserved1())
+//                .append(request.getReserved2())
+//                .append(request.getReserved3())
+//                .append(request.getReserved4())
+//                .append(request.getReserved5())
+//                .append(request.getReserved6())
+//                .append(request.getReserved7())
+//                .append(request.getReserved8())
+//                .append(request.getReserved9())
+//                .append(request.getReserved10());
+//
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+//                try {
+//                    HostRequestValidator.validateOptasiadebitInquiry(request);
+//                    response = integrationService.optasiaDebitInquiryResponse(request);
+//
+//                } catch (ValidationException ve) {
+//                    response.setResponseCode("420");
+//                    response.setResponseDescription(ve.getMessage());
+//
+//                    logger.error("ERROR: Request Validation", ve);
+//                } catch (Exception e) {
+//                    response.setResponseCode("220");
+//                    response.setResponseDescription(e.getMessage());
+//                    logger.error("ERROR: General Processing ", e);
+//                }
+//
+//                logger.info("******* DEBUG LOGS FOR Optasia Debit Inquiry PAYMENT TRANSACTION *********");
+//                logger.info("ResponseCode: " + response.getResponseCode());
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Optasia Debit Inquiry Payment TRANSACTION AUTHENTICATION *********");
+//                response = new OptasiaDebitInquiryResponse();
+//                response.setResponseCode("420");
+//                response.setResponseDescription("Request is not authenticated");
+//                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+//            }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR  Optasia Debit Inquiry PAYMENT TRANSACTION *********");
+//            response = new OptasiaDebitInquiryResponse();
+//            response.setResponseCode("111");
+//            response.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
+//
+//        long end = System.currentTimeMillis() - start;
+//        logger.info("Optasia Debit Inquiry Payment Request  Processed in : {} ms {}", end, response);
+//
+//        return response;
+//    }
+//
+//    @RequestMapping(value = "api/optasiaDebit", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseBody
+//    OptasiaDebitResponse optasiaDebit(@RequestBody OptasiaDebitRequest request) {
+//        long start = System.currentTimeMillis();
+//        OptasiaDebitResponse response = null;
+//        String requestXML = JSONUtil.getJSON(request);
+////        requestXML = XMLUtil.maskPassword(requestXML);
+//        logger.info("Start Processing Optasia Debit Transaction Request with {}", requestXML);
+//        StringBuilder stringText = new StringBuilder()
+//                .append(request.getUserName())
+//                .append(request.getPassword())
+//                .append(request.getMobileNumber())
+//                .append(request.getDateTime())
+//                .append(request.getRrn())
+//                .append(request.getChannelId())
+//                .append(request.getTerminalId())
+//                .append(request.getProductId())
+//                .append(request.getPin())
+//                .append(request.getPinType())
+//                .append(request.getTransactionAmount())
+//                .append(request.getReserved1())
+//                .append(request.getReserved2())
+//                .append(request.getReserved3())
+//                .append(request.getReserved4())
+//                .append(request.getReserved5())
+//                .append(request.getReserved6())
+//                .append(request.getReserved7())
+//                .append(request.getReserved8())
+//                .append(request.getReserved9())
+//                .append(request.getReserved10());
+//
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+//                try {
+//                    HostRequestValidator.validateOptasiaDebit(request);
+//                    response = integrationService.optasiaDebitResponse(request);
+//
+//                } catch (ValidationException ve) {
+//                    response.setResponseCode("420");
+//                    response.setResponseDescription(ve.getMessage());
+//
+//                    logger.error("ERROR: Request Validation", ve);
+//                } catch (Exception e) {
+//                    response.setResponseCode("220");
+//                    response.setResponseDescription(e.getMessage());
+//                    logger.error("ERROR: General Processing ", e);
+//                }
+//
+//                logger.info("******* DEBUG LOGS FOR Optasia Debit PAYMENT TRANSACTION *********");
+//                logger.info("ResponseCode: " + response.getResponseCode());
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Optasia Debit Payment TRANSACTION AUTHENTICATION *********");
+//                response = new OptasiaDebitResponse();
+//                response.setResponseCode("420");
+//                response.setResponseDescription("Request is not authenticated");
+//                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+//            }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR  Optasia Debit PAYMENT TRANSACTION *********");
+//            response = new OptasiaDebitResponse();
+//            response.setResponseCode("111");
+//            response.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
+//
+//        long end = System.currentTimeMillis() - start;
+//        logger.info("Optasia Debit Payment Request  Processed in : {} ms {}", end, response);
+//
+//        return response;
+//    }
 
     @RequestMapping(value = "api/loanHistory", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
@@ -1581,78 +1589,80 @@ public class JSController {
         return response;
     }
 
-    @RequestMapping(value = "api/loanPlan", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    LoanPlanResponse loanPlanResponse(@RequestBody LoansPlanRequest request) {
-        long start = System.currentTimeMillis();
-        logger.info("Loan Plan Request Received at Controller at time: " + start);
-        LoanPlanResponse response = new LoanPlanResponse();
-        String requestXML = JSONUtil.getJSON(request);
-//        requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Loan Plan Request with {}", requestXML);
-        StringBuilder stringText = new StringBuilder()
-                .append(request.getUserName())
-                .append(request.getPassword())
-                .append(request.getCustomerId())
-                .append(request.getDateTime())
-                .append(request.getRrn())
-                .append(request.getChannelId())
-                .append(request.getTerminalId())
-                .append(request.getFromDate())
-                .append(request.getToDate())
-                .append(request.getAmount())
-                .append(request.getReason())
-                .append(request.getReserved1())
-                .append(request.getReserved2())
-                .append(request.getReserved3())
-                .append(request.getReserved4())
-                .append(request.getReserved5())
-                .append(request.getReserved6())
-                .append(request.getReserved7())
-                .append(request.getReserved8())
-                .append(request.getReserved9())
-                .append(request.getReserved10());
-
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateLoanPlan(request);
-                    response = integrationService.loanPlanResponse(request);
-
-                } catch (ValidationException ve) {
-                    response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-
-                logger.info("******* DEBUG LOGS FOR Loan Plan Request TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR Loan Plan Request TRANSACTION AUTHENTICATION *********");
-                response = new LoanPlanResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-            }
-        } else {
-            logger.info("******* DEBUG LOGS FOR Loan Plan Request TRANSACTION *********");
-            response = new LoanPlanResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
-
-        long end = System.currentTimeMillis() - start;
-        logger.info("Loan Plan Request  Processed in : {} ms {}", end, response);
-
-        return response;
-    }
+//    @RequestMapping(value = "api/loanPlan", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseBody
+//    LoanPlanResponse loanPlanResponse(@RequestBody LoansPlanRequest request) {
+//
+//        long start = System.currentTimeMillis();
+//        logger.info("Loan Plan Request Received at Controller at time: " + start);
+//        LoanPlanResponse response = new LoanPlanResponse();
+//        String requestXML = JSONUtil.getJSON(request);
+////        requestXML = XMLUtil.maskPassword(requestXML);
+//        logger.info("Start Processing Loan Plan Request with {}", requestXML);
+//        StringBuilder stringText = new StringBuilder()
+//                .append(request.getUserName())
+//                .append(request.getPassword())
+//                .append(request.getCustomerId())
+//                .append(request.getDateTime())
+//                .append(request.getRrn())
+//                .append(request.getChannelId())
+//                .append(request.getTerminalId())
+//                .append(request.getFromDate())
+//                .append(request.getToDate())
+//                .append(request.getAmount())
+//                .append(request.getReason())
+//                .append(request.getReserved1())
+//                .append(request.getReserved2())
+//                .append(request.getReserved3())
+//                .append(request.getReserved4())
+//                .append(request.getReserved5())
+//                .append(request.getReserved6())
+//                .append(request.getReserved7())
+//                .append(request.getReserved8())
+//                .append(request.getReserved9())
+//                .append(request.getReserved10());
+//
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//
+//            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+//                try {
+//                    HostRequestValidator.validateLoanPlan(request);
+//                    response = integrationService.loanPlanResponse(request);
+//
+//                } catch (ValidationException ve) {
+//                    response.setResponseCode("420");
+//                    response.setResponseDescription(ve.getMessage());
+//
+//                    logger.error("ERROR: Request Validation", ve);
+//                } catch (Exception e) {
+//                    response.setResponseCode("220");
+//                    response.setResponseDescription(e.getMessage());
+//                    logger.error("ERROR: General Processing ", e);
+//                }
+//
+//                logger.info("******* DEBUG LOGS FOR Loan Plan Request TRANSACTION *********");
+//                logger.info("ResponseCode: " + response.getResponseCode());
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Loan Plan Request TRANSACTION AUTHENTICATION *********");
+//                response = new LoanPlanResponse();
+//                response.setResponseCode("420");
+//                response.setResponseDescription("Request is not authenticated");
+//                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+//            }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR Loan Plan Request TRANSACTION *********");
+//            response = new LoanPlanResponse();
+//            response.setResponseCode("111");
+//            response.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
+//
+//        long end = System.currentTimeMillis() - start;
+//        logger.info("Loan Plan Request  Processed in : {} ms {}", end, response);
+//
+//        return response;
+//    }
 
 
     @RequestMapping(value = "api/transactionActive", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -26,7 +26,7 @@ import java.io.Serializable;
         "OrigSource",
         "CommodityType",
         "SourceRequestId",
-        "offerName",
+        "OfferName",
         "Amount",
         "FED",
         "Reserved1",

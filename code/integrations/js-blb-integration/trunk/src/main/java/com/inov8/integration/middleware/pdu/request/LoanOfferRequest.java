@@ -23,6 +23,7 @@ import java.io.Serializable;
         "TerminalId",
         "SourceRequestId",
         "OfferName",
+        "Amount",
         "ExternalLoanId",
         "MerchantId",
         "FED",

@@ -7,11 +7,13 @@ import com.inov8.integration.webservice.optasiaVO.EligibilityStatus;
 import com.inov8.integration.webservice.optasiaVO.LoanOffersByLoanProductGroup;
 import com.inov8.integration.webservice.optasiaVO.*;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
+import java.util.*;
 
 public class OptasiaMock {
 
@@ -627,10 +629,65 @@ public class OptasiaMock {
 
     public static void main(String[] args) throws ParseException {
 
-        String date = "22072022";
-//        SimpleDateFormat formatter1=new SimpleDateFormat("ddMMyyyy");
-        Date startDate=new SimpleDateFormat("ddMMyyyy").parse(date);
-        System.out.printf("Date"+startDate);
+//        String date = "22072022";
+////        SimpleDateFormat formatter1=new SimpleDateFormat("ddMMyyyy");
+//        Date startDate=new SimpleDateFormat("ddMMyyyy").parse(date);
+//        System.out.printf("Date"+startDate);
+
+//        double amount = 100;
+//        double weeklyPlan = 0.045*amount;
+//
+//        System.out.println("Weekly Plan "+weeklyPlan);
+
+//        String dateStr = format.format(startDate);
+//        String endStr = format.format(endDate);
+//        String fromDate = "25022023";
+//        DateFormat format = new SimpleDateFormat("ddMMyyyy");
+////        Date dt = format.parse(fromDate);
+//        System.out.println("From Date "+fromDate);
+//
+//        int dayOfMonth = Integer.parseInt(fromDate.substring(0,2));
+//        int month = Integer.parseInt(fromDate.substring(2,4));
+//        int year = Integer.parseInt(fromDate.substring(4,8));
+//
+////        System.out.println("Year: "+year);
+////        System.out.println("Month: "+month);
+////        System.out.println("Day: "+dayOfMonth);
+//
+//        Calendar cal = Calendar.getInstance();
+//        try{
+//            cal.setTime(format.parse(fromDate));
+//        }catch(ParseException e){
+//            e.printStackTrace();
+//        }
+//
+//        cal.add(Calendar.DAY_OF_MONTH, 7);
+//        String afterDate = format.format(cal.getTime());
+//
+//        System.out.println("Date after adding 7 days "+afterDate);
+//
+//        LocalDate date = LocalDate.of(year, month,dayOfMonth);
+//        int weekOfYear = date.get(WeekFields.of(Locale.getDefault()).weekOfYear());
+//        System.out.println("Week of Year "+weekOfYear);
+
+//        double amount = 100;
+//
+//        List<LoanAmount> loanAmountList = new ArrayList<>();
+//        LoanAmount loanAmount = new LoanAmount();
+//
+//        for (int i=0; i<8; i++){
+//            if (i<4){
+//                loanAmount.setTitle("Week"+i+1);
+//                loanAmount.setWeek(String.valueOf(i+1));
+//                loanAmount.setFee(String.valueOf(i+1*0.045*amount));
+//                loanAmount.setAmount(0.045*amount+loanAmount.getFee());
+//                loanAmountList.add(loanAmount);
+//            }
+//        }
+//
+        double value = 200.3456;
+        DecimalFormat df = new DecimalFormat("####0.00");
+        System.out.println("Value: " + df.format(value));
 
     }
 }

@@ -37,6 +37,42 @@ public class LoanOfferRequest extends Request {
     @JsonProperty("additionalIds")
     private List<AdditionalId> additionalIds;
     private List<AdditionalId> additionalIdList;
+    private String identityType;
+    private String identityValue;
+    private String origSource;
+    private String commodityType;
+
+    public String getIdentityType() {
+        return identityType;
+    }
+
+    public void setIdentityType(String identityType) {
+        this.identityType = identityType;
+    }
+
+    public String getIdentityValue() {
+        return identityValue;
+    }
+
+    public void setIdentityValue(String identityValue) {
+        this.identityValue = identityValue;
+    }
+
+    public String getOrigSource() {
+        return origSource;
+    }
+
+    public void setOrigSource(String origSource) {
+        this.origSource = origSource;
+    }
+
+    public String getCommodityType() {
+        return commodityType;
+    }
+
+    public void setCommodityType(String commodityType) {
+        this.commodityType = commodityType;
+    }
 
     @JsonProperty("sourceRequestId")
     public String getSourceRequestId() {

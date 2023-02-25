@@ -27,6 +27,7 @@ public class TasdeeqBo implements I8SBChannelInterface {
     @Override
     public I8SBSwitchControllerResponseVO execute(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) throws Exception {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
+
         Object[] objects = this.initializeRequestAndResponseObjects(i8SBSwitchControllerRequestVO.getRequestType());
         Request request = null;
         Response response = null;
@@ -36,20 +37,18 @@ public class TasdeeqBo implements I8SBChannelInterface {
         if (objects[1] != null) {
             response = (Response) objects[1];
         }
-
+        logger.info("Populate Request : " + request);
         request.populateRequest(i8SBSwitchControllerRequestVO);
         if (request.validateRequest()) {
             logger.info("Request Validate For RRN " + i8SBSwitchControllerRequestVO.getRRN());
             String requestJSON = JSONUtil.getJSON(request);
             i8SBSwitchControllerRequestVO.setRequestXML(requestJSON);
             String requestType = i8SBSwitchControllerRequestVO.getRequestType();
-
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_Tasdeeq_AuthenticateUpdated)) {
                 response = tasdeeqService.authenticateUpdatedResponse((AuthenticateUpdatedRequest) request);
             } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_Tasdeeq_CustomAnalytics)) {
                 response = tasdeeqService.customAnalyticsResponse((CustomAnalyticsRequest) request);
             }
-            logger.info("I8SB Response back to Microbank after 30s");
             if (response.populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
             String responseXML = JSONUtil.getJSON(i8SBSwitchControllerResponseVO);
@@ -94,7 +93,6 @@ public class TasdeeqBo implements I8SBChannelInterface {
         Response response = null;
         logger.info("Request type: " + requestType);
         if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_Tasdeeq_AuthenticateUpdated)) {
-
             request = new AuthenticateUpdatedRequest();
             response = new AuthenticateUpdatedResponse();
 

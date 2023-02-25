@@ -5,6 +5,7 @@ import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import org.apache.commons.lang.StringUtils;
@@ -20,6 +21,9 @@ public class AuthenticateUpdatedRequest extends Request{
     private String userName;
     @JsonProperty("Password")
     private String password;
+
+    private String userId=PropertyReader.getProperty("tasdeeq.username");
+    private String pass=PropertyReader.getProperty("tasdeeq.password");
 
     @JsonProperty("UserName")
     public String getUserName() {
@@ -44,19 +48,19 @@ public class AuthenticateUpdatedRequest extends Request{
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        this.setUserName(i8SBSwitchControllerRequestVO.getUserName());
-        this.setPassword(i8SBSwitchControllerRequestVO.getPassword());
+        this.setUserName(userId);
+        this.setPassword(pass);
     }
 
     @Override
     public boolean validateRequest() throws I8SBValidationException {
 
-        if (StringUtils.isEmpty(this.getUserName())) {
-            throw new I8SBValidationException("[Failed] Username:" + this.getUserName());
-        }
-        if (StringUtils.isEmpty(this.getPassword())) {
-            throw new I8SBValidationException("[Failed] Password:" + this.getPassword());
-        }
+//        if (StringUtils.isEmpty(this.getUserName())) {
+//            throw new I8SBValidationException("[Failed] Username:" + this.getUserName());
+//        }
+//        if (StringUtils.isEmpty(this.getPassword())) {
+//            throw new I8SBValidationException("[Failed] Password:" + this.getPassword());
+//        }
         return true;
     }
 }

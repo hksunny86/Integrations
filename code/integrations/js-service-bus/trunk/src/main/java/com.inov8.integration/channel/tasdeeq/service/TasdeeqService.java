@@ -69,8 +69,10 @@ public class TasdeeqService {
                 logger.info("Sending Authenticate Updated Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
+                logger.info("Response received from client " + res1.getBody());
                 if (res1.getStatusCode().toString().equals("200")) {
                     response = (String) res1.getBody();
+                    authenticateUpdatedResponse.setStatusCode(res1.getStatusCode().toString());
                     authenticateUpdatedResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
                     authenticateUpdatedResponse.setResponseDescription("Success");
                 }
@@ -81,14 +83,18 @@ public class TasdeeqService {
                     if (response.equals("400")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
                         authenticateUpdatedResponse = (AuthenticateUpdatedResponse) JSONUtil.jsonToObject(result, AuthenticateUpdatedResponse.class);
+//                        authenticateUpdatedResponse.setStatusCode(result.getStatusCode().toString());
+                        authenticateUpdatedResponse.setStatusCode(((HttpStatusCodeException) e).getStatusCode().toString());
                         authenticateUpdatedResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     } else if (response.equals("422")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
                         authenticateUpdatedResponse = (AuthenticateUpdatedResponse) JSONUtil.jsonToObject(result, AuthenticateUpdatedResponse.class);
+                        authenticateUpdatedResponse.setStatusCode(((HttpStatusCodeException) e).getStatusCode().toString());
                         authenticateUpdatedResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     } else if (response.equals("500")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
                         authenticateUpdatedResponse = (AuthenticateUpdatedResponse) JSONUtil.jsonToObject(result, AuthenticateUpdatedResponse.class);
+                        authenticateUpdatedResponse.setStatusCode(((HttpStatusCodeException) e).getStatusCode().toString());
                         authenticateUpdatedResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     }
                 }
@@ -133,9 +139,11 @@ public class TasdeeqService {
             try {
                 logger.info("Sending Custom Analytics Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
+                logger.info("Response received from client " + res1.getBody());
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
                 if (res1.getStatusCode().toString().equals("200")) {
                     response = (String) res1.getBody();
+                    customAnalyticsResponse.setStatusCode(res1.getStatusCode().toString());
                     customAnalyticsResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
                     customAnalyticsResponse.setResponseDescription("Success");
                 }
@@ -146,14 +154,17 @@ public class TasdeeqService {
                     if (response.equals("400")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
                         customAnalyticsResponse = (CustomAnalyticsResponse) JSONUtil.jsonToObject(result, CustomAnalyticsResponse.class);
+                        customAnalyticsResponse.setStatusCode(((HttpStatusCodeException) e).getStatusCode().toString());
                         customAnalyticsResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     } else if (response.equals("422")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
                         customAnalyticsResponse = (CustomAnalyticsResponse) JSONUtil.jsonToObject(result, CustomAnalyticsResponse.class);
+                        customAnalyticsResponse.setStatusCode(((HttpStatusCodeException) e).getStatusCode().toString());
                         customAnalyticsResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     } else if (response.equals("500")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
                         customAnalyticsResponse = (CustomAnalyticsResponse) JSONUtil.jsonToObject(result, CustomAnalyticsResponse.class);
+                        customAnalyticsResponse.setStatusCode(((HttpStatusCodeException) e).getStatusCode().toString());
                         customAnalyticsResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     }
                 }

@@ -1589,80 +1589,80 @@ public class JSController {
         return response;
     }
 
-//    @RequestMapping(value = "api/loanPlan", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public @ResponseBody
-//    LoanPlanResponse loanPlanResponse(@RequestBody LoansPlanRequest request) {
-//
-//        long start = System.currentTimeMillis();
-//        logger.info("Loan Plan Request Received at Controller at time: " + start);
-//        LoanPlanResponse response = new LoanPlanResponse();
-//        String requestXML = JSONUtil.getJSON(request);
-////        requestXML = XMLUtil.maskPassword(requestXML);
-//        logger.info("Start Processing Loan Plan Request with {}", requestXML);
-//        StringBuilder stringText = new StringBuilder()
-//                .append(request.getUserName())
-//                .append(request.getPassword())
-//                .append(request.getCustomerId())
-//                .append(request.getDateTime())
-//                .append(request.getRrn())
-//                .append(request.getChannelId())
-//                .append(request.getTerminalId())
-//                .append(request.getFromDate())
-//                .append(request.getToDate())
-//                .append(request.getAmount())
-//                .append(request.getReason())
-//                .append(request.getReserved1())
-//                .append(request.getReserved2())
-//                .append(request.getReserved3())
-//                .append(request.getReserved4())
-//                .append(request.getReserved5())
-//                .append(request.getReserved6())
-//                .append(request.getReserved7())
-//                .append(request.getReserved8())
-//                .append(request.getReserved9())
-//                .append(request.getReserved10());
-//
-//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-//
-//            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-//                try {
-//                    HostRequestValidator.validateLoanPlan(request);
-//                    response = integrationService.loanPlanResponse(request);
-//
-//                } catch (ValidationException ve) {
-//                    response.setResponseCode("420");
-//                    response.setResponseDescription(ve.getMessage());
-//
-//                    logger.error("ERROR: Request Validation", ve);
-//                } catch (Exception e) {
-//                    response.setResponseCode("220");
-//                    response.setResponseDescription(e.getMessage());
-//                    logger.error("ERROR: General Processing ", e);
-//                }
-//
-//                logger.info("******* DEBUG LOGS FOR Loan Plan Request TRANSACTION *********");
-//                logger.info("ResponseCode: " + response.getResponseCode());
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Loan Plan Request TRANSACTION AUTHENTICATION *********");
-//                response = new LoanPlanResponse();
-//                response.setResponseCode("420");
-//                response.setResponseDescription("Request is not authenticated");
-//                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-//            }
-//        } else {
-//            logger.info("******* DEBUG LOGS FOR Loan Plan Request TRANSACTION *********");
-//            response = new LoanPlanResponse();
-//            response.setResponseCode("111");
-//            response.setResponseDescription("Request is not recognized");
-//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//        }
-//
-//        long end = System.currentTimeMillis() - start;
-//        logger.info("Loan Plan Request  Processed in : {} ms {}", end, response);
-//
-//        return response;
-//    }
+    @RequestMapping(value = "api/loanPlan", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    LoanPlanResponse loanPlanResponse(@RequestBody LoansPlanRequest request) {
+
+        long start = System.currentTimeMillis();
+        logger.info("Loan Plan Request Received at Controller at time: " + start);
+        LoanPlanResponse response = new LoanPlanResponse();
+        String requestXML = JSONUtil.getJSON(request);
+        requestXML = XMLUtil.maskPassword(requestXML);
+        logger.info("Start Processing Loan Plan Request with {}", requestXML);
+        StringBuilder stringText = new StringBuilder()
+                .append(request.getUserName())
+                .append(request.getPassword())
+                .append(request.getCustomerId())
+                .append(request.getDateTime())
+                .append(request.getRrn())
+                .append(request.getChannelId())
+                .append(request.getTerminalId())
+                .append(request.getFromDate())
+                .append(request.getToDate())
+                .append(request.getAmount())
+                .append(request.getReason())
+                .append(request.getReserved1())
+                .append(request.getReserved2())
+                .append(request.getReserved3())
+                .append(request.getReserved4())
+                .append(request.getReserved5())
+                .append(request.getReserved6())
+                .append(request.getReserved7())
+                .append(request.getReserved8())
+                .append(request.getReserved9())
+                .append(request.getReserved10());
+
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    HostRequestValidator.validateLoanPlan(request);
+                    response = integrationService.loanPlanResponse(request);
+
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+
+                logger.info("******* DEBUG LOGS FOR Loan Plan Request TRANSACTION *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Loan Plan Request TRANSACTION AUTHENTICATION *********");
+                response = new LoanPlanResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+            }
+        } else {
+            logger.info("******* DEBUG LOGS FOR Loan Plan Request TRANSACTION *********");
+            response = new LoanPlanResponse();
+            response.setResponseCode("111");
+            response.setResponseDescription("Request is not recognized");
+            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+        }
+
+        long end = System.currentTimeMillis() - start;
+        logger.info("Loan Plan Request  Processed in : {} ms {}", end, response);
+
+        return response;
+    }
 
 
     @RequestMapping(value = "api/transactionActive", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -25,6 +25,33 @@ public class LoanPaymentRequest extends Request{
     private String currencyCode;
     @JsonProperty("reason")
     private String reason;
+    private String identityType;
+    private String identityValue;
+    private String origSource;
+
+    public String getIdentityType() {
+        return identityType;
+    }
+
+    public void setIdentityType(String identityType) {
+        this.identityType = identityType;
+    }
+
+    public String getIdentityValue() {
+        return identityValue;
+    }
+
+    public void setIdentityValue(String identityValue) {
+        this.identityValue = identityValue;
+    }
+
+    public String getOrigSource() {
+        return origSource;
+    }
+
+    public void setOrigSource(String origSource) {
+        this.origSource = origSource;
+    }
 
     @JsonProperty("sourceRequestId")
     public String getSourceRequestId() {

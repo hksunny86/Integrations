@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -17,7 +19,7 @@ import java.util.List;
         "receivedTimestamp",
         "events"
 })
-public class TransactionStatusResponse extends Response{
+public class TransactionStatusResponse extends Response {
 
     @JsonProperty("identityValue")
     private String identityValue;
@@ -29,7 +31,7 @@ public class TransactionStatusResponse extends Response{
     private String receivedTimestamp;
     @JsonProperty("events")
     private List<Event> events;
-
+    private Map<String, List<?>> collectionOfList = new HashMap();
     private String responseCode;
     private String responseDescription;
 
@@ -109,48 +111,53 @@ public class TransactionStatusResponse extends Response{
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
         i8SBSwitchControllerResponseVO.setReceivedTimestamp(this.getReceivedTimestamp());
-        i8SBSwitchControllerResponseVO.setEventType(this.getEvents().get(0).getEventType());
-        i8SBSwitchControllerResponseVO.setEventTypeStatus(this.getEvents().get(0).getEventTypeStatus());
-        i8SBSwitchControllerResponseVO.setEventTransactionId(this.getEvents().get(0).getEventTransactionId());
-        i8SBSwitchControllerResponseVO.setThirdPartyTransactionId(this.getEvents().get(0).getThirdPartyTransactionId());
-        i8SBSwitchControllerResponseVO.setEventReason(this.getEvents().get(0).getEventReason());
-        i8SBSwitchControllerResponseVO.setShortCode(this.getEvents().get(0).getEventReasonDetails().getShortCode());
-        i8SBSwitchControllerResponseVO.setPeriod(this.getEvents().get(0).getPeriod());
-        i8SBSwitchControllerResponseVO.setPeriodIndex(this.getEvents().get(0).getPeriodIndex());
-        i8SBSwitchControllerResponseVO.setPeriodExpirationTimestamp(this.getEvents().get(0).getPeriodExpirationTimestamp());
-        i8SBSwitchControllerResponseVO.setPrincipalAdjustment(this.getEvents().get(0).getPrincipalAdjustment());
-        i8SBSwitchControllerResponseVO.setPrincipalBefore(this.getEvents().get(0).getPrincipalBefore());
-        i8SBSwitchControllerResponseVO.setPrincipalAfter(this.getEvents().get(0).getPrincipalAfter());
-        i8SBSwitchControllerResponseVO.setSetupFeesAdjustment(this.getEvents().get(0).getSetupFeesAdjustment());
-        i8SBSwitchControllerResponseVO.setSetupFeesBefore(this.getEvents().get(0).getSetupFeesBefore());
-        i8SBSwitchControllerResponseVO.setSetupFeesAfter(this.getEvents().get(0).getSetupFeesAfter());
-        i8SBSwitchControllerResponseVO.setInterestAdjustment(this.getEvents().get(0).getInterestAdjustment());
-        i8SBSwitchControllerResponseVO.setInterestAdjustmentVAT(this.getEvents().get(0).getInterestAdjustmentVAT());
-        i8SBSwitchControllerResponseVO.setInterestBefore(this.getEvents().get(0).getInterestBefore());
-        i8SBSwitchControllerResponseVO.setInterestAfter(this.getEvents().get(0).getInterestAfter());
-        i8SBSwitchControllerResponseVO.setTotalChargesAfter(this.getEvents().get(0).getTotalChargesAfter());
-        i8SBSwitchControllerResponseVO.setTotalChargesAdjustment(this.getEvents().get(0).getTotalChargesAdjustment());
-        i8SBSwitchControllerResponseVO.setTotalChargesAdjustmentVAT(this.getEvents().get(0).getTotalChargesAdjustmentVAT());
-        i8SBSwitchControllerResponseVO.setTotalChargesBefore(this.getEvents().get(0).getTotalChargesBefore());
-        i8SBSwitchControllerResponseVO.setEventTimestamp(this.getEvents().get(0).getEventTimestamp());
-        i8SBSwitchControllerResponseVO.setReceptionTimestamp(this.getEvents().get(0).getReceptionTimestamp());
-        i8SBSwitchControllerResponseVO.setProcessingTimestamp(this.getEvents().get(0).getProcessingTimestamp());
-        i8SBSwitchControllerResponseVO.setSourceRequestId(this.getEvents().get(0).getSourceRequestId());
-        i8SBSwitchControllerResponseVO.setLoanReason(this.getEvents().get(0).getLoanReason());
-        i8SBSwitchControllerResponseVO.setShortCode(this.getEvents().get(0).getLoanReasonDetails().getShortCode());
-        i8SBSwitchControllerResponseVO.setLoanTimeStamp(this.getEvents().get(0).getLoanTimestamp());
-        i8SBSwitchControllerResponseVO.setInternalLoanId(this.getEvents().get(0).getInternalLoanId());
-        i8SBSwitchControllerResponseVO.setLoanState(this.getEvents().get(0).getLoanState());
-        i8SBSwitchControllerResponseVO.setExternalLoanId(this.getEvents().get(0).getExternalLoanId());
-        i8SBSwitchControllerResponseVO.setOfferName(this.getEvents().get(0).getOfferName());
-        i8SBSwitchControllerResponseVO.setCommodityType(this.getEvents().get(0).getCommodityType());
-        i8SBSwitchControllerResponseVO.setCurrencyCode(this.getEvents().get(0).getCurrencyCode());
-        i8SBSwitchControllerResponseVO.setPrincipalAmount(this.getEvents().get(0).getPrincipalAmount());
-        i8SBSwitchControllerResponseVO.setSetupFees(this.getEvents().get(0).getSetupFees());
-        i8SBSwitchControllerResponseVO.setLoanPlanId(this.getEvents().get(0).getLoanPlanId());
-        i8SBSwitchControllerResponseVO.setLoanPlanName(this.getEvents().get(0).getLoanPlanName());
-        i8SBSwitchControllerResponseVO.setLoanProductGroup(this.getEvents().get(0).getLoanProductGroup());
-        i8SBSwitchControllerResponseVO.setMaturityDuration(this.getEvents().get(0).getMaturityDetails().getMaturityDuration());
+        for (int i = 0; i < events.size(); i++) {
+            i8SBSwitchControllerResponseVO.setEventType(events.get(i).getEventType());
+            i8SBSwitchControllerResponseVO.setEventTypeStatus(events.get(i).getEventTypeStatus());
+            i8SBSwitchControllerResponseVO.setEventTransactionId(events.get(i).getEventTransactionId());
+            i8SBSwitchControllerResponseVO.setThirdPartyTransactionId(events.get(i).getThirdPartyTransactionId());
+            i8SBSwitchControllerResponseVO.setEventReason(events.get(i).getEventReason());
+            i8SBSwitchControllerResponseVO.setShortCode(events.get(i).getEventReasonDetails().getShortCode());
+            i8SBSwitchControllerResponseVO.setPeriod(events.get(i).getPeriod());
+            i8SBSwitchControllerResponseVO.setPeriodIndex(events.get(i).getPeriodIndex());
+            i8SBSwitchControllerResponseVO.setPeriodExpirationTimestamp(events.get(i).getPeriodExpirationTimestamp());
+            i8SBSwitchControllerResponseVO.setPrincipalAdjustment(events.get(i).getPrincipalAdjustment());
+            i8SBSwitchControllerResponseVO.setPrincipalBefore(events.get(i).getPrincipalBefore());
+            i8SBSwitchControllerResponseVO.setPrincipalAfter(events.get(i).getPrincipalAfter());
+            i8SBSwitchControllerResponseVO.setSetupFeesAdjustment(events.get(i).getSetupFeesAdjustment());
+            i8SBSwitchControllerResponseVO.setSetupFeesBefore(events.get(i).getSetupFeesBefore());
+            i8SBSwitchControllerResponseVO.setSetupFeesAfter(events.get(i).getSetupFeesAfter());
+            i8SBSwitchControllerResponseVO.setInterestAdjustment(events.get(i).getInterestAdjustment());
+            i8SBSwitchControllerResponseVO.setInterestAdjustmentVAT(events.get(i).getInterestAdjustmentVAT());
+            i8SBSwitchControllerResponseVO.setInterestBefore(events.get(i).getInterestBefore());
+            i8SBSwitchControllerResponseVO.setInterestAfter(events.get(i).getInterestAfter());
+            i8SBSwitchControllerResponseVO.setTotalChargesAfter(events.get(i).getTotalChargesAfter());
+            i8SBSwitchControllerResponseVO.setTotalChargesAdjustment(events.get(i).getTotalChargesAdjustment());
+            i8SBSwitchControllerResponseVO.setTotalChargesAdjustmentVAT(events.get(i).getTotalChargesAdjustmentVAT());
+            i8SBSwitchControllerResponseVO.setTotalChargesBefore(events.get(i).getTotalChargesBefore());
+            i8SBSwitchControllerResponseVO.setEventTimestamp(events.get(i).getEventTimestamp());
+            i8SBSwitchControllerResponseVO.setReceptionTimestamp(events.get(i).getReceptionTimestamp());
+            i8SBSwitchControllerResponseVO.setProcessingTimestamp(events.get(i).getProcessingTimestamp());
+            i8SBSwitchControllerResponseVO.setSourceRequestId(events.get(i).getSourceRequestId());
+            i8SBSwitchControllerResponseVO.setLoanReason(events.get(i).getLoanReason());
+            i8SBSwitchControllerResponseVO.setShortCode(events.get(i).getLoanReasonDetails().getShortCode());
+            i8SBSwitchControllerResponseVO.setLoanTimeStamp(events.get(i).getLoanTimestamp());
+            i8SBSwitchControllerResponseVO.setInternalLoanId(events.get(i).getInternalLoanId());
+            i8SBSwitchControllerResponseVO.setLoanState(events.get(i).getLoanState());
+            i8SBSwitchControllerResponseVO.setExternalLoanId(events.get(i).getExternalLoanId());
+            i8SBSwitchControllerResponseVO.setOfferName(events.get(i).getOfferName());
+            i8SBSwitchControllerResponseVO.setCommodityType(events.get(i).getCommodityType());
+            i8SBSwitchControllerResponseVO.setCurrencyCode(events.get(i).getCurrencyCode());
+            i8SBSwitchControllerResponseVO.setPrincipalAmount(events.get(i).getPrincipalAmount());
+            i8SBSwitchControllerResponseVO.setSetupFees(events.get(i).getSetupFees());
+            i8SBSwitchControllerResponseVO.setLoanPlanId(events.get(i).getLoanPlanId());
+            i8SBSwitchControllerResponseVO.setLoanPlanName(events.get(i).getLoanPlanName());
+            i8SBSwitchControllerResponseVO.setLoanProductGroup(events.get(i).getLoanProductGroup());
+            i8SBSwitchControllerResponseVO.setMaturityDuration(events.get(i).getMaturityDetails().getMaturityDuration());
+            collectionOfList.put("Events", events);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+        }
 
         return i8SBSwitchControllerResponseVO;
     }
@@ -201,7 +208,7 @@ public class TransactionStatusResponse extends Response{
         "loanProductGroup",
         "maturityDetails"
 })
- class Event {
+class Event {
 
     @JsonProperty("eventType")
     private String eventType;
@@ -715,7 +722,7 @@ public class TransactionStatusResponse extends Response{
         "shortCode",
         "type"
 })
- class EventReasonDetails {
+class EventReasonDetails {
 
     @JsonProperty("shortCode")
     private String shortCode;
@@ -748,7 +755,7 @@ public class TransactionStatusResponse extends Response{
 @JsonPropertyOrder({
         "shortCode"
 })
- class LoanReasonDetails {
+class LoanReasonDetails {
 
     @JsonProperty("shortCode")
     private String shortCode;
@@ -769,7 +776,7 @@ public class TransactionStatusResponse extends Response{
 @JsonPropertyOrder({
         "maturityDuration"
 })
- class TransactionsMaturityDetails {
+class TransactionsMaturityDetails {
 
     @JsonProperty("maturityDuration")
     private String maturityDuration;

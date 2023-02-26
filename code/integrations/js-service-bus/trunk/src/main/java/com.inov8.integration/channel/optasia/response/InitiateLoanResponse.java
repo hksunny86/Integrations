@@ -8,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -35,6 +37,7 @@ public class InitiateLoanResponse extends Response {
     private List<PeriodsProjection> periodsProjections;
     private String responseCode;
     private String responseDescription;
+    private Map<String, List<?>> collectionOfList = new HashMap();
 
     public String getResponseCode() {
         return responseCode;
@@ -144,32 +147,36 @@ public class InitiateLoanResponse extends Response {
         i8SBSwitchControllerResponseVO.setChargeValue(this.getLoanOffer().getMaturityDetails().getOneOffCharges().getChargeValue());
         i8SBSwitchControllerResponseVO.setChargeVAT(this.getLoanOffer().getMaturityDetails().getOneOffCharges().getChargeVAT());
         i8SBSwitchControllerResponseVO.setDaysOffset(this.getLoanOffer().getMaturityDetails().getOneOffCharges().getDaysOffset());
-        i8SBSwitchControllerResponseVO.setPeriodIndex(this.getPeriodsProjections().get(0).getPeriodIndex());
-        i8SBSwitchControllerResponseVO.setPeriodType(this.getPeriodsProjections().get(0).getPeriodType());
-        i8SBSwitchControllerResponseVO.setPeriodStartTimemp(this.getPeriodsProjections().get(0).getPeriodStartTimemp());
-        i8SBSwitchControllerResponseVO.setPeriodEndTimestamp(this.getPeriodsProjections().get(0).getPeriodEndTimestamp());
-        i8SBSwitchControllerResponseVO.setPeriodStartDayOfLoanIndex(this.getPeriodsProjections().get(0).getPeriodStartDayOfLoanIndex());
-        i8SBSwitchControllerResponseVO.setPeriodEndDayOfLoanIndex(this.getPeriodsProjections().get(0).getPeriodEndDayOfLoanIndex());
-        i8SBSwitchControllerResponseVO.setPrincipal(this.getPeriodsProjections().get(0).getPrincipal());
-        i8SBSwitchControllerResponseVO.setTotalExpenses(this.getPeriodsProjections().get(0).getTotalExpenses());
-        i8SBSwitchControllerResponseVO.setTotalGross(this.getPeriodsProjections().get(0).getTotalGross());
-        i8SBSwitchControllerResponseVO.setTotalInterest(this.getPeriodsProjections().get(0).getTotalInterest());
-        i8SBSwitchControllerResponseVO.setTotalInterestVAT(this.getPeriodsProjections().get(0).getTotalInterestVAT());
-        i8SBSwitchControllerResponseVO.setTotalCharges(this.getPeriodsProjections().get(0).getTotalCharges());
-        i8SBSwitchControllerResponseVO.setTotalChargesVAT(this.getPeriodsProjections().get(0).getTotalChargesVAT());
-        i8SBSwitchControllerResponseVO.setChargeName(this.getPeriodsProjections().get(0).getTotalOneOffCharges().get(0).getChargeName());
-        i8SBSwitchControllerResponseVO.setChargeAmount(this.getPeriodsProjections().get(0).getTotalOneOffCharges().get(0).getChargeAmount());
-        i8SBSwitchControllerResponseVO.setChargesVAT(this.getPeriodsProjections().get(0).getTotalOneOffCharges().get(0).getChargeVAT());
-        i8SBSwitchControllerResponseVO.setDayOfLoan(this.getPeriodsProjections().get(0).getMilestones().get(0).getDayOfLoan());
-        i8SBSwitchControllerResponseVO.setDate(this.getPeriodsProjections().get(0).getMilestones().get(0).getDate());
-        i8SBSwitchControllerResponseVO.setGross(this.getPeriodsProjections().get(0).getMilestones().get(0).getInterestAdjustment().getGross());
-        i8SBSwitchControllerResponseVO.setNet(this.getPeriodsProjections().get(0).getMilestones().get(0).getInterestAdjustment().getNet());
-        i8SBSwitchControllerResponseVO.setVat(this.getPeriodsProjections().get(0).getMilestones().get(0).getInterestAdjustment().getVat());
-        i8SBSwitchControllerResponseVO.setName(this.getPeriodsProjections().get(0).getMilestones().get(0).getChargeAdjustments().get(0).getName());
-        i8SBSwitchControllerResponseVO.setGross(this.getPeriodsProjections().get(0).getMilestones().get(0).getChargeAdjustments().get(0).getGross());
-        i8SBSwitchControllerResponseVO.setNet(this.getPeriodsProjections().get(0).getMilestones().get(0).getChargeAdjustments().get(0).getNet());
-        i8SBSwitchControllerResponseVO.setVat(this.getPeriodsProjections().get(0).getMilestones().get(0).getChargeAdjustments().get(0).getVat());
+        for (int i=0; i<periodsProjections.size(); i++){
+            i8SBSwitchControllerResponseVO.setPeriodIndex(periodsProjections.get(i).getPeriodIndex());
+            i8SBSwitchControllerResponseVO.setPeriodType(periodsProjections.get(i).getPeriodType());
+            i8SBSwitchControllerResponseVO.setPeriodStartTimemp(periodsProjections.get(i).getPeriodStartTimemp());
+            i8SBSwitchControllerResponseVO.setPeriodEndTimestamp(periodsProjections.get(i).getPeriodEndTimestamp());
+            i8SBSwitchControllerResponseVO.setPeriodStartDayOfLoanIndex(periodsProjections.get(i).getPeriodStartDayOfLoanIndex());
+            i8SBSwitchControllerResponseVO.setPeriodEndDayOfLoanIndex(periodsProjections.get(i).getPeriodEndDayOfLoanIndex());
+            i8SBSwitchControllerResponseVO.setPrincipal(periodsProjections.get(i).getPrincipal());
+            i8SBSwitchControllerResponseVO.setTotalExpenses(periodsProjections.get(i).getTotalExpenses());
+            i8SBSwitchControllerResponseVO.setTotalGross(periodsProjections.get(i).getTotalGross());
+            i8SBSwitchControllerResponseVO.setTotalInterest(periodsProjections.get(i).getTotalInterest());
+            i8SBSwitchControllerResponseVO.setTotalInterestVAT(periodsProjections.get(i).getTotalInterestVAT());
+            i8SBSwitchControllerResponseVO.setTotalCharges(periodsProjections.get(i).getTotalCharges());
+            i8SBSwitchControllerResponseVO.setTotalChargesVAT(periodsProjections.get(i).getTotalChargesVAT());
+            i8SBSwitchControllerResponseVO.setChargeName(periodsProjections.get(i).getTotalOneOffCharges().get(i).getChargeName());
+            i8SBSwitchControllerResponseVO.setChargeAmount(periodsProjections.get(i).getTotalOneOffCharges().get(i).getChargeAmount());
+            i8SBSwitchControllerResponseVO.setChargesVAT(periodsProjections.get(i).getTotalOneOffCharges().get(i).getChargeVAT());
+            i8SBSwitchControllerResponseVO.setDayOfLoan(periodsProjections.get(i).getMilestones().get(i).getDayOfLoan());
+            i8SBSwitchControllerResponseVO.setDate(periodsProjections.get(i).getMilestones().get(i).getDate());
+            i8SBSwitchControllerResponseVO.setGross(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getGross());
+            i8SBSwitchControllerResponseVO.setNet(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getNet());
+            i8SBSwitchControllerResponseVO.setVat(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getVat());
+            i8SBSwitchControllerResponseVO.setName(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getName());
+            i8SBSwitchControllerResponseVO.setGross(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getGross());
+            i8SBSwitchControllerResponseVO.setNet(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getNet());
+            i8SBSwitchControllerResponseVO.setVat(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getVat());
+            collectionOfList.put("Projections", periodsProjections);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
+        }
 
         return i8SBSwitchControllerResponseVO;
     }

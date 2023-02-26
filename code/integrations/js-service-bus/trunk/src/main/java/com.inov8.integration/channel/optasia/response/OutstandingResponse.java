@@ -8,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -18,7 +20,7 @@ import java.util.List;
         "receivedTimestamp",
         "outstandingPerCurrency"
 })
-public class OutstandingResponse extends Response{
+public class OutstandingResponse extends Response {
 
     @JsonProperty("identityValue")
     private String identityValue;
@@ -32,6 +34,7 @@ public class OutstandingResponse extends Response{
     private List<OutstandingPerCurrency> outstandingPerCurrency;
     private String responseCode;
     private String responseDescription;
+    private Map<String, List<?>> collectionOfList = new HashMap();
 
     public String getResponseCode() {
         return responseCode;
@@ -109,18 +112,22 @@ public class OutstandingResponse extends Response{
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
         i8SBSwitchControllerResponseVO.setReceivedTimestamp(this.getReceivedTimestamp());
-        i8SBSwitchControllerResponseVO.setCurrencyCode(this.getOutstandingPerCurrency().get(0).getCurrencyCode());
-        i8SBSwitchControllerResponseVO.setNumOutstandingLoans(this.getOutstandingPerCurrency().get(0).getNumOutstandingLoans());
-        i8SBSwitchControllerResponseVO.setTotalGross(this.getOutstandingPerCurrency().get(0).getTotalGross());
-        i8SBSwitchControllerResponseVO.setTotalPrincipal(this.getOutstandingPerCurrency().get(0).getTotalPrincipal());
-        i8SBSwitchControllerResponseVO.setTotalSetupFees(this.getOutstandingPerCurrency().get(0).getTotalSetupFees());
-        i8SBSwitchControllerResponseVO.setTotalInterest(this.getOutstandingPerCurrency().get(0).getTotalInterest());
-        i8SBSwitchControllerResponseVO.setTotalInterestVAT(this.getOutstandingPerCurrency().get(0).getTotalInterestVAT());
-        i8SBSwitchControllerResponseVO.setTotalCharges(this.getOutstandingPerCurrency().get(0).getTotalCharges());
-        i8SBSwitchControllerResponseVO.setTotalChargesVAT(this.getOutstandingPerCurrency().get(0).getTotalChargesVAT());
-        i8SBSwitchControllerResponseVO.setTotalPendingLoans(this.getOutstandingPerCurrency().get(0).getTotalPendingLoans());
-        i8SBSwitchControllerResponseVO.setTotalPendingRecoveries(this.getOutstandingPerCurrency().get(0).getTotalPendingRecoveries());
+        for (int i = 0; i < outstandingPerCurrency.size(); i++) {
+            i8SBSwitchControllerResponseVO.setCurrencyCode(outstandingPerCurrency.get(i).getCurrencyCode());
+            i8SBSwitchControllerResponseVO.setNumOutstandingLoans(outstandingPerCurrency.get(i).getNumOutstandingLoans());
+            i8SBSwitchControllerResponseVO.setTotalGross(outstandingPerCurrency.get(i).getTotalGross());
+            i8SBSwitchControllerResponseVO.setTotalPrincipal(outstandingPerCurrency.get(i).getTotalPrincipal());
+            i8SBSwitchControllerResponseVO.setTotalSetupFees(outstandingPerCurrency.get(i).getTotalSetupFees());
+            i8SBSwitchControllerResponseVO.setTotalInterest(outstandingPerCurrency.get(i).getTotalInterest());
+            i8SBSwitchControllerResponseVO.setTotalInterestVAT(outstandingPerCurrency.get(i).getTotalInterestVAT());
+            i8SBSwitchControllerResponseVO.setTotalCharges(outstandingPerCurrency.get(i).getTotalCharges());
+            i8SBSwitchControllerResponseVO.setTotalChargesVAT(outstandingPerCurrency.get(i).getTotalChargesVAT());
+            i8SBSwitchControllerResponseVO.setTotalPendingLoans(outstandingPerCurrency.get(i).getTotalPendingLoans());
+            i8SBSwitchControllerResponseVO.setTotalPendingRecoveries(outstandingPerCurrency.get(i).getTotalPendingRecoveries());
+            collectionOfList.put("OutstandingPerCurrency", outstandingPerCurrency);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
+        }
         return i8SBSwitchControllerResponseVO;
     }
 }
@@ -139,7 +146,7 @@ public class OutstandingResponse extends Response{
         "totalPendingLoans",
         "totalPendingRecoveries"
 })
- class OutstandingPerCurrency {
+class OutstandingPerCurrency {
 
     @JsonProperty("currencyCode")
     private String currencyCode;

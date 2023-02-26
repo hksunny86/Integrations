@@ -6,12 +6,17 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 
+import java.io.Serializable;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "code",
         "message",
 })
-public class CallBackResponse extends Response {
+public class CallBackResponse extends Response implements Serializable {
+
+    private static final long serialVersionUID = 5824473488070382311L;
+
 
     @JsonProperty("code")
     private String code;

@@ -7,7 +7,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
+import com.inov8.integration.webservice.optasiaVO.ChargeAdjustments;
+import com.inov8.integration.webservice.optasiaVO.Milestones;
+import com.inov8.integration.webservice.optasiaVO.TotalOneOffCharges;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +26,10 @@ import java.util.Map;
         "loanOffer",
         "periodsProjections"
 })
-public class InitiateLoanResponse extends Response {
+public class InitiateLoanResponse extends Response implements Serializable {
+
+    private static final long serialVersionUID = 5824473488070382311L;
+
 
     @JsonProperty("identityValue")
     private String identityValue;
@@ -148,34 +156,57 @@ public class InitiateLoanResponse extends Response {
         i8SBSwitchControllerResponseVO.setChargeVAT(this.getLoanOffer().getMaturityDetails().getOneOffCharges().getChargeVAT());
         i8SBSwitchControllerResponseVO.setDaysOffset(this.getLoanOffer().getMaturityDetails().getOneOffCharges().getDaysOffset());
         for (int i=0; i<periodsProjections.size(); i++){
-            i8SBSwitchControllerResponseVO.setPeriodIndex(periodsProjections.get(i).getPeriodIndex());
-            i8SBSwitchControllerResponseVO.setPeriodType(periodsProjections.get(i).getPeriodType());
-            i8SBSwitchControllerResponseVO.setPeriodStartTimemp(periodsProjections.get(i).getPeriodStartTimemp());
-            i8SBSwitchControllerResponseVO.setPeriodEndTimestamp(periodsProjections.get(i).getPeriodEndTimestamp());
-            i8SBSwitchControllerResponseVO.setPeriodStartDayOfLoanIndex(periodsProjections.get(i).getPeriodStartDayOfLoanIndex());
-            i8SBSwitchControllerResponseVO.setPeriodEndDayOfLoanIndex(periodsProjections.get(i).getPeriodEndDayOfLoanIndex());
-            i8SBSwitchControllerResponseVO.setPrincipal(periodsProjections.get(i).getPrincipal());
-            i8SBSwitchControllerResponseVO.setTotalExpenses(periodsProjections.get(i).getTotalExpenses());
-            i8SBSwitchControllerResponseVO.setTotalGross(periodsProjections.get(i).getTotalGross());
-            i8SBSwitchControllerResponseVO.setTotalInterest(periodsProjections.get(i).getTotalInterest());
-            i8SBSwitchControllerResponseVO.setTotalInterestVAT(periodsProjections.get(i).getTotalInterestVAT());
-            i8SBSwitchControllerResponseVO.setTotalCharges(periodsProjections.get(i).getTotalCharges());
-            i8SBSwitchControllerResponseVO.setTotalChargesVAT(periodsProjections.get(i).getTotalChargesVAT());
-            i8SBSwitchControllerResponseVO.setChargeName(periodsProjections.get(i).getTotalOneOffCharges().get(i).getChargeName());
-            i8SBSwitchControllerResponseVO.setChargeAmount(periodsProjections.get(i).getTotalOneOffCharges().get(i).getChargeAmount());
-            i8SBSwitchControllerResponseVO.setChargesVAT(periodsProjections.get(i).getTotalOneOffCharges().get(i).getChargeVAT());
-            i8SBSwitchControllerResponseVO.setDayOfLoan(periodsProjections.get(i).getMilestones().get(i).getDayOfLoan());
-            i8SBSwitchControllerResponseVO.setDate(periodsProjections.get(i).getMilestones().get(i).getDate());
-            i8SBSwitchControllerResponseVO.setGross(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getGross());
-            i8SBSwitchControllerResponseVO.setNet(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getNet());
-            i8SBSwitchControllerResponseVO.setVat(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getVat());
-            i8SBSwitchControllerResponseVO.setName(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getName());
-            i8SBSwitchControllerResponseVO.setGross(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getGross());
-            i8SBSwitchControllerResponseVO.setNet(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getNet());
-            i8SBSwitchControllerResponseVO.setVat(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getVat());
-            collectionOfList.put("Projections", periodsProjections);
-            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+            com.inov8.integration.webservice.optasiaVO.PeriodsProjection periodsProjection = new com.inov8.integration.webservice.optasiaVO.PeriodsProjection();
+            List<com.inov8.integration.webservice.optasiaVO.PeriodsProjection> periodsProjectionList = new ArrayList<>();
 
+            com.inov8.integration.webservice.optasiaVO.TotalOneOffCharges totalOneOffCharges = new com.inov8.integration.webservice.optasiaVO.TotalOneOffCharges();
+            List<com.inov8.integration.webservice.optasiaVO.TotalOneOffCharges> oneOffCharges = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.Milestones milestones = new com.inov8.integration.webservice.optasiaVO.Milestones();
+            List<com.inov8.integration.webservice.optasiaVO.Milestones> milestonesList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.InterestAdjustment interestAdjustment = new com.inov8.integration.webservice.optasiaVO.InterestAdjustment();
+            List<com.inov8.integration.webservice.optasiaVO.InterestAdjustment> interestAdjustmentList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.ChargeAdjustments chargeAdjustment = new com.inov8.integration.webservice.optasiaVO.ChargeAdjustments();
+            List<ChargeAdjustments> chargeAdjustmentList = new ArrayList<>();
+
+
+            periodsProjection.setPeriodIndex(periodsProjections.get(i).getPeriodIndex());
+            periodsProjection.setPeriodType(periodsProjections.get(i).getPeriodType());
+            periodsProjection.setPeriodStartTimemp(periodsProjections.get(i).getPeriodStartTimemp());
+            periodsProjection.setPeriodEndTimestamp(periodsProjections.get(i).getPeriodEndTimestamp());
+            periodsProjection.setPeriodStartDayOfLoanIndex(periodsProjections.get(i).getPeriodStartDayOfLoanIndex());
+            periodsProjection.setPeriodEndDayOfLoanIndex(periodsProjections.get(i).getPeriodEndDayOfLoanIndex());
+            periodsProjection.setPrincipal(periodsProjections.get(i).getPrincipal());
+            periodsProjection.setTotalExpenses(periodsProjections.get(i).getTotalExpenses());
+            periodsProjection.setTotalGross(periodsProjections.get(i).getTotalGross());
+            periodsProjection.setTotalInterest(periodsProjections.get(i).getTotalInterest());
+            periodsProjection.setTotalInterestVAT(periodsProjections.get(i).getTotalInterestVAT());
+            periodsProjection.setTotalCharges(periodsProjections.get(i).getTotalCharges());
+            periodsProjection.setTotalChargesVAT(periodsProjections.get(i).getTotalChargesVAT());
+            totalOneOffCharges.setChargeName(periodsProjections.get(i).getTotalOneOffCharges().get(i).getChargeName());
+            totalOneOffCharges.setChargeAmount(periodsProjections.get(i).getTotalOneOffCharges().get(i).getChargeAmount());
+            totalOneOffCharges.setChargeVAT(periodsProjections.get(i).getTotalOneOffCharges().get(i).getChargeVAT());
+            milestones.setDayOfLoan(periodsProjections.get(i).getMilestones().get(i).getDayOfLoan());
+            milestones.setDate(periodsProjections.get(i).getMilestones().get(i).getDate());
+            interestAdjustment.setGross(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getGross());
+            interestAdjustment.setNet(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getNet());
+            interestAdjustment.setVat(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getVat());
+            chargeAdjustment.setName(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getName());
+            chargeAdjustment.setGross(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getGross());
+            chargeAdjustment.setNet(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getNet());
+            chargeAdjustment.setVat(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getVat());
+
+            oneOffCharges.add(totalOneOffCharges);
+            periodsProjection.setTotalOneOffChargesList(oneOffCharges);
+            milestonesList.add(milestones);
+            interestAdjustmentList.add(interestAdjustment);
+            chargeAdjustmentList.add(chargeAdjustment);
+            periodsProjectionList.add(periodsProjection);
+
+            collectionOfList.put("Projections", periodsProjectionList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
         }
 
         return i8SBSwitchControllerResponseVO;
@@ -189,7 +220,7 @@ public class InitiateLoanResponse extends Response {
         "net",
         "vat"
 })
-class ChargeAdjustment {
+class ChargeAdjustment implements Serializable{
 
     @JsonProperty("name")
     private String name;
@@ -251,7 +282,7 @@ class ChargeAdjustment {
         "daysOffset",
         "interval"
 })
-class Interest {
+class Interest implements Serializable{
 
     @JsonProperty("interestName")
     private String interestName;
@@ -334,7 +365,7 @@ class Interest {
         "net",
         "vat"
 })
-class InterestAdjustment {
+class InterestAdjustment implements Serializable {
 
     @JsonProperty("gross")
     private String gross;
@@ -389,7 +420,7 @@ class InterestAdjustment {
         "loanProductGroup",
         "maturityDetails"
 })
-class ProjectionLoanOffer {
+class ProjectionLoanOffer implements Serializable{
 
     @JsonProperty("offerClass")
     private String offerClass;
@@ -532,7 +563,7 @@ class ProjectionLoanOffer {
         "interest",
         "oneOffCharges"
 })
-class MaturityDetails {
+class MaturityDetails implements Serializable{
 
     @JsonProperty("maturityDuration")
     private String maturityDuration;
@@ -587,7 +618,7 @@ class MaturityDetails {
         "totalCharges",
         "totalChargesVAT"
 })
-class Milestone {
+class Milestone implements Serializable {
 
     @JsonProperty("dayOfLoan")
     private String dayOfLoan;
@@ -732,7 +763,7 @@ class Milestone {
         "chargeVAT",
         "daysOffset"
 })
-class OneOffCharges {
+class OneOffCharges implements Serializable {
 
     @JsonProperty("chargeName")
     private String chargeName;
@@ -815,7 +846,9 @@ class OneOffCharges {
         "totalOneOffCharges",
         "milestones"
 })
-class PeriodsProjection {
+class PeriodsProjection implements Serializable{
+
+    private static final long serialVersionUID = 5824473488070382311L;
 
     @JsonProperty("periodIndex")
     private String periodIndex;
@@ -1006,7 +1039,7 @@ class PeriodsProjection {
         "chargeAmount",
         "chargeVAT"
 })
-class TotalOneOffCharge {
+class TotalOneOffCharge implements Serializable{
 
     @JsonProperty("chargeName")
     private String chargeName;

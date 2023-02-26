@@ -60,7 +60,7 @@ public class I8SBFacade {
 
             String i8sbRequestXml = JSONUtil.getJSON(i8SBSwitchControllerRequestVO);
             JSONObject json = new JSONObject(i8sbRequestXml);
-            json.put("OPT","****");
+            json.put("OPT", "****");
             logger.info("CashOut Request Recieved at Controller:" + "\n" + json);
             if (i8SBSwitchControllerRequestVO.getCollectionOfList().isEmpty()) {
                 i8SBSwitchControllerRequestVO.setRequestXML(i8sbRequestXml);
@@ -71,7 +71,7 @@ public class I8SBFacade {
 
             i8SBBO.generateSystemTraceableInfo(i8SBSwitchControllerRequestVO, i8SBChannelInterface);
             //saving request into i8sb db in transaction_log table
-            i8SBBO. insertTransactionLog(i8SBSwitchControllerRequestVO);
+            i8SBBO.insertTransactionLog(i8SBSwitchControllerRequestVO);
             //i8SBSwitchControllerRequestVO.setRequestXML(null);
 
             // If I8SBSwitchControllerRequestVO already contain I8SBSwitchControllerResponseVO then request wont be sent to channel for execution.
@@ -199,7 +199,11 @@ public class I8SBFacade {
                     i8SBSwitchControllerRequestVO.setRRN(null);
                     i8SBSwitchControllerRequestVO.setSTAN(null);
                     i8SBSwitchControllerRequestVO.setTransmissionDateAndTime(null);
-                    if (!((i8SBSwitchControllerRequestVO.getRequestType().equals(I8SBConstants.RequestType_AccountBalanceInquiry) || i8SBSwitchControllerRequestVO.getRequestType().equals(I8SBConstants.RequestType_CashWithdrawal) || i8SBSwitchControllerRequestVO.getRequestType().equals(I8SBConstants.RequestType_CashWithdrawalReversal)) || i8SBSwitchControllerRequestVO.getRequestType().equals(I8SBConstants.RequestType_AgentVerification)))
+                    if (!((i8SBSwitchControllerRequestVO.getRequestType().equals(I8SBConstants.RequestType_AccountBalanceInquiry)
+                            || i8SBSwitchControllerRequestVO.getRequestType().equals(I8SBConstants.RequestType_CashWithdrawal)
+                            || i8SBSwitchControllerRequestVO.getRequestType().equals(I8SBConstants.RequestType_CashWithdrawalReversal))
+                            || i8SBSwitchControllerRequestVO.getRequestType().equals(I8SBConstants.RequestType_AgentVerification))
+                            || i8SBSwitchControllerRequestVO.getRequestType().equals(I8SBConstants.RequestType_Tasdeeq_CustomAnalytics))
                         i8SBSwitchControllerRequestVO.setTransactionId(null);
                 } else {
                     logger.info("request was not processed as expected");

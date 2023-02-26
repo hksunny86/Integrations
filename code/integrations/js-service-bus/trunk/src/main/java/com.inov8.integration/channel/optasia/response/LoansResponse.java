@@ -7,7 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
+import com.inov8.integration.webservice.optasiaVO.Loans;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +24,10 @@ import java.util.Map;
         "loansPerState"
 })
 @Generated("jsonschema2pojo")
-public class LoansResponse extends Response {
+public class LoansResponse extends Response implements Serializable {
+
+    private static final long serialVersionUID = 5824473488070382311L;
+
 
     @JsonProperty("identityValue")
     private String identityValue;
@@ -114,42 +120,85 @@ public class LoansResponse extends Response {
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
         i8SBSwitchControllerResponseVO.setReceivedTimestamp(this.getReceivedTimestamp());
         for (int i = 0; i < loansPerState.size(); i++) {
-            i8SBSwitchControllerResponseVO.setLoanState(loansPerState.get(i).getLoanState());
-            i8SBSwitchControllerResponseVO.setInternalLoanId(loansPerState.get(i).getLoans().get(i).getLoan().getInternalLoanId());
-            i8SBSwitchControllerResponseVO.setExternalLoanId(loansPerState.get(i).getLoans().get(i).getLoan().getExternalLoanId());
-            i8SBSwitchControllerResponseVO.setLoanState(loansPerState.get(i).getLoans().get(i).getLoan().getLoanState());
-            i8SBSwitchControllerResponseVO.setLoanTimeStamp(loansPerState.get(i).getLoans().get(i).getLoan().getLoanTimestamp());
-            i8SBSwitchControllerResponseVO.setLoanReason(loansPerState.get(i).getLoans().get(i).getLoan().getLoanReason());
-            i8SBSwitchControllerResponseVO.setAdvanceOfferId(loansPerState.get(i).getLoans().get(i).getLoan().getLoanOffer().getAdvanceOfferId());
-            i8SBSwitchControllerResponseVO.setOfferName(loansPerState.get(i).getLoans().get(i).getLoan().getLoanOffer().getOfferName());
-            i8SBSwitchControllerResponseVO.setCommodityType(loansPerState.get(i).getLoans().get(i).getLoan().getLoanOffer().getCommodityType());
-            i8SBSwitchControllerResponseVO.setCurrencyCode(loansPerState.get(i).getLoans().get(i).getLoan().getLoanOffer().getCurrencyCode());
-            i8SBSwitchControllerResponseVO.setPrincipalAmount(loansPerState.get(i).getLoans().get(i).getLoan().getLoanOffer().getPrincipalAmount());
-            i8SBSwitchControllerResponseVO.setSetUpFees(loansPerState.get(i).getLoans().get(i).getLoan().getLoanOffer().getSetupFees());
-            i8SBSwitchControllerResponseVO.setLoanPlanId(loansPerState.get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanPlanId());
-            i8SBSwitchControllerResponseVO.setLoanPlanName(loansPerState.get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanPlanName());
-            i8SBSwitchControllerResponseVO.setLoanProductGroup(loansPerState.get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanProductGroup());
-            i8SBSwitchControllerResponseVO.setRepaymentCounts(loansPerState.get(i).getLoans().get(i).getReport().getRepayment().getRepaymentsCount());
-            i8SBSwitchControllerResponseVO.setGross(loansPerState.get(i).getLoans().get(i).getReport().getRepayment().getGross());
-            i8SBSwitchControllerResponseVO.setPrincipal(loansPerState.get(i).getLoans().get(i).getReport().getRepayment().getPrincipal());
-            i8SBSwitchControllerResponseVO.setSetUpFees(loansPerState.get(i).getLoans().get(i).getReport().getRepayment().getSetupFees());
-            i8SBSwitchControllerResponseVO.setInterest(loansPerState.get(i).getLoans().get(i).getReport().getRepayment().getInterest());
-            i8SBSwitchControllerResponseVO.setInterestVAT(loansPerState.get(i).getLoans().get(i).getReport().getRepayment().getInterestVAT());
-            i8SBSwitchControllerResponseVO.setCharges(loansPerState.get(i).getLoans().get(i).getReport().getRepayment().getCharges());
-            i8SBSwitchControllerResponseVO.setChargesVAT(loansPerState.get(i).getLoans().get(i).getReport().getRepayment().getChargesVAT());
-            i8SBSwitchControllerResponseVO.setCurrencyCode(loansPerState.get(i).getLoans().get(i).getReport().getOutstanding().getCurrencyCode());
-            i8SBSwitchControllerResponseVO.setTotalGross(loansPerState.get(i).getLoans().get(i).getReport().getOutstanding().getTotalGross());
-            i8SBSwitchControllerResponseVO.setTotalPrincipal(loansPerState.get(i).getLoans().get(i).getReport().getOutstanding().getTotalPrincipal());
-            i8SBSwitchControllerResponseVO.setTotalSetupFees(loansPerState.get(i).getLoans().get(i).getReport().getOutstanding().getTotalSetupFees());
-            i8SBSwitchControllerResponseVO.setTotalInterest(loansPerState.get(i).getLoans().get(i).getReport().getOutstanding().getTotalInterest());
-            i8SBSwitchControllerResponseVO.setTotalInterestVAT(loansPerState.get(i).getLoans().get(i).getReport().getOutstanding().getTotalInterestVAT());
-            i8SBSwitchControllerResponseVO.setTotalCharges(loansPerState.get(i).getLoans().get(i).getReport().getOutstanding().getTotalCharges());
-            i8SBSwitchControllerResponseVO.setTotalChargesVAT(loansPerState.get(i).getLoans().get(i).getReport().getOutstanding().getTotalChargesVAT());
-            i8SBSwitchControllerResponseVO.setTotalPendingRecoveries(loansPerState.get(i).getLoans().get(i).getReport().getOutstanding().getTotalPendingRecoveries());
-            i8SBSwitchControllerResponseVO.setCurrentPeriod(loansPerState.get(i).getLoans().get(i).getReport().getPlan().getCurrentPeriod());
-            i8SBSwitchControllerResponseVO.setDaysLeftInPeriod(loansPerState.get(i).getLoans().get(i).getReport().getPlan().getDaysLeftInPeriod());
-            i8SBSwitchControllerResponseVO.setNextPeriod(loansPerState.get(i).getLoans().get(i).getReport().getPlan().getNextPeriod());
-            collectionOfList.put("LoansPerState", loansPerState);
+
+            com.inov8.integration.webservice.optasiaVO.LoansPerState loansPerState = new com.inov8.integration.webservice.optasiaVO.LoansPerState();
+            List<com.inov8.integration.webservice.optasiaVO.LoansPerState> loansPerStateList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.Report report = new com.inov8.integration.webservice.optasiaVO.Report();
+            List<com.inov8.integration.webservice.optasiaVO.Report> reportList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.Loan loan = new com.inov8.integration.webservice.optasiaVO.Loan();
+            List<com.inov8.integration.webservice.optasiaVO.Loan> loanList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.LoanOffers loanOffers = new com.inov8.integration.webservice.optasiaVO.LoanOffers();
+            List<com.inov8.integration.webservice.optasiaVO.LoanOffers> loanOffersList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.Loans loans = new Loans();
+            List<com.inov8.integration.webservice.optasiaVO.Loans> loansList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.Repayment repayment = new com.inov8.integration.webservice.optasiaVO.Repayment();
+            List<com.inov8.integration.webservice.optasiaVO.Repayment> repaymentList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.OutstandingStatus outstandingStatus = new com.inov8.integration.webservice.optasiaVO.OutstandingStatus();
+            List<com.inov8.integration.webservice.optasiaVO.OutstandingStatus> outstandingStatusList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.Plan plan = new com.inov8.integration.webservice.optasiaVO.Plan();
+            List<com.inov8.integration.webservice.optasiaVO.Plan> planList = new ArrayList<>();
+
+            loansPerState.setLoanState(this.getLoansPerState().get(i).getLoanState());
+            loan.setInternalLoanId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getInternalLoanId());
+            loan.setExternalLoanId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getExternalLoanId());
+            loan.setLoanState(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanState());
+            loan.setLoanTimestamp(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanTimestamp());
+            loan.setLoanReason(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanReason());
+
+            loanList.add(loan);
+
+            loanOffers.setAdvanceOfferId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getAdvanceOfferId());
+            loanOffers.setOfferName(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getOfferName());
+            loanOffers.setCommodityType(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getCommodityType());
+            loanOffers.setCurrencyCode(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getCurrencyCode());
+            loanOffers.setPrincipalAmount(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getPrincipalAmount());
+            loanOffers.setSetupFees(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getSetupFees());
+            loanOffers.setLoanPlanId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanPlanId());
+            loanOffers.setLoanPlanName(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanPlanName());
+            loanOffers.setLoanProductGroup(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanProductGroup());
+            loanOffersList.add(loanOffers);
+
+            loans.setLoanList(loanList);
+
+            repayment.setRepaymentsCount(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getRepaymentsCount());
+            repayment.setGross(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getGross());
+            repayment.setPrincipal(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getPrincipal());
+            repayment.setSetupFees(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getSetupFees());
+            repayment.setInterest(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getInterest());
+            repayment.setInterestVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getInterestVAT());
+            repayment.setCharges(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getCharges());
+            repayment.setChargesVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getChargesVAT());
+
+            repaymentList.add(repayment);
+
+            outstandingStatus.setCurrencyCode(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getCurrencyCode());
+            outstandingStatus.setTotalGross(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalGross());
+            outstandingStatus.setTotalPrincipal(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalPrincipal());
+            outstandingStatus.setTotalSetupFees(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalSetupFees());
+            outstandingStatus.setTotalInterest(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalInterest());
+            outstandingStatus.setTotalInterestVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalInterestVAT());
+            outstandingStatus.setTotalCharges(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalCharges());
+            outstandingStatus.setTotalChargesVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalChargesVAT());
+            outstandingStatus.setTotalPendingRecoveries(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalPendingRecoveries());
+
+            outstandingStatusList.add(outstandingStatus);
+
+            plan.setCurrentPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getCurrentPeriod());
+            plan.setDaysLeftInPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getDaysLeftInPeriod());
+            plan.setNextPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getNextPeriod());
+
+            planList.add(plan);
+            reportList.add(report);
+            loansPerStateList.add(loansPerState);
+
+            collectionOfList.put("LoansPerState", loansPerStateList);
             i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
         }
@@ -163,7 +212,7 @@ public class LoansResponse extends Response {
         "loan",
         "report"
 })
-class Loan {
+class Loan implements Serializable{
 
     @JsonProperty("loan")
     private Loan__1 loan;
@@ -204,7 +253,7 @@ class Loan {
         "loanPlanName",
         "loanProductGroup"
 })
-class LoanOffer {
+class LoanOffer implements Serializable{
 
     @JsonProperty("advanceOfferId")
     private String advanceOfferId;
@@ -327,7 +376,7 @@ class LoanOffer {
         "loanOffer"
 })
 @Generated("jsonschema2pojo")
-class Loan__1 {
+class Loan__1 implements Serializable {
 
     @JsonProperty("internalLoanId")
     private String internalLoanId;
@@ -410,7 +459,7 @@ class Loan__1 {
         "loans"
 })
 @Generated("jsonschema2pojo")
-class LoansPerState {
+class LoansPerState implements Serializable{
 
     @JsonProperty("loanState")
     private String loanState;
@@ -452,7 +501,7 @@ class LoansPerState {
         "totalPendingRecoveries"
 })
 @Generated("jsonschema2pojo")
-class Outstanding {
+class Outstanding implements Serializable{
 
     @JsonProperty("currencyCode")
     private String currencyCode;
@@ -572,7 +621,7 @@ class Outstanding {
         "nextPeriod"
 })
 @Generated("jsonschema2pojo")
-class Plan {
+class Plan implements Serializable{
 
     @JsonProperty("currentPeriod")
     private String currentPeriod;
@@ -625,7 +674,7 @@ class Plan {
         "chargesVAT"
 })
 @Generated("jsonschema2pojo")
-class Repayment {
+class Repayment implements Serializable {
 
     @JsonProperty("repaymentsCount")
     private String repaymentsCount;
@@ -733,7 +782,7 @@ class Repayment {
         "plan"
 })
 @Generated("jsonschema2pojo")
-class Report {
+class Report implements Serializable{
 
     @JsonProperty("repayment")
     private Repayment repayment;

@@ -60,6 +60,7 @@ public class TasdeeqTest {
         requestVO.setGenderCode("M");
         requestVO.setAddress("current address");
         requestVO.setFatherName("fatherName");
+        requestVO.setRRN("91522108184044");
 
         requestVO = (I8SBSwitchControllerRequestVO) switchController.invoke(requestVO);
         responseVO = requestVO.getI8SBSwitchControllerResponseVO();

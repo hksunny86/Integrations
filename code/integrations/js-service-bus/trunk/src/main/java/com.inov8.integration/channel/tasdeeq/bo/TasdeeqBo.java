@@ -63,7 +63,10 @@ public class TasdeeqBo implements I8SBChannelInterface {
 
     @Override
     public I8SBSwitchControllerRequestVO prepareRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO, I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO) {
-        return null;
+        if (i8SBSwitchControllerResponseVO!=null){
+            i8SBSwitchControllerRequestVO.setAccessToken(i8SBSwitchControllerResponseVO.getI8SBSwitchControllerResponseVOList().get(0).getAccessToken());
+        }
+        return i8SBSwitchControllerRequestVO;
     }
 
     @Override

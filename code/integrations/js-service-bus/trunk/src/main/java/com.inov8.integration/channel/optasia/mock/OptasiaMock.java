@@ -322,26 +322,26 @@ public class OptasiaMock {
     public String outstanding() {
 
         String outstanding = "{\n" +
-                "  \"identityValue\": \"16505130514\",\n" +
-                "  \"identityType\": \"msisdn\",\n" +
-                "  \"origSource\": \"mobileapp\",\n" +
-                "  \"receivedTimestamp\": \"2021-07-20T13:10:38.738+03:00\",\n" +
-                "  \"outstandingPerCurrency\": [\n" +
-                "    {\n" +
-                "      \"currencyCode\": \"USD\",\n" +
-                "      \"numOutstandingLoans\": 1,\n" +
-                "      \"totalGross\": 12,\n" +
-                "      \"totalPrincipal\": 10,\n" +
-                "      \"totalSetupFees\": 2,\n" +
-                "      \"totalInterest\": 0,\n" +
-                "      \"totalInterestVAT\": 0,\n" +
-                "      \"totalCharges\": 0,\n" +
-                "      \"totalChargesVAT\": 0,\n" +
-                "      \"totalPendingLoans\": 0,\n" +
-                "      \"totalPendingRecoveries\": 0\n" +
-                "    }\n" +
-                "  ],\n" +
-                "}\n";
+                "    \"identityValue\":\"16505130514\",\n" +
+                "    \"identityType\":\"msisdn\",\n" +
+                "    \"origSource\":\"mobileapp\",\n" +
+                "    \"receivedTimestamp\":\"2021-07-20T13:10:38.738+03:00\",\n" +
+                "    \"outstandingPerCurrency\":[\n" +
+                "        {\n" +
+                "            \"currencyCode\":\"USD\",\n" +
+                "            \"numOutstandingLoans\":1,\n" +
+                "            \"totalGross\":12,\n" +
+                "            \"totalPrincipal\":10,\n" +
+                "            \"totalSetupFees\":2,\n" +
+                "            \"totalInterest\":0,\n" +
+                "            \"totalInterestVAT\":0,\n" +
+                "            \"totalCharges\":0,\n" +
+                "            \"totalChargesVAT\":0,\n" +
+                "            \"totalPendingLoans\":0,\n" +
+                "            \"totalPendingRecoveries\":0\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
 
         return outstanding;
     }

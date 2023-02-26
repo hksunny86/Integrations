@@ -34,6 +34,9 @@ public class OptasiaTest {
         requestVO.setSourceRequestId("123548");
         requestVO.setOfferName("CASH15");
         requestVO.setAmount("5000");
+        requestVO.setIdentityType("5000");
+        requestVO.setIdentityValue("5000");
+        requestVO.setOrigSource("5000");
 
         requestVO = (I8SBSwitchControllerRequestVO) switchController.invoke(requestVO);
         responseVO = requestVO.getI8SBSwitchControllerResponseVO();

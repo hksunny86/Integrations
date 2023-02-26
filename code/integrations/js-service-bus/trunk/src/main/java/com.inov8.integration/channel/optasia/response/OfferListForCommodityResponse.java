@@ -7,8 +7,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
-import com.inov8.integration.webservice.optasiaVO.EligibilityStatus;
+import com.inov8.integration.webservice.optasiaVO.*;
+import com.inov8.integration.webservice.optasiaVO.Interest;
+import com.inov8.integration.webservice.optasiaVO.LoanOffers;
+import com.inov8.integration.webservice.optasiaVO.MaturityDetails;
+import com.inov8.integration.webservice.optasiaVO.OneOffCharges;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +30,9 @@ import java.util.Map;
         "loanOffersByLoanProductGroup",
         "outstandingStatus"
 })
-public class OfferListForCommodityResponse extends Response {
+public class OfferListForCommodityResponse extends Response implements Serializable {
+
+    private static final long serialVersionUID = 5824473488070382311L;
 
     @JsonProperty("identityValue")
     private String identityValue;
@@ -142,60 +150,111 @@ public class OfferListForCommodityResponse extends Response {
         i8SBSwitchControllerResponseVO.setReceptionTimestamp(this.getReceivedTimestamp());
 
         for (int i = 0; i < eligibilityStatus.size(); i++) {
-            i8SBSwitchControllerResponseVO.setEligible(eligibilityStatus.get(i).getIsEligible());
-            i8SBSwitchControllerResponseVO.setEligibilityStatus(eligibilityStatus.get(i).getEligibilityStatus());
-            i8SBSwitchControllerResponseVO.setEligible(eligibilityStatus.get(i).getIsEligible());
-            collectionOfList.put("EligibilityStatus", eligibilityStatus);
+            com.inov8.integration.webservice.optasiaVO.EligibilityStatus eligibilityStatus = new com.inov8.integration.webservice.optasiaVO.EligibilityStatus();
+            List<com.inov8.integration.webservice.optasiaVO.EligibilityStatus> eligibilityStatusList = new ArrayList<>();
+
+            eligibilityStatus.setEligible(this.getEligibilityStatus().get(i).getIsEligible());
+            eligibilityStatus.setEligibilityStatus(this.getEligibilityStatus().get(i).getEligibilityStatus());
+
+            eligibilityStatusList.add(eligibilityStatus);
+
+            collectionOfList.put("EligibilityStatus", eligibilityStatusList);
             i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
         }
 
         for (int i = 0; i < loanOffersByLoanProductGroup.size(); i++) {
-            i8SBSwitchControllerResponseVO.setLoanProductGroup(loanOffersByLoanProductGroup.get(i).getLoanProductGroup());
-            i8SBSwitchControllerResponseVO.setOfferClass(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getOfferClass());
-            i8SBSwitchControllerResponseVO.setOfferName(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getOfferName());
-            i8SBSwitchControllerResponseVO.setCurrencyCode(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getCurrencyCode());
-            i8SBSwitchControllerResponseVO.setPrincipalFrom(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getPrincipalFrom()));
-            i8SBSwitchControllerResponseVO.setPrincipalTo(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getPrincipalTo()));
-            i8SBSwitchControllerResponseVO.setSetupFees(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getSetupFees()));
-            i8SBSwitchControllerResponseVO.setCommodityType(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getCommodityType());
-            i8SBSwitchControllerResponseVO.setLoanPlanId(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getLoanPlanId()));
-            i8SBSwitchControllerResponseVO.setLoanPlanName(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getLoanPlanName());
-            i8SBSwitchControllerResponseVO.setLoanProductGroup(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getLoanProductGroup());
-            i8SBSwitchControllerResponseVO.setMaturityDuration(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getMaturityDuration()));
-            i8SBSwitchControllerResponseVO.setInterestName(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestName());
-            i8SBSwitchControllerResponseVO.setInterestType(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestType());
-            i8SBSwitchControllerResponseVO.setInterestValue(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestValue()));
-            i8SBSwitchControllerResponseVO.setInterestVAT(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestVAT()));
-            i8SBSwitchControllerResponseVO.setDaysOffset(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getDaysOffset()));
-            i8SBSwitchControllerResponseVO.setInterval(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterval()));
-            i8SBSwitchControllerResponseVO.setChargeName(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeName());
-            i8SBSwitchControllerResponseVO.setChargeType(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeType());
-            i8SBSwitchControllerResponseVO.setChargeValue(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeValue()));
-            i8SBSwitchControllerResponseVO.setChargeVAT(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeVAT()));
-            i8SBSwitchControllerResponseVO.setChargeVAT(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeVAT()));
-            i8SBSwitchControllerResponseVO.setChargeName(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeName());
-            i8SBSwitchControllerResponseVO.setChargeType(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeType());
-            i8SBSwitchControllerResponseVO.setChargeValue(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeValue()));
-            i8SBSwitchControllerResponseVO.setChargeVAT(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeVAT()));
-            i8SBSwitchControllerResponseVO.setChargeVAT(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeVAT()));
-            i8SBSwitchControllerResponseVO.setDaysOffset(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getDaysOffset()));
-            i8SBSwitchControllerResponseVO.setInterval(String.valueOf(loanOffersByLoanProductGroup.get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getInterval()));
-            collectionOfList.put("LoanOffersByLoanProductGroup", loanOffersByLoanProductGroup);
+            com.inov8.integration.webservice.optasiaVO.LoanOffersByLoanProductGroup loanOffersByLoanProductGroup = new com.inov8.integration.webservice.optasiaVO.LoanOffersByLoanProductGroup();
+            List<com.inov8.integration.webservice.optasiaVO.LoanOffersByLoanProductGroup> loanOffersByLoanProductGroupList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.MaturityDetails maturityDetails = new com.inov8.integration.webservice.optasiaVO.MaturityDetails();
+            List<com.inov8.integration.webservice.optasiaVO.MaturityDetails> maturityDetailsList = new ArrayList<>();
+
+
+            com.inov8.integration.webservice.optasiaVO.Interest interest = new com.inov8.integration.webservice.optasiaVO.Interest();
+            List<com.inov8.integration.webservice.optasiaVO.Interest> interestList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.OneOffCharges oneOffCharges = new com.inov8.integration.webservice.optasiaVO.OneOffCharges();
+            List<com.inov8.integration.webservice.optasiaVO.OneOffCharges> oneOffChargesList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.RecurringCharges recurringCharges = new com.inov8.integration.webservice.optasiaVO.RecurringCharges();
+            List<com.inov8.integration.webservice.optasiaVO.RecurringCharges> recurringChargesList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.LoanOffers loanOffers = new com.inov8.integration.webservice.optasiaVO.LoanOffers();
+            List<com.inov8.integration.webservice.optasiaVO.LoanOffers> loanOffersList = new ArrayList<>();
+
+            loanOffersByLoanProductGroup.setLoanProductGroup(this.getLoanOffersByLoanProductGroup().get(i).getLoanProductGroup());
+            loanOffers.setOfferClass(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getOfferClass());
+            loanOffers.setOfferName(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getOfferName());
+            loanOffers.setCurrencyCode(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getCurrencyCode());
+            loanOffers.setPrincipalFrom(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getPrincipalFrom()));
+            loanOffers.setPrincipalTo(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getPrincipalTo()));
+            loanOffers.setSetupFees(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getSetupFees()));
+            loanOffers.setCommodityType(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getCommodityType());
+            loanOffers.setLoanPlanId(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getLoanPlanId()));
+            loanOffers.setLoanPlanName(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getLoanPlanName());
+            loanOffersByLoanProductGroup.setLoanProductGroup(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getLoanProductGroup());
+            maturityDetails.setMaturityDuration(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getMaturityDuration()));
+            interest.setInterestName(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestName());
+            interest.setInterestType(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestType());
+            interest.setInterestValue(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestValue()));
+            interest.setInterestVAT(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestVAT()));
+            interest.setDaysOffset(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getDaysOffset()));
+            interest.setInterval(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterval()));
+            oneOffCharges.setChargeName(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeName());
+            oneOffCharges.setChargeType(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeType());
+            oneOffCharges.setChargeValue(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeValue()));
+            oneOffCharges.setChargeVAT(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeVAT()));
+            oneOffCharges.setDaysOffset(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getDaysOffset()));
+            recurringCharges.setChargeName(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeName());
+            recurringCharges.setChargeType(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeType());
+            recurringCharges.setChargeValue(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeValue()));
+            recurringCharges.setChargeVAT(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeVAT()));
+            recurringCharges.setInterval(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getInterval()));
+
+            interestList.add(interest);
+            loanOffersList.add(loanOffers);
+            maturityDetailsList.add(maturityDetails);
+            oneOffChargesList.add(oneOffCharges);
+            recurringChargesList.add(recurringCharges);
+            loanOffersByLoanProductGroupList.add(loanOffersByLoanProductGroup);
+
+            collectionOfList.put("Interest", interestList);
             i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("LoanOffers", loanOffersList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("MaturityDetails", maturityDetailsList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("OneOffCharges", oneOffChargesList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("RecurringCharges", recurringChargesList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("LoanOffersByLoanProductGroup", loanOffersByLoanProductGroupList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
         }
 
         for (int i = 0; i < outstandingStatus.size(); i++) {
-            i8SBSwitchControllerResponseVO.setCurrencyCode(outstandingStatus.get(i).getCurrencyCode());
-            i8SBSwitchControllerResponseVO.setNumOutstandingLoans(String.valueOf(outstandingStatus.get(i).getNumOutstandingLoans()));
-            i8SBSwitchControllerResponseVO.setTotalGross(String.valueOf(outstandingStatus.get(i).getTotalGross()));
-            i8SBSwitchControllerResponseVO.setTotalSetupFees(String.valueOf(outstandingStatus.get(i).getTotalSetupFees()));
-            i8SBSwitchControllerResponseVO.setTotalInterest(String.valueOf(outstandingStatus.get(i).getTotalInterest()));
-            i8SBSwitchControllerResponseVO.setTotalInterestVAT(String.valueOf(outstandingStatus.get(i).getTotalInterestVAT()));
-            i8SBSwitchControllerResponseVO.setTotalCharges(String.valueOf(outstandingStatus.get(i).getTotalCharges()));
-            i8SBSwitchControllerResponseVO.setTotalChargesVAT(String.valueOf(outstandingStatus.get(i).getTotalChargesVAT()));
-            i8SBSwitchControllerResponseVO.setTotalPendingLoans(String.valueOf(outstandingStatus.get(i).getTotalPendingLoans()));
-            i8SBSwitchControllerResponseVO.setTotalPendingRecoveries(String.valueOf(outstandingStatus.get(i).getTotalPendingRecoveries()));
-            collectionOfList.put("OutstandingStatus", outstandingStatus);
+            com.inov8.integration.webservice.optasiaVO.OutstandingStatus outstandingStatus = new OutstandingStatus();
+            List<com.inov8.integration.webservice.optasiaVO.OutstandingStatus> outstandingStatusList = new ArrayList<>();
+
+            outstandingStatus.setCurrencyCode(this.getOutstandingStatus().get(i).getCurrencyCode());
+            outstandingStatus.setNumOutstandingLoans(String.valueOf(this.getOutstandingStatus().get(i).getNumOutstandingLoans()));
+            outstandingStatus.setTotalGross(String.valueOf(this.getOutstandingStatus().get(i).getTotalGross()));
+            outstandingStatus.setTotalSetupFees(String.valueOf(this.getOutstandingStatus().get(i).getTotalSetupFees()));
+            outstandingStatus.setTotalInterest(String.valueOf(this.getOutstandingStatus().get(i).getTotalInterest()));
+            outstandingStatus.setTotalInterestVAT(String.valueOf(this.getOutstandingStatus().get(i).getTotalInterestVAT()));
+            outstandingStatus.setTotalCharges(String.valueOf(this.getOutstandingStatus().get(i).getTotalCharges()));
+            outstandingStatus.setTotalChargesVAT(String.valueOf(this.getOutstandingStatus().get(i).getTotalChargesVAT()));
+            outstandingStatus.setTotalPendingLoans(String.valueOf(this.getOutstandingStatus().get(i).getTotalPendingLoans()));
+            outstandingStatus.setTotalPendingRecoveries(String.valueOf(this.getOutstandingStatus().get(i).getTotalPendingRecoveries()));
+
+            outstandingStatusList.add(outstandingStatus);
+            collectionOfList.put("OutstandingStatus", outstandingStatusList);
             i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
         }
 
@@ -210,7 +269,7 @@ public class OfferListForCommodityResponse extends Response {
         "eligibilityStatus"
 })
 @Generated("jsonschema2pojo")
-class OfferEligibilitystatus {
+class OfferEligibilitystatus implements Serializable{
 
     @JsonProperty("isEligible")
     private Boolean isEligible;
@@ -248,7 +307,7 @@ class OfferEligibilitystatus {
         "daysOffset",
         "interval"
 })
-class OfferInterest {
+class OfferInterest implements Serializable{
 
     @JsonProperty("interestName")
     private String interestName;
@@ -339,7 +398,7 @@ class OfferInterest {
         "loanProductGroup",
         "maturityDetails"
 })
-class OfferLoanOffer {
+class OfferLoanOffer implements Serializable {
 
     @JsonProperty("offerClass")
     private String offerClass;
@@ -481,7 +540,7 @@ class OfferLoanOffer {
         "loanProductGroup",
         "loanOffers"
 })
-class LoanOffersByLoanProductGroup {
+class LoanOffersByLoanProductGroup implements Serializable{
 
     @JsonProperty("loanProductGroup")
     private String loanProductGroup;
@@ -517,7 +576,7 @@ class LoanOffersByLoanProductGroup {
         "oneOffCharges",
         "recurringCharges"
 })
-class OfferMaturityDetails {
+class OfferMaturityDetails implements Serializable{
 
     @JsonProperty("maturityDuration")
     private Integer maturityDuration;
@@ -578,7 +637,7 @@ class OfferMaturityDetails {
         "chargeVAT",
         "daysOffset"
 })
-class OfferOneOffCharge {
+class OfferOneOffCharge implements Serializable{
 
     @JsonProperty("chargeName")
     private String chargeName;
@@ -657,7 +716,7 @@ class OfferOneOffCharge {
         "totalPendingLoans",
         "totalPendingRecoveries"
 })
-class OfferOutstandingstatus {
+class OfferOutstandingstatus implements Serializable{
 
     @JsonProperty("currencyCode")
     private String currencyCode;
@@ -803,7 +862,7 @@ class OfferOutstandingstatus {
         "daysOffset",
         "interval"
 })
-class OfferRecurringCharge {
+class OfferRecurringCharge implements Serializable{
 
     @JsonProperty("chargeName")
     private String chargeName;

@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +21,10 @@ import java.util.Map;
         "receivedTimestamp",
         "events"
 })
-public class TransactionStatusResponse extends Response {
+public class TransactionStatusResponse extends Response implements Serializable {
+
+    private static final long serialVersionUID = 5824473488070382311L;
+
 
     @JsonProperty("identityValue")
     private String identityValue;
@@ -112,49 +117,68 @@ public class TransactionStatusResponse extends Response {
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
         i8SBSwitchControllerResponseVO.setReceivedTimestamp(this.getReceivedTimestamp());
         for (int i = 0; i < events.size(); i++) {
-            i8SBSwitchControllerResponseVO.setEventType(events.get(i).getEventType());
-            i8SBSwitchControllerResponseVO.setEventTypeStatus(events.get(i).getEventTypeStatus());
-            i8SBSwitchControllerResponseVO.setEventTransactionId(events.get(i).getEventTransactionId());
-            i8SBSwitchControllerResponseVO.setThirdPartyTransactionId(events.get(i).getThirdPartyTransactionId());
-            i8SBSwitchControllerResponseVO.setEventReason(events.get(i).getEventReason());
-            i8SBSwitchControllerResponseVO.setShortCode(events.get(i).getEventReasonDetails().getShortCode());
-            i8SBSwitchControllerResponseVO.setPeriod(events.get(i).getPeriod());
-            i8SBSwitchControllerResponseVO.setPeriodIndex(events.get(i).getPeriodIndex());
-            i8SBSwitchControllerResponseVO.setPeriodExpirationTimestamp(events.get(i).getPeriodExpirationTimestamp());
-            i8SBSwitchControllerResponseVO.setPrincipalAdjustment(events.get(i).getPrincipalAdjustment());
-            i8SBSwitchControllerResponseVO.setPrincipalBefore(events.get(i).getPrincipalBefore());
-            i8SBSwitchControllerResponseVO.setPrincipalAfter(events.get(i).getPrincipalAfter());
-            i8SBSwitchControllerResponseVO.setSetupFeesAdjustment(events.get(i).getSetupFeesAdjustment());
-            i8SBSwitchControllerResponseVO.setSetupFeesBefore(events.get(i).getSetupFeesBefore());
-            i8SBSwitchControllerResponseVO.setSetupFeesAfter(events.get(i).getSetupFeesAfter());
-            i8SBSwitchControllerResponseVO.setInterestAdjustment(events.get(i).getInterestAdjustment());
-            i8SBSwitchControllerResponseVO.setInterestAdjustmentVAT(events.get(i).getInterestAdjustmentVAT());
-            i8SBSwitchControllerResponseVO.setInterestBefore(events.get(i).getInterestBefore());
-            i8SBSwitchControllerResponseVO.setInterestAfter(events.get(i).getInterestAfter());
-            i8SBSwitchControllerResponseVO.setTotalChargesAfter(events.get(i).getTotalChargesAfter());
-            i8SBSwitchControllerResponseVO.setTotalChargesAdjustment(events.get(i).getTotalChargesAdjustment());
-            i8SBSwitchControllerResponseVO.setTotalChargesAdjustmentVAT(events.get(i).getTotalChargesAdjustmentVAT());
-            i8SBSwitchControllerResponseVO.setTotalChargesBefore(events.get(i).getTotalChargesBefore());
-            i8SBSwitchControllerResponseVO.setEventTimestamp(events.get(i).getEventTimestamp());
-            i8SBSwitchControllerResponseVO.setReceptionTimestamp(events.get(i).getReceptionTimestamp());
-            i8SBSwitchControllerResponseVO.setProcessingTimestamp(events.get(i).getProcessingTimestamp());
-            i8SBSwitchControllerResponseVO.setSourceRequestId(events.get(i).getSourceRequestId());
-            i8SBSwitchControllerResponseVO.setLoanReason(events.get(i).getLoanReason());
-            i8SBSwitchControllerResponseVO.setShortCode(events.get(i).getLoanReasonDetails().getShortCode());
-            i8SBSwitchControllerResponseVO.setLoanTimeStamp(events.get(i).getLoanTimestamp());
-            i8SBSwitchControllerResponseVO.setInternalLoanId(events.get(i).getInternalLoanId());
-            i8SBSwitchControllerResponseVO.setLoanState(events.get(i).getLoanState());
-            i8SBSwitchControllerResponseVO.setExternalLoanId(events.get(i).getExternalLoanId());
-            i8SBSwitchControllerResponseVO.setOfferName(events.get(i).getOfferName());
-            i8SBSwitchControllerResponseVO.setCommodityType(events.get(i).getCommodityType());
-            i8SBSwitchControllerResponseVO.setCurrencyCode(events.get(i).getCurrencyCode());
-            i8SBSwitchControllerResponseVO.setPrincipalAmount(events.get(i).getPrincipalAmount());
-            i8SBSwitchControllerResponseVO.setSetupFees(events.get(i).getSetupFees());
-            i8SBSwitchControllerResponseVO.setLoanPlanId(events.get(i).getLoanPlanId());
-            i8SBSwitchControllerResponseVO.setLoanPlanName(events.get(i).getLoanPlanName());
-            i8SBSwitchControllerResponseVO.setLoanProductGroup(events.get(i).getLoanProductGroup());
-            i8SBSwitchControllerResponseVO.setMaturityDuration(events.get(i).getMaturityDetails().getMaturityDuration());
-            collectionOfList.put("Events", events);
+
+            com.inov8.integration.webservice.optasiaVO.Event event = new com.inov8.integration.webservice.optasiaVO.Event();
+            List<com.inov8.integration.webservice.optasiaVO.Event> eventList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.EventReasonDetails eventReasonDetails = new com.inov8.integration.webservice.optasiaVO.EventReasonDetails();
+            List<com.inov8.integration.webservice.optasiaVO.EventReasonDetails> eventReasonDetailsList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.LoanReasonDetails loanReasonDetails = new com.inov8.integration.webservice.optasiaVO.LoanReasonDetails();
+            List<com.inov8.integration.webservice.optasiaVO.LoanReasonDetails> loanReasonDetailsList = new ArrayList<>();
+
+            com.inov8.integration.webservice.optasiaVO.MaturityDetails maturityDetails = new com.inov8.integration.webservice.optasiaVO.MaturityDetails();
+            List<com.inov8.integration.webservice.optasiaVO.MaturityDetails> maturityDetailsList = new ArrayList<>();
+
+            event.setEventType(events.get(i).getEventType());
+            event.setEventTypeStatus(events.get(i).getEventTypeStatus());
+            event.setEventTransactionId(events.get(i).getEventTransactionId());
+            event.setThirdPartyTransactionId(events.get(i).getThirdPartyTransactionId());
+            event.setEventReason(events.get(i).getEventReason());
+            eventReasonDetails.setShortCode(events.get(i).getEventReasonDetails().getShortCode());
+            event.setPeriod(events.get(i).getPeriod());
+            event.setPeriodIndex(events.get(i).getPeriodIndex());
+            event.setPeriodExpirationTimestamp(events.get(i).getPeriodExpirationTimestamp());
+            event.setPrincipalAdjustment(events.get(i).getPrincipalAdjustment());
+            event.setPrincipalBefore(events.get(i).getPrincipalBefore());
+            event.setPrincipalAfter(events.get(i).getPrincipalAfter());
+            event.setSetupFeesAdjustment(events.get(i).getSetupFeesAdjustment());
+            event.setSetupFeesBefore(events.get(i).getSetupFeesBefore());
+            event.setSetupFeesAfter(events.get(i).getSetupFeesAfter());
+            event.setInterestAdjustment(events.get(i).getInterestAdjustment());
+            event.setInterestAdjustmentVAT(events.get(i).getInterestAdjustmentVAT());
+            event.setInterestBefore(events.get(i).getInterestBefore());
+            event.setInterestAfter(events.get(i).getInterestAfter());
+            event.setTotalChargesAfter(events.get(i).getTotalChargesAfter());
+            event.setTotalChargesAdjustment(events.get(i).getTotalChargesAdjustment());
+            event.setTotalChargesAdjustmentVAT(events.get(i).getTotalChargesAdjustmentVAT());
+            event.setTotalChargesBefore(events.get(i).getTotalChargesBefore());
+            event.setEventTimestamp(events.get(i).getEventTimestamp());
+            event.setReceptionTimestamp(events.get(i).getReceptionTimestamp());
+            event.setProcessingTimestamp(events.get(i).getProcessingTimestamp());
+            event.setSourceRequestId(events.get(i).getSourceRequestId());
+            event.setLoanReason(events.get(i).getLoanReason());
+            loanReasonDetails.setShortCode(events.get(i).getLoanReasonDetails().getShortCode());
+            event.setLoanTimestamp(events.get(i).getLoanTimestamp());
+            event.setInternalLoanId(events.get(i).getInternalLoanId());
+            event.setLoanState(events.get(i).getLoanState());
+            event.setExternalLoanId(events.get(i).getExternalLoanId());
+            event.setOfferName(events.get(i).getOfferName());
+            event.setCommodityType(events.get(i).getCommodityType());
+            event.setCurrencyCode(events.get(i).getCurrencyCode());
+            event.setPrincipalAmount(events.get(i).getPrincipalAmount());
+            event.setSetupFees(events.get(i).getSetupFees());
+            event.setLoanPlanId(events.get(i).getLoanPlanId());
+            event.setLoanPlanName(events.get(i).getLoanPlanName());
+            event.setLoanProductGroup(events.get(i).getLoanProductGroup());
+            maturityDetails.setMaturityDuration(events.get(i).getMaturityDetails().getMaturityDuration());
+
+            eventReasonDetailsList.add(eventReasonDetails);
+            loanReasonDetailsList.add(loanReasonDetails);
+            maturityDetailsList.add(maturityDetails);
+            eventList.add(event);
+
+            collectionOfList.put("Events", eventList);
             i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
         }
@@ -208,7 +232,7 @@ public class TransactionStatusResponse extends Response {
         "loanProductGroup",
         "maturityDetails"
 })
-class Event {
+class Event implements Serializable {
 
     @JsonProperty("eventType")
     private String eventType;
@@ -722,7 +746,7 @@ class Event {
         "shortCode",
         "type"
 })
-class EventReasonDetails {
+class EventReasonDetails implements Serializable {
 
     @JsonProperty("shortCode")
     private String shortCode;
@@ -755,7 +779,7 @@ class EventReasonDetails {
 @JsonPropertyOrder({
         "shortCode"
 })
-class LoanReasonDetails {
+class LoanReasonDetails implements Serializable {
 
     @JsonProperty("shortCode")
     private String shortCode;
@@ -776,7 +800,7 @@ class LoanReasonDetails {
 @JsonPropertyOrder({
         "maturityDuration"
 })
-class TransactionsMaturityDetails {
+class TransactionsMaturityDetails implements Serializable {
 
     @JsonProperty("maturityDuration")
     private String maturityDuration;

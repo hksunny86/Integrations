@@ -8,6 +8,8 @@ import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import com.inov8.integration.middleware.enums.ResponseCodeEnum;
 
+import java.io.Serializable;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "code",
@@ -22,7 +24,10 @@ import com.inov8.integration.middleware.enums.ResponseCodeEnum;
         "advanceOfferId",
         "offerName"
 })
-public class LoanOfferResponse extends Response {
+public class LoanOfferResponse extends Response implements Serializable {
+
+    private static final long serialVersionUID = 5824473488070382311L;
+
 
     @JsonProperty("code")
     private String code;

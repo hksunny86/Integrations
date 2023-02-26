@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 
+import java.io.Serializable;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "identityValue",
@@ -16,7 +18,9 @@ import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
         "receivedTimestamp",
         "loanInfo"
 })
-public class LoanStatusResponse extends Response{
+public class LoanStatusResponse extends Response implements Serializable {
+
+    private static final long serialVersionUID = 5824473488070382311L;
 
     @JsonProperty("identityValue")
     private String identityValue;
@@ -158,7 +162,7 @@ public class LoanStatusResponse extends Response{
         "loanOffer"
 })
 @Generated("jsonschema2pojo")
- class LoanSummary {
+ class LoanSummary implements Serializable {
 
     @JsonProperty("internalLoanId")
     private String internalLoanId;
@@ -240,7 +244,7 @@ public class LoanStatusResponse extends Response{
         "loan",
         "report"
 })
- class LoanInfo {
+ class LoanInfo implements Serializable {
 
     @JsonProperty("loan")
     private LoanSummary loanSummary;
@@ -281,7 +285,7 @@ public class LoanStatusResponse extends Response{
         "loanProductGroup",
         "maturityDetails"
 })
- class LoanOffers {
+ class LoanOffers implements Serializable {
 
     @JsonProperty("offerName")
     private String offerName;
@@ -398,7 +402,7 @@ public class LoanStatusResponse extends Response{
 @JsonPropertyOrder({
         "maturityDuration"
 })
- class MaturityDetail {
+ class MaturityDetail implements Serializable {
 
     @JsonProperty("maturityDuration")
     private String maturityDuration;
@@ -427,7 +431,7 @@ public class LoanStatusResponse extends Response{
         "totalChargesVAT",
         "totalPendingRecoveries"
 })
- class Outstandings {
+ class Outstandings implements Serializable {
 
     @JsonProperty("currencyCode")
     private String currencyCode;
@@ -547,7 +551,7 @@ public class LoanStatusResponse extends Response{
         "nextPeriod"
 })
 @Generated("jsonschema2pojo")
- class Plans {
+ class Plans implements Serializable {
 
     @JsonProperty("currentPeriod")
     private String currentPeriod;
@@ -599,7 +603,7 @@ public class LoanStatusResponse extends Response{
         "charges",
         "chargesVAT"
 })
- class Repayments {
+ class Repayments implements Serializable {
 
     @JsonProperty("repaymentsCount")
     private String repaymentsCount;
@@ -706,7 +710,7 @@ public class LoanStatusResponse extends Response{
         "outstanding",
         "plan"
 })
- class Reports {
+ class Reports implements Serializable {
 
     @JsonProperty("repayment")
     private Repayments repayments;

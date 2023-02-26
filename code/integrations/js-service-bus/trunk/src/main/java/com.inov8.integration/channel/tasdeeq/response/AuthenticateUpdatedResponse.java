@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
+import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -87,6 +88,7 @@ public class AuthenticateUpdatedResponse extends Response {
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
+        I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
 
         if (this.getStatusCode().equalsIgnoreCase("111")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
@@ -97,6 +99,7 @@ public class AuthenticateUpdatedResponse extends Response {
         i8SBSwitchControllerResponseVO.setMessageCode(this.getMessageCode());
         i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
         i8SBSwitchControllerResponseVO.setAuthToken(this.data.getAuthToken());
+        i8SBSwitchControllerResponseVO.setRrn(i8SBSwitchControllerRequestVO.getRRN());
         return i8SBSwitchControllerResponseVO;
     }
 }

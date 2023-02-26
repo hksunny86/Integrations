@@ -929,6 +929,8 @@ public class JSController {
                 .append(request.getMerchantId())
                 .append(request.getFed())
                 .append(request.getLoanPurpose())
+                .append(request.getProcessingFee())
+                .append(request.getStartDate())
                 .append(request.getReserved1())
                 .append(request.getReserved2())
                 .append(request.getReserved3())
@@ -1597,7 +1599,7 @@ public class JSController {
         logger.info("Loan Plan Request Received at Controller at time: " + start);
         LoanPlanResponse response = new LoanPlanResponse();
         String requestXML = JSONUtil.getJSON(request);
-        requestXML = XMLUtil.maskPassword(requestXML);
+//        requestXML = XMLUtil.maskPassword(requestXML);
         logger.info("Start Processing Loan Plan Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
@@ -1624,7 +1626,6 @@ public class JSController {
 
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
         if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
                     HostRequestValidator.validateLoanPlan(request);
@@ -1663,7 +1664,6 @@ public class JSController {
 
         return response;
     }
-
 
     @RequestMapping(value = "api/transactionActive", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody

@@ -15924,6 +15924,10 @@ public class HostIntegrationService {
                 response.setExternalLoanId(messageVO.getExternalLoanId());
                 response.setAdvanceOfferId(messageVO.getAdvanceOfferId());
                 response.setOfferName(messageVO.getOfferName());
+                response.setAmount(messageVO.getAmount());
+                response.setProcessingFee(messageVO.getProcessingFee());
+                response.setTotalAmount(messageVO.getTotalAmount());
+                response.setTransactionId(messageVO.getTransactionId());
 
 
                 logModel.setResponseCode(messageVO.getResponseCode());

@@ -28,6 +28,8 @@ import java.io.Serializable;
         "MerchantId",
         "FED",
         "LoanPurpose",
+        "ProcessingFee",
+        "StartDate",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -72,6 +74,10 @@ public class LoanOfferRequest implements Serializable {
     private String fed;
     @JsonProperty("LoanPurpose")
     private String loanPurpose;
+    @JsonProperty("ProcessingFee")
+    private String ProcessingFee;
+    @JsonProperty("StartDate")
+    private String startDate;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -94,6 +100,22 @@ public class LoanOfferRequest implements Serializable {
     private String reserved10;
     @JsonProperty("HashData")
     private String hashData;
+
+    public String getProcessingFee() {
+        return ProcessingFee;
+    }
+
+    public void setProcessingFee(String processingFee) {
+        ProcessingFee = processingFee;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
 
     public String getUserName() {
         return userName;

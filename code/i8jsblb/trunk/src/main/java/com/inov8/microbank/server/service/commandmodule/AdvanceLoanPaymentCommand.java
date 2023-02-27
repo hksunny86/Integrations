@@ -227,6 +227,7 @@ public class AdvanceLoanPaymentCommand extends BaseCommand {
                 productModel = workFlowWrapper.getProductModel();
                 //Customer Balance
                 balance = workFlowWrapper.getOLASwitchWrapper().getOlavo().getFromBalanceAfterTransaction();
+                workFlowWrapper.putObject("productTile",productModel.getName());
                 //consumerNumber = ((UtilityBillVO) workFlowWrapper.getProductVO()).getConsumerNo();
                 commonCommandManager.sendSMS(workFlowWrapper);
 

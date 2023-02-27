@@ -178,7 +178,7 @@ public class CnicToCoreAccountCommand extends BaseCommand {
 					if (((BBToCoreVO)workFlowWrapper.getProductVO()).getSenderBalance() != null) {
 						agentBalance = ((BBToCoreVO)workFlowWrapper.getProductVO()).getSenderBalance();
 					}
-					
+					workFlowWrapper.putObject("productTile",productModel.getName());
 					commonCommandManager.sendSMS(workFlowWrapper);
 				}
 				else

@@ -1615,6 +1615,7 @@
 				<prop key="/p_digidebitcardannualreport.html">digiDebitCardAnnualReportController</prop>
 				<prop key="/p_digipostedrdvreport.html">digiPostedRdvReportController</prop>
 				<prop key="/p_ivrMpinVerificationReport.html">ivrMpinVerificationController</prop>
+				<prop key="/p_currentDayIvrMpinVerificationReport.html">currentDayIvrMpinVerificationController</prop>
 
 
 
@@ -6914,6 +6915,13 @@
 	</bean>
 	<bean id="ivrMpinVerificationController"
 		  class="com.inov8.microbank.ivr.controller.IVRMpinVerificationReportController"
+		  parent="baseFormSearchController" autowire="byName">
+		<property name="ivrMpinVerificationManager">
+			<ref bean="ivrMpinVerificationManager"/>
+		</property>
+	</bean>
+	<bean id="currentDayIvrMpinVerificationController"
+		  class="com.inov8.microbank.ivr.controller.CurrentDayIvrMpinVerificationController"
 		  parent="baseFormSearchController" autowire="byName">
 		<property name="ivrMpinVerificationManager">
 			<ref bean="ivrMpinVerificationManager"/>

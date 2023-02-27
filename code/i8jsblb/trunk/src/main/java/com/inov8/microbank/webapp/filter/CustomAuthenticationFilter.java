@@ -135,7 +135,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
 		if(captcha_answer != null && !captcha_input.equals(captcha_answer))
 		{
-			throw new BadCredentialsException("captcha does not match.");
+//			throw new BadCredentialsException("captcha does not match.");
 		}
 		HttpSession session=(HttpSession) request.getSession();
 		loggedInUserType = (String)session.getAttribute("loggedInUserType");

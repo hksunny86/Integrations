@@ -286,6 +286,7 @@
             <Item title="Vc File Summary Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_WHT_DETAILED_R" location="p_vcfileSummary.html?actionId=2"></Item>
             <Item title="Merchant Campaing Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_WHT_DETAILED_R" location="p_merchantcampaing.html?actionId=2"></Item>
             <Item title="IVR-MPIN Verification" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_WHT_DETAILED_R" location="p_ivrMpinVerificationReport.html"/>
+            <Item title="Current Day IVR-MPIN Verification" roles="PG_GP_C,ADD_IVR_MPIN_VERIFICATION_R,ADD_IVR_MPIN_VERIFICATION_D" location="p_currentDayIvrMpinVerificationReport.html"/>
             <Item title="Marketing Reports"
                   roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_DATE_WISE_ACT_R,RPT_DATE_WISE_SUMM_R,RPT_TX_TYPE_SUMM_R,RPT_ACT_OPENING_R,RPT_ACT_TO_ACT_R,RPT_ACT_TO_CNIC_R,RPT_CNIC_TO_CNIC_R,RPT_CUST_RETAIL_PAY_R,RPT_UTIL_BILL_PAY_R,RPT_BAL_TOP_UP_R,RPT_CASH_DEP_R,RPT_CASH_WITHDRAWAL_R,RPT_TX_REVENUE_R,RPT_P2P_TRANSFER_R">
                 <Item title="Date Wise Activity Report" roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_DATE_WISE_ACT_R"

@@ -347,7 +347,7 @@ public class CollectionPaymentCommand extends BaseCommand {
 						balance = workFlowWrapper.getOLASwitchWrapper().getOlavo().getFromBalanceAfterTransaction();
 					}
 					//consumerNumber = ((UtilityBillVO) workFlowWrapper.getProductVO()).getConsumerNo();
-	
+					workFlowWrapper.putObject("productTile",productModel.getName());
 					commonCommandManager.sendSMS(workFlowWrapper);
 					//Remove challan row from billStatus
 					//Data will be delete by CLEAN_BILL_STATUS_JOB

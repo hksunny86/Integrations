@@ -204,6 +204,7 @@ public class AdvanceSalaryLoanCommand extends BaseCommand {
                     productModel = workFlowWrapper.getProductModel();
                     userDeviceAccountsModel =  workFlowWrapper.getUserDeviceAccountModel();
                     commissionAmountsHolder = workFlowWrapper.getCommissionAmountsHolder();
+                    workFlowWrapper.putObject("productTile",productModel.getName());
 
                     commonCommandManager.sendSMS(workFlowWrapper);
 

@@ -211,7 +211,7 @@ public class CustomerBBToCoreCommand extends BaseCommand {
                     productModel = workFlowWrapper.getProductModel();
                     userDeviceAccountsModel = workFlowWrapper.getUserDeviceAccountModel();
                     commissionAmountsHolder = workFlowWrapper.getCommissionAmountsHolder();
-
+                    workFlowWrapper.putObject("productTile",productModel.getName());
                     commonCommandManager.sendSMS(workFlowWrapper);
                 } else {
                     logger.error("[CustomerBBToCoreCommand.execute] Throwing Exception for Product ID: " + productId + " Logged In AppUserID:" + appUserModel.getAppUserId() + " Customer Mobile No:" + customerMobileNo + " Trx Amount: " + transactionAmount + " Commission: " + commissionAmount);

@@ -300,6 +300,8 @@
 
                 <security:intercept-url pattern="/**/p_ivrMpinVerificationReport.html*"
                                         access="CSR_GP_R,ADM_GP_R,PG_GP_R,MNO_GP_R,RPT_TX_DETAIL_R"/>
+                <security:intercept-url pattern="/**/p_currentDayIvrMpinVerificationReport.html*"
+                                        access="PG_GP_C,ADD_IVR_MPIN_VERIFICATION_R,ADD_IVR_MPIN_VERIFICATION_D,ADM_GP_R,CSR_GP_R"/>
 
                 <security:intercept-url pattern="/**/p_IntegratedSystemActivityReport.html*"
                                         access="ADM_GP_R,PG_GP_R,RPT_INTGRT_SYS_LOGS_R"/>

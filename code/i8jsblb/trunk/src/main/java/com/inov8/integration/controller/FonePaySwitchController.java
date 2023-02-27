@@ -707,10 +707,10 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         }
         this.logger.info("[FonePay " + reqType + "] CNIC:" + cnic + ", Mobile:" + mobileNumber + ", RRN:" + rrn + ", DateTime:" + dateTime + ", TransactionType:" + transactionType + "]");
         try {
-            webServiceVO = this.validateRRN(webServiceVO);
+          /*  webServiceVO = this.validateRRN(webServiceVO);
             if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
-                return webServiceVO;
-            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, reqType);
+                return webServiceVO;*/
+//            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, reqType);
             ActionLogModel actionLogModel = actionLogBeforeStart(PortalConstants.ACTION_CREATE, null, null, mobileNumber);
             appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
             if (!getCommonCommandManager().checkActiveAppUserForOpenAPI(webServiceVO, appUserModel)) {
@@ -777,10 +777,10 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         }
         this.logger.info("[FonePay Verify Account] [CNIC:" + cnic + ", Mobile:" + mobileNumber + ", RRN:" + rrn + ", DateTime:" + dateTime + ", TransactionType:" + transactionType + "]");
         try {
-            webServiceVO = this.validateRRN(webServiceVO);
+           /* webServiceVO = this.validateRRN(webServiceVO);
             if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
-                return webServiceVO;
-            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, reqType);
+                return webServiceVO;*/
+//            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, reqType);
             ActionLogModel actionLogModel = actionLogBeforeStart(PortalConstants.ACTION_RETRIEVE, null, null, mobileNumber);
             if (transactionType.equals("02")) {
                 webServiceVO = getFonePayManager().makeExistingCustomerVerification(webServiceVO);
@@ -889,7 +889,18 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "Minor Account Opening");
 
             } else {
-                fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "Account Opening");
+                fonePayLogModel=new FonePayLogModel();
+                fonePayLogModel.setCnic(webServiceVO.getCnicNo());
+                fonePayLogModel.setMobile_no(webServiceVO.getMobileNo());
+                fonePayLogModel.setResponse_code(webServiceVO.getResponseCode());
+                fonePayLogModel.setResponse_description(webServiceVO.getResponseCodeDescription());
+                fonePayLogModel.setRrn(webServiceVO.getRetrievalReferenceNumber());
+                fonePayLogModel.setTransactionId(webServiceVO.getTransactionId());
+                Date date = new Date();
+                Timestamp ts_now = new Timestamp(date.getTime());
+                fonePayLogModel.setCreated_on(ts_now);
+                fonePayLogModel.setUpdated_on(ts_now);
+//                fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "Account Opening");
             }
             AppUserModel webServiceAppUser = new AppUserModel();
             webServiceAppUser.setAppUserId(Long.valueOf(4L));

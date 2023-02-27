@@ -269,7 +269,7 @@ public class SenderRedeemPaymentCommand extends MiniBaseCommand
 					
 					currentDate = dtf.print(new Date().getTime());
 					currentTime = tf.print(new Date().getTime());
-					
+					workFlowWrapper.putObject("productTile",productModel.getName());
 					commonCommandManager.sendSMS(workFlowWrapper);
 					
 					this.getCommonCommandManager().saveTransactionDetailModel(workFlowWrapper.getTransactionDetailModel());

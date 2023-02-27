@@ -239,7 +239,7 @@ public class TellerCashOutCommand extends BaseCommand  {
 
 				balance = workFlowWrapper.getOLASwitchWrapper().getBalance();
 				balance = workFlowWrapper.getOLASwitchWrapper().getAgentBalance();
-		
+				workFlowWrapper.putObject("productTile",productModel.getName());
 				commonCommandManager.sendSMS(workFlowWrapper);
 			}
 				

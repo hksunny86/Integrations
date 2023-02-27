@@ -1420,7 +1420,7 @@ public class VeriflyManagerImpl implements VeriflyManager {
             accountInfoModelTemp.setCustomerId(baseWrapper.getAccountInfoModel().getCustomerId());
             accountInfoModelTemp.setAccountNick(baseWrapper.getAccountInfoModel().getAccountNick());
             
-            if (isExist(accountInfoModelTemp)){
+           /* if (isExist(accountInfoModelTemp)){
             	if (logger.isDebugEnabled())
             		logger.debug("<-Record already exists->") ;
         		throw new InvalidDataException (String.valueOf(FailureReasonConstants.RECORD_ALREADY_EXISTS));
@@ -1437,7 +1437,7 @@ public class VeriflyManagerImpl implements VeriflyManager {
             		throw new InvalidDataException(String.valueOf(FailureReasonConstants.ACCOUNT_NO_ALREADY_EXIST));
                 }
             }
-
+*/
             if (logger.isDebugEnabled())
             	logger.debug("<-Going to generate random number-->");
             logDetailModel.setActionId(ActionConstants.GENERATE_RANDOM_NO);
@@ -1447,14 +1447,14 @@ public class VeriflyManagerImpl implements VeriflyManager {
             else
             	pin = this.messageSource.getMessage(VeriflyLiteConstants.VERIFLY_LITE_PIN_KEY, null, null);*/
             
-            PayShieldDTO dto = new PayShieldDTO();
+           /* PayShieldDTO dto = new PayShieldDTO();
             dto.setPAN(baseWrapper.getAccountInfoModel().getPan());
             logger.debug("PAN : " + dto.getPAN());
             
             if(baseWrapper != null && (baseWrapper.getSkipPanCheck() == null || baseWrapper.getSkipPanCheck() == Boolean.FALSE)) { // Other than Link Account Case Only
 
                 IPayShieldSwitchController iPayShieldSwitchController = getIntegrationSwitch();
-                dto = iPayShieldSwitchController.generateSystemPIN(dto);
+//                dto = iPayShieldSwitchController.generateSystemPIN(dto);
                 
             } else if(baseWrapper != null && (baseWrapper.getSkipPanCheck() != null && baseWrapper.getSkipPanCheck() == Boolean.TRUE)) { // Link Account Case Only
             	dto.setResponseCode("00");
@@ -1475,7 +1475,7 @@ public class VeriflyManagerImpl implements VeriflyManager {
                                                   ERROR_GENERATING_RANDOM_NUMBER);
                 throw new  InvalidDataException (String.valueOf(FailureReasonConstants.ERROR_GENERATING_RANDOM_NUMBER));
     	
-            }
+            }*/
             
             /*if (pin == null){
             	if (logger.isDebugEnabled())
@@ -1500,12 +1500,12 @@ public class VeriflyManagerImpl implements VeriflyManager {
             if (logger.isDebugEnabled())
             	logger.debug("<--Going to save record--->") ;
             logDetailModel.setActionId(ActionConstants.SAVING_OR_UPDATING_RECORD);
-            accountInfoModelTemp = (AccountInfoModel)baseWrapper.getAccountInfoModel().clone();
+           /* accountInfoModelTemp = (AccountInfoModel)baseWrapper.getAccountInfoModel().clone();
             accountInfoModelTemp = encryptionHandler.encrypt(accountInfoModelTemp);
             
             accountInfoModelTemp.setActive(true);
             accountInfoModelTemp.setDeleted(false);
-            this.accountInfoDao.saveOrUpdate(accountInfoModelTemp);
+            this.accountInfoDao.saveOrUpdate(accountInfoModelTemp);*/
 
 
             logDetailModel.setStatusId(StatusConstants.SUCCESS);

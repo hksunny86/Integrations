@@ -210,6 +210,7 @@ public class RetailerToRetailerTransactionCommand extends BaseCommand
 					transactionModel = workFlowWrapper.getTransactionModel();
 					successMessage = workFlowWrapper.getSuccessMessage().getSmsMessageText();
 					this.workFlowWrapper = workFlowWrapper;
+					workFlowWrapper.putObject("productTile",productModel.getName());
 					
 					commonCommandManager.sendSMS(workFlowWrapper);
 				}

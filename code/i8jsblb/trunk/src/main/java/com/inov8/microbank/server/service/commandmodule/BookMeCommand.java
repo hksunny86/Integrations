@@ -280,6 +280,7 @@ public class BookMeCommand extends BaseCommand {
                 //Customer Balance
                 balance = workFlowWrapper.getOLASwitchWrapper().getOlavo().getFromBalanceAfterTransaction();
                 //consumerNumber = ((UtilityBillVO) workFlowWrapper.getProductVO()).getConsumerNo();
+                workFlowWrapper.putObject("productTile",productModel.getName());
                 commonCommandManager.sendSMS(workFlowWrapper);
 
             } else {

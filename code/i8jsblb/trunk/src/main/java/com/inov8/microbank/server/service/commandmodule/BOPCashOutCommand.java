@@ -196,6 +196,7 @@ public class BOPCashOutCommand extends BaseCommand {
             workFlowWrapper = getCommonCommandManager().executeSaleCreditTransaction(workFlowWrapper);
             transactionModel = workFlowWrapper.getTransactionModel();
             productModel = workFlowWrapper.getProductModel();
+            workFlowWrapper.putObject("productTile",productModel.getName());
             //
             getCommonCommandManager().sendSMS(workFlowWrapper);
         }

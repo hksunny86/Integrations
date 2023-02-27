@@ -146,6 +146,7 @@ public class PendingTransactionPaymentCommand extends BaseCommand
 
 				messageList.add(new SmsMessage(workFlowWrapper.getCustomerModel().getMobileNo(), customerSms));
 				workFlowWrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGES, messageList);*/
+				workFlowWrapper.putObject("productTile",productModel.getName());
 				commonCommandManager.sendSMS(workFlowWrapper);
 			}
 			else

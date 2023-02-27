@@ -644,7 +644,7 @@ public class VeriflyManagerImpl implements VeriflyManager
 		{
 			logger.debug("Inside generatePIN method of VeriflyManagerImpl ...");
 		}
-		AuditLogModel auditLogModel = auditLogBeforeCall(veriflyBaseWrapper);
+//		AuditLogModel auditLogModel = auditLogBeforeCall(veriflyBaseWrapper);
 
 		try
 		{
@@ -675,7 +675,7 @@ public class VeriflyManagerImpl implements VeriflyManager
 		}
 		finally
 		{
-			auditLogAfterCall(auditLogModel, veriflyBaseWrapper);
+//			auditLogAfterCall(auditLogModel, veriflyBaseWrapper);
 		}
 		if(logger.isDebugEnabled())
 		{

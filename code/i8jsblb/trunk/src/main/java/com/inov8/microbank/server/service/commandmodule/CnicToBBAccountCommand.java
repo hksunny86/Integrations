@@ -200,6 +200,7 @@ public class CnicToBBAccountCommand extends BaseCommand
 					
 					logger.info(workFlowWrapper.getSwitchWrapper().getAgentBalance()+"-"+workFlowWrapper.getSwitchWrapper().getBalance());
 
+					workFlowWrapper.putObject("productTile",productModel.getName());
 					commonCommandManager.sendSMS(workFlowWrapper);
 				}
 				else

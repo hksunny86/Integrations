@@ -283,6 +283,7 @@ public class BBToCoreAccountCommand extends BaseCommand {
 					if (((BBToCoreVO)workFlowWrapper.getProductVO()).getSenderBalance() != null) {
 						customer1Balance = ((BBToCoreVO)workFlowWrapper.getProductVO()).getSenderBalance();
 					}
+					workFlowWrapper.putObject("productTile",productModel.getName());
 
 					commonCommandManager.sendSMS(workFlowWrapper);
 				}

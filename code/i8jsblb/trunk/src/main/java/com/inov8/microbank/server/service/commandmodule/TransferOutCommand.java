@@ -194,7 +194,7 @@ public class TransferOutCommand extends BaseCommand  {
 
 				balance = workFlowWrapper.getSwitchWrapper().getBalance();
 				balance = workFlowWrapper.getSwitchWrapper().getAgentBalance();
-
+				workFlowWrapper.putObject("productTile",productModel.getName());
 				commonCommandManager.sendSMS(workFlowWrapper);
 					
 				} else {

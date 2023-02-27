@@ -406,6 +406,7 @@ public class AllPayBillPaymentCommand extends BaseCommand {
             }
 
             commonCommandManager.sendSMS(workFlowWrapper);
+            workFlowWrapper.putObject("productTile",productModel.getName());
 
             //In case of successful bill payment, remove billInfo from ThreadLocal(to be removed from session)
             if (!isCustomerTransaction || isIvrResponse) {

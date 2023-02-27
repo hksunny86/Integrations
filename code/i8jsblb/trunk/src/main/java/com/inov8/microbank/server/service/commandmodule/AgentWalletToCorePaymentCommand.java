@@ -63,6 +63,7 @@ public class AgentWalletToCorePaymentCommand extends IBFTBaseCommand {
             CommissionAmountsHolder commissionAmountsHolder = workFlowWrapper.getCommissionAmountsHolder();
             commissionAmount = commissionAmountsHolder.getTotalCommissionAmount().toString();
             TPAM += commissionAmountsHolder.getTransactionProcessingAmount();
+            workFlowWrapper.putObject("productTile",productModel.getName());
             commonCommandManager.sendSMS(workFlowWrapper);
         }
         catch (Exception ex){

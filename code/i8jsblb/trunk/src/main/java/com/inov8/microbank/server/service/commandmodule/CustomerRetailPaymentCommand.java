@@ -158,7 +158,7 @@ public class CustomerRetailPaymentCommand extends MiniBaseCommand
 					AgentRetailPaymentVO avo=(AgentRetailPaymentVO) workFlowWrapper.getProductVO();
 					balance=avo.getBalance();
 					userDeviceAccountsModel =  workFlowWrapper.getUserDeviceAccountModel();
-
+					workFlowWrapper.putObject("productTile",productModel.getName());
 					commonCommandManager.sendSMS(workFlowWrapper);
 				}
 				else

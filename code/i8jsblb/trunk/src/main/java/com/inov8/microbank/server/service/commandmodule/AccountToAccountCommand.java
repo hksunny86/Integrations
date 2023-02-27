@@ -235,7 +235,8 @@ public class AccountToAccountCommand extends BaseCommand {
 					productModel = workFlowWrapper.getProductModel();
 					userDeviceAccountsModel =  workFlowWrapper.getUserDeviceAccountModel();
 					successMessage = workFlowWrapper.getSuccessMessage().getSmsMessageText();
-					
+
+					workFlowWrapper.putObject("productTile",productModel.getName());
 					commonCommandManager.sendSMS(workFlowWrapper);
 				}
 				else

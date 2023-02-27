@@ -105,18 +105,18 @@ public class LoanPaymentRequest extends Request{
     @Override
     public boolean validateRequest() throws I8SBValidationException {
 
-        if (StringUtils.isEmpty(this.getSourceRequestId())) {
-            throw new I8SBValidationException("[Failed] Source Request Id:" + this.getSourceRequestId());
-        }
+//        if (StringUtils.isEmpty(this.getSourceRequestId())) {
+//            throw new I8SBValidationException("[Failed] Source Request Id:" + this.getSourceRequestId());
+//        }
         if (StringUtils.isEmpty(this.getAmount())) {
             throw new I8SBValidationException("[Failed] Transaction Amount:" + this.getAmount());
         }
-        if (StringUtils.isEmpty(this.getCurrencyCode())) {
-            throw new I8SBValidationException("[Failed] Message Title:" + this.getCurrencyCode());
-        }
-        if (StringUtils.isEmpty(this.getReason())) {
-            throw new I8SBValidationException("[Failed] Message Loan Reason:" + this.getReason());
-        }
+//        if (StringUtils.isEmpty(this.getCurrencyCode())) {
+//            throw new I8SBValidationException("[Failed] Currency Code:" + this.getCurrencyCode());
+//        }
+//        if (StringUtils.isEmpty(this.getReason())) {
+//            throw new I8SBValidationException("[Failed] Message Loan Reason:" + this.getReason());
+//        }
 
         return true;
     }

@@ -43,7 +43,7 @@ public class TasdeeqService {
         I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             TasdeeqMock tasdeeqMock = new TasdeeqMock();
             String response = tasdeeqMock.authenticatedUpdated();
@@ -113,7 +113,7 @@ public class TasdeeqService {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             TasdeeqMock tasdeeqMock = new TasdeeqMock();
             String response = tasdeeqMock.customAnalytics();

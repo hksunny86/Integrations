@@ -152,7 +152,6 @@ public class LoansResponse extends Response implements Serializable {
             loan.setLoanTimestamp(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanTimestamp());
             loan.setLoanReason(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanReason());
 
-            loanList.add(loan);
 
             loanOffers.setAdvanceOfferId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getAdvanceOfferId());
             loanOffers.setOfferName(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getOfferName());
@@ -163,9 +162,7 @@ public class LoansResponse extends Response implements Serializable {
             loanOffers.setLoanPlanId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanPlanId());
             loanOffers.setLoanPlanName(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanPlanName());
             loanOffers.setLoanProductGroup(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanProductGroup());
-            loanOffersList.add(loanOffers);
 
-            loans.setLoanList(loanList);
 
             repayment.setRepaymentsCount(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getRepaymentsCount());
             repayment.setGross(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getGross());
@@ -176,7 +173,6 @@ public class LoansResponse extends Response implements Serializable {
             repayment.setCharges(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getCharges());
             repayment.setChargesVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getChargesVAT());
 
-            repaymentList.add(repayment);
 
             outstandingStatus.setCurrencyCode(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getCurrencyCode());
             outstandingStatus.setTotalGross(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalGross());
@@ -188,17 +184,53 @@ public class LoansResponse extends Response implements Serializable {
             outstandingStatus.setTotalChargesVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalChargesVAT());
             outstandingStatus.setTotalPendingRecoveries(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalPendingRecoveries());
 
-            outstandingStatusList.add(outstandingStatus);
 
             plan.setCurrentPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getCurrentPeriod());
             plan.setDaysLeftInPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getDaysLeftInPeriod());
             plan.setNextPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getNextPeriod());
 
+
+
+
+//            loans.setPlanList(planList);
+//            loans.setOutstandingStatusList(outstandingStatusList);
+//            report.setRepaymentList(repaymentList);
+//            loans.setReportList(reportList);
+//            loan.setLoanOffersList(loanOffersList);
+//            loans.setLoanList(loanList);
+//            loansPerState.setLoansList(loansList);
+
             planList.add(plan);
+            outstandingStatusList.add(outstandingStatus);
+            repaymentList.add(repayment);
             reportList.add(report);
+            loanOffersList.add(loanOffers);
+            loanList.add(loan);
+            loansList.add(loans);
             loansPerStateList.add(loansPerState);
 
             collectionOfList.put("LoansPerState", loansPerStateList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("Loans", loansList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("Loan", loanList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("LoanOffers", loanOffersList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("Report", reportList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("Repayment", repaymentList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("Outstanding", outstandingStatusList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("Plan", planList);
             i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
         }

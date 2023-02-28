@@ -141,7 +141,7 @@ public class LoanPlanResponse implements Serializable {
 
         week5.setTitle("Week5");
         week5.setWeek(String.valueOf(5));
-        week5.setFee(String.valueOf( df.format(0.04 * amount + (Double.parseDouble(week4.getFee())))));
+        week5.setFee(String.valueOf(df.format(0.04 * amount + (Double.parseDouble(week4.getFee())))));
         week5.setAmount(String.valueOf(df.format(amount + Double.parseDouble(week5.getFee()))));
         dueDatePlanList.add(week5);
 
@@ -164,10 +164,8 @@ public class LoanPlanResponse implements Serializable {
         dueDatePlanList.add(week8);
 
 
-
-
-            this.setLoanAmountList(amountList);
-            this.setDueDatePlans(dueDatePlanList);
+        this.setLoanAmountList(amountList);
+        this.setDueDatePlans(dueDatePlanList);
         this.setResponseDescription("Success");
         webServiceVO.setLoanAmountList(amountList);
         webServiceVO.setDueDatePlanList(dueDatePlanList);

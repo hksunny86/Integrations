@@ -144,6 +144,7 @@ public class InitiateLoanResponse extends Response implements Serializable {
         i8SBSwitchControllerResponseVO.setLoanPlanName(this.getLoanOffer().getLoanPlanName());
         i8SBSwitchControllerResponseVO.setLoanProductGroup(this.getLoanOffer().getLoanProductGroup());
         i8SBSwitchControllerResponseVO.setMaturityDuration(this.getLoanOffer().getMaturityDetails().getMaturityDuration());
+//        i8SBSwitchControllerResponseVO.setProcessingFee()
         i8SBSwitchControllerResponseVO.setInterest(this.getLoanOffer().getMaturityDetails().getInterest().getInterestName());
         i8SBSwitchControllerResponseVO.setInterestType(this.getLoanOffer().getMaturityDetails().getInterest().getInterestType());
         i8SBSwitchControllerResponseVO.setInterestValue(this.getLoanOffer().getMaturityDetails().getInterest().getInterestValue());
@@ -160,7 +161,7 @@ public class InitiateLoanResponse extends Response implements Serializable {
             List<com.inov8.integration.webservice.optasiaVO.PeriodsProjection> periodsProjectionList = new ArrayList<>();
 
             com.inov8.integration.webservice.optasiaVO.TotalOneOffCharges totalOneOffCharges = new com.inov8.integration.webservice.optasiaVO.TotalOneOffCharges();
-            List<com.inov8.integration.webservice.optasiaVO.TotalOneOffCharges> oneOffCharges = new ArrayList<>();
+            List<com.inov8.integration.webservice.optasiaVO.TotalOneOffCharges> totalOneOffChargesList = new ArrayList<>();
 
             com.inov8.integration.webservice.optasiaVO.Milestones milestones = new com.inov8.integration.webservice.optasiaVO.Milestones();
             List<com.inov8.integration.webservice.optasiaVO.Milestones> milestonesList = new ArrayList<>();
@@ -198,12 +199,23 @@ public class InitiateLoanResponse extends Response implements Serializable {
             chargeAdjustment.setNet(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getNet());
             chargeAdjustment.setVat(periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments().get(i).getVat());
 
-            oneOffCharges.add(totalOneOffCharges);
-            periodsProjection.setTotalOneOffChargesList(oneOffCharges);
-            milestonesList.add(milestones);
-            interestAdjustmentList.add(interestAdjustment);
             chargeAdjustmentList.add(chargeAdjustment);
+            interestAdjustmentList.add(interestAdjustment);
+            milestonesList.add(milestones);
+            totalOneOffChargesList.add(totalOneOffCharges);
             periodsProjectionList.add(periodsProjection);
+
+            collectionOfList.put("ChargeAdjustments", chargeAdjustmentList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("InterestAdjustment", interestAdjustmentList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("Milestones", milestonesList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            collectionOfList.put("TotalOneOffCharges", totalOneOffChargesList);
+            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
             collectionOfList.put("Projections", periodsProjectionList);
             i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);

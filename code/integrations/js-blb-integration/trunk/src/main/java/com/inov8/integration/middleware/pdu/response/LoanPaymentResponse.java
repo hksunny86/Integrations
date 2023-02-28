@@ -17,6 +17,10 @@ import java.io.Serializable;
         "OrigSource",
         "ReceivedTimestamp",
         "SourceRequestId",
+        "TransactionId",
+        "Amount",
+        "ProcessingFee",
+        "TotalAmount",
         "HashData",
 })
 public class LoanPaymentResponse implements Serializable {
@@ -45,6 +49,14 @@ public class LoanPaymentResponse implements Serializable {
     private String receivedTimestamp;
     @JsonProperty("SourceRequestId")
     private String sourceRequestId;
+    @JsonProperty("TransactionId")
+    private String transactionId;
+    @JsonProperty("Amount")
+    private String amount;
+    @JsonProperty("ProcessingFee")
+    private String processingFee;
+    @JsonProperty("TotalAmount")
+    private String totalAmount;
     @JsonProperty("HashData")
     private String hashData;
 
@@ -134,6 +146,38 @@ public class LoanPaymentResponse implements Serializable {
 
     public void setSourceRequestId(String sourceRequestId) {
         this.sourceRequestId = sourceRequestId;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getProcessingFee() {
+        return processingFee;
+    }
+
+    public void setProcessingFee(String processingFee) {
+        this.processingFee = processingFee;
+    }
+
+    public String getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(String totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public String getHashData() {

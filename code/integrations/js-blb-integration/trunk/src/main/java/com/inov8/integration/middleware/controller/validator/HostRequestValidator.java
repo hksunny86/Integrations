@@ -3632,8 +3632,8 @@ public class HostRequestValidator {
 
     public static void validateOptasiaCredit(OptasiaCreditRequest integrationVO) {
 
-        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
-            throw new ValidationException("[FAILED] Validation Failed Mobile Number : " + integrationVO.getMobileNumber());
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id : " + integrationVO.getCustomerId());
         }
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
@@ -3660,8 +3660,8 @@ public class HostRequestValidator {
 
     public static void validateOptasiadebitInquiry(OptasiaDebitInquiryRequest integrationVO) {
 
-        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
-            throw new ValidationException("[FAILED] Validation Failed Mobile Number : " + integrationVO.getMobileNumber());
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id : " + integrationVO.getCustomerId());
         }
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
@@ -3688,8 +3688,8 @@ public class HostRequestValidator {
 
     public static void validateOptasiaDebit(OptasiaDebitRequest integrationVO) {
 
-        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
-            throw new ValidationException("[FAILED] Validation Failed Mobile Number : " + integrationVO.getMobileNumber());
+        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Id : " + integrationVO.getCustomerId());
         }
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
@@ -3731,6 +3731,10 @@ public class HostRequestValidator {
         }
         if (StringUtils.isEmpty(integrationVO.getRrn())) {
             throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getThirdPartTransactionId())) {
+            throw new ValidationException("[FAILED] Validation Failed Third Part Transaction Id: " + integrationVO.getThirdPartTransactionId());
         }
 
     }

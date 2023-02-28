@@ -13,6 +13,7 @@ import java.util.List;
         "ResponseCode",
         "ResponseDescription",
         "ResponseDateTime",
+        "status",
         "isStatus ",
         "HashData",
 })
@@ -28,6 +29,8 @@ public class TransactionActiveResponse implements Serializable {
     private String responseDescription;
     @JsonProperty("ResponseDateTime")
     private String responseDateTime;
+    @JsonProperty("status")
+    private String status;
     @JsonProperty("IsStatus")
     private Boolean isStatus;
     @JsonProperty("HashData")
@@ -65,11 +68,15 @@ public class TransactionActiveResponse implements Serializable {
         this.responseDateTime = responseDateTime;
     }
 
-    public Boolean getStatus() {
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Boolean getIsStatus() {
         return isStatus;
     }
 
-    public void setStatus(Boolean status) {
+    public void setIsStatus(Boolean status) {
         isStatus = status;
     }
 

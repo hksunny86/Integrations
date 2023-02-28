@@ -521,7 +521,10 @@ public class OptasiaMock {
         webServiceVO.setOrigSource("mobileApp");
         webServiceVO.setReceivedTimestamp("2021-07-20T13:10:38.738+03:00");
         webServiceVO.setSourceRequestId("EXT123");
-
+        webServiceVO.setTransactionId("54879653212");
+        webServiceVO.setAmount("5000");
+        webServiceVO.setProcessingFee("500");
+        webServiceVO.setTotalAmount("5500");
 
         return webServiceVO;
     }
@@ -622,7 +625,8 @@ public class OptasiaMock {
         transactionActiveResponse.setResponseCode("00");
         transactionActiveResponse.setResponseDescription("Success");
         transactionActiveResponse.setResponseDateTime("");
-        transactionActiveResponse.setStatus(true);
+        transactionActiveResponse.setStatus("Active");
+        transactionActiveResponse.setIsStatus(true);
 
         return transactionActiveResponse;
     }

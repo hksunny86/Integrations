@@ -43,7 +43,7 @@ public class TasdeeqService {
         I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             TasdeeqMock tasdeeqMock = new TasdeeqMock();
             String response = tasdeeqMock.authenticatedUpdated();
@@ -68,6 +68,7 @@ public class TasdeeqService {
             try {
                 logger.info("Sending Authenticate Updated Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
+                authenticateUpdatedResponse = (AuthenticateUpdatedResponse) JSONUtil.jsonToObject(res1.getBody(), AuthenticateUpdatedResponse.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
                 logger.info("Response received from client " + res1.getBody());
                 if (res1.getStatusCode().toString().equals("200")) {
@@ -113,7 +114,7 @@ public class TasdeeqService {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             TasdeeqMock tasdeeqMock = new TasdeeqMock();
             String response = tasdeeqMock.customAnalytics();
@@ -139,6 +140,7 @@ public class TasdeeqService {
             try {
                 logger.info("Sending Custom Analytics Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
+                customAnalyticsResponse = (CustomAnalyticsResponse) JSONUtil.jsonToObject(res1.getBody(), CustomAnalyticsResponse.class);
                 logger.info("Response received from client " + res1.getBody());
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
                 if (res1.getStatusCode().toString().equals("200")) {

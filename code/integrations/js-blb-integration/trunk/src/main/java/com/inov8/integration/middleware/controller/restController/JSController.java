@@ -451,7 +451,6 @@ public class JSController {
         return advanceLoanEarlyPyamentResponse;
     }
 
-
     @RequestMapping(value = "api/FeePaymentInquiry", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
     public @ResponseBody
     FeePaymentInquiryResponse feePaymentInquiryResponse(@RequestBody FeePaymentInquiryRequest request) {
@@ -612,6 +611,7 @@ public class JSController {
                 .append(request.getCustomerId())
                 .append(request.getDateTime())
                 .append(request.getRrn())
+                .append(request.getThirdPartTransactionId())
                 .append(request.getChannelId())
                 .append(request.getTerminalId())
                 .append(request.getReserved1())
@@ -1054,7 +1054,7 @@ public class JSController {
 
             }
         } else {
-            logger.info("******* DEBUG LOGS FOR ILoan Offer Request *********");
+            logger.info("******* DEBUG LOGS FOR Loan Offer Request *********");
             projectionResponse = new ProjectionResponse();
             projectionResponse.setResponseCode("111");
             projectionResponse.setResponseDescription("Request is not recognized");
@@ -1316,7 +1316,7 @@ public class JSController {
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
-                .append(request.getMobileNumber())
+                .append(request.getCustomerId())
                 .append(request.getDateTime())
                 .append(request.getRrn())
                 .append(request.getChannelId())
@@ -1388,7 +1388,7 @@ public class JSController {
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
-                .append(request.getMobileNumber())
+                .append(request.getCustomerId())
                 .append(request.getDateTime())
                 .append(request.getRrn())
                 .append(request.getChannelId())
@@ -1459,7 +1459,7 @@ public class JSController {
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
-                .append(request.getMobileNumber())
+                .append(request.getCustomerId())
                 .append(request.getDateTime())
                 .append(request.getRrn())
                 .append(request.getChannelId())

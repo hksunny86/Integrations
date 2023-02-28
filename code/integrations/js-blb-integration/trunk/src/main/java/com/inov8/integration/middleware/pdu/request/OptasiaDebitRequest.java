@@ -43,8 +43,8 @@ public class OptasiaDebitRequest implements Serializable {
     private String userName;
     @JsonProperty("Password")
     private String password;
-    @JsonProperty("MobileNumber")
-    private String mobileNumber;
+    @JsonProperty("CustomerId")
+    private String customerId;
     @JsonProperty("DateTime")
     private String dateTime;
     @JsonProperty("Rrn")
@@ -100,12 +100,12 @@ public class OptasiaDebitRequest implements Serializable {
         this.password = password;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getDateTime() {

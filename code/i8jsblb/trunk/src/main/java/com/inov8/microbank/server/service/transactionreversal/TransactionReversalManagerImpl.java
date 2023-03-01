@@ -1494,6 +1494,21 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
         return model;
     }
 
+    @Override
+    public TransactionDetailMasterModel loadTDMbyThridPartyRRN(String rrn) throws Exception {
+        return transactionDetailMasterManager.loadTransactionDetailMasterModelByRRN(rrn);
+    }
+
+    @Override
+    public TransactionDetailMasterModel loadTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException {
+        return transactionDetailMasterManager.loadTDMbyMobileNumber(mobileNo, productId);
+    }
+
+//    @Override
+//    public List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, String startDate, String endDate) throws FrameworkCheckedException {
+//        return transactionDetailMasterManager.loadTDMbyMobileandDateRange(mobileNo, startDate, endDate);
+//    }
+
     public IBFTRetryAdviceListViewDAO getiBFTRetryAdviceListViewDAO() {
         return iBFTRetryAdviceListViewDAO;
     }

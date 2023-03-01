@@ -3,6 +3,7 @@ package com.inov8.integration.webservice.vo;
 import com.inov8.integration.vo.CardType;
 import com.inov8.integration.vo.CatalogList;
 import com.inov8.integration.vo.SegmentList;
+import com.inov8.integration.webservice.optasiaVO.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -221,6 +222,1511 @@ public class WebServiceVO implements Serializable {
     private String caseStatus;
     private String clsComment;
     private String currencyCode;
+    private String minorCustomerPic;
+    private String bFormPic;
+    private String parentCnicPic;
+    private String snicPic;
+    private String sNicBackPic;
+    private String ParentNicBackPic;
+    private String fatherMotherMobileNumber;
+    private String fatherCnic;
+    private String fatherCnicIssuanceDate;
+    private String fatherCnicExpiryDate;
+    private String motherCnic;
+    private String shaCnic;
+    private String walletType;
+    private String walletStatus;
+    private String taxRegime;
+    private String lienStatus;
+    private String sourceRequestId;
+    private String offerName;
+    private String amount;
+    private String externalLoanId;
+    private String merchantId;
+    private String fed;
+    private String loanPurpose;
+    private String code;
+    private String identityValue;
+    private String identityType;
+    private String origSource;
+    private String receivedTimestamp;
+    private String internalLoanId;
+    private String advanceOfferId;
+    private String loanState;
+    private String LoanTimestamp;
+    private String loanReason;
+    private String commodityType;
+    private String principalAmount;
+    private String setupFees;
+    private String loanPlanId;
+    private String loanPlanName;
+    private String loanProductGroup;
+    private String repaymentsCount;
+    private String gross;
+    private String principal;
+    private String interest;
+    private String interestVAT;
+    private String chargesVAT;
+    private String totalGross;
+    private String totalPrincipal;
+    private String totalSetupFees;
+    private String totalInterest;
+    private String totalInterestVAT;
+    private String totalCharges;
+    private String totalChargesVAT;
+    private String totalPendingRecoveries;
+    private String currentPeriod;
+    private String daysLeftInPeriod;
+    private String nextPeriod;
+    private String loanOffer;
+    private String setUpFees;
+    private String repayment;
+    private String repaymentCounts;
+    private String totalExpenses;
+    private String periodIndex;
+    private String periodType;
+    private String periodStartTimestamp;
+    private String periodEndTimestamp;
+    private String periodStartDayOfLoanIndex;
+    private String periodEndDayOfLoanIndex;
+    private String totalOneOffCharges;
+    private String chargeName;
+    private String chargeAmount;
+    private String chargeVAT;
+    private String principalFrom;
+    private String principalTo;
+    private String maturityDetails;
+    private String maturityDuration;
+    private String interestName;
+    private String interestType;
+    private String interestValue;
+    private String daysOffset;
+    private String interval;
+    private String oneOffCharges;
+    private String chargeType;
+    private String chargeValue;
+    private String periodsProjections;
+    private String periodStartTimemp;
+    private String milestones;
+    private String dayOfLoan;
+    private String date;
+    private String interestAdjustment;
+    private String net;
+    private String vat;
+    private String outstandingPerCurrency;
+    private String numOutstandingLoans;
+    private String totalPendingLoans;
+    private String events;
+    private String eventType;
+    private String eventTypeStatus;
+    private String eventTransactionId;
+    private String thirdPartyTransactionId;
+    private String eventReason;
+    private String eventReasonDetails;
+    private String period;
+    private String periodExpirationTimestamp;
+    private String principalAdjustment;
+    private String principalBefore;
+    private String principalAfter;
+    private String setupFeesAdjustment;
+    private String setupFeesBefore;
+    private String setupFeesAfter;
+    private String interestAdjustmentVAT;
+    private String interestBefore;
+    private String interestAfter;
+    private String totalChargesAfter;
+    private String totalChargesAdjustment;
+    private String totalChargesAdjustmentVAT;
+    private String totalChargesBefore;
+    private String eventTimestamp;
+    private String receptionTimestamp;
+    private String processingTimestamp;
+    private String loanReasonDetails;
+    private String loanTimestamp;
+    private String loanInfo;
+    private String loan;
+    private String report;
+    private String outstanding;
+    private String plan;
+    private String reason;
+    private String loanEvent;
+    private String loanEventStatus;
+    private String upToPeriod;
+    private String offerClass;
+    private String name;
+    private String loanTimeStamp;
+    private String shortCode;
+    private String filterType;
+
+    private String reportDate;
+    private String reportTime;
+    private String city;
+    private String noOfActiveAccounts;
+    private String totalOutstandingBalance;
+    private String plus3024m;
+    private String plus6024m;
+    private String plus9024m;
+    private String plus12024m;
+    private String plus15024m;
+    private String plus18024m;
+    private String writeOff;
+    private String disclaimerText;
+    private String remarks;
+    private String messageCode;
+    private Boolean isEligible;
+    private String eligibilityStatus;
+    private String fromDate;
+    private String toDate;
+    private Boolean isStatusFlag;
+    private List<DueDatePlan> dueDatePlanList;
+    private List<History> historyList;
+    private List<Interest> interestList;
+    private List<LoanAmount> loanAmountList;
+    private List<LoanOffers> loanOffersList;
+    private List<OneOffCharges> oneOffChargesList;
+    private List<OutstandingStatus> outstandingStatusList;
+    private List<RecurringCharges> recurringChargesList;
+    private List<PeriodsProjection> periodsProjectionList;
+    private String processingFee;
+    private List<LoansPerState> loansPerStates;
+    private List<EligibilityStatus> eligibilityStatusList;
+    private List<LoanOffersByLoanProductGroup> loanOffersByLoanProductGroupList;
+
+    public List<LoanOffersByLoanProductGroup> getLoanOffersByLoanProductGroupList() {
+        return loanOffersByLoanProductGroupList;
+    }
+
+    public void setLoanOffersByLoanProductGroupList(List<LoanOffersByLoanProductGroup> loanOffersByLoanProductGroupList) {
+        this.loanOffersByLoanProductGroupList = loanOffersByLoanProductGroupList;
+    }
+
+    public List<EligibilityStatus> getEligibilityStatusList() {
+        return eligibilityStatusList;
+    }
+
+    public void setEligibilityStatusList(List<EligibilityStatus> eligibilityStatusList) {
+        this.eligibilityStatusList = eligibilityStatusList;
+    }
+
+    public List<LoansPerState> getLoansPerStates() {
+        return loansPerStates;
+    }
+
+    public void setLoansPerStates(List<LoansPerState> loansPerStates) {
+        this.loansPerStates = loansPerStates;
+    }
+
+    public String getProcessingFee() {
+        return processingFee;
+    }
+
+    public void setProcessingFee(String processingFee) {
+        this.processingFee = processingFee;
+    }
+
+    public List<PeriodsProjection> getPeriodsProjectionList() {
+        return periodsProjectionList;
+    }
+
+    public void setPeriodsProjectionList(List<PeriodsProjection> periodsProjectionList) {
+        this.periodsProjectionList = periodsProjectionList;
+    }
+
+    public List<Interest> getInterestList() {
+        return interestList;
+    }
+
+    public void setInterestList(List<Interest> interestList) {
+        this.interestList = interestList;
+    }
+
+    public List<LoanOffers> getLoanOffersList() {
+        return loanOffersList;
+    }
+
+    public void setLoanOffersList(List<LoanOffers> loanOffersList) {
+        this.loanOffersList = loanOffersList;
+    }
+
+    public List<OneOffCharges> getOneOffChargesList() {
+        return oneOffChargesList;
+    }
+
+    public void setOneOffChargesList(List<OneOffCharges> oneOffChargesList) {
+        this.oneOffChargesList = oneOffChargesList;
+    }
+
+    public List<OutstandingStatus> getOutstandingStatusList() {
+        return outstandingStatusList;
+    }
+
+    public void setOutstandingStatusList(List<OutstandingStatus> outstandingStatusList) {
+        this.outstandingStatusList = outstandingStatusList;
+    }
+
+    public List<RecurringCharges> getRecurringChargesList() {
+        return recurringChargesList;
+    }
+
+    public void setRecurringChargesList(List<RecurringCharges> recurringChargesList) {
+        this.recurringChargesList = recurringChargesList;
+    }
+
+    public Boolean getStatusFlag() {
+        return isStatusFlag;
+    }
+
+    public void setStatusFlag(Boolean statusFlag) {
+        isStatusFlag = statusFlag;
+    }
+
+    public List<DueDatePlan> getDueDatePlanList() {
+        return dueDatePlanList;
+    }
+
+    public void setDueDatePlanList(List<DueDatePlan> dueDatePlanList) {
+        this.dueDatePlanList = dueDatePlanList;
+    }
+
+    public List<LoanAmount> getLoanAmountList() {
+        return loanAmountList;
+    }
+
+    public void setLoanAmountList(List<LoanAmount> loanAmountList) {
+        this.loanAmountList = loanAmountList;
+    }
+
+    public List<History> getHistoryList() {
+        return historyList;
+    }
+
+    public void setHistoryList(List<History> historyList) {
+        this.historyList = historyList;
+    }
+
+    public String getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(String fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public String getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
+    }
+
+    public Boolean getEligible() {
+        return isEligible;
+    }
+
+    public void setEligible(Boolean eligible) {
+        isEligible = eligible;
+    }
+
+    public String getEligibilityStatus() {
+        return eligibilityStatus;
+    }
+
+    public void setEligibilityStatus(String eligibilityStatus) {
+        this.eligibilityStatus = eligibilityStatus;
+    }
+
+    public String getReportDate() {
+        return reportDate;
+    }
+
+    public void setReportDate(String reportDate) {
+        this.reportDate = reportDate;
+    }
+
+    public String getReportTime() {
+        return reportTime;
+    }
+
+    public void setReportTime(String reportTime) {
+        this.reportTime = reportTime;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getNoOfActiveAccounts() {
+        return noOfActiveAccounts;
+    }
+
+    public void setNoOfActiveAccounts(String noOfActiveAccounts) {
+        this.noOfActiveAccounts = noOfActiveAccounts;
+    }
+
+    public String getTotalOutstandingBalance() {
+        return totalOutstandingBalance;
+    }
+
+    public void setTotalOutstandingBalance(String totalOutstandingBalance) {
+        this.totalOutstandingBalance = totalOutstandingBalance;
+    }
+
+    public String getPlus3024m() {
+        return plus3024m;
+    }
+
+    public void setPlus3024m(String plus3024m) {
+        this.plus3024m = plus3024m;
+    }
+
+    public String getPlus6024m() {
+        return plus6024m;
+    }
+
+    public void setPlus6024m(String plus6024m) {
+        this.plus6024m = plus6024m;
+    }
+
+    public String getPlus9024m() {
+        return plus9024m;
+    }
+
+    public void setPlus9024m(String plus9024m) {
+        this.plus9024m = plus9024m;
+    }
+
+    public String getPlus12024m() {
+        return plus12024m;
+    }
+
+    public void setPlus12024m(String plus12024m) {
+        this.plus12024m = plus12024m;
+    }
+
+    public String getPlus15024m() {
+        return plus15024m;
+    }
+
+    public void setPlus15024m(String plus15024m) {
+        this.plus15024m = plus15024m;
+    }
+
+    public String getPlus18024m() {
+        return plus18024m;
+    }
+
+    public void setPlus18024m(String plus18024m) {
+        this.plus18024m = plus18024m;
+    }
+
+    public String getWriteOff() {
+        return writeOff;
+    }
+
+    public void setWriteOff(String writeOff) {
+        this.writeOff = writeOff;
+    }
+
+    public String getDisclaimerText() {
+        return disclaimerText;
+    }
+
+    public void setDisclaimerText(String disclaimerText) {
+        this.disclaimerText = disclaimerText;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getMessageCode() {
+        return messageCode;
+    }
+
+    public void setMessageCode(String messageCode) {
+        this.messageCode = messageCode;
+    }
+
+    public String getFilterType() {
+        return filterType;
+    }
+
+    public void setFilterType(String filterType) {
+        this.filterType = filterType;
+    }
+
+    public String getShortCode() {
+        return shortCode;
+    }
+
+    public void setShortCode(String shortCode) {
+        this.shortCode = shortCode;
+    }
+
+    public String getLoanTimeStamp() {
+        return loanTimeStamp;
+    }
+
+    public void setLoanTimeStamp(String loanTimeStamp) {
+        this.loanTimeStamp = loanTimeStamp;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getOfferClass() {
+        return offerClass;
+    }
+
+    public void setOfferClass(String offerClass) {
+        this.offerClass = offerClass;
+    }
+
+    public String getUpToPeriod() {
+        return upToPeriod;
+    }
+
+    public void setUpToPeriod(String upToPeriod) {
+        this.upToPeriod = upToPeriod;
+    }
+
+    public String getLoanEvent() {
+        return loanEvent;
+    }
+
+    public void setLoanEvent(String loanEvent) {
+        this.loanEvent = loanEvent;
+    }
+
+    public String getLoanEventStatus() {
+        return loanEventStatus;
+    }
+
+    public void setLoanEventStatus(String loanEventStatus) {
+        this.loanEventStatus = loanEventStatus;
+    }
+
+    public String getLoanOffer() {
+        return loanOffer;
+    }
+
+    public void setLoanOffer(String loanOffer) {
+        this.loanOffer = loanOffer;
+    }
+
+    public String getSetUpFees() {
+        return setUpFees;
+    }
+
+    public void setSetUpFees(String setUpFees) {
+        this.setUpFees = setUpFees;
+    }
+
+    public String getRepayment() {
+        return repayment;
+    }
+
+    public void setRepayment(String repayment) {
+        this.repayment = repayment;
+    }
+
+    public String getRepaymentCounts() {
+        return repaymentCounts;
+    }
+
+    public void setRepaymentCounts(String repaymentCounts) {
+        this.repaymentCounts = repaymentCounts;
+    }
+
+    public String getTotalExpenses() {
+        return totalExpenses;
+    }
+
+    public void setTotalExpenses(String totalExpenses) {
+        this.totalExpenses = totalExpenses;
+    }
+
+    public String getPeriodIndex() {
+        return periodIndex;
+    }
+
+    public void setPeriodIndex(String periodIndex) {
+        this.periodIndex = periodIndex;
+    }
+
+    public String getPeriodType() {
+        return periodType;
+    }
+
+    public void setPeriodType(String periodType) {
+        this.periodType = periodType;
+    }
+
+    public String getPeriodStartTimestamp() {
+        return periodStartTimestamp;
+    }
+
+    public void setPeriodStartTimestamp(String periodStartTimestamp) {
+        this.periodStartTimestamp = periodStartTimestamp;
+    }
+
+    public String getPeriodEndTimestamp() {
+        return periodEndTimestamp;
+    }
+
+    public void setPeriodEndTimestamp(String periodEndTimestamp) {
+        this.periodEndTimestamp = periodEndTimestamp;
+    }
+
+    public String getPeriodStartDayOfLoanIndex() {
+        return periodStartDayOfLoanIndex;
+    }
+
+    public void setPeriodStartDayOfLoanIndex(String periodStartDayOfLoanIndex) {
+        this.periodStartDayOfLoanIndex = periodStartDayOfLoanIndex;
+    }
+
+    public String getPeriodEndDayOfLoanIndex() {
+        return periodEndDayOfLoanIndex;
+    }
+
+    public void setPeriodEndDayOfLoanIndex(String periodEndDayOfLoanIndex) {
+        this.periodEndDayOfLoanIndex = periodEndDayOfLoanIndex;
+    }
+
+    public String getTotalOneOffCharges() {
+        return totalOneOffCharges;
+    }
+
+    public void setTotalOneOffCharges(String totalOneOffCharges) {
+        this.totalOneOffCharges = totalOneOffCharges;
+    }
+
+    public String getChargeName() {
+        return chargeName;
+    }
+
+    public void setChargeName(String chargeName) {
+        this.chargeName = chargeName;
+    }
+
+    public String getChargeAmount() {
+        return chargeAmount;
+    }
+
+    public void setChargeAmount(String chargeAmount) {
+        this.chargeAmount = chargeAmount;
+    }
+
+    public String getChargeVAT() {
+        return chargeVAT;
+    }
+
+    public void setChargeVAT(String chargeVAT) {
+        this.chargeVAT = chargeVAT;
+    }
+
+    public String getPrincipalFrom() {
+        return principalFrom;
+    }
+
+    public void setPrincipalFrom(String principalFrom) {
+        this.principalFrom = principalFrom;
+    }
+
+    public String getPrincipalTo() {
+        return principalTo;
+    }
+
+    public void setPrincipalTo(String principalTo) {
+        this.principalTo = principalTo;
+    }
+
+    public String getMaturityDetails() {
+        return maturityDetails;
+    }
+
+    public void setMaturityDetails(String maturityDetails) {
+        this.maturityDetails = maturityDetails;
+    }
+
+    public String getMaturityDuration() {
+        return maturityDuration;
+    }
+
+    public void setMaturityDuration(String maturityDuration) {
+        this.maturityDuration = maturityDuration;
+    }
+
+    public String getInterestName() {
+        return interestName;
+    }
+
+    public void setInterestName(String interestName) {
+        this.interestName = interestName;
+    }
+
+    public String getInterestType() {
+        return interestType;
+    }
+
+    public void setInterestType(String interestType) {
+        this.interestType = interestType;
+    }
+
+    public String getInterestValue() {
+        return interestValue;
+    }
+
+    public void setInterestValue(String interestValue) {
+        this.interestValue = interestValue;
+    }
+
+    public String getDaysOffset() {
+        return daysOffset;
+    }
+
+    public void setDaysOffset(String daysOffset) {
+        this.daysOffset = daysOffset;
+    }
+
+    public String getInterval() {
+        return interval;
+    }
+
+    public void setInterval(String interval) {
+        this.interval = interval;
+    }
+
+    public String getOneOffCharges() {
+        return oneOffCharges;
+    }
+
+    public void setOneOffCharges(String oneOffCharges) {
+        this.oneOffCharges = oneOffCharges;
+    }
+
+    public String getChargeType() {
+        return chargeType;
+    }
+
+    public void setChargeType(String chargeType) {
+        this.chargeType = chargeType;
+    }
+
+    public String getChargeValue() {
+        return chargeValue;
+    }
+
+    public void setChargeValue(String chargeValue) {
+        this.chargeValue = chargeValue;
+    }
+
+    public String getPeriodsProjections() {
+        return periodsProjections;
+    }
+
+    public void setPeriodsProjections(String periodsProjections) {
+        this.periodsProjections = periodsProjections;
+    }
+
+    public String getPeriodStartTimemp() {
+        return periodStartTimemp;
+    }
+
+    public void setPeriodStartTimemp(String periodStartTimemp) {
+        this.periodStartTimemp = periodStartTimemp;
+    }
+
+    public String getMilestones() {
+        return milestones;
+    }
+
+    public void setMilestones(String milestones) {
+        this.milestones = milestones;
+    }
+
+    public String getDayOfLoan() {
+        return dayOfLoan;
+    }
+
+    public void setDayOfLoan(String dayOfLoan) {
+        this.dayOfLoan = dayOfLoan;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getInterestAdjustment() {
+        return interestAdjustment;
+    }
+
+    public void setInterestAdjustment(String interestAdjustment) {
+        this.interestAdjustment = interestAdjustment;
+    }
+
+    public String getNet() {
+        return net;
+    }
+
+    public void setNet(String net) {
+        this.net = net;
+    }
+
+    public String getVat() {
+        return vat;
+    }
+
+    public void setVat(String vat) {
+        this.vat = vat;
+    }
+
+    public String getOutstandingPerCurrency() {
+        return outstandingPerCurrency;
+    }
+
+    public void setOutstandingPerCurrency(String outstandingPerCurrency) {
+        this.outstandingPerCurrency = outstandingPerCurrency;
+    }
+
+    public String getNumOutstandingLoans() {
+        return numOutstandingLoans;
+    }
+
+    public void setNumOutstandingLoans(String numOutstandingLoans) {
+        this.numOutstandingLoans = numOutstandingLoans;
+    }
+
+    public String getTotalPendingLoans() {
+        return totalPendingLoans;
+    }
+
+    public void setTotalPendingLoans(String totalPendingLoans) {
+        this.totalPendingLoans = totalPendingLoans;
+    }
+
+    public String getEvents() {
+        return events;
+    }
+
+    public void setEvents(String events) {
+        this.events = events;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public String getEventTypeStatus() {
+        return eventTypeStatus;
+    }
+
+    public void setEventTypeStatus(String eventTypeStatus) {
+        this.eventTypeStatus = eventTypeStatus;
+    }
+
+    public String getEventTransactionId() {
+        return eventTransactionId;
+    }
+
+    public void setEventTransactionId(String eventTransactionId) {
+        this.eventTransactionId = eventTransactionId;
+    }
+
+    public String getThirdPartyTransactionId() {
+        return thirdPartyTransactionId;
+    }
+
+    public void setThirdPartyTransactionId(String thirdPartyTransactionId) {
+        this.thirdPartyTransactionId = thirdPartyTransactionId;
+    }
+
+    public String getEventReason() {
+        return eventReason;
+    }
+
+    public void setEventReason(String eventReason) {
+        this.eventReason = eventReason;
+    }
+
+    public String getEventReasonDetails() {
+        return eventReasonDetails;
+    }
+
+    public void setEventReasonDetails(String eventReasonDetails) {
+        this.eventReasonDetails = eventReasonDetails;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
+    public String getPeriodExpirationTimestamp() {
+        return periodExpirationTimestamp;
+    }
+
+    public void setPeriodExpirationTimestamp(String periodExpirationTimestamp) {
+        this.periodExpirationTimestamp = periodExpirationTimestamp;
+    }
+
+    public String getPrincipalAdjustment() {
+        return principalAdjustment;
+    }
+
+    public void setPrincipalAdjustment(String principalAdjustment) {
+        this.principalAdjustment = principalAdjustment;
+    }
+
+    public String getPrincipalBefore() {
+        return principalBefore;
+    }
+
+    public void setPrincipalBefore(String principalBefore) {
+        this.principalBefore = principalBefore;
+    }
+
+    public String getPrincipalAfter() {
+        return principalAfter;
+    }
+
+    public void setPrincipalAfter(String principalAfter) {
+        this.principalAfter = principalAfter;
+    }
+
+    public String getSetupFeesAdjustment() {
+        return setupFeesAdjustment;
+    }
+
+    public void setSetupFeesAdjustment(String setupFeesAdjustment) {
+        this.setupFeesAdjustment = setupFeesAdjustment;
+    }
+
+    public String getSetupFeesBefore() {
+        return setupFeesBefore;
+    }
+
+    public void setSetupFeesBefore(String setupFeesBefore) {
+        this.setupFeesBefore = setupFeesBefore;
+    }
+
+    public String getSetupFeesAfter() {
+        return setupFeesAfter;
+    }
+
+    public void setSetupFeesAfter(String setupFeesAfter) {
+        this.setupFeesAfter = setupFeesAfter;
+    }
+
+    public String getInterestAdjustmentVAT() {
+        return interestAdjustmentVAT;
+    }
+
+    public void setInterestAdjustmentVAT(String interestAdjustmentVAT) {
+        this.interestAdjustmentVAT = interestAdjustmentVAT;
+    }
+
+    public String getInterestBefore() {
+        return interestBefore;
+    }
+
+    public void setInterestBefore(String interestBefore) {
+        this.interestBefore = interestBefore;
+    }
+
+    public String getInterestAfter() {
+        return interestAfter;
+    }
+
+    public void setInterestAfter(String interestAfter) {
+        this.interestAfter = interestAfter;
+    }
+
+    public String getTotalChargesAfter() {
+        return totalChargesAfter;
+    }
+
+    public void setTotalChargesAfter(String totalChargesAfter) {
+        this.totalChargesAfter = totalChargesAfter;
+    }
+
+    public String getTotalChargesAdjustment() {
+        return totalChargesAdjustment;
+    }
+
+    public void setTotalChargesAdjustment(String totalChargesAdjustment) {
+        this.totalChargesAdjustment = totalChargesAdjustment;
+    }
+
+    public String getTotalChargesAdjustmentVAT() {
+        return totalChargesAdjustmentVAT;
+    }
+
+    public void setTotalChargesAdjustmentVAT(String totalChargesAdjustmentVAT) {
+        this.totalChargesAdjustmentVAT = totalChargesAdjustmentVAT;
+    }
+
+    public String getTotalChargesBefore() {
+        return totalChargesBefore;
+    }
+
+    public void setTotalChargesBefore(String totalChargesBefore) {
+        this.totalChargesBefore = totalChargesBefore;
+    }
+
+    public String getEventTimestamp() {
+        return eventTimestamp;
+    }
+
+    public void setEventTimestamp(String eventTimestamp) {
+        this.eventTimestamp = eventTimestamp;
+    }
+
+    public String getReceptionTimestamp() {
+        return receptionTimestamp;
+    }
+
+    public void setReceptionTimestamp(String receptionTimestamp) {
+        this.receptionTimestamp = receptionTimestamp;
+    }
+
+    public String getProcessingTimestamp() {
+        return processingTimestamp;
+    }
+
+    public void setProcessingTimestamp(String processingTimestamp) {
+        this.processingTimestamp = processingTimestamp;
+    }
+
+    public String getLoanReasonDetails() {
+        return loanReasonDetails;
+    }
+
+    public void setLoanReasonDetails(String loanReasonDetails) {
+        this.loanReasonDetails = loanReasonDetails;
+    }
+
+    public String getLoanInfo() {
+        return loanInfo;
+    }
+
+    public void setLoanInfo(String loanInfo) {
+        this.loanInfo = loanInfo;
+    }
+
+    public String getLoan() {
+        return loan;
+    }
+
+    public void setLoan(String loan) {
+        this.loan = loan;
+    }
+
+    public String getReport() {
+        return report;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
+    }
+
+    public String getOutstanding() {
+        return outstanding;
+    }
+
+    public void setOutstanding(String outstanding) {
+        this.outstanding = outstanding;
+    }
+
+    public String getPlan() {
+        return plan;
+    }
+
+    public void setPlan(String plan) {
+        this.plan = plan;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getLoanState() {
+        return loanState;
+    }
+
+    public void setLoanState(String loanState) {
+        this.loanState = loanState;
+    }
+
+    public String getLoanTimestamp() {
+        return LoanTimestamp;
+    }
+
+    public void setLoanTimestamp(String loanTimestamp) {
+        LoanTimestamp = loanTimestamp;
+    }
+
+    public String getLoanReason() {
+        return loanReason;
+    }
+
+    public void setLoanReason(String loanReason) {
+        this.loanReason = loanReason;
+    }
+
+    public String getCommodityType() {
+        return commodityType;
+    }
+
+    public void setCommodityType(String commodityType) {
+        this.commodityType = commodityType;
+    }
+
+    public String getPrincipalAmount() {
+        return principalAmount;
+    }
+
+    public void setPrincipalAmount(String principalAmount) {
+        this.principalAmount = principalAmount;
+    }
+
+    public String getSetupFees() {
+        return setupFees;
+    }
+
+    public void setSetupFees(String setupFees) {
+        this.setupFees = setupFees;
+    }
+
+    public String getLoanPlanId() {
+        return loanPlanId;
+    }
+
+    public void setLoanPlanId(String loanPlanId) {
+        this.loanPlanId = loanPlanId;
+    }
+
+    public String getLoanPlanName() {
+        return loanPlanName;
+    }
+
+    public void setLoanPlanName(String loanPlanName) {
+        this.loanPlanName = loanPlanName;
+    }
+
+    public String getLoanProductGroup() {
+        return loanProductGroup;
+    }
+
+    public void setLoanProductGroup(String loanProductGroup) {
+        this.loanProductGroup = loanProductGroup;
+    }
+
+    public String getRepaymentsCount() {
+        return repaymentsCount;
+    }
+
+    public void setRepaymentsCount(String repaymentsCount) {
+        this.repaymentsCount = repaymentsCount;
+    }
+
+    public String getGross() {
+        return gross;
+    }
+
+    public void setGross(String gross) {
+        this.gross = gross;
+    }
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
+    }
+
+    public String getInterestVAT() {
+        return interestVAT;
+    }
+
+    public void setInterestVAT(String interestVAT) {
+        this.interestVAT = interestVAT;
+    }
+
+    public String getChargesVAT() {
+        return chargesVAT;
+    }
+
+    public void setChargesVAT(String chargesVAT) {
+        this.chargesVAT = chargesVAT;
+    }
+
+    public String getTotalGross() {
+        return totalGross;
+    }
+
+    public void setTotalGross(String totalGross) {
+        this.totalGross = totalGross;
+    }
+
+    public String getTotalPrincipal() {
+        return totalPrincipal;
+    }
+
+    public void setTotalPrincipal(String totalPrincipal) {
+        this.totalPrincipal = totalPrincipal;
+    }
+
+    public String getTotalSetupFees() {
+        return totalSetupFees;
+    }
+
+    public void setTotalSetupFees(String totalSetupFees) {
+        this.totalSetupFees = totalSetupFees;
+    }
+
+    public String getTotalInterest() {
+        return totalInterest;
+    }
+
+    public void setTotalInterest(String totalInterest) {
+        this.totalInterest = totalInterest;
+    }
+
+    public String getTotalInterestVAT() {
+        return totalInterestVAT;
+    }
+
+    public void setTotalInterestVAT(String totalInterestVAT) {
+        this.totalInterestVAT = totalInterestVAT;
+    }
+
+    public String getTotalCharges() {
+        return totalCharges;
+    }
+
+    public void setTotalCharges(String totalCharges) {
+        this.totalCharges = totalCharges;
+    }
+
+    public String getTotalChargesVAT() {
+        return totalChargesVAT;
+    }
+
+    public void setTotalChargesVAT(String totalChargesVAT) {
+        this.totalChargesVAT = totalChargesVAT;
+    }
+
+    public String getTotalPendingRecoveries() {
+        return totalPendingRecoveries;
+    }
+
+    public void setTotalPendingRecoveries(String totalPendingRecoveries) {
+        this.totalPendingRecoveries = totalPendingRecoveries;
+    }
+
+    public String getCurrentPeriod() {
+        return currentPeriod;
+    }
+
+    public void setCurrentPeriod(String currentPeriod) {
+        this.currentPeriod = currentPeriod;
+    }
+
+    public String getDaysLeftInPeriod() {
+        return daysLeftInPeriod;
+    }
+
+    public void setDaysLeftInPeriod(String daysLeftInPeriod) {
+        this.daysLeftInPeriod = daysLeftInPeriod;
+    }
+
+    public String getNextPeriod() {
+        return nextPeriod;
+    }
+
+    public void setNextPeriod(String nextPeriod) {
+        this.nextPeriod = nextPeriod;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getIdentityValue() {
+        return identityValue;
+    }
+
+    public void setIdentityValue(String identityValue) {
+        this.identityValue = identityValue;
+    }
+
+    public String getIdentityType() {
+        return identityType;
+    }
+
+    public void setIdentityType(String identityType) {
+        this.identityType = identityType;
+    }
+
+    public String getOrigSource() {
+        return origSource;
+    }
+
+    public void setOrigSource(String origSource) {
+        this.origSource = origSource;
+    }
+
+    public String getReceivedTimestamp() {
+        return receivedTimestamp;
+    }
+
+    public void setReceivedTimestamp(String receivedTimestamp) {
+        this.receivedTimestamp = receivedTimestamp;
+    }
+
+    public String getInternalLoanId() {
+        return internalLoanId;
+    }
+
+    public void setInternalLoanId(String internalLoanId) {
+        this.internalLoanId = internalLoanId;
+    }
+
+    public String getAdvanceOfferId() {
+        return advanceOfferId;
+    }
+
+    public void setAdvanceOfferId(String advanceOfferId) {
+        this.advanceOfferId = advanceOfferId;
+    }
+
+    public String getSourceRequestId() {
+        return sourceRequestId;
+    }
+
+    public void setSourceRequestId(String sourceRequestId) {
+        this.sourceRequestId = sourceRequestId;
+    }
+
+    public String getOfferName() {
+        return offerName;
+    }
+
+    public void setOfferName(String offerName) {
+        this.offerName = offerName;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getExternalLoanId() {
+        return externalLoanId;
+    }
+
+    public void setExternalLoanId(String externalLoanId) {
+        this.externalLoanId = externalLoanId;
+    }
+
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public String getFed() {
+        return fed;
+    }
+
+    public void setFed(String fed) {
+        this.fed = fed;
+    }
+
+    public String getLoanPurpose() {
+        return loanPurpose;
+    }
+
+    public void setLoanPurpose(String loanPurpose) {
+        this.loanPurpose = loanPurpose;
+    }
+
+    public String getWalletType() {
+        return walletType;
+    }
+
+    public void setWalletType(String walletType) {
+        this.walletType = walletType;
+    }
+
+    public String getWalletStatus() {
+        return walletStatus;
+    }
+
+    public void setWalletStatus(String walletStatus) {
+        this.walletStatus = walletStatus;
+    }
+
+    public String getTaxRegime() {
+        return taxRegime;
+    }
+
+    public void setTaxRegime(String taxRegime) {
+        this.taxRegime = taxRegime;
+    }
+
+    public String getLienStatus() {
+        return lienStatus;
+    }
+
+    public void setLienStatus(String lienStatus) {
+        this.lienStatus = lienStatus;
+    }
+
+    public String getShaCnic() {
+        return shaCnic;
+    }
+
+    public void setShaCnic(String shaCnic) {
+        this.shaCnic = shaCnic;
+    }
+
+    public String getFatherCnicIssuanceDate() {
+        return fatherCnicIssuanceDate;
+    }
+
+    public void setFatherCnicIssuanceDate(String fatherCnicIssuanceDate) {
+        this.fatherCnicIssuanceDate = fatherCnicIssuanceDate;
+    }
+
+    public String getFatherCnicExpiryDate() {
+        return fatherCnicExpiryDate;
+    }
+
+    public void setFatherCnicExpiryDate(String fatherCnicExpiryDate) {
+        this.fatherCnicExpiryDate = fatherCnicExpiryDate;
+    }
+
+    public String getMotherCnic() {
+        return motherCnic;
+    }
+
+    public void setMotherCnic(String motherCnic) {
+        this.motherCnic = motherCnic;
+    }
+
+    public String getFatherMotherMobileNumber() {
+        return fatherMotherMobileNumber;
+    }
+
+    public void setFatherMotherMobileNumber(String fatherMotherMobileNumber) {
+        this.fatherMotherMobileNumber = fatherMotherMobileNumber;
+    }
+
+    public String getFatherCnic() {
+        return fatherCnic;
+    }
+
+    public void setFatherCnic(String fatherCnic) {
+        this.fatherCnic = fatherCnic;
+    }
+
+    public String getMinorCustomerPic() {
+        return minorCustomerPic;
+    }
+
+    public void setMinorCustomerPic(String minorCustomerPic) {
+        this.minorCustomerPic = minorCustomerPic;
+    }
+
+    public String getbFormPic() {
+        return bFormPic;
+    }
+
+    public void setbFormPic(String bFormPic) {
+        this.bFormPic = bFormPic;
+    }
+
+    public String getParentCnicPic() {
+        return parentCnicPic;
+    }
+
+    public void setParentCnicPic(String parentCnicPic) {
+        this.parentCnicPic = parentCnicPic;
+    }
+
+    public String getSnicPic() {
+        return snicPic;
+    }
+
+    public void setSnicPic(String snicPic) {
+        this.snicPic = snicPic;
+    }
+
+    public String getsNicBackPic() {
+        return sNicBackPic;
+    }
+
+    public void setsNicBackPic(String sNicBackPic) {
+        this.sNicBackPic = sNicBackPic;
+    }
+
+    public String getParentNicBackPic() {
+        return ParentNicBackPic;
+    }
+
+    public void setParentNicBackPic(String parentNicBackPic) {
+        ParentNicBackPic = parentNicBackPic;
+    }
 
     public String getCurrencyCode() {
         return currencyCode;

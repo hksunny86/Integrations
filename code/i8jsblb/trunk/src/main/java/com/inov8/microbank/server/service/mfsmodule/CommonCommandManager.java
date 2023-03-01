@@ -804,4 +804,8 @@ public interface CommonCommandManager {
 
     public abstract OfflineBillersConfigModel loadOfflineBillersModelByProductId(String productId);
 
+    TasdeeqDataModel saveOrUpdateTasdeeqDataModel(TasdeeqDataModel tasdeeqDataModel);
+
+    public TasdeeqDataModel loadTasdeeqDataModelByMobile(String mobileNo) throws FrameworkCheckedException;
+
 }

@@ -125,4 +125,33 @@ public interface WebServiceSwitchController {
     WebServiceVO clsStatusUpdate(WebServiceVO webServiceVO);
     WebServiceVO blinkAccountVerificationInquiry(WebServiceVO webServiceVO);
     WebServiceVO blinkAccountVerification(WebServiceVO webServiceVO);
+    WebServiceVO fundWalletToCoreInquiry(WebServiceVO webServiceVO);
+    WebServiceVO fundWalletToCore(WebServiceVO webServiceVO);
+    WebServiceVO debitCardStatusVerification(WebServiceVO webServiceVO);
+    WebServiceVO advanceLoanPaymentSettlement(WebServiceVO webServiceVO);
+    WebServiceVO feePaymentInquiry(WebServiceVO webServiceVO);
+    WebServiceVO feePayment(WebServiceVO webServiceVO);
+    WebServiceVO updateMinorAccount(WebServiceVO webServiceVO);
+    WebServiceVO verifyLoginAccount(WebServiceVO webServiceVO);
+    WebServiceVO minorFatherBvsVerification(WebServiceVO webServiceVO);
+    WebServiceVO checqueBookStatus(WebServiceVO webServiceVO);
+    WebServiceVO cnicTo256(WebServiceVO webServiceVO);
+    WebServiceVO transactionStatus(WebServiceVO webServiceVO);
+    WebServiceVO profileStatus(WebServiceVO webServiceVO);
+    WebServiceVO lienStatus(WebServiceVO webServiceVO);
+    WebServiceVO initiateLoan(WebServiceVO webServiceVO);
+    WebServiceVO selectLoanOffer(WebServiceVO webServiceVO);
+    WebServiceVO selectLoan(WebServiceVO webServiceVO);
+//    WebServiceVO repayLoan(WebServiceVO webServiceVO);
+//    WebServiceVO getLoanSummary(WebServiceVO webServiceVO);
+    WebServiceVO payLoan(WebServiceVO webServiceVO);
+    WebServiceVO outstandingLoanStatus(WebServiceVO webServiceVO);
+    WebServiceVO loanPlan(WebServiceVO webServiceVO);
+    WebServiceVO loanHistory(WebServiceVO webServiceVO);
+    WebServiceVO transactionActive(WebServiceVO webServiceVO);
+//    WebServiceVO loanStatus(WebServiceVO webServiceVO);
+//    WebServiceVO loanCallBack(WebServiceVO webServiceVO);
+//    WebServiceVO offerListForCommodity(WebServiceVO webServiceVO);
+//    WebServiceVO customerAnalytics(WebServiceVO webServiceVO);
+
 }

@@ -58,6 +58,8 @@
         <property name="customerPictureDAO" ref="customerPictureDAO"></property>
         <property name="esbAdapter" ref="esbAdapter"></property>
         <property name="reversalAdviceQueingPreProcessor" ref="reversalAdviceQueingPreProcessor"/>
+        <property name="transactionDetailMasterDAO" ref="transactionDetailMasterDAO"/>
+
 <!--        <property name="ibftRetryAdviceDAO" ref="ibftRetryAdviceDAO"></property>-->
 
         <!--		<property name="chequeBookDAO" ref="chequeBookDAO"></property>-->

@@ -5,21 +5,17 @@ import com.inov8.integration.middleware.dao.TransactionDAO;
 import com.inov8.integration.middleware.dao.TransactionLogModel;
 import com.inov8.integration.middleware.enums.ResponseCodeEnum;
 import com.inov8.integration.middleware.enums.TransactionStatus;
+import com.inov8.integration.middleware.mock.OptasiaMock;
 import com.inov8.integration.middleware.pdu.request.*;
 import com.inov8.integration.middleware.pdu.response.*;
 import com.inov8.integration.middleware.util.*;
-import com.inov8.integration.vo.MiddlewareMessageVO;
 import com.inov8.integration.webservice.controller.WebServiceSwitchController;
 import com.inov8.integration.webservice.vo.WebServiceVO;
-import com.inov8.microbank.server.service.integration.vo.MiddlewareAdviceVO;
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.remoting.RemoteAccessException;
-import org.springframework.remoting.RemoteConnectFailureException;
 import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
 import org.springframework.remoting.httpinvoker.SimpleHttpInvokerRequestExecutor;
 import org.springframework.stereotype.Component;
@@ -27,14 +23,12 @@ import org.springframework.stereotype.Component;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.jms.*;
 import javax.net.ssl.*;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.security.InvalidKeyException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,14 +40,18 @@ public class HostIntegrationService {
     private static String I8_SCHEME = ConfigReader.getInstance().getProperty("i8-scheme", "http");
     private static String I8_SERVER = ConfigReader.getInstance().getProperty("i8-ip", "127.0.0.1");
     private static String I8_PORT = (ConfigReader.getInstance().getProperty("i8-port", ""));
-    private static String I8_QUEUE_SERVER = ConfigReader.getInstance().getProperty("i8-queue-ip", "127.0.0.1");
-    private static String I8_QUEUE_PORT = (ConfigReader.getInstance().getProperty("i8-queue-port", ""));
+    //    private static String I8_QUEUE_SERVER = ConfigReader.getInstance().getProperty("i8-queue-ip", "127.0.0.1");
+//    private static String I8_QUEUE_PORT = (ConfigReader.getInstance().getProperty("i8-queue-port", ""));
     private static String I8_PATH = (ConfigReader.getInstance().getProperty("i8-path", ""));
     private static int READ_TIME_OUT = Integer.parseInt(ConfigReader.getInstance().getProperty("i8-read-timeout", "55"));
     private static int CONNECTION_TIME_OUT = Integer.parseInt(ConfigReader.getInstance().getProperty("i8-connection-timeout", "10"));
 
     private static String publicKey = ConfigReader.getInstance().getProperty("publicKey", "");
     private static String privateKey = ConfigReader.getInstance().getProperty("privateKey", "");
+
+    private static String loginPrivateKey = ConfigReader.getInstance().getProperty("login.authentication.privateKey", "");
+    private String i8sb_target_environment = ConfigReader.getInstance().getProperty("i8sb.target.environment", "");
+    private OptasiaMock optasiaMock = new OptasiaMock();
 
     @Autowired
     TransactionDAO transactionDAO;
@@ -211,6 +209,204 @@ public class HostIntegrationService {
     }
 
 
+    public VerifyLoginAccountResponse verifyLoginAccountResponse(VerifyLoginAccountRequest request) {
+        WebServiceVO messageVO = new WebServiceVO();
+        long startTime = new Date().getTime(); // start time
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Starting Processing Account Verify Request RRN: " + messageVO.getRetrievalReferenceNumber());
+        transactionKey = request.getChannelId() + request.getRrn();
+        VerifyLoginAccountResponse response = new VerifyLoginAccountResponse();
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            logger.error("Date Parsing Error ", e);
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("verifyAccount");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = XMLUtil.convertToXML(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+        saveTransaction(logModel);
+        try {
+            logger.info("[HOST] Sent Account Verify Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.verifyLoginAccount(messageVO);
+        } catch (Exception e) {
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+        }
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Account Verify Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setAccountTitle(messageVO.getAccountTitle());
+            response.setMobileNumber(messageVO.getMobileNo());
+            response.setCnic(messageVO.getCnicNo());
+            response.setAccountStatus(messageVO.getAccountStatus());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setAccountType(messageVO.getAccountType());
+            response.setIsPinSet(messageVO.getOtpPin());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Account Verify Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Account Verify Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+
+        }
+
+        StringBuffer stringText = new StringBuffer(response.getRrn() +
+                response.getResponseCode() + response.getResponseDescription() + response.getAccountTitle() +
+                response.getMobileNumber() + response.getCnic() + response.getAccountStatus() +
+                response.getAccountType()
+                + response.getIsPinSet());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** ACCOUNT VERIFY REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = XMLUtil.convertToXML(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+
+
+        updateTransactionInDB(logModel);
+
+        return response;
+    }
+
+
+//    public ChequeBookResponse chequeBookResponse(ChequeBookRequest request) {
+//        WebServiceVO messageVO = new WebServiceVO();
+//        long startTime = new Date().getTime(); // start time
+//        String transactionKey = request.getDateTime() + request.getRrn();
+//        messageVO.setRetrievalReferenceNumber(request.getRrn());
+//        logger.info("[HOST] Starting Processing Checque Book Request RRN: " + messageVO.getRetrievalReferenceNumber());
+//        transactionKey = request.getChannelId() + request.getRrn();
+//        ChequeBookResponse response = new ChequeBookResponse();
+//        messageVO.setUserName(request.getUserName());
+//        messageVO.setCustomerPassword(request.getPassword());
+//        messageVO.setCnicNo(request.getCnic());
+//        messageVO.setDateTime(request.getDateTime());
+//        messageVO.setMobileNo(request.getMobileNumber());
+//        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+//        messageVO.setMicrobankTransactionCode(request.getOrignalTransactionRRN());
+//        messageVO.setChannelId(request.getChannelId());
+//        messageVO.setReserved1(request.getReserved1());
+//        messageVO.setReserved2(request.getReserved2());
+//        messageVO.setReserved3(request.getReserved3());
+//        messageVO.setReserved4(request.getReserved4());
+//        messageVO.setReserved5(request.getReserved5());
+//
+//
+//        TransactionLogModel logModel = new TransactionLogModel();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+//        Date txDateTime = new Date();
+//        try {
+//            txDateTime = dateFormat.parse(request.getDateTime());
+//        } catch (java.text.ParseException e) {
+//            logger.error("Date Parsing Error ", e);
+//        }
+//
+//        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+//        logModel.setTransactionDateTime(txDateTime);
+//        logModel.setChannelId(request.getChannelId());
+//        logModel.setTransactionCode("ChechqueBookStatus");
+//        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+//        //preparing request XML
+//        String requestXml = XMLUtil.convertToXML(request);
+//        //Setting in logModel
+//        logModel.setPduRequestHEX(requestXml);
+//        saveTransaction(logModel);
+//        try {
+//            logger.info("[HOST] Sent Checque Book Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//            messageVO = switchController.checqueBookStatus(messageVO);
+//        } catch (Exception e) {
+//            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+//        }
+//        // Set Response from i8
+//        if (messageVO != null
+//                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+//                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+//            logger.info("[HOST] Checque Book Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+//            response.setResponseDescription(messageVO.getResponseCodeDescription());
+//            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+//        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+//            logger.info("[HOST] Checque Book Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//            response.setResponseCode(messageVO.getResponseCode());
+//            response.setResponseDescription(messageVO.getResponseCodeDescription());
+//
+//            logModel.setResponseCode(messageVO.getResponseCode());
+//            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+//        } else {
+//            logger.info("[HOST] Checque Book Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+//            response.setResponseDescription("Host Not In Reach");
+//            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+//
+//        }
+//
+//        StringBuffer stringText = new StringBuffer(
+//                response.getResponseCode() + response.getResponseDescription());
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//        response.setHashData(sha256hex);
+//
+//        long endTime = new Date().getTime(); // end time
+//        long difference = endTime - startTime; // check different
+//        logger.debug("[HOST] **** Checque Book REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+//
+//        //preparing request XML
+//        String responseXml = XMLUtil.convertToXML(response);
+//        //Setting in logModel
+//        logModel.setPduResponseHEX(responseXml);
+//        logModel.setProcessedTime(difference);
+//
+//
+//        updateTransactionInDB(logModel);
+//
+//        return response;
+//    }
+
+
     public M0VerifyAccountResponse m0VerifyAccount(M0VerifyAccountRequest request) {
         WebServiceVO messageVO = new WebServiceVO();
         long startTime = new Date().getTime(); // start time
@@ -317,138 +513,6 @@ public class HostIntegrationService {
 
         return response;
     }
-
-//    public ChequeBookResponse chequeBookResponse(ChequeBookRequest request) {
-//        WebServiceVO messageVO = new WebServiceVO();
-//        long startTime = new Date().getTime(); // start time
-//        String transactionKey = request.getDateTime() + request.getRrn();
-//        messageVO.setRetrievalReferenceNumber(request.getRrn());
-//        logger.info("[HOST] Starting Processing Account Verify Request RRN: " + messageVO.getRetrievalReferenceNumber());
-//        transactionKey = request.getChannelId() + request.getRrn();
-//        M0VerifyAccountResponse response = new M0VerifyAccountResponse();
-//        messageVO.setUserName(request.getUserName());
-//        messageVO.setCustomerPassword(request.getPassword());
-//        messageVO.setCnicNo(request.getCnic());
-//        messageVO.setDateTime(request.getDateTime());
-//        messageVO.setMobileNo(request.getMobileNumber());
-//        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-//        messageVO.setTransactionType(request.getOrignalTransactionRRN());
-//        messageVO.setChannelId(request.getChannelId());
-//        messageVO.setReserved1(request.getReserved1());
-//        messageVO.setReserved2(request.getReserved2());
-//        messageVO.setReserved3(request.getReserved3());
-//        messageVO.setReserved4(request.getReserved4());
-//        messageVO.setReserved5(request.getReserved5());
-//
-//
-//        TransactionLogModel logModel = new TransactionLogModel();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
-//        Date txDateTime = new Date();
-//        try {
-//            txDateTime = dateFormat.parse(request.getDateTime());
-//        } catch (java.text.ParseException e) {
-//            logger.error("Date Parsing Error ", e);
-//        }
-//
-//        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
-//        logModel.setTransactionDateTime(txDateTime);
-//        logModel.setChannelId(request.getChannelId());
-//        logModel.setTransactionCode("verifyAccount");
-//        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
-//        //preparing request XML
-//        String requestXml = JSONUtil.getJSON(request);
-//        //Setting in logModel
-//        logModel.setPduRequestHEX(requestXml);
-//        saveTransaction(logModel);
-//        try {
-//            logger.info("[HOST] Sent Account Verify Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-//            messageVO = switchController.verifyAccount(messageVO);
-//        } catch (Exception e) {
-//            if (!(e instanceof RemoteConnectFailureException)) {
-//                response.setResponseCode(ResponseCodeEnum.TRANSACTION_TIMED_OUT.getValue());
-//                StringWriter sw = new StringWriter();
-//                PrintWriter pw = new PrintWriter(sw);
-//                e.printStackTrace(pw);
-//                String stackTrace = sw.toString();
-//                if (stackTrace.contains("status code = 503")) {
-//                    response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-//                } else {
-//                    response.setResponseCode(ResponseCodeEnum.TRANSACTION_TIMED_OUT.getValue());
-//                }
-//                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
-//                logger.error("error" + e.getMessage());
-//            }        }
-//        // Set Response from i8
-//        if (messageVO != null
-//                && StringUtils.isNotEmpty(messageVO.getResponseCode())
-//                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
-//            logger.info("[HOST] Account Verify Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-//            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-//            response.setResponseDescription(messageVO.getResponseCodeDescription());
-//            response.setAccountTitle(messageVO.getAccountTitle());
-//            response.setMobileNumber(messageVO.getMobileNo());
-//            response.setCnic(messageVO.getCnicNo());
-//            response.setAccountStatus(messageVO.getAccountStatus());
-//            response.setFirstName(messageVO.getFirstName());
-//            response.setLastName(messageVO.getLastName());
-//            response.setCnicExpiry(messageVO.getCnicExpiry());
-//            response.setAccountType(messageVO.getAccountType());
-//            response.setDateOfBirth(messageVO.getDateOfBirth());
-//            response.setIsPinSet(messageVO.getOtpPin());
-//            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-//        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
-//            logger.info("[HOST] Account Verify Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-//
-//            response.setResponseCode(messageVO.getResponseCode());
-//            response.setResponseDescription(messageVO.getResponseCodeDescription());
-//
-//            logModel.setResponseCode(messageVO.getResponseCode());
-//            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-//        } else {
-//            logger.info("[HOST] Account Verify Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-//
-//            if ((response.getResponseCode() != null) && (response.getResponseCode().equalsIgnoreCase(ResponseCodeEnum.TRANSACTION_TIMED_OUT.getValue()))) {
-//
-//                response.setResponseCode(ResponseCodeEnum.TRANSACTION_TIMED_OUT.getValue());
-//                response.setResponseDescription("Transaction Time Out");
-//                logModel.setResponseCode(ResponseCodeEnum.TRANSACTION_TIMED_OUT.getValue());
-//
-//
-//            } else {
-//                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-//                response.setResponseDescription("Host Not In Reach");
-//                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-//
-//
-//            }
-//            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
-//
-//        }
-//
-//        StringBuffer stringText = new StringBuffer(
-//                response.getResponseCode() + response.getResponseDescription() + response.getAccountTitle() +
-//                        response.getMobileNumber() + response.getCnic() + response.getAccountStatus() +
-//                        response.getFirstName() + response.getLastName() + response.getAccountType() +
-//                        response.getCnicExpiry() + response.getDateOfBirth()
-//                        + response.getIsPinSet());
-//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//        response.setHashData(sha256hex);
-//
-//        long endTime = new Date().getTime(); // end time
-//        long difference = endTime - startTime; // check different
-//        logger.debug("[HOST] **** ACCOUNT VERIFY REQUEST PROCESSED IN ****: " + difference + " milliseconds");
-//
-//        //preparing request XML
-//        String responseXml = JSONUtil.getJSON(response);
-//        //Setting in logModel
-//        logModel.setPduResponseHEX(responseXml);
-//        logModel.setProcessedTime(difference);
-//
-//
-//        updateTransactionInDB(logModel);
-//
-//        return response;
-//    }
 
 
     public AccountOpeningResponse accountOpening(AccountOpeningRequest request) {
@@ -755,7 +819,7 @@ public class HostIntegrationService {
 
         messageVO.setUserName(request.getUserName());
         messageVO.setCustomerPassword(request.getPassword());
-        messageVO.setMobilePin(request.getmPin());
+//        messageVO.setMobilePin(request.getmPin());
         messageVO.setAccountNo1(request.getAccountNumber());
         //As per demand of abubakar to validate otp
         messageVO.setMobileNo(request.getAccountNumber());
@@ -767,7 +831,22 @@ public class HostIntegrationService {
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setPaymentType(request.getPaymentType());
         messageVO.setChannelId(request.getChannelId());
-        messageVO.setOtpPin(request.getOtp());
+//        messageVO.setOtpPin(request.getOtp());
+        try {
+            String text;
+            String pin;
+            if (request.getOtp() != null && !request.getOtp().equals("")) {
+                text = request.getOtp();
+                pin = text.replaceAll("\\r|\\n", "");
+                messageVO.setOtpPin(RSAEncryption.decrypt(pin, loginPrivateKey));
+            } else if (request.getmPin() != null && !request.getmPin().equals("")) {
+                text = request.getmPin();
+                pin = text.replaceAll("\\r|\\n", "");
+                messageVO.setMobilePin(RSAEncryption.decrypt(pin, loginPrivateKey));
+            }
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         if (request.getChannelId().equalsIgnoreCase("FONEPAY")) {
             messageVO.setReserved1("03");
         } else {
@@ -1144,8 +1223,25 @@ public class HostIntegrationService {
         messageVO.setDateTime(request.getDateTime());
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
-        messageVO.setOtpPin(request.getOtp());
-        messageVO.setMobilePin(request.getmPin());
+//        messageVO.setOtpPin(request.getOtp());
+//        messageVO.setMobilePin(request.getmPin());
+        try {
+            String text;
+            String mpin;
+            if (request.getmPin() != null && !request.getmPin().equals("")) {
+                text = request.getmPin();
+                mpin = text.replaceAll("\\r|\\n", "");
+                messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+            } else if (request.getOtp() != null && !request.getOtp().equals("")) {
+                text = request.getOtp();
+                mpin = text.replaceAll("\\r|\\n", "");
+                messageVO.setOtpPin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+            }
+
+
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         messageVO.setTerminalId("Apigee");
         messageVO.setReserved1(request.getReserved());
         messageVO.setReserved2(request.getReserved2());
@@ -1428,13 +1524,27 @@ public class HostIntegrationService {
 
         messageVO.setUserName(request.getUserName());
         messageVO.setCustomerPassword(request.getPassword());
-        messageVO.setMobilePin(request.getMpin());
+//        messageVO.setMobilePin(request.getMpin());
         messageVO.setMobileNo(request.getMobileNumber());
         messageVO.setDateTime(request.getDateTime());
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setOtpPin(request.getOtpPin());
+//        messageVO.setOtpPin(request.getOtpPin());
+        try {
+            if (request.getOtpPin() != null && !request.getOtpPin().equals("")) {
+                String text = request.getOtpPin();
+                String otp = text.replaceAll("\\r|\\n", "");
+                messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+            } else if (request.getMpin() != null && !request.getMpin().equals("")) {
+                String text = request.getMpin();
+                String mpin = text.replaceAll("\\r|\\n", "");
+                messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+            }
+
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());
@@ -1532,13 +1642,26 @@ public class HostIntegrationService {
 
         messageVO.setUserName(request.getUserName());
         messageVO.setCustomerPassword(request.getPassword());
-        messageVO.setMobilePin(request.getMpin());
+//        messageVO.setMobilePin(request.getMpin());
         messageVO.setMobileNo(request.getMobileNumber());
         messageVO.setDateTime(request.getDateTime());
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setChannelId(request.getChannelId());
-        messageVO.setOtpPin(request.getOtpPin());
+//        messageVO.setOtpPin(request.getOtpPin());
+        try {
+            if (request.getOtpPin() != null && !request.getOtpPin().equals("")) {
+                String text = request.getOtpPin();
+                String otp = text.replaceAll("\\r|\\n", "");
+                messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+            } else if (request.getMpin() != null && !request.getMpin().equals("")) {
+                String text = request.getMpin();
+                String mpin = text.replaceAll("\\r|\\n", "");
+                messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+            }
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());
@@ -1703,6 +1826,7 @@ public class HostIntegrationService {
             response.setBillPaid(messageVO.getBillPaid());
             response.setDueDate(messageVO.getDueDate());
             response.setOverDue(messageVO.getOverDue());
+//            response.setComissionAmount(messageVO.getCommissionAmount());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -1764,8 +1888,22 @@ public class HostIntegrationService {
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setChannelId(request.getChannelId());
-        messageVO.setOtpPin(request.getOtpPin());
-        messageVO.setMobilePin(request.getOtpPin());
+//        messageVO.setOtpPin(request.getOtpPin());
+
+        try {
+            if (request.getOtpPin() != null && !request.getOtpPin().equals("")) {
+                String text = request.getOtpPin();
+                String otp = text.replaceAll("\\r|\\n", "");
+                messageVO.setMobilePin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+            }
+
+
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+//        messageVO.setMobilePin(request.getOtpPin());
         messageVO.setProductID(request.getProductId());
         messageVO.setConsumerNo(request.getConsumerNo());
         messageVO.setBillAmount(request.getAmount());
@@ -2516,8 +2654,23 @@ public class HostIntegrationService {
         webServiceVO.setTerminalId(cashOutRequest.getTerminalID());
         webServiceVO.setTransactionAmount(cashOutRequest.getAmount());
         webServiceVO.setCharges(cashOutRequest.getCharges());
-        webServiceVO.setOtpPin(cashOutRequest.getOtp());
-        webServiceVO.setMobilePin(cashOutRequest.getMpin());
+//        webServiceVO.setOtpPin(cashOutRequest.getOtp());
+//        webServiceVO.setMobilePin(cashOutRequest.getMpin());
+
+        try {
+            if (cashOutRequest.getMpin() != null && !cashOutRequest.getMpin().equals("")) {
+                String text = cashOutRequest.getMpin();
+                String mpin = text.replaceAll("\\r|\\n", "");
+                webServiceVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+            } else if (cashOutRequest.getOtp() != null && !cashOutRequest.getOtp().equals("")) {
+                String text = cashOutRequest.getOtp();
+                String otp = text.replaceAll("\\r|\\n", "");
+                webServiceVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+            }
+
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         webServiceVO.setMobileNo(cashOutRequest.getMobileNumber());
         webServiceVO.setPaymentMode(cashOutRequest.getPaymentType());
         webServiceVO.setReserved1(cashOutRequest.getReserved1());
@@ -2633,8 +2786,28 @@ public class HostIntegrationService {
         webServiceVO.setCustomerPassword(mpinRegistrationRequest.getPassword());
         webServiceVO.setChannelId(mpinRegistrationRequest.getChannelId());
         webServiceVO.setTerminalId(mpinRegistrationRequest.getTerminalId());
-        webServiceVO.setMobilePin(EncryptionUtil.encrypt(mpinRegistrationRequest.getMpin()));
-        webServiceVO.setConfirmMpin(EncryptionUtil.encrypt(mpinRegistrationRequest.getConfirmMpin()));
+//        webServiceVO.setMobilePin(EncryptionUtil.encrypt(mpinRegistrationRequest.getMpin()));
+        try {
+            String text;
+            String newPin;
+            text = mpinRegistrationRequest.getMpin();
+            newPin = text.replaceAll("\\r|\\n", "");
+            String newMpin = (RSAEncryption.decrypt(newPin, loginPrivateKey));
+            webServiceVO.setMobilePin(EncryptionUtil.encrypt(newMpin));
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+//        webServiceVO.setConfirmMpin(EncryptionUtil.encrypt(mpinRegistrationRequest.getConfirmMpin()));
+        try {
+            String text;
+            String confimPin;
+            text = mpinRegistrationRequest.getConfirmMpin();
+            confimPin = text.replaceAll("\\r|\\n", "");
+            String confirmMpin = (RSAEncryption.decrypt(confimPin, loginPrivateKey));
+            webServiceVO.setConfirmMpin(EncryptionUtil.encrypt(confirmMpin));
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         webServiceVO.setMobileNo(mpinRegistrationRequest.getMobileNumber());
         webServiceVO.setReserved1(mpinRegistrationRequest.getReserved1());
         webServiceVO.setReserved2(mpinRegistrationRequest.getReserved2());
@@ -2749,9 +2922,39 @@ public class HostIntegrationService {
         webServiceVO.setCustomerPassword(mpinChangeRequest.getPassword());
         webServiceVO.setChannelId(mpinChangeRequest.getChannelId());
         webServiceVO.setTerminalId(mpinChangeRequest.getTerminalId());
-        webServiceVO.setOldMpin(EncryptionUtil.encrypt(mpinChangeRequest.getOldMpin()));
-        webServiceVO.setMobilePin(EncryptionUtil.encrypt(mpinChangeRequest.getNewMpin()));
-        webServiceVO.setConfirmMpin(EncryptionUtil.encrypt(mpinChangeRequest.getConfirmMpin()));
+//        webServiceVO.setOldMpin(EncryptionUtil.encrypt(mpinChangeRequest.getOldMpin()));
+        try {
+            String text;
+            String oldMpin;
+            text = mpinChangeRequest.getOldMpin();
+            oldMpin = text.replaceAll("\\r|\\n", "");
+            String oldPin = (RSAEncryption.decrypt(oldMpin, loginPrivateKey));
+            webServiceVO.setOldMpin(EncryptionUtil.encrypt(oldPin));
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+//        webServiceVO.setMobilePin(EncryptionUtil.encrypt(mpinChangeRequest.getNewMpin()));
+        try {
+            String text;
+            String newPin;
+            text = mpinChangeRequest.getNewMpin();
+            newPin = text.replaceAll("\\r|\\n", "");
+            String newMpin = (RSAEncryption.decrypt(newPin, loginPrivateKey));
+            webServiceVO.setMobilePin(EncryptionUtil.encrypt(newMpin));
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+//        webServiceVO.setConfirmMpin(EncryptionUtil.encrypt(mpinChangeRequest.getConfirmMpin()));
+        try {
+            String text;
+            String confirmMPin;
+            text = mpinChangeRequest.getConfirmMpin();
+            confirmMPin = text.replaceAll("\\r|\\n", "");
+            String confirmPin = (RSAEncryption.decrypt(confirmMPin, loginPrivateKey));
+            webServiceVO.setConfirmMpin(EncryptionUtil.encrypt(confirmPin));
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         webServiceVO.setMobileNo(mpinChangeRequest.getMobileNumber());
         webServiceVO.setReserved1(mpinChangeRequest.getReserved1());
         webServiceVO.setReserved2(mpinChangeRequest.getReserved2());
@@ -2998,12 +3201,27 @@ public class HostIntegrationService {
         webServiceVO.setRetrievalReferenceNumber(webServiceVO.getRetrievalReferenceNumber());
         webServiceVO.setUserName(walletToWalletPaymentRequest.getUserName());
         webServiceVO.setCustomerPassword(walletToWalletPaymentRequest.getPassword());
-        webServiceVO.setMobilePin(walletToWalletPaymentRequest.getMpin());
+//        webServiceVO.setMobilePin(walletToWalletPaymentRequest.getMpin());
         webServiceVO.setMobileNo(walletToWalletPaymentRequest.getMobileNumber());
         webServiceVO.setDateTime(walletToWalletPaymentRequest.getDateTime());
         webServiceVO.setChannelId(walletToWalletPaymentRequest.getChannelId());
         webServiceVO.setTerminalId(walletToWalletPaymentRequest.getTerminalId());
-        webServiceVO.setOtpPin(walletToWalletPaymentRequest.getOtp());
+//        webServiceVO.setOtpPin(walletToWalletPaymentRequest.getOtp());
+        try {
+            if (walletToWalletPaymentRequest.getOtp() != null && !walletToWalletPaymentRequest.getOtp().equals("")) {
+                String text = walletToWalletPaymentRequest.getOtp();
+                String otp = text.replaceAll("\\r|\\n", "");
+                webServiceVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+            } else if (walletToWalletPaymentRequest.getMpin() != null && !walletToWalletPaymentRequest.getMpin().equals("")) {
+                String text = walletToWalletPaymentRequest.getMpin();
+                String pin = text.replaceAll("\\r|\\n", "");
+                webServiceVO.setMobilePin(RSAEncryption.decrypt(pin, loginPrivateKey));
+            }
+
+
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         webServiceVO.setReceiverMobileNumber(walletToWalletPaymentRequest.getReceiverMobileNumber());
         webServiceVO.setTotalAmount(walletToWalletPaymentRequest.getAmount());
         webServiceVO.setReserved1(walletToWalletPaymentRequest.getReserved1());
@@ -3363,9 +3581,30 @@ public class HostIntegrationService {
         webServiceVO.setChannelId(upgradeAccountRequest.getChannelId());
         webServiceVO.setTerminalId(upgradeAccountRequest.getTerminalId());
         if (upgradeAccountRequest.getReserved1().equals("02")) {
-            webServiceVO.setOtpPin(upgradeAccountRequest.getMpin());
+//            webServiceVO.setOtpPin(upgradeAccountRequest.getMpin());
+            try {
+                String text;
+                String pin;
+                if (upgradeAccountRequest.getMpin() != null) {
+                    text = upgradeAccountRequest.getMpin();
+                    pin = text.replaceAll("\\r|\\n", "");
+                    webServiceVO.setOtpPin(RSAEncryption.decrypt(pin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         } else {
-            webServiceVO.setMobilePin(upgradeAccountRequest.getMpin());
+            try {
+                String text;
+                String pin;
+                if (upgradeAccountRequest.getMpin() != null) {
+                    text = upgradeAccountRequest.getMpin();
+                    pin = text.replaceAll("\\r|\\n", "");
+                    webServiceVO.setMobilePin(RSAEncryption.decrypt(pin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
         webServiceVO.setCnicNo(upgradeAccountRequest.getCnic());
         webServiceVO.setFingerIndex(upgradeAccountRequest.getFingerIndex());
@@ -3696,7 +3935,19 @@ public class HostIntegrationService {
         webServiceVO.setCustomerPassword(accountStatusChangeRequest.getPassword());
         webServiceVO.setCnicNo(accountStatusChangeRequest.getCnic());
         webServiceVO.setAccountStatus(accountStatusChangeRequest.getAccountStatus());
-        webServiceVO.setOtpPin(accountStatusChangeRequest.getMpin());
+//        webServiceVO.setOtpPin(accountStatusChangeRequest.getMpin());
+        try {
+            String text;
+            String pin;
+            if (accountStatusChangeRequest.getMpin() != null) {
+                text = accountStatusChangeRequest.getMpin();
+                pin = text.replaceAll("\\r|\\n", "");
+                webServiceVO.setOtpPin(RSAEncryption.decrypt(pin, loginPrivateKey));
+
+            }
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         webServiceVO.setMobileNo(accountStatusChangeRequest.getMobileNumber());
         webServiceVO.setDateTime(accountStatusChangeRequest.getDateTime());
         webServiceVO.setChannelId(accountStatusChangeRequest.getChannelId());
@@ -3965,8 +4216,21 @@ public class HostIntegrationService {
         webServiceVO.setBenificieryIban(ibftAdviceRequest.getBenificieryIban());
         webServiceVO.setPurposeOfPayment(ibftAdviceRequest.getPurposeOfPayment());
         webServiceVO.setReserved1(ibftAdviceRequest.getReserved());
-        webServiceVO.setOtpPin(ibftAdviceRequest.getmPIN());// ya otp ha
-        webServiceVO.setMobilePin(ibftAdviceRequest.getOtpPin());//ya mpin ha
+//        webServiceVO.setOtpPin(ibftAdviceRequest.getmPIN());// ya otp ha
+//        webServiceVO.setMobilePin(ibftAdviceRequest.getOtpPin());//ya mpin ha
+        try {
+            if (ibftAdviceRequest.getOtpPin() != null && !ibftAdviceRequest.getOtpPin().equals("")) {
+                String text = ibftAdviceRequest.getOtpPin();
+                String otp = text.replaceAll("\\r|\\n", "");
+                webServiceVO.setMobilePin(RSAEncryption.decrypt(otp, loginPrivateKey));
+            } else if (ibftAdviceRequest.getmPIN() != null && !ibftAdviceRequest.getmPIN().equals("")) {
+                String text = ibftAdviceRequest.getmPIN();
+                String mpin = text.replaceAll("\\r|\\n", "");
+                webServiceVO.setOtpPin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+            }
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         webServiceVO.setReserved2(ibftAdviceRequest.getReserved2());
         webServiceVO.setReserved3(ibftAdviceRequest.getReserved3());
         webServiceVO.setReserved4(ibftAdviceRequest.getReserved4());
@@ -4247,9 +4511,27 @@ public class HostIntegrationService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setCardTypeId(request.getCardType());
         if (request.getPinType().equals("02")) {
-            messageVO.setOtpPin(request.getPin());
+//            messageVO.setOtpPin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         } else {
-            messageVO.setMobilePin(request.getPin());
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
         messageVO.setReserved1(request.getPinType());
         messageVO.setTransactionType(request.getTransactionType());
@@ -4371,9 +4653,28 @@ public class HostIntegrationService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         if (request.getPinType().equals("02")) {
-            messageVO.setOtpPin(request.getPin());
+//            messageVO.setOtpPin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
         } else {
-            messageVO.setMobilePin(request.getPin());
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
         messageVO.setReserved1(request.getPinType());
         messageVO.setReserved2(request.getReserved2());
@@ -4766,9 +5067,28 @@ public class HostIntegrationService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         if (request.getPinType().equals("02")) {
-            messageVO.setOtpPin(request.getPin());
+//            messageVO.setOtpPin(request.getPin());
+
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         } else {
-            messageVO.setMobilePin(request.getPin());
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
         messageVO.setReserved1(request.getPinType());
         messageVO.setFirstName(request.getName());
@@ -5144,9 +5464,27 @@ public class HostIntegrationService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         if (request.getPinType().equals("02")) {
-            messageVO.setOtpPin(request.getPin());
+//            messageVO.setOtpPin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         } else {
-            messageVO.setMobilePin(request.getPin());
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
         messageVO.setReserved1(request.getPinType());
         messageVO.setReceiverMobileNumber(request.getReceiverMobileNumber());
@@ -5271,9 +5609,27 @@ public class HostIntegrationService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         if (request.getPinType().equals("02")) {
-            messageVO.setOtpPin(request.getPin());
+//            messageVO.setOtpPin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         } else {
-            messageVO.setMobilePin(request.getPin());
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
         messageVO.setReserved1(request.getPinType());
         messageVO.setReceiverMobileNumber(request.getReceiverMobileNumber());
@@ -5398,9 +5754,27 @@ public class HostIntegrationService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         if (request.getPinType().equals("02")) {
-            messageVO.setOtpPin(request.getPin());
+//            messageVO.setOtpPin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         } else {
-            messageVO.setMobilePin(request.getPin());
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
         messageVO.setReserved1(request.getPinType());
         messageVO.setReceiverMobileNumber(request.getReceiverMobileNumber());
@@ -5780,9 +6154,27 @@ public class HostIntegrationService {
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setTerminalId(request.getTerminalId());
         if (request.getPinType().equals("02")) {
-            messageVO.setOtpPin(request.getPin());
+//            messageVO.setOtpPin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         } else {
-            messageVO.setMobilePin(request.getPin());
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
 
         messageVO.setReserved1(request.getPinType());
@@ -6009,7 +6401,6 @@ public class HostIntegrationService {
         return response;
     }
 
-
     public DebitResponse debitResponse(DebitRequest request) {
         long startTime = new Date().getTime(); // start time
         String transactionKey = request.getDateTime() + request.getRrn();
@@ -6030,9 +6421,28 @@ public class HostIntegrationService {
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setProductID(request.getProductId());
         if (request.getPinType().equals("02")) {
-            messageVO.setOtpPin(request.getPin());
+//            messageVO.setOtpPin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         } else {
-            messageVO.setMobilePin(request.getPin());
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
         }
         messageVO.setTransactionAmount(request.getTransactionAmount());
         messageVO.setReserved1(request.getPinType());
@@ -6081,40 +6491,41 @@ public class HostIntegrationService {
             messageVO = switchController.debit(messageVO);
         } catch (Exception e) {
 
-
-            if (e instanceof RemoteAccessException) {
-                if (!(e instanceof RemoteConnectFailureException)) {
-
-                    try {
-                        MiddlewareMessageVO middlewareMessageVO = new MiddlewareMessageVO();
-                        middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
-                        middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
-                        middlewareMessageVO.setStan(messageVO.getReserved2());
-                        middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-                        middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
-                        middlewareMessageVO.setDateTime(messageVO.getDateTime());
-                        middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
-                        middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
-                        this.sentDebitPaymentRequest(middlewareMessageVO);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        messageVO.setResponseCode("550");
-                        messageVO.setResponseCodeDescription("Host Not In Reach");
-                    }
-
-                    messageVO.setResponseCode(" ");
-                    messageVO.setResponseCodeDescription("");
-                    messageVO.setRetrievalReferenceNumber("");
-                }
-            }
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String stackTrace = sw.toString();
-            if (stackTrace.contains("status code = 503")) {
-                messageVO.setResponseCode("550");
-                messageVO.setResponseCodeDescription("Host Not In Reach");
-            }
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+//
+//            if (e instanceof RemoteAccessException) {
+//                if (!(e instanceof RemoteConnectFailureException)) {
+//
+//                    try {
+//                        MiddlewareMessageVO middlewareMessageVO = new MiddlewareMessageVO();
+//                        middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
+//                        middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
+//                        middlewareMessageVO.setStan(messageVO.getReserved2());
+//                        middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+//                        middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
+//                        middlewareMessageVO.setDateTime(messageVO.getDateTime());
+//                        middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
+//                        middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+//                        this.sentDebitPaymentRequest(middlewareMessageVO);
+//                    } catch (Exception ex) {
+//                        ex.printStackTrace();
+//                        messageVO.setResponseCode("550");
+//                        messageVO.setResponseCodeDescription("Host Not In Reach");
+//                    }
+//
+//                    messageVO.setResponseCode(" ");
+//                    messageVO.setResponseCodeDescription("");
+//                    messageVO.setRetrievalReferenceNumber("");
+//                }
+//            }
+//            StringWriter sw = new StringWriter();
+//            PrintWriter pw = new PrintWriter(sw);
+//            e.printStackTrace(pw);
+//            String stackTrace = sw.toString();
+//            if (stackTrace.contains("status code = 503")) {
+//                messageVO.setResponseCode("550");
+//                messageVO.setResponseCodeDescription("Host Not In Reach");
+//            }
         }
 
 
@@ -6124,6 +6535,18 @@ public class HostIntegrationService {
                 && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
             logger.info("[HOST] Debit Payment Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
 
+//            if (messageVO.getProductID().equals("10245364")){
+//                PaymentReversalRequest reversalRequest=new PaymentReversalRequest();
+//                String requestTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+//                String stan = String.valueOf((100000 + new Random().nextInt(900000)));
+//                reversalRequest.setTransactionCode(request.getRrn());
+//                reversalRequest.setRrn(requestTime+stan);
+//                reversalRequest.setDateTime(request.getDateTime());
+//                reversalRequest.setUserName(request.getUserName());
+//                reversalRequest.setPassword(request.getPassword());
+//                reversalRequest.setChannelId(request.getChannelId());
+//                this.paymentReversal(reversalRequest);
+//            }
             response.setRrn(messageVO.getRetrievalReferenceNumber());
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
@@ -6513,6 +6936,7 @@ public class HostIntegrationService {
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
             response.setComissionAmount(messageVO.getCommissionAmount());
+            response.setInclusiveExclusiveComissionAmount(messageVO.getReserved3());
             response.setTotalAmount(messageVO.getTotalAmount());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -6574,9 +6998,27 @@ public class HostIntegrationService {
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setProductID(request.getProductId());
         if (request.getPinType().equals("02")) {
-            messageVO.setOtpPin(request.getPin());
+//            messageVO.setOtpPin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         } else {
-            messageVO.setMobilePin(request.getPin());
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
         messageVO.setTransactionAmount(request.getTransactionAmount());
         messageVO.setReserved1(request.getPinType());
@@ -6622,39 +7064,40 @@ public class HostIntegrationService {
             logger.info("[HOST] Sent Credit Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.credit(messageVO);
         } catch (Exception e) {
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
 
-
-            if (e instanceof RemoteAccessException) {
-                if (!(e instanceof RemoteConnectFailureException)) {
-                    messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-                }
-            }
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String stackTrace = sw.toString();
-            if (stackTrace.contains("status code = 503")) {
-            MiddlewareMessageVO middlewareMessageVO = new MiddlewareMessageVO();
-            middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
-            middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
-            middlewareMessageVO.setStan(messageVO.getReserved2());
-            middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-            middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
-            middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
-            middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
-
-            try {
-                this.sentWalletRequest(middlewareMessageVO);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                messageVO.setResponseCode("550");
-                messageVO.setResponseCodeDescription("Host Not In Reach");
-            }
-            } else {
-            messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-            messageVO.setResponseCodeDescription("Successful");
-
-            }
+//below code comment disscuss with zulfiqar sir
+//            if (e instanceof RemoteAccessException) {
+//                if (!(e instanceof RemoteConnectFailureException)) {
+//                    messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+//                }
+//            }
+//            StringWriter sw = new StringWriter();
+//            PrintWriter pw = new PrintWriter(sw);
+//            e.printStackTrace(pw);
+//            String stackTrace = sw.toString();
+//            if (stackTrace.contains("status code = 503")) {
+//                MiddlewareMessageVO middlewareMessageVO = new MiddlewareMessageVO();
+//                middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
+//                middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
+//                middlewareMessageVO.setStan(messageVO.getReserved2());
+//                middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+//                middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
+//                middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
+//                middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+//
+//                try {
+//                    this.sentWalletRequest(middlewareMessageVO);
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                    messageVO.setResponseCode("550");
+//                    messageVO.setResponseCodeDescription("Host Not In Reach");
+//                }
+//            } else {
+//                messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+//                messageVO.setResponseCodeDescription("Successful");
+//
+//            }
 
         }
 
@@ -6865,9 +7308,27 @@ public class HostIntegrationService {
         messageVO.setAgentMobileNumber(request.getAgentMobileNumber());
         messageVO.setCnicNo(request.getCnic());
         if (request.getPinType().equals("02")) {
-            messageVO.setOtpPin(request.getPin());
+//            messageVO.setOtpPin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         } else {
-            messageVO.setMobilePin(request.getPin());
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
         messageVO.setTransactionAmount(request.getTransactionAmount());
         messageVO.setReserved1(request.getPinType());
@@ -6988,7 +7449,18 @@ public class HostIntegrationService {
 
         messageVO.setUserName(request.getUserName());
         messageVO.setCustomerPassword(request.getPassword());
-        messageVO.setMobilePin(request.getPin());
+//        messageVO.setMobilePin(request.getPin());
+
+        try {
+            String text;
+            String pin;
+            text = request.getPin();
+            pin = text.replaceAll("\\r|\\n", "");
+            messageVO.setMobilePin(RSAEncryption.decrypt(pin, loginPrivateKey));
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
         messageVO.setMobileNo(request.getMobileNumber());
 //        messageVO.setCnicNo(request.getCnic());
         messageVO.setDateTime(request.getDateTime());
@@ -7040,6 +7512,126 @@ public class HostIntegrationService {
             response.setRrn(messageVO.getRetrievalReferenceNumber());
             response.setDailyCreditLimit(messageVO.getDailyCreditLimit());
             response.setDailyDebitLimit(messageVO.getDailyDebitLimit());
+            response.setSegment(messageVO.getReserved2());
+//            response.setBvs(messageVO.getIsBVSAccount());
+//            response.setBlinlBvs(messageVO.getReserved3());
+            response.setMonthlyCreditLimit(messageVO.getMonthlyCreditLimit());
+            response.setMonthlyDebitLimit(messageVO.getMonthlyDebitLimit());
+            response.setYearlyCreditLimit(messageVO.getYearlyCreditLimit());
+            response.setYearlyDebitLimit(messageVO.getYearlyDebitLimit());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Login Authentication Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Login Authentication Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Login Authentication REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = XMLUtil.convertToXML(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+        return response;
+    }
+
+
+    public ZindigiLoginAuthenticationResponse zindigiLoginAuthenticationResponse(ZindigiLoginAuthenticationRequest request) {
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Starting Processing Zindigi Login Authentication Request RRN: " + messageVO.getRetrievalReferenceNumber());
+        transactionKey = request.getChannelId() + request.getRrn();
+        ZindigiLoginAuthenticationResponse response = new ZindigiLoginAuthenticationResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+//        messageVO.setMobilePin(request.getPin());
+
+        try {
+            String text;
+            String pin;
+            text = request.getPin();
+            pin = text.replaceAll("\\r|\\n", "");
+            messageVO.setMobilePin(RSAEncryption.decrypt(pin, loginPrivateKey));
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        messageVO.setMobileNo(request.getMobileNumber());
+//        messageVO.setCnicNo(request.getCnic());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("LoginAuthenticationRequest");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = XMLUtil.convertToXML(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Login Authentication Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.accountAuthentication(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Login Authentication Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setIban(messageVO.getBenificieryIban());
+            response.setAccountTitle(messageVO.getAccountTitle());
+            response.setAccountLevel(messageVO.getAccountType());
+            response.setBalance(messageVO.getBalance());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setDailyCreditLimit(messageVO.getDailyCreditLimit());
+            response.setDailyDebitLimit(messageVO.getDailyDebitLimit());
+            response.setSegment(messageVO.getReserved2());
+            response.setBvs(messageVO.getIsBVSAccount());
+            response.setBlinlBvs(messageVO.getReserved3());
             response.setMonthlyCreditLimit(messageVO.getMonthlyCreditLimit());
             response.setMonthlyDebitLimit(messageVO.getMonthlyDebitLimit());
             response.setYearlyCreditLimit(messageVO.getYearlyCreditLimit());
@@ -7095,7 +7687,17 @@ public class HostIntegrationService {
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setLoginPin(request.getPin());
+//        messageVO.setLoginPin(request.getPin());
+
+        try {
+            String text;
+            String pin;
+            text = request.getPin();
+            pin = text.replaceAll("\\r|\\n", "");
+            messageVO.setLoginPin(RSAEncryption.decrypt(pin, loginPrivateKey));
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         messageVO.setReserved2("");
 
         TransactionLogModel logModel = new TransactionLogModel();
@@ -7189,10 +7791,36 @@ public class HostIntegrationService {
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setOldLoginPin(request.getOldLoginPin());
-        messageVO.setNewLoginPin(request.getNewLoginPin());
-        messageVO.setConfirmLoginPin(request.getConfirmLoginPin());
-
+//        messageVO.setOldLoginPin(request.getOldLoginPin());
+        try {
+            String text;
+            String oldPin;
+            text = request.getOldLoginPin();
+            oldPin = text.replaceAll("\\r|\\n", "");
+            messageVO.setOldLoginPin(RSAEncryption.decrypt(request.getOldLoginPin(), loginPrivateKey));
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+//        messageVO.setNewLoginPin(request.getNewLoginPin());
+        try {
+            String text;
+            String newPin;
+            text = request.getNewLoginPin();
+            newPin = text.replaceAll("\\r|\\n", "");
+            messageVO.setNewLoginPin(RSAEncryption.decrypt(newPin, loginPrivateKey));
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+//        messageVO.setConfirmLoginPin(request.getConfirmLoginPin());
+        try {
+            String text;
+            String confirmPin;
+            text = request.getConfirmLoginPin();
+            confirmPin = text.replaceAll("\\r|\\n", "");
+            messageVO.setConfirmLoginPin(RSAEncryption.decrypt(confirmPin, loginPrivateKey));
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         TransactionLogModel logModel = new TransactionLogModel();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
         Date txDateTime = new Date();
@@ -7284,8 +7912,34 @@ public class HostIntegrationService {
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setNewLoginPin(request.getNewLoginPin());
-        messageVO.setConfirmLoginPin(request.getConfirmLoginPin());
+
+        try {
+            String text;
+            String newLoginPin;
+            text = request.getNewLoginPin();
+            newLoginPin = text.replaceAll("\\r|\\n", "");
+
+
+            String newMpin = (RSAEncryption.decrypt(newLoginPin, loginPrivateKey));
+            messageVO.setNewLoginPin(newMpin);
+            logger.info("[HOST] Reset New Login Pin " + newMpin);
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String text;
+            String confirmLoginPin;
+            text = request.getConfirmLoginPin();
+            confirmLoginPin = text.replaceAll("\\r|\\n", "");
+            String confirmPin = (RSAEncryption.decrypt(confirmLoginPin, loginPrivateKey));
+            logger.info("[HOST] Reset confirm Login Pin " + confirmPin);
+
+
+            messageVO.setConfirmLoginPin(confirmPin);
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         messageVO.setCnicNo(request.getCnic());
 
         TransactionLogModel logModel = new TransactionLogModel();
@@ -7595,6 +8249,7 @@ public class HostIntegrationService {
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setAgentId(request.getAgentId());
         try {
+
             messageVO.setLoginPin(RSAEncryption.decrypt(request.getPin(), privateKey));
         } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -11846,11 +12501,15 @@ public class HostIntegrationService {
         messageVO.setProductID(request.getProductId());
         messageVO.setAgentId(request.getAgentId());
         try {
-            messageVO.setMobilePin(RSAEncryption.decrypt(request.getPin(), privateKey));
+            messageVO.setMobilePin(RSAEncryption.decrypt(request.getPin(), loginPrivateKey));
         } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         messageVO.setAgentMobileNumber(request.getAgentMobileNumber());
+//        messageVO.setCnicNo(request.getCnic());
+//        messageVO.setFingerIndex(request.getFingerIndex());
+//        messageVO.setFingerTemplate(request.getFingerTemplate());
+//        messageVO.setTemplateType(request.getTemplateType());
         messageVO.setTransactionAmount(request.getAmount());
         messageVO.setCommissionAmount(request.getComissionAmount());
         messageVO.setTransactionProcessingAmount(request.getTransactionProcessingAmount());
@@ -12094,15 +12753,23 @@ public class HostIntegrationService {
         messageVO.setAgentMobileNumber(request.getAgentMobileNumber());
 
         try {
-            messageVO.setMobilePin(RSAEncryption.decrypt(request.getPin(), privateKey));
-            logger.info("Decrypted Mobile Pin: " + messageVO.getMobilePin());
+            if (request.getPin() != null && !request.getPin().equals("")) {
+                String text = request.getPin();
+                String pin = text.replaceAll("\\r|\\n", "");
+                messageVO.setMobilePin(RSAEncryption.decrypt(pin, loginPrivateKey));
+                logger.info("Decrypted Mobile Pin: " + messageVO.getMobilePin());
+            }
 
         } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         try {
-            messageVO.setOtpPin(RSAEncryption.decrypt(request.getOtp(), privateKey));
-            logger.info("Decrypted OTP : " + messageVO.getOtpPin());
+            if (request.getOtp() != null && !request.getOtp().equals("")) {
+                String text = request.getOtp();
+                String otp = text.replaceAll("\\r|\\n", "");
+                messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                logger.info("Decrypted OTP : " + messageVO.getOtpPin());
+            }
         } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -12112,6 +12779,9 @@ public class HostIntegrationService {
         messageVO.setAgentMobileNumber(request.getAgentMobileNumber());
         messageVO.setMobileNo(request.getCustomerMobileNumber());
         messageVO.setCnicNo(request.getCustomerCnic());
+//        messageVO.setFingerIndex(request.getFingerIndex());
+//        messageVO.setFingerTemplate(request.getFingerTemplate());
+//        messageVO.setTemplateType(request.getTemplateType());
         messageVO.setTransactionAmount(request.getAmount());
         messageVO.setCommissionAmount(request.getComissionAmount());
         messageVO.setTransactionProcessingAmount(request.getTransactionProcessingAmount());
@@ -12231,7 +12901,7 @@ public class HostIntegrationService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         try {
-            messageVO.setMobilePin(RSAEncryption.decrypt(request.getMpin(), privateKey));
+            messageVO.setMobilePin(RSAEncryption.decrypt(request.getMpin(), loginPrivateKey));
         } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -12676,9 +13346,28 @@ public class HostIntegrationService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         if (request.getReserved1().equals("02")) {
-            messageVO.setOtpPin(request.getMpin());
+//            messageVO.setOtpPin(request.getMpin());
+            try {
+                if (request.getMpin() != null) {
+                    String text = request.getMpin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         } else {
-            messageVO.setMobilePin(request.getMpin());
+//            messageVO.setMobilePin(request.getMpin());
+            try {
+                if (request.getMpin() != null) {
+                    String text = request.getMpin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
         }
         messageVO.setCnicNo(request.getCnic());
         messageVO.setFingerIndex(request.getFingerIndex());
@@ -13754,6 +14443,7 @@ public class HostIntegrationService {
         return response;
     }
 
+
     public MinorAccountOpeningResponse m0AccountOpeningResponse(MinorAccountOpeningRequest request) {
         long startTime = new Date().getTime(); // start time
         WebServiceVO messageVO = new WebServiceVO();
@@ -13879,81 +14569,2855 @@ public class HostIntegrationService {
         return response;
     }
 
+//    public void sentWalletRequest(MiddlewareMessageVO middlewareMessageVO) throws Exception {
+//        logger.info("Core To Wallet Push To SAF against RRN: " + middlewareMessageVO.getRetrievalReferenceNumber());
+//        MiddlewareAdviceVO middlewareAdviceVO = new MiddlewareAdviceVO();
+//        middlewareAdviceVO.setAccountNo1(middlewareMessageVO.getAccountNo1());
+//        middlewareAdviceVO.setAccountNo2(middlewareMessageVO.getAccountNo2());
+//        middlewareAdviceVO.setTransactionAmount(middlewareMessageVO.getTransactionAmount());
+//        middlewareAdviceVO.setRequestTime(middlewareMessageVO.getRequestTime());
+//        middlewareAdviceVO.setStan(middlewareMessageVO.getStan());
+//        middlewareAdviceVO.setRetrievalReferenceNumber(middlewareMessageVO.getRetrievalReferenceNumber());
+//        middlewareAdviceVO.setAdviceType("creditPayment"); // Used in DLQ
+//        middlewareAdviceVO.setBankIMD(middlewareMessageVO.getBankIMD());
+//        middlewareAdviceVO.setProductId(middlewareMessageVO.getProductId());
+//
+////        boolean isAlreadyExists = transactionDAO.getIbftDuplicateRequest(middlewareAdviceVO.getStan(),middlewareAdviceVO.getRequestTime());
+//
+//        // Create a ConnectionFactory
+//        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://" + I8_QUEUE_SERVER + ":" + I8_QUEUE_PORT);
+//
+//        // Create a Connection
+//        Connection connection = connectionFactory.createConnection();
+//        connection.start();
+//        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+//        Destination destination = session.createQueue("queue/creditPaymentQueue");
+//
+//        MessageProducer producer = session.createProducer(destination);
+//
+//        ObjectMessage message = session.createObjectMessage(middlewareAdviceVO);
+//
+//        producer.send(message);
+//        connection.close();
+//
+//    }
+//
+//
+//    public void sentDebitPaymentRequest(MiddlewareMessageVO middlewareMessageVO) throws Exception {
+//        logger.info("Debit Payment Reversal Push To SAF against RRN: " + middlewareMessageVO.getRetrievalReferenceNumber());
+//        MiddlewareAdviceVO middlewareAdviceVO = new MiddlewareAdviceVO();
+//        middlewareAdviceVO.setAccountNo1(middlewareMessageVO.getAccountNo1());
+//        middlewareAdviceVO.setAccountNo2(middlewareMessageVO.getAccountNo2());
+//        middlewareAdviceVO.setRequestTime(middlewareMessageVO.getRequestTime());
+//        middlewareAdviceVO.setStan(middlewareMessageVO.getStan());
+//        middlewareAdviceVO.setRetrievalReferenceNumber(middlewareMessageVO.getRetrievalReferenceNumber());
+//        middlewareAdviceVO.setAdviceType("debitPayment"); // Used in DLQ
+//        middlewareAdviceVO.setBankIMD(middlewareMessageVO.getBankIMD());
+//        middlewareAdviceVO.setTransactionAmount(middlewareMessageVO.getTransactionAmount());
+//        middlewareAdviceVO.setProductId(middlewareMessageVO.getProductId());
+//        middlewareAdviceVO.setReversalRequestTime(middlewareMessageVO.getDateTime());
+//        // Create a ConnectionFactory
+//        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://" + I8_QUEUE_SERVER + ":" + I8_QUEUE_PORT);
+//
+//        // Create a Connection
+//        Connection connection = connectionFactory.createConnection();
+//        connection.start();
+//        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+//        Destination destination = session.createQueue("queue/debitPaymentQueue");
+//
+//        MessageProducer producer = session.createProducer(destination);
+//
+//        ObjectMessage message = session.createObjectMessage(middlewareAdviceVO);
+//
+//        producer.send(message);
+//        connection.close();
+//
+//    }
+//
+//    private Date getRequestTime(String date) {
+//        try {
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddhhmmss");
+//            Date dt = formatter.parse(date);
+//            return dt;
+//        } catch (Exception e) {
+//            logger.error("Exception", e);
+//        }
+//        return null;
+//    }
 
-    public void sentWalletRequest(MiddlewareMessageVO middlewareMessageVO) throws Exception {
-        logger.info("Core To Wallet Push To SAF against RRN: " + middlewareMessageVO.getRetrievalReferenceNumber());
-        MiddlewareAdviceVO middlewareAdviceVO = new MiddlewareAdviceVO();
-        middlewareAdviceVO.setAccountNo1(middlewareMessageVO.getAccountNo1());
-        middlewareAdviceVO.setAccountNo2(middlewareMessageVO.getAccountNo2());
-        middlewareAdviceVO.setTransactionAmount(middlewareMessageVO.getTransactionAmount());
-        middlewareAdviceVO.setRequestTime(middlewareMessageVO.getRequestTime());
-        middlewareAdviceVO.setStan(middlewareMessageVO.getStan());
-        middlewareAdviceVO.setRetrievalReferenceNumber(middlewareMessageVO.getRetrievalReferenceNumber());
-        middlewareAdviceVO.setAdviceType("creditPayment"); // Used in DLQ
-        middlewareAdviceVO.setBankIMD(middlewareMessageVO.getBankIMD());
-        middlewareAdviceVO.setProductId(middlewareMessageVO.getProductId());
+    public OptasiaCreditInquiryResponse optasiaCreditInquiryResponse(OptasiaCreditInquiryRequest request) {
+        long startTime = new Date().getTime(); // start time
+        String transactionKey = request.getDateTime() + request.getRrn();
+        WebServiceVO messageVO = new WebServiceVO();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Starting Processing Optasia Credit Inquiry  Payment  Request RRN: " + messageVO.getRetrievalReferenceNumber());
+        transactionKey = request.getChannelId() + request.getRrn();
 
-//        boolean isAlreadyExists = transactionDAO.getIbftDuplicateRequest(middlewareAdviceVO.getStan(),middlewareAdviceVO.getRequestTime());
-
-        // Create a ConnectionFactory
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://" + I8_QUEUE_SERVER + ":" + I8_QUEUE_PORT);
-
-        // Create a Connection
-        Connection connection = connectionFactory.createConnection();
-        connection.start();
-        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        Destination destination = session.createQueue("queue/creditPaymentQueue");
-
-        MessageProducer producer = session.createProducer(destination);
-
-        ObjectMessage message = session.createObjectMessage(middlewareAdviceVO);
-
-        producer.send(message);
-        connection.close();
-
-    }
+        OptasiaCreditInquiryResponse response = new OptasiaCreditInquiryResponse();
 
 
-    public void sentDebitPaymentRequest(MiddlewareMessageVO middlewareMessageVO) throws Exception {
-        logger.info("Debit Payment Reversal Push To SAF against RRN: " + middlewareMessageVO.getRetrievalReferenceNumber());
-        MiddlewareAdviceVO middlewareAdviceVO = new MiddlewareAdviceVO();
-        middlewareAdviceVO.setAccountNo1(middlewareMessageVO.getAccountNo1());
-        middlewareAdviceVO.setAccountNo2(middlewareMessageVO.getAccountNo2());
-        middlewareAdviceVO.setRequestTime(middlewareMessageVO.getRequestTime());
-        middlewareAdviceVO.setStan(middlewareMessageVO.getStan());
-        middlewareAdviceVO.setRetrievalReferenceNumber(middlewareMessageVO.getRetrievalReferenceNumber());
-        middlewareAdviceVO.setAdviceType("debitPayment"); // Used in DLQ
-        middlewareAdviceVO.setBankIMD(middlewareMessageVO.getBankIMD());
-        middlewareAdviceVO.setTransactionAmount(middlewareMessageVO.getTransactionAmount());
-        middlewareAdviceVO.setProductId(middlewareMessageVO.getProductId());
-        middlewareAdviceVO.setReversalRequestTime(middlewareMessageVO.getDateTime());
-        // Create a ConnectionFactory
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://" + I8_QUEUE_SERVER + ":" + I8_QUEUE_PORT);
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setShaCnic(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setProductID(request.getProductId());
+        messageVO.setPinType(request.getPinType());
+        messageVO.setTransactionAmount(request.getTransactionAmount());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
 
-        // Create a Connection
-        Connection connection = connectionFactory.createConnection();
-        connection.start();
-        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        Destination destination = session.createQueue("queue/debitPaymentQueue");
 
-        MessageProducer producer = session.createProducer(destination);
+        /*This is temporary solution to enable talotalk on behalf of Attique Butt.
+        Should be reverted once otp optional implemented
+        on APIGEE End*/
+        // messageVO.setReserved1("1");
 
-        ObjectMessage message = session.createObjectMessage(middlewareAdviceVO);
+//        messageVO.setReserved1(request.getReserved1());
 
-        producer.send(message);
-        connection.close();
-
-    }
-
-    private Date getRequestTime(String date) {
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddhhmmss");
-            Date dt = formatter.parse(date);
-            return dt;
-        } catch (Exception e) {
-            logger.error("Exception", e);
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
         }
-        return null;
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("OptasiaCreditInquiry");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Optasia Credit Inquiry Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.cnicTo256(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Optasia Credit Inquiry Payment Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            CreditInquiryRequest creditInquiryRequest = new CreditInquiryRequest();
+
+            creditInquiryRequest.setUserName(request.getUserName());
+            creditInquiryRequest.setPassword(request.getPassword());
+            creditInquiryRequest.setMobileNumber(messageVO.getMobileNo());
+            creditInquiryRequest.setDateTime(request.getDateTime());
+            creditInquiryRequest.setRrn(messageVO.getRetrievalReferenceNumber());
+            creditInquiryRequest.setChannelId(request.getChannelId());
+            creditInquiryRequest.setTerminalId(request.getTerminalId());
+            creditInquiryRequest.setProductId(request.getProductId());
+            creditInquiryRequest.setPinType(request.getPinType());
+            creditInquiryRequest.setTransactionAmount(request.getTransactionAmount());
+            creditInquiryRequest.setReserved1(request.getReserved1());
+            creditInquiryRequest.setReserved2(request.getReserved2());
+            creditInquiryRequest.setReserved3(request.getReserved3());
+            creditInquiryRequest.setReserved4(request.getReserved4());
+            creditInquiryRequest.setReserved5(request.getReserved5());
+            creditInquiryRequest.setReserved6(request.getReserved6());
+            creditInquiryRequest.setReserved7(request.getReserved7());
+            creditInquiryRequest.setReserved8(request.getReserved8());
+            creditInquiryRequest.setReserved9(request.getReserved9());
+            creditInquiryRequest.setReserved10(request.getReserved10());
+            logger.info("[HOST] Optasia Credit Inquiry Payment Request Sent to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            CreditInquiryResponse creditInquiryResponse = new CreditInquiryResponse();
+
+            creditInquiryResponse = this.creditInquiryResponse(creditInquiryRequest);
+
+            if (creditInquiryResponse != null
+                    && StringUtils.isNotEmpty(creditInquiryResponse.getResponseCode())
+                    && creditInquiryResponse.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+
+                response.setRrn(creditInquiryResponse.getRrn());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(creditInquiryResponse.getResponseDescription());
+                response.setResponseDateTime(creditInquiryResponse.getResponseDateTime());
+                response.setComissionAmount(creditInquiryResponse.getComissionAmount());
+                response.setInclusiveExclusiveComissionAmount(creditInquiryResponse.getInclusiveExclusiveComissionAmount());
+                response.setTotalAmount(creditInquiryResponse.getTotalAmount());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (creditInquiryResponse != null && StringUtils.isNotEmpty(creditInquiryResponse.getResponseCode())) {
+                logger.info("[HOST] Credit Inquiry Payment Request Unsuccessful from Micro Bank RRN: " + creditInquiryResponse.getRrn());
+                response.setResponseCode(creditInquiryResponse.getResponseCode());
+                response.setResponseDescription(creditInquiryResponse.getResponseDescription());
+                response.setRrn(creditInquiryResponse.getRrn());
+                logModel.setResponseCode(creditInquiryResponse.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Credit Inquiry Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+
+            StringBuilder stringText = new StringBuilder()
+                    .append(response.getRrn())
+                    .append(response.getResponseCode())
+                    .append(response.getResponseDescription())
+                    .append(response.getResponseDateTime());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] ****Optasia Credit Inquiry PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+            return response;
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Optasia Credit Inquiry Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Optasia Credit Inquiry Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+
+        StringBuilder stringText = new StringBuilder()
+                .append(response.getRrn())
+                .append(response.getResponseCode())
+                .append(response.getResponseDescription())
+                .append(response.getResponseDateTime());
+
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****Optasia Credit Inquiry PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+
+        updateTransactionInDB(logModel);
+        return response;
     }
+
+    public OptasiaCreditResponse optasiaCreditResponse(OptasiaCreditRequest request) {
+        long startTime = new Date().getTime(); // start time
+        String transactionKey = request.getDateTime() + request.getRrn();
+        WebServiceVO messageVO = new WebServiceVO();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Starting Processing Optasia Credit Payment  Request RRN: " + messageVO.getRetrievalReferenceNumber());
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        OptasiaCreditResponse response = new OptasiaCreditResponse();
+
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setShaCnic(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setProductID(request.getProductId());
+        if (request.getPinType().equals("02")) {
+//            messageVO.setOtpPin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        } else {
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        }
+        messageVO.setTransactionAmount(request.getTransactionAmount());
+        messageVO.setReserved1(request.getPinType());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+
+        /*This is temporary solution to enable talotalk on behalf of Attique Butt.
+        Should be reverted once otp optional implemented
+        on APIGEE End*/
+        // messageVO.setReserved1("1");
+
+//        messageVO.setReserved1(request.getReserved1());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("OptasiaCredit");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = XMLUtil.convertToXML(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+        try {
+            logger.info("[HOST] Sent Optasia Credit Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.cnicTo256(messageVO);
+        } catch (Exception e) {
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+//below code comment disscuss with zulfiqar sir
+//            if (e instanceof RemoteAccessException) {
+//                if (!(e instanceof RemoteConnectFailureException)) {
+//                    messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+//                }
+//            }
+//            StringWriter sw = new StringWriter();
+//            PrintWriter pw = new PrintWriter(sw);
+//            e.printStackTrace(pw);
+//            String stackTrace = sw.toString();
+//            if (stackTrace.contains("status code = 503")) {
+//                MiddlewareMessageVO middlewareMessageVO = new MiddlewareMessageVO();
+//                middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
+//                middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
+//                middlewareMessageVO.setStan(messageVO.getReserved2());
+//                middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+//                middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
+//                middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
+//                middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+//
+//                try {
+//                    this.sentWalletRequest(middlewareMessageVO);
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                    messageVO.setResponseCode("550");
+//                    messageVO.setResponseCodeDescription("Host Not In Reach");
+//                }
+//            } else {
+//                messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+//                messageVO.setResponseCodeDescription("Successful");
+//
+//            }
+
+        }
+
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().
+
+                equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Optasia Credit Payment Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            CreditRequest creditRequest = new CreditRequest();
+
+            creditRequest.setUserName(request.getUserName());
+            creditRequest.setPassword(request.getPassword());
+            creditRequest.setMobileNumber(messageVO.getMobileNo());
+            creditRequest.setDateTime(request.getDateTime());
+            creditRequest.setRrn(messageVO.getRetrievalReferenceNumber());
+            creditRequest.setChannelId(request.getChannelId());
+            creditRequest.setTerminalId(request.getTerminalId());
+            creditRequest.setProductId(request.getProductId());
+            creditRequest.setPin(request.getPin());
+            creditRequest.setPinType(request.getPinType());
+            creditRequest.setTransactionAmount(request.getTransactionAmount());
+            creditRequest.setReserved1(request.getReserved1());
+            creditRequest.setReserved2(request.getReserved2());
+            creditRequest.setReserved3(request.getReserved3());
+            creditRequest.setReserved4(request.getReserved4());
+            creditRequest.setReserved5(request.getReserved5());
+            creditRequest.setReserved6(request.getReserved6());
+            creditRequest.setReserved7(request.getReserved7());
+            creditRequest.setReserved8(request.getReserved8());
+            creditRequest.setReserved9(request.getReserved9());
+            creditRequest.setReserved10(request.getReserved10());
+            logger.info("[HOST] Optasia Credit Payment Request Sent to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            CreditResponse creditResponse = new CreditResponse();
+            creditResponse = this.creditResponse(creditRequest);
+
+            if (creditResponse != null
+                    && StringUtils.isNotEmpty(creditResponse.getResponseCode())
+                    && creditResponse.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+
+                response.setRrn(creditResponse.getRrn());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(creditResponse.getResponseDescription());
+                response.setResponseDateTime(creditResponse.getResponseDateTime());
+                response.setTransactionId(creditResponse.getTransactionId());
+                response.setComissionAmount(creditResponse.getComissionAmount());
+                response.setTransactionAmount(creditResponse.getTransactionAmount());
+                response.setTotalTransactionAmount(creditResponse.getTotalTransactionAmount());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (creditResponse != null && StringUtils.isNotEmpty(creditResponse.getResponseCode())) {
+                logger.info("[HOST] Credit Payment Request Unsuccessful from Micro Bank RRN: " + creditResponse.getRrn());
+                response.setResponseCode(creditResponse.getResponseCode());
+                response.setResponseDescription(creditResponse.getResponseDescription());
+                response.setRrn(creditResponse.getRrn());
+                logModel.setResponseCode(creditResponse.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Credit Payment Request Unsuccessful from Micro Bank RRN: " + creditResponse.getRrn());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+
+            StringBuilder stringText = new StringBuilder()
+                    .append(response.getRrn())
+                    .append(response.getResponseCode())
+                    .append(response.getResponseDescription())
+                    .append(response.getResponseDateTime());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] ****Credit Payment PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+            return response;
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Optasia Credit  Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Optasia Credit Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+
+        StringBuilder stringText = new StringBuilder()
+                .append(response.getRrn())
+                .append(response.getResponseCode())
+                .append(response.getResponseDescription())
+                .append(response.getResponseDateTime());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****Optasia Credit PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = XMLUtil.convertToXML(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+
+        updateTransactionInDB(logModel);
+        return response;
+    }
+
+    public OptasiaDebitInquiryResponse optasiaDebitInquiryResponse(OptasiaDebitInquiryRequest request) {
+        long startTime = new Date().getTime(); // start time
+        String transactionKey = request.getDateTime() + request.getRrn();
+        WebServiceVO messageVO = new WebServiceVO();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Starting Processing Optasia Debit Inquiry  Payment  Request RRN: " + messageVO.getRetrievalReferenceNumber());
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        OptasiaDebitInquiryResponse response = new OptasiaDebitInquiryResponse();
+
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setShaCnic(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setProductID(request.getProductId());
+        messageVO.setPinType(request.getPinType());
+        messageVO.setTransactionAmount(request.getTransactionAmount());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+
+        /*This is temporary solution to enable talotalk on behalf of Attique Butt.
+        Should be reverted once otp optional implemented
+        on APIGEE End*/
+        // messageVO.setReserved1("1");
+
+//        messageVO.setReserved1(request.getReserved1());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("OptasiaDebitInquiry");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = XMLUtil.convertToXML(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Optasia Debit Inquiry Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.cnicTo256(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Optasia Debit Inquiry Payment Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            DebitInquiryRequest debitInquiryRequest = new DebitInquiryRequest();
+
+            debitInquiryRequest.setUserName(request.getUserName());
+            debitInquiryRequest.setPassword(request.getPassword());
+            debitInquiryRequest.setMobileNumber(messageVO.getMobileNo());
+            debitInquiryRequest.setDateTime(request.getDateTime());
+            debitInquiryRequest.setRrn(messageVO.getRetrievalReferenceNumber());
+            debitInquiryRequest.setChannelId(request.getChannelId());
+            debitInquiryRequest.setTerminalId(request.getTerminalId());
+            debitInquiryRequest.setProductId(request.getProductId());
+            debitInquiryRequest.setPinType(request.getPinType());
+            debitInquiryRequest.setTransactionAmount(request.getTransactionAmount());
+            debitInquiryRequest.setReserved1(request.getReserved1());
+            debitInquiryRequest.setReserved2(request.getReserved2());
+            debitInquiryRequest.setReserved3(request.getReserved3());
+            debitInquiryRequest.setReserved4(request.getReserved4());
+            debitInquiryRequest.setReserved5(request.getReserved5());
+            debitInquiryRequest.setReserved6(request.getReserved6());
+            debitInquiryRequest.setReserved7(request.getReserved7());
+            debitInquiryRequest.setReserved8(request.getReserved8());
+            debitInquiryRequest.setReserved9(request.getReserved9());
+            debitInquiryRequest.setReserved10(request.getReserved10());
+            logger.info("[HOST] Optasia Debit Inquiry Payment Request Sent to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            DebitInquiryResponse debitInquiryResponse = new DebitInquiryResponse();
+            debitInquiryResponse = this.debitInquiryResponse(debitInquiryRequest);
+
+            if (debitInquiryResponse != null
+                    && StringUtils.isNotEmpty(debitInquiryResponse.getResponseCode())
+                    && debitInquiryResponse.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+
+                response.setRrn(debitInquiryResponse.getRrn());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(debitInquiryResponse.getResponseDescription());
+                response.setResponseDateTime(debitInquiryResponse.getResponseDateTime());
+                response.setComissionAmount(debitInquiryResponse.getComissionAmount());
+                response.setTotalAmount(debitInquiryResponse.getTotalAmount());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (debitInquiryResponse != null && StringUtils.isNotEmpty(debitInquiryResponse.getResponseCode())) {
+                logger.info("[HOST] Debit Inquiry Request Unsuccessful from Micro Bank RRN: " + debitInquiryResponse.getRrn());
+                response.setResponseCode(debitInquiryResponse.getResponseCode());
+                response.setResponseDescription(debitInquiryResponse.getResponseDescription());
+                response.setRrn(debitInquiryResponse.getRrn());
+                logModel.setResponseCode(debitInquiryResponse.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Debit Inquiry Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+
+            StringBuilder stringText = new StringBuilder()
+                    .append(response.getRrn())
+                    .append(response.getResponseCode())
+                    .append(response.getResponseDescription())
+                    .append(response.getResponseDateTime());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] ****Optasia Debit Inquiry PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+            return response;
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Optasia Debit Inquiry Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Optasia Debit Inquiry Inquiry Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuilder stringText = new StringBuilder()
+                .append(response.getRrn())
+                .append(response.getResponseCode())
+                .append(response.getResponseDescription())
+                .append(response.getResponseDateTime());
+
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****Optasia Debit Inquiry PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = XMLUtil.convertToXML(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+        return response;
+    }
+
+    public OptasiaDebitResponse optasiaDebitResponse(OptasiaDebitRequest request) {
+        long startTime = new Date().getTime(); // start time
+        String transactionKey = request.getDateTime() + request.getRrn();
+        WebServiceVO messageVO = new WebServiceVO();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Starting Processing Optasia Debit Payment  Request RRN: " + messageVO.getRetrievalReferenceNumber());
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        OptasiaDebitResponse response = new OptasiaDebitResponse();
+
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setShaCnic(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setProductID(request.getProductId());
+        if (request.getPinType().equals("02")) {
+//            messageVO.setOtpPin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        } else {
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
+        }
+        messageVO.setTransactionAmount(request.getTransactionAmount());
+        messageVO.setReserved1(request.getPinType());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+
+        /*This is temporary solution to enable talotalk on behalf of Attique Butt.
+        Should be reverted once otp optional implemented
+        on APIGEE End*/
+        // messageVO.setReserved1("1");
+
+//        messageVO.setReserved1(request.getReserved1());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("OptasiaDebit");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = XMLUtil.convertToXML(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Optasia Debit Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.cnicTo256(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+//
+//            if (e instanceof RemoteAccessException) {
+//                if (!(e instanceof RemoteConnectFailureException)) {
+//
+//                    try {
+//                        MiddlewareMessageVO middlewareMessageVO = new MiddlewareMessageVO();
+//                        middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
+//                        middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
+//                        middlewareMessageVO.setStan(messageVO.getReserved2());
+//                        middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+//                        middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
+//                        middlewareMessageVO.setDateTime(messageVO.getDateTime());
+//                        middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
+//                        middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+//                        this.sentDebitPaymentRequest(middlewareMessageVO);
+//                    } catch (Exception ex) {
+//                        ex.printStackTrace();
+//                        messageVO.setResponseCode("550");
+//                        messageVO.setResponseCodeDescription("Host Not In Reach");
+//                    }
+//
+//                    messageVO.setResponseCode(" ");
+//                    messageVO.setResponseCodeDescription("");
+//                    messageVO.setRetrievalReferenceNumber("");
+//                }
+//            }
+//            StringWriter sw = new StringWriter();
+//            PrintWriter pw = new PrintWriter(sw);
+//            e.printStackTrace(pw);
+//            String stackTrace = sw.toString();
+//            if (stackTrace.contains("status code = 503")) {
+//                messageVO.setResponseCode("550");
+//                messageVO.setResponseCodeDescription("Host Not In Reach");
+//            }
+        }
+
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Optasia Debit Payment Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+//            if (messageVO.getProductID().equals("10245364")){
+//                PaymentReversalRequest reversalRequest=new PaymentReversalRequest();
+//                String requestTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+//                String stan = String.valueOf((100000 + new Random().nextInt(900000)));
+//                reversalRequest.setTransactionCode(request.getRrn());
+//                reversalRequest.setRrn(requestTime+stan);
+//                reversalRequest.setDateTime(request.getDateTime());
+//                reversalRequest.setUserName(request.getUserName());
+//                reversalRequest.setPassword(request.getPassword());
+//                reversalRequest.setChannelId(request.getChannelId());
+//                this.paymentReversal(reversalRequest);
+//            }
+            DebitRequest debitRequest = new DebitRequest();
+
+            debitRequest.setUserName(request.getUserName());
+            debitRequest.setPassword(request.getPassword());
+            debitRequest.setMobileNumber(messageVO.getMobileNo());
+            debitRequest.setDateTime(request.getDateTime());
+            debitRequest.setRrn(messageVO.getRetrievalReferenceNumber());
+            debitRequest.setChannelId(request.getChannelId());
+            debitRequest.setTerminalId(request.getTerminalId());
+            debitRequest.setProductId(request.getProductId());
+            debitRequest.setPin(request.getPin());
+            debitRequest.setPinType(request.getPinType());
+            debitRequest.setTransactionAmount(request.getTransactionAmount());
+            debitRequest.setReserved1(request.getReserved1());
+            debitRequest.setReserved2(request.getReserved2());
+            debitRequest.setReserved3(request.getReserved3());
+            debitRequest.setReserved4(request.getReserved4());
+            debitRequest.setReserved5(request.getReserved5());
+            debitRequest.setReserved6(request.getReserved6());
+            debitRequest.setReserved7(request.getReserved7());
+            debitRequest.setReserved8(request.getReserved8());
+            debitRequest.setReserved9(request.getReserved9());
+            debitRequest.setReserved10(request.getReserved10());
+            logger.info("[HOST] Optasia Debit Payment Request Sent to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            DebitResponse debitResponse = new DebitResponse();
+            debitResponse = this.debitResponse(debitRequest);
+
+            if (debitResponse != null
+                    && StringUtils.isNotEmpty(debitResponse.getResponseCode())
+                    && debitResponse.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+
+                response.setRrn(debitResponse.getRrn());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(debitResponse.getResponseDescription());
+                response.setResponseDateTime(debitResponse.getResponseDateTime());
+                response.setTransactionId(debitResponse.getTransactionId());
+                response.setComissionAmount(debitResponse.getComissionAmount());
+                response.setTransactionAmount(debitResponse.getTransactionAmount());
+                response.setTotalTransactionAmount(debitResponse.getTotalTransactionAmount());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (messageVO != null && StringUtils.isNotEmpty(debitResponse.getResponseCode())) {
+                logger.info("[HOST] Debit Payment Request Unsuccessful from Micro Bank RRN: " + debitResponse.getRrn());
+                response.setResponseCode(debitResponse.getResponseCode());
+                response.setResponseDescription(debitResponse.getResponseDescription());
+                response.setRrn(debitResponse.getRrn());
+                logModel.setResponseCode(debitResponse.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Debit Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+
+            StringBuilder stringText = new StringBuilder()
+                    .append(response.getRrn())
+                    .append(response.getResponseCode())
+                    .append(response.getResponseDescription())
+                    .append(response.getResponseDateTime());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] ****Optasia Debit Payment PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+            return response;
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Optasia Debit Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Optasiaa Debit Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuilder stringText = new StringBuilder()
+                .append(response.getRrn())
+                .append(response.getResponseCode())
+                .append(response.getResponseDescription())
+                .append(response.getResponseDateTime());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****Optasia Debit PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = XMLUtil.convertToXML(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+        return response;
+    }
+
+    public TransactionStatusResponse transactionStatusResponse(TransactionStatusRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Transaction Status Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        TransactionStatusResponse response = new TransactionStatusResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setShaCnic(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setThirdPartyTransactionId(request.getThirdPartTransactionId());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("TransactionStatus");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Transaction Status Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.transactionStatus(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST]  Transaction Status Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setTransactionId(messageVO.getTransactionId());
+            response.setTransactionAmount(messageVO.getTransactionAmount());
+            response.setTotalAmount(messageVO.getTotalAmount());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST]  Transaction Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Transaction Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Transaction Status Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+
+        return response;
+    }
+
+    public ProfileStatusResponse profileStatusResponse(ProfileStatusRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Profile Status Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        ProfileStatusResponse response = new ProfileStatusResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setShaCnic(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("ProfileStatus");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Profile Status Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.profileStatus(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST]  Profile Status Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setWalletType(messageVO.getWalletType());
+            response.setWalletStatus(messageVO.getWalletStatus());
+            response.setTaxRegime(messageVO.getTaxRegime());
+            response.setLienStatus(messageVO.getLienStatus());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST]  Profile Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Profile Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Profile Status Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+
+        return response;
+    }
+
+    public LienStatusResponse lienStatusResponse(LienStatusRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Lien Status Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        LienStatusResponse response = new LienStatusResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setShaCnic(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("LienStatus");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Lien Status Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.lienStatus(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Lien Status Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Lien Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Lien Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Lien Status Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+
+        return response;
+    }
+
+    public OfferListForCommodityResponse initiateLoanResponse(OfferListForCommodityRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Initiate Loan Request Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        OfferListForCommodityResponse response = new OfferListForCommodityResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getCustomerId());
+//        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setIdentityType(request.getIdentityType());
+        messageVO.setIdentityValue(request.getIdentityValue());
+        messageVO.setOrigSource(request.getOrigSource());
+        messageVO.setCommodityType(request.getCommodityType());
+        messageVO.setSourceRequestId(request.getSourceRequestId());
+        messageVO.setOfferName(request.getOfferName());
+        messageVO.setAmount(request.getAmount());
+        messageVO.setFed(request.getFed());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("InitiateLoan");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+            response = optasiaMock.offerListForCommodity();
+            String responseXml = JSONUtil.getJSON(response);
+            logger.info("[HOST] Mock Response of Initiate Loan Request: " + responseXml);
+        } else {
+            // Call i8
+
+            try {
+                logger.info("[HOST] Sent Initiate Loan Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                messageVO = switchController.initiateLoan(messageVO);
+            } catch (Exception e) {
+
+                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+            }
+
+            // Set Response from i8
+            if (messageVO != null
+                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+                logger.info("[HOST] Initiate Loan Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setRrn(messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                response.setResponseDateTime(messageVO.getDateTime());
+                response.setIdentityValue(messageVO.getIdentityValue());
+                response.setIdentityType(messageVO.getIdentityType());
+                response.setOrigSource(messageVO.getOrigSource());
+                response.setReceivedTimestamp(messageVO.getReceivedTimestamp());
+                response.setEligibilityStatusList(messageVO.getEligibilityStatusList());
+                response.setLoanOffersByLoanProductGroupList(messageVO.getLoanOffersByLoanProductGroupList());
+                response.setOutstandingStatusList(messageVO.getOutstandingStatusList());
+
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+                logger.info("[HOST] Initiate Loan Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(messageVO.getResponseCode());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Initiate Loan Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] **** Initiate Loan Request PROCESSED IN ****: " + difference + " milliseconds");
+
+            //preparing request
+            String responseXml = JSONUtil.getJSON(response);
+            //Setting in logModel
+            logModel.setPduResponseHEX(responseXml);
+            logModel.setProcessedTime(difference);
+            updateTransactionInDB(logModel);
+        }
+        return response;
+    }
+
+    public LoanOfferResponse selectLoanResponse(LoanOfferRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Select Loan Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        LoanOfferResponse response = new LoanOfferResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setSourceRequestId(request.getSourceRequestId());
+        messageVO.setOfferName(request.getOfferName());
+        messageVO.setAmount(request.getAmount());
+        messageVO.setExternalLoanId(request.getExternalLoanId());
+        messageVO.setMerchantId(request.getMerchantId());
+        messageVO.setFed(request.getFed());
+        messageVO.setLoanPurpose(request.getLoanPurpose());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("SelectLoan");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = XMLUtil.convertToXML(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+            response = optasiaMock.loanOffer();
+            String responseXml = JSONUtil.getJSON(response);
+            logger.info("[HOST] Mock Response of Select Loan Request: " + responseXml);
+        } else {
+            // Call i8
+            try {
+                logger.info("[HOST] Sent Select Loan Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                messageVO = switchController.selectLoan(messageVO);
+            } catch (Exception e) {
+
+                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+            }
+
+            // Set Response from i8
+            if (messageVO != null
+                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+                logger.info("[HOST] Select Loan Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setRrn(messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                response.setResponseDateTime(messageVO.getDateTime());
+                response.setCode(messageVO.getCode());
+                response.setMessage(messageVO.getMessage());
+                response.setIdentityValue(messageVO.getIdentityValue());
+                response.setIdentityType(messageVO.getIdentityType());
+                response.setOrigSource(messageVO.getOrigSource());
+                response.setReceivedTimestamp(messageVO.getReceivedTimestamp());
+                response.setSourceRequestId(messageVO.getSourceRequestId());
+                response.setExternalLoanId(messageVO.getExternalLoanId());
+                response.setAdvanceOfferId(messageVO.getAdvanceOfferId());
+                response.setOfferName(messageVO.getOfferName());
+                response.setAmount(messageVO.getAmount());
+                response.setProcessingFee(messageVO.getProcessingFee());
+                response.setTotalAmount(messageVO.getTotalAmount());
+                response.setTransactionId(messageVO.getTransactionId());
+
+
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+                logger.info("[HOST] Select Loan Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(messageVO.getResponseCode());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Select Loan Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] **** Select Loan Request PROCESSED IN ****: " + difference + " milliseconds");
+
+            //preparing request
+            String responseXml = JSONUtil.getJSON(response);
+            //Setting in logModel
+            logModel.setPduResponseHEX(responseXml);
+            logModel.setProcessedTime(difference);
+            updateTransactionInDB(logModel);
+        }
+
+        return response;
+    }
+
+    public ProjectionResponse selectLoanOfferResponse(ProjectionRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Loan Offer Request Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        ProjectionResponse response = new ProjectionResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setIdentityType(request.getIdentityType());
+        messageVO.setOrigSource(request.getOrigSource());
+        messageVO.setIdentityValue(request.getIdentityValue());
+        messageVO.setOfferName(request.getOfferName());
+        messageVO.setLoanAmount(request.getLoanAmount());
+        messageVO.setUpToPeriod(request.getUpToPeriod());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("LoanOffer");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+            response = optasiaMock.projection();
+
+            String responseXml = JSONUtil.getJSON(response);
+
+            logger.info("[HOST] Mock Response of Loan Offer Request: " + responseXml);
+        } else {
+            // Call i8
+            try {
+                logger.info("[HOST] Sent Loan Offer Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                messageVO = switchController.selectLoanOffer(messageVO);
+            } catch (Exception e) {
+
+                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+            }
+
+            // Set Response from i8
+            if (messageVO != null
+                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+                logger.info("[HOST] Loan Offer Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setRrn(messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                response.setResponseDateTime(messageVO.getDateTime());
+                response.setIdentityValue(messageVO.getIdentityValue());
+                response.setIdentityType(messageVO.getIdentityType());
+                response.setOrigSource(messageVO.getOrigSource());
+                response.setReceivedTimestamp(messageVO.getReceivedTimestamp());
+                response.setLoanOffersList(messageVO.getLoanOffersList());
+                response.setPeriodsProjectionList(messageVO.getPeriodsProjectionList());
+
+
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+                logger.info("[HOST] Loan Offer Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(messageVO.getResponseCode());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Loan Offer Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] **** Loan Offer Request PROCESSED IN ****: " + difference + " milliseconds");
+
+            //preparing request
+            String responseXml = JSONUtil.getJSON(response);
+            //Setting in logModel
+            logModel.setPduResponseHEX(responseXml);
+            logModel.setProcessedTime(difference);
+            updateTransactionInDB(logModel);
+        }
+        return response;
+    }
+
+    public LoanPaymentResponse loanPaymentResponse(LoanPaymentRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Loan Payment Request Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        LoanPaymentResponse response = new LoanPaymentResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setSourceRequestId(request.getSourceRequestId());
+        messageVO.setAmount(request.getAmount());
+        messageVO.setCurrencyCode(request.getCurrencyCode());
+        messageVO.setReason(request.getReason());
+        messageVO.setIdentityType(request.getIdentityType());
+        messageVO.setOrigSource(request.getOrigSource());
+        messageVO.setIdentityValue(request.getIdentityValue());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("LoanPayment");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+            response = optasiaMock.payment();
+
+            String responseXml = JSONUtil.getJSON(response);
+            logger.info("[HOST] Mock Response of Loan Payment Request: " + responseXml);
+        } else {
+            // Call i8
+            try {
+                logger.info("[HOST] Sent Loan Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                messageVO = switchController.payLoan(messageVO);
+            } catch (Exception e) {
+
+                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+            }
+
+            // Set Response from i8
+            if (messageVO != null
+                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+                logger.info("[HOST] Loan Payment Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setRrn(messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                response.setResponseDateTime(messageVO.getDateTime());
+                response.setCode(messageVO.getCode());
+                response.setMessage(messageVO.getMessage());
+                response.setIdentityValue(messageVO.getIdentityValue());
+                response.setIdentityType(messageVO.getIdentityType());
+                response.setOrigSource(messageVO.getOrigSource());
+                response.setReceivedTimestamp(messageVO.getReceivedTimestamp());
+                response.setSourceRequestId(messageVO.getSourceRequestId());
+                response.setTransactionId(messageVO.getTransactionId());
+                response.setAmount(messageVO.getAmount());
+                response.setProcessingFee(messageVO.getProcessingFee());
+                response.setTotalAmount(messageVO.getTotalAmount());
+
+
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+                logger.info("[HOST] Loan Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(messageVO.getResponseCode());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Loan Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] **** Loan Payment Request PROCESSED IN ****: " + difference + " milliseconds");
+
+            //preparing request
+            String responseXml = JSONUtil.getJSON(response);
+            //Setting in logModel
+            logModel.setPduResponseHEX(responseXml);
+            logModel.setProcessedTime(difference);
+            updateTransactionInDB(logModel);
+        }
+        return response;
+    }
+
+//    public LoanCallBackResponse loanCallBackResponse(LoanCallBackRequest request) {
+//
+//
+//        long startTime = new Date().getTime(); // start time
+//        WebServiceVO messageVO = new WebServiceVO();
+//        String transactionKey = request.getDateTime() + request.getRrn();
+//        messageVO.setRetrievalReferenceNumber(request.getRrn());
+//        logger.info("[HOST] Loan Call Back Request Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//        transactionKey = request.getChannelId() + request.getRrn();
+//
+//        LoanCallBackResponse response = new LoanCallBackResponse();
+//
+//        messageVO.setUserName(request.getUserName());
+//        messageVO.setCustomerPassword(request.getPassword());
+//        messageVO.setShaCnic(request.getCustomerId());
+//        messageVO.setDateTime(request.getDateTime());
+//        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+//        messageVO.setChannelId(request.getChannelId());
+//        messageVO.setTerminalId(request.getTerminalId());
+//        messageVO.setLoanEvent(request.getLoanEvent());
+//        messageVO.setLoanEventStatus(request.getLoanEventStatus());
+//        messageVO.setIdentityType(request.getIdentityType());
+//        messageVO.setOrigSource(request.getOrigSource());
+//        messageVO.setSourceRequestId(request.getSourceRequestId());
+//        messageVO.setIdentityValue(request.getIdentityValue());
+//        messageVO.setReserved1(request.getReserved1());
+//        messageVO.setReserved2(request.getReserved2());
+//        messageVO.setReserved3(request.getReserved3());
+//        messageVO.setReserved4(request.getReserved4());
+//        messageVO.setReserved5(request.getReserved5());
+//        messageVO.setReserved6(request.getReserved6());
+//        messageVO.setReserved7(request.getReserved7());
+//        messageVO.setReserved8(request.getReserved8());
+//        messageVO.setReserved9(request.getReserved9());
+//        messageVO.setReserved10(request.getReserved10());
+//
+//        TransactionLogModel logModel = new TransactionLogModel();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+//        Date txDateTime = new Date();
+//        try {
+//            txDateTime = dateFormat.parse(request.getDateTime());
+//        } catch (java.text.ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+//        logModel.setTransactionDateTime(txDateTime);
+//        logModel.setChannelId(request.getChannelId());
+//        logModel.setTransactionCode("LoanCallBack");
+//        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+//        //preparing request
+//        String requestXml = JSONUtil.getJSON(request);
+//        //Setting in logModel
+//        logModel.setPduRequestHEX(requestXml);
+//
+//        saveTransaction(logModel);
+//
+//        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+//            response = optasiaMock.callBack();
+//
+//            String responseXml = JSONUtil.getJSON(response);
+//            logger.info("[HOST] Mock Response of Call Back Request: " + responseXml);
+//        } else {
+//            // Call i8
+//            try {
+//                logger.info("[HOST] Sent Loan Call Back Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//                messageVO = switchController.loanCallBack(messageVO);
+//            } catch (Exception e) {
+//
+//                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+//
+//            }
+//
+//            // Set Response from i8
+//            if (messageVO != null
+//                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+//                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+//                logger.info("[HOST] Loan Call Back Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//                response.setRrn(messageVO.getRetrievalReferenceNumber());
+//                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+//                response.setResponseDescription(messageVO.getResponseCodeDescription());
+//                response.setResponseDateTime(messageVO.getDateTime());
+//
+//                logModel.setResponseCode(messageVO.getResponseCode());
+//                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+//
+//            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+//                logger.info("[HOST] Loan Call Back Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//                response.setResponseCode(messageVO.getResponseCode());
+//                response.setResponseDescription(messageVO.getResponseCodeDescription());
+//                logModel.setResponseCode(messageVO.getResponseCode());
+//                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+//            } else {
+//                logger.info("[HOST] Loan Call Back Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+//                response.setResponseDescription("Host Not In Reach");
+//                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+//
+//                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+//            }
+//            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+//            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//            response.setHashData(sha256hex);
+//
+//            long endTime = new Date().getTime(); // end time
+//            long difference = endTime - startTime; // check different
+//            logger.debug("[HOST] **** Loan Call Back Request PROCESSED IN ****: " + difference + " milliseconds");
+//
+//            //preparing request
+//            String responseXml = JSONUtil.getJSON(response);
+//            //Setting in logModel
+//            logModel.setPduResponseHEX(responseXml);
+//            logModel.setProcessedTime(difference);
+//            updateTransactionInDB(logModel);
+//        }
+//        return response;
+//    }
+
+    public LoansResponse outstandingResponse(LoansRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Outstanding Loan Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        LoansResponse response = new LoansResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setIdentityType(request.getIdentityType());
+        messageVO.setOrigSource(request.getOrigSource());
+        messageVO.setIdentityValue(request.getIdentityValue());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("Outstanding");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+            response = optasiaMock.loans();
+            String responseXml = JSONUtil.getJSON(response);
+            logger.info("[HOST] Mock Response of Outstanding Loan Request: " + responseXml);
+        } else {
+            // Call i8
+            try {
+                logger.info("[HOST] Sent Outstanding Loan Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                messageVO = switchController.outstandingLoanStatus(messageVO);
+            } catch (Exception e) {
+
+                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+            }
+
+            // Set Response from i8
+            if (messageVO != null
+                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+                logger.info("[HOST] Outstanding Loan Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setRrn(messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                response.setResponseDateTime(messageVO.getDateTime());
+                response.setIdentityValue(messageVO.getIdentityValue());
+                response.setIdentityType(messageVO.getIdentityType());
+                response.setOrigSource(messageVO.getOrigSource());
+                response.setReceivedTimestamp(messageVO.getReceivedTimestamp());
+                response.setLoansPerStateList(messageVO.getLoansPerStates());
+
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+                logger.info("[HOST] Outstanding Loan Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(messageVO.getResponseCode());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Outstanding Loan Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] **** Outstanding Loan Request PROCESSED IN ****: " + difference + " milliseconds");
+
+            //preparing request
+            String responseXml = JSONUtil.getJSON(response);
+            //Setting in logModel
+            logModel.setPduResponseHEX(responseXml);
+            logModel.setProcessedTime(difference);
+            updateTransactionInDB(logModel);
+        }
+        return response;
+    }
+
+
+//    public OutstandingResponse customerOutstandingLoanStatus(OutstandingRequest request) {
+//
+//
+//        long startTime = new Date().getTime(); // start time
+//        WebServiceVO messageVO = new WebServiceVO();
+//        String transactionKey = request.getDateTime() + request.getRrn();
+//        messageVO.setRetrievalReferenceNumber(request.getRrn());
+//        logger.info("[HOST] Customer Outstanding Loan Status Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//        transactionKey = request.getChannelId() + request.getRrn();
+//
+//        OutstandingResponse response = new OutstandingResponse();
+//
+//        messageVO.setUserName(request.getUserName());
+//        messageVO.setCustomerPassword(request.getPassword());
+//        messageVO.setShaCnic(request.getCustomerId());
+//        messageVO.setDateTime(request.getDateTime());
+//        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+//        messageVO.setChannelId(request.getChannelId());
+//        messageVO.setTerminalId(request.getTerminalId());
+//        messageVO.setIdentityType(request.getIdentityType());
+//        messageVO.setOrigSource(request.getOrigSource());
+//        messageVO.setIdentityValue(request.getIdentityValue());
+//        messageVO.setReserved1(request.getReserved1());
+//        messageVO.setReserved2(request.getReserved2());
+//        messageVO.setReserved3(request.getReserved3());
+//        messageVO.setReserved4(request.getReserved4());
+//        messageVO.setReserved5(request.getReserved5());
+//        messageVO.setReserved6(request.getReserved6());
+//        messageVO.setReserved7(request.getReserved7());
+//        messageVO.setReserved8(request.getReserved8());
+//        messageVO.setReserved9(request.getReserved9());
+//        messageVO.setReserved10(request.getReserved10());
+//
+//        TransactionLogModel logModel = new TransactionLogModel();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+//        Date txDateTime = new Date();
+//        try {
+//            txDateTime = dateFormat.parse(request.getDateTime());
+//        } catch (java.text.ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+//        logModel.setTransactionDateTime(txDateTime);
+//        logModel.setChannelId(request.getChannelId());
+//        logModel.setTransactionCode("CustomerOutstandingLoanStatus");
+//        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+//        //preparing request
+//        String requestXml = JSONUtil.getJSON(request);
+//        //Setting in logModel
+//        logModel.setPduRequestHEX(requestXml);
+//
+//        saveTransaction(logModel);
+//
+//        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+//            response = optasiaMock.outstanding();
+//
+//            String responseXml = JSONUtil.getJSON(response);
+//            logger.info("[HOST] Mock Response of Loan Outstanding Request: " + responseXml);
+//        } else {
+//            // Call i8
+//            try {
+//                logger.info("[HOST] Sent Customer Outstanding Loan Status Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//                messageVO = switchController.outstandingLoanStatus(messageVO);
+//            } catch (Exception e) {
+//
+//                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+//
+//            }
+//
+//            // Set Response from i8
+//            if (messageVO != null
+//                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+//                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+//                logger.info("[HOST] Customer Outstanding Loan Status Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//                response.setRrn(messageVO.getRetrievalReferenceNumber());
+//                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+//                response.setResponseDescription(messageVO.getResponseCodeDescription());
+//                response.setResponseDateTime(messageVO.getDateTime());
+//                response.setIdentityValue(messageVO.getIdentityValue());
+//                response.setIdentityType(messageVO.getIdentityType());
+//                response.setOrigSource(messageVO.getOrigSource());
+//                response.setReceivedTimestamp(messageVO.getReceivedTimestamp());
+//                response.setCurrencyCode(messageVO.getCurrencyCode());
+//                response.setTotalGross(messageVO.getTotalGross());
+//                response.setTotalPrincipal(messageVO.getTotalPrincipal());
+//                response.setTotalSetupFees(messageVO.getTotalSetupFees());
+//                response.setTotalInterest(messageVO.getTotalInterest());
+//                response.setTotalInterestVAT(messageVO.getTotalInterestVAT());
+//                response.setTotalCharges(messageVO.getTotalCharges());
+//                response.setTotalChargesVAT(messageVO.getTotalChargesVAT());
+//                response.setTotalPendingLoans(messageVO.getTotalPendingLoans());
+//                response.setTotalPendingRecoveries(messageVO.getTotalPendingRecoveries());
+//
+//                logModel.setResponseCode(messageVO.getResponseCode());
+//                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+//
+//            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+//                logger.info("[HOST] Customer Outstanding Loan Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//                response.setResponseCode(messageVO.getResponseCode());
+//                response.setResponseDescription(messageVO.getResponseCodeDescription());
+//                logModel.setResponseCode(messageVO.getResponseCode());
+//                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+//            } else {
+//                logger.info("[HOST] Customer Outstanding Loan Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+//                response.setResponseDescription("Host Not In Reach");
+//                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+//
+//                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+//            }
+//            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+//            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//            response.setHashData(sha256hex);
+//
+//            long endTime = new Date().getTime(); // end time
+//            long difference = endTime - startTime; // check different
+//            logger.debug("[HOST] **** Customer Outstanding Loan Status Request PROCESSED IN ****: " + difference + " milliseconds");
+//
+//            //preparing request
+//            String responseXml = JSONUtil.getJSON(response);
+//            //Setting in logModel
+//            logModel.setPduResponseHEX(responseXml);
+//            logModel.setProcessedTime(difference);
+//            updateTransactionInDB(logModel);
+//        }
+//        return response;
+//    }
+
+//    public LoanStatusResponse loanStatusResponse(LoanStatusRequest request) {
+//
+//
+//        long startTime = new Date().getTime(); // start time
+//        WebServiceVO messageVO = new WebServiceVO();
+//        String transactionKey = request.getDateTime() + request.getRrn();
+//        messageVO.setRetrievalReferenceNumber(request.getRrn());
+//        logger.info("[HOST] Loan Status Request Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//        transactionKey = request.getChannelId() + request.getRrn();
+//
+//        LoanStatusResponse response = new LoanStatusResponse();
+//
+//        messageVO.setUserName(request.getUserName());
+//        messageVO.setCustomerPassword(request.getPassword());
+//        messageVO.setShaCnic(request.getCustomerId());
+//        messageVO.setDateTime(request.getDateTime());
+//        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+//        messageVO.setChannelId(request.getChannelId());
+//        messageVO.setTerminalId(request.getTerminalId());
+//        messageVO.setIdentityType(request.getIdentityType());
+//        messageVO.setOrigSource(request.getOrigSource());
+//        messageVO.setIdentityValue(request.getIdentityValue());
+//        messageVO.setReserved1(request.getReserved1());
+//        messageVO.setReserved2(request.getReserved2());
+//        messageVO.setReserved3(request.getReserved3());
+//        messageVO.setReserved4(request.getReserved4());
+//        messageVO.setReserved5(request.getReserved5());
+//        messageVO.setReserved6(request.getReserved6());
+//        messageVO.setReserved7(request.getReserved7());
+//        messageVO.setReserved8(request.getReserved8());
+//        messageVO.setReserved9(request.getReserved9());
+//        messageVO.setReserved10(request.getReserved10());
+//
+//        TransactionLogModel logModel = new TransactionLogModel();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+//        Date txDateTime = new Date();
+//        try {
+//            txDateTime = dateFormat.parse(request.getDateTime());
+//        } catch (java.text.ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+//        logModel.setTransactionDateTime(txDateTime);
+//        logModel.setChannelId(request.getChannelId());
+//        logModel.setTransactionCode("LoanStatus");
+//        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+//        //preparing request
+//        String requestXml = JSONUtil.getJSON(request);
+//        //Setting in logModel
+//        logModel.setPduRequestHEX(requestXml);
+//
+//        saveTransaction(logModel);
+//
+//        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+//            response = optasiaMock.status();
+//
+//            String responseXml = JSONUtil.getJSON(response);
+//            logger.info("[HOST] Mock Response of Loan Status Request: " + responseXml);
+//        } else {
+//            // Call i8
+//            try {
+//                logger.info("[HOST] Sent Loan Status Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//                messageVO = switchController.loanStatus(messageVO);
+//            } catch (Exception e) {
+//
+//                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+//
+//            }
+//
+//            // Set Response from i8
+//            if (messageVO != null
+//                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+//                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+//                logger.info("[HOST] Loan Status Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//                response.setRrn(messageVO.getRetrievalReferenceNumber());
+//                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+//                response.setResponseDescription(messageVO.getResponseCodeDescription());
+//                response.setResponseDateTime(messageVO.getDateTime());
+//                response.setIdentityValue(messageVO.getIdentityValue());
+//                response.setIdentityType(messageVO.getIdentityType());
+//                response.setOrigSource(messageVO.getOrigSource());
+//                response.setReceivedTimestamp(messageVO.getReceivedTimestamp());
+//                response.setInternalLoanId(messageVO.getInternalLoanId());
+//                response.setExternalLoanId(messageVO.getExternalLoanId());
+//                response.setLoanState(messageVO.getLoanState());
+//                response.setLoanTimestamp(messageVO.getLoanTimestamp());
+//                response.setLoanReason(messageVO.getLoanReason());
+//                response.setOfferName(messageVO.getOfferName());
+//                response.setCommodityType(messageVO.getCommodityType());
+//                response.setCurrencyCode(messageVO.getCurrencyCode());
+//                response.setPrincipalAmount(messageVO.getPrincipalAmount());
+//                response.setSetupFees(messageVO.getSetupFees());
+//                response.setLoanPlanId(messageVO.getLoanPlanId());
+//                response.setLoanPlanName(messageVO.getLoanPlanName());
+//                response.setLoanProductGroup(messageVO.getLoanProductGroup());
+//                response.setMaturityDuration(messageVO.getMaturityDuration());
+//                response.setRepaymentsCount(messageVO.getRepaymentsCount());
+//                response.setGross(messageVO.getGross());
+//                response.setPrincipal(messageVO.getPrincipal());
+//                response.setInterest(messageVO.getInterest());
+//                response.setInterestVAT(messageVO.getInterestVAT());
+//                response.setCharges(messageVO.getCharges());
+//                response.setChargesVAT(messageVO.getChargesVAT());
+//                response.setTotalGross(messageVO.getTotalGross());
+//                response.setTotalPrincipal(messageVO.getTotalPrincipal());
+//                response.setTotalSetupFees(messageVO.getTotalSetupFees());
+//                response.setTotalInterest(messageVO.getTotalInterest());
+//                response.setTotalInterestVAT(messageVO.getTotalInterestVAT());
+//                response.setTotalCharges(messageVO.getTotalCharges());
+//                response.setTotalChargesVAT(messageVO.getTotalChargesVAT());
+//                response.setTotalPendingRecoveries(messageVO.getTotalPendingRecoveries());
+//                response.setCurrentPeriod(messageVO.getCurrentPeriod());
+//                response.setDaysLeftInPeriod(messageVO.getDaysLeftInPeriod());
+//                response.setNextPeriod(messageVO.getNextPeriod());
+//
+//
+//                logModel.setResponseCode(messageVO.getResponseCode());
+//                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+//
+//            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+//                logger.info("[HOST] Loan Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//                response.setResponseCode(messageVO.getResponseCode());
+//                response.setResponseDescription(messageVO.getResponseCodeDescription());
+//                logModel.setResponseCode(messageVO.getResponseCode());
+//                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+//            } else {
+//                logger.info("[HOST] Loan Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+//                response.setResponseDescription("Host Not In Reach");
+//                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+//
+//                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+//            }
+//            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+//            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//            response.setHashData(sha256hex);
+//
+//            long endTime = new Date().getTime(); // end time
+//            long difference = endTime - startTime; // check different
+//            logger.debug("[HOST] **** Loan Status Request PROCESSED IN ****: " + difference + " milliseconds");
+//
+//            //preparing request
+//            String responseXml = JSONUtil.getJSON(response);
+//            //Setting in logModel
+//            logModel.setPduResponseHEX(responseXml);
+//            logModel.setProcessedTime(difference);
+//            updateTransactionInDB(logModel);
+//        }
+//        return response;
+//    }
+
+    public LoansHistoryResponse loansHistoryResponse(LoansHistoryRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Loan History Request Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        LoansHistoryResponse response = new LoansHistoryResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+
+        messageVO.setFromDate(request.getFromDate());
+        messageVO.setToDate(request.getToDate());
+
+//        Date fromDate=new SimpleDateFormat("ddMMyyyy").parse(String.valueOf(request.getFromDate()));
+//        messageVO.setFromDate(fromDate);
+//        Date toDate=new SimpleDateFormat("ddMMyyyy").parse(String.valueOf(request.getToDate()));
+//        messageVO.setToDate(toDate);
+
+        messageVO.setReason(request.getReason());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("LoanHistory");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+            response = optasiaMock.loansHistoryResponse();
+
+            String responseXml = JSONUtil.getJSON(response);
+            logger.info("[HOST] Mock Response of Loan History Request: " + responseXml);
+        } else {
+            // Call i8
+            try {
+                logger.info("[HOST] Sent Loan History Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                messageVO = switchController.loanHistory(messageVO);
+            } catch (Exception e) {
+
+                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+            }
+
+            // Set Response from i8
+            if (messageVO != null
+                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+                logger.info("[HOST] Loan History Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setRrn(messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                response.setResponseDateTime(messageVO.getDateTime());
+                response.setHistoryList(messageVO.getHistoryList());
+
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+                logger.info("[HOST] Loan History Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(messageVO.getResponseCode());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Loan History Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] **** Loan History Request PROCESSED IN ****: " + difference + " milliseconds");
+
+            //preparing request
+            String responseXml = JSONUtil.getJSON(response);
+            //Setting in logModel
+            logModel.setPduResponseHEX(responseXml);
+            logModel.setProcessedTime(difference);
+            updateTransactionInDB(logModel);
+        }
+        return response;
+    }
+
+    public LoanPlanResponse loanPlanResponse(LoansPlanRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Loan Plan Request Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        LoanPlanResponse response = new LoanPlanResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setFromDate(request.getFromDate());
+        messageVO.setToDate(request.getToDate());
+        messageVO.setAmount(request.getAmount());
+        messageVO.setReason(request.getReason());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("LoanPlan");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+            response = optasiaMock.loansPlanResponse();
+
+            String responseXml = JSONUtil.getJSON(response);
+            logger.info("[HOST] Mock Response of Loan Plan Request: " + responseXml);
+        } else {
+            // Call i8
+            try {
+                logger.info("[HOST] Sent Loan Plan  Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                messageVO = response.repaymentPlan(messageVO);
+                String repaymentPlan = JSONUtil.getJSON(messageVO);
+                logger.info("[HOST] Loan Plan Request Successful Response: " + repaymentPlan);
+
+            } catch (Exception e) {
+
+                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+            }
+
+            // Set Response from i8
+            if (messageVO != null
+                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+//                logger.info("[HOST] Loan Plan Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setRrn(messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                response.setResponseDateTime(messageVO.getDateTime());
+                response.setDueDatePlans(messageVO.getDueDatePlanList());
+                response.setLoanAmountList(messageVO.getLoanAmountList());
+
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+                logger.info("[HOST] Loan Plan Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(messageVO.getResponseCode());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Loan Plan Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] **** Loan Plan Request PROCESSED IN ****: " + difference + " milliseconds");
+
+            //preparing request
+            String responseXml = JSONUtil.getJSON(response);
+            //Setting in logModel
+            logModel.setPduResponseHEX(responseXml);
+            logModel.setProcessedTime(difference);
+            updateTransactionInDB(logModel);
+        }
+        return response;
+    }
+
+    public TransactionActiveResponse transactionActiveResponse(TransactionActiveRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Transaction Active Request Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        TransactionActiveResponse response = new TransactionActiveResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getCustomerId());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setFromDate(request.getFromDate());
+        messageVO.setToDate(request.getToDate());
+        messageVO.setReason(request.getReason());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("TransactionActive");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+            response = optasiaMock.transactionActiveResponse();
+
+            String responseXml = JSONUtil.getJSON(response);
+            logger.info("[HOST] Mock Response of Transaction Active Request: " + responseXml);
+        } else {
+            // Call i8
+            try {
+                logger.info("[HOST] Sent Transaction Active Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                messageVO = switchController.transactionActive(messageVO);
+            } catch (Exception e) {
+
+                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+            }
+
+            // Set Response from i8
+            if (messageVO != null
+                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+                logger.info("[HOST] Transaction Active Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setRrn(messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                response.setResponseDateTime(messageVO.getDateTime());
+                response.setStatus(messageVO.getStatus());
+                response.setIsStatus(messageVO.getStatusFlag());
+
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+                logger.info("[HOST] Transaction Active Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(messageVO.getResponseCode());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Transaction Active Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] **** Transaction Active Request PROCESSED IN ****: " + difference + " milliseconds");
+
+            //preparing request
+            String responseXml = JSONUtil.getJSON(response);
+            //Setting in logModel
+            logModel.setPduResponseHEX(responseXml);
+            logModel.setProcessedTime(difference);
+            updateTransactionInDB(logModel);
+        }
+        return response;
+    }
+
+//    public CustomerAnalyticsResponse customAnalyticsResponse(CustomerAnalyticsRequest request) {
+//
+//
+//        long startTime = new Date().getTime(); // start time
+//        WebServiceVO messageVO = new WebServiceVO();
+//        String transactionKey = request.getDateTime() + request.getRrn();
+//        messageVO.setRetrievalReferenceNumber(request.getRrn());
+//        logger.info("[HOST] Customer Analytics Request Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//        transactionKey = request.getChannelId() + request.getRrn();
+//
+//        CustomerAnalyticsResponse response = new CustomerAnalyticsResponse();
+//
+//        messageVO.setUserName(request.getUserName());
+//        messageVO.setCustomerPassword(request.getPassword());
+//        messageVO.setShaCnic(request.getCustomerId());
+//        messageVO.setDateTime(request.getDateTime());
+//        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+//        messageVO.setChannelId(request.getChannelId());
+//        messageVO.setTerminalId(request.getTerminalId());
+//        messageVO.setName(request.getFullName());
+//        messageVO.setDateOfBirth(request.getDateOfBirth());
+//        messageVO.setPermanentCity(request.getCity());
+//        messageVO.setLoanAmount(request.getLoanAmount());
+//        messageVO.setGender(request.getGender());
+//        messageVO.setPresentAddress(request.getCurrentAddress());
+//        messageVO.setFatherHusbandName(request.getFatherHusbandName());
+//        messageVO.setReserved1(request.getReserved1());
+//        messageVO.setReserved2(request.getReserved2());
+//        messageVO.setReserved3(request.getReserved3());
+//        messageVO.setReserved4(request.getReserved4());
+//        messageVO.setReserved5(request.getReserved5());
+//        messageVO.setReserved6(request.getReserved6());
+//        messageVO.setReserved7(request.getReserved7());
+//        messageVO.setReserved8(request.getReserved8());
+//        messageVO.setReserved9(request.getReserved9());
+//        messageVO.setReserved10(request.getReserved10());
+//
+//        TransactionLogModel logModel = new TransactionLogModel();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+//        Date txDateTime = new Date();
+//        try {
+//            txDateTime = dateFormat.parse(request.getDateTime());
+//        } catch (java.text.ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+//        logModel.setTransactionDateTime(txDateTime);
+//        logModel.setChannelId(request.getChannelId());
+//        logModel.setTransactionCode("CustomerAnalytics");
+//        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+//        //preparing request
+//        String requestXml = JSONUtil.getJSON(request);
+//        //Setting in logModel
+//        logModel.setPduRequestHEX(requestXml);
+//
+//        saveTransaction(logModel);
+//
+//        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+//            response = optasiaMock.analyticsResponse();
+//
+//            String responseXml = JSONUtil.getJSON(response);
+//            logger.info("[HOST] Mock Response of Customer Analytics Request: " + responseXml);
+//        } else {
+//            // Call i8
+//            try {
+//                logger.info("[HOST] Sent Customer Analytics Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//                messageVO = switchController.customerAnalytics(messageVO);
+//            } catch (Exception e) {
+//
+//                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+//
+//            }
+//
+//            // Set Response from i8
+//            if (messageVO != null
+//                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+//                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+//                logger.info("[HOST] Customer Analytics Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//                response.setRrn(messageVO.getRetrievalReferenceNumber());
+//                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+//                response.setResponseDescription(messageVO.getResponseCodeDescription());
+//                response.setResponseDateTime(messageVO.getDateTime());
+//                response.setStatusCode(messageVO.getCode());
+//                response.setMessageCode(messageVO.getMessageCode());
+//                response.setMessage(messageVO.getMessage());
+//                response.setReportDate(messageVO.getReportDate());
+//                response.setReportTime(messageVO.getReportTime());
+//                response.setName(messageVO.getName());
+//                response.setCnic(messageVO.getCnicNo());
+//                response.setCity(messageVO.getPresentCity());
+//                response.setNoOfActiveAccounts(messageVO.getNoOfActiveAccounts());
+//                response.setTotalOutstandingBalance(messageVO.getTotalOutstandingBalance());
+//                response.setDob(messageVO.getDateOfBirth());
+//                response.setPlus3024m(messageVO.getPlus3024m());
+//                response.setPlus6024m(messageVO.getPlus6024m());
+//                response.setPlus9024m(messageVO.getPlus9024m());
+//                response.setPlus12024m(messageVO.getPlus12024m());
+//                response.setPlus15024m(messageVO.getPlus15024m());
+//                response.setPlus18024m(messageVO.getPlus18024m());
+//                response.setDisclaimerText(messageVO.getDisclaimerText());
+//                response.setRemarks(messageVO.getRemarks());
+//
+//
+//                logModel.setResponseCode(messageVO.getResponseCode());
+//                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+//
+//            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+//                logger.info("[HOST] Customer Analytics Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//                response.setResponseCode(messageVO.getResponseCode());
+//                response.setResponseDescription(messageVO.getResponseCodeDescription());
+//                logModel.setResponseCode(messageVO.getResponseCode());
+//                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+//            } else {
+//                logger.info("[HOST] Customer Analytics Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+//                response.setResponseDescription("Host Not In Reach");
+//                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+//
+//                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+//            }
+//            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+//            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//            response.setHashData(sha256hex);
+//
+//            long endTime = new Date().getTime(); // end time
+//            long difference = endTime - startTime; // check different
+//            logger.debug("[HOST] **** Customer Analytics Request PROCESSED IN ****: " + difference + " milliseconds");
+//
+//            //preparing request
+//            String responseXml = JSONUtil.getJSON(response);
+//            //Setting in logModel
+//            logModel.setPduResponseHEX(responseXml);
+//            logModel.setProcessedTime(difference);
+//            updateTransactionInDB(logModel);
+//        }
+//        return response;
+//    }
 
 }

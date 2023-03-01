@@ -133,4 +133,7 @@ public interface AppUserDAO extends BaseDAO<AppUserModel, Long> {
 	public String getCustomerId(String cnic) throws FrameworkCheckedException;
 
 	public AppUserModel getAppUserWithRegistrationStates(String mobileNo, String cnic, Long ...registrationStates);
+
+	public AppUserModel loadAppUserByCnic256(String shaCnic) throws FrameworkCheckedException;
+
 }

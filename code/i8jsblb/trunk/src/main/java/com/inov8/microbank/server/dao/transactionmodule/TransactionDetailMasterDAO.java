@@ -5,7 +5,9 @@ import com.inov8.framework.common.wrapper.BaseWrapper;
 import com.inov8.framework.common.wrapper.SearchBaseWrapper;
 import com.inov8.framework.server.dao.framework.BaseDAO;
 import com.inov8.microbank.common.model.TransactionDetailMasterModel;
+import com.inov8.microbank.common.model.WalletSafRepoModel;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,5 +40,9 @@ public interface TransactionDetailMasterDAO
     public BaseWrapper loadAndLockTransactionDetailMasterModel(BaseWrapper baseWrapper) throws FrameworkCheckedException;
     public long getPaidChallan(String consumerNo,String productCode);
 
-	
+    TransactionDetailMasterModel  loadTDMbyRRN(String rrn);
+    TransactionDetailMasterModel  loadTDMbyMobileNumber(String mobileNo, String productId);
+//    TransactionDetailMasterModel  loadTDMbyMobileandDateRange(String mobileNo, String startDate, String endDate);
+    List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, Date startDate, Date endDate, String productId) throws FrameworkCheckedException;
+
 }

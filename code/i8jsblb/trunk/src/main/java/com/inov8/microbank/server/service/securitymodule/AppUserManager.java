@@ -213,4 +213,6 @@ public interface AppUserManager {
 
     public AppUserModel getAppUserWithRegistrationStates(String mobileNo, String cnic, Long ...registrationStates) throws FrameworkCheckedException;
 
+    public AppUserModel loadAppUserByCnic256(String shaCnic) throws FrameworkCheckedException;
+
 }

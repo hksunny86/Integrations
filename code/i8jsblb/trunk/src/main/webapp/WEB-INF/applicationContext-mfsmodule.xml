@@ -419,6 +419,7 @@
           <property name="blinkCustomerRegistrationStateDAO" ref="blinkCustomerRegistrationStateDAO"/>
           <property name="clsDebitCreditDAO" ref="clsDebitCreditDAO"/>
           <property name="offlineBillersConfigDAO" ref="offlineBillersConfigDAO"/>
+          <property name="tasdeeqDataDAO" ref="tasdeeqDataDAO"/>
       </bean>
     </property>
 

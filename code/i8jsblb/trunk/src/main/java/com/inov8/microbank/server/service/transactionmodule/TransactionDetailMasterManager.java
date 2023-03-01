@@ -46,6 +46,7 @@ public interface TransactionDetailMasterManager{
 
 	TransactionDetailMasterModel loadTransactionDetailMasterModelByRRN(String rrn) throws FrameworkCheckedException;
 	TransactionDetailMasterModel loadTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException;
+	TransactionDetailMasterModel loadTDMbyProductId(String mobileNo, String productId) throws FrameworkCheckedException;
 //	List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, String startDate, String endDate) throws FrameworkCheckedException;
 
 }

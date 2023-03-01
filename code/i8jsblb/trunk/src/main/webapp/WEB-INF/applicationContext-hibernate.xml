@@ -993,8 +993,7 @@
 		<value>com.inov8.microbank.common.model.portal.blbnewreports.DigiDebitCardAnnualReportViewModel</value>
 		<value>com.inov8.microbank.common.model.portal.blbnewreports.DigiPostedRdvReportViewModel</value>
 		<value>com.inov8.microbank.common.model.IVRMpinVerificationViewModel</value>
-
-
+		<value>com.inov8.microbank.common.model.TasdeeqDataModel</value>
 
 	</util:list>
 

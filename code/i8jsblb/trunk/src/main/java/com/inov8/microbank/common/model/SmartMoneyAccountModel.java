@@ -102,6 +102,8 @@ public class SmartMoneyAccountModel extends BasePersistableModel implements Seri
    private Long isAccountClosedSetteled;
    private Double debitBlockAmount;
    private Boolean isDebitBlocked;
+   private Boolean isOptasiaDebitBlocked;
+   private String debitBlockReason;
 
    /**
     * Default constructor.
@@ -1624,4 +1626,21 @@ public class SmartMoneyAccountModel extends BasePersistableModel implements Seri
       this.isDebitBlocked = isDebitBlocked;
    }
 
+   @Column(name="IS_OPTASIA_DEBIT_BLOCKED")
+   public Boolean getIsOptasiaDebitBlocked() {
+      return isOptasiaDebitBlocked;
+   }
+
+   public void setIsOptasiaDebitBlocked(Boolean isOptasiaDebitBlocked) {
+      this.isOptasiaDebitBlocked = isOptasiaDebitBlocked;
+   }
+
+   @Column(name="DEBIT_BLOCK_REASON")
+   public String getDebitBlockReason() {
+      return debitBlockReason;
+   }
+
+   public void setDebitBlockReason(String debitBlockReason) {
+      this.debitBlockReason = debitBlockReason;
+   }
 }

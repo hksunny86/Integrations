@@ -33,14 +33,7 @@ public class TasdeeqMock {
 
     public String authenticatedUpdated() {
 
-        String authenticatedUpdated = "{\n" +
-                "    \"statusCode\": \"111\",\n" +
-                "    \"messageCode\": \"00170017\",\n" +
-                "    \"message\": \"Login successful\",\n" +
-                "    \"data\": {\n" +
-                "        \"auth_token\": \"1234567890\"\n" +
-                "    }\n" +
-                "}";
+        String authenticatedUpdated = "{\"messageCode\": \"00170017\", \"message\": \"Login Successful\", \"data\": {\"auth_token\": \"O7dvrfGaUOunKqxi5gtRgSbFtwyNwD\"}, \"statusCode\": \"111\"}";
 
         return authenticatedUpdated;
     }

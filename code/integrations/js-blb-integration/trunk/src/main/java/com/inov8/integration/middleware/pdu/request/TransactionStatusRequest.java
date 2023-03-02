@@ -19,6 +19,7 @@ import java.io.Serializable;
         "CustomerId",
         "DateTime",
         "Rrn",
+        "ThirdPartTransactionId",
         "ChannelId",
         "TerminalId",
         "Reserved1",
@@ -47,6 +48,8 @@ public class TransactionStatusRequest implements Serializable {
     private String dateTime;
     @JsonProperty("Rrn")
     private String rrn;
+    @JsonProperty("ThirdPartTransactionId")
+    private String thirdPartTransactionId;
     @JsonProperty("ChannelId")
     private String channelId;
     @JsonProperty("TerminalId")
@@ -112,6 +115,14 @@ public class TransactionStatusRequest implements Serializable {
 
     public void setRrn(String rrn) {
         this.rrn = rrn;
+    }
+
+    public String getThirdPartTransactionId() {
+        return thirdPartTransactionId;
+    }
+
+    public void setThirdPartTransactionId(String thirdPartTransactionId) {
+        this.thirdPartTransactionId = thirdPartTransactionId;
     }
 
     public String getChannelId() {

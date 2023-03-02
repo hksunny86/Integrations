@@ -170,4 +170,7 @@
 			<ref local="customerManager" />
 		</property>
 	</bean>
+	<bean id="tasdeeqDataDAO" class="com.inov8.microbank.server.dao.customermodule.hibernate.TasdeeqDataHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 </beans>

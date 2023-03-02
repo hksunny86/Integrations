@@ -13,6 +13,7 @@ import com.inov8.integration.webservice.optasiaVO.LoanOffers;
 import com.inov8.integration.webservice.optasiaVO.MaturityDetails;
 import com.inov8.integration.webservice.optasiaVO.OneOffCharges;
 
+import java.awt.font.TextHitInfo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -245,6 +246,7 @@ public class OfferListForCommodityResponse extends Response implements Serializa
             outstandingStatus.setCurrencyCode(this.getOutstandingStatus().get(i).getCurrencyCode());
             outstandingStatus.setNumOutstandingLoans(String.valueOf(this.getOutstandingStatus().get(i).getNumOutstandingLoans()));
             outstandingStatus.setTotalGross(String.valueOf(this.getOutstandingStatus().get(i).getTotalGross()));
+            outstandingStatus.setTotalPrincipal(String.valueOf(this.getOutstandingStatus().get(i).getTotalPrincipal()));
             outstandingStatus.setTotalSetupFees(String.valueOf(this.getOutstandingStatus().get(i).getTotalSetupFees()));
             outstandingStatus.setTotalInterest(String.valueOf(this.getOutstandingStatus().get(i).getTotalInterest()));
             outstandingStatus.setTotalInterestVAT(String.valueOf(this.getOutstandingStatus().get(i).getTotalInterestVAT()));
@@ -269,7 +271,7 @@ public class OfferListForCommodityResponse extends Response implements Serializa
         "eligibilityStatus"
 })
 @Generated("jsonschema2pojo")
-class OfferEligibilitystatus implements Serializable{
+class OfferEligibilitystatus implements Serializable {
 
     @JsonProperty("isEligible")
     private Boolean isEligible;
@@ -307,7 +309,7 @@ class OfferEligibilitystatus implements Serializable{
         "daysOffset",
         "interval"
 })
-class OfferInterest implements Serializable{
+class OfferInterest implements Serializable {
 
     @JsonProperty("interestName")
     private String interestName;
@@ -540,7 +542,7 @@ class OfferLoanOffer implements Serializable {
         "loanProductGroup",
         "loanOffers"
 })
-class LoanOffersByLoanProductGroup implements Serializable{
+class LoanOffersByLoanProductGroup implements Serializable {
 
     @JsonProperty("loanProductGroup")
     private String loanProductGroup;
@@ -576,7 +578,7 @@ class LoanOffersByLoanProductGroup implements Serializable{
         "oneOffCharges",
         "recurringCharges"
 })
-class OfferMaturityDetails implements Serializable{
+class OfferMaturityDetails implements Serializable {
 
     @JsonProperty("maturityDuration")
     private Integer maturityDuration;
@@ -637,7 +639,7 @@ class OfferMaturityDetails implements Serializable{
         "chargeVAT",
         "daysOffset"
 })
-class OfferOneOffCharge implements Serializable{
+class OfferOneOffCharge implements Serializable {
 
     @JsonProperty("chargeName")
     private String chargeName;
@@ -716,7 +718,7 @@ class OfferOneOffCharge implements Serializable{
         "totalPendingLoans",
         "totalPendingRecoveries"
 })
-class OfferOutstandingstatus implements Serializable{
+class OfferOutstandingstatus implements Serializable {
 
     @JsonProperty("currencyCode")
     private String currencyCode;
@@ -862,7 +864,7 @@ class OfferOutstandingstatus implements Serializable{
         "daysOffset",
         "interval"
 })
-class OfferRecurringCharge implements Serializable{
+class OfferRecurringCharge implements Serializable {
 
     @JsonProperty("chargeName")
     private String chargeName;

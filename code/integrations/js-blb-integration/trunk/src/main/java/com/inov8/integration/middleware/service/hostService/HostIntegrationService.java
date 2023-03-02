@@ -14743,16 +14743,53 @@ public class HostIntegrationService {
             creditInquiryRequest.setReserved9(request.getReserved9());
             creditInquiryRequest.setReserved10(request.getReserved10());
             logger.info("[HOST] Optasia Credit Inquiry Payment Request Sent to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-            this.creditInquiryResponse(creditInquiryRequest);
+            CreditInquiryResponse creditInquiryResponse = new CreditInquiryResponse();
 
-            response.setRrn(messageVO.getRetrievalReferenceNumber());
-            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-            response.setResponseDescription(messageVO.getResponseCodeDescription());
-            response.setResponseDateTime(messageVO.getDateTime());
-            response.setComissionAmount(messageVO.getCommissionAmount());
-            response.setInclusiveExclusiveComissionAmount(messageVO.getReserved3());
-            response.setTotalAmount(messageVO.getTotalAmount());
-            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            creditInquiryResponse = this.creditInquiryResponse(creditInquiryRequest);
+
+            if (creditInquiryResponse != null
+                    && StringUtils.isNotEmpty(creditInquiryResponse.getResponseCode())
+                    && creditInquiryResponse.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+
+                response.setRrn(creditInquiryResponse.getRrn());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(creditInquiryResponse.getResponseDescription());
+                response.setResponseDateTime(creditInquiryResponse.getResponseDateTime());
+                response.setComissionAmount(creditInquiryResponse.getComissionAmount());
+                response.setInclusiveExclusiveComissionAmount(creditInquiryResponse.getInclusiveExclusiveComissionAmount());
+                response.setTotalAmount(creditInquiryResponse.getTotalAmount());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (creditInquiryResponse != null && StringUtils.isNotEmpty(creditInquiryResponse.getResponseCode())) {
+                logger.info("[HOST] Credit Inquiry Payment Request Unsuccessful from Micro Bank RRN: " + creditInquiryResponse.getRrn());
+                response.setResponseCode(creditInquiryResponse.getResponseCode());
+                response.setResponseDescription(creditInquiryResponse.getResponseDescription());
+                response.setRrn(creditInquiryResponse.getRrn());
+                logModel.setResponseCode(creditInquiryResponse.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Credit Inquiry Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+
+            StringBuilder stringText = new StringBuilder()
+                    .append(response.getRrn())
+                    .append(response.getResponseCode())
+                    .append(response.getResponseDescription())
+                    .append(response.getResponseDateTime());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] ****Optasia Credit Inquiry PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+            return response;
 
         } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
             logger.info("[HOST] Optasia Credit Inquiry Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -14770,6 +14807,7 @@ public class HostIntegrationService {
 
             logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
         }
+
         StringBuilder stringText = new StringBuilder()
                 .append(response.getRrn())
                 .append(response.getResponseCode())
@@ -14788,6 +14826,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
+
         updateTransactionInDB(logModel);
         return response;
     }
@@ -14805,7 +14844,7 @@ public class HostIntegrationService {
 
         messageVO.setUserName(request.getUserName());
         messageVO.setCustomerPassword(request.getPassword());
-        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setShaCnic(request.getCustomerId());
         messageVO.setDateTime(request.getDateTime());
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
@@ -14866,7 +14905,7 @@ public class HostIntegrationService {
         logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
         logModel.setTransactionDateTime(txDateTime);
         logModel.setChannelId(request.getChannelId());
-        logModel.setTransactionCode("Credit");
+        logModel.setTransactionCode("OptasiaCredit");
         logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
         //preparing request XML
         String requestXml = XMLUtil.convertToXML(request);
@@ -14948,17 +14987,53 @@ public class HostIntegrationService {
             creditRequest.setReserved9(request.getReserved9());
             creditRequest.setReserved10(request.getReserved10());
             logger.info("[HOST] Optasia Credit Payment Request Sent to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-            this.creditResponse(creditRequest);
+            CreditResponse creditResponse = new CreditResponse();
+            creditResponse = this.creditResponse(creditRequest);
 
-            response.setRrn(messageVO.getRetrievalReferenceNumber());
-            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-            response.setResponseDescription(messageVO.getResponseCodeDescription());
-            response.setResponseDateTime(messageVO.getDateTime());
-            response.setTransactionId(messageVO.getTransactionId());
-            response.setComissionAmount(messageVO.getCommissionAmount());
-            response.setTransactionAmount(messageVO.getTransactionAmount());
-            response.setTotalTransactionAmount(messageVO.getTotalAmount());
-            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            if (creditResponse != null
+                    && StringUtils.isNotEmpty(creditResponse.getResponseCode())
+                    && creditResponse.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+
+                response.setRrn(creditResponse.getRrn());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(creditResponse.getResponseDescription());
+                response.setResponseDateTime(creditResponse.getResponseDateTime());
+                response.setTransactionId(creditResponse.getTransactionId());
+                response.setComissionAmount(creditResponse.getComissionAmount());
+                response.setTransactionAmount(creditResponse.getTransactionAmount());
+                response.setTotalTransactionAmount(creditResponse.getTotalTransactionAmount());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (creditResponse != null && StringUtils.isNotEmpty(creditResponse.getResponseCode())) {
+                logger.info("[HOST] Credit Payment Request Unsuccessful from Micro Bank RRN: " + creditResponse.getRrn());
+                response.setResponseCode(creditResponse.getResponseCode());
+                response.setResponseDescription(creditResponse.getResponseDescription());
+                response.setRrn(creditResponse.getRrn());
+                logModel.setResponseCode(creditResponse.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Credit Payment Request Unsuccessful from Micro Bank RRN: " + creditResponse.getRrn());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+
+            StringBuilder stringText = new StringBuilder()
+                    .append(response.getRrn())
+                    .append(response.getResponseCode())
+                    .append(response.getResponseDescription())
+                    .append(response.getResponseDateTime());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] ****Credit Payment PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+            return response;
 
         } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
             logger.info("[HOST] Optasia Credit  Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -15011,7 +15086,7 @@ public class HostIntegrationService {
 
         messageVO.setUserName(request.getUserName());
         messageVO.setCustomerPassword(request.getPassword());
-        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setShaCnic(request.getCustomerId());
         messageVO.setDateTime(request.getDateTime());
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
@@ -15097,16 +15172,51 @@ public class HostIntegrationService {
             debitInquiryRequest.setReserved9(request.getReserved9());
             debitInquiryRequest.setReserved10(request.getReserved10());
             logger.info("[HOST] Optasia Debit Inquiry Payment Request Sent to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-            this.debitInquiryResponse(debitInquiryRequest);
+            DebitInquiryResponse debitInquiryResponse = new DebitInquiryResponse();
+            debitInquiryResponse = this.debitInquiryResponse(debitInquiryRequest);
 
+            if (debitInquiryResponse != null
+                    && StringUtils.isNotEmpty(debitInquiryResponse.getResponseCode())
+                    && debitInquiryResponse.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
 
-            response.setRrn(messageVO.getRetrievalReferenceNumber());
-            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-            response.setResponseDescription(messageVO.getResponseCodeDescription());
-            response.setResponseDateTime(messageVO.getDateTime());
-            response.setComissionAmount(messageVO.getCommissionAmount());
-            response.setTotalAmount(messageVO.getTotalAmount());
-            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+                response.setRrn(debitInquiryResponse.getRrn());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(debitInquiryResponse.getResponseDescription());
+                response.setResponseDateTime(debitInquiryResponse.getResponseDateTime());
+                response.setComissionAmount(debitInquiryResponse.getComissionAmount());
+                response.setTotalAmount(debitInquiryResponse.getTotalAmount());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (debitInquiryResponse != null && StringUtils.isNotEmpty(debitInquiryResponse.getResponseCode())) {
+                logger.info("[HOST] Debit Inquiry Request Unsuccessful from Micro Bank RRN: " + debitInquiryResponse.getRrn());
+                response.setResponseCode(debitInquiryResponse.getResponseCode());
+                response.setResponseDescription(debitInquiryResponse.getResponseDescription());
+                response.setRrn(debitInquiryResponse.getRrn());
+                logModel.setResponseCode(debitInquiryResponse.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Debit Inquiry Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+
+            StringBuilder stringText = new StringBuilder()
+                    .append(response.getRrn())
+                    .append(response.getResponseCode())
+                    .append(response.getResponseDescription())
+                    .append(response.getResponseDateTime());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] ****Optasia Debit Inquiry PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+            return response;
 
         } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
             logger.info("[HOST] Optasia Debit Inquiry Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -15159,7 +15269,7 @@ public class HostIntegrationService {
 
         messageVO.setUserName(request.getUserName());
         messageVO.setCustomerPassword(request.getPassword());
-        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setShaCnic(request.getCustomerId());
         messageVO.setDateTime(request.getDateTime());
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
@@ -15316,17 +15426,53 @@ public class HostIntegrationService {
             debitRequest.setReserved9(request.getReserved9());
             debitRequest.setReserved10(request.getReserved10());
             logger.info("[HOST] Optasia Debit Payment Request Sent to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-            this.debitResponse(debitRequest);
+            DebitResponse debitResponse = new DebitResponse();
+            debitResponse = this.debitResponse(debitRequest);
 
-            response.setRrn(messageVO.getRetrievalReferenceNumber());
-            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-            response.setResponseDescription(messageVO.getResponseCodeDescription());
-            response.setResponseDateTime(messageVO.getDateTime());
-            response.setTransactionId(messageVO.getTransactionId());
-            response.setComissionAmount(messageVO.getCommissionAmount());
-            response.setTransactionAmount(messageVO.getTransactionAmount());
-            response.setTotalTransactionAmount(messageVO.getTotalAmount());
-            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            if (debitResponse != null
+                    && StringUtils.isNotEmpty(debitResponse.getResponseCode())
+                    && debitResponse.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+
+                response.setRrn(debitResponse.getRrn());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(debitResponse.getResponseDescription());
+                response.setResponseDateTime(debitResponse.getResponseDateTime());
+                response.setTransactionId(debitResponse.getTransactionId());
+                response.setComissionAmount(debitResponse.getComissionAmount());
+                response.setTransactionAmount(debitResponse.getTransactionAmount());
+                response.setTotalTransactionAmount(debitResponse.getTotalTransactionAmount());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (messageVO != null && StringUtils.isNotEmpty(debitResponse.getResponseCode())) {
+                logger.info("[HOST] Debit Payment Request Unsuccessful from Micro Bank RRN: " + debitResponse.getRrn());
+                response.setResponseCode(debitResponse.getResponseCode());
+                response.setResponseDescription(debitResponse.getResponseDescription());
+                response.setRrn(debitResponse.getRrn());
+                logModel.setResponseCode(debitResponse.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Debit Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+
+            StringBuilder stringText = new StringBuilder()
+                    .append(response.getRrn())
+                    .append(response.getResponseCode())
+                    .append(response.getResponseDescription())
+                    .append(response.getResponseDateTime());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] ****Optasia Debit Payment PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+            return response;
 
         } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
             logger.info("[HOST] Optasia Debit Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -15383,6 +15529,7 @@ public class HostIntegrationService {
         messageVO.setShaCnic(request.getCustomerId());
         messageVO.setDateTime(request.getDateTime());
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setThirdPartyTransactionId(request.getThirdPartTransactionId());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setReserved1(request.getReserved1());
@@ -16188,6 +16335,10 @@ public class HostIntegrationService {
                 response.setOrigSource(messageVO.getOrigSource());
                 response.setReceivedTimestamp(messageVO.getReceivedTimestamp());
                 response.setSourceRequestId(messageVO.getSourceRequestId());
+                response.setTransactionId(messageVO.getTransactionId());
+                response.setAmount(messageVO.getAmount());
+                response.setProcessingFee(messageVO.getProcessingFee());
+                response.setTotalAmount(messageVO.getTotalAmount());
 
 
                 logModel.setResponseCode(messageVO.getResponseCode());
@@ -17088,7 +17239,8 @@ public class HostIntegrationService {
                 response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
                 response.setResponseDescription(messageVO.getResponseCodeDescription());
                 response.setResponseDateTime(messageVO.getDateTime());
-                response.setStatus(messageVO.getStatusFlag());
+                response.setStatus(messageVO.getStatus());
+                response.setIsStatus(messageVO.getStatusFlag());
 
                 logModel.setResponseCode(messageVO.getResponseCode());
                 logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());

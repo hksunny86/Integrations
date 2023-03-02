@@ -96,35 +96,8 @@ public class OptasiaService {
             HttpEntity httpEntity = new HttpEntity(headers);
             HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Sending Offer List For Commodity Request Sent to Client " + httpEntity.getBody().toString());
-            offerListForCommodityResponse = (OfferListForCommodityResponse) JSONUtil.jsonToObject(res.getBody(), OfferListForCommodityResponse.class);
-//                ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
             logger.info("Response received from client " + res.getBody());
-//            logger.info("Response Code received from client " + res1.getStatusCode().toString());
-//                if (res1.getStatusCode().toString().equals("200")) {
-//                    response = (String) res1.getBody();
-//                    offerListForCommodityResponse.setResponseCode(res1.getStatusCode().toString());
-//                    offerListForCommodityResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
-//                    offerListForCommodityResponse.setResponseDescription("Success");
-//                }
-//            } catch (RestClientException e) {
-//                if (e instanceof HttpStatusCodeException) {
-//                    response = ((HttpStatusCodeException) e).getStatusCode().toString();
-//                    String result;
-//                    if (response.equals("400")) {
-//                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-//                        offerListForCommodityResponse = (OfferListForCommodityResponse) JSONUtil.jsonToObject(result, OfferListForCommodityResponse.class);
-//                        offerListForCommodityResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-//                    } else if (response.equals("422")) {
-//                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-//                        offerListForCommodityResponse = (OfferListForCommodityResponse) JSONUtil.jsonToObject(result, OfferListForCommodityResponse.class);
-//                        offerListForCommodityResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-//                    } else if (response.equals("500")) {
-//                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-//                        offerListForCommodityResponse = (OfferListForCommodityResponse) JSONUtil.jsonToObject(result, OfferListForCommodityResponse.class);
-//                        offerListForCommodityResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-//                    }
-//                }
-//            }
+            offerListForCommodityResponse = (OfferListForCommodityResponse) JSONUtil.jsonToObject(res.getBody(), OfferListForCommodityResponse.class);
         }
 
         long endTime = (new Date()).getTime();
@@ -170,7 +143,8 @@ public class OptasiaService {
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
                 if (res1.getStatusCode().toString().equals("200")) {
-                    response = (String) res1.getBody();
+                    response = res1.getBody();
+                    loanOfferResponse = (LoanOfferResponse) JSONUtil.jsonToObject(response, LoanOfferResponse.class);
                     loanOfferResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
                     loanOfferResponse.setResponseDescription("Success");
                 }
@@ -236,7 +210,8 @@ public class OptasiaService {
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
                 if (res1.getStatusCode().toString().equals("200")) {
-                    response = (String) res1.getBody();
+                    response = res1.getBody();
+                    callBackResponse = (CallBackResponse) JSONUtil.jsonToObject(response, CallBackResponse.class);
                     callBackResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
                     callBackResponse.setResponseDescription("Success");
                 }
@@ -306,9 +281,9 @@ public class OptasiaService {
             HttpEntity httpEntity = new HttpEntity(headers);
             HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Sending Customer Loans Request Sent to Client " + httpEntity.getBody().toString());
+            logger.info("Response received from client " + res.getBody());
             loansResponse = (LoansResponse) JSONUtil.jsonToObject(res.getBody(), LoansResponse.class);
 //                ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
-            logger.info("Response received from client " + res.getBody());
 
         }
 
@@ -362,7 +337,8 @@ public class OptasiaService {
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
                 if (res1.getStatusCode().toString().equals("200")) {
-                    response = (String) res1.getBody();
+                    response = res1.getBody();
+                    initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(response, InitiateLoanResponse.class);
                     initiateLoanResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
                     initiateLoanResponse.setResponseDescription("Success");
                 }
@@ -431,8 +407,10 @@ public class OptasiaService {
                 logger.info("Sending Outstanding Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
+                logger.info("Response received from client " + res1.getBody());
                 if (res1.getStatusCode().toString().equals("200")) {
-                    response = (String) res1.getBody();
+                    response = res1.getBody();
+                    outstandingResponse = (OutstandingResponse) JSONUtil.jsonToObject(response, OutstandingResponse.class);
                     outstandingResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
                     outstandingResponse.setResponseDescription("Success");
                 }
@@ -499,7 +477,8 @@ public class OptasiaService {
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
                 if (res1.getStatusCode().toString().equals("200")) {
-                    response = (String) res1.getBody();
+                    response = res1.getBody();
+                    transactionStatusResponse = (TransactionStatusResponse) JSONUtil.jsonToObject(response, TransactionStatusResponse.class);
                     transactionStatusResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
                     transactionStatusResponse.setResponseDescription("Success");
                 }
@@ -544,7 +523,7 @@ public class OptasiaService {
             String response = optasiaMock.status();
             loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(response, LoanStatusResponse.class);
             logger.info("Response Code of Loans Status Request : " + response);
-            logger.info("Response Code for Loan Offer Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
+            logger.info("Response Code for Loan Status Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaOutstanding);
             HttpHeaders headers = new HttpHeaders();
@@ -565,8 +544,10 @@ public class OptasiaService {
                 logger.info("Sending Loan Status Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
+                logger.info("Response received from client " + res1.getBody());
                 if (res1.getStatusCode().toString().equals("200")) {
-                    response = (String) res1.getBody();
+                    response =  res1.getBody();
+                    loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(response, LoanStatusResponse.class);
                     loanStatusResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
                     loanStatusResponse.setResponseDescription("Success");
                 }
@@ -635,8 +616,10 @@ public class OptasiaService {
                 logger.info("Sending Loan Payment Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
+                logger.info("Response received from client " + res1.getBody());
                 if (res1.getStatusCode().toString().equals("200")) {
-                    response = (String) res1.getBody();
+                    response = res1.getBody();
+                    loanPaymentResponse = (LoanPaymentResponse) JSONUtil.jsonToObject(response, LoanPaymentResponse.class);
                     loanPaymentResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
                     loanPaymentResponse.setResponseDescription("Success");
                 }

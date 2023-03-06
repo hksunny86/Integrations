@@ -63,6 +63,7 @@ public interface TransactionReversalManager
     TransactionDetailMasterModel loadTDMbyThridPartyRRN(String rrn) throws Exception;
 
     TransactionDetailMasterModel loadTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException;
+    TransactionDetailMasterModel loadTDMbyProductId(String mobileNo, String productId) throws FrameworkCheckedException;
 
 //    List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, String startDate, String endDate) throws FrameworkCheckedException;
 

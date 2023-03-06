@@ -306,11 +306,29 @@ public class TransactionDetailMasterHibernateDAO
         StringBuilder sb = new StringBuilder();
 
         String query = "select * from TRANSACTION_DETAIL_MASTER where SALE_MOBILE_NO='" + mobileNo + "' " +
-                "and PRODUCT_ID='" + productId + "'" + "and trunc(CREATED_ON) between trunc(sysdate) and trunc(sysdate)";
+                "and PRODUCT_ID='" + productId + "'" + "and trunc(CREATED_ON) between trunc(sysdate)-180 and trunc(sysdate)";
 
-        //        List<TransactionDetailMasterModel> result = jdbcTemplate.query
-//                (query, new BeanPropertyRowMapper<TransactionDetailMasterModel>(TransactionDetailMasterModel.class));
-        return jdbcTemplate.queryForObject(query, TransactionDetailMasterModel.class);
+        List<TransactionDetailMasterModel> result = jdbcTemplate.query
+                (query, new BeanPropertyRowMapper<TransactionDetailMasterModel>(TransactionDetailMasterModel.class));
+        if(!result.isEmpty()) {
+            return result.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public TransactionDetailMasterModel loadTDMbyProductId(String mobileNo, String productId) {
+        StringBuilder sb = new StringBuilder();
+
+        String query = "select * from TRANSACTION_DETAIL_MASTER where SALE_MOBILE_NO='" + mobileNo + "' " +
+                "and PRODUCT_ID='" + productId + "'";
+
+        List<TransactionDetailMasterModel> result = jdbcTemplate.query
+                (query, new BeanPropertyRowMapper<TransactionDetailMasterModel>(TransactionDetailMasterModel.class));
+        if(!result.isEmpty()) {
+            return result.get(0);
+        }
+        return null;
     }
 
     @Override

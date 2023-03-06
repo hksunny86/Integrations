@@ -265,6 +265,14 @@ public class TransactionDetailMasterManagerImpl implements TransactionDetailMast
 		return tdm;
 	}
 
+	@Override
+	public TransactionDetailMasterModel loadTDMbyProductId(String mobileNo, String productId) throws FrameworkCheckedException {
+		TransactionDetailMasterModel tdm = new TransactionDetailMasterModel();
+		tdm = this.transactionDetailMasterDAO.loadTDMbyProductId(mobileNo, productId);
+
+		return tdm;
+	}
+
 //	@Override
 //	public List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, String startDate, String endDate) throws FrameworkCheckedException {
 //		TransactionDetailMasterModel tdm = new TransactionDetailMasterModel();

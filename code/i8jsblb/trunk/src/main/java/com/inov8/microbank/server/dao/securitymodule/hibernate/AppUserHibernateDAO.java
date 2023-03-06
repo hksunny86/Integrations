@@ -1369,7 +1369,7 @@ public class AppUserHibernateDAO
     @Override
     public AppUserModel loadAppUserByCnic256(String shaCnic) throws FrameworkCheckedException {
         DetachedCriteria criteria = DetachedCriteria.forClass(AppUserModel.class);
-        criteria.add(Restrictions.eq("nic", shaCnic));
+        criteria.add(Restrictions.eq("shaNic", shaCnic));
         List<AppUserModel> list = getHibernateTemplate().findByCriteria(criteria);
 
         AppUserModel appUserModel = null;

@@ -9671,7 +9671,7 @@ public class AppUserModel extends BasePersistableModel implements UserDetails {
    }
 
    //--------------REGISTRATION STATE-----------------------------------------------------------------
-   @ManyToOne(fetch = FetchType.LAZY)
+   @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
    @JoinColumn(name = "REGISTRATION_STATE_ID")
    public RegistrationStateModel getRelationRegistrationStateModel() {
       return registrationStateModel;

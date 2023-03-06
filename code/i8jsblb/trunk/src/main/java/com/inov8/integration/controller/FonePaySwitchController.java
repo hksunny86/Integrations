@@ -6248,15 +6248,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.SERVICE_CHARGES_NODEREF);
                 webServiceVO.setReserved3("ExclusiveCharges");
                 if (charges == null || charges.equals("0.00")) {
-                    if(!MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.INCLUSIVE_CHARGES_NODEREF).equals("0.00")){
-                        charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.INCLUSIVE_CHARGES_NODEREF);
-                    }
-                    else{
-                        if(!MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.INCLUSIVE_PERCENT_CHARGES_NODEREF).equals("0.00")){
-                            charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.INCLUSIVE_PERCENT_CHARGES_NODEREF);
-                        }
-                    }
-//                    charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.CAMTF_NODEREF);
+                    charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.CAMTF_NODEREF);
                     if (charges == null || charges.equals("0.00")) {
                         webServiceVO.setReserved3("");
                     } else {
@@ -10462,10 +10454,10 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
         BaseWrapper baseWrapper = new BaseWrapperImpl();
         try {
-            webServiceVO = this.validateRRN(webServiceVO);
-            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
-                return webServiceVO;
-            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "CnicTo256");
+//            webServiceVO = this.validateRRN(webServiceVO);
+//            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+//                return webServiceVO;
+//            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "CnicTo256");
 
             appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByCnic256(webServiceVO.getShaCnic());
             if(appUserModel != null){
@@ -10474,6 +10466,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     return webServiceVO;
                 }
                 webServiceVO.setShaCnic(appUserModel.getNic());
+                webServiceVO.setMobileNo(appUserModel.getMobileNo());
                 webServiceVO.setResponseCode("00");
                 webServiceVO.setResponseCodeDescription("Successfull");
             }
@@ -10481,7 +10474,6 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 logger.info("[FonePaySwitchController.cnicTo256] User Not Found against the Mobile # :: " + webServiceVO.getMobileNo());
                 webServiceVO.setResponseCode(FonePayResponseCodes.CUSTOMER_NOT_FOUND);
                 webServiceVO.setResponseCodeDescription("User Not Found.");
-                return webServiceVO;
             }
 
         } catch (Exception e) {
@@ -10528,10 +10520,12 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 //                return webServiceVO;
 //            }
 
-            TransactionDetailMasterModel tdm = getTransactionReversalManager().loadTDMbyThridPartyRRN(webServiceVO.getRetrievalReferenceNumber());
+            TransactionDetailMasterModel tdm = getTransactionReversalManager().loadTDMbyThridPartyRRN(webServiceVO.getThirdPartyTransactionId());
             if(tdm != null){
                 webServiceVO.setTransactionId(tdm.getTransactionCode());
                 webServiceVO.setStatus(tdm.getProcessingStatusName());
+                webServiceVO.setTransactionAmount(String.valueOf(tdm.getTransactionAmount()));
+                webServiceVO.setTotalAmount(String.valueOf(tdm.getTotalAmount()));
                 webServiceVO.setResponseCode("00");
                 webServiceVO.setResponseCodeDescription("Successfull");
             }
@@ -10581,17 +10575,17 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 return webServiceVO;
             fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "profileStatus");
 
-            appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
-//            appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByCnic256(webServiceVO.getShaCnic());
+//            appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
+            appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByCnic256(webServiceVO.getShaCnic());
             if(appUserModel != null){
-//                webServiceVO.setCnicNo(appUserModel.getNic());
+                webServiceVO.setCnicNo(appUserModel.getNic());
                 if (!getCommonCommandManager().checkActiveAppUserForOpenAPI(webServiceVO, appUserModel)) {
                     return webServiceVO;
                 }
 
                 CustomerModel customerModel = getCommonCommandManager().getCustomerModelById(appUserModel.getCustomerId());
-                webServiceVO.setWalletType(String.valueOf(customerModel.getCustomerAccountTypeId()));
-                webServiceVO.setWalletStatus(String.valueOf(customerModel.getCustomerAccountTypeId()));
+                webServiceVO.setWalletType(customerModel.getCustomerAccountTypeIdCustomerAccountTypeModel().getName());
+                webServiceVO.setWalletStatus(String.valueOf(appUserModel.getRegistrationStateModel().getName()));
                 webServiceVO.setTaxRegime(String.valueOf(customerModel.getTaxRegimeIdTaxRegimeModel().getName()));
 
                 SmartMoneyAccountModel sma = getCommonCommandManager().getSmartMoneyAccountByAppUserModelAndPaymentModId
@@ -10649,10 +10643,10 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 return webServiceVO;
             fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "lienStatus");
 
-            appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
-//            appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByCnic256(webServiceVO.getShaCnic());
+//            appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
+            appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByCnic256(webServiceVO.getShaCnic());
             if(appUserModel != null) {
-//                webServiceVO.setCnicNo(appUserModel.getNic());
+                webServiceVO.setCnicNo(appUserModel.getNic());
                 if (!getCommonCommandManager().checkActiveAppUserForOpenAPI(webServiceVO, appUserModel)) {
                     return webServiceVO;
                 }
@@ -10662,6 +10656,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 if (sma != null) {
                     sma.setIsDebitBlocked(true);
                     sma.setIsOptasiaDebitBlocked(true);
+                    sma.setDebitBlockAmount(9999999999d);
                     sma.setDebitBlockReason("Debit Blocked By Optasia");
                     smartMoneyAccountDAO.saveOrUpdate(sma);
 
@@ -10719,9 +10714,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
         BaseWrapper baseWrapper = new BaseWrapperImpl();
         try {
-//            webServiceVO = this.validateRRN(webServiceVO);
-//            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
-//                return webServiceVO;
+            webServiceVO = this.validateRRN(webServiceVO);
+            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+                return webServiceVO;
             fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "initiateLoan");
 
             appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
@@ -10773,6 +10768,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
                         sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
                         sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+                        ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
                         responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
 
                         if (!responseVO.getResponseCode().equals("I8SB-200")) {
@@ -10824,6 +10820,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
                     sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
                     sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+                    ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
                     responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
 
                     if (!responseVO.getResponseCode().equals("I8SB-200")) {
@@ -10864,7 +10861,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 responseVO = new I8SBSwitchControllerResponseVO();
                 requestVO = ESBAdapter.offerListForCommodity(I8SBConstants.RequestType_OPTASIA_OfferListForCommodity); //Request type offer list for commodity api
                 requestVO.setIdentityType("customerIdentity");
-                requestVO.setIdentityValue(webServiceVO.getShaCnic());
+                requestVO.setIdentityValue(appUserModel.getShaNic());
                 requestVO.setOrigSource("mobileApp");
                 requestVO.setCommodityType(webServiceVO.getCommodityType());
 //                requestVO.setSTAN(webServiceVO.getReserved2());
@@ -10879,6 +10876,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
                 sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
                 sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
                 responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
 
                 if (!responseVO.getResponseCode().equals("I8SB-200")) {
@@ -10891,100 +10889,189 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     webServiceVO.setIdentityType(webServiceVO.getMobileNo());
                     webServiceVO.setOrigSource("mobileApp");
                     webServiceVO.setReceivedTimestamp(responseVO.getReceivedTimestamp());
-                    EligibilityStatus eligibilityStatus = new EligibilityStatus();
-                    eligibilityStatus.setEligible(responseVO.getEligible());
-                    eligibilityStatus.setEligibilityStatus(responseVO.getEligibilityStatus());
+                    ArrayList<?> data = new ArrayList<>();
 
-                    List<EligibilityStatus> eligibilityStatusList = new ArrayList<>();
-                    eligibilityStatusList.add(eligibilityStatus);
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("EligibilityStatus");
+                    if (data != null) {
+                        List<?> eligibilityStatusList = data;
+                        for (int i=0; i<eligibilityStatusList.size(); i++) {
+                            EligibilityStatus eligibilityStatus = new EligibilityStatus();
 
-                    webServiceVO.setEligibilityStatusList(eligibilityStatusList);
+                            eligibilityStatus.setEligible(((EligibilityStatus) eligibilityStatusList.get(i)).getEligible());
+                            eligibilityStatus.setEligibilityStatus(((EligibilityStatus) eligibilityStatusList.get(i)).getEligibilityStatus());
 
-                    LoanOffersByLoanProductGroup loanOffersByLoanProductGroup = new LoanOffersByLoanProductGroup();
+                            List<EligibilityStatus> eligibilityStatusList1 = new ArrayList<>();
+                            eligibilityStatusList1.add(eligibilityStatus);
 
-                    loanOffersByLoanProductGroup.setLoanProductGroup(responseVO.getLoanProductGroup());
+                            webServiceVO.setEligibilityStatusList(eligibilityStatusList1);
+                        }
+                    }
+
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("OutstandingStatus");
+                    if (data != null) {
+                        List<?> outstandingList = data;
+                        for (int i=0; i<outstandingList.size(); i++) {
+
+                            OutstandingStatus outstandingStatus = new OutstandingStatus();
+                            List<OutstandingStatus> outstandingStatusList = new ArrayList<>();
+
+                            outstandingStatus.setCurrencyCode(((OutstandingStatus)outstandingList.get(i)).getCurrencyCode());
+                            outstandingStatus.setNumOutstandingLoans(((OutstandingStatus)outstandingList.get(i)).getNumOutstandingLoans());
+                            outstandingStatus.setTotalGross(((OutstandingStatus)outstandingList.get(i)).getTotalGross());
+                            outstandingStatus.setTotalPrincipal(((OutstandingStatus)outstandingList.get(i)).getTotalPrincipal());
+                            outstandingStatus.setTotalSetupFees(((OutstandingStatus)outstandingList.get(i)).getTotalSetupFees());
+                            outstandingStatus.setTotalInterest(((OutstandingStatus)outstandingList.get(i)).getTotalInterest());
+                            outstandingStatus.setTotalInterestVAT(((OutstandingStatus)outstandingList.get(i)).getTotalInterestVAT());
+                            outstandingStatus.setTotalCharges(((OutstandingStatus)outstandingList.get(i)).getTotalCharges());
+                            outstandingStatus.setTotalChargesVAT(((OutstandingStatus)outstandingList.get(i)).getTotalChargesVAT());
+                            outstandingStatus.setTotalPendingLoans(((OutstandingStatus)outstandingList.get(i)).getTotalPendingLoans());
+                            outstandingStatus.setTotalPendingRecoveries(((OutstandingStatus)outstandingList.get(i)).getTotalPendingRecoveries());
+
+                            outstandingStatusList.add(outstandingStatus);
+                            webServiceVO.setOutstandingStatusList(outstandingStatusList);
+
+                        }
+                    }
+
+                    List<?> interestList = new ArrayList<>();
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("Interest");
+                    if (data != null) {
+                        interestList = data;
+                        for (int i=0; i<interestList.size(); i++) {
+
+                            Interest interest = new Interest();
+                            List<Interest> interestList1 = new ArrayList<>();
+
+                            interest.setInterestName(((Interest) interestList.get(i)).getInterestName());
+                            interest.setInterestType(((Interest) interestList.get(i)).getInterestType());
+                            interest.setInterestValue(((Interest) interestList.get(i)).getInterestValue());
+                            interest.setInterestVAT(((Interest) interestList.get(i)).getInterestVAT());
+                            interest.setDaysOffset(((Interest) interestList.get(i)).getDaysOffset());
+                            interest.setInterval(((Interest) interestList.get(i)).getInterval());
+
+                            interestList1.add(interest);
+                            webServiceVO.setInterestList(interestList1);
+
+                        }
+                    }
+
+                    List<?> oneOffChargesList = new ArrayList<>();
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("OneOffCharges");
+                    if (data != null) {
+                        oneOffChargesList = data;
+                        for (int i=0; i<oneOffChargesList.size(); i++) {
+
+                            OneOffCharges oneOffCharges = new OneOffCharges();
+                            List<OneOffCharges> oneOffCharges1 = new ArrayList<>();
 
 
-                    List<LoanOffers> loanOffersList = new ArrayList<>();
-                    LoanOffers loanOffers = new LoanOffers();
-                    loanOffers.setOfferName(responseVO.getOfferName());
-                    loanOffers.setOfferClass(responseVO.getOfferClass());
-                    loanOffers.setCurrencyCode(responseVO.getCurrencyCode());
-                    loanOffers.setPrincipalFrom(responseVO.getPrincipalFrom());
-                    loanOffers.setPrincipalTo(responseVO.getPrincipalTo());
-                    loanOffers.setSetupFees(responseVO.getSetupFees());
-                    loanOffers.setCommodityType(responseVO.getCommodityType());
-                    loanOffers.setLoanPlanId(responseVO.getLoanPlanId());
-                    loanOffers.setLoanPlanName(responseVO.getLoanPlanName());
-                    loanOffersList.add(loanOffers);
-//        webServiceVO.setLoanOffersList(loanOffersList);
+                            oneOffCharges.setChargeName(((OneOffCharges) oneOffChargesList.get(i)).getChargeName());
+                            oneOffCharges.setChargeType(((OneOffCharges) oneOffChargesList.get(i)).getChargeType());
+                            oneOffCharges.setChargeValue(String.valueOf(((OneOffCharges) oneOffChargesList.get(i)).getChargeValue()));
+                            oneOffCharges.setChargeVAT(String.valueOf(((OneOffCharges) oneOffChargesList.get(i)).getChargeVAT()));
+                            oneOffCharges.setDaysOffset(String.valueOf(((OneOffCharges) oneOffChargesList.get(i)).getDaysOffset()));
 
-                    MaturityDetails maturityDetails = new MaturityDetails();
 
-                    maturityDetails.setMaturityDuration(responseVO.getMaturityDuration());
+                            oneOffCharges1.add(oneOffCharges);
+                            webServiceVO.setOneOffChargesList(oneOffCharges1);
 
-                    List<MaturityDetails> maturityDetailsList = new ArrayList<>();
+                        }
+                    }
 
-                    maturityDetailsList.add(maturityDetails);
+                    List<?> recurringChargesList = new ArrayList<>();
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("RecurringCharges");
+                    if (data != null) {
+                        recurringChargesList = data;
+                        for (int i=0; i<recurringChargesList.size(); i++) {
 
-                    loanOffers.setMaturityDetailsList(maturityDetailsList);
+                            RecurringCharges recurringCharges = new RecurringCharges();
+                            List<RecurringCharges> recurringCharges1 = new ArrayList<>();
 
-                    List<Interest> interestList = new ArrayList<>();
-                    Interest interest = new Interest();
-                    interest.setInterestName(responseVO.getInterestName());
-                    interest.setInterestType(responseVO.getInterestType());
-                    interest.setInterestValue(responseVO.getInterestValue());
-                    interest.setInterestVAT(responseVO.getInterestVAT());
-                    interest.setDaysOffset(responseVO.getDaysOffset());
-                    interest.setInterval(responseVO.getInterval());
 
-                    interestList.add(interest);
-                    maturityDetails.setInterestList(interestList);
-//        webServiceVO.setInterestList(interestList);
+                            recurringCharges.setChargeName(((RecurringCharges) recurringChargesList.get(i)).getChargeName());
+                            recurringCharges.setChargeType(((RecurringCharges) recurringChargesList.get(i)).getChargeType());
+                            recurringCharges.setChargeValue(String.valueOf(((RecurringCharges) recurringChargesList.get(i)).getChargeValue()));
+                            recurringCharges.setChargeVAT(String.valueOf(((RecurringCharges) recurringChargesList.get(i)).getChargeVAT()));
+                            recurringCharges.setInterval(String.valueOf(((RecurringCharges) recurringChargesList.get(i)).getDaysOffset()));
 
-                    List<OneOffCharges> oneOffChargesList = new ArrayList<>();
-                    OneOffCharges oneOffCharges = new OneOffCharges();
-                    oneOffCharges.setChargeName(responseVO.getChargeName());
-                    oneOffCharges.setChargeType(responseVO.getChargeType());
-                    oneOffCharges.setChargeValue(responseVO.getChargeValue());
-                    oneOffCharges.setChargeVAT(responseVO.getChargeVAT());
-                    oneOffCharges.setDaysOffset(responseVO.getDaysOffset());
-                    oneOffChargesList.add(oneOffCharges);
-                    maturityDetails.setOneOffChargesList(oneOffChargesList);
-//        webServiceVO.setOneOffChargesList(oneOffChargesList);
 
-                    List<RecurringCharges> recurringChargesList = new ArrayList<>();
-                    RecurringCharges recurringCharges = new RecurringCharges();
-                    recurringCharges.setChargeName(responseVO.getChargeName());
-                    recurringCharges.setChargeType(responseVO.getChargeType());
-                    recurringCharges.setChargeValue(responseVO.getChargeValue());
-                    recurringCharges.setChargeVAT(responseVO.getChargeVAT());
-                    recurringCharges.setDaysOffset(responseVO.getDaysOffset());
-                    recurringCharges.setInterval(responseVO.getInterval());
-                    recurringChargesList.add(recurringCharges);
-                    maturityDetails.setRecurringChargesList(recurringChargesList);
-//        webServiceVO.setRecurringChargesList(recurringChargesList);
+                            recurringCharges1.add(recurringCharges);
+                            webServiceVO.setRecurringChargesList(recurringCharges1);
 
-                    List<OutstandingStatus> outstandingStatusList = new ArrayList<>();
-                    OutstandingStatus outstandingStatus = new OutstandingStatus();
-                    outstandingStatus.setCurrencyCode(responseVO.getCurrencyCode());
-                    outstandingStatus.setNumOutstandingLoans(responseVO.getNumOutstandingLoans());
-                    outstandingStatus.setTotalGross(responseVO.getTotalGross());
-                    outstandingStatus.setTotalSetupFees(responseVO.getTotalSetupFees());
-                    outstandingStatus.setTotalInterest(responseVO.getTotalInterest());
-                    outstandingStatus.setTotalInterestVAT(responseVO.getTotalInterestVAT());
-                    outstandingStatus.setTotalCharges(responseVO.getTotalCharges());
-                    outstandingStatus.setTotalChargesVAT(responseVO.getTotalChargesVAT());
-                    outstandingStatus.setTotalPendingLoans(responseVO.getTotalPendingLoans());
-                    outstandingStatus.setTotalPendingRecoveries(responseVO.getTotalPendingRecoveries());
-                    outstandingStatusList.add(outstandingStatus);
+                        }
+                    }
 
-                    webServiceVO.setOutstandingStatusList(outstandingStatusList);
+                    List<?> maturityDetailsList = new ArrayList<>();
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("MaturityDetails");
+                    if (data != null) {
+                        maturityDetailsList = data;
+                        for (int i=0; i<maturityDetailsList.size(); i++) {
 
-                    loanOffersByLoanProductGroup.setLoanOffersList(loanOffersList);
-                    List<LoanOffersByLoanProductGroup> loanOffersByLoanProductGroupList = new ArrayList<>();
-                    loanOffersByLoanProductGroupList.add(loanOffersByLoanProductGroup);
-                    webServiceVO.setLoanOffersByLoanProductGroupList(loanOffersByLoanProductGroupList);
+                            MaturityDetails maturityDetails = new MaturityDetails();
+                            List<MaturityDetails> maturityDetailsList1 = new ArrayList<>();
+
+//                            loanOffers.setOfferClass(((LoanOffers)loanOffersList.get(i)).getOfferClass());
+                            maturityDetails.setMaturityDuration(((MaturityDetails)maturityDetailsList.get(i)).getMaturityDuration());
+
+                            maturityDetails.setInterestList((List<Interest>) interestList);
+                            maturityDetails.setRecurringChargesList((List<RecurringCharges>) recurringChargesList);
+                            maturityDetails.setOneOffChargesList((List<OneOffCharges>) oneOffChargesList);
+
+                            maturityDetailsList1.add(maturityDetails);
+                            webServiceVO.setMaturityDetailsList(maturityDetailsList1);
+                        }
+                    }
+
+                    List<?> loanOffersList = new ArrayList<>();
+
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("LoanOffers");
+                    if (data != null) {
+                        loanOffersList = data;
+                        for (int i=0; i<loanOffersList.size(); i++) {
+                            LoanOffers loanOffers = new LoanOffers();
+
+                            loanOffers.setOfferClass(((LoanOffers)loanOffersList.get(i)).getOfferClass());
+                            loanOffers.setOfferName(((LoanOffers) loanOffersList.get(i)).getOfferName());
+                            loanOffers.setCurrencyCode(((LoanOffers) loanOffersList.get(i)).getCurrencyCode());
+                            loanOffers.setPrincipalFrom(((LoanOffers) loanOffersList.get(i)).getPrincipalFrom());
+                            loanOffers.setPrincipalTo(((LoanOffers) loanOffersList.get(i)).getPrincipalTo());
+                            loanOffers.setSetupFees(((LoanOffers) loanOffersList.get(i)).getSetupFees());
+                            loanOffers.setCommodityType(((LoanOffers) loanOffersList.get(i)).getCommodityType());
+                            loanOffers.setLoanPlanId(((LoanOffers) loanOffersList.get(i)).getLoanPlanId());
+                            loanOffers.setLoanPlanName(((LoanOffers) loanOffersList.get(i)).getLoanPlanName());
+
+                            List<LoanOffers> loanOffersList1 = new ArrayList<>();
+
+                            loanOffers.setMaturityDetailsList(webServiceVO.getMaturityDetailsList());
+
+                            loanOffersList1.add(loanOffers);
+
+                            webServiceVO.setLoanOffersList(loanOffersList1);
+
+                        }
+                    }
+
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("LoanOffersByLoanProductGroup");
+                    if (data != null) {
+                        List<?> loanOffersByLoanProductGroupList = data;
+                        for (int i=0; i<loanOffersByLoanProductGroupList.size(); i++) {
+
+                            LoanOffersByLoanProductGroup loanOffersByLoanProductGroup = new LoanOffersByLoanProductGroup();
+
+                            loanOffersByLoanProductGroup.setLoanProductGroup(((LoanOffersByLoanProductGroup) loanOffersByLoanProductGroupList.get(i)).getLoanProductGroup());
+
+
+                            List<LoanOffersByLoanProductGroup> loanOffersByLoanProductGroups = new ArrayList<>();
+
+                            loanOffersByLoanProductGroup.setLoanOffersList(webServiceVO.getLoanOffersList());
+
+                            loanOffersByLoanProductGroups.add(loanOffersByLoanProductGroup);
+
+                            webServiceVO.setLoanOffersByLoanProductGroupList(loanOffersByLoanProductGroups);
+
+                        }
+                    }
+
                     webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
                     webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
                 }
@@ -11031,9 +11118,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
         BaseWrapper baseWrapper = new BaseWrapperImpl();
         try {
-//            webServiceVO = this.validateRRN(webServiceVO);
-//            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
-//                return webServiceVO;
+            webServiceVO = this.validateRRN(webServiceVO);
+            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+                return webServiceVO;
             fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "selectLoanOffer");
 
             appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
@@ -11059,6 +11146,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
                 sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
                 sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
                 responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
 
                 if (!responseVO.getResponseCode().equals("I8SB-200")) {
@@ -11109,77 +11197,132 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     interestList.add(interest);
                     maturityDetails.setInterestList(interestList);
 
-                    List<OneOffCharges> oneOffChargesList = new ArrayList<>();
-                    OneOffCharges oneOffCharges = new OneOffCharges();
-                    oneOffCharges.setChargeName(responseVO.getChargeName());
-                    oneOffCharges.setChargeType(responseVO.getChargeType());
-                    oneOffCharges.setChargeValue(responseVO.getChargeValue());
-                    oneOffCharges.setChargeVAT(responseVO.getChargeVAT());
-                    oneOffCharges.setDaysOffset(responseVO.getDaysOffset());
-                    oneOffChargesList.add(oneOffCharges);
+//                    List<OneOffCharges> oneOffChargesList = new ArrayList<>();
+//                    OneOffCharges oneOffCharges = new OneOffCharges();
+//                    oneOffCharges.setChargeName(responseVO.getChargeName());
+//                    oneOffCharges.setChargeType(responseVO.getChargeType());
+//                    oneOffCharges.setChargeValue(responseVO.getChargeValue());
+//                    oneOffCharges.setChargeVAT(responseVO.getChargeVAT());
+//                    oneOffCharges.setDaysOffset(responseVO.getDaysOffset());
+//                    oneOffChargesList.add(oneOffCharges);
 
-                    List<PeriodsProjection> periodsProjectionList = new ArrayList<>();
-                    PeriodsProjection periodsProjection = new PeriodsProjection();
-                    periodsProjection.setPeriodIndex(responseVO.getPeriodIndex());
-                    periodsProjection.setPeriodType(responseVO.getPeriodType());
-                    periodsProjection.setPeriodStartTimemp(responseVO.getPeriodStartTimemp());
-                    periodsProjection.setPeriodEndTimestamp(responseVO.getPeriod());
-                    periodsProjection.setPeriodStartDayOfLoanIndex(responseVO.getPeriodStartDayOfLoanIndex());
-                    periodsProjection.setPeriodEndDayOfLoanIndex(responseVO.getPeriodEndDayOfLoanIndex());
-                    periodsProjection.setPrincipal(responseVO.getPrincipal());
-                    periodsProjection.setTotalExpenses(responseVO.getTotalExpenses());
-                    periodsProjection.setTotalGross(responseVO.getTotalGross());
-                    periodsProjection.setTotalInterest(responseVO.getTotalInterest());
-                    periodsProjection.setTotalInterestVAT(responseVO.getTotalInterestVAT());
-                    periodsProjection.setTotalCharges(responseVO.getTotalCharges());
-                    periodsProjection.setTotalChargesVAT(responseVO.getTotalChargesVAT());
-                    periodsProjectionList.add(periodsProjection);
 
-                    webServiceVO.setPeriodsProjectionList(periodsProjectionList);
+                    ArrayList<?> data = new ArrayList<>();
 
-                    TotalOneOffCharges totalOneOffCharges = new TotalOneOffCharges();
+                    List<?> chargeAdjustmentList = new ArrayList<>();
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("ChargeAdjustments");
+                    if (data != null) {
+                        chargeAdjustmentList = data;
+                        for (int i=0; i<chargeAdjustmentList.size(); i++) {
+                            ChargeAdjustments chargeAdjustments = new ChargeAdjustments();
 
-                    totalOneOffCharges.setChargeName(responseVO.getChargeName());
-                    totalOneOffCharges.setChargeAmount(responseVO.getChargeAmount());
-                    totalOneOffCharges.setChargeVAT(responseVO.getChargeVAT());
-                    List<TotalOneOffCharges> totalOneOffChargesList = new ArrayList<>();
-                    totalOneOffChargesList.add(totalOneOffCharges);
-                    periodsProjection.setTotalOneOffChargesList(totalOneOffChargesList);
+                            chargeAdjustments.setGross(((ChargeAdjustments) chargeAdjustmentList.get(i)).getGross());
+                            chargeAdjustments.setNet(((ChargeAdjustments) chargeAdjustmentList.get(i)).getNet());
+                            chargeAdjustments.setVat(((ChargeAdjustments) chargeAdjustmentList.get(i)).getVat());
+                            chargeAdjustments.setName(((ChargeAdjustments) chargeAdjustmentList.get(i)).getName());
 
-                    Milestones milestones = new Milestones();
 
-                    milestones.setDayOfLoan(responseVO.getDayOfLoan());
-                    milestones.setDate(responseVO.getDate());
-                    List<Milestones> milestonesList = new ArrayList<>();
-                    milestonesList.add(milestones);
-                    periodsProjection.setMilestonesList(milestonesList);
+                            List<ChargeAdjustments> chargeAdjustmentList1 = new ArrayList<>();
+                            chargeAdjustmentList1.add(chargeAdjustments);
 
-                    InterestAdjustment interestAdjustment = new InterestAdjustment();
+                            webServiceVO.setChargeAdjustmentsList(chargeAdjustmentList1);
+                        }
+                    }
 
-                    interestAdjustment.setGross(responseVO.getGross());
-                    interestAdjustment.setNet(responseVO.getNet());
-                    interestAdjustment.setVat(responseVO.getVat());
-                    List<InterestAdjustment> interestAdjustmentList = new ArrayList<>();
-                    interestAdjustmentList.add(interestAdjustment);
-                    milestones.setInterestAdjustmentList(interestAdjustmentList);
+                    List<?> interestAdjustmentList = new ArrayList<>();
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("InterestAdjustment");
+                    if (data != null) {
+                        interestAdjustmentList = data;
+                        for (int i=0; i<interestAdjustmentList.size(); i++) {
+                            InterestAdjustment interestAdjustment = new InterestAdjustment();
 
-                    ChargeAdjustments chargeAdjustments = new ChargeAdjustments();
+                            interestAdjustment.setGross(((InterestAdjustment) interestAdjustmentList.get(i)).getGross());
+                            interestAdjustment.setNet(((InterestAdjustment) interestAdjustmentList.get(i)).getNet());
+                            interestAdjustment.setVat(((InterestAdjustment) interestAdjustmentList.get(i)).getVat());
 
-                    chargeAdjustments.setName(responseVO.getName());
-                    chargeAdjustments.setGross(responseVO.getGross());
-                    chargeAdjustments.setNet(responseVO.getNet());
-                    chargeAdjustments.setVat(responseVO.getVat());
-                    List<ChargeAdjustments> chargeAdjustmentsList = new ArrayList<>();
-                    chargeAdjustmentsList.add(chargeAdjustments);
-                    milestones.setChargeAdjustmentsList(chargeAdjustmentsList);
 
-                    milestones.setPrincipal(responseVO.getPrincipal());
-                    milestones.setTotalExpenses(responseVO.getTotalExpenses());
-                    milestones.setTotalGross(responseVO.getTotalGross());
-                    milestones.setTotalInterest(responseVO.getTotalInterest());
-                    milestones.setTotalInterestVAT(responseVO.getTotalInterestVAT());
-                    milestones.setTotalCharges(responseVO.getTotalCharges());
-                    milestones.setTotalChargesVAT(responseVO.getTotalChargesVAT());
+                            List<InterestAdjustment> interestAdjustmentList1 = new ArrayList<>();
+                            interestAdjustmentList1.add(interestAdjustment);
+
+                            webServiceVO.setInterestAdjustmentsList(interestAdjustmentList1);
+                        }
+                    }
+
+                    List<?> milestonesList = new ArrayList<>();
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("Milestones");
+                    if (data != null) {
+                        milestonesList = data;
+                        for (int i=0; i<milestonesList.size(); i++) {
+                            Milestones milestones = new Milestones();
+
+                            milestones.setDayOfLoan(((Milestones) milestonesList.get(i)).getDayOfLoan());
+                            milestones.setDate(((Milestones) milestonesList.get(i)).getDate());
+                            milestones.setPrincipal(((Milestones) milestonesList.get(i)).getPrincipal());
+                            milestones.setTotalExpenses(((Milestones) milestonesList.get(i)).getTotalExpenses());
+                            milestones.setTotalGross(((Milestones) milestonesList.get(i)).getTotalGross());
+                            milestones.setTotalInterest(((Milestones) milestonesList.get(i)).getTotalInterest());
+                            milestones.setTotalInterestVAT(((Milestones) milestonesList.get(i)).getTotalInterestVAT());
+                            milestones.setTotalCharges(((Milestones) milestonesList.get(i)).getTotalCharges());
+                            milestones.setTotalChargesVAT(((Milestones) milestonesList.get(i)).getTotalChargesVAT());
+
+                            milestones.setInterestAdjustmentList(webServiceVO.getInterestAdjustmentsList());
+                            milestones.setChargeAdjustmentsList(webServiceVO.getChargeAdjustmentsList());
+
+                            List<Milestones> milestonesList1 = new ArrayList<>();
+                            milestonesList1.add(milestones);
+
+                            webServiceVO.setMilestonesList(milestonesList1);
+                        }
+                    }
+
+                    List<?> totalOneOffChargesList = new ArrayList<>();
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("TotalOneOffCharges");
+                    if (data != null) {
+                        totalOneOffChargesList = data;
+                        for (int i=0; i<totalOneOffChargesList.size(); i++) {
+                            TotalOneOffCharges totalOneOffCharges = new TotalOneOffCharges();
+
+                            totalOneOffCharges.setChargeAmount(((TotalOneOffCharges) totalOneOffChargesList.get(i)).getChargeAmount());
+                            totalOneOffCharges.setChargeName(((TotalOneOffCharges) totalOneOffChargesList.get(i)).getChargeName());
+                            totalOneOffCharges.setChargeVAT(((TotalOneOffCharges) totalOneOffChargesList.get(i)).getChargeVAT());
+
+                            List<TotalOneOffCharges> totalOneOffChargesList1 = new ArrayList<>();
+                            totalOneOffChargesList1.add(totalOneOffCharges);
+
+                            webServiceVO.setTotalOneOffChargesList(totalOneOffChargesList1);
+                        }
+                    }
+
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("Projections");
+                    if (data != null) {
+                        List<?> projectionsList = data;
+                        for (int i=0; i<projectionsList.size(); i++) {
+                            PeriodsProjection periodsProjection = new PeriodsProjection();
+
+                            periodsProjection.setPeriodIndex(((PeriodsProjection) projectionsList.get(i)).getPeriodIndex());
+                            periodsProjection.setPeriodType(((PeriodsProjection) projectionsList.get(i)).getPeriodType());
+                            periodsProjection.setPeriodStartTimemp(((PeriodsProjection) projectionsList.get(i)).getPeriodStartTimemp());
+                            periodsProjection.setPeriodEndTimestamp(((PeriodsProjection) projectionsList.get(i)).getPeriodEndTimestamp());
+                            periodsProjection.setPeriodStartDayOfLoanIndex(((PeriodsProjection) projectionsList.get(i)).getPeriodStartDayOfLoanIndex());
+                            periodsProjection.setPeriodEndDayOfLoanIndex(((PeriodsProjection) projectionsList.get(i)).getPeriodEndDayOfLoanIndex());
+                            periodsProjection.setPrincipal(((PeriodsProjection) projectionsList.get(i)).getPrincipal());
+                            periodsProjection.setTotalExpenses(((PeriodsProjection) projectionsList.get(i)).getTotalExpenses());
+                            periodsProjection.setTotalGross(((PeriodsProjection) projectionsList.get(i)).getTotalGross());
+                            periodsProjection.setTotalInterest(((PeriodsProjection) projectionsList.get(i)).getTotalInterest());
+                            periodsProjection.setTotalInterestVAT(((PeriodsProjection) projectionsList.get(i)).getTotalInterestVAT());
+                            periodsProjection.setTotalCharges(((PeriodsProjection) projectionsList.get(i)).getTotalCharges());
+                            periodsProjection.setTotalChargesVAT(((PeriodsProjection) projectionsList.get(i)).getTotalChargesVAT());
+
+                            List<PeriodsProjection> periodsProjectionList = new ArrayList<>();
+                            periodsProjection.setTotalOneOffChargesList(webServiceVO.getTotalOneOffChargesList());
+                            periodsProjection.setMilestonesList(webServiceVO.getMilestonesList());
+                            periodsProjectionList.add(periodsProjection);
+
+
+                            webServiceVO.setPeriodsProjectionList(periodsProjectionList);
+                        }
+                    }
+
                     webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
                     webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
                 }
@@ -11226,9 +11369,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
         BaseWrapper baseWrapper = new BaseWrapperImpl();
         try {
-//            webServiceVO = this.validateRRN(webServiceVO);
-//            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
-//                return webServiceVO;
+            webServiceVO = this.validateRRN(webServiceVO);
+            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+                return webServiceVO;
             fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "selectLoan");
 
             appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
@@ -11253,6 +11396,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
                 sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
                 sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
                 responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
 
                 if (!responseVO.getResponseCode().equals("I8SB-200")) {
@@ -11305,7 +11449,143 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
     @Override
     public WebServiceVO payLoan(WebServiceVO webServiceVO) {
-        return null;
+        logger.info("[FonePaySwitchController.payloan] Start:: ");
+        FonePayLogModel fonePayLogModel = null;
+        ActionLogModel actionLogModel = null;
+        AppUserModel appUserModel = new AppUserModel();
+        String xml = "";
+
+        BaseWrapper baseWrapper = new BaseWrapperImpl();
+        try {
+//            webServiceVO = this.validateRRN(webServiceVO);
+//            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+//                return webServiceVO;
+//            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "payloan");
+
+            appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
+//            appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByCnic256(webServiceVO.getShaCnic());
+            if(appUserModel != null) {
+//                webServiceVO.setCnicNo(appUserModel.getNic());
+                if (!getCommonCommandManager().checkActiveAppUserForOpenAPI(webServiceVO, appUserModel)) {
+                    return webServiceVO;
+                }
+                I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+                I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
+                requestVO = ESBAdapter.loans(I8SBConstants.RequestType_OPTASIA_OUTSTANDING);
+                requestVO.setIdentityType("customerIdentity");
+                requestVO.setIdentityValue(appUserModel.getShaNic());
+                requestVO.setOrigSource("mobileApp");
+
+                SwitchWrapper sWrapper = new SwitchWrapperImpl();
+                sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
+                sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
+                sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
+                responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
+
+                if (!responseVO.getResponseCode().equals("I8SB-200")) {
+                    webServiceVO.setResponseCode("65");
+                    webServiceVO.setResponseCodeDescription("No success response from I8SB");
+                }
+                else{
+                    webServiceVO.setProcessingFee(responseVO.getTotalCharges());
+                    webServiceVO.setProductID(String.valueOf(ProductConstantsInterface.LOAN_XTRA_CASH));
+                    webServiceVO.setTransactionAmount(webServiceVO.getAmount());
+                    this.debit(webServiceVO);
+                    if(webServiceVO.getResponseCode().equals("00")) {
+
+                        Double outStandingAmount = Double.valueOf(responseVO.getTotalGross());
+                        Double payAmount = Double.valueOf(webServiceVO.getAmount());
+
+                        Double remainingAmount = outStandingAmount - payAmount;
+
+                        SmartMoneyAccountModel sma = getCommonCommandManager().getSmartMoneyAccountByAppUserModelAndPaymentModId
+                                (appUserModel, PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT);
+                        if (sma != null) {
+                            if (remainingAmount > 0) {
+                                sma.setIsDebitBlocked(true);
+                                sma.setDebitBlockAmount(remainingAmount);
+                                sma.setIsOptasiaDebitBlocked(true);
+                                sma.setDebitBlockReason("Debit Blocked By Optasia");
+                                sma.setUpdatedOn(new Date());
+                                smartMoneyAccountDAO.saveOrUpdate(sma);
+                            }
+                        }
+
+                        requestVO = new I8SBSwitchControllerRequestVO();
+                        responseVO = new I8SBSwitchControllerResponseVO();
+                        requestVO = ESBAdapter.loans(I8SBConstants.RequestType_OPTASIA_PAYLOAN);
+                        requestVO.setIdentityType("customerIdentity");
+                        requestVO.setIdentityValue(appUserModel.getShaNic());
+                        requestVO.setOrigSource("mobileApp");
+                        requestVO.setAmount(webServiceVO.getAmount());
+
+                        sWrapper = new SwitchWrapperImpl();
+                        sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
+                        sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
+                        sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+                        ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
+                        responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
+
+                        if (!responseVO.getResponseCode().equals("I8SB-200")) {
+                            webServiceVO.setResponseCode("65");
+                            webServiceVO.setResponseCodeDescription("No success response from I8SB");
+                        }
+                        else {
+//                            TransactionDetailMasterModel tdm = getTransactionReversalManager().loadTDMbyProductId
+//                                    (webServiceVO.getMobileNo(), String.valueOf(ProductConstantsInterface.LOAN_XTRA_CASH));
+//                            if (tdm != null) {
+//                                webServiceVO.setTransactionId(tdm.getTransactionCode());
+//                            } else {
+//                                webServiceVO.setTransactionId("");
+//                            }
+
+                            webServiceVO.setRetrievalReferenceNumber(webServiceVO.getRetrievalReferenceNumber());
+                            webServiceVO.setLoanAmount(webServiceVO.getLoanAmount());
+                            webServiceVO.setTotalAmount(webServiceVO.getTotalAmount());
+                            webServiceVO.setTransactionId(webServiceVO.getTransactionId());
+                            webServiceVO.setStatus(responseVO.getCode());
+                            webServiceVO.setMessage(responseVO.getMessage());
+                            webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
+                            webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
+                        }
+                    }
+                    else{
+                        webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+                        webServiceVO.setResponseCodeDescription("Error in Debit API");
+                    }
+                }
+            }
+            else {
+                logger.info("[FonePaySwitchController.payloan] User Not Found against the Mobile # :: " + webServiceVO.getMobileNo());
+                webServiceVO.setResponseCode(FonePayResponseCodes.CUSTOMER_NOT_FOUND);
+                webServiceVO.setResponseCodeDescription("User Not Found.");
+                return webServiceVO;
+            }
+
+        } catch (Exception e) {
+            logger.error("[FonePaySwitchController.payloan] Error occured: " + e.getMessage(), e);
+
+            this.logger.error("[FonePaySwitchController.payloan] Error occured: " + e.getMessage(), e);
+            webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+            webServiceVO.setResponseCodeDescription(e.getMessage());
+            if (e instanceof NullPointerException
+                    || e instanceof HibernateException
+                    || e instanceof SQLException
+                    || e instanceof DataAccessException
+                    || (e.getMessage() != null && e.getMessage().indexOf("Exception") != -1)) {
+
+                logger.error("Converting Exception (" + e.getClass() + ") to generic error message...");
+                webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR.toString());
+            }
+
+        } finally {
+            ThreadLocalAppUser.remove();
+            ThreadLocalUserDeviceAccounts.remove();
+            getFonePayManager().updateFonePayIntegrationLogModel(fonePayLogModel, webServiceVO);
+        }
+        logger.info("[FonePaySwitchController.payloan] (In End) Response Code: " + webServiceVO.getResponseCode());
+        return webServiceVO;
     }
 
 //    @Override
@@ -11621,9 +11901,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
         BaseWrapper baseWrapper = new BaseWrapperImpl();
         try {
-//            webServiceVO = this.validateRRN(webServiceVO);
-//            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
-//                return webServiceVO;
+            webServiceVO = this.validateRRN(webServiceVO);
+            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+                return webServiceVO;
             fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "outstandingLoanStatus");
 
             appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
@@ -11637,7 +11917,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
                 requestVO = ESBAdapter.loans(I8SBConstants.RequestType_OPTASIA_LOANS);
                 requestVO.setIdentityType("customerIdentity");
-                requestVO.setIdentityValue(webServiceVO.getShaCnic());
+                requestVO.setIdentityValue(appUserModel.getShaNic());
                 requestVO.setOrigSource("mobileApp");
                 requestVO.setFilterCommodityType("CASH");
                 requestVO.setFilterLoanState("OPEN");
@@ -11646,6 +11926,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
                 sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
                 sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
                 responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
 
                 if (!responseVO.getResponseCode().equals("I8SB-200")) {
@@ -11653,143 +11934,158 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     webServiceVO.setResponseCodeDescription("No success response from I8SB");
                 }
                 else{
-//                    List<I8SBSwitchControllerResponseVO> list = new ArrayList<>();
-//                    list = responseVO.getI8SBSwitchControllerResponseVOList();
-//
-//                    List<LoanOffers> loanOffersList = new ArrayList<>();
-//
-//                    for (I8SBSwitchControllerResponseVO responseList :
-//                            list) {
-//                        LoanOffers l1 = new LoanOffers();
-////                        l1.setAdvanceOfferId(responseList.getAdvanceOfferId())
-//                        l1.setOfferName(responseList.getOfferName().toString());
-//                        l1.setCommodityType(responseList.getCommodityType().toString());
-//                        l1.setCurrencyCode(responseList.getCurrencyCode());
-////                        l1.setPrinicipalAmount(responseList.getPrincipalAmount());
-//                        l1.setSetupFees(responseList.getSetupFees());
-//                        l1.setLoanPlanId(responseList.getLoanPlanId());
-//                        l1.setLoanPlanName(responseList.getLoanPlanName());
-//                        l1.setLoanProductGroup(responseList.getLoanProductGroup());
-//                        loanOffersList.add(l1);
-//                    }
-//
-//                    List<OutstandingStatus> outstandingStatusList = new ArrayList<>();
-//
-//                    for (I8SBSwitchControllerResponseVO responseList :
-//                            list) {
-//                        OutstandingStatus l1 = new OutstandingStatus();
-//                        l1.setCurrencyCode(responseList.getCurrencyCode());
-//                        l1.setTotalGross(responseList.getTotalGross().toString());
-//                        l1.setTotalPrincipal(responseList.getTotalPrincipal().toString());
-//                        l1.setTotalSetupFees(responseList.getTotalSetupFees());
-//                        l1.setTotalInterest(responseList.getTotalInterest());
-//                        l1.setTotalInterestVAT(responseList.getTotalInterestVAT());
-//                        l1.setTotalCharges(responseList.getTotalCharges());
-//                        l1.setTotalChargesVAT(responseList.getTotalChargesVAT());
-//                        l1.setTotalPendingRecoveries(responseList.getTotalPendingRecoveries());
-//                        outstandingStatusList.add(l1);
-//                    }
-//
-//                    webServiceVO.setLoanOffersList(loanOffersList);
-//                    webServiceVO.setOutstandingStatusList(outstandingStatusList);
-//                    LoansResponse webServiceVO = new LoansResponse();
-//
-//                    webServiceVO.setResponseCode("00");
-//                    webServiceVO.setIdentityValue("16505130514");
-//                    webServiceVO.setIdentityType("customeridentity");
-//                    webServiceVO.setOrigSource("mobileApp");
-//                    webServiceVO.setReceivedTimestamp("2021-07-20T13:10:38.738+03:00");
-                    LoansPerState loansPerState = new LoansPerState();
-                    loansPerState.setLoanState("OPEN");
+                    new ArrayList();
+                    ArrayList<?> data = (ArrayList)responseVO.getCollectionOfList().get("Plan");
+                    ArrayList repaymentList;
+                    int i;
+                    ArrayList repaymentList1;
+                    if (data != null) {
+                        repaymentList = data;
 
+                        for(i = 0; i < repaymentList.size(); ++i) {
+                            Plan plan = new Plan();
+                            plan.setCurrentPeriod(((Plan)repaymentList.get(i)).getCurrentPeriod());
+                            plan.setDaysLeftInPeriod(((Plan)repaymentList.get(i)).getDaysLeftInPeriod());
+                            plan.setNextPeriod(((Plan)repaymentList.get(i)).getNextPeriod());
+                            repaymentList1 = new ArrayList();
+                            repaymentList1.add(plan);
+                            webServiceVO.setPlanList(repaymentList1);
+                        }
+                    }
 
-                    Loan loan = new Loan();
-                    loan.setInternalLoanId(responseVO.getInternalLoanId());
-                    loan.setLoanState(responseVO.getLoanState());
-                    loan.setLoanTimestamp(responseVO.getLoanTimestamp());
-                    loan.setLoanReason(responseVO.getLoanReason());
+                    data = (ArrayList)responseVO.getCollectionOfList().get("Outstanding");
+                    if (data != null) {
+                        repaymentList = data;
 
-                    Loans loans = new Loans();
-                    List<Loan> loanList = new ArrayList<>();
-                    loanList.add(loan);
+                        for(i = 0; i < repaymentList.size(); ++i) {
+                            OutstandingStatus outstandingStatus = new OutstandingStatus();
+                            repaymentList1 = new ArrayList();
+                            outstandingStatus.setCurrencyCode(((OutstandingStatus)repaymentList.get(i)).getCurrencyCode());
+                            outstandingStatus.setNumOutstandingLoans(((OutstandingStatus)repaymentList.get(i)).getNumOutstandingLoans());
+                            outstandingStatus.setTotalGross(((OutstandingStatus)repaymentList.get(i)).getTotalGross());
+                            outstandingStatus.setTotalPrincipal(((OutstandingStatus)repaymentList.get(i)).getTotalPrincipal());
+                            outstandingStatus.setTotalSetupFees(((OutstandingStatus)repaymentList.get(i)).getTotalSetupFees());
+                            outstandingStatus.setTotalInterest(((OutstandingStatus)repaymentList.get(i)).getTotalInterest());
+                            outstandingStatus.setTotalInterestVAT(((OutstandingStatus)repaymentList.get(i)).getTotalInterestVAT());
+                            outstandingStatus.setTotalCharges(((OutstandingStatus)repaymentList.get(i)).getTotalCharges());
+                            outstandingStatus.setTotalChargesVAT(((OutstandingStatus)repaymentList.get(i)).getTotalChargesVAT());
+                            outstandingStatus.setTotalPendingLoans(((OutstandingStatus)repaymentList.get(i)).getTotalPendingLoans());
+                            outstandingStatus.setTotalPendingRecoveries(((OutstandingStatus)repaymentList.get(i)).getTotalPendingRecoveries());
+                            repaymentList1.add(outstandingStatus);
+                            webServiceVO.setOutstandingStatusList(repaymentList1);
+                        }
+                    }
 
-                    loans.setLoanList(loanList);
+                    new ArrayList();
+                    data = (ArrayList)responseVO.getCollectionOfList().get("Repayment");
+                    if (data != null) {
+                        repaymentList = data;
 
+                        for(i = 0; i < repaymentList.size(); ++i) {
+                            Repayment repayment = new Repayment();
+                            repayment.setRepaymentsCount(((Repayment)repaymentList.get(i)).getRepaymentsCount());
+                            repayment.setGross(((Repayment)repaymentList.get(i)).getGross());
+                            repayment.setPrincipal(((Repayment)repaymentList.get(i)).getPrincipal());
+                            repayment.setSetupFees(((Repayment)repaymentList.get(i)).getSetupFees());
+                            repayment.setInterest(((Repayment)repaymentList.get(i)).getInterest());
+                            repayment.setInterestVAT(((Repayment)repaymentList.get(i)).getInterestVAT());
+                            repayment.setCharges(((Repayment)repaymentList.get(i)).getCharges());
+                            repayment.setChargesVAT(((Repayment)repaymentList.get(i)).getChargesVAT());
+                            repaymentList1 = new ArrayList();
+                            repaymentList1.add(repayment);
+                            webServiceVO.setRepaymentList(repaymentList1);
+                        }
+                    }
 
-                    LoanOffers loanOffers = new LoanOffers();
+                    data = (ArrayList)responseVO.getCollectionOfList().get("Report");
+                    ArrayList loanOffersList1;
+                    ArrayList loanOffersList;
+//                    int i;
+                    if (data != null) {
+                        loanOffersList = data;
 
-                    loanOffers.setAdvanceOfferId(responseVO.getAdvanceOfferId());
-                    loanOffers.setOfferName(responseVO.getOfferName());
-                    loanOffers.setCommodityType(responseVO.getCommodityType());
-                    loanOffers.setCurrencyCode(responseVO.getCurrencyCode());
-                    loanOffers.setPrincipalAmount(responseVO.getPrincipalAmount());
-                    loanOffers.setSetupFees(responseVO.getSetupFees());
-                    loanOffers.setLoanPlanId(responseVO.getLoanPlanId());
-                    loanOffers.setLoanPlanName(responseVO.getLoan());
-                    loanOffers.setLoanProductGroup(responseVO.getLoanProductGroup());
+                        for(i = 0; i < loanOffersList.size(); ++i) {
+                            Report report = new Report();
+                            report.setRepaymentList(webServiceVO.getRepaymentList());
+                            loanOffersList1 = new ArrayList();
+                            loanOffersList1.add(report);
+                            webServiceVO.setReportList(loanOffersList1);
+                        }
+                    }
 
-                    List<LoanOffers> loanOffersList = new ArrayList<>();
-                    loanOffersList.add(loanOffers);
+                    new ArrayList();
+                    data = (ArrayList)responseVO.getCollectionOfList().get("LoanOffers");
+                    if (data != null) {
+                        loanOffersList = data;
 
-                    loan.setLoanOffersList(loanOffersList);
+                        for(i = 0; i < loanOffersList.size(); ++i) {
+                            LoanOffers loanOffers = new LoanOffers();
+                            loanOffers.setOfferName(((LoanOffers)loanOffersList.get(i)).getOfferName());
+                            loanOffers.setCurrencyCode(((LoanOffers)loanOffersList.get(i)).getCurrencyCode());
+                            loanOffers.setSetupFees(((LoanOffers)loanOffersList.get(i)).getSetupFees());
+                            loanOffers.setCommodityType(((LoanOffers)loanOffersList.get(i)).getCommodityType());
+                            loanOffers.setLoanPlanId(((LoanOffers)loanOffersList.get(i)).getLoanPlanId());
+                            loanOffers.setLoanPlanName(((LoanOffers)loanOffersList.get(i)).getLoanPlanName());
+                            loanOffers.setLoanProductGroup(((LoanOffers)loanOffersList.get(i)).getLoanProductGroup());
+                            loanOffers.setAdvanceOfferId(((LoanOffers)loanOffersList.get(i)).getAdvanceOfferId());
+                            loanOffers.setPrincipalAmount(((LoanOffers)loanOffersList.get(i)).getPrincipalAmount());
+                            loanOffersList1 = new ArrayList();
+                            loanOffersList1.add(loanOffers);
+                            webServiceVO.setLoanOffersList(loanOffersList1);
+                        }
+                    }
 
-                    Repayment repayment = new Repayment();
-                    repayment.setRepaymentsCount(responseVO.getRepaymentsCount());
-                    repayment.setGross(responseVO.getGross());
-                    repayment.setPrincipal(responseVO.getPrincipal());
-                    repayment.setSetupFees(responseVO.getSetupFees());
-                    repayment.setInterest(responseVO.getInterest());
-                    repayment.setInterestVAT(responseVO.getInterestVAT());
-                    repayment.setCharges(responseVO.getCharges());
-                    repayment.setChargesVAT(responseVO.getChargesVAT());
+                    data = (ArrayList)responseVO.getCollectionOfList().get("Loan");
+                    ArrayList loansPerStateList1;
+                    ArrayList loansPerStateList;
+//                    int i;
+                    if (data != null) {
+                        loansPerStateList = data;
 
-                    Report report = new Report();
-                    List<Repayment> repaymentList = new ArrayList<>();
-                    repaymentList.add(repayment);
+                        for(i = 0; i < loansPerStateList.size(); ++i) {
+                            Loan loan = new Loan();
+                            loan.setInternalLoanId(((Loan)loansPerStateList.get(i)).getInternalLoanId());
+                            loan.setLoanState(((Loan)loansPerStateList.get(i)).getLoanState());
+                            loan.setLoanTimestamp(((Loan)loansPerStateList.get(i)).getLoanTimestamp());
+                            loan.setLoanReason(((Loan)loansPerStateList.get(i)).getLoanReason());
+                            loansPerStateList1 = new ArrayList();
+                            loan.setLoanOffersList(webServiceVO.getLoanOffersList());
+                            loansPerStateList1.add(loan);
+                            webServiceVO.setLoanList(loansPerStateList1);
+                        }
+                    }
 
-                    report.setRepaymentList(repaymentList);
+                    data = (ArrayList)responseVO.getCollectionOfList().get("Loans");
+                    if (data != null) {
+                        loansPerStateList = data;
 
-                    List<Report> reportList = new ArrayList<>();
-                    reportList.add(report);
+                        for(i = 0; i < loansPerStateList.size(); ++i) {
+                            Loans loans = new Loans();
+                            loans.setLoanList(webServiceVO.getLoanList());
+                            loansPerStateList1 = new ArrayList();
+                            loans.setLoanList(webServiceVO.getLoanList());
+                            loans.setReportList(webServiceVO.getReportList());
+                            loans.setOutstandingStatusList(webServiceVO.getOutstandingStatusList());
+                            loans.setPlanList(webServiceVO.getPlanList());
+                            loansPerStateList1.add(loans);
+                            webServiceVO.setLoansList(loansPerStateList1);
+                        }
+                    }
 
-                    loans.setReportList(reportList);
+                    data = (ArrayList)responseVO.getCollectionOfList().get("LoansPerState");
+                    if (data != null) {
+                        loansPerStateList = data;
 
+                        for(i = 0; i < loansPerStateList.size(); ++i) {
+                            LoansPerState loansPerState1 = new LoansPerState();
+                            loansPerState1.setLoanState(((LoansPerState)loansPerStateList.get(i)).getLoanState());
+                            loansPerStateList1 = new ArrayList();
+                            loansPerState1.setLoansList(webServiceVO.getLoansList());
+                            loansPerStateList1.add(loansPerState1);
+                            webServiceVO.setLoansPerStates(loansPerStateList1);
+                        }
+                    }
 
-                    OutstandingStatus outstandingStatus = new OutstandingStatus();
-                    outstandingStatus.setCurrencyCode(responseVO.getCurrencyCode());
-                    outstandingStatus.setTotalGross(responseVO.getTotalGross());
-                    outstandingStatus.setTotalPrincipal(responseVO.getTotalPrincipal());
-                    outstandingStatus.setTotalSetupFees(responseVO.getTotalSetupFees());
-                    outstandingStatus.setTotalInterest(responseVO.getTotalInterest());
-                    outstandingStatus.setTotalInterestVAT(responseVO.getTotalInterestVAT());
-                    outstandingStatus.setTotalCharges(responseVO.getTotalCharges());
-                    outstandingStatus.setTotalChargesVAT(responseVO.getTotalChargesVAT());
-                    outstandingStatus.setTotalPendingRecoveries(responseVO.getTotalPendingRecoveries());
-
-                    List<OutstandingStatus> outstandingStatusList = new ArrayList<>();
-                    outstandingStatusList.add(outstandingStatus);
-                    loans.setOutstandingStatusList(outstandingStatusList);
-
-                    Plan plan = new Plan();
-                    plan.setCurrentPeriod(responseVO.getCurrentPeriod());
-                    plan.setDaysLeftInPeriod(responseVO.getDaysLeftInPeriod());
-                    plan.setNextPeriod(responseVO.getNextPeriod());
-
-                    List<Plan> planList = new ArrayList<>();
-                    planList.add(plan);
-                    loans.setPlanList(planList);
-
-                    List<Loans> loansList = new ArrayList<>();
-                    loansList.add(loans);
-
-                    loansPerState.setLoansList(loansList);
-                    List<LoansPerState> loansPerStateList = new ArrayList<>();
-
-                    loansPerStateList.add(loansPerState);
-
-//                    webServiceVO.setLoansPerStateList(loansPerStateList);
-
-                    webServiceVO.setLoansPerStates(loansPerStateList);
                     webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
                     webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
                 }
@@ -11840,9 +12136,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
         BaseWrapper baseWrapper = new BaseWrapperImpl();
         try {
-//            webServiceVO = this.validateRRN(webServiceVO);
-//            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
-//                return webServiceVO;
+            webServiceVO = this.validateRRN(webServiceVO);
+            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+                return webServiceVO;
             fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "loanHistory");
 
             appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
@@ -11864,7 +12160,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 //                dateStr = startCalendar.setTime(webServiceVO.getFromDate());
 
                 toBeProcessedList = transactionDetailMasterDAO.loadTDMbyMobileandDateRange
-                        (webServiceVO.getMobileNo(), dateStr, endStr, String.valueOf(ProductConstantsInterface.ADVANCE_SALARY_LOAN));
+                        (webServiceVO.getMobileNo(), dateStr, endStr, String.valueOf(ProductConstantsInterface.LOAN_XTRA_CASH));
 
                 if(toBeProcessedList != null && !toBeProcessedList.isEmpty()){
                     for (TransactionDetailMasterModel l1 : toBeProcessedList) {
@@ -11948,10 +12244,15 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         (webServiceVO.getMobileNo(), String.valueOf(ProductConstantsInterface.LOAN_XTRA_CASH));
                 if(tdm != null){
                     webServiceVO.setStatus("Active");
+                    webServiceVO.setStatusFlag(true);
                 }
                 else{
                     webServiceVO.setStatus("In-Active");
+                    webServiceVO.setStatusFlag(false);
                 }
+
+                webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
+                webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
             }
             else {
                 logger.info("[FonePaySwitchController.transactionActive] User Not Found against the Mobile # :: " + webServiceVO.getMobileNo());

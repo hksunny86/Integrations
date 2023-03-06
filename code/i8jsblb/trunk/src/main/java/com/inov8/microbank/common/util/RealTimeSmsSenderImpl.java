@@ -6,6 +6,7 @@ import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import com.inov8.microbank.common.exception.CommandException;
 import com.inov8.microbank.common.model.SmsLogModel;
 import com.inov8.microbank.common.model.UserDeviceAccountsModel;
+import com.inov8.microbank.common.model.messagemodule.NovaAlertMessage;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapper;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapperImpl;
@@ -168,7 +169,7 @@ public class RealTimeSmsSenderImpl implements RealTimeSmsSender {
                 if (!responseVO.getResponseCode().equals("I8SB-200")) {
                     throw new CommandException(responseVO.getDescription(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, null);
                 }
-            } else {
+            } else if (MessageUtil.getMessage("SENDSMS.CHANNEL").equals("3")) {
                 I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
                 I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
                 requestVO = ESBAdapter.prepareEoceanRequest(I8SBConstants.RequestType_EOCEAN);
@@ -224,10 +225,112 @@ public class RealTimeSmsSenderImpl implements RealTimeSmsSender {
                 if (!responseVO.getResponseCode().equals("I8SB-200")) {
                     throw new CommandException(responseVO.getDescription(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, null);
                 }
+            } else if (MessageUtil.getMessage("SENDSMS.CHANNEL").equals("2")) {
+                I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+                I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
+                requestVO = ESBAdapter.prepareM3TechSmsRequest(I8SBConstants.RequestType_SendSMS);
+                requestVO.setRecieverMobileNo(this.formatNumberWith0092(to));
+                requestVO.setSmsText(msg);
+                SwitchWrapper sWrapper = new SwitchWrapperImpl();
+                sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
+                sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
+                sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
+                responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
+
+                if (!responseVO.getResponseCode().equals("I8SB-200")) {
+                    throw new CommandException(responseVO.getDescription(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, null);
+                }
             }
+//            } else {
+//                I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+//                I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
+//                requestVO = ESBAdapter.prepareEoceanNewRequest(I8SBConstants.RequestType_SendSMS);
+//                requestVO.setRecieverMobileNo(this.formatNumberWith092(to));
+//                requestVO.setSmsText(msg);
+//                String mobileNumber = this.formatNumberWith092(to);
+//                String shortCode = mobileNumber.substring(1, 4);
+//                String mobilink = MessageUtil.getMessage("Mobilink.Short.codes");
+//                List<String> mobilinkShortCode = Arrays.asList(mobilink.split("\\s*,\\s*"));
+//                String ufone = MessageUtil.getMessage("ufone.short.codes");
+//                List<String> ufoneShortCode = Arrays.asList(ufone.split("\\s*,\\s*"));
+//                String telenor = MessageUtil.getMessage("telenor.short.codes");
+//                List<String> telenorShortCodes = Arrays.asList(telenor.split("\\s*,\\s*"));
+//                String zong = MessageUtil.getMessage("zong.short.codes");
+//                List<String> zongShortCode = Arrays.asList(zong.split("\\s*,\\s*"));
+//                String scom = MessageUtil.getMessage("scom.short.codes");
+//                List<String> scomShortCode = Arrays.asList(scom.split("\\s*,\\s*"));
+//                if (mobilinkShortCode.contains(shortCode)) {
+//                    requestVO.setMobileNetwork(MessageUtil.getMessage("Mobilink.operator.name"));
+//                } else if (ufoneShortCode.contains(shortCode)) {
+//                    requestVO.setMobileNetwork(MessageUtil.getMessage("ufone.operator.name"));
+//                } else if (telenorShortCodes.contains(shortCode)) {
+//                    requestVO.setMobileNetwork(MessageUtil.getMessage("telenor.operator.name"));
+//                } else if (zongShortCode.contains(shortCode)) {
+//                    requestVO.setMobileNetwork(MessageUtil.getMessage("zong.operator.name"));
+//
+//                } else if (scomShortCode.contains(shortCode)) {
+//                    requestVO.setMobileNetwork(MessageUtil.getMessage("scom.operator.name"));
+//
+//                }
+//
+////                AppUserModel appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(this.formatNumberWith092(to), UserTypeConstantsInterface.CUSTOMER);
+////                if (appUserModel != null) {
+////                    if (appUserModel.getCustomerMobileNetwork() != null) {
+////                        if (appUserModel.getCustomerMobileNetwork().equalsIgnoreCase("jazz") || appUserModel.getCustomerMobileNetwork().equalsIgnoreCase("warid")) {
+////                            requestVO.setMobileNetwork("Mobilink");
+////                        }else {
+////                            requestVO.setMobileNetwork(appUserModel.getCustomerMobileNetwork());
+////                        }
+////                    } else {
+////                        requestVO.setMobileNetwork("Zong");
+////                    }
+////                } else {
+////                    requestVO.setMobileNetwork("Zong");
+////                }
+//                SwitchWrapper sWrapper = new SwitchWrapperImpl();
+//                sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
+//                sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
+//                sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+//                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
+//                responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
+//
+//                if (!responseVO.getResponseCode().equals("I8SB-200")) {
+//                    throw new CommandException(responseVO.getDescription(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, null);
+//                }
+//            }
 
         } catch (Exception ex) {
             logger.error("Sms sending failed due to Exception...", ex);
+            throw new RuntimeException(ex.getMessage(), ex);
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("End send() of RealTimeSmsSenderImpl");
+        }
+    }
+
+
+    @Override
+    public void novaAlertSMS(NovaAlertMessage smsMessage) {
+        logger.info("SmsSenderImpl.pushNotification() request sent to I8SB");
+        SwitchWrapper sWrapper = new SwitchWrapperImpl();
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
+        try {
+            requestVO = esbAdapter.prepareRefferalCustomerRequest(I8SBConstants.RequestType_Notification);
+            requestVO.setMobileNumber(smsMessage.getMobileNo());
+            requestVO.setSmsText(smsMessage.getText());
+            sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
+            sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
+            sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+            ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
+            responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
+
+            if (!responseVO.getResponseCode().equals("I8SB-200")) {
+                throw new CommandException(responseVO.getDescription(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, null);
+            }
+        } catch (Exception ex) {
+            logger.error("Notifcation sending failed due to Exception...", ex);
             throw new RuntimeException(ex.getMessage(), ex);
         }
         if (logger.isDebugEnabled()) {

@@ -7,6 +7,7 @@ import com.inov8.framework.common.wrapper.BaseWrapperImpl;
 import com.inov8.framework.server.dao.framework.v2.GenericDao;
 import com.inov8.microbank.common.exception.WorkFlowException;
 import com.inov8.microbank.common.model.*;
+import com.inov8.microbank.common.model.messagemodule.NovaAlertMessage;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.util.*;
 import com.inov8.microbank.common.wrapper.commission.CommissionWrapper;
@@ -469,6 +470,7 @@ public class CustomerInitiatedAccountToAccountTransaction extends SalesTransacti
 		}
 		String brandName = MessageUtil.getMessage("jsbl.brandName");
 		ArrayList<SmsMessage> messageList = new ArrayList<SmsMessage>(0);
+		ArrayList<NovaAlertMessage> messageList2 = new ArrayList<NovaAlertMessage>(0);
 
 		if(wrapper.getObject(CommandFieldConstants.KEY_CHANNEL_ID) != null && wrapper.getObject(CommandFieldConstants.KEY_CHANNEL_ID).equals("NOVA")) {
 			String maskedSenderAccNo = wrapper.getAppUserModel().getMobileNo();
@@ -496,6 +498,7 @@ public class CustomerInitiatedAccountToAccountTransaction extends SalesTransacti
 							}, null);
 
 					messageList.add(new SmsMessage(((AccountToAccountVO) wrapper.getProductVO()).getSenderCustomerMobileNo(), custSMS));
+					messageList2.add(new NovaAlertMessage(((AccountToAccountVO) wrapper.getProductVO()).getSenderCustomerMobileNo(), custSMS,"","","",""));
 
 					wrapper.getTransactionDetailModel().setCustomField8(custSMS);
 				}
@@ -516,6 +519,8 @@ public class CustomerInitiatedAccountToAccountTransaction extends SalesTransacti
 							}, null);
 
 					messageList.add(new SmsMessage(((AccountToAccountVO) wrapper.getProductVO()).getSenderCustomerMobileNo(), custSMS));
+					messageList2.add(new NovaAlertMessage(((AccountToAccountVO) wrapper.getProductVO()).getSenderCustomerMobileNo(), custSMS,"","","",""));
+
 
 					wrapper.getTransactionDetailModel().setCustomField8(custSMS);
 				}
@@ -537,6 +542,7 @@ public class CustomerInitiatedAccountToAccountTransaction extends SalesTransacti
 						}, null);
 
 				messageList.add(new SmsMessage(((AccountToAccountVO) wrapper.getProductVO()).getSenderCustomerMobileNo(), custSMS));
+				messageList2.add(new NovaAlertMessage(((AccountToAccountVO) wrapper.getProductVO()).getSenderCustomerMobileNo(), custSMS,"","","",""));
 
 				wrapper.getTransactionDetailModel().setCustomField8(custSMS);
 			}
@@ -558,6 +564,7 @@ public class CustomerInitiatedAccountToAccountTransaction extends SalesTransacti
 					}, null);
 
 			messageList.add(new SmsMessage(((AccountToAccountVO) wrapper.getProductVO()).getSenderCustomerMobileNo(), cust1SMS));
+			messageList2.add(new NovaAlertMessage(((AccountToAccountVO) wrapper.getProductVO()).getSenderCustomerMobileNo(), cust1SMS,"","","",""));
 
 			wrapper.getTransactionDetailModel().setCustomField8(cust1SMS);
 		}
@@ -580,6 +587,7 @@ public class CustomerInitiatedAccountToAccountTransaction extends SalesTransacti
 
 
 			messageList.add(new SmsMessage(((AccountToAccountVO) wrapper.getProductVO()).getRecipientCustomerMobileNo(), cust2SMS));
+			messageList2.add(new NovaAlertMessage(((AccountToAccountVO) wrapper.getProductVO()).getRecipientCustomerMobileNo(), cust2SMS,"","","",""));
 
 			wrapper.getTransactionModel().setConfirmationMessage(cust2SMS);
 		}
@@ -609,6 +617,7 @@ public class CustomerInitiatedAccountToAccountTransaction extends SalesTransacti
 
 
 			messageList.add(new SmsMessage(((AccountToAccountVO) wrapper.getProductVO()).getRecipientCustomerMobileNo(), cust2SMS));
+			messageList2.add(new NovaAlertMessage(((AccountToAccountVO) wrapper.getProductVO()).getRecipientCustomerMobileNo(), cust2SMS,"","","",""));
 
 			wrapper.getTransactionModel().setConfirmationMessage(cust2SMS);
 		}
@@ -627,10 +636,15 @@ public class CustomerInitiatedAccountToAccountTransaction extends SalesTransacti
 
 
 			messageList.add(new SmsMessage(((AccountToAccountVO) wrapper.getProductVO()).getRecipientCustomerMobileNo(), cust2SMS));
+			messageList2.add(new NovaAlertMessage(((AccountToAccountVO) wrapper.getProductVO()).getRecipientCustomerMobileNo(), cust2SMS,"","","",""));
 
 			wrapper.getTransactionModel().setConfirmationMessage(cust2SMS);
 		}
+
+
+
 		txManager.saveTransaction(wrapper);
+		wrapper.putObject(CommandFieldConstants.KEY_NOVA_ALERT_SMS_MESSAGES,messageList2);
 		wrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGES, messageList);
 
 		this.settlementManager.settleCommission(commissionWrapper, wrapper);

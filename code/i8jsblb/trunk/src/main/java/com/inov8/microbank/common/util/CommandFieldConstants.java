@@ -292,6 +292,8 @@ public class CommandFieldConstants
     public static final String KENNEL_POSTPAID = "POSTPAID";
     public static final String KENNEL_PREPAID = "PREPAID";
     public static final String KEY_SMS_MESSAGES = "sms_msgs";
+
+    public static final String KEY_NOVA_ALERT_SMS_MESSAGES = "nova_alert";
     
 //CustomerAccountRelationshipInquiry Command
         

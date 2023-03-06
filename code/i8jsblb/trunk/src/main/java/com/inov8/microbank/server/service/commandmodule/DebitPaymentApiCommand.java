@@ -239,6 +239,7 @@ public class DebitPaymentApiCommand extends BaseCommand {
                 balance = workFlowWrapper.getOLASwitchWrapper().getOlavo().getFromBalanceAfterTransaction();
                 //consumerNumber = ((UtilityBillVO) workFlowWrapper.getProductVO()).getConsumerNo();
                 commonCommandManager.sendSMS(workFlowWrapper);
+                commonCommandManager.novaAlertMessage(workFlowWrapper);
 
 
             }

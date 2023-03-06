@@ -12,9 +12,11 @@ import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import com.inov8.microbank.common.exception.CommandException;
 import com.inov8.microbank.common.model.*;
+import com.inov8.microbank.common.model.messagemodule.NovaAlertMessage;
 import com.inov8.microbank.common.util.*;
 import com.inov8.microbank.fonepay.common.FonePayConstants;
 import com.inov8.microbank.server.service.financialintegrationmodule.switchmodule.ESBAdapter;
+import com.inov8.microbank.server.service.integration.vo.AccountToAccountVO;
 import com.inov8.microbank.server.service.mfsmodule.CommonCommandManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -893,6 +895,7 @@ public class CustomerBillPaymentTransaction extends SalesTransaction {
 		String customerMsgString = null;
 		Object[] customerSMSParam = null;
 
+
 		String brandName = null;
 		if(UserUtils.getCurrentUser().getMnoId()!=null && UserUtils.getCurrentUser().getMnoId().equals(50028L)){
 			brandName= MessageUtil.getMessage("sco.brandName");
@@ -923,6 +926,7 @@ public class CustomerBillPaymentTransaction extends SalesTransaction {
 				consumer = consumer.replaceAll("(\\d+)(\\d{2})","****$2");
 				customerMsgString = "nova.billPayments";
 				customerSMSParam = new Object[]{trxCode, totalAmount, _workFlowWrapper.getProductModel().getDescription(), consumer, date, customerBalance};
+
 			}
 			else {
 				customerMsgString = "ubp.paybyaccount.customer";
@@ -944,18 +948,27 @@ public class CustomerBillPaymentTransaction extends SalesTransaction {
 		}
 		else if(categoryId == PRE_PAID.longValue()) {}
 
+		ArrayList<NovaAlertMessage> messageList2 = new ArrayList<NovaAlertMessage>(0);
+
+
+
 
 		String customerSMS = this.getMessageSource().getMessage(customerMsgString, customerSMSParam, null);
 		
 		SmsMessage customerSMSMessage = new SmsMessage(_workFlowWrapper.getCustomerAppUserModel().getMobileNo(), customerSMS);
-			
+		NovaAlertMessage customerNovaAlertSMSMessage = new NovaAlertMessage(_workFlowWrapper.getCustomerAppUserModel().getMobileNo(), customerSMS,"","","","");
+
+
 		_workFlowWrapper.getTransactionDetailModel().setCustomField8(customerSMS);
 		_workFlowWrapper.getTransactionModel().setNotificationMobileNo(_workFlowWrapper.getAppUserModel().getMobileNo());//todo
 		_workFlowWrapper.getTransactionModel().setConfirmationMessage(customerSMS);
 			
 		ArrayList<SmsMessage> messageList = new ArrayList<SmsMessage>(0);
 		messageList.add(customerSMSMessage);
-		
+		messageList2.add(customerNovaAlertSMSMessage);
+
+		_workFlowWrapper.putObject(CommandFieldConstants.KEY_NOVA_ALERT_SMS_MESSAGES, messageList2);
+
 		_workFlowWrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGES, messageList);
 	}
 	

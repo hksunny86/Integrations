@@ -5,6 +5,7 @@ import com.inov8.framework.common.wrapper.BaseWrapperImpl;
 import com.inov8.framework.server.dao.framework.v2.GenericDao;
 import com.inov8.microbank.common.exception.WorkFlowException;
 import com.inov8.microbank.common.model.*;
+import com.inov8.microbank.common.model.messagemodule.NovaAlertMessage;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.model.productdeviceflowmodule.ProductDeviceFlowListViewModel;
 import com.inov8.microbank.common.util.*;
@@ -241,6 +242,8 @@ public class DebitCardCashWithdrawlTransaction extends SalesTransaction {
 
     private void sendSMS(WorkFlowWrapper wrapper) throws Exception {
         ArrayList<SmsMessage> messageList = new ArrayList<SmsMessage>(0);
+        ArrayList<NovaAlertMessage> messageList2 = new ArrayList<NovaAlertMessage>(0);
+
         Boolean thirdPartyCheck = wrapper.getProductModel().getInclChargesCheck();
         Double totalAmount = 0.0d;
         if (thirdPartyCheck == null) {
@@ -312,8 +315,10 @@ public class DebitCardCashWithdrawlTransaction extends SalesTransaction {
 
         String customerSMS = this.messageSource.getMessage(smsInputParam, customerParams, null);
         messageList.add(new SmsMessage(wrapper.getCustomerAppUserModel().getMobileNo(), customerSMS));
+        messageList2.add(new NovaAlertMessage(wrapper.getCustomerAppUserModel().getMobileNo(), customerSMS,"","","",""));
         wrapper.getTransactionModel().setConfirmationMessage(customerSMS);
         wrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGES, messageList);
+        wrapper.putObject(CommandFieldConstants.KEY_NOVA_ALERT_SMS_MESSAGES,messageList2);
     }
 
     @Override

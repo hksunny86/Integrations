@@ -36,6 +36,11 @@
         <property name="physicalName" value="queue/outgoingSmsQueue"/>
     </bean>
 
+
+    <bean id="alertNovaSmsQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <property name="physicalName" value="queue/alertNovaSmsQueue"/>
+    </bean>
+
     <bean id="franchiseQueue" class="org.apache.activemq.command.ActiveMQQueue">
         <property name="physicalName" value="queue/franchiseQueue"/>
     </bean>
@@ -169,6 +174,29 @@
     <!-- this is the Message Driven POJO (MDP) -->
     <bean id="smsMessageListener" class="com.inov8.microbank.server.messaging.listener.SmsMessageListener">
         <property name="realTimeSmsSender" ref="realTimeSmsSender"/>
+    </bean>
+
+    <bean id="novaAlertSmsMessageListener" class="com.inov8.microbank.server.messaging.listener.NovaAlertSmsMessageListener">
+        <property name="realTimeSmsSender" ref="realTimeSmsSender"/>
+    </bean>
+
+
+
+    <bean id="novaAlertSmsMessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="transactionManager" ref="jmsTransactionManager"/>
+        <property name="destination" ref="alertNovaSmsQueue"/>
+        <property name="messageListener" ref="novaAlertSmsMessageListener"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="concurrentConsumers" value="100"/>
+        <property name="maxConcurrentConsumers" value="200"/>
+        <property name="idleConsumerLimit" value="50"/>
+        <property name="receiveTimeout" value="5000"/>
+        <property name="idleTaskExecutionLimit" value="50"/>
+        <property name="cacheLevel">
+            <util:constant
+                    static-field="org.springframework.jms.listener.DefaultMessageListenerContainer.CACHE_CONSUMER"/>
+        </property>
     </bean>
 
     <bean id="smsMessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">

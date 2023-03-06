@@ -36,6 +36,7 @@ import com.inov8.microbank.common.model.appversionmodule.AppVersionListViewModel
 import com.inov8.microbank.common.model.customermodule.BlinkCustomerPictureModel;
 import com.inov8.microbank.common.model.customermodule.CustomerPictureModel;
 import com.inov8.microbank.common.model.favoritenumbermodule.FavoriteNumberListViewModel;
+import com.inov8.microbank.common.model.messagemodule.NovaAlertMessage;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.model.portal.inovtransactiondetailmodule.ExtendedTransactionDetailPortalListModel;
 import com.inov8.microbank.common.model.portal.inovtransactiondetailmodule.MiniStatementListViewModel;
@@ -5225,6 +5226,22 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     }
 
     @Override
+    public void novaAlertMessage(BaseWrapper baseWrapper) throws FrameworkCheckedException {
+        @SuppressWarnings("unchecked")
+        ArrayList<NovaAlertMessage> messageList = (ArrayList<NovaAlertMessage>) baseWrapper.getObject(CommandFieldConstants.KEY_NOVA_ALERT_SMS_MESSAGES);
+
+        if (messageList != null && !messageList.isEmpty()) {
+            for (NovaAlertMessage message : messageList) {
+                this.smsSender.alertNovaMessage(message);
+            }
+        }
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("End of CommonCommandManagerImpl.sendSMS()");
+        }
+    }
+
+    @Override
     public void initiateUserGeneratedPinIvrCall(IvrRequestDTO ivrDTO) throws FrameworkCheckedException {
         ivrDTO.setRetryCount(0);
         // ProductId should be already set
@@ -7845,6 +7862,19 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
     public void setOfflineBillersConfigDAO(OfflineBillersConfigDAO offlineBillersConfigDAO) {
         this.offlineBillersConfigDAO = offlineBillersConfigDAO;
+    }
+
+    @Override
+    public TasdeeqDataModel saveOrUpdateTasdeeqDataModel(TasdeeqDataModel tasdeeqDataModel) {
+        return this.genericDao.createEntity(tasdeeqDataModel);
+    }
+
+    @Override
+    public TasdeeqDataModel loadTasdeeqDataModelByMobile(String mobileNo) throws FrameworkCheckedException {
+        return tasdeeqDataDAO.loadTasdeeqDataByMobile(mobileNo);
+    }
+    public void setTasdeeqDataDAO(TasdeeqDataDAO tasdeeqDataDAO) {
+        this.tasdeeqDataDAO = tasdeeqDataDAO;
     }
 
     public void setTasdeeqDataDAO(TasdeeqDataDAO tasdeeqDataDAO) {

@@ -13,6 +13,7 @@ import com.inov8.microbank.common.exception.CommandException;
 import com.inov8.microbank.common.exception.WorkFlowException;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.agenthierarchy.RegionModel;
+import com.inov8.microbank.common.model.messagemodule.NovaAlertMessage;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.model.productmodule.paymentservice.BookMeLog;
 import com.inov8.microbank.common.util.*;
@@ -780,15 +781,22 @@ public class DebitPaymentApiTransaction extends SalesTransaction {
             String customerSMS = this.getMessageSource().getMessage(customerMsgString, customerSMSParam, null);
 
             SmsMessage customerSMSMessage = new SmsMessage(_workFlowWrapper.getCustomerAppUserModel().getMobileNo(), customerSMS);
+            NovaAlertMessage customerNovaAlertSMSMessage = new NovaAlertMessage(_workFlowWrapper.getCustomerAppUserModel().getMobileNo(), customerSMS,"","","","");
+
 
             _workFlowWrapper.getTransactionDetailModel().setCustomField8(customerSMS);
             _workFlowWrapper.getTransactionModel().setNotificationMobileNo(_workFlowWrapper.getAppUserModel().getMobileNo());//todo
             _workFlowWrapper.getTransactionModel().setConfirmationMessage(customerSMS);
 
             ArrayList<SmsMessage> messageList = new ArrayList<SmsMessage>(0);
+            ArrayList<NovaAlertMessage> messageList2 = new ArrayList<NovaAlertMessage>(0);
             messageList.add(customerSMSMessage);
+            messageList2.add(customerNovaAlertSMSMessage);
+
 
             _workFlowWrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGES, messageList);
+            _workFlowWrapper.putObject(CommandFieldConstants.KEY_NOVA_ALERT_SMS_MESSAGES, messageList2);
+
         }
     }
 

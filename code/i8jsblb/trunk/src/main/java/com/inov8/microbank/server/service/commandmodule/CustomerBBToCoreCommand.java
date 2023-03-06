@@ -213,6 +213,7 @@ public class CustomerBBToCoreCommand extends BaseCommand {
                     commissionAmountsHolder = workFlowWrapper.getCommissionAmountsHolder();
 
                     commonCommandManager.sendSMS(workFlowWrapper);
+                    commonCommandManager.novaAlertMessage(workFlowWrapper);
                 } else {
                     logger.error("[CustomerBBToCoreCommand.execute] Throwing Exception for Product ID: " + productId + " Logged In AppUserID:" + appUserModel.getAppUserId() + " Customer Mobile No:" + customerMobileNo + " Trx Amount: " + transactionAmount + " Commission: " + commissionAmount);
                     throw new CommandException(validationErrors.getErrors(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, new Throwable());

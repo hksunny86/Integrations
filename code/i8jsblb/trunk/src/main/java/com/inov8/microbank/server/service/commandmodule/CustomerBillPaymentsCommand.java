@@ -325,6 +325,7 @@ public class CustomerBillPaymentsCommand extends BaseCommand {
 			
 
 				commonCommandManager.sendSMS(workFlowWrapper);
+				commonCommandManager.novaAlertMessage(workFlowWrapper);
 				
 			} else {
 				

@@ -2751,4 +2751,9 @@ public class JsIntegrationController implements WebServiceSwitchController {
     public WebServiceVO loanCallBack(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO simpleAccountOpening(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

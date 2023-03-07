@@ -4097,6 +4097,36 @@ public class HostRequestValidator {
 
     }
 
+    public static void validateSimpleAccountOpening(SimpleAccountOpeningRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getCnic())) {
+            throw new ValidationException("[FAILED] Validation Failed CNIC: " + integrationVO.getCnic());
+        }
+        if (StringUtils.isEmpty(String.valueOf(integrationVO.getCnicIssuanceDate()))) {
+            throw new ValidationException("[FAILED] Validation Failed Cnic Issuance Date: " + integrationVO.getCnicIssuanceDate());
+        }
+
+        if (StringUtils.isEmpty(String.valueOf(integrationVO.getCnicExpiryDate()))) {
+            throw new ValidationException("[FAILED] Validation Failed Cnic Expiry Date: " + integrationVO.getCnicExpiryDate());
+        }
+    }
+
 
     public static boolean authenticate(String userName, String password, String channelID) {
         if (ConfigReader.getInstance().getProperty("channel.ids", "").contains(channelID))

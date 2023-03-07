@@ -1799,7 +1799,7 @@ public class JSController {
         return response;
     }
 
-    @RequestMapping(value = "api/callBack", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
+    @RequestMapping(value = "api/callBack", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     LoanCallBackResponse loanCallBackResponse(@RequestBody LoanCallBackRequest request) {
         LoanCallBackResponse loanCallBackResponse = new LoanCallBackResponse();
@@ -1869,6 +1869,79 @@ public class JSController {
         logger.info("Loan Call Back Request Processed in : {} ms {}", end, loanCallBackResponse);
 
         return loanCallBackResponse;
+    }
+
+    @RequestMapping(value = "api/simpleAccountOpening", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    SimpleAccountOpeningResponse simpleAccountOpeningResponse(@RequestBody SimpleAccountOpeningRequest request) {
+        long start = System.currentTimeMillis();
+        logger.info("Simple Account Opening Request Received at Controller at time: " + start);
+
+        SimpleAccountOpeningResponse response = new SimpleAccountOpeningResponse();
+        String requestXML = JSONUtil.getJSON(request);
+//        requestXML = XMLUtil.maskPassword(requestXML);
+        logger.info("Start Processing Simple Account Opening Request with {}", requestXML);
+        StringBuilder stringText = new StringBuilder()
+                .append(request.getUserName())
+                .append(request.getPassword())
+                .append(request.getMobileNumber())
+                .append(request.getDateTime())
+                .append(request.getRrn())
+                .append(request.getChannelId())
+                .append(request.getTerminalId())
+                .append(request.getCnic())
+                .append(request.getCnicIssuanceDate())
+                .append(request.getCnicExpiryDate())
+                .append(request.getReserved1())
+                .append(request.getReserved2())
+                .append(request.getReserved3())
+                .append(request.getReserved4())
+                .append(request.getReserved5())
+                .append(request.getReserved6())
+                .append(request.getReserved7())
+                .append(request.getReserved8())
+                .append(request.getReserved9())
+                .append(request.getReserved10());
+
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+        if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+            try {
+                    HostRequestValidator.validateSimpleAccountOpening(request);
+                response = integrationService.simpleAccountOpeningResponse(request);
+
+            } catch (ValidationException ve) {
+                response.setResponseCode("420");
+                response.setResponseDescription(ve.getMessage());
+
+                logger.error("ERROR: Request Validation", ve);
+            } catch (Exception e) {
+                response.setResponseCode("220");
+                response.setResponseDescription(e.getMessage());
+                logger.error("ERROR: General Processing ", e);
+            }
+
+            logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION *********");
+            logger.info("ResponseCode: " + response.getResponseCode());
+        } else {
+            logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION AUTHENTICATION *********");
+            response = new SimpleAccountOpeningResponse();
+            response.setResponseCode("420");
+            response.setResponseDescription("Request is not authenticated");
+            logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+        }
+        } else {
+            logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION *********");
+            response = new SimpleAccountOpeningResponse();
+            response.setResponseCode("111");
+            response.setResponseDescription("Request is not recognized");
+            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+        }
+
+        long end = System.currentTimeMillis() - start;
+        logger.info("Simple Account Opening Request  Processed in : {} ms {}", end, response);
+
+        return response;
     }
 
 

@@ -98,7 +98,7 @@ public class AuthenticateUpdatedResponse extends Response {
         i8SBSwitchControllerResponseVO.setStatusCode(this.getStatusCode());
         i8SBSwitchControllerResponseVO.setMessageCode(this.getMessageCode());
         i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
-        i8SBSwitchControllerResponseVO.setAuthToken(this.data.getAuthToken());
+        i8SBSwitchControllerResponseVO.setAuthToken(this.getData().getAuthToken());
         i8SBSwitchControllerResponseVO.setRrn(i8SBSwitchControllerRequestVO.getRRN());
         return i8SBSwitchControllerResponseVO;
     }

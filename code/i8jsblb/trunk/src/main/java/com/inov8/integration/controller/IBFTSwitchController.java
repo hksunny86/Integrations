@@ -477,7 +477,7 @@ public class IBFTSwitchController implements HostTransactionController {
                     terminalId = "POS";
                 }
             } else {
-                if (customerModel != null && customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.BLINK)) {
+                if (customerModel != null && (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.BLINK) || customerModel.getCustomerAccountTypeId().equals(56L))) {
 
                     if (!isPosTrx) {
                         productId = ProductConstantsInterface.INTERNATIONAL_DEBIT_CARD_CASH_WITHDRAWAL_OFF_US.toString();

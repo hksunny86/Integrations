@@ -1669,7 +1669,6 @@ public class JSController {
     public @ResponseBody
     TransactionActiveResponse transactionActiveResponse(@RequestBody TransactionActiveRequest request) {
         long start = System.currentTimeMillis();
-        logger.info("Initiate Loan Request Received at Controller at time: " + start);
 
         TransactionActiveResponse response = new TransactionActiveResponse();
         String requestXML = JSONUtil.getJSON(request);
@@ -1738,7 +1737,69 @@ public class JSController {
         return response;
     }
 
- /*   @RequestMapping(value = "api/callBack", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
+    @RequestMapping(value = "api/smsGeneration", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    OptasiaSmsGenerationResponse optasiaSmsGenerationResponse(@RequestBody OptasiaSmsGenerationRequest request) {
+        long start = System.currentTimeMillis();
+
+        OptasiaSmsGenerationResponse response = new OptasiaSmsGenerationResponse();
+        String requestXML = JSONUtil.getJSON(request);
+//        requestXML = XMLUtil.maskPassword(requestXML);
+        logger.info("Start Processing Optasia Sms Generation Request with {}", requestXML);
+        StringBuilder stringText = new StringBuilder()
+                .append(request.getUserName())
+                .append(request.getPassword())
+                .append(request.getCustomerId())
+                .append(request.getDateTime())
+                .append(request.getRrn())
+                .append(request.getChannelId())
+                .append(request.getTerminalId())
+                .append(request.getMessage())
+                .append(request.getReserved1())
+                .append(request.getReserved2());
+
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    HostRequestValidator.validateOptasiaSmsGeneration(request);
+                    response = integrationService.optasiaSmsGenerationResponse(request);
+
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+
+                logger.info("******* DEBUG LOGS FOR Optasia Sms Generation Request TRANSACTION *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Optasia Sms Generation Request TRANSACTION AUTHENTICATION *********");
+                response = new OptasiaSmsGenerationResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+            }
+        } else {
+            logger.info("******* DEBUG LOGS FOR Optasia Sms Generation Request TRANSACTION *********");
+            response = new OptasiaSmsGenerationResponse();
+            response.setResponseCode("111");
+            response.setResponseDescription("Request is not recognized");
+            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+        }
+
+        long end = System.currentTimeMillis() - start;
+        logger.info("Optasia Sms Generation Request  Processed in : {} ms {}", end, response);
+
+        return response;
+    }
+
+    @RequestMapping(value = "api/callBack", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
     public @ResponseBody
     LoanCallBackResponse loanCallBackResponse(@RequestBody LoanCallBackRequest request) {
         LoanCallBackResponse loanCallBackResponse = new LoanCallBackResponse();
@@ -1758,19 +1819,13 @@ public class JSController {
                 .append(request.getRrn())
                 .append(request.getChannelId())
                 .append(request.getTerminalId())
-                .append(request.getIdentityType())
+                .append(request.getLoanEvent())
+                .append(request.getLoanEventStatus())
                 .append(request.getOrigSource())
-                .append(request.getIdentityValue())
+                .append(request.getInternalLoanId())
+                .append(request.getThirdPartyTransactionId())
                 .append(request.getReserved1())
-                .append(request.getReserved2())
-                .append(request.getReserved3())
-                .append(request.getReserved4())
-                .append(request.getReserved5())
-                .append(request.getReserved6())
-                .append(request.getReserved7())
-                .append(request.getReserved8())
-                .append(request.getReserved9())
-                .append(request.getReserved10());
+                .append(request.getReserved2());
 
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
         if (request.getHashData().equalsIgnoreCase(sha256hex)) {
@@ -1817,7 +1872,7 @@ public class JSController {
     }
 
 
-    @RequestMapping(value = "api/outstanding", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+/*    @RequestMapping(value = "api/outstanding", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     OutstandingResponse outstandingResponse(@RequestBody OutstandingRequest request) {
         OutstandingResponse outstandingResponse = new OutstandingResponse();

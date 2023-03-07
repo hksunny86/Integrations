@@ -119,77 +119,89 @@ public class LoansResponse extends Response implements Serializable {
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
         i8SBSwitchControllerResponseVO.setReceivedTimestamp(this.getReceivedTimestamp());
-        for (int i = 0; i < loansPerState.size(); i++) {
 
-            com.inov8.integration.webservice.optasiaVO.LoansPerState loansPerState = new com.inov8.integration.webservice.optasiaVO.LoansPerState();
+        if (loansPerState != null) {
+
             List<com.inov8.integration.webservice.optasiaVO.LoansPerState> loansPerStateList = new ArrayList<>();
-
-            com.inov8.integration.webservice.optasiaVO.Report report = new com.inov8.integration.webservice.optasiaVO.Report();
             List<com.inov8.integration.webservice.optasiaVO.Report> reportList = new ArrayList<>();
-
-            com.inov8.integration.webservice.optasiaVO.Loan loan = new com.inov8.integration.webservice.optasiaVO.Loan();
             List<com.inov8.integration.webservice.optasiaVO.Loan> loanList = new ArrayList<>();
-
-            com.inov8.integration.webservice.optasiaVO.LoanOffers loanOffers = new com.inov8.integration.webservice.optasiaVO.LoanOffers();
             List<com.inov8.integration.webservice.optasiaVO.LoanOffers> loanOffersList = new ArrayList<>();
-
-            com.inov8.integration.webservice.optasiaVO.Loans loans = new Loans();
             List<com.inov8.integration.webservice.optasiaVO.Loans> loansList = new ArrayList<>();
-
-            com.inov8.integration.webservice.optasiaVO.Repayment repayment = new com.inov8.integration.webservice.optasiaVO.Repayment();
             List<com.inov8.integration.webservice.optasiaVO.Repayment> repaymentList = new ArrayList<>();
-
-            com.inov8.integration.webservice.optasiaVO.OutstandingStatus outstandingStatus = new com.inov8.integration.webservice.optasiaVO.OutstandingStatus();
             List<com.inov8.integration.webservice.optasiaVO.OutstandingStatus> outstandingStatusList = new ArrayList<>();
-
-            com.inov8.integration.webservice.optasiaVO.Plan plan = new com.inov8.integration.webservice.optasiaVO.Plan();
             List<com.inov8.integration.webservice.optasiaVO.Plan> planList = new ArrayList<>();
 
-            loansPerState.setLoanState(this.getLoansPerState().get(i).getLoanState());
-            loan.setInternalLoanId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getInternalLoanId());
-            loan.setExternalLoanId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getExternalLoanId());
-            loan.setLoanState(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanState());
-            loan.setLoanTimestamp(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanTimestamp());
-            loan.setLoanReason(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanReason());
+            com.inov8.integration.webservice.optasiaVO.LoansPerState loansPerState;
+
+            com.inov8.integration.webservice.optasiaVO.Report report;
+
+            com.inov8.integration.webservice.optasiaVO.Loan loan;
+
+            com.inov8.integration.webservice.optasiaVO.LoanOffers loanOffers;
+
+            com.inov8.integration.webservice.optasiaVO.Loans loans;
+
+            com.inov8.integration.webservice.optasiaVO.Repayment repayment;
+
+            com.inov8.integration.webservice.optasiaVO.OutstandingStatus outstandingStatus;
+
+            com.inov8.integration.webservice.optasiaVO.Plan plan;
+
+            for (int i = 0; i < this.getLoansPerState().size(); i++) {
+
+                loansPerState = new com.inov8.integration.webservice.optasiaVO.LoansPerState();
+                report = new com.inov8.integration.webservice.optasiaVO.Report();
+                loan = new com.inov8.integration.webservice.optasiaVO.Loan();
+                loanOffers = new com.inov8.integration.webservice.optasiaVO.LoanOffers();
+                loans = new com.inov8.integration.webservice.optasiaVO.Loans();
+                repayment = new com.inov8.integration.webservice.optasiaVO.Repayment();
+                outstandingStatus = new com.inov8.integration.webservice.optasiaVO.OutstandingStatus();
+                plan = new com.inov8.integration.webservice.optasiaVO.Plan();
 
 
-            loanOffers.setAdvanceOfferId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getAdvanceOfferId());
-            loanOffers.setOfferName(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getOfferName());
-            loanOffers.setCommodityType(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getCommodityType());
-            loanOffers.setCurrencyCode(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getCurrencyCode());
-            loanOffers.setPrincipalAmount(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getPrincipalAmount());
-            loanOffers.setSetupFees(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getSetupFees());
-            loanOffers.setLoanPlanId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanPlanId());
-            loanOffers.setLoanPlanName(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanPlanName());
-            loanOffers.setLoanProductGroup(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanProductGroup());
+                loansPerState.setLoanState(this.getLoansPerState().get(i).getLoanState());
+                loan.setInternalLoanId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getInternalLoanId());
+                loan.setExternalLoanId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getExternalLoanId());
+                loan.setLoanState(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanState());
+                loan.setLoanTimestamp(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanTimestamp());
+                loan.setLoanReason(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanReason());
 
 
-            repayment.setRepaymentsCount(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getRepaymentsCount());
-            repayment.setGross(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getGross());
-            repayment.setPrincipal(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getPrincipal());
-            repayment.setSetupFees(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getSetupFees());
-            repayment.setInterest(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getInterest());
-            repayment.setInterestVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getInterestVAT());
-            repayment.setCharges(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getCharges());
-            repayment.setChargesVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getChargesVAT());
+                loanOffers.setAdvanceOfferId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getAdvanceOfferId());
+                loanOffers.setOfferName(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getOfferName());
+                loanOffers.setCommodityType(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getCommodityType());
+                loanOffers.setCurrencyCode(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getCurrencyCode());
+                loanOffers.setPrincipalAmount(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getPrincipalAmount());
+                loanOffers.setSetupFees(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getSetupFees());
+                loanOffers.setLoanPlanId(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanPlanId());
+                loanOffers.setLoanPlanName(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanPlanName());
+                loanOffers.setLoanProductGroup(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanProductGroup());
 
 
-            outstandingStatus.setCurrencyCode(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getCurrencyCode());
-            outstandingStatus.setTotalGross(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalGross());
-            outstandingStatus.setTotalPrincipal(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalPrincipal());
-            outstandingStatus.setTotalSetupFees(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalSetupFees());
-            outstandingStatus.setTotalInterest(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalInterest());
-            outstandingStatus.setTotalInterestVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalInterestVAT());
-            outstandingStatus.setTotalCharges(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalCharges());
-            outstandingStatus.setTotalChargesVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalChargesVAT());
-            outstandingStatus.setTotalPendingRecoveries(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalPendingRecoveries());
+                repayment.setRepaymentsCount(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getRepaymentsCount());
+                repayment.setGross(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getGross());
+                repayment.setPrincipal(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getPrincipal());
+                repayment.setSetupFees(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getSetupFees());
+                repayment.setInterest(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getInterest());
+                repayment.setInterestVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getInterestVAT());
+                repayment.setCharges(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getCharges());
+                repayment.setChargesVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getChargesVAT());
 
 
-            plan.setCurrentPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getCurrentPeriod());
-            plan.setDaysLeftInPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getDaysLeftInPeriod());
-            plan.setNextPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getNextPeriod());
+                outstandingStatus.setCurrencyCode(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getCurrencyCode());
+                outstandingStatus.setTotalGross(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalGross());
+                outstandingStatus.setTotalPrincipal(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalPrincipal());
+                outstandingStatus.setTotalSetupFees(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalSetupFees());
+                outstandingStatus.setTotalInterest(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalInterest());
+                outstandingStatus.setTotalInterestVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalInterestVAT());
+                outstandingStatus.setTotalCharges(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalCharges());
+                outstandingStatus.setTotalChargesVAT(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalChargesVAT());
+                outstandingStatus.setTotalPendingRecoveries(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalPendingRecoveries());
 
 
+                plan.setCurrentPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getCurrentPeriod());
+                plan.setDaysLeftInPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getDaysLeftInPeriod());
+                plan.setNextPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getNextPeriod());
 
 
 //            loans.setPlanList(planList);
@@ -200,40 +212,42 @@ public class LoansResponse extends Response implements Serializable {
 //            loans.setLoanList(loanList);
 //            loansPerState.setLoansList(loansList);
 
-            planList.add(plan);
-            outstandingStatusList.add(outstandingStatus);
-            repaymentList.add(repayment);
-            reportList.add(report);
-            loanOffersList.add(loanOffers);
-            loanList.add(loan);
-            loansList.add(loans);
-            loansPerStateList.add(loansPerState);
+                planList.add(plan);
+                outstandingStatusList.add(outstandingStatus);
+                repaymentList.add(repayment);
+                reportList.add(report);
+                loanOffersList.add(loanOffers);
+                loanList.add(loan);
+                loansList.add(loans);
+                loansPerStateList.add(loansPerState);
 
-            collectionOfList.put("LoansPerState", loansPerStateList);
-            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+                collectionOfList.put("LoansPerState", loansPerStateList);
+                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
-            collectionOfList.put("Loans", loansList);
-            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+                collectionOfList.put("Loans", loansList);
+                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
-            collectionOfList.put("Loan", loanList);
-            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+                collectionOfList.put("Loan", loanList);
+                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
-            collectionOfList.put("LoanOffers", loanOffersList);
-            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+                collectionOfList.put("LoanOffers", loanOffersList);
+                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
-            collectionOfList.put("Report", reportList);
-            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+                collectionOfList.put("Report", reportList);
+                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
-            collectionOfList.put("Repayment", repaymentList);
-            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+                collectionOfList.put("Repayment", repaymentList);
+                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
-            collectionOfList.put("Outstanding", outstandingStatusList);
-            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+                collectionOfList.put("Outstanding", outstandingStatusList);
+                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
-            collectionOfList.put("Plan", planList);
-            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+                collectionOfList.put("Plan", planList);
+                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
+            }
         }
+
 
         return i8SBSwitchControllerResponseVO;
     }
@@ -244,7 +258,7 @@ public class LoansResponse extends Response implements Serializable {
         "loan",
         "report"
 })
-class Loan implements Serializable{
+class Loan implements Serializable {
 
     @JsonProperty("loan")
     private Loan__1 loan;
@@ -285,7 +299,7 @@ class Loan implements Serializable{
         "loanPlanName",
         "loanProductGroup"
 })
-class LoanOffer implements Serializable{
+class LoanOffer implements Serializable {
 
     @JsonProperty("advanceOfferId")
     private String advanceOfferId;
@@ -491,7 +505,7 @@ class Loan__1 implements Serializable {
         "loans"
 })
 @Generated("jsonschema2pojo")
-class LoansPerState implements Serializable{
+class LoansPerState implements Serializable {
 
     @JsonProperty("loanState")
     private String loanState;
@@ -533,7 +547,7 @@ class LoansPerState implements Serializable{
         "totalPendingRecoveries"
 })
 @Generated("jsonschema2pojo")
-class Outstanding implements Serializable{
+class Outstanding implements Serializable {
 
     @JsonProperty("currencyCode")
     private String currencyCode;
@@ -653,7 +667,7 @@ class Outstanding implements Serializable{
         "nextPeriod"
 })
 @Generated("jsonschema2pojo")
-class Plan implements Serializable{
+class Plan implements Serializable {
 
     @JsonProperty("currentPeriod")
     private String currentPeriod;
@@ -814,7 +828,7 @@ class Repayment implements Serializable {
         "plan"
 })
 @Generated("jsonschema2pojo")
-class Report implements Serializable{
+class Report implements Serializable {
 
     @JsonProperty("repayment")
     private Repayment repayment;

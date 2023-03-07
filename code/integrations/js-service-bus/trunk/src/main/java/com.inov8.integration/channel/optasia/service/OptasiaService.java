@@ -52,6 +52,8 @@ public class OptasiaService {
     private String optasiaTransactions = PropertyReader.getProperty("optasia.transactions");
     private String optasiaStatus = PropertyReader.getProperty("optasia.status");
     private String optasiaPayment = PropertyReader.getProperty("optasia.payment");
+    private String usernmae = PropertyReader.getProperty("optasia.username");
+    private String password = PropertyReader.getProperty("optasia.password");
 
     public OfferListForCommodityResponse sendOfferListForCommodityResponse(OfferListForCommodityRequest offerListForCommodityRequest) {
 
@@ -60,7 +62,7 @@ public class OptasiaService {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             OptasiaMock optasiaMock = new OptasiaMock();
             String response = optasiaMock.offerListForCommodity();
@@ -70,32 +72,31 @@ public class OptasiaService {
         } else {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("Username", usernmae);
+            headers.add("Password", password);
 
-            if (optasiaOfferListForCommodity != null && optasiaOfferListForCommodity.contains("{0}")) {
-                optasiaOfferListForCommodity = optasiaOfferListForCommodity.
-                        replace("{0}", offerListForCommodityRequest.getIdentityType())
-                        .replace("{1}", offerListForCommodityRequest.getIdentityValue())
-                        .replace("{2}", offerListForCommodityRequest.getOrigSource())
-                        .replace("{3}", offerListForCommodityRequest.getCommodityType());
-            }
+//            if (optasiaOfferListForCommodity != null && optasiaOfferListForCommodity.contains("{0}")) {
+//                optasiaOfferListForCommodity = optasiaOfferListForCommodity.
+//                        replace("{0}", offerListForCommodityRequest.getIdentityType())
+//                        .replace("{1}", offerListForCommodityRequest.getIdentityValue())
+//                        .replace("{2}", offerListForCommodityRequest.getOrigSource())
+//                        .replace("{3}", offerListForCommodityRequest.getCommodityType());
+//            }
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromHttpUrl(optasiaOfferListForCommodity)
                     .queryParam("identityType", offerListForCommodityRequest.getIdentityType())
                     .queryParam("identityValue", offerListForCommodityRequest.getIdentityValue())
                     .queryParam("origSource", offerListForCommodityRequest.getOrigSource())
-                    .queryParam("commodityType", offerListForCommodityRequest.getCommodityType())
-                    .queryParam("sourceRequestId", offerListForCommodityRequest.getSourceRequestId())
-                    .queryParam("offerName", offerListForCommodityRequest.getOfferName())
-                    .queryParam("amount", offerListForCommodityRequest.getAmount());
+                    .queryParam("commodityType", offerListForCommodityRequest.getCommodityType());
+//                    .queryParam("sourceRequestId", offerListForCommodityRequest.getSourceRequestId())
+//                    .queryParam("offerName", offerListForCommodityRequest.getOfferName())
+//                    .queryParam("amount", offerListForCommodityRequest.getAmount());
 
-            String response;
-//            try {
-            logger.info("Request", uri);
-            String tem = uri.toUriString();
-            String url = tem.replaceAll("%20", "");
+            String url = uri.toUriString();
+            logger.info("Requesting URL ", url);
             HttpEntity httpEntity = new HttpEntity(headers);
-            HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Sending Offer List For Commodity Request Sent to Client " + httpEntity.getBody().toString());
+            HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Response received from client " + res.getBody());
             offerListForCommodityResponse = (OfferListForCommodityResponse) JSONUtil.jsonToObject(res.getBody(), OfferListForCommodityResponse.class);
         }
@@ -112,7 +113,7 @@ public class OptasiaService {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             OptasiaMock optasiaMock = new OptasiaMock();
             String response = optasiaMock.loanOffer();
@@ -120,13 +121,18 @@ public class OptasiaService {
             logger.info("Response of Loan Offer Request : " + response);
             logger.info("Response Code for Loan Offer Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("Username", usernmae);
+            headers.add("Password", password);
+//            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
+
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaLoanOffer)
                     .queryParam("identityType", loanOfferRequest.getIdentityType())
                     .queryParam("identityValue", loanOfferRequest.getIdentityValue())
                     .queryParam("origSource", loanOfferRequest.getOrigSource());
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-//            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
+
             String requestJSON = JSONUtil.getJSON(loanOfferRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
             Iterator res = this.restTemplate.getMessageConverters().iterator();
@@ -139,14 +145,16 @@ public class OptasiaService {
             }
             String response;
             try {
+                logger.info("Requesting URL ", uri.toUriString());
                 logger.info("Sending Loan Offer Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
+                logger.info("Response received from client " + res1.getBody());
                 if (res1.getStatusCode().toString().equals("200")) {
                     response = res1.getBody();
-                    loanOfferResponse = (LoanOfferResponse) JSONUtil.jsonToObject(response, LoanOfferResponse.class);
                     loanOfferResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
                     loanOfferResponse.setResponseDescription("Success");
+                    loanOfferResponse = (LoanOfferResponse) JSONUtil.jsonToObject(response, LoanOfferResponse.class);
                 }
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
@@ -154,16 +162,20 @@ public class OptasiaService {
                     String result;
                     if (response.equals("400")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        loanOfferResponse = (LoanOfferResponse) JSONUtil.jsonToObject(result, LoanOfferResponse.class);
                         loanOfferResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        loanOfferResponse = (LoanOfferResponse) JSONUtil.jsonToObject(result, LoanOfferResponse.class);
                     } else if (response.equals("422")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        loanOfferResponse = (LoanOfferResponse) JSONUtil.jsonToObject(result, LoanOfferResponse.class);
                         loanOfferResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        loanOfferResponse = (LoanOfferResponse) JSONUtil.jsonToObject(result, LoanOfferResponse.class);
                     } else if (response.equals("500")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        loanOfferResponse = (LoanOfferResponse) JSONUtil.jsonToObject(result, LoanOfferResponse.class);
                         loanOfferResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        loanOfferResponse = (LoanOfferResponse) JSONUtil.jsonToObject(result, LoanOfferResponse.class);
+                    } else {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        loanOfferResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        loanOfferResponse = (LoanOfferResponse) JSONUtil.jsonToObject(result, LoanOfferResponse.class);
                     }
                 }
             }
@@ -182,7 +194,7 @@ public class OptasiaService {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             OptasiaMock optasiaMock = new OptasiaMock();
             String response = optasiaMock.callBack();
@@ -190,10 +202,18 @@ public class OptasiaService {
             logger.info("Response of Call Back Request : " + response);
             logger.info("Response Code for Call Back Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
-            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaCallback);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("Username", usernmae);
+            headers.add("Password", password);
 //            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
+            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaCallback)
+                    .queryParam("loanEvent", callBackRequest.getLoanEvent())
+                    .queryParam("loanEventStatus", callBackRequest.getLoanEventStatus())
+                    .queryParam("origSource", callBackRequest.getOrigSource())
+                    .queryParam("sourceRequestId", callBackRequest.getSourceRequestId());
+
+
             String requestJSON = JSONUtil.getJSON(callBackRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
             Iterator res = this.restTemplate.getMessageConverters().iterator();
@@ -206,6 +226,7 @@ public class OptasiaService {
             }
             String response;
             try {
+                logger.info("Requesting URL ", uri.toUriString());
                 logger.info("Sending Call Back Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
@@ -231,6 +252,10 @@ public class OptasiaService {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
                         callBackResponse = (CallBackResponse) JSONUtil.jsonToObject(result, CallBackResponse.class);
                         callBackResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    } else {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        callBackResponse = (CallBackResponse) JSONUtil.jsonToObject(result, CallBackResponse.class);
+                        callBackResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     }
                 }
             }
@@ -249,24 +274,25 @@ public class OptasiaService {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             OptasiaMock optasiaMock = new OptasiaMock();
             String response = optasiaMock.loans();
             loansResponse = (LoansResponse) JSONUtil.jsonToObject(response, LoansResponse.class);
-            logger.info("Response Code of Call Back Request : " + response);
-            logger.info("Response Code for Call Back Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
+            logger.info("Response Code of Loans Request : " + response);
+            logger.info("Response Code for Loans Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-
-            if (optasiaLoans != null && optasiaLoans.contains("{0}")) {
-                optasiaLoans = optasiaLoans.
-                        replace("{0}", loansRequest.getIdentityType())
-                        .replace("{2}", loansRequest.getOrigSource())
-                        .replace("{1}", loansRequest.getIdentityValue());
-            }
+            headers.add("Username", usernmae);
+            headers.add("Password", password);
+//            if (optasiaLoans != null && optasiaLoans.contains("{0}")) {
+//                optasiaLoans = optasiaLoans.
+//                        replace("{0}", loansRequest.getIdentityType())
+//                        .replace("{2}", loansRequest.getOrigSource())
+//                        .replace("{1}", loansRequest.getIdentityValue());
+//            }
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromHttpUrl(optasiaOfferListForCommodity)
                     .queryParam("identityType", loansRequest.getIdentityType())
@@ -275,12 +301,12 @@ public class OptasiaService {
 
             String response;
 //            try {
-            logger.info("Request", uri);
-            String tem = uri.toUriString();
-            String url = tem.replaceAll("%20", "");
+            String url = uri.toUriString();
+            logger.info("Requesting URL", url);
+//            String url = tem.replaceAll("%20", "");
             HttpEntity httpEntity = new HttpEntity(headers);
-            HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Sending Customer Loans Request Sent to Client " + httpEntity.getBody().toString());
+            HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Response received from client " + res.getBody());
             loansResponse = (LoansResponse) JSONUtil.jsonToObject(res.getBody(), LoansResponse.class);
 //                ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
@@ -302,24 +328,26 @@ public class OptasiaService {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             OptasiaMock optasiaMock = new OptasiaMock();
             String response = optasiaMock.projection();
             initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(response, InitiateLoanResponse.class);
-            logger.info("Response of Initiate Loan Request : " + response);
-            logger.info("Response Code for Initiate Loan Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
+            logger.info("Response of Projection Request : " + response);
+            logger.info("Response Code for Projection Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaInitiateLoan)
                     .queryParam("identityType", initiateLoanRequest.getIdentityType())
-                    .queryParam("identityValue", initiateLoanRequest.getIdentityValue())
                     .queryParam("origSource", initiateLoanRequest.getOrigSource())
+                    .queryParam("identityValue", initiateLoanRequest.getIdentityValue())
                     .queryParam("offerName", initiateLoanRequest.getOfferName())
                     .queryParam("loanAmount", initiateLoanRequest.getLoanAmount())
                     .queryParam("upToPeriod", initiateLoanRequest.getUpToPeriod());
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("Username", usernmae);
+            headers.add("Password", password);
 //            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
             String requestJSON = JSONUtil.getJSON(initiateLoanRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
@@ -333,14 +361,15 @@ public class OptasiaService {
             }
             String response;
             try {
-                logger.info("Sending Initiate Loan Request Sent to Client " + httpEntity.getBody().toString());
+                logger.info("Requesting URL ", uri.toUriString());
+                logger.info("Sending Projection Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
                 if (res1.getStatusCode().toString().equals("200")) {
                     response = res1.getBody();
-                    initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(response, InitiateLoanResponse.class);
                     initiateLoanResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
                     initiateLoanResponse.setResponseDescription("Success");
+                    initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(response, InitiateLoanResponse.class);
                 }
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
@@ -348,16 +377,20 @@ public class OptasiaService {
                     String result;
                     if (response.equals("400")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(result, InitiateLoanResponse.class);
                         initiateLoanResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(result, InitiateLoanResponse.class);
                     } else if (response.equals("422")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(result, InitiateLoanResponse.class);
                         initiateLoanResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(result, InitiateLoanResponse.class);
                     } else if (response.equals("500")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(result, InitiateLoanResponse.class);
                         initiateLoanResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(result, InitiateLoanResponse.class);
+                    } else {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        initiateLoanResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(result, InitiateLoanResponse.class);
                     }
                 }
             }
@@ -377,7 +410,7 @@ public class OptasiaService {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             OptasiaMock optasiaMock = new OptasiaMock();
             String response = optasiaMock.outstanding();
@@ -385,54 +418,30 @@ public class OptasiaService {
             logger.info("Response Code of Outstanding Request : " + response);
             logger.info("Response Code for Loan Offer Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("Username", usernmae);
+            headers.add("Password", password);
+
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaOutstanding)
                     .queryParam("identityType", outstandingRequest.getIdentityType())
                     .queryParam("origSource", outstandingRequest.getOrigSource())
                     .queryParam("identityValue", outstandingRequest.getIdentityValue());
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-//            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
-            String requestJSON = JSONUtil.getJSON(outstandingRequest);
-            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
-            Iterator res = this.restTemplate.getMessageConverters().iterator();
 
-            while (res.hasNext()) {
-                HttpMessageConverter endTime = (HttpMessageConverter) res.next();
-                if (endTime instanceof StringHttpMessageConverter) {
-                    ((StringHttpMessageConverter) endTime).setWriteAcceptCharset(false);
-                }
-            }
-            String response;
-            try {
-                logger.info("Sending Outstanding Request Sent to Client " + httpEntity.getBody().toString());
-                ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
-                logger.info("Response Code received from client " + res1.getStatusCode().toString());
-                logger.info("Response received from client " + res1.getBody());
-                if (res1.getStatusCode().toString().equals("200")) {
-                    response = res1.getBody();
-                    outstandingResponse = (OutstandingResponse) JSONUtil.jsonToObject(response, OutstandingResponse.class);
-                    outstandingResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
-                    outstandingResponse.setResponseDescription("Success");
-                }
-            } catch (RestClientException e) {
-                if (e instanceof HttpStatusCodeException) {
-                    response = ((HttpStatusCodeException) e).getStatusCode().toString();
-                    String result;
-                    if (response.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        outstandingResponse = (OutstandingResponse) JSONUtil.jsonToObject(result, InitiateLoanResponse.class);
-                        outstandingResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                    } else if (response.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        outstandingResponse = (OutstandingResponse) JSONUtil.jsonToObject(result, InitiateLoanResponse.class);
-                        outstandingResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                    } else if (response.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        outstandingResponse = (OutstandingResponse) JSONUtil.jsonToObject(result, InitiateLoanResponse.class);
-                        outstandingResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                    }
-                }
-            }
+////            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
+//            String requestJSON = JSONUtil.getJSON(outstandingRequest);
+//            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+//            Iterator res = this.restTemplate.getMessageConverters().iterator();
+
+            String url = uri.toUriString();
+            logger.info("Requesting URL ", url);
+            HttpEntity httpEntity = new HttpEntity(headers);
+            logger.info("Sending Outstanding Request Sent to Client " + httpEntity.getBody().toString());
+            HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
+            logger.info("Response received from client " + res.getBody());
+            outstandingResponse = (OutstandingResponse) JSONUtil.jsonToObject(res.getBody(), OutstandingResponse.class);
+
         }
 
         long endTime = (new Date()).getTime();
@@ -449,7 +458,7 @@ public class OptasiaService {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             OptasiaMock optasiaMock = new OptasiaMock();
             String response = optasiaMock.outstanding();
@@ -457,50 +466,30 @@ public class OptasiaService {
             logger.info("Response Code of Transaction Status Request : " + response);
             logger.info("Response Code for Loan Offer Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
-            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaTransactions);
+
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-//            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
-            String requestJSON = JSONUtil.getJSON(transactionStatusRequest);
-            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
-            Iterator res = this.restTemplate.getMessageConverters().iterator();
+            headers.add("Username", usernmae);
+            headers.add("Password", password);
 
-            while (res.hasNext()) {
-                HttpMessageConverter endTime = (HttpMessageConverter) res.next();
-                if (endTime instanceof StringHttpMessageConverter) {
-                    ((StringHttpMessageConverter) endTime).setWriteAcceptCharset(false);
-                }
-            }
-            String response;
-            try {
-                logger.info("Sending Transaction Status Request Sent to Client " + httpEntity.getBody().toString());
-                ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
-                logger.info("Response Code received from client " + res1.getStatusCode().toString());
-                if (res1.getStatusCode().toString().equals("200")) {
-                    response = res1.getBody();
-                    transactionStatusResponse = (TransactionStatusResponse) JSONUtil.jsonToObject(response, TransactionStatusResponse.class);
-                    transactionStatusResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
-                    transactionStatusResponse.setResponseDescription("Success");
-                }
-            } catch (RestClientException e) {
-                if (e instanceof HttpStatusCodeException) {
-                    response = ((HttpStatusCodeException) e).getStatusCode().toString();
-                    String result;
-                    if (response.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        transactionStatusResponse = (TransactionStatusResponse) JSONUtil.jsonToObject(result, TransactionStatusResponse.class);
-                        transactionStatusResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                    } else if (response.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        transactionStatusResponse = (TransactionStatusResponse) JSONUtil.jsonToObject(result, TransactionStatusResponse.class);
-                        transactionStatusResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                    } else if (response.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        transactionStatusResponse = (TransactionStatusResponse) JSONUtil.jsonToObject(result, TransactionStatusResponse.class);
-                        transactionStatusResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                    }
-                }
-            }
+            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaOutstanding)
+                    .queryParam("identityType", transactionStatusRequest.getIdentityType())
+                    .queryParam("origSource", transactionStatusRequest.getOrigSource())
+                    .queryParam("identityValue", transactionStatusRequest.getIdentityValue())
+                    .queryParam("filterCommodityType", transactionStatusRequest.getFilterCommodityType());
+
+////            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
+//            String requestJSON = JSONUtil.getJSON(outstandingRequest);
+//            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+//            Iterator res = this.restTemplate.getMessageConverters().iterator();
+
+            String url = uri.toUriString();
+            logger.info("Requesting URL ", url);
+            HttpEntity httpEntity = new HttpEntity(headers);
+            logger.info("Sending Transaction Status Request Sent to Client " + httpEntity.getBody().toString());
+            HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
+            logger.info("Response received from client " + res.getBody());
+            transactionStatusResponse = (TransactionStatusResponse) JSONUtil.jsonToObject(res.getBody(), TransactionStatusResponse.class);
         }
 
         long endTime = (new Date()).getTime();
@@ -517,7 +506,7 @@ public class OptasiaService {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             OptasiaMock optasiaMock = new OptasiaMock();
             String response = optasiaMock.status();
@@ -525,51 +514,28 @@ public class OptasiaService {
             logger.info("Response Code of Loans Status Request : " + response);
             logger.info("Response Code for Loan Status Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
-            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaOutstanding);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-//            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
-            String requestJSON = JSONUtil.getJSON(loanStatusRequest);
-            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
-            Iterator res = this.restTemplate.getMessageConverters().iterator();
+            headers.add("Username", usernmae);
+            headers.add("Password", password);
 
-            while (res.hasNext()) {
-                HttpMessageConverter endTime = (HttpMessageConverter) res.next();
-                if (endTime instanceof StringHttpMessageConverter) {
-                    ((StringHttpMessageConverter) endTime).setWriteAcceptCharset(false);
-                }
-            }
-            String response;
-            try {
-                logger.info("Sending Loan Status Request Sent to Client " + httpEntity.getBody().toString());
-                ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
-                logger.info("Response Code received from client " + res1.getStatusCode().toString());
-                logger.info("Response received from client " + res1.getBody());
-                if (res1.getStatusCode().toString().equals("200")) {
-                    response =  res1.getBody();
-                    loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(response, LoanStatusResponse.class);
-                    loanStatusResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
-                    loanStatusResponse.setResponseDescription("Success");
-                }
-            } catch (RestClientException e) {
-                if (e instanceof HttpStatusCodeException) {
-                    response = ((HttpStatusCodeException) e).getStatusCode().toString();
-                    String result;
-                    if (response.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(result, LoanStatusResponse.class);
-                        loanStatusResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                    } else if (response.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(result, LoanStatusResponse.class);
-                        loanStatusResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                    } else if (response.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(result, LoanStatusResponse.class);
-                        loanStatusResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                    }
-                }
-            }
+            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaOutstanding)
+                    .queryParam("identityType", loanStatusRequest.getIdentityType())
+                    .queryParam("origSource", loanStatusRequest.getOrigSource())
+                    .queryParam("identityValue", loanStatusRequest.getIdentityValue());
+
+////            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
+//            String requestJSON = JSONUtil.getJSON(outstandingRequest);
+//            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+//            Iterator res = this.restTemplate.getMessageConverters().iterator();
+
+            String url = uri.toUriString();
+            logger.info("Requesting URL ", url);
+            HttpEntity httpEntity = new HttpEntity(headers);
+            logger.info("Sending Loan Status Request Sent to Client " + httpEntity.getBody().toString());
+            HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
+            logger.info("Response received from client " + res.getBody());
+            loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(res.getBody(), LoanStatusResponse.class);
         }
 
         long endTime = (new Date()).getTime();
@@ -586,7 +552,7 @@ public class OptasiaService {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             OptasiaMock optasiaMock = new OptasiaMock();
             String response = optasiaMock.payment();
@@ -594,12 +560,17 @@ public class OptasiaService {
             logger.info("Response Code of Loan Payment Request : " + response);
             logger.info("Response Code for Loan Payment Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("Username", usernmae);
+            headers.add("Password", password);
+
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaPayment)
                     .queryParam("identityType", loanPaymentRequest.getIdentityType())
                     .queryParam("origSource", loanPaymentRequest.getOrigSource())
                     .queryParam("identityValue", loanPaymentRequest.getIdentityValue());
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+
 //            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
             String requestJSON = JSONUtil.getJSON(loanPaymentRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
@@ -613,15 +584,16 @@ public class OptasiaService {
             }
             String response;
             try {
+                logger.info("Requesting URL ", uri.toUriString());
                 logger.info("Sending Loan Payment Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
                 logger.info("Response received from client " + res1.getBody());
                 if (res1.getStatusCode().toString().equals("200")) {
                     response = res1.getBody();
-                    loanPaymentResponse = (LoanPaymentResponse) JSONUtil.jsonToObject(response, LoanPaymentResponse.class);
                     loanPaymentResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
                     loanPaymentResponse.setResponseDescription("Success");
+                    loanPaymentResponse = (LoanPaymentResponse) JSONUtil.jsonToObject(response, LoanPaymentResponse.class);
                 }
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
@@ -629,16 +601,20 @@ public class OptasiaService {
                     String result;
                     if (response.equals("400")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        loanPaymentResponse = (LoanPaymentResponse) JSONUtil.jsonToObject(result, LoanPaymentResponse.class);
                         loanPaymentResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        loanPaymentResponse = (LoanPaymentResponse) JSONUtil.jsonToObject(result, LoanPaymentResponse.class);
                     } else if (response.equals("422")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        loanPaymentResponse = (LoanPaymentResponse) JSONUtil.jsonToObject(result, LoanPaymentResponse.class);
                         loanPaymentResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        loanPaymentResponse = (LoanPaymentResponse) JSONUtil.jsonToObject(result, LoanPaymentResponse.class);
                     } else if (response.equals("500")) {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        loanPaymentResponse = (LoanPaymentResponse) JSONUtil.jsonToObject(result, LoanPaymentResponse.class);
                         loanPaymentResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        loanPaymentResponse = (LoanPaymentResponse) JSONUtil.jsonToObject(result, LoanPaymentResponse.class);
+                    } else {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        loanPaymentResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        loanPaymentResponse = (LoanPaymentResponse) JSONUtil.jsonToObject(result, LoanPaymentResponse.class);
                     }
                 }
             }

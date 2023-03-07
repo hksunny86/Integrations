@@ -90,7 +90,7 @@ public class AuthenticateUpdatedResponse extends Response {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
         I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
 
-        if (this.getStatusCode().equalsIgnoreCase("111")) {
+        if (this.getStatusCode().equals("111")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getStatusCode());

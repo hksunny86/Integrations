@@ -13,9 +13,7 @@ import java.io.Serializable;
         "ResponseDateTime",
         "HashData",
 })
-public class LoanCallBackResponse implements Serializable {
-
-    private final static long serialVersionUID = 1L;
+public class OptasiaSmsGenerationResponse implements Serializable {
 
     @JsonProperty( "Rrn")
     private String rrn;

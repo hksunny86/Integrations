@@ -31,7 +31,7 @@ public class CustomAnalyticsRequest extends Request {
 
         this.getReportDataObj().setCnic(i8SBSwitchControllerRequestVO.getCNIC());
         this.getReportDataObj().setFullName(i8SBSwitchControllerRequestVO.getFullName());
-        this.getReportDataObj().setDateOfBirth(i8SBSwitchControllerRequestVO.getDateOfBirth());
+        this.getReportDataObj().setDateOfBirth(i8SBSwitchControllerRequestVO.getDob());
         this.getReportDataObj().setCity(i8SBSwitchControllerRequestVO.getCity());
         this.getReportDataObj().setLoanAmount(i8SBSwitchControllerRequestVO.getAmount());
         this.getReportDataObj().setGender(i8SBSwitchControllerRequestVO.getGenderCode());

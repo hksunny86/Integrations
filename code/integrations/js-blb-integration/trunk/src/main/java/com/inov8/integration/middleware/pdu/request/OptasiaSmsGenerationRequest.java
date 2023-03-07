@@ -1,5 +1,6 @@
 package com.inov8.integration.middleware.pdu.request;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,16 +22,12 @@ import java.io.Serializable;
         "Rrn",
         "ChannelId",
         "TerminalId",
-        "LoanEvent",
-        "LoanEventStatus",
-        "OrigSource",
-        "InternalLoanId",
-        "ThirdPartyTransactionId",
+        "Message",
         "Reserved1",
         "Reserved2",
         "HashData",
 })
-public class LoanCallBackRequest implements Serializable {
+public class OptasiaSmsGenerationRequest implements Serializable {
 
     private final static long serialVersionUID = 1L;
 
@@ -48,16 +45,8 @@ public class LoanCallBackRequest implements Serializable {
     private String channelId;
     @JsonProperty("TerminalId")
     private String terminalId;
-    @JsonProperty("LoanEvent")
-    private String loanEvent;
-    @JsonProperty("LoanEventStatus")
-    private String loanEventStatus;
-    @JsonProperty("OrigSource")
-    private String origSource;
-    @JsonProperty("InternalLoanId")
-    private String internalLoanId;
-    @JsonProperty("ThirdPartyTransactionId")
-    private String thirdPartyTransactionId;
+    @JsonProperty("Message")
+    private String message;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -121,44 +110,12 @@ public class LoanCallBackRequest implements Serializable {
         this.terminalId = terminalId;
     }
 
-    public String getLoanEvent() {
-        return loanEvent;
+    public String getMessage() {
+        return message;
     }
 
-    public void setLoanEvent(String loanEvent) {
-        this.loanEvent = loanEvent;
-    }
-
-    public String getLoanEventStatus() {
-        return loanEventStatus;
-    }
-
-    public void setLoanEventStatus(String loanEventStatus) {
-        this.loanEventStatus = loanEventStatus;
-    }
-
-    public String getOrigSource() {
-        return origSource;
-    }
-
-    public void setOrigSource(String origSource) {
-        this.origSource = origSource;
-    }
-
-    public String getInternalLoanId() {
-        return internalLoanId;
-    }
-
-    public void setInternalLoanId(String internalLoanId) {
-        this.internalLoanId = internalLoanId;
-    }
-
-    public String getThirdPartyTransactionId() {
-        return thirdPartyTransactionId;
-    }
-
-    public void setThirdPartyTransactionId(String thirdPartyTransactionId) {
-        this.thirdPartyTransactionId = thirdPartyTransactionId;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getReserved1() {

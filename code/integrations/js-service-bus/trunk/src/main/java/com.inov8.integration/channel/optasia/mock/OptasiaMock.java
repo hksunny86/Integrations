@@ -312,6 +312,134 @@ public class OptasiaMock {
                 "                    \"totalChargesVAT\": 133.25\n" +
                 "                }\n" +
                 "            ]\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"periodIndex\": 2,\n" +
+                "            \"periodType\": \"ROLLOVER\",\n" +
+                "            \"periodStartTimemp\": \"2021-07-29T00:01:00.000+03:00\",\n" +
+                "            \"periodEndTimestamp\": \"2021-09-02T23:59:59.999+03:00\",\n" +
+                "            \"periodStartDayOfLoanIndex\": 29,\n" +
+                "            \"periodEndDayOfLoanIndex\": 64,\n" +
+                "            \"principal\": 10000,\n" +
+                "            \"totalExpenses\": 5339.25,\n" +
+                "            \"totalGross\": 15339.25,\n" +
+                "            \"totalInterest\": 2800,\n" +
+                "            \"totalInterestVAT\": 364,\n" +
+                "            \"totalCharges\": 1925,\n" +
+                "            \"totalChargesVAT\": 250.25,\n" +
+                "            \"totalOneOffCharges\": [\n" +
+                "                {\n" +
+                "                    \"chargeName\": \"initiation_fee\",\n" +
+                "                    \"chargeAmount\": 1025,\n" +
+                "                    \"chargeVAT\": 133.25\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"chargeName\": \"overdue_fee\",\n" +
+                "                    \"chargeAmount\": 900,\n" +
+                "                    \"chargeVAT\": 117\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"milestones\": [\n" +
+                "                {\n" +
+                "                    \"dayOfLoan\": 36,\n" +
+                "                    \"date\": \"2021-08-06T00:01:00.000+03:00\",\n" +
+                "                    \"interestAdjustment\": {\n" +
+                "                        \"gross\": 395.5,\n" +
+                "                        \"net\": 350,\n" +
+                "                        \"vat\": 45.5\n" +
+                "                    },\n" +
+                "                    \"chargeAdjustments\": [\n" +
+                "                        {\n" +
+                "                            \"name\": \"overdue_fee\",\n" +
+                "                            \"gross\": 1017,\n" +
+                "                            \"net\": 900,\n" +
+                "                            \"vat\": 117\n" +
+                "                        }\n" +
+                "                    ],\n" +
+                "                    \"principal\": 10000,\n" +
+                "                    \"totalExpenses\": 4152.25,\n" +
+                "                    \"totalGross\": 14152.25,\n" +
+                "                    \"totalInterest\": 1750,\n" +
+                "                    \"totalInterestVAT\": 227.5,\n" +
+                "                    \"totalCharges\": 1925,\n" +
+                "                    \"totalChargesVAT\": 250.25\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"dayOfLoan\": 43,\n" +
+                "                    \"date\": \"2021-08-14T00:01:00.000+03:00\",\n" +
+                "                    \"interestAdjustment\": {\n" +
+                "                        \"gross\": 395.5,\n" +
+                "                        \"net\": 350,\n" +
+                "                        \"vat\": 45.5\n" +
+                "                    },\n" +
+                "                    \"principal\": 10000,\n" +
+                "                    \"totalExpenses\": 4548.25,\n" +
+                "                    \"totalGross\": 14548.25,\n" +
+                "                    \"totalInterest\": 2100,\n" +
+                "                    \"totalInterestVAT\": 273,\n" +
+                "                    \"totalCharges\": 1925,\n" +
+                "                    \"totalChargesVAT\": 250.25\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"dayOfLoan\": 50,\n" +
+                "                    \"date\": \"2021-08-21T00:01:00.000+03:00\",\n" +
+                "                    \"interestAdjustment\": {\n" +
+                "                        \"gross\": 395.5,\n" +
+                "                        \"net\": 350,\n" +
+                "                        \"vat\": 45.5\n" +
+                "                    },\n" +
+                "                    \"principal\": 10000,\n" +
+                "                    \"totalExpenses\": 4943.25,\n" +
+                "                    \"totalGross\": 14943.25,\n" +
+                "                    \"totalInterest\": 2450,\n" +
+                "                    \"totalInterestVAT\": 318.5,\n" +
+                "                    \"totalCharges\": 1925,\n" +
+                "                    \"totalChargesVAT\": 250.25\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"dayOfLoan\": 57,\n" +
+                "                    \"date\": \"2021-08-28T00:01:00.000+03:00\",\n" +
+                "                    \"interestAdjustment\": {\n" +
+                "                        \"gross\": 395.5,\n" +
+                "                        \"net\": 350,\n" +
+                "                        \"vat\": 45.5\n" +
+                "                    },\n" +
+                "                    \"principal\": 10000,\n" +
+                "                    \"totalExpenses\": 5339.25,\n" +
+                "                    \"totalGross\": 15339.25,\n" +
+                "                    \"totalInterest\": 2800,\n" +
+                "                    \"totalInterestVAT\": 364,\n" +
+                "                    \"totalCharges\": 1925,\n" +
+                "                    \"totalChargesVAT\": 250.25\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"periodIndex\": 3,\n" +
+                "            \"periodType\": \"COLLECTION\",\n" +
+                "            \"periodStartTimemp\": \"2021-09-03T00:00:00.000+03:00\",\n" +
+                "            \"periodEndTimestamp\": \"2031-09-01T23:59:59.999+03:00\",\n" +
+                "            \"periodStartDayOfLoanIndex\": 65,\n" +
+                "            \"periodEndDayOfLoanIndex\": 3714,\n" +
+                "            \"principal\": 10000,\n" +
+                "            \"totalExpenses\": 5339.25,\n" +
+                "            \"totalGross\": 15339.25,\n" +
+                "            \"totalInterest\": 2800,\n" +
+                "            \"totalInterestVAT\": 364,\n" +
+                "            \"totalCharges\": 1925,\n" +
+                "            \"totalChargesVAT\": 250.25,\n" +
+                "            \"totalOneOffCharges\": [\n" +
+                "                {\n" +
+                "                    \"chargeName\": \"initiation_fee\",\n" +
+                "                    \"chargeAmount\": 1025,\n" +
+                "                    \"chargeVAT\": 133.25\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"chargeName\": \"overdue_fee\",\n" +
+                "                    \"chargeAmount\": 900,\n" +
+                "                    \"chargeVAT\": 117\n" +
+                "                }\n" +
+                "            ]\n" +
                 "        }\n" +
                 "    ]\n" +
                 "}";

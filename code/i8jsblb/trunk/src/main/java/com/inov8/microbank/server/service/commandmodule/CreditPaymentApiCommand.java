@@ -217,6 +217,7 @@ public class CreditPaymentApiCommand extends BaseCommand {
                 successMessage = workFlowWrapper.getSuccessMessage().getSmsMessageText();
 
                 commonCommandManager.sendSMS(workFlowWrapper);
+                commonCommandManager.novaAlertMessage(workFlowWrapper);
 
             } else {
                 logger.error("[CreditPaymentApiCommand.prepare] Throwing Exception for Product ID: " + productId + " Logged In AppUserID:" + appUserModel.getAppUserId() + " Customer Mobile No:" + customerMobileNo + " Trx Amount: " + txAmount + " Commission: " + commissionAmount);

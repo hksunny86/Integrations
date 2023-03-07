@@ -254,6 +254,8 @@ private String channelId;
                 balance = workFlowWrapper.getOLASwitchWrapper().getOlavo().getFromBalanceAfterTransaction();
 
                 commonCommandManager.sendSMS(workFlowWrapper);
+                commonCommandManager.novaAlertMessage(workFlowWrapper);
+
                 //Remove challan row from billStatus
                 //Data will be delete by CLEAN_BILL_STATUS_JOB
                 /*if(consumerNumber!=null && productCode != null)

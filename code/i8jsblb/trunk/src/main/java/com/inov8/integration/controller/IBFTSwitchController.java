@@ -3,10 +3,7 @@ package com.inov8.integration.controller;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 import com.inov8.framework.common.exception.FrameworkCheckedException;
 import com.inov8.framework.common.model.DateRangeHolderModel;
@@ -19,9 +16,11 @@ import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import com.inov8.integration.webservice.vo.WebServiceVO;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.commissionmodule.CommissionTransactionViewModel;
+import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.model.portal.ola.BbStatementAllViewModel;
 import com.inov8.microbank.common.model.postedrransactionreportmodule.PostedTransactionReportModel;
 import com.inov8.microbank.common.util.*;
+import com.inov8.microbank.common.util.Formatter;
 import com.inov8.microbank.common.vo.transactionreversal.ManualReversalVO;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapper;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapperImpl;
@@ -52,6 +51,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
+import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
@@ -88,6 +90,10 @@ public class IBFTSwitchController implements HostTransactionController {
     private IBFTRetryAdviceDAO ibftRetryAdviceDAO;
     private IBFTStatusHibernateDAO ibftStatusHibernateDAO;
     private ESBAdapter esbAdapter;
+    @Autowired
+    private SmsSender smsSender;
+
+
 
 
     protected final Log logger = LogFactory.getLog(getClass());
@@ -109,7 +115,7 @@ public class IBFTSwitchController implements HostTransactionController {
         ActionLogModel actionLogModel = new ActionLogModel();
 
         String username = "0010787";
-//		String password = "011c945f30ce2cbafc452f39840f025693339c42";
+//		String password = "qOjtTfAzFuEIK6JOfoZa2A==";
         String password = "6tBH5Et3C3b9p7Xzr1YVIQ==";
 
         try {
@@ -146,7 +152,7 @@ public class IBFTSwitchController implements HostTransactionController {
                 }
             }
         } catch (Exception e) {
-            logger.error("[IBFT TitleFetch] Exception occurred while trying to Login default User. Details: ", e);
+            this.logger.error("[IBFT TitleFetch] Exception occurred while trying to Login default User. Details: ", e);
             return processErrorResponseCode(integrationMessageVO, IBFTErrorCodes.GENERAL_ERROR);
         }
 
@@ -452,7 +458,7 @@ public class IBFTSwitchController implements HostTransactionController {
             e.printStackTrace();
         }
 
-        if (customerModel != null && customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0) && (!(customerModel.getSegmentId().equals(Long.parseLong(MessageUtil.getMessage("Minor_segment_id")))))) {
+        if (customerModel != null && customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)) {
             middlewareMessageVO.setResponseCode("07");
             middlewareMessageVO.setResponseDescription("Upgrade Account L0 to L1 to perform Transaction.");
             FonePayUtils.prepareErrorResponseForDebitCard(middlewareMessageVO, "07");
@@ -523,9 +529,7 @@ public class IBFTSwitchController implements HostTransactionController {
                 sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
                 sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
                 sWrapper = esbAdapter.makeI8SBCall(sWrapper);
-                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
                 responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
-
                 if (!responseVO.getResponseCode().equals("I8SB-200"))
                     throw new CommandException(responseVO.getDescription(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, null);
                 ActionLogModel actionLogModel = new ActionLogModel();
@@ -568,7 +572,6 @@ public class IBFTSwitchController implements HostTransactionController {
                         sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
                         sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
                         sWrapper = esbAdapter.makeI8SBCall(sWrapper);
-                        ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
                         responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
                         middlewareMessageVO.setResponseCode(FonePayResponseCodes.STAN_ALREADY_EXISTS.toString());
                         middlewareMessageVO.setResponseDescription(FonePayResponseCodes.STAN_ALREADY_EXISTS_DESCRIPTION);
@@ -656,7 +659,6 @@ public class IBFTSwitchController implements HostTransactionController {
                     sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
                     sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
                     sWrapper = esbAdapter.makeI8SBCall(sWrapper);
-                    ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
                     responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
                     middlewareMessageVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
                     middlewareMessageVO.setResponseDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
@@ -784,7 +786,6 @@ public class IBFTSwitchController implements HostTransactionController {
             sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
             sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
             sWrapper = esbAdapter.makeI8SBCall(sWrapper);
-            ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
             responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
 
             if (e.getErrorCode() == 9023) {
@@ -969,6 +970,7 @@ public class IBFTSwitchController implements HostTransactionController {
             String codeId = middlewareMessageVO.getReserved1();
             Long transactionCodeId = null;
             TransactionCodeModel transactionCodeModel = null;
+            TransactionDetailMasterModel transactionDetailMasterModel = null;
             PostedTransactionReportModel postedTransactionReportModel = null;
             if (codeId != null) {
                 requestType = "Transaction Reversal";
@@ -978,10 +980,10 @@ public class IBFTSwitchController implements HostTransactionController {
             } else if (codeId == null) {
                 if (middlewareMessageVO.getMerchantType().equals("0000"))
                     productId = ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_ON_US;
-				else if(middlewareMessageVO.getMerchantType().equals("0003"))
-					productId = ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_OFF_US;
-				else
-					productId = ProductConstantsInterface.POS_DEBIT_CARD_CASH_WITHDRAWAL;
+                else if (middlewareMessageVO.getMerchantType().equals("0003"))
+                    productId = ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_OFF_US;
+                else
+                    productId = ProductConstantsInterface.POS_DEBIT_CARD_CASH_WITHDRAWAL;
                 requestType = "Debit Card Cash WithDrawl Reversal";
                 ActionLogModel actionLogModel = new ActionLogModel();
 //                actionLogBeforeStart(middlewareMessageVO, actionLogModel, false);
@@ -1019,6 +1021,7 @@ public class IBFTSwitchController implements HostTransactionController {
             if (transactionCodeId != null && !transactionCodeId.equals(""))
                 transactionCodeModel = transactionCodeDAO.findByPrimaryKey(transactionCodeId);
             if (transactionCodeModel != null) {
+                transactionDetailMasterModel = this.getTransactionReversalManager().loadTDMForReversalByTransactionCode(String.valueOf(transactionCodeModel.getCode()));
                 String trxCode = transactionCodeModel.getCode();
                 ManualReversalVO manualReversalVO = new ManualReversalVO();
                 manualReversalVO.setInitiatorAppUserId(UserUtils.getCurrentUser().getAppUserId());
@@ -1038,6 +1041,12 @@ public class IBFTSwitchController implements HostTransactionController {
                         manualReversalVO.setProductId(productId);
                     manualReversalFacade.makeReversal(manualReversalVO);
 //					middlewareMessageVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
+                    String smsText = MessageUtil.getMessage("REVERSAL_CUSTOMER_WITHDRAWAL_DEBIT_CARD", new String[]{
+                            String.valueOf(manualReversalVO.getTransactionAmount()),
+                            transactionDetailMasterModel.getRecipientMobileNo(),
+                            transactionDetailMasterModel.getTransactionCode(),});
+                    SmsMessage smsMessage = new SmsMessage(transactionDetailMasterModel.getRecipientMobileNo(), smsText);
+                    smsSender.send(smsMessage);
                     middlewareMessageVO.setResponseDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
                     if (productId.equals(ProductConstantsInterface.POS_DEBIT_CARD_CASH_WITHDRAWAL)) {
                         I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
@@ -1053,7 +1062,7 @@ public class IBFTSwitchController implements HostTransactionController {
                         requestVO.setRRN(middlewareMessageVO.getOrignalStan());
                         requestVO.setSTAN(middlewareMessageVO.getStan());
                         requestVO.setStatus("R");
-                        requestVO.setTransactionAmount(middlewareMessageVO.getTransactionAmount());
+                        requestVO.setTransactionAmount("1");
                         requestVO.setTransactionType("C");
                         SwitchWrapper sWrapper = new SwitchWrapperImpl();
                         sWrapper = new SwitchWrapperImpl();
@@ -1318,6 +1327,10 @@ public class IBFTSwitchController implements HostTransactionController {
 
     public void setIbftStatusHibernateDAO(IBFTStatusHibernateDAO ibftStatusHibernateDAO) {
         this.ibftStatusHibernateDAO = ibftStatusHibernateDAO;
+    }
+
+    public void setSmsSender(SmsSender smsSender) {
+        this.smsSender = smsSender;
     }
 
     public void setEsbAdapter(ESBAdapter esbAdapter) {

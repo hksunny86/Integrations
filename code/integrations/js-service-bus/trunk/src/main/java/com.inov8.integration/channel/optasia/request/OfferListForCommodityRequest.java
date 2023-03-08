@@ -111,7 +111,7 @@ public class OfferListForCommodityRequest extends Request {
         this.setSourceRequestId(i8SBSwitchControllerRequestVO.getSourceRequestId());
         this.setOfferName(i8SBSwitchControllerRequestVO.getOfferName());
         this.setAmount(i8SBSwitchControllerRequestVO.getAmount());
-//        this.getAdditionalInfo().setFed(i8SBSwitchControllerRequestVO.getFed());
+        this.getAdditionalInfo().setFed(i8SBSwitchControllerRequestVO.getFed());
 
     }
 

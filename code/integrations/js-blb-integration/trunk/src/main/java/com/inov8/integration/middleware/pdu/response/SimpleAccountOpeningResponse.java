@@ -3,9 +3,10 @@ package com.inov8.integration.middleware.pdu.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
+// @Created On 3/3/2023 : Friday
+// @Created By muhammad.aqeel
 @JsonPropertyOrder({
         "Rrn",
         "ResponseCode",
@@ -13,19 +14,19 @@ import java.io.Serializable;
         "ResponseDateTime",
         "HashData",
 })
-public class LoanCallBackResponse implements Serializable {
+public class SimpleAccountOpeningResponse implements Serializable {
 
     private final static long serialVersionUID = 1L;
 
-    @JsonProperty( "Rrn")
+    @JsonProperty("Rrn")
     private String rrn;
-    @JsonProperty( "ResponseCode")
+    @JsonProperty("ResponseCode")
     private String responseCode;
-    @JsonProperty( "ResponseDescription")
+    @JsonProperty("ResponseDescription")
     private String responseDescription;
-    @JsonProperty( "ResponseDateTime")
+    @JsonProperty("ResponseDateTime")
     private String responseDateTime;
-    @JsonProperty( "HashData")
+    @JsonProperty("HashData")
     private String hashData;
 
     public String getRrn() {

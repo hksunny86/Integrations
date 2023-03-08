@@ -116,72 +116,78 @@ public class TransactionStatusResponse extends Response implements Serializable 
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
         i8SBSwitchControllerResponseVO.setReceivedTimestamp(this.getReceivedTimestamp());
-        for (int i = 0; i < events.size(); i++) {
 
-            com.inov8.integration.webservice.optasiaVO.Event event = new com.inov8.integration.webservice.optasiaVO.Event();
+        if (events != null) {
             List<com.inov8.integration.webservice.optasiaVO.Event> eventList = new ArrayList<>();
-
-            com.inov8.integration.webservice.optasiaVO.EventReasonDetails eventReasonDetails = new com.inov8.integration.webservice.optasiaVO.EventReasonDetails();
             List<com.inov8.integration.webservice.optasiaVO.EventReasonDetails> eventReasonDetailsList = new ArrayList<>();
-
-            com.inov8.integration.webservice.optasiaVO.LoanReasonDetails loanReasonDetails = new com.inov8.integration.webservice.optasiaVO.LoanReasonDetails();
             List<com.inov8.integration.webservice.optasiaVO.LoanReasonDetails> loanReasonDetailsList = new ArrayList<>();
-
-            com.inov8.integration.webservice.optasiaVO.MaturityDetails maturityDetails = new com.inov8.integration.webservice.optasiaVO.MaturityDetails();
             List<com.inov8.integration.webservice.optasiaVO.MaturityDetails> maturityDetailsList = new ArrayList<>();
 
-            event.setEventType(events.get(i).getEventType());
-            event.setEventTypeStatus(events.get(i).getEventTypeStatus());
-            event.setEventTransactionId(events.get(i).getEventTransactionId());
-            event.setThirdPartyTransactionId(events.get(i).getThirdPartyTransactionId());
-            event.setEventReason(events.get(i).getEventReason());
-            eventReasonDetails.setShortCode(events.get(i).getEventReasonDetails().getShortCode());
-            event.setPeriod(events.get(i).getPeriod());
-            event.setPeriodIndex(events.get(i).getPeriodIndex());
-            event.setPeriodExpirationTimestamp(events.get(i).getPeriodExpirationTimestamp());
-            event.setPrincipalAdjustment(events.get(i).getPrincipalAdjustment());
-            event.setPrincipalBefore(events.get(i).getPrincipalBefore());
-            event.setPrincipalAfter(events.get(i).getPrincipalAfter());
-            event.setSetupFeesAdjustment(events.get(i).getSetupFeesAdjustment());
-            event.setSetupFeesBefore(events.get(i).getSetupFeesBefore());
-            event.setSetupFeesAfter(events.get(i).getSetupFeesAfter());
-            event.setInterestAdjustment(events.get(i).getInterestAdjustment());
-            event.setInterestAdjustmentVAT(events.get(i).getInterestAdjustmentVAT());
-            event.setInterestBefore(events.get(i).getInterestBefore());
-            event.setInterestAfter(events.get(i).getInterestAfter());
-            event.setTotalChargesAfter(events.get(i).getTotalChargesAfter());
-            event.setTotalChargesAdjustment(events.get(i).getTotalChargesAdjustment());
-            event.setTotalChargesAdjustmentVAT(events.get(i).getTotalChargesAdjustmentVAT());
-            event.setTotalChargesBefore(events.get(i).getTotalChargesBefore());
-            event.setEventTimestamp(events.get(i).getEventTimestamp());
-            event.setReceptionTimestamp(events.get(i).getReceptionTimestamp());
-            event.setProcessingTimestamp(events.get(i).getProcessingTimestamp());
-            event.setSourceRequestId(events.get(i).getSourceRequestId());
-            event.setLoanReason(events.get(i).getLoanReason());
-            loanReasonDetails.setShortCode(events.get(i).getLoanReasonDetails().getShortCode());
-            event.setLoanTimestamp(events.get(i).getLoanTimestamp());
-            event.setInternalLoanId(events.get(i).getInternalLoanId());
-            event.setLoanState(events.get(i).getLoanState());
-            event.setExternalLoanId(events.get(i).getExternalLoanId());
-            event.setOfferName(events.get(i).getOfferName());
-            event.setCommodityType(events.get(i).getCommodityType());
-            event.setCurrencyCode(events.get(i).getCurrencyCode());
-            event.setPrincipalAmount(events.get(i).getPrincipalAmount());
-            event.setSetupFees(events.get(i).getSetupFees());
-            event.setLoanPlanId(events.get(i).getLoanPlanId());
-            event.setLoanPlanName(events.get(i).getLoanPlanName());
-            event.setLoanProductGroup(events.get(i).getLoanProductGroup());
-            maturityDetails.setMaturityDuration(events.get(i).getMaturityDetails().getMaturityDuration());
+            com.inov8.integration.webservice.optasiaVO.Event event;
+            com.inov8.integration.webservice.optasiaVO.EventReasonDetails eventReasonDetails;
+            com.inov8.integration.webservice.optasiaVO.LoanReasonDetails loanReasonDetails;
+            com.inov8.integration.webservice.optasiaVO.MaturityDetails maturityDetails;
+            for (int i = 0; i < events.size(); i++) {
 
-            eventReasonDetailsList.add(eventReasonDetails);
-            loanReasonDetailsList.add(loanReasonDetails);
-            maturityDetailsList.add(maturityDetails);
-            eventList.add(event);
+                event = new com.inov8.integration.webservice.optasiaVO.Event();
+                eventReasonDetails = new com.inov8.integration.webservice.optasiaVO.EventReasonDetails();
+                loanReasonDetails = new com.inov8.integration.webservice.optasiaVO.LoanReasonDetails();
+                maturityDetails = new com.inov8.integration.webservice.optasiaVO.MaturityDetails();
 
-            collectionOfList.put("Events", eventList);
-            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+                event.setEventType(events.get(i).getEventType());
+                event.setEventTypeStatus(events.get(i).getEventTypeStatus());
+                event.setEventTransactionId(events.get(i).getEventTransactionId());
+                event.setThirdPartyTransactionId(events.get(i).getThirdPartyTransactionId());
+                event.setEventReason(events.get(i).getEventReason());
+                eventReasonDetails.setShortCode(events.get(i).getEventReasonDetails().getShortCode());
+                event.setPeriod(events.get(i).getPeriod());
+                event.setPeriodIndex(events.get(i).getPeriodIndex());
+                event.setPeriodExpirationTimestamp(events.get(i).getPeriodExpirationTimestamp());
+                event.setPrincipalAdjustment(events.get(i).getPrincipalAdjustment());
+                event.setPrincipalBefore(events.get(i).getPrincipalBefore());
+                event.setPrincipalAfter(events.get(i).getPrincipalAfter());
+                event.setSetupFeesAdjustment(events.get(i).getSetupFeesAdjustment());
+                event.setSetupFeesBefore(events.get(i).getSetupFeesBefore());
+                event.setSetupFeesAfter(events.get(i).getSetupFeesAfter());
+                event.setInterestAdjustment(events.get(i).getInterestAdjustment());
+                event.setInterestAdjustmentVAT(events.get(i).getInterestAdjustmentVAT());
+                event.setInterestBefore(events.get(i).getInterestBefore());
+                event.setInterestAfter(events.get(i).getInterestAfter());
+                event.setTotalChargesAfter(events.get(i).getTotalChargesAfter());
+                event.setTotalChargesAdjustment(events.get(i).getTotalChargesAdjustment());
+                event.setTotalChargesAdjustmentVAT(events.get(i).getTotalChargesAdjustmentVAT());
+                event.setTotalChargesBefore(events.get(i).getTotalChargesBefore());
+                event.setEventTimestamp(events.get(i).getEventTimestamp());
+                event.setReceptionTimestamp(events.get(i).getReceptionTimestamp());
+                event.setProcessingTimestamp(events.get(i).getProcessingTimestamp());
+                event.setSourceRequestId(events.get(i).getSourceRequestId());
+                event.setLoanReason(events.get(i).getLoanReason());
+                loanReasonDetails.setShortCode(events.get(i).getLoanReasonDetails().getShortCode());
+                event.setLoanTimestamp(events.get(i).getLoanTimestamp());
+                event.setInternalLoanId(events.get(i).getInternalLoanId());
+                event.setLoanState(events.get(i).getLoanState());
+                event.setExternalLoanId(events.get(i).getExternalLoanId());
+                event.setOfferName(events.get(i).getOfferName());
+                event.setCommodityType(events.get(i).getCommodityType());
+                event.setCurrencyCode(events.get(i).getCurrencyCode());
+                event.setPrincipalAmount(events.get(i).getPrincipalAmount());
+                event.setSetupFees(events.get(i).getSetupFees());
+                event.setLoanPlanId(events.get(i).getLoanPlanId());
+                event.setLoanPlanName(events.get(i).getLoanPlanName());
+                event.setLoanProductGroup(events.get(i).getLoanProductGroup());
+                maturityDetails.setMaturityDuration(events.get(i).getMaturityDetails().getMaturityDuration());
 
+                eventReasonDetailsList.add(eventReasonDetails);
+                loanReasonDetailsList.add(loanReasonDetails);
+                maturityDetailsList.add(maturityDetails);
+                eventList.add(event);
+
+                collectionOfList.put("Events", eventList);
+                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+            }
         }
+
 
         return i8SBSwitchControllerResponseVO;
     }

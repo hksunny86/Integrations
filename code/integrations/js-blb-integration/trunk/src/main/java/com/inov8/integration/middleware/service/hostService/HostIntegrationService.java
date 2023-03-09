@@ -14755,8 +14755,9 @@ public class HostIntegrationService {
                 response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
                 response.setResponseDescription(creditInquiryResponse.getResponseDescription());
                 response.setResponseDateTime(creditInquiryResponse.getResponseDateTime());
+                response.setTransactionId(messageVO.getTransactionId());
                 response.setComissionAmount(creditInquiryResponse.getComissionAmount());
-                response.setInclusiveExclusiveComissionAmount(creditInquiryResponse.getInclusiveExclusiveComissionAmount());
+                response.setAmount(messageVO.getTransactionAmount());
                 response.setTotalAmount(creditInquiryResponse.getTotalAmount());
                 logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -15094,6 +15095,7 @@ public class HostIntegrationService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setProductID(request.getProductId());
+        messageVO.setMobilePin(request.getPin());
         messageVO.setPinType(request.getPinType());
         messageVO.setTransactionAmount(request.getTransactionAmount());
         messageVO.setReserved1(request.getReserved1());
@@ -15185,7 +15187,9 @@ public class HostIntegrationService {
                 response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
                 response.setResponseDescription(debitInquiryResponse.getResponseDescription());
                 response.setResponseDateTime(debitInquiryResponse.getResponseDateTime());
+                response.setTransactionId(messageVO.getTransactionId());
                 response.setComissionAmount(debitInquiryResponse.getComissionAmount());
+                response.setAmount(messageVO.getTransactionAmount());
                 response.setTotalAmount(debitInquiryResponse.getTotalAmount());
                 logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -15532,20 +15536,9 @@ public class HostIntegrationService {
         messageVO.setCustomerPassword(request.getPassword());
         messageVO.setShaCnic(request.getCustomerId());
         messageVO.setDateTime(request.getDateTime());
-        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-        messageVO.setThirdPartyTransactionId(request.getThirdPartTransactionId());
+        messageVO.setThirdPartyTransactionId(request.getRrn());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setReserved1(request.getReserved1());
-        messageVO.setReserved2(request.getReserved2());
-        messageVO.setReserved3(request.getReserved3());
-        messageVO.setReserved4(request.getReserved4());
-        messageVO.setReserved5(request.getReserved5());
-        messageVO.setReserved6(request.getReserved6());
-        messageVO.setReserved7(request.getReserved7());
-        messageVO.setReserved8(request.getReserved8());
-        messageVO.setReserved9(request.getReserved9());
-        messageVO.setReserved10(request.getReserved10());
 
         TransactionLogModel logModel = new TransactionLogModel();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
@@ -15649,17 +15642,6 @@ public class HostIntegrationService {
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setReserved1(request.getReserved1());
-        messageVO.setReserved2(request.getReserved2());
-        messageVO.setReserved3(request.getReserved3());
-        messageVO.setReserved4(request.getReserved4());
-        messageVO.setReserved5(request.getReserved5());
-        messageVO.setReserved6(request.getReserved6());
-        messageVO.setReserved7(request.getReserved7());
-        messageVO.setReserved8(request.getReserved8());
-        messageVO.setReserved9(request.getReserved9());
-        messageVO.setReserved10(request.getReserved10());
-
         TransactionLogModel logModel = new TransactionLogModel();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
         Date txDateTime = new Date();
@@ -15764,16 +15746,6 @@ public class HostIntegrationService {
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setReserved1(request.getReserved1());
-        messageVO.setReserved2(request.getReserved2());
-        messageVO.setReserved3(request.getReserved3());
-        messageVO.setReserved4(request.getReserved4());
-        messageVO.setReserved5(request.getReserved5());
-        messageVO.setReserved6(request.getReserved6());
-        messageVO.setReserved7(request.getReserved7());
-        messageVO.setReserved8(request.getReserved8());
-        messageVO.setReserved9(request.getReserved9());
-        messageVO.setReserved10(request.getReserved10());
 
         TransactionLogModel logModel = new TransactionLogModel();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
@@ -17520,6 +17492,7 @@ public class HostIntegrationService {
                 && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
             logger.info("[HOST] Simple Account Opening Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
 
+
             AccountOpeningRequest accountOpeningRequest = new AccountOpeningRequest();
 
             accountOpeningRequest.setUserName(request.getUserName());
@@ -17552,16 +17525,24 @@ public class HostIntegrationService {
             logger.info("[HOST] Account Opening Request Sent to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             accountOpeningResponse = this.accountOpening(accountOpeningRequest);
 
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
             if (accountOpeningResponse != null
                     && StringUtils.isNotEmpty(accountOpeningResponse.getResponseCode())
                     && accountOpeningResponse.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
 
                 logger.info("[HOST] Account Opening Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
 
-                response.setRrn(accountOpeningResponse.getRrn());
+                response.setRrn(messageVO.getRetrievalReferenceNumber());
                 response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-                response.setResponseDescription(accountOpeningResponse.getResponseDescription());
-
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                response.setResponseDateTime(messageVO.getDateTime());
                 logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
             } else if (messageVO != null && StringUtils.isNotEmpty(accountOpeningResponse.getResponseCode())) {

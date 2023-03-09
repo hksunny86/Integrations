@@ -7,29 +7,35 @@ import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
 @JsonPropertyOrder({
-        "Rrn",
-        "ResponseCode",
-        "ResponseDescription",
-        "ResponseDateTime",
-        "CommissionAmount",
-        "TotalAmount",
-        "HashData",
+        "rrn",
+        "responseCode",
+        "responseDescription",
+        "dateTime",
+        "transactionId",
+        "commission",
+        "amount",
+        "totalAmount",
+        "hashData",
 })
 public class OptasiaDebitInquiryResponse implements Serializable {
 
-    @JsonProperty("Rrn")
+    @JsonProperty("rrn")
     private String rrn;
-    @JsonProperty("ResponseCode")
+    @JsonProperty("responseCode")
     private String responseCode;
-    @JsonProperty("ResponseDescription")
+    @JsonProperty("responseDescription")
     private String responseDescription;
-    @JsonProperty("ResponseDateTime")
+    @JsonProperty("dateTime")
     private String responseDateTime;
-    @JsonProperty("CommissionAmount")
+    @JsonProperty("transactionId")
+    private String transactionId;
+    @JsonProperty("commission")
     private String comissionAmount;
-    @JsonProperty("TotalAmount")
+    @JsonProperty("amount")
+    private String amount;
+    @JsonProperty("totalAmount")
     private String totalAmount;
-    @JsonProperty("HashData")
+    @JsonProperty("hashData")
     private String hashData;
 
     public String getRrn() {
@@ -70,6 +76,22 @@ public class OptasiaDebitInquiryResponse implements Serializable {
 
     public void setComissionAmount(String comissionAmount) {
         this.comissionAmount = comissionAmount;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
     public String getTotalAmount() {

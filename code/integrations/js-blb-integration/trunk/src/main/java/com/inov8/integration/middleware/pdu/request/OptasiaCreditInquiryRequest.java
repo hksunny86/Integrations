@@ -14,71 +14,74 @@ import java.io.Serializable;
 )
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "UserName",
-        "Password",
-        "CustomerId",
-        "DateTime",
-        "Rrn",
-        "ChannelId",
-        "TerminalId",
-        "ProductId",
-        "PinType",
-        "TransactionAmount",
-        "Reserved1",
-        "Reserved2",
-        "Reserved3",
-        "Reserved4",
-        "Reserved5",
-        "Reserved6",
-        "Reserved7",
-        "Reserved8",
-        "Reserved9",
-        "Reserved10",
-        "HashData",
+        "userName",
+        "password",
+        "customerId",
+        "dateTime",
+        "rrn",
+        "channelId",
+        "terminalId",
+        "productId",
+        "pin",
+        "pinType",
+        "amount",
+        "reserved1",
+        "reserved2",
+        "reserved3",
+        "reserved4",
+        "reserved5",
+        "reserved6",
+        "reserved7",
+        "reserved8",
+        "reserved9",
+        "reserved10",
+        "hashData",
 })
 public class OptasiaCreditInquiryRequest implements Serializable {
 
-    @JsonProperty("UserName")
+    @JsonProperty("userName")
     private String userName;
-    @JsonProperty("Password")
+    @JsonProperty("password")
     private String password;
-    @JsonProperty("CustomerId")
+    @JsonProperty("customerId")
     private String customerId;
-    @JsonProperty("DateTime")
+    @JsonProperty("dateTime")
     private String dateTime;
-    @JsonProperty("Rrn")
+    @JsonProperty("rrn")
     private String rrn;
-    @JsonProperty("ChannelId")
+    @JsonProperty("channelId")
     private String channelId;
-    @JsonProperty("TerminalId")
+    @JsonProperty("terminalId")
     private String terminalId;
-    @JsonProperty("ProductId")
+    @JsonProperty("productId")
     private String productId;
-    @JsonProperty("PinType")
+    @JsonProperty("pin")
+    private String pin;
+    @JsonProperty("pinType")
     private String pinType;
-    @JsonProperty("TransactionAmount")
+    @JsonProperty("amount")
     private String transactionAmount;
-    @JsonProperty("Reserved1")
+    @JsonProperty("reserved1")
     private String reserved1;
-    @JsonProperty("Reserved2")
+    @JsonProperty("reserved2")
     private String reserved2;
-    @JsonProperty("Reserved3")
+    @JsonProperty("reserved3")
     private String reserved3;
-    @JsonProperty("Reserved4")
+    @JsonProperty("reserved4")
     private String reserved4;
-    @JsonProperty("Reserved5")
+    @JsonProperty("reserved5")
     private String reserved5;
-    @JsonProperty("Reserved6")
+    @JsonProperty("reserved6")
     private String reserved6;
-    @JsonProperty("Reserved7")
+    @JsonProperty("reserved7")
     private String reserved7;
-    @JsonProperty("Reserved8")
+    @JsonProperty("reserved8")
     private String reserved8;
-    @JsonProperty("Reserved9")
+    @JsonProperty("reserved9")
     private String reserved9;
-    @JsonProperty("Reserved10")
+    @JsonProperty("reserved10")
     private String reserved10;
-    @JsonProperty("HashData")
+    @JsonProperty("hashData")
     private String hashData;
 
     public String getUserName() {
@@ -143,6 +146,14 @@ public class OptasiaCreditInquiryRequest implements Serializable {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 
     public String getPinType() {

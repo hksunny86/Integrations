@@ -14,55 +14,55 @@ import java.io.Serializable;
 )
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "UserName",
-        "Password",
-        "CustomerId",
-        "DateTime",
-        "Rrn",
-        "ChannelId",
-        "TerminalId",
-        "LoanEvent",
-        "LoanEventStatus",
-        "OrigSource",
-        "InternalLoanId",
-        "ThirdPartyTransactionId",
-        "Reserved1",
-        "Reserved2",
-        "HashData",
+        "userName",
+        "password",
+        "customerId",
+        "dateTime",
+        "rrn",
+        "channelId",
+        "terminalId",
+        "loanEvent",
+        "loanEventStatus",
+        "origSource",
+        "internalLoanId",
+        "thirdPartyTransactionId",
+        "reserved1",
+        "reserved2",
+        "hashData",
 })
 public class LoanCallBackRequest implements Serializable {
 
     private final static long serialVersionUID = 1L;
 
-    @JsonProperty("UserName")
+    @JsonProperty("userName")
     private String userName;
-    @JsonProperty("Password")
+    @JsonProperty("password")
     private String password;
-    @JsonProperty("CustomerId")
+    @JsonProperty("customerId")
     private String customerId;
-    @JsonProperty("DateTime")
+    @JsonProperty("dateTime")
     private String dateTime;
-    @JsonProperty("Rrn")
+    @JsonProperty("rrn")
     private String rrn;
-    @JsonProperty("ChannelId")
+    @JsonProperty("channelId")
     private String channelId;
-    @JsonProperty("TerminalId")
+    @JsonProperty("terminalId")
     private String terminalId;
-    @JsonProperty("LoanEvent")
+    @JsonProperty("loanEvent")
     private String loanEvent;
-    @JsonProperty("LoanEventStatus")
+    @JsonProperty("loanEventStatus")
     private String loanEventStatus;
-    @JsonProperty("OrigSource")
+    @JsonProperty("origSource")
     private String origSource;
-    @JsonProperty("InternalLoanId")
+    @JsonProperty("internalLoanId")
     private String internalLoanId;
-    @JsonProperty("ThirdPartyTransactionId")
+    @JsonProperty("thirdPartyTransactionId")
     private String thirdPartyTransactionId;
-    @JsonProperty("Reserved1")
+    @JsonProperty("reserved1")
     private String reserved1;
-    @JsonProperty("Reserved2")
+    @JsonProperty("reserved2")
     private String reserved2;
-    @JsonProperty("HashData")
+    @JsonProperty("hashData")
     private String hashData;
 
     public String getUserName() {

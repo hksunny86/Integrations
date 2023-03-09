@@ -26,6 +26,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Objects;
 
 @Service
 public class TasdeeqService {
@@ -35,12 +36,11 @@ public class TasdeeqService {
     private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
     private String authenticateUpdatedUrl = PropertyReader.getProperty("tasdeeq.AuthenticateUpdated");
     private String customAnalyticsUrl = PropertyReader.getProperty("tasdeeq.CustomAnalytics");
-
+    I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
     public AuthenticateUpdatedResponse authenticateUpdatedResponse(AuthenticateUpdatedRequest authenticateUpdatedRequest) {
 
         AuthenticateUpdatedResponse authenticateUpdatedResponse = new AuthenticateUpdatedResponse();
-        I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
 
         long start = System.currentTimeMillis();
         if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
@@ -56,6 +56,7 @@ public class TasdeeqService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             String requestJSON = JSONUtil.getJSON(authenticateUpdatedRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+            logger.info("Prepared Request HttpEntity " + httpEntity);
             Iterator res = this.restTemplate.getMessageConverters().iterator();
 
             while (res.hasNext()) {
@@ -93,6 +94,7 @@ public class TasdeeqService {
                         authenticateUpdatedResponse = (AuthenticateUpdatedResponse) JSONUtil.jsonToObject(result, AuthenticateUpdatedResponse.class);
                     } else {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
                         authenticateUpdatedResponse.setStatusCode(((HttpStatusCodeException) e).getStatusCode().toString());
                         authenticateUpdatedResponse = (AuthenticateUpdatedResponse) JSONUtil.jsonToObject(result, AuthenticateUpdatedResponse.class);
                     }
@@ -108,14 +110,13 @@ public class TasdeeqService {
 
     public CustomAnalyticsResponse customAnalyticsResponse(CustomAnalyticsRequest customAnalyticsRequest) {
         CustomAnalyticsResponse customAnalyticsResponse = new CustomAnalyticsResponse();
-        I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
-        I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
         if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
-            logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
+            logger.info("Preparing request for Request Type : " + this.i8SBSwitchControllerRequestVO.getRequestType());
             TasdeeqMock tasdeeqMock = new TasdeeqMock();
             String response = tasdeeqMock.customAnalytics();
+            logger.info("Access Token " + i8SBSwitchControllerRequestVO.getAccessToken());
             customAnalyticsResponse = (CustomAnalyticsResponse) JSONUtil.jsonToObject(response, CustomAnalyticsResponse.class);
             logger.info("Mock Response Code for Custom Analytics Request: " + customAnalyticsResponse.getResponseCode());
         } else {
@@ -123,9 +124,12 @@ public class TasdeeqService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.customAnalyticsUrl);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Authorization", i8SBSwitchControllerResponseVO.getAuthToken());
+            String token = i8SBSwitchControllerRequestVO.getAccessToken();
+            logger.info("Access Token " + token);
+            headers.add("Authorization", "bearer " + token);
             String requestJSON = JSONUtil.getJSON(customAnalyticsRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+            logger.info("Prepared Request HttpEntity " + httpEntity);
             Iterator res = this.restTemplate.getMessageConverters().iterator();
 
             while (res.hasNext()) {
@@ -163,6 +167,7 @@ public class TasdeeqService {
                         customAnalyticsResponse = (CustomAnalyticsResponse) JSONUtil.jsonToObject(result, CustomAnalyticsResponse.class);
                     } else {
                         result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received " + ((HttpStatusCodeException) e).getStatusCode().toString());
                         customAnalyticsResponse.setStatusCode(((HttpStatusCodeException) e).getStatusCode().toString());
                         customAnalyticsResponse = (CustomAnalyticsResponse) JSONUtil.jsonToObject(result, CustomAnalyticsResponse.class);
                     }
@@ -175,5 +180,13 @@ public class TasdeeqService {
         }
 
         return customAnalyticsResponse;
+    }
+
+    public I8SBSwitchControllerRequestVO getI8SBSwitchControllerRequestVO() {
+        return i8SBSwitchControllerRequestVO;
+    }
+
+    public void setI8SBSwitchControllerRequestVO(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
+        this.i8SBSwitchControllerRequestVO = i8SBSwitchControllerRequestVO;
     }
 }

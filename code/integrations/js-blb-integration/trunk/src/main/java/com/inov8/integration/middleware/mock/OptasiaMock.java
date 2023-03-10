@@ -631,6 +631,17 @@ public class OptasiaMock {
         return transactionActiveResponse;
     }
 
+    public SimpleAccountOpeningResponse simpleAccountOpeningResponse() {
+        SimpleAccountOpeningResponse simpleAccountOpeningResponse = new SimpleAccountOpeningResponse();
+
+        simpleAccountOpeningResponse.setRrn("91522103234050");
+        simpleAccountOpeningResponse.setResponseCode("00");
+        simpleAccountOpeningResponse.setResponseDescription("Success");
+        simpleAccountOpeningResponse.setResponseDateTime("");
+
+        return simpleAccountOpeningResponse;
+    }
+
     public static void main(String[] args) throws ParseException {
 
 //        String date = "22072022";

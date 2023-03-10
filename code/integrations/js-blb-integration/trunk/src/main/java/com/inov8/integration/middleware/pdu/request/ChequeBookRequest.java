@@ -4,44 +4,44 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-@XmlRootElement(name = "ChequeBookRequest")
+@XmlType(name = "")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "chequeBookRequest")
 public class ChequeBookRequest {
 
-    @JsonProperty("UserName")
+    @XmlElement(name = "UserName")
     private String userName;
-    @JsonProperty("Password")
+    @XmlElement(name = "Password")
     private String password;
-    @JsonProperty("Cnic")
+    @XmlElement(name = "Cnic")
     private String cnic;
-    @JsonProperty("DateTime")
+    @XmlElement(name = "DateTime")
     private String dateTime;
-    @JsonProperty("MobileNumber")
+    @XmlElement(name = "MobileNumber")
     private String mobileNumber;
-    @JsonProperty("Rrn")
+    @XmlElement(name = "Rrn")
     private String rrn;
-    @JsonProperty("OrignalTransactionRRN")
+    @XmlElement(name = "OrignalTransactionRRN")
     private String orignalTransactionRRN;
-    @JsonProperty("ChannelId")
+    @XmlElement(name = "ChannelId")
     private String channelId;
-    @JsonProperty("TerminalID")
+    @XmlElement(name = "TerminalID")
     private String terminalId;
-    @JsonProperty("TransactionStatus")
+    @XmlElement(name = "TransactionStatus")
     private String transactionStatus;
-    @JsonProperty("Reserved1")
+    @XmlElement(name = "Reserved1")
     private String reserved1;
-    @JsonProperty("Reserved2")
+    @XmlElement(name = "Reserved2")
     private String reserved2;
-    @JsonProperty("Reserved3")
+    @XmlElement(name = "Reserved3")
     private String reserved3;
-    @JsonProperty("Reserved4")
+    @XmlElement(name = "Reserved4")
     private String reserved4;
-    @JsonProperty("Reserved5")
+    @XmlElement(name = "Reserved5")
     private String reserved5;
-    @JsonProperty("HashData")
+    @XmlElement(name = "HashData")
     private String hashData;
 
 

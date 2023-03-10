@@ -30,9 +30,20 @@ public class BillPaymentInquiryResponse implements Serializable {
     private String dueDate;
     @XmlElement(name = "OverDue")
     private String overDue;
-
+    @XmlElement(name = "CommissionAmount")
+    private String comissionAmount;
     @XmlElement(name = "HashData")
     private String hashData;
+
+
+    public String getComissionAmount() {
+        return comissionAmount;
+    }
+
+    public void setComissionAmount(String comissionAmount) {
+        this.comissionAmount = comissionAmount;
+    }
+
 
     public String getResponseCode() {
         return responseCode;

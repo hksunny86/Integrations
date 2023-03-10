@@ -32,6 +32,12 @@ public class AgentCashDepositPaymentRequest implements Serializable {
     private String agentMobileNumber;
     @XmlElement(name = "CustomerCnic")
     private String cnic;
+    @XmlElement(name = "FingerIndex")
+    private String fingerIndex;
+    @XmlElement(name = "FingerTemplate")
+    private String fingerTemplate;
+    @XmlElement(name = "TemplateType")
+    private String templateType;
     @XmlElement(name = "TransactionAmount")
     private String amount;
     @XmlElement(name = "ComissionAmount")
@@ -219,6 +225,30 @@ public class AgentCashDepositPaymentRequest implements Serializable {
 
     public void setReserved5(String reserved5) {
         this.reserved5 = reserved5;
+    }
+
+    public String getFingerIndex() {
+        return fingerIndex;
+    }
+
+    public void setFingerIndex(String fingerIndex) {
+        this.fingerIndex = fingerIndex;
+    }
+
+    public String getFingerTemplate() {
+        return fingerTemplate;
+    }
+
+    public void setFingerTemplate(String fingerTemplate) {
+        this.fingerTemplate = fingerTemplate;
+    }
+
+    public String getTemplateType() {
+        return templateType;
+    }
+
+    public void setTemplateType(String templateType) {
+        this.templateType = templateType;
     }
 
     public String getHashData() {

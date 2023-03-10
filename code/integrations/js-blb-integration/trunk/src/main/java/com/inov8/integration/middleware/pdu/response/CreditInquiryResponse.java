@@ -18,10 +18,21 @@ public class CreditInquiryResponse implements Serializable {
     private String responseDateTime;
     @XmlElement(name = "CommissionAmount")
     private String comissionAmount;
+    @XmlElement(name = "InclusiveExclusiveComission")
+    private String inclusiveExclusiveComissionAmount;
     @XmlElement(name = "TotalAmount")
     private String totalAmount;
     @XmlElement(name = "HashData")
     private String hashData;
+
+
+    public String getInclusiveExclusiveComissionAmount() {
+        return inclusiveExclusiveComissionAmount;
+    }
+
+    public void setInclusiveExclusiveComissionAmount(String inclusiveExclusiveComissionAmount) {
+        this.inclusiveExclusiveComissionAmount = inclusiveExclusiveComissionAmount;
+    }
 
     public String getRrn() {
         return rrn;

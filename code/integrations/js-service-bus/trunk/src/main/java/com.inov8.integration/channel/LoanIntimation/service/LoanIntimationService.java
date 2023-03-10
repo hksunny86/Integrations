@@ -53,12 +53,13 @@ public class LoanIntimationService {
         LoanIntimationResponse loanIntimationResponse = new LoanIntimationResponse();
 
         I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             JSDebitCardImport jsDebitCardImport = new JSDebitCardImport();
             String response = jsDebitCardImport.importCardResponse();
             loanIntimationResponse = (LoanIntimationResponse) JSONUtil.jsonToObject(response, LoanIntimationResponse.class);
         } else {
+
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(loanIntimationUrl);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

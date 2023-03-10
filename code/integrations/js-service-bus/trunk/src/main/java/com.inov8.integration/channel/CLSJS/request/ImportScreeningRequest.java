@@ -57,14 +57,6 @@ public class ImportScreeningRequest extends Request {
         this.customerName = customerName;
     }
 
-    public String getFatherName() {
-        return fatherName;
-    }
-
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
-    }
-
     public String getDateOfBirth() {
         return dateOfBirth;
     }
@@ -103,6 +95,14 @@ public class ImportScreeningRequest extends Request {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
     }
 
     @Override
@@ -151,13 +151,11 @@ public class ImportScreeningRequest extends Request {
         if (StringUtils.isEmpty(this.getCnic())) {
             throw new I8SBValidationException("[Failed] CNIC " + this.getCnic());
         }
-
-        if (StringUtils.isEmpty(this.getCustomerName())) {
-            throw new I8SBValidationException("[Failed] Customer Name " + this.getCustomerName());
-        }
-
         if (StringUtils.isEmpty(this.getFatherName())) {
             throw new I8SBValidationException("[Failed] Father Name " + this.getFatherName());
+        }
+        if (StringUtils.isEmpty(this.getCustomerName())) {
+            throw new I8SBValidationException("[Failed] Customer Name " + this.getCustomerName());
         }
 
         return true;

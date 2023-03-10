@@ -46,6 +46,7 @@ public class LoanIntimationBo implements I8SBChannelInterface {
             loanIntimationService.setI8SBSwitchControllerRequestVO(i8SBSwitchControllerRequestVO);
 
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_LOANINTIMATION)){
+                logger.info("Request send to service " + I8SBConstants.RequestType_LOANINTIMATION);
                 response=loanIntimationService.sendLoanIntimation((LoanIntimationRequest) request );
             }
 

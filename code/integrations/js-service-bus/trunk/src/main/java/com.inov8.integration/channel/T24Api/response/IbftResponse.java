@@ -1,9 +1,10 @@
 package com.inov8.integration.channel.T24Api.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class IbftResponse extends Response {
     @JsonProperty("ISOMessage")
     ISOMessage ISOMessageObject;
@@ -35,7 +36,7 @@ public class IbftResponse extends Response {
 
         return i8SBSwitchControllerResponseVO;
     }
-
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public class ISOMessage {
         @JsonProperty("MTI")
         private String MTI;

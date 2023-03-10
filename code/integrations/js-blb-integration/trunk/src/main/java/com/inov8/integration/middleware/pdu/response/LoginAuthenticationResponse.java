@@ -32,9 +32,31 @@ public class LoginAuthenticationResponse {
     private String yearlyCreditLimit;
     @XmlElement(name = "YearlyDebitLimit")
     private String yearlyDebitLimit;
+    @XmlElement(name = "Segment")
+    private String segment;
+    @XmlElement(name = "BVS")
+    private String bvs;
+    @XmlElement(name = "BlinkBvs")
+    private String BlinlBvs;
     @XmlElement(name = "HashData")
     private String hashData;
 
+
+    public String getBvs() {
+        return bvs;
+    }
+
+    public void setBvs(String bvs) {
+        this.bvs = bvs;
+    }
+
+    public String getBlinlBvs() {
+        return BlinlBvs;
+    }
+
+    public void setBlinlBvs(String blinlBvs) {
+        BlinlBvs = blinlBvs;
+    }
 
     public String getResponseCode() {
         return responseCode;
@@ -138,6 +160,14 @@ public class LoginAuthenticationResponse {
 
     public void setYearlyDebitLimit(String yearlyDebitLimit) {
         this.yearlyDebitLimit = yearlyDebitLimit;
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+
+    public void setSegment(String segment) {
+        this.segment = segment;
     }
 
     public String getHashData() {

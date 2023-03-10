@@ -1,5 +1,6 @@
 package com.inov8.integration.i8sb.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import javax.xml.bind.annotation.XmlTransient;
@@ -459,6 +460,213 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String cnicFrontPic;
     private String cnicBackPic;
     private String customerPic;
+    private String signaturePic;
+    private String sourceOfIncome;
+    private String fatherCnicPic;
+    private String minorCnicPic;
+    private String minorCnicBackPic;
+    private String motherCnicPic;
+    private String sourceRequestId;
+    private String offerName;
+    private String externalLoanId;
+    private String loanPurpose;
+    private String reason;
+    private String identityType;
+    private String origSource;
+    private String identityValue;
+    private String fed;
+    private String loanEvent;
+    private String loanEventStatus;
+    private String upToPeriod;
+    private String filterCommodityType;
+    private String commodityType;
+    private String filterLoanState;
+    private String filterType;
+    private String fullName;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getCommodityType() {
+        return commodityType;
+    }
+
+    public void setCommodityType(String commodityType) {
+        this.commodityType = commodityType;
+    }
+
+    public String getFilterLoanState() {
+        return filterLoanState;
+    }
+
+    public void setFilterLoanState(String filterLoanState) {
+        this.filterLoanState = filterLoanState;
+    }
+
+    public String getFilterType() {
+        return filterType;
+    }
+
+    public void setFilterType(String filterType) {
+        this.filterType = filterType;
+    }
+
+    public String getFilterCommodityType() {
+        return filterCommodityType;
+    }
+
+    public void setFilterCommodityType(String filterCommodityType) {
+        this.filterCommodityType = filterCommodityType;
+    }
+
+    public String getUpToPeriod() {
+        return upToPeriod;
+    }
+
+    public void setUpToPeriod(String upToPeriod) {
+        this.upToPeriod = upToPeriod;
+    }
+
+    public String getLoanEvent() {
+        return loanEvent;
+    }
+
+    public void setLoanEvent(String loanEvent) {
+        this.loanEvent = loanEvent;
+    }
+
+    public String getLoanEventStatus() {
+        return loanEventStatus;
+    }
+
+    public void setLoanEventStatus(String loanEventStatus) {
+        this.loanEventStatus = loanEventStatus;
+    }
+
+    public String getFed() {
+        return fed;
+    }
+
+    public void setFed(String fed) {
+        this.fed = fed;
+    }
+
+    public String getIdentityType() {
+        return identityType;
+    }
+
+    public void setIdentityType(String identityType) {
+        this.identityType = identityType;
+    }
+
+    public String getOrigSource() {
+        return origSource;
+    }
+
+    public void setOrigSource(String origSource) {
+        this.origSource = origSource;
+    }
+
+    public String getIdentityValue() {
+        return identityValue;
+    }
+
+    public void setIdentityValue(String identityValue) {
+        this.identityValue = identityValue;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getSourceRequestId() {
+        return sourceRequestId;
+    }
+
+    public void setSourceRequestId(String sourceRequestId) {
+        this.sourceRequestId = sourceRequestId;
+    }
+
+    public String getOfferName() {
+        return offerName;
+    }
+
+    public void setOfferName(String offerName) {
+        this.offerName = offerName;
+    }
+
+    public String getExternalLoanId() {
+        return externalLoanId;
+    }
+
+    public void setExternalLoanId(String externalLoanId) {
+        this.externalLoanId = externalLoanId;
+    }
+
+    public String getLoanPurpose() {
+        return loanPurpose;
+    }
+
+    public void setLoanPurpose(String loanPurpose) {
+        this.loanPurpose = loanPurpose;
+    }
+
+    public String getMotherCnicPic() {
+        return motherCnicPic;
+    }
+
+    public void setMotherCnicPic(String motherCnicPic) {
+        this.motherCnicPic = motherCnicPic;
+    }
+
+    public String getSignaturePic() {
+        return signaturePic;
+    }
+
+    public void setSignaturePic(String signaturePic) {
+        this.signaturePic = signaturePic;
+    }
+
+    public String getSourceOfIncome() {
+        return sourceOfIncome;
+    }
+
+    public void setSourceOfIncome(String sourceOfIncome) {
+        this.sourceOfIncome = sourceOfIncome;
+    }
+
+    public String getFatherCnicPic() {
+        return fatherCnicPic;
+    }
+
+    public void setFatherCnicPic(String fatherCnicPic) {
+        this.fatherCnicPic = fatherCnicPic;
+    }
+
+    public String getMinorCnicPic() {
+        return minorCnicPic;
+    }
+
+    public void setMinorCnicPic(String minorCnicPic) {
+        this.minorCnicPic = minorCnicPic;
+    }
+
+    public String getMinorCnicBackPic() {
+        return minorCnicBackPic;
+    }
+
+    public void setMinorCnicBackPic(String minorCnicBackPic) {
+        this.minorCnicBackPic = minorCnicBackPic;
+    }
 
     public String getCustomerPic() {
         return customerPic;
@@ -1316,33 +1524,62 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
         this.iban = iban;
     }
 
-    public String getMTI() { return MTI; }
+    public String getMTI() {
+        return MTI;
+    }
 
-    public void setMTI(String MTI) { this.MTI = MTI; }
+    public void setMTI(String MTI) {
+        this.MTI = MTI;
+    }
 
-    public String getProcessingCode() { return processingCode; }
+    public String getProcessingCode() {
+        return processingCode;
+    }
 
-    public void setProcessingCode(String processingCode) { this.processingCode = processingCode; }
+    public void setProcessingCode(String processingCode) {
+        this.processingCode = processingCode;
+    }
 
-    public String getTimeLocalTransaction() { return timeLocalTransaction; }
+    public String getTimeLocalTransaction() {
+        return timeLocalTransaction;
+    }
 
-    public void setTimeLocalTransaction(String timeLocalTransaction) { this.timeLocalTransaction = timeLocalTransaction; }
+    public void setTimeLocalTransaction(String timeLocalTransaction) {
+        this.timeLocalTransaction = timeLocalTransaction;
+    }
 
-    public String getDateLocalTransaction() { return dateLocalTransaction; }
+    public String getDateLocalTransaction() {
+        return dateLocalTransaction;
+    }
 
-    public void setDateLocalTransaction(String dateLocalTransaction) { this.dateLocalTransaction = dateLocalTransaction; }
+    public void setDateLocalTransaction(String dateLocalTransaction) {
+        this.dateLocalTransaction = dateLocalTransaction;
+    }
 
-    public String getMerchantType() { return merchantType; }
+    public String getMerchantType() {
+        return merchantType;
+    }
 
-    public void setMerchantType(String merchantType) { this.merchantType = merchantType; }
+    public void setMerchantType(String merchantType) {
+        this.merchantType = merchantType;
+    }
 
-    public String getCardType() { return cardType; }
+    public String getCardType() {
+        return cardType;
+    }
 
-    public void setCardType(String cardType) { this.cardType = cardType; }
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
+    }
 
-    public String getAPI_KEY() { return API_KEY; }
+    public String getAPI_KEY() {
+        return API_KEY;
+    }
 
-    public void setAPI_KEY(String API_KEY) { this.API_KEY = API_KEY; }
+    public void setAPI_KEY(String API_KEY) {
+        this.API_KEY = API_KEY;
+    }
+
     public String getEndDate() {
         return endDate;
     }
@@ -1905,9 +2142,13 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
         this.cardId = cardId;
     }
 
-    public String getCardNumber() { return cardNumber; }
+    public String getCardNumber() {
+        return cardNumber;
+    }
 
-    public void setCardNumber(String cardNumber) { this.cardNumber = cardNumber; }
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
 
     public String getBranchCode() {
         return branchCode;

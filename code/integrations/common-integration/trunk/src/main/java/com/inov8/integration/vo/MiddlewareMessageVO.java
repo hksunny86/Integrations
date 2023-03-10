@@ -177,6 +177,18 @@ public class MiddlewareMessageVO implements Serializable {
     private String maxLimit;
     private String minLimit;
 
+    private String posEntryMode;
+
+
+    public String getPosEntryMode() {
+        return posEntryMode;
+    }
+
+    public void setPosEntryMode(String posEntryMode) {
+        this.posEntryMode = posEntryMode;
+    }
+
+
     public String getSenderIban() {
         return senderIban;
     }
@@ -789,6 +801,7 @@ public class MiddlewareMessageVO implements Serializable {
         sb.append(", Reseved2=").append(reserved2);
         sb.append(", DateExpiration=").append(dateExpiration);
         sb.append(", PointOfServiceEntryMode=").append(pointOfServiceEntryMode);
+        sb.append(", posEntryMode=").append(posEntryMode);
         sb.append(", institutionIdentificationCode=").append(institutionIdentificationCode);
         sb.append(", track2Data").append(track2Data);
         sb.append(", cardAcceptorTerminalIdentification").append(cardAcceptorTerminalIdentification);

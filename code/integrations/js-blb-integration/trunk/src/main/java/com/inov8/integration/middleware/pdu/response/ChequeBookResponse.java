@@ -4,19 +4,19 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
-@XmlRootElement
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@XmlRootElement(name = "chequeBookResponse")
+@XmlType(name = "")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ChequeBookResponse {
     private final static long serialVersionUID = 1L;
 
-    @JsonProperty("ResponseCode")
+    @XmlElement(name = "ResponseCode")
     private String responseCode;
-    @JsonProperty("ResponseDescription")
+    @XmlElement(name = "ResponseDescription")
     private String responseDescription;
-    @JsonProperty("HashData")
+    @XmlElement(name = "HashData")
     private String hashData;
 
 

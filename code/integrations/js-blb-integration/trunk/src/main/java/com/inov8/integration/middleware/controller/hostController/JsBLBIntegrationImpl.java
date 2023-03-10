@@ -1,6 +1,5 @@
 package com.inov8.integration.middleware.controller.hostController;
 
-import com.inov8.integration.middleware.abl.mobapp.Account;
 import com.inov8.integration.middleware.controller.validator.HostRequestValidator;
 import com.inov8.integration.middleware.controller.validator.ValidationException;
 import com.inov8.integration.middleware.pdu.request.*;
@@ -26,7 +25,7 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
 
     private static final Logger logger = LoggerFactory.getLogger(JsBLBIntegrationImpl.class);
-    private static String loginPinMatch = ConfigReader.getInstance().getProperty("loginPinMatch","");
+    private static String loginPinMatch = ConfigReader.getInstance().getProperty("loginPinMatch", "");
 
     @Autowired
     HostIntegrationService integrationService;
@@ -114,12 +113,75 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         return response;
     }
 
+
+    @Override
+    public VerifyLoginAccountResponse verifyLoginAccount(VerifyLoginAccountRequest request) {
+        long start = System.currentTimeMillis();
+        VerifyLoginAccountResponse response = null;
+        String requestXML = XMLUtil.convertRequest(request);
+        requestXML = XMLUtil.maskPassword(requestXML);
+        logger.info("Start Processing Account Verify Transaction Request with {}", requestXML);
+        StringBuffer stringText = new StringBuffer(
+                request.getUserName() +
+                        request.getPassword() +
+                        request.getDateTime() +
+                        request.getMobileNumber() +
+                        request.getRrn() +
+                        request.getChannelId() +
+                        request.getReserved1() +
+                        request.getReserved2() +
+                        request.getReserved3() +
+                        request.getReserved4() +
+                        request.getReserved5());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        if (sha256hex.equalsIgnoreCase(request.getHashData())) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+
+                try {
+                    HostRequestValidator.validateVerifyLoginAccount(request);
+                response = integrationService.verifyLoginAccountResponse(request);
+
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+                logger.info("******* DEBUG LOGS FOR ACCOUNT VERIFY TRANSACTION *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+                logger.info("RRN Number: " + response.getRrn());
+            } else {
+                logger.info("******* DEBUG LOGS FOR  Verify Account TRANSACTION AUTHENTICATION *********");
+                response = new VerifyLoginAccountResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+            }
+        } else {
+            logger.info("******* DEBUG LOGS FOR ACCOUNT VERIFY TRANSACTION *********");
+            response = new VerifyLoginAccountResponse();
+            response.setResponseCode("111");
+            response.setResponseDescription("Request is not recognized");
+            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+        }
+
+
+        long end = System.currentTimeMillis() - start;
+        logger.info("Account Verify Transaction Request  Processed in : {} ms {}", end, response);
+
+        return response;
+    }
+
     @Override
     public AccountOpeningResponse accountOpening(AccountOpeningRequest request) {
         try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.sleep(10000L);
+        } catch (InterruptedException var12) {
+            var12.printStackTrace();
         }
         long start = System.currentTimeMillis();
         AccountOpeningResponse response = null;
@@ -1040,6 +1102,7 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
                     logger.error("ERROR: Request Validation", ve);
                 } catch (Exception e) {
+
                     response.setResponseCode("220");
                     response.setResponseDescription(e.getMessage());
                     logger.error("ERROR: General Processing ", e);
@@ -1084,11 +1147,11 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 .append(request.getTerminalId())
                 .append(request.getAmount());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
 
-                    HostRequestValidator.cashInInquiry(request);
+//                    HostRequestValidator.cashInInquiry(request);
                     response = integrationService.cashInInquiry(request);
 
                 } catch (ValidationException ve) {
@@ -1111,13 +1174,13 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 response.setResponseDescription("Request is not authenticated");
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
-        } else {
-            logger.info("******* DEBUG LOGS FOR  Cash In Inquiry TRANSACTION *********");
-            response = new CashInInquiryResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR  Cash In Inquiry TRANSACTION *********");
+//            response = new CashInInquiryResponse();
+//            response.setResponseCode("111");
+//            response.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
 
         long end = System.currentTimeMillis() - start;
         logger.info("Cash In Inquiry Request  Processed in : {} ms {}", end, response);
@@ -1148,11 +1211,11 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 .append(request.getReserved4())
                 .append(request.getReserved5());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
 
-                    HostRequestValidator.cashIn(request);
+//                    HostRequestValidator.cashIn(request);
                     response = integrationService.cashIn(request);
 
                 } catch (ValidationException ve) {
@@ -1176,13 +1239,13 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 response.setResponseDescription("Request is not authenticated");
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
-        } else {
-            logger.info("******* DEBUG LOGS FOR  Cash In TRANSACTION *********");
-            response = new CashInResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR  Cash In TRANSACTION *********");
+//            response = new CashInResponse();
+//            response.setResponseCode("111");
+//            response.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
 
         long end = System.currentTimeMillis() - start;
         logger.info("Cash In Request  Processed in : {} ms {}", end, response);
@@ -1635,13 +1698,13 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 response.setResponseDescription("Request is not authenticated");
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
-        } else {
-            logger.info("******* DEBUG LOGS FOR  Wallet to wallet Payment Inquiry *********");
-            response = new WalletToWalletPaymentInquiryResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
+            } else {
+                logger.info("******* DEBUG LOGS FOR  Wallet to wallet Payment Inquiry *********");
+                response = new WalletToWalletPaymentInquiryResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
 
         long end = System.currentTimeMillis() - start;
         logger.info("Wallet to wallet Payment Inquiry in : {} ms {}", end, response);
@@ -1802,31 +1865,31 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 .append(request.getReserved5());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
         if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateMpinUpgadeAccount(request);
-                    response = integrationService.upgradeAccountResponse(request);
+        if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+            try {
+                HostRequestValidator.validateMpinUpgadeAccount(request);
+                response = integrationService.upgradeAccountResponse(request);
 
-                } catch (ValidationException ve) {
-                    response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-
-                logger.info("******* DEBUG LOGS FOR Upgrade Account TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR  Upgrade Account TRANSACTION AUTHENTICATION *********");
-                response = new UpgradeAccountResponse();
+            } catch (ValidationException ve) {
                 response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                response.setResponseDescription(ve.getMessage());
+
+                logger.error("ERROR: Request Validation", ve);
+            } catch (Exception e) {
+                response.setResponseCode("220");
+                response.setResponseDescription(e.getMessage());
+                logger.error("ERROR: General Processing ", e);
             }
+
+            logger.info("******* DEBUG LOGS FOR Upgrade Account TRANSACTION *********");
+            logger.info("ResponseCode: " + response.getResponseCode());
+        } else {
+            logger.info("******* DEBUG LOGS FOR  Upgrade Account TRANSACTION AUTHENTICATION *********");
+            response = new UpgradeAccountResponse();
+            response.setResponseCode("420");
+            response.setResponseDescription("Request is not authenticated");
+            logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+        }
         } else {
             logger.info("******* DEBUG LOGS FOR  Upgrade Account TRANSACTION *********");
             response = new UpgradeAccountResponse();
@@ -2719,31 +2782,31 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
         if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-        if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-            try {
-                HostRequestValidator.walletToCoreInquiry(request);
-                response = integrationService.fundWalletToCoreInquiryResponse(request);
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    HostRequestValidator.walletToCoreInquiry(request);
+                    response = integrationService.fundWalletToCoreInquiryResponse(request);
 
-            } catch (ValidationException ve) {
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+
+                logger.info("******* DEBUG LOGS FOR Fund Wallet To Core Inquiry PAYMENT TRANSACTION *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Fund Wallet To Core Inquiry Payment TRANSACTION AUTHENTICATION *********");
+                response = new WalletToCoreInquiryResponse();
                 response.setResponseCode("420");
-                response.setResponseDescription(ve.getMessage());
-
-                logger.error("ERROR: Request Validation", ve);
-            } catch (Exception e) {
-                response.setResponseCode("220");
-                response.setResponseDescription(e.getMessage());
-                logger.error("ERROR: General Processing ", e);
+                response.setResponseDescription("Request is not authenticated");
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
-
-            logger.info("******* DEBUG LOGS FOR Fund Wallet To Core Inquiry PAYMENT TRANSACTION *********");
-            logger.info("ResponseCode: " + response.getResponseCode());
-        } else {
-            logger.info("******* DEBUG LOGS FOR Fund Wallet To Core Inquiry Payment TRANSACTION AUTHENTICATION *********");
-            response = new WalletToCoreInquiryResponse();
-            response.setResponseCode("420");
-            response.setResponseDescription("Request is not authenticated");
-            logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-        }
         } else {
             logger.info("******* DEBUG LOGS FOR Fund Wallet To Core Inquiry PAYMENT TRANSACTION *********");
             response = new WalletToCoreInquiryResponse();
@@ -3046,7 +3109,7 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 .append(request.getReserved10());
 
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
                     HostRequestValidator.debit(request);
@@ -3072,13 +3135,13 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 response.setResponseDescription("Request is not authenticated");
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
-        } else {
-            logger.info("******* DEBUG LOGS FOR  Debit PAYMENT TRANSACTION *********");
-            response = new DebitResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR  Debit PAYMENT TRANSACTION *********");
+//            response = new DebitResponse();
+//            response.setResponseCode("111");
+//            response.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
 
         long end = System.currentTimeMillis() - start;
         logger.info("Debit Payment Request  Processed in : {} ms {}", end, response);
@@ -3522,7 +3585,7 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                         loginAuthenticationRequest.getPin() +
                         loginAuthenticationRequest.getCnic());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (loginAuthenticationRequest.getHashData().equalsIgnoreCase(sha256hex)) {
+//        if (loginAuthenticationRequest.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(loginAuthenticationRequest.getUserName(), loginAuthenticationRequest.getPassword(), loginAuthenticationRequest.getChannelId())) {
 
                 try {
@@ -3550,9 +3613,70 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 response.setResponseDescription("Request is not authenticated");
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR  Login Authentication  TRANSACTION *********");
+//            response = new LoginAuthenticationResponse();
+//            response.setResponseCode("111");
+//            response.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
+
+
+        long end = System.currentTimeMillis() - start;
+        logger.info("Login Authentication VERIFICATION Transaction Request  Processed in : {} ms {}", end, response);
+
+        return response;
+    }
+
+
+    @Override
+    public ZindigiLoginAuthenticationResponse zindigiLoginAuthentication(ZindigiLoginAuthenticationRequest zindigiLoginAuthenticationRequest) {
+        long start = System.currentTimeMillis();
+        ZindigiLoginAuthenticationResponse response = null;
+        String requestXML = XMLUtil.convertRequest(zindigiLoginAuthenticationRequest);
+        requestXML = XMLUtil.maskPassword(requestXML);
+        logger.info("Start Processing Login Authentication Transaction Request with {}", requestXML);
+        StringBuffer stringText = new StringBuffer(
+                zindigiLoginAuthenticationRequest.getUserName() +
+                        zindigiLoginAuthenticationRequest.getPassword() +
+                        zindigiLoginAuthenticationRequest.getMobileNumber() +
+                        zindigiLoginAuthenticationRequest.getDateTime() +
+                        zindigiLoginAuthenticationRequest.getRrn() +
+                        zindigiLoginAuthenticationRequest.getChannelId() +
+                        zindigiLoginAuthenticationRequest.getPin() +
+                        zindigiLoginAuthenticationRequest.getCnic());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        if (zindigiLoginAuthenticationRequest.getHashData().equalsIgnoreCase(sha256hex)) {
+        if (HostRequestValidator.authenticate(zindigiLoginAuthenticationRequest.getUserName(), zindigiLoginAuthenticationRequest.getPassword(), zindigiLoginAuthenticationRequest.getChannelId())) {
+
+            try {
+                HostRequestValidator.validateZindigiLoginAuthenticationRequest(zindigiLoginAuthenticationRequest);
+                response = integrationService.zindigiLoginAuthenticationResponse(zindigiLoginAuthenticationRequest);
+
+            } catch (ValidationException ve) {
+                response.setResponseCode("420");
+                response.setResponseDescription(ve.getMessage());
+
+                logger.error("ERROR: Request Validation", ve);
+            } catch (Exception e) {
+                response.setResponseCode("220");
+                response.setResponseDescription(e.getMessage());
+                logger.error("ERROR: General Processing ", e);
+            }
+
+            logger.info("******* DEBUG LOGS FOR Login AuthenticationTRANSACTION *********");
+            logger.info("ResponseCode: " + response.getResponseCode());
+            logger.info("RRN Number: " + response.getRrn());
+        } else {
+            logger.info("******* DEBUG LOGS FOR  Login Authentication TRANSACTION AUTHENTICATION *********");
+            response = new ZindigiLoginAuthenticationResponse();
+            response.setResponseCode("420");
+            response.setResponseDescription("Request is not authenticated");
+            logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+        }
         } else {
             logger.info("******* DEBUG LOGS FOR  Login Authentication  TRANSACTION *********");
-            response = new LoginAuthenticationResponse();
+            response = new ZindigiLoginAuthenticationResponse();
             response.setResponseCode("111");
             response.setResponseDescription("Request is not recognized");
             logger.info("******* REQUEST IS NOT RECOGNIZED *********");
@@ -3560,7 +3684,7 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
 
         long end = System.currentTimeMillis() - start;
-        logger.info("Login Authentication VERIFICATION Transaction Request  Processed in : {} ms {}", end, response);
+        logger.info("Zindigi Login Authentication VERIFICATION Transaction Request  Processed in : {} ms {}", end, response);
 
         return response;
     }
@@ -3585,13 +3709,12 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                         loginPinRequest.getReserved1() +
                         loginPinRequest.getReserved2());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (loginPin.contains(loginPinRequest.getPin())){
+        if (loginPin.contains(loginPinRequest.getPin())) {
             response = new LoginPinResponse();
             response.setResponseCode("112");
             response.setResponseDescription("This combination of pin is not allowed");
             return response;
-        }
-        else {
+        } else {
             if (loginPinRequest.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (HostRequestValidator.authenticate(loginPinRequest.getUserName(), loginPinRequest.getPassword(), loginPinRequest.getChannelId())) {
 
@@ -3657,48 +3780,47 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                         loginPinChangeRequest.getReserved1() +
                         loginPinChangeRequest.getReserved2());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (loginPin.contains(loginPinChangeRequest.getConfirmLoginPin())){
+        if (loginPin.contains(loginPinChangeRequest.getConfirmLoginPin())) {
             response = new LoginPinChangeResponse();
             response.setResponseCode("112");
             response.setResponseDescription("This combination of pin is not allowed");
             return response;
-        }
-        else {
-        if (loginPinChangeRequest.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(loginPinChangeRequest.getUserName(), loginPinChangeRequest.getPassword(), loginPinChangeRequest.getChannelId())) {
-
-                try {
-                    HostRequestValidator.validateLoginPinChangeRequest(loginPinChangeRequest);
-                    response = integrationService.loginPinChange(loginPinChangeRequest);
-
-                } catch (ValidationException ve) {
-                    response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-
-                logger.info("******* DEBUG LOGS FOR Login PIN Change TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
-                logger.info("RRN Number: " + response.getRrn());
-            } else {
-                logger.info("******* DEBUG LOGS FOR  Login PIN Change TRANSACTION AUTHENTICATION *********");
-                response = new LoginPinChangeResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-            }
         } else {
-            logger.info("******* DEBUG LOGS FOR  Login PIN Change TRANSACTION *********");
-            response = new LoginPinChangeResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
+            if (loginPinChangeRequest.getHashData().equalsIgnoreCase(sha256hex)) {
+                if (HostRequestValidator.authenticate(loginPinChangeRequest.getUserName(), loginPinChangeRequest.getPassword(), loginPinChangeRequest.getChannelId())) {
+
+                    try {
+                        HostRequestValidator.validateLoginPinChangeRequest(loginPinChangeRequest);
+                        response = integrationService.loginPinChange(loginPinChangeRequest);
+
+                    } catch (ValidationException ve) {
+                        response.setResponseCode("420");
+                        response.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        response.setResponseCode("220");
+                        response.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR Login PIN Change TRANSACTION *********");
+                    logger.info("ResponseCode: " + response.getResponseCode());
+                    logger.info("RRN Number: " + response.getRrn());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR  Login PIN Change TRANSACTION AUTHENTICATION *********");
+                    response = new LoginPinChangeResponse();
+                    response.setResponseCode("420");
+                    response.setResponseDescription("Request is not authenticated");
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                }
+            } else {
+                logger.info("******* DEBUG LOGS FOR  Login PIN Change TRANSACTION *********");
+                response = new LoginPinChangeResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
         }
 
         long end = System.currentTimeMillis() - start;
@@ -3729,13 +3851,12 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                         resetPinRequest.getReserved1() +
                         resetPinRequest.getReserved2());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (loginPin.contains(resetPinRequest.getConfirmLoginPin())){
+        if (loginPin.contains(resetPinRequest.getConfirmLoginPin())) {
             response = new ResetPinResponse();
             response.setResponseCode("112");
             response.setResponseDescription("This combination of pin is not allowed");
             return response;
-        }
-        else {
+        } else {
             if (resetPinRequest.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (HostRequestValidator.authenticate(resetPinRequest.getUserName(), resetPinRequest.getPassword(), resetPinRequest.getChannelId())) {
 
@@ -3848,7 +3969,7 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
     @Override
     public SmsGenerationResponse smsGeneration(SmsGenerationRequest request) {
-                long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
 
         SmsGenerationResponse response = null;
 
@@ -3915,14 +4036,14 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         requestXML = XMLUtil.maskPassword(requestXML);
         logger.info("Start Processing Agent Account Login Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
-                        agentAccountLoginRequest.getUserName() +
+                agentAccountLoginRequest.getUserName() +
                         agentAccountLoginRequest.getPassword() +
                         agentAccountLoginRequest.getDateTime() +
                         agentAccountLoginRequest.getRrn() +
                         agentAccountLoginRequest.getChannelId() +
                         agentAccountLoginRequest.getTerminalId() +
                         agentAccountLoginRequest.getAgentId() +
-                        agentAccountLoginRequest.getPin()+
+                        agentAccountLoginRequest.getPin() +
                         agentAccountLoginRequest.getReserved1() +
                         agentAccountLoginRequest.getReserved2() +
                         agentAccountLoginRequest.getReserved3() +
@@ -3980,7 +4101,7 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         requestXML = XMLUtil.maskPassword(requestXML);
         logger.info("Start Processing Agent Login PIN Generation Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
-                        agentLoginPinGenerationRequest.getUserName() +
+                agentLoginPinGenerationRequest.getUserName() +
                         agentLoginPinGenerationRequest.getPassword() +
                         agentLoginPinGenerationRequest.getDateTime() +
                         agentLoginPinGenerationRequest.getRrn() +
@@ -4059,7 +4180,7 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                         agentLoginPinResetRequest.getReserved2() +
                         agentLoginPinResetRequest.getReserved3() +
                         agentLoginPinResetRequest.getReserved4() +
-                        agentLoginPinResetRequest.getReserved5() );
+                        agentLoginPinResetRequest.getReserved5());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
         if (agentLoginPinResetRequest.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(agentLoginPinResetRequest.getUserName(), agentLoginPinResetRequest.getPassword(), agentLoginPinResetRequest.getChannelId())) {
@@ -6420,6 +6541,9 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 .append(request.getPin())
                 .append(request.getAgentMobileNumber())
                 .append(request.getCnic())
+//                .append(request.getFingerIndex())
+//                .append(request.getFingerTemplate())
+//                .append(request.getTemplateType())
                 .append(request.getAmount())
                 .append(request.getComissionAmount())
                 .append(request.getTransactionProcessingAmount())
@@ -6565,6 +6689,9 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 .append(request.getAgentMobileNumber())
                 .append(request.getCustomerMobileNumber())
                 .append(request.getCustomerCnic())
+//                .append(request.getFingerIndex())
+//                .append(request.getFingerTemplate())
+//                .append(request.getTemplateType())
                 .append(request.getAmount())
                 .append(request.getComissionAmount())
                 .append(request.getTransactionProcessingAmount())
@@ -6576,31 +6703,31 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 .append(request.getReserved5());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
         if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateAgentCashWithdrawalPayment(request);
-                    response = integrationService.agentCashWithdrawalPayment(request);
+        if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+            try {
+                HostRequestValidator.validateAgentCashWithdrawalPayment(request);
+                response = integrationService.agentCashWithdrawalPayment(request);
 
-                } catch (ValidationException ve) {
-                    response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-
-                logger.info("******* DEBUG LOGS FOR AGENT Agent Cash Withdrawal Payment TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR  AGENT Agent Cash Withdrawal Payment TRANSACTION AUTHENTICATION *********");
-                response = new AgentCashWithdrawalPaymentResponse();
+            } catch (ValidationException ve) {
                 response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                response.setResponseDescription(ve.getMessage());
+
+                logger.error("ERROR: Request Validation", ve);
+            } catch (Exception e) {
+                response.setResponseCode("220");
+                response.setResponseDescription(e.getMessage());
+                logger.error("ERROR: General Processing ", e);
             }
+
+            logger.info("******* DEBUG LOGS FOR AGENT Agent Cash Withdrawal Payment TRANSACTION *********");
+            logger.info("ResponseCode: " + response.getResponseCode());
+        } else {
+            logger.info("******* DEBUG LOGS FOR  AGENT Agent Cash Withdrawal Payment TRANSACTION AUTHENTICATION *********");
+            response = new AgentCashWithdrawalPaymentResponse();
+            response.setResponseCode("420");
+            response.setResponseDescription("Request is not authenticated");
+            logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+        }
         } else {
             logger.info("******* DEBUG LOGS FOR AGENT Agent Cash Withdrawal Payment TRANSACTION *********");
             response = new AgentCashWithdrawalPaymentResponse();
@@ -6983,7 +7110,7 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
     @Override
     public AccountDetailResponse accountDetail(AccountDetails request) {
-                long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
 
         AccountDetailResponse response = null;
 

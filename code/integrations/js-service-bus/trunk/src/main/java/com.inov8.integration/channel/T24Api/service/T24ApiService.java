@@ -40,7 +40,7 @@ public class T24ApiService {
     I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
     private RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${t24.ibfttitlefetch.url}")
+    @Value("${t24.titlefetch.url}")
     private String t24IbftTitleFetchUrl;
     @Value("${t24.ibft.url}")
     private String t24IbftUrl;
@@ -72,6 +72,7 @@ public class T24ApiService {
             ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(response, IbftTitleFetchResponse.class);
             logger.info("Response Code for Ibft Title Fetch Request : " + ibftTitleFetchResponse.getISOMessage().getResponseCode_039());
         } else {
+            logger.info(" Ibft title Fetch"+  t24IbftTitleFetchUrl);
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(t24IbftTitleFetchUrl);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -88,7 +89,7 @@ public class T24ApiService {
 
             ResponseEntity<String> res = restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
             ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(res.getBody(), IbftTitleFetchResponse.class);
-
+            logger.info(" Ibft title Fetch Response Received from  T24 : "+res.getBody());
         }
         return ibftTitleFetchResponse;
     }
@@ -126,6 +127,7 @@ public class T24ApiService {
 
             ResponseEntity<String> res = restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
             ibftResponse = (IbftResponse) JSONUtil.jsonToObject(res.getBody(), IbftResponse.class);
+            logger.info(" Ibft Response Received from  T24 : "+res.getBody());
 
         }
         return ibftResponse;

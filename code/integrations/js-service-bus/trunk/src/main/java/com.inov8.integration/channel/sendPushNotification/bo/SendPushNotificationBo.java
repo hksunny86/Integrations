@@ -59,7 +59,7 @@ public class SendPushNotificationBo implements I8SBChannelInterface {
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_SendPushNotification)) {
                 response = sendPushNotificationService.sendPushNotificationResponse((SendPushNotificationsRequest) request);
             }
-            Thread.sleep(30000);
+//            Thread.sleep(30000);
             logger.info("I8SB Response back to Microbank after 30s");
             if (response.populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();

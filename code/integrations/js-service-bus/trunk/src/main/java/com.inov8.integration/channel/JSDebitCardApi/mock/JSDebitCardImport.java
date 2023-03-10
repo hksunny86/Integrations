@@ -137,35 +137,7 @@ public class JSDebitCardImport {
 
 
     public String getCVV(){
-        String importCard = "{\n" +
-                "  \"processingCode\": \"GetCVV\",\n" +
-                "  \"merchantType\": \"0088\",\n" +
-                "  \"traceNo\": \"519667\",\n" +
-                "  \"dateTime\": \"20220622113711\",\n" +
-                "  \"responseCode\": \"00\",\n" +
-                "  \"data\": {\n" +
-                "    \"CCIMessageResponse\": {\n" +
-                "      \"Header\": {\n" +
-                "        \"Message_Type\": \"0210\",\n" +
-                "        \"Transaction_Code\": \"406\",\n" +
-                "        \"Transmission_Date_Time\": \"20220622113711\",\n" +
-                "        \"STAN\": \"519667\",\n" +
-                "        \"UserId\": \"user\",\n" +
-                "        \"Password\": \"password\"\n" +
-                "      },\n" +
-                "      \"Body\": {\n" +
-                "        \"Response\": {\n" +
-                "          \"CardNumber\": \"5172960000323705\",\n" +
-                "          \"CardTitle\": \"DANIYAL KAREEM\",\n" +
-                "          \"Response_Code\": \"00|Success\",\n" +
-                "          \"Expiry\": \"12/31/2025 2:02:58 PM\",\n" +
-                "          \"CVV2\": \"095\",\n" +
-                "          \"Issue_Date\": \"12/22/2020 2:02:58 PM\"\n" +
-                "        }\n" +
-                "      }\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
+        String importCard ="{\"processingCode\":\"GetCVV\",\"merchantType\":\"0088\",\"traceNo\":\"403441\",\"dateTime\":\"20220628154010\",\"responseCode\":\"00\",\"data\":{\"CCIMessageResponse\":{\"Header\":{\"Message_Type\":\"0210\",\"Transaction_Code\":\"406\",\"Transmission_Date_Time\":\"20220628154010\",\"STAN\":\"403441\",\"UserId\":\"user\",\"Password\":\"password\"},\"Body\":{\"Response\":{\"CardNumber\":\"2205770000000056\",\"CardTitle\":\"KHALIL AHMAD\",\"Response_Code\":\"00|Success\",\"Expiry\":\"12\\/31\\/2024\",\"CVV2\":\"891\",\"Issue_Date\":\"12\\/27\\/2019 8:58:51 PM\"}}}}}";
         return importCard;
     }
 }

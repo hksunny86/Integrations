@@ -17525,13 +17525,6 @@ public class HostIntegrationService {
             logger.info("[HOST] Account Opening Request Sent to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             accountOpeningResponse = this.accountOpening(accountOpeningRequest);
 
-            response.setRrn(messageVO.getRetrievalReferenceNumber());
-            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-            response.setResponseDescription(messageVO.getResponseCodeDescription());
-            response.setResponseDateTime(messageVO.getDateTime());
-
-            logModel.setResponseCode(messageVO.getResponseCode());
-            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
             if (accountOpeningResponse != null
                     && StringUtils.isNotEmpty(accountOpeningResponse.getResponseCode())
@@ -17539,9 +17532,9 @@ public class HostIntegrationService {
 
                 logger.info("[HOST] Account Opening Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
 
-                response.setRrn(messageVO.getRetrievalReferenceNumber());
+                response.setRrn(accountOpeningResponse.getRrn());
                 response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                response.setResponseDescription(accountOpeningResponse.getResponseDescription());
                 response.setResponseDateTime(messageVO.getDateTime());
                 logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 

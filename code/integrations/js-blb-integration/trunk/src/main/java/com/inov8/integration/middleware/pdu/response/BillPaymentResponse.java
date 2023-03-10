@@ -36,7 +36,8 @@ public class BillPaymentResponse implements Serializable {
     private String transactionAmount;
     @XmlElement(name = "RemainingBalance")
     private String remainingBalance;
-
+    @XmlElement(name = "TransactionId")
+    private String transactionId;
     @XmlElement(name = "HashData")
     private String hashData;
 
@@ -126,6 +127,15 @@ public class BillPaymentResponse implements Serializable {
 
     public void setTotalAmount(String totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 
     public String getTransactionAmount() {

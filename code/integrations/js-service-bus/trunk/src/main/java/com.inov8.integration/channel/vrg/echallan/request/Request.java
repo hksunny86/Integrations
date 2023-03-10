@@ -1,6 +1,7 @@
 package com.inov8.integration.channel.vrg.echallan.request;
 
 import com.inov8.integration.exception.I8SBValidationException;
+import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import org.apache.commons.lang.StringUtils;
 
@@ -64,12 +65,13 @@ public abstract class Request {
                     + this.getPassword());
         }
 
-        if (StringUtils.isEmpty(this.getConsumerNo()) ||
-                this.getConsumerNo().length() > CONSUMER_NUMBER_MAX_LENGTH) {
-            throw new I8SBValidationException("[FAILED] Validation Failed Consumer Number: "
-                    + this.getConsumerNo());
+        if (i8SBSwitchControllerRequestVO.getRequestType().equals(I8SBConstants.RequestType_EChallanInquiry)) {
+            if (StringUtils.isEmpty(this.getConsumerNo()) ||
+                    this.getConsumerNo().length() > CONSUMER_NUMBER_MAX_LENGTH) {
+                throw new I8SBValidationException("[FAILED] Validation Failed Consumer Number: "
+                        + this.getConsumerNo());
+            }
         }
-
         if (StringUtils.isEmpty(this.getBankMnemonic()) ||
                 this.getBankMnemonic().length() > BANK_MNEMONIC_MAX_LENGTH) {
             throw new I8SBValidationException("[FAILED] Validation Failed Bank Mnemonic: " +

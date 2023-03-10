@@ -93,7 +93,7 @@ public class AuthenticateUpdatedResponse extends Response {
         if (this.getStatusCode().equals("111")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
         } else {
-            i8SBSwitchControllerResponseVO.setResponseCode(this.getStatusCode());
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getMessageCode());
         }
         i8SBSwitchControllerResponseVO.setStatusCode(this.getStatusCode());
         i8SBSwitchControllerResponseVO.setMessageCode(this.getMessageCode());

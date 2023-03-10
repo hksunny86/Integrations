@@ -21,7 +21,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{http://tempuri.org/Screen_MS}RequestID"/&gt;
  *         &lt;element ref="{http://tempuri.org/Screen_MS}CNIC"/&gt;
  *         &lt;element ref="{http://tempuri.org/Screen_MS}CustomerName"/&gt;
- *         &lt;element ref="{http://tempuri.org/Screen_MS}FatherName"/&gt;
  *         &lt;element ref="{http://tempuri.org/Screen_MS}DateOfBirth"/&gt;
  *         &lt;element ref="{http://tempuri.org/Screen_MS}Nationality"/&gt;
  *         &lt;element ref="{http://tempuri.org/Screen_MS}City"/&gt;
@@ -38,7 +37,6 @@ import javax.xml.bind.annotation.XmlType;
         "requestID",
         "cnic",
         "customerName",
-        "fatherName",
         "dateOfBirth",
         "nationality",
         "city",
@@ -106,26 +104,6 @@ public class ImportScreening
      */
     public void setCNIC(String value) {
         this.cnic = value;
-    }
-
-    /**
-     * Gets the value of the fatherName property.
-     *
-     * @return possible object is
-     * {@link String }
-     */
-    public String getFatherName() {
-        return fatherName;
-    }
-
-    /**
-     * Sets the value of the fatherName property.
-     *
-     * @param value allowed object is
-     *              {@link String }
-     */
-    public void setFatherName(String value) {
-        this.fatherName = value;
     }
 
     /**
@@ -248,4 +226,11 @@ public class ImportScreening
         this.userId = value;
     }
 
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
 }

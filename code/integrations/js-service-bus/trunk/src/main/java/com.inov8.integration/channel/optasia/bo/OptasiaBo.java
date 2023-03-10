@@ -64,7 +64,6 @@ public class OptasiaBo implements I8SBChannelInterface {
                 response = optasiaService.sendLoanPaymentResponse((LoanPaymentRequest) request);
             }
 
-            logger.info("I8SB Response back to Microbank after 30s");
             if (response.populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
             String responseXML = JSONUtil.getJSON(i8SBSwitchControllerResponseVO);

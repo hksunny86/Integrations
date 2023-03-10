@@ -25,24 +25,24 @@ public class IbftTitleFetchRequest extends Request {
     @JsonProperty("PrimaryAccountNumber_002")
     private String primaryAccountNumber_002;
     @JsonProperty("ProcessingCode_003")
-    private String processingCode_003;
-    @JsonProperty("TransactionDatetime_007")
+    private String processingCode_003= PropertyReader.getProperty("IBFT_TITLEFETCH_PROCESSING_CODE");
+    @JsonProperty("TransmissionDatetime_007")
     private String transactionDatetime_007;
-    @JsonProperty("SystemTraceAuditNumber_011")
+    @JsonProperty("SystemsTraceAuditNumber_011")
     private String systemTraceAuditNumber_011;
     @JsonProperty("TimeLocalTransaction_012")
     private String timeLocalTransaction_012;
     @JsonProperty("DateLocalTransaction_013")
     private String dateLocalTransaction_013;
     @JsonProperty("MerchantType_018")
-    private String merchantType_018 = PropertyReader.getProperty("IBFT_TITLEFETCH_MERCHANT_TYPE");
+    private String  merchantType_018 = PropertyReader.getProperty("IBFT_TITLEFETCH_MERCHANT_TYPE");
     @JsonProperty("CurrencyCodeTransaction_049")
     private String currencyCodeTransaction_049=PropertyReader.getProperty("PKR_CURRENCY");
-    @JsonProperty("CurrencyCodeSettlement_50")
+    @JsonProperty("CurrencyCodeSettlement_050")
     private String currencyCodeSettlement_50=PropertyReader.getProperty("PKR_CURRENCY");
     @JsonProperty("AccountIdentification1_102")
     private String accountIdentification1_102;
-    @JsonProperty("AccountIdentification1_103")
+    @JsonProperty("AccountIdentification2_103")
     private String accountIdentification2_103;
 
     @JsonProperty("ReservedPrivate_120")
@@ -54,7 +54,7 @@ public class IbftTitleFetchRequest extends Request {
         this.setMti(mti);
 
         this.setPrimaryAccountNumber_002(StringUtils.rightPad(i8SBSwitchControllerRequestVO.getAccountId2(),16,"0"));
-        this.setProcessingCode_003("650000");
+        this.setProcessingCode_003(processingCode_003);
         this.setTransactionDatetime_007(DateUtil.formatCurrentDate(TRANSACTION_DATE_TIME.getValue()));
         this.setSystemTraceAuditNumber_011(i8SBSwitchControllerRequestVO.getSTAN());
         this.setTimeLocalTransaction_012(i8SBSwitchControllerRequestVO.getTimeLocalTransaction());

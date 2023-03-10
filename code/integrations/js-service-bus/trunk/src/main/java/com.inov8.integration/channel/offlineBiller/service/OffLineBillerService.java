@@ -1,14 +1,7 @@
 package com.inov8.integration.channel.offlineBiller.service;
 
-import com.inov8.integration.channel.BOPBLB.client.BillInquiry;
-import com.inov8.integration.channel.BOPBLB.client.BillPayment;
-import com.inov8.integration.channel.JSBookMe.response.JSBBookMeResponse;
-import com.inov8.integration.channel.JSBookMe.service.JSBookMeService;
-import com.inov8.integration.channel.T24Api.service.T24ApiMockService;
-import com.inov8.integration.channel.merchantDiscountCamping.request.TransactionUpdateRequest;
-import com.inov8.integration.channel.merchantDiscountCamping.request.TransactionValidationRequest;
-import com.inov8.integration.channel.merchantDiscountCamping.response.TransactionUpdateResponse;
-import com.inov8.integration.channel.merchantDiscountCamping.response.TransactionValidationResponse;
+
+
 import com.inov8.integration.channel.offlineBiller.response.BillInquiryResponse;
 import com.inov8.integration.channel.offlineBiller.response.BillPaymentResponse;
 import com.inov8.integration.channel.offlineBiller.resquest.BillInquiryRequest;
@@ -46,7 +39,7 @@ import java.security.NoSuchAlgorithmException;
 @Service
 public class OffLineBillerService {
 
-    private static Logger logger = LoggerFactory.getLogger(JSBookMeService.class.getSimpleName());
+    private static Logger logger = LoggerFactory.getLogger(OffLineBillerService.class.getSimpleName());
     I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -71,12 +64,7 @@ public class OffLineBillerService {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String requesJson = JSONUtil.getJSON(request);
             logger.info("Request Send To OffLine Biller Server : " + requesJson);
-            T24ApiMockService mock = new T24ApiMockService();
-
-            String response = mock.transactionValidation();
-
-            billInquiryResponse = (BillInquiryResponse) JSONUtil.jsonToObject(response, BillInquiryResponse.class);
-//            logger.info("Response Code for Ibft Title Fetch Request : " + ibftTitleFetchResponse.getISOMessage().getResponseCode_039());
+            //            logger.info("Response Code for Ibft Title Fetch Request : " + ibftTitleFetchResponse.getISOMessage().getResponseCode_039());
         } else {
             logger.info("Bill  Inquiry " + fetchOfflineBiller);
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(fetchOfflineBiller);
@@ -101,10 +89,10 @@ public class OffLineBillerService {
                     String response = ((HttpStatusCodeException) e).getStatusCode().toString();
                     if (response.equals("204")) {
                         String result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        billInquiryResponse = (BillInquiryResponse) JSONUtil.jsonToObject(result, BillInquiry.class);
+                        billInquiryResponse = (BillInquiryResponse) JSONUtil.jsonToObject(result, BillInquiryResponse.class);
                     } else if (response.equals("405")) {
                         String resp = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        billInquiryResponse = (BillInquiryResponse) JSONUtil.jsonToObject(resp, BillInquiry.class);
+                        billInquiryResponse = (BillInquiryResponse) JSONUtil.jsonToObject(resp, BillInquiryResponse.class);
 
                     }
 
@@ -126,9 +114,7 @@ public class OffLineBillerService {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String requesJson = JSONUtil.getJSON(request);
             logger.info("Request Send To Zmiles Server : " + requesJson);
-            T24ApiMockService mock = new T24ApiMockService();
-            String response = mock.transactionValidation();
-            billPaymentResponse = (BillPaymentResponse) JSONUtil.jsonToObject(response, BillPaymentResponse.class);
+
         } else {
             logger.info("Bill Payment: " + payOfflineBiller);
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(payOfflineBiller);
@@ -155,7 +141,7 @@ public class OffLineBillerService {
                     String response = ((HttpStatusCodeException) e).getStatusCode().toString();
                     if (response.equals("204")) {
                         String result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        billPaymentResponse = (BillPaymentResponse) JSONUtil.jsonToObject(result, BillPayment.class);
+                        billPaymentResponse = (BillPaymentResponse) JSONUtil.jsonToObject(result, BillPaymentResponse.class);
                     } else if (response.equals("405")) {
                         String resp = ((HttpStatusCodeException) e).getResponseBodyAsString();
                         billPaymentResponse = (BillPaymentResponse) JSONUtil.jsonToObject(resp, BillPaymentResponse.class);

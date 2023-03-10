@@ -30,6 +30,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -98,14 +99,25 @@ public class MerchantCampingService {
                     String response = ((HttpStatusCodeException) e).getStatusCode().toString();
                     if (response.equals("204")) {
                         String result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        transactionValidationResponse = (TransactionValidationResponse) JSONUtil.jsonToObject(result, TransactionValidationResponse.class);
-
-                    } else if (response.equals("401")) {
+                        transactionValidationResponse.setResponsecode("1");
+                        transactionValidationResponse.setMessages("Validation Exception");
+                    } else if (response.equals("405")) {
                         String resp = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        transactionValidationResponse = (TransactionValidationResponse) JSONUtil.jsonToObject(resp, TransactionValidationResponse.class);
-
+                        transactionValidationResponse.setResponsecode("40");
+                        transactionValidationResponse.setMessages("Transaction Not Allowed");
+                    }
+                    else {
+                        transactionValidationResponse.setResponsecode("1");
+                        transactionValidationResponse.setMessages("SuccessFull");
                     }
                 }
+                if (e instanceof ResourceAccessException){
+                    transactionValidationResponse.setResponsecode("1");
+                    transactionValidationResponse.setMessages("SuccessFull");
+                }
+            }catch (Exception e){
+                transactionValidationResponse.setResponsecode("1");
+                transactionValidationResponse.setMessages("SuccessFull");
             }
         }
         return transactionValidationResponse;
@@ -123,11 +135,8 @@ public class MerchantCampingService {
             String requesJson = JSONUtil.getJSON(request);
             logger.info("Request Send To Zmiles Server : " + requesJson);
             T24ApiMockService mock = new T24ApiMockService();
-
             String response = mock.transactionValidation();
-
             transactionUpdateResponse = (TransactionUpdateResponse) JSONUtil.jsonToObject(response, TransactionUpdateResponse.class);
-//            logger.info("Response Code for Ibft Title Fetch Request : " + ibftTitleFetchResponse.getISOMessage().getResponseCode_039());
         } else {
             logger.info("Transaction Status" + transactionStatusUpdateURL);
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(transactionStatusUpdateURL);
@@ -150,18 +159,11 @@ public class MerchantCampingService {
                 logger.info("Transaction Status Response Received from  Zmiles Server : " + res.getBody());
 
             } catch (RestClientException e) {
-                if (e instanceof HttpStatusCodeException) {
+
                     String response = ((HttpStatusCodeException) e).getStatusCode().toString();
-                    if (response.equals("204")) {
-                        String result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        transactionUpdateResponse = (TransactionUpdateResponse) JSONUtil.jsonToObject(result, TransactionUpdateResponse.class);
+                    transactionUpdateResponse.setResponsecode("1");
+                    transactionUpdateResponse.setMessages("SuccessFull");
 
-                    } else if (response.equals("401")) {
-                        String resp = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        transactionUpdateResponse = (TransactionUpdateResponse) JSONUtil.jsonToObject(resp, TransactionUpdateResponse.class);
-
-                    }
-                }
             }
         }
         return transactionUpdateResponse;

@@ -1,21 +1,20 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by Fernflower decompiler)
-//
+package com.inov8.integration.channel.refferalCustomer.bo;
 
-package com.inov8.integration.channel.sendPushNotification.bo;
 
-import com.inov8.integration.channel.JSDebitCardApi.request.CardReissuanceRequest;
-import com.inov8.integration.channel.JSDebitCardApi.request.GetCvvRequest;
-import com.inov8.integration.channel.JSDebitCardApi.request.ImportCardRequest;
-import com.inov8.integration.channel.JSDebitCardApi.request.UpdateCardStatusRequest;
-import com.inov8.integration.channel.sendPushNotification.request.Request;
-import com.inov8.integration.channel.sendPushNotification.request.SendPushNotificationsRequest;
-import com.inov8.integration.channel.sendPushNotification.response.Response;
-import com.inov8.integration.channel.sendPushNotification.response.SendPushNotificationResponse;
-import com.inov8.integration.channel.sendPushNotification.service.SendPushNotificationService;
+
+import com.inov8.integration.channel.offlineBiller.response.BillInquiryResponse;
+import com.inov8.integration.channel.offlineBiller.response.BillPaymentResponse;
+
+import com.inov8.integration.channel.offlineBiller.resquest.BillInquiryRequest;
+import com.inov8.integration.channel.offlineBiller.resquest.BillPaymentRequest;
+
+import com.inov8.integration.channel.offlineBiller.service.OffLineBillerService;
+import com.inov8.integration.channel.refferalCustomer.request.RefferalCustomerRequest;
+import com.inov8.integration.channel.refferalCustomer.request.Request;
+import com.inov8.integration.channel.refferalCustomer.response.RefferalCustomerResponse;
+import com.inov8.integration.channel.refferalCustomer.response.Response;
+import com.inov8.integration.channel.refferalCustomer.service.RefferalCustomerService;
 import com.inov8.integration.controller.I8SBChannelInterface;
-import com.inov8.integration.enums.DateFormatEnum;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
@@ -28,17 +27,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static com.inov8.integration.enums.DateFormatEnum.TIME_LOCAL_TRANSACTION;
+import static com.inov8.integration.enums.DateFormatEnum.TRANSACTION_DATE;
+
 @Component
-public class SendPushNotificationBo implements I8SBChannelInterface {
+public class RefferalCustomerBo implements I8SBChannelInterface {
+    private static Logger logger = LoggerFactory.getLogger(RefferalCustomerBo.class.getSimpleName());
+
     @Autowired
-    SendPushNotificationService sendPushNotificationService;
-    private static Logger logger = LoggerFactory.getLogger(SendPushNotificationBo.class.getSimpleName());
+    RefferalCustomerService refferalCustomerService;
 
-    public SendPushNotificationBo() {
-    }
-
+    @Override
     public I8SBSwitchControllerResponseVO execute(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) throws Exception {
-        I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
         Object[] objects = this.initializeRequestAndResponseObjects(i8SBSwitchControllerRequestVO.getRequestType());
         Request request = null;
         Response response = null;
@@ -48,48 +48,46 @@ public class SendPushNotificationBo implements I8SBChannelInterface {
         if (objects[1] != null) {
             response = (Response) objects[1];
         }
-
         request.populateRequest(i8SBSwitchControllerRequestVO);
+        logger.info("Valiadate Request For RRN" + i8SBSwitchControllerRequestVO.getRRN());
+        I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = null;
         if (request.validateRequest()) {
-            logger.info("Request Validate For RRN " + i8SBSwitchControllerRequestVO.getRRN());
-            String requestJSON = JSONUtil.getJSON(request);
-            i8SBSwitchControllerRequestVO.setRequestXML(requestJSON);
+            logger.info("Request Validate For RRN" + i8SBSwitchControllerRequestVO.getRRN());
+
             String requestType = i8SBSwitchControllerRequestVO.getRequestType();
 
-            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_SendPushNotification)) {
-                response = sendPushNotificationService.sendPushNotificationResponse((SendPushNotificationsRequest) request);
+
+            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_REFFERAL_CUSTOMER)) {
+                response = refferalCustomerService.refferalCustomerResponse((RefferalCustomerRequest) request);
             }
-//            Thread.sleep(30000);
-            logger.info("I8SB Response back to Microbank after 30s");
             if (response.populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
-            String responseXML = JSONUtil.getJSON(i8SBSwitchControllerResponseVO);
+            String responseXML = JSONUtil.getJSON(response);
             i8SBSwitchControllerResponseVO.setResponseXML(responseXML);
+
         } else {
             logger.info("[FAILED] Request validation failed for RRN: " + i8SBSwitchControllerRequestVO.getRRN());
         }
-
-
         return i8SBSwitchControllerResponseVO;
     }
 
+    @Override
     public I8SBSwitchControllerRequestVO prepareRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO, I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO) {
         return null;
     }
 
+    @Override
     public I8SBSwitchControllerRequestVO generateSystemTraceableInfo(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) throws Exception {
+
         if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getTransmissionDateAndTime())) {
-            i8SBSwitchControllerRequestVO.setTransmissionDateAndTime(DateUtil.formatCurrentDate(DateFormatEnum.TRANSACTION_DATE.getValue()));
+            i8SBSwitchControllerRequestVO.setTransmissionDateAndTime(DateUtil.formatCurrentDate(TRANSACTION_DATE.getValue()));
         }
-
         if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getSTAN())) {
-            i8SBSwitchControllerRequestVO.setSTAN(DateUtil.formatCurrentDate(DateFormatEnum.TIME_LOCAL_TRANSACTION.getValue()));
+            i8SBSwitchControllerRequestVO.setSTAN(DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue()));
         }
-
         if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getRRN())) {
             i8SBSwitchControllerRequestVO.setRRN(i8SBSwitchControllerRequestVO.getSTAN() + i8SBSwitchControllerRequestVO.getTransmissionDateAndTime());
         }
-
         if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getTransactionId())) {
             i8SBSwitchControllerRequestVO.setTransactionId(i8SBSwitchControllerRequestVO.getRRN());
         }
@@ -97,20 +95,23 @@ public class SendPushNotificationBo implements I8SBChannelInterface {
         return i8SBSwitchControllerRequestVO;
     }
 
+
     private Object[] initializeRequestAndResponseObjects(String requestType) {
         Object[] objects = new Object[2];
         Request request = null;
         Response response = null;
         logger.info("Request type: " + requestType);
-        if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_SendPushNotification)) {
-            request = new SendPushNotificationsRequest();
-            response = new SendPushNotificationResponse();
-            objects[0] = request;
-            objects[1] = response;
-            return objects;
+        if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_REFFERAL_CUSTOMER)) {
+            request = new RefferalCustomerRequest();
+            response = new RefferalCustomerResponse();
         } else {
             logger.info("[FAILED] Request type not supported");
             throw new I8SBValidationException("Request type not supported");
         }
+
+        objects[0] = request;
+        objects[1] = response;
+
+        return objects;
     }
 }

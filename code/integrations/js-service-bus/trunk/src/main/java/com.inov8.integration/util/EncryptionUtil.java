@@ -14,7 +14,9 @@ import java.util.Iterator;
 public class EncryptionUtil {
     private static final Logger log = LoggerFactory.getLogger(EncryptionUtil.class);
 
-    private static final String KEY = PropertyReader.getProperty("i8sb.gateway.crypto.key");
+    private static final String KEY ="682ede816988e58fb6d057d9d85605e0";
+
+//            PropertyReader.getProperty("i8sb.gateway.crypto.key");
 
     public static String encrypt(String input) {
         return encryptWithAES(KEY, input);
@@ -105,14 +107,24 @@ public class EncryptionUtil {
 
     public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchProviderException {
 
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        keyGen.initialize(2048);
-        byte[] publicKey = keyGen.genKeyPair().getPublic().getEncoded();
-        StringBuffer retString = new StringBuffer();
-        for (int i = 0; i < publicKey.length; ++i) {
-            retString.append(Integer.toHexString(0x0100 + (publicKey[i] & 0x00FF)).substring(1));
+//        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+//        keyGen.initialize(2048);
+//        byte[] publicKey = keyGen.genKeyPair().getPublic().getEncoded();
+//        StringBuffer retString = new StringBuffer();
+//        for (int i = 0; i < publicKey.length; ++i) {
+//            retString.append(Integer.toHexString(0x0100 + (publicKey[i] & 0x00FF)).substring(1));
+//        }
+//        System.out.println(retString);
+
+        String key = new String("682ede816988e58fb6d057d9d85605e0");
+        String decrypted = null;
+        try {
+            decrypted = encryptWithAES(key,"ub3r_khi");
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        System.out.println(retString);
+        System.out.println("Decryption: " + decrypted);
     }
 
 

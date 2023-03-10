@@ -199,11 +199,7 @@ public class L2AccountUpgradeValidationRequest extends Request implements Serial
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
         this.setCnic(i8SBSwitchControllerRequestVO.getCNIC());
-        if (i8SBSwitchControllerRequestVO.getMobileNumber().equalsIgnoreCase("Approved")) {
-            this.setMobileNumber(true);
-        } else {
-            this.setMobileNumber(false);
-        }
+        this.setMobileNumber(true);
         if (i8SBSwitchControllerRequestVO.getFatherName().equalsIgnoreCase("Approved")) {
             this.setFatherHusbandName(true);
         } else {

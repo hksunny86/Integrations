@@ -23,7 +23,7 @@ public class OfferListForCommodityRequest extends Request {
     @JsonProperty("amount")
     private String amount;
     @JsonProperty("additionalInfo")
-    private AdditionalInfo additionalInfo;
+    private AdditionalInfo additionalInfo=new AdditionalInfo();
     private String identityType;
     private String identityValue;
     private String origSource;

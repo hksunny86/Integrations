@@ -8,9 +8,11 @@ public enum DateFormatEnum {
 	T24_DATE_LOCAL_TRANSACTION("MMdd"),
 	TRANSACTION_DATE("yyyyMMddHHmmss"),
 	TRANSACTION_DATE_TIME("MMddHHmmss"),
+	IBFT_DATE_TIME("yyMMddHHmmss"),
 	EXPIRY_DATE("yyyy-MM-dd HH:mm:ss"),
 	CNIC_FORMAT("E MMM dd HH:mm:ss z yyyy"),
-	DATE_TIME("MM/dd/yyyy HH:mm:ss");
+	DATE_TIME("MM/dd/yyyy"),
+	MERCHANT_CAMPING_DATE_FORMAT("yyyy-MM-dd");
 	// @formatter:on
 	private DateFormatEnum(String value) {
 		this.value = value;

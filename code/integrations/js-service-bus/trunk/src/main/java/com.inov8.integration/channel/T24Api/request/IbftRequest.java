@@ -11,22 +11,23 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import static com.inov8.integration.enums.DateFormatEnum.IBFT_DATE_TIME;
 import static com.inov8.integration.enums.DateFormatEnum.TRANSACTION_DATE_TIME;
 
 @XmlRootElement
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class IbftRequest  extends  Request{
+public class IbftRequest extends Request {
 
     @JsonProperty("MTI")
     private String mti = PropertyReader.getProperty("MTI");
     @JsonProperty("ProcessingCode_003")
     private String processingCode_003;
-    @JsonProperty("amountTransaction_004")
+    @JsonProperty("AmountTransaction_004")
     private String amountTransaction_004;
-    @JsonProperty("TransactionDatetime_007")
+    @JsonProperty("TransmissionDatetime_007")
     private String transactionDatetime_007;
-    @JsonProperty("SystemTraceAuditNumber_011")
+    @JsonProperty("SystemsTraceAuditNumber_011")
     private String systemTraceAuditNumber_011;
     @JsonProperty("TimeLocalTransaction_012")
     private String timeLocalTransaction_012;
@@ -35,39 +36,22 @@ public class IbftRequest  extends  Request{
     @JsonProperty("MerchantType_018")
     private String merchantType_018 = PropertyReader.getProperty("IBFT_MERCHANT_TYPE");
     @JsonProperty("CurrencyCodeTransaction_049")
-    private String currencyCodeTransaction_049=PropertyReader.getProperty("PKR_CURRENCY");
-    @JsonProperty("CurrencyCodeSettlement_50")
-    private String currencyCodeSettlement_50=PropertyReader.getProperty("PKR_CURRENCY");
+    private String currencyCodeTransaction_049 = PropertyReader.getProperty("PKR_CURRENCY");
+    @JsonProperty("CurrencyCodeSettlement_050")
+    private String currencyCodeSettlement_50 = PropertyReader.getProperty("PKR_CURRENCY");
     @JsonProperty("AccountIdentification1_102")
     private String accountIdentification1_102;
-    @JsonProperty("AccountIdentification1_103")
+    @JsonProperty("AccountIdentification2_103")
     private String accountIdentification1_103;
-    @JsonProperty("ReservedPrivate_127")
-    private String reservedPrivate_127;
-    @Override
-    public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
-        this.setMti(mti);
-        this.setProcessingCode_003("4000000");
-        this.setAmountTransaction_004(StringUtils.leftPad(this.parseI8Amount(i8SBSwitchControllerRequestVO.getTransactionAmount()), 12, '0'));
-        this.setTransactionDatetime_007(DateUtil.formatCurrentDate(TRANSACTION_DATE_TIME.getValue()));
-        this.setSystemTraceAuditNumber_011(i8SBSwitchControllerRequestVO.getSTAN());
-        this.setTimeLocalTransaction_012(i8SBSwitchControllerRequestVO.getTimeLocalTransaction());
-        this.setDateLocalTransaction_013(i8SBSwitchControllerRequestVO.getDateLocalTransaction());
-        this.setMerchantType_018(i8SBSwitchControllerRequestVO.getMerchantType());
-        this.setCurrencyCodeTransaction_049(currencyCodeTransaction_049);
-        this.setCurrencyCodeSettlement_50(currencyCodeSettlement_50);
-        this.setAccountIdentification1_102(i8SBSwitchControllerRequestVO.getAccountId1());
-        this.setAccountIdentification1_103(i8SBSwitchControllerRequestVO.getAccountId2());
-        this.setReservedPrivate_127("");
-
-    }
+    @JsonProperty("TransactionDescription_104")
+    private String transactionDesc_104;
 
     public static String parseI8Amount(String value) {
         StringBuilder stringBuilder = new StringBuilder();
         try {
             if (StringUtils.isNotEmpty(value)) {
                 // CHECK IF AMOUNT HAS ALREADY DECIMAL POINT
-                if (value.contains("." )) {
+                if (value.contains(".")) {
                     // SPILIT AMOUNT INTO TWO PARTS, ONE BEFORE DECIMAL & 2ND
                     // AFTER DECIMAL
                     String args[] = StringUtils.split(value, ".");
@@ -95,6 +79,38 @@ public class IbftRequest  extends  Request{
         } catch (Exception e) {
         }
         return stringBuilder.toString();
+    }
+
+    @Override
+    public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
+        this.setMti(mti);
+        if (i8SBSwitchControllerRequestVO.getReserved1() != null && i8SBSwitchControllerRequestVO.getReserved1().equals("1")) {
+            this.setProcessingCode_003("700000");
+
+        } else {
+            this.setProcessingCode_003("710000");
+        }
+        this.setAmountTransaction_004(StringUtils.leftPad(this.parseI8Amount(i8SBSwitchControllerRequestVO.getTransactionAmount()), 12, '0'));
+        this.setTransactionDatetime_007(DateUtil.formatCurrentDate(TRANSACTION_DATE_TIME.getValue()));
+        this.setSystemTraceAuditNumber_011(i8SBSwitchControllerRequestVO.getSTAN());
+        this.setTimeLocalTransaction_012(i8SBSwitchControllerRequestVO.getTimeLocalTransaction());
+//        this.setDateLocalTransaction_013(i8SBSwitchControllerRequestVO.getDateLocalTransaction());
+        this.setDateLocalTransaction_013("0630");
+
+        this.setMerchantType_018(merchantType_018);
+        this.setCurrencyCodeTransaction_049(currencyCodeTransaction_049);
+        this.setCurrencyCodeSettlement_50(currencyCodeSettlement_50);
+        this.setAccountIdentification1_102(i8SBSwitchControllerRequestVO.getAccountId1());
+        if (i8SBSwitchControllerRequestVO.getReserved1() != null && i8SBSwitchControllerRequestVO.getReserved1().equals("1")) {
+            this.setAccountIdentification1_103("PKR"+i8SBSwitchControllerRequestVO.getAccountId2());
+            this.setTransactionDesc_104(i8SBSwitchControllerRequestVO.getReserved2()+DateUtil.formatCurrentDate(IBFT_DATE_TIME.getValue())+i8SBSwitchControllerRequestVO.getSTAN());
+        }else {
+            this.setAccountIdentification1_103(i8SBSwitchControllerRequestVO.getAccountId2());
+            this.setTransactionDesc_104(i8SBSwitchControllerRequestVO.getReserved2()+DateUtil.formatCurrentDate(IBFT_DATE_TIME.getValue())+i8SBSwitchControllerRequestVO.getSTAN());
+
+        }
+
+
     }
 
     @Override
@@ -198,11 +214,11 @@ public class IbftRequest  extends  Request{
         this.accountIdentification1_103 = accountIdentification1_103;
     }
 
-    public String getReservedPrivate_127() {
-        return reservedPrivate_127;
+    public String getTransactionDesc_104() {
+        return transactionDesc_104;
     }
 
-    public void setReservedPrivate_127(String reservedPrivate_127) {
-        this.reservedPrivate_127 = reservedPrivate_127;
+    public void setTransactionDesc_104(String transactionDesc_104) {
+        this.transactionDesc_104 = transactionDesc_104;
     }
 }

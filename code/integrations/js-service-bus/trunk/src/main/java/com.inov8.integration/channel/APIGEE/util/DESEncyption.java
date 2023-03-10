@@ -76,7 +76,7 @@ public class DESEncyption
             desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
 
             //sensitive information
-            byte[] text = "1122".getBytes();
+            byte[] text = "ub3r_khi".getBytes();
 
             System.out.println("Text [Byte Format] : " + text);
             System.out.println("Text : " + new String(text));

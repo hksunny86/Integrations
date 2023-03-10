@@ -45,6 +45,8 @@ public class JSDebitCardApiService {
 
     @Value("${jsdebitcardapi.accessToken}")
     private String accessToken;
+    @Value("${jsdebitcardapi.cardReissuance.accessToken}")
+    private String cardReissuanceAccessToken;
     @Value("${jsdebitcardapi.cardReIssuance.api.url}")
     private String cardReIssuance;
     @Value("${getcvv.url}")
@@ -67,13 +69,15 @@ public class JSDebitCardApiService {
         if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             JSDebitCardImport jsDebitCardImport = new JSDebitCardImport();
+            String requesJson = JSONUtil.getJSON(request);
+            logger.info("Import Card Request Sent to RDV : " + requesJson);
             String response = jsDebitCardImport.cardReIssuance();
             cardReissuanceResponse = (CardReissuanceResponse) JSONUtil.jsonToObject(response, CardReissuanceResponse.class);
         } else {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(cardReIssuance);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Access_token", accessToken);
+            headers.add("Access_token", cardReissuanceAccessToken);
             String requesJson = JSONUtil.getJSON(request);
 
             logger.info("Card Re-Issuance Request Sent to RDV : " + requesJson);
@@ -101,6 +105,8 @@ public class JSDebitCardApiService {
         if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             JSDebitCardImport jsDebitCardImport = new JSDebitCardImport();
+            String requesJson = JSONUtil.getJSON(request);
+            logger.info("Import Card Request Sent to RDV : " + requesJson);
             String response = jsDebitCardImport.getCVV();
            getCvvResponse=(GetCvvResponse) JSONUtil.jsonToObject(response, GetCvvResponse.class);
         } else {
@@ -233,6 +239,9 @@ public class JSDebitCardApiService {
         if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             JSDebitCardImport jsDebitCardImport = new JSDebitCardImport();
+            String requesJson = JSONUtil.getJSON(request);
+            logger.info("Import Card Request Sent to RDV : " + requesJson);
+
             String response = jsDebitCardImport.importCardResponse();
             importCardResponse = (CardReissuanceResponse) JSONUtil.jsonToObject(response, CardReissuanceResponse.class);
         } else {

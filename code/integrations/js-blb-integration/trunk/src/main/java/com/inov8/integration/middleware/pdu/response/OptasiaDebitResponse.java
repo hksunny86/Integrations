@@ -7,35 +7,35 @@ import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
 @JsonPropertyOrder({
-        "Rrn",
-        "ResponseCode",
-        "ResponseDescription",
-        "ResponseDateTime",
-        "TransactioId",
-        "CommissionAmount",
-        "TransactionAmount",
-        "TotalTransactionAmount",
+        "rrn",
+        "responseCode",
+        "responseDescription",
+        "dateTime",
+        "transactionId",
+        "commission",
+        "amount",
+        "totalAmount",
         "HashData",
 })
 public class OptasiaDebitResponse implements Serializable {
 
-    @JsonProperty("Rrn")
+    @JsonProperty("rrn")
     private String rrn;
-    @JsonProperty("ResponseCode")
+    @JsonProperty("responseCode")
     private String responseCode;
-    @JsonProperty("ResponseDescription")
+    @JsonProperty("responseDescription")
     private String responseDescription;
-    @JsonProperty("ResponseDateTime")
+    @JsonProperty("dateTime")
     private String responseDateTime;
-    @JsonProperty("TransactioId")
+    @JsonProperty("transactionId")
     private String transactionId;
-    @JsonProperty("CommissionAmount")
+    @JsonProperty("commission")
     private String comissionAmount;
-    @JsonProperty("TransactionAmount")
+    @JsonProperty("amount")
     private String transactionAmount;
-    @JsonProperty("TotalTransactionAmount")
+    @JsonProperty("totalAmount")
     private String totalTransactionAmount;
-    @JsonProperty("HashData")
+    @JsonProperty("hashData")
     private String hashData;
 
     public String getRrn() {

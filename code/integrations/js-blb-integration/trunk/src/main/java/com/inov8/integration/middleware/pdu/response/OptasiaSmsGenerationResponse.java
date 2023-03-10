@@ -7,23 +7,23 @@ import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
 @JsonPropertyOrder({
-        "Rrn",
-        "ResponseCode",
-        "ResponseDescription",
-        "ResponseDateTime",
-        "HashData",
+        "rrn",
+        "responseCode",
+        "responseDescription",
+        "dateTime",
+        "hashData",
 })
 public class OptasiaSmsGenerationResponse implements Serializable {
 
-    @JsonProperty( "Rrn")
+    @JsonProperty("rrn")
     private String rrn;
-    @JsonProperty( "ResponseCode")
+    @JsonProperty("responseCode")
     private String responseCode;
-    @JsonProperty( "ResponseDescription")
+    @JsonProperty("responseDescription")
     private String responseDescription;
-    @JsonProperty( "ResponseDateTime")
+    @JsonProperty("dateTime")
     private String responseDateTime;
-    @JsonProperty( "HashData")
+    @JsonProperty("hashData")
     private String hashData;
 
     public String getRrn() {

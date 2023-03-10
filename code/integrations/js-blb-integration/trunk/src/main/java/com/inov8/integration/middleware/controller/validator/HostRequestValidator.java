@@ -3733,10 +3733,6 @@ public class HostRequestValidator {
             throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
         }
 
-        if (StringUtils.isEmpty(integrationVO.getThirdPartTransactionId())) {
-            throw new ValidationException("[FAILED] Validation Failed Third Part Transaction Id: " + integrationVO.getThirdPartTransactionId());
-        }
-
     }
 
     public static void validateProfileStatus(ProfileStatusRequest integrationVO) throws ValidationException {

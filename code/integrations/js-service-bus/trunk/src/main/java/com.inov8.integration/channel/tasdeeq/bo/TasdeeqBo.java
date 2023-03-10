@@ -37,13 +37,13 @@ public class TasdeeqBo implements I8SBChannelInterface {
         if (objects[1] != null) {
             response = (Response) objects[1];
         }
-        logger.info("Populate Request : " + request);
         request.populateRequest(i8SBSwitchControllerRequestVO);
         if (request.validateRequest()) {
             logger.info("Request Validate For RRN " + i8SBSwitchControllerRequestVO.getRRN());
             String requestJSON = JSONUtil.getJSON(request);
             i8SBSwitchControllerRequestVO.setRequestXML(requestJSON);
             String requestType = i8SBSwitchControllerRequestVO.getRequestType();
+            tasdeeqService.setI8SBSwitchControllerRequestVO(i8SBSwitchControllerRequestVO);
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_Tasdeeq_AuthenticateUpdated)) {
                 response = tasdeeqService.authenticateUpdatedResponse((AuthenticateUpdatedRequest) request);
             } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_Tasdeeq_CustomAnalytics)) {
@@ -64,7 +64,7 @@ public class TasdeeqBo implements I8SBChannelInterface {
     @Override
     public I8SBSwitchControllerRequestVO prepareRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO, I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO) {
         if (i8SBSwitchControllerResponseVO!=null){
-            i8SBSwitchControllerRequestVO.setAccessToken(i8SBSwitchControllerResponseVO.getI8SBSwitchControllerResponseVOList().get(0).getAccessToken());
+            i8SBSwitchControllerRequestVO.setAccessToken(i8SBSwitchControllerResponseVO.getI8SBSwitchControllerResponseVOList().get(0).getAuthToken());
         }
         return i8SBSwitchControllerRequestVO;
     }

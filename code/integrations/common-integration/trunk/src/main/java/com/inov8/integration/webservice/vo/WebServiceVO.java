@@ -378,6 +378,8 @@ public class WebServiceVO implements Serializable {
     private String fromDate;
     private String toDate;
     private Boolean isStatusFlag;
+    private String processingFee;
+    private String refNo;
     private List<DueDatePlan> dueDatePlanList;
     private List<History> historyList;
     private List<Interest> interestList;
@@ -387,10 +389,116 @@ public class WebServiceVO implements Serializable {
     private List<OutstandingStatus> outstandingStatusList;
     private List<RecurringCharges> recurringChargesList;
     private List<PeriodsProjection> periodsProjectionList;
-    private String processingFee;
     private List<LoansPerState> loansPerStates;
     private List<EligibilityStatus> eligibilityStatusList;
     private List<LoanOffersByLoanProductGroup> loanOffersByLoanProductGroupList;
+    private List<MaturityDetails> maturityDetailsList;
+    private List<LoansPerState> loansPerStateList;
+    private List<Loans> loansList;
+    private List<Loan> loanList;
+    private List<Report> reportList;
+    private List<Repayment> repaymentList;
+    private List<Plan> planList;
+    private List<TotalOneOffCharges> totalOneOffChargesList;
+    private List<InterestAdjustment> interestAdjustmentsList;
+    private List<ChargeAdjustments> chargeAdjustmentsList;
+    private List<Milestones> milestonesList;
+
+    public String getRefNo() {
+        return refNo;
+    }
+
+    public void setRefNo(String refNo) {
+        this.refNo = refNo;
+    }
+
+    public List<Milestones> getMilestonesList() {
+        return milestonesList;
+    }
+
+    public void setMilestonesList(List<Milestones> milestonesList) {
+        this.milestonesList = milestonesList;
+    }
+
+    public List<InterestAdjustment> getInterestAdjustmentsList() {
+        return interestAdjustmentsList;
+    }
+
+    public void setInterestAdjustmentsList(List<InterestAdjustment> interestAdjustmentsList) {
+        this.interestAdjustmentsList = interestAdjustmentsList;
+    }
+
+    public List<ChargeAdjustments> getChargeAdjustmentsList() {
+        return chargeAdjustmentsList;
+    }
+
+    public void setChargeAdjustmentsList(List<ChargeAdjustments> chargeAdjustmentsList) {
+        this.chargeAdjustmentsList = chargeAdjustmentsList;
+    }
+
+    public List<TotalOneOffCharges> getTotalOneOffChargesList() {
+        return totalOneOffChargesList;
+    }
+
+    public void setTotalOneOffChargesList(List<TotalOneOffCharges> totalOneOffChargesList) {
+        this.totalOneOffChargesList = totalOneOffChargesList;
+    }
+
+    public List<LoansPerState> getLoansPerStateList() {
+        return loansPerStateList;
+    }
+
+    public void setLoansPerStateList(List<LoansPerState> loansPerStateList) {
+        this.loansPerStateList = loansPerStateList;
+    }
+
+    public List<Loans> getLoansList() {
+        return loansList;
+    }
+
+    public void setLoansList(List<Loans> loansList) {
+        this.loansList = loansList;
+    }
+
+    public List<Loan> getLoanList() {
+        return loanList;
+    }
+
+    public void setLoanList(List<Loan> loanList) {
+        this.loanList = loanList;
+    }
+
+    public List<Report> getReportList() {
+        return reportList;
+    }
+
+    public void setReportList(List<Report> reportList) {
+        this.reportList = reportList;
+    }
+
+    public List<Repayment> getRepaymentList() {
+        return repaymentList;
+    }
+
+    public void setRepaymentList(List<Repayment> repaymentList) {
+        this.repaymentList = repaymentList;
+    }
+
+    public List<Plan> getPlanList() {
+        return planList;
+    }
+
+    public void setPlanList(List<Plan> planList) {
+        this.planList = planList;
+    }
+
+    public List<MaturityDetails> getMaturityDetailsList() {
+        return maturityDetailsList;
+    }
+
+    public void setMaturityDetailsList(List<MaturityDetails> maturityDetailsList) {
+        this.maturityDetailsList = maturityDetailsList;
+    }
 
     public List<LoanOffersByLoanProductGroup> getLoanOffersByLoanProductGroupList() {
         return loanOffersByLoanProductGroupList;

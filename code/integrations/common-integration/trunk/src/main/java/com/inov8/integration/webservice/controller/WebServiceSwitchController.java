@@ -150,7 +150,8 @@ public interface WebServiceSwitchController {
     WebServiceVO loanHistory(WebServiceVO webServiceVO);
     WebServiceVO transactionActive(WebServiceVO webServiceVO);
 //    WebServiceVO loanStatus(WebServiceVO webServiceVO);
-//    WebServiceVO loanCallBack(WebServiceVO webServiceVO);
+    WebServiceVO loanCallBack(WebServiceVO webServiceVO);
+    WebServiceVO simpleAccountOpening(WebServiceVO webServiceVO);
 //    WebServiceVO offerListForCommodity(WebServiceVO webServiceVO);
 //    WebServiceVO customerAnalytics(WebServiceVO webServiceVO);
 

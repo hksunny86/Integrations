@@ -10,6 +10,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "internalLoanId",
+        "externalLoanId",
         "loanState",
         "loanTimestamp",
         "loanReason",
@@ -21,6 +22,8 @@ public class Loan implements Serializable {
 
     @JsonProperty("internalLoanId")
     private String internalLoanId;
+    @JsonProperty("externalLoanId")
+    private String externalLoanId;
     @JsonProperty("loanState")
     private String loanState;
     @JsonProperty("loanTimestamp")
@@ -29,6 +32,14 @@ public class Loan implements Serializable {
     private String loanReason;
     @JsonProperty("loanOffer")
     private List<LoanOffers> loanOffersList;
+
+    public String getExternalLoanId() {
+        return externalLoanId;
+    }
+
+    public void setExternalLoanId(String externalLoanId) {
+        this.externalLoanId = externalLoanId;
+    }
 
     public String getInternalLoanId() {
         return internalLoanId;

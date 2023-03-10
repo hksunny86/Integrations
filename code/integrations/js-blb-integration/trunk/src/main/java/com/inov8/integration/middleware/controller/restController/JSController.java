@@ -1197,7 +1197,7 @@ public class JSController {
         return lienStatusResponse;
     }
 
-    @RequestMapping(value = "api/smsGeneration", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/optasiaSMS", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     OptasiaSmsGenerationResponse optasiaSmsGenerationResponse(@RequestBody OptasiaSmsGenerationRequest request) throws
             Exception {
@@ -2017,7 +2017,7 @@ public class JSController {
         return response;
     }
 
-    @RequestMapping(value = "api/callBack", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/advance_callback", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     LoanCallBackResponse loanCallBackResponse(@RequestBody LoanCallBackRequest request) throws Exception {
         LoanCallBackResponse loanCallBackResponse = new LoanCallBackResponse();

@@ -6835,17 +6835,17 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     webServiceVO.setAccountTitle(appUserModel.getFirstName() + " " + appUserModel.getLastName());
                     if (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)) {
                         webServiceVO.setAccountType("L0");
-//                        webServiceVO.setIsBVSAccount("0");
+                        webServiceVO.setIsBVSAccount("0");
                     } else if (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_1)) {
                         webServiceVO.setAccountType("L1");
-//                        webServiceVO.setIsBVSAccount("1");
+                        webServiceVO.setIsBVSAccount("1");
                     } else if (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.BLINK)) {
                         webServiceVO.setAccountType("blink");
-//                        if (customerModel.getBlinkBvs().equals(true)){
-//                            webServiceVO.setReserved3("1");
-//                        }else {
-//                            webServiceVO.setReserved3("0");
-//                        }
+                        if (customerModel.getBlinkBvs().equals(true)){
+                            webServiceVO.setReserved3("1");
+                        }else {
+                            webServiceVO.setReserved3("0");
+                        }
                     } else if (customerModel.getCustomerAccountTypeId().equals(56L)) {
                         webServiceVO.setAccountType("Zindigi Ultra");
                     }
@@ -7098,9 +7098,11 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 String password = com.inov8.microbank.common.util.EncryptionUtil.encryptWithAES(XMLConstants.AES_ENCRYPTION_KEY, loginPin);
                 appUserModel.setPassword(password);
                 appUserModel.setAccountStateId(AccountStateConstants.ACCOUNT_STATE_COLD);
-
+                appUserModel.setUpdatedOn(new Date());
                 uda.setPin(password);
                 uda.setAccountLocked(false);
+                uda.setComments("");
+                uda.setUpdatedOn(new Date());
                 uda.setLoginAttemptCount(new Integer(0));
 
                 baseWrapper.setBasePersistableModel(appUserModel);
@@ -9650,8 +9652,8 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         customerModel.setCustomerId(appUserModel.getCustomerId());
         try {
             customerModel = getCommonCommandManager().getCustomerModelById(appUserModel.getCustomerId());
-            if (blinkCustomerModelList.get(0) == null || !(customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.BLINK) || customerModel.getCustomerAccountTypeId().equals(56L))) {
-                webServiceVO.setResponseCodeDescription("No Blink Customer Found Against This CNIC and Mobile Number");
+            if (!(customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.BLINK) || customerModel.getCustomerAccountTypeId().equals(56L))) {
+                webServiceVO.setResponseCodeDescription("No Ultra and Zindig Ultra Customer Found Against This CNIC and Mobile Number");
                 webServiceVO.setResponseCode("172");
                 return webServiceVO;
             } else {
@@ -9669,9 +9671,104 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                             logger.info("CustomerNadraVerificationCommand response for Mobile # :: " + appUserModel.getMobileNo() + "\n" + response);
                             return mfsWebResponseDataPopulator.populateErrorMessagesForOpenAPI(webServiceVO, response);
                         } else {
+
+                            if (!blinkCustomerModelList.isEmpty()) {
+
+
+                                BlinkCustomerModel blinkModel = new BlinkCustomerModel();
+                                blinkModel = blinkCustomerModelDAO.loadBlinkCustomerModelByBlinkCustomerId(blinkCustomerModelList.get(0).getBlinkCustomerId());
+                                bWrapper.setBasePersistableModel(appUserModel);
+                                logger.info("load UserDeviceAccount against appUserId" + appUserModel.getAppUserId());
+                                bWrapper = getCommonCommandManager().loadUserDeviceAccountByMobileNumber(bWrapper);
+                                uda = (UserDeviceAccountsModel) bWrapper.getBasePersistableModel();
+                                Long paymentModeId = PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT;
+                                logger.info("account Info Model against customerID" + customerModel.getCustomerId() + "and payement mode Id" + paymentModeId);
+                                AccountInfoModel accountInfoModel = getCommonCommandManager().getAccountInfoModel(customerModel.getCustomerId(), paymentModeId);
+                                SmartMoneyAccountModel smartMoneyAccountModel = null;
+                                smartMoneyAccountModel = getCommonCommandManager().getSmartMoneyAccountByAppUserModelAndPaymentModId(appUserModel, paymentModeId);
+                                if (uda.getAccountLocked()) {
+                                    if (blinkModel.getClsResponseCode() == null || !blinkModel.getClsResponseCode().equals("True Match-Compliance")) {
+                                        uda.setAccountLocked(false);
+                                        uda.setUpdatedOn(new Date());
+                                        bWrapper.setBasePersistableModel(uda);
+                                        this.getCommonCommandManager().updateUserDeviceAccounts(bWrapper);
+                                        appUserModel.setAccountStateId(AccountStateConstants.ACCOUNT_STATE_COLD);
+                                        appUserModel.setUpdatedOn(new Date());
+                                        bWrapper.setBasePersistableModel(appUserModel);
+                                        this.getCommonCommandManager().updateAppUser(bWrapper);
+                                    }
+                                }
+                                Long stateId = appUserModel.getAccountStateId();
+                                if (stateId.equals(AccountStateConstantsInterface.ACCOUNT_STATE_DORMANT)) {
+                                    appUserModel.setAccountStateId(AccountStateConstants.ACCOUNT_STATE_COLD);
+                                    appUserModel.setPrevRegistrationStateId(appUserModel.getRegistrationStateId());
+                                    appUserModel.setRegistrationStateId(RegistrationStateConstants.VERIFIED);
+                                    appUserModel.setDormancyRemovedOn(new Date());
+                                    appUserModel.setUpdatedOn(new Date());
+                                    bWrapper.setBasePersistableModel(appUserModel);
+                                    this.getCommonCommandManager().updateAppUser(bWrapper);
+                                }
+                                if (!(smartMoneyAccountModel.getIsDebitBlocked() == null) && smartMoneyAccountModel.getIsDebitBlocked().equals(true)) {
+                                    smartMoneyAccountModel.setIsDebitBlocked(false);
+                                    smartMoneyAccountModel.setDebitBlockAmount(0.0);
+                                    smartMoneyAccountModel.setUpdatedOn(new Date());
+                                    bWrapper.setBasePersistableModel(smartMoneyAccountModel);
+                                    this.getCommonCommandManager().updateSmartMoneyAccount(bWrapper);
+                                }
+                                logger.info("Blink Bvs Successfully Verified");
+                                blinkModel.setMobileNo(mobileNo);
+                                blinkModel.setCnic(cnic);
+                                blinkModel.setBVS(true);
+                                blinkCustomerModelDAO.saveOrUpdate(blinkModel);
+                                CustomerModel customerModel1 = new CustomerModel();
+                                customerModel1 = customerDAO.loadCustomerModelByCustomerId(customerModel.getCustomerId());
+                                customerModel1.setMobileNo(mobileNo);
+                                customerModel1.setBlinkBvs(true);
+                                customerDAO.saveOrUpdate(customerModel1);
+                                webServiceVO.setResponseCodeDescription("Successful");
+                                webServiceVO.setResponseCode("00");
+                            }else {
+                                bWrapper.setBasePersistableModel(appUserModel);
+                                logger.info("load UserDeviceAccount against appUserId" + appUserModel.getAppUserId());
+                                bWrapper = getCommonCommandManager().loadUserDeviceAccountByMobileNumber(bWrapper);
+                                uda = (UserDeviceAccountsModel) bWrapper.getBasePersistableModel();
+                                Long paymentModeId = PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT;
+                                logger.info("account Info Model against customerID" + customerModel.getCustomerId() + "and payement mode Id" + paymentModeId);
+                                AccountInfoModel accountInfoModel = getCommonCommandManager().getAccountInfoModel(customerModel.getCustomerId(), paymentModeId);
+                                SmartMoneyAccountModel smartMoneyAccountModel = null;
+                                smartMoneyAccountModel = getCommonCommandManager().getSmartMoneyAccountByAppUserModelAndPaymentModId(appUserModel, paymentModeId);
+                                Long stateId = appUserModel.getAccountStateId();
+                                if (stateId.equals(AccountStateConstantsInterface.ACCOUNT_STATE_DORMANT)) {
+                                    appUserModel.setAccountStateId(AccountStateConstants.ACCOUNT_STATE_COLD);
+                                    appUserModel.setPrevRegistrationStateId(appUserModel.getRegistrationStateId());
+                                    appUserModel.setRegistrationStateId(RegistrationStateConstants.VERIFIED);
+                                    appUserModel.setDormancyRemovedOn(new Date());
+                                    appUserModel.setUpdatedOn(new Date());
+                                    bWrapper.setBasePersistableModel(appUserModel);
+                                    this.getCommonCommandManager().updateAppUser(bWrapper);
+                                }
+                                if (!(smartMoneyAccountModel.getIsDebitBlocked() == null) && smartMoneyAccountModel.getIsDebitBlocked().equals(true)) {
+                                    smartMoneyAccountModel.setIsDebitBlocked(false);
+                                    smartMoneyAccountModel.setDebitBlockAmount(0.0);
+                                    smartMoneyAccountModel.setUpdatedOn(new Date());
+                                    bWrapper.setBasePersistableModel(smartMoneyAccountModel);
+                                    this.getCommonCommandManager().updateSmartMoneyAccount(bWrapper);
+                                }
+                                CustomerModel customerModel1 = new CustomerModel();
+                                customerModel1 = customerDAO.loadCustomerModelByCustomerId(customerModel.getCustomerId());
+                                customerModel1.setMobileNo(mobileNo);
+                                customerModel1.setBlinkBvs(true);
+                                customerDAO.saveOrUpdate(customerModel1);
+                                webServiceVO.setResponseCodeDescription("Successful");
+                                webServiceVO.setResponseCode("00");
+                            }
+
+                        }
+                    } else {
+
+                        if(!blinkCustomerModelList.isEmpty()) {
                             BlinkCustomerModel blinkModel = new BlinkCustomerModel();
                             blinkModel = blinkCustomerModelDAO.loadBlinkCustomerModelByBlinkCustomerId(blinkCustomerModelList.get(0).getBlinkCustomerId());
-                            ThreadLocalAppUser.setAppUserModel(appUserModel);
                             bWrapper.setBasePersistableModel(appUserModel);
                             logger.info("load UserDeviceAccount against appUserId" + appUserModel.getAppUserId());
                             bWrapper = getCommonCommandManager().loadUserDeviceAccountByMobileNumber(bWrapper);
@@ -9692,6 +9789,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                                     appUserModel.setUpdatedOn(new Date());
                                     bWrapper.setBasePersistableModel(appUserModel);
                                     this.getCommonCommandManager().updateAppUser(bWrapper);
+
                                 }
                             }
                             Long stateId = appUserModel.getAccountStateId();
@@ -9699,7 +9797,6 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                                 appUserModel.setAccountStateId(AccountStateConstants.ACCOUNT_STATE_COLD);
                                 appUserModel.setPrevRegistrationStateId(appUserModel.getRegistrationStateId());
                                 appUserModel.setRegistrationStateId(RegistrationStateConstants.VERIFIED);
-                                appUserModel.setDormancyRemovedOn(new Date());
                                 appUserModel.setUpdatedOn(new Date());
                                 bWrapper.setBasePersistableModel(appUserModel);
                                 this.getCommonCommandManager().updateAppUser(bWrapper);
@@ -9723,62 +9820,41 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                             customerDAO.saveOrUpdate(customerModel1);
                             webServiceVO.setResponseCodeDescription("Successful");
                             webServiceVO.setResponseCode("00");
-                        }
-                    } else {
-                        BlinkCustomerModel blinkModel = new BlinkCustomerModel();
-                        blinkModel = blinkCustomerModelDAO.loadBlinkCustomerModelByBlinkCustomerId(blinkCustomerModelList.get(0).getBlinkCustomerId());
-                        ThreadLocalAppUser.setAppUserModel(appUserModel);
-                        bWrapper.setBasePersistableModel(appUserModel);
-                        logger.info("load UserDeviceAccount against appUserId" + appUserModel.getAppUserId());
-                        bWrapper = getCommonCommandManager().loadUserDeviceAccountByMobileNumber(bWrapper);
-                        uda = (UserDeviceAccountsModel) bWrapper.getBasePersistableModel();
-                        ThreadLocalUserDeviceAccounts.setUserDeviceAccountsModel(uda);
-                        Long paymentModeId = PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT;
-                        logger.info("account Info Model against customerID" + customerModel.getCustomerId() + "and payement mode Id" + paymentModeId);
-                        AccountInfoModel accountInfoModel = getCommonCommandManager().getAccountInfoModel(customerModel.getCustomerId(), paymentModeId);
-                        SmartMoneyAccountModel smartMoneyAccountModel = null;
-                        smartMoneyAccountModel = getCommonCommandManager().getSmartMoneyAccountByAppUserModelAndPaymentModId(appUserModel, paymentModeId);
-                        if (uda.getAccountLocked()) {
-                            if (blinkModel.getClsResponseCode() == null || !blinkModel.getClsResponseCode().equals("True Match-Compliance")) {
-                                uda.setAccountLocked(false);
-                                uda.setUpdatedOn(new Date());
-                                bWrapper.setBasePersistableModel(uda);
-                                this.getCommonCommandManager().updateUserDeviceAccounts(bWrapper);
+                        }else {
+                            bWrapper.setBasePersistableModel(appUserModel);
+                            logger.info("load UserDeviceAccount against appUserId" + appUserModel.getAppUserId());
+                            bWrapper = getCommonCommandManager().loadUserDeviceAccountByMobileNumber(bWrapper);
+                            uda = (UserDeviceAccountsModel) bWrapper.getBasePersistableModel();
+                            Long paymentModeId = PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT;
+                            logger.info("account Info Model against customerID" + customerModel.getCustomerId() + "and payement mode Id" + paymentModeId);
+                            AccountInfoModel accountInfoModel = getCommonCommandManager().getAccountInfoModel(customerModel.getCustomerId(), paymentModeId);
+                            SmartMoneyAccountModel smartMoneyAccountModel = null;
+                            smartMoneyAccountModel = getCommonCommandManager().getSmartMoneyAccountByAppUserModelAndPaymentModId(appUserModel, paymentModeId);
+                            Long stateId = appUserModel.getAccountStateId();
+                            if (stateId.equals(AccountStateConstantsInterface.ACCOUNT_STATE_DORMANT)) {
                                 appUserModel.setAccountStateId(AccountStateConstants.ACCOUNT_STATE_COLD);
+                                appUserModel.setPrevRegistrationStateId(appUserModel.getRegistrationStateId());
+                                appUserModel.setRegistrationStateId(RegistrationStateConstants.VERIFIED);
+                                appUserModel.setDormancyRemovedOn(new Date());
                                 appUserModel.setUpdatedOn(new Date());
                                 bWrapper.setBasePersistableModel(appUserModel);
                                 this.getCommonCommandManager().updateAppUser(bWrapper);
-
                             }
+                            if (!(smartMoneyAccountModel.getIsDebitBlocked() == null) && smartMoneyAccountModel.getIsDebitBlocked().equals(true)) {
+                                smartMoneyAccountModel.setIsDebitBlocked(false);
+                                smartMoneyAccountModel.setDebitBlockAmount(0.0);
+                                smartMoneyAccountModel.setUpdatedOn(new Date());
+                                bWrapper.setBasePersistableModel(smartMoneyAccountModel);
+                                this.getCommonCommandManager().updateSmartMoneyAccount(bWrapper);
+                            }
+                            CustomerModel customerModel1 = new CustomerModel();
+                            customerModel1 = customerDAO.loadCustomerModelByCustomerId(customerModel.getCustomerId());
+                            customerModel1.setMobileNo(mobileNo);
+                            customerModel1.setBlinkBvs(true);
+                            customerDAO.saveOrUpdate(customerModel1);
+                            webServiceVO.setResponseCodeDescription("Successful");
+                            webServiceVO.setResponseCode("00");
                         }
-                        Long stateId = appUserModel.getAccountStateId();
-                        if (stateId.equals(AccountStateConstantsInterface.ACCOUNT_STATE_DORMANT)) {
-                            appUserModel.setAccountStateId(AccountStateConstants.ACCOUNT_STATE_COLD);
-                            appUserModel.setPrevRegistrationStateId(appUserModel.getRegistrationStateId());
-                            appUserModel.setRegistrationStateId(RegistrationStateConstants.VERIFIED);
-                            appUserModel.setUpdatedOn(new Date());
-                            bWrapper.setBasePersistableModel(appUserModel);
-                            this.getCommonCommandManager().updateAppUser(bWrapper);
-                        }
-                        if (!(smartMoneyAccountModel.getIsDebitBlocked() == null) && smartMoneyAccountModel.getIsDebitBlocked().equals(true)) {
-                            smartMoneyAccountModel.setIsDebitBlocked(false);
-                            smartMoneyAccountModel.setDebitBlockAmount(0.0);
-                            smartMoneyAccountModel.setUpdatedOn(new Date());
-                            bWrapper.setBasePersistableModel(smartMoneyAccountModel);
-                            this.getCommonCommandManager().updateSmartMoneyAccount(bWrapper);
-                        }
-                        logger.info("Blink Bvs Successfully Verified");
-                        blinkModel.setMobileNo(mobileNo);
-                        blinkModel.setCnic(cnic);
-                        blinkModel.setBVS(true);
-                        blinkCustomerModelDAO.saveOrUpdate(blinkModel);
-                        CustomerModel customerModel1 = new CustomerModel();
-                        customerModel1 = customerDAO.loadCustomerModelByCustomerId(customerModel.getCustomerId());
-                        customerModel1.setMobileNo(mobileNo);
-                        customerModel1.setBlinkBvs(true);
-                        customerDAO.saveOrUpdate(customerModel1);
-                        webServiceVO.setResponseCodeDescription("Successful");
-                        webServiceVO.setResponseCode("00");
                     }
                 }
             }
@@ -9799,6 +9875,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         }
         return webServiceVO;
     }
+
 
 
     @Override

@@ -26,161 +26,161 @@ public class JSMinorAccountController {
     @Autowired
     HostIntegrationService integrationService;
 
-    @RequestMapping(value = "api/M0AccountOpening", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public MinorAccountOpeningResponse m0AccountOpeningResponse(@RequestBody MinorAccountOpeningRequest request) throws ParseException {
-
-        logger.info("M0 Account Opening  Request Recieve at Controller at time: ");
-
-        MinorAccountOpeningResponse m0AccountOpeningResponse = new MinorAccountOpeningResponse();
-        String res = null;
-        long start = System.currentTimeMillis();
-        logger.info("M0 Account Opening  Request Recieve at Controller at time: " + start);//        JSONParser parser = new JSONParser();
-        StringBuilder stringText = new StringBuilder()
-                .append(request.getUserName())
-                .append(request.getPassword())
-                .append(request.getRrn())
-                .append(request.getDateTime())
-                .append(request.getName())
-                .append(request.getNic())
-                .append(request.getIssuanceDate())
-                .append(request.getMobileNumber())
-                .append(request.getMotherMedianName())
-                .append(request.getFatherName())
-                .append(request.getPlaceOfbirth())
-                .append(request.getDateOfBirth())
-                .append(request.getAddress())
-                .append(request.getNicExpiry())
-                .append(request.getParentCnicPic())
-                .append(request.getSnicPic())
-                .append(request.getMinorCutomerPic())
-                .append(request.getFatherMotherMobileNumber())
-                .append(request.getFatherCnic())
-                .append(request.getFatherCnicIssuanceDate())
-                .append(request.getFatherCnicExpiryDate())
-                .append(request.getMotherCnic())
-                .append(request.getEmail())
-                .append(request.getBFormPic())
-                .append(request.getChannelId())
-                .append(request.getTerminalId())
-                .append(request.getReserved1())
-                .append(request.getReserved2())
-                .append(request.getReserved3())
-                .append(request.getReserved4())
-                .append(request.getReserved5())
-                .append(request.getReserved6())
-                .append(request.getReserved7())
-                .append(request.getReserved8())
-                .append(request.getReserved9())
-                .append(request.getReserved10());
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-        if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-            try {
-                    HostRequestValidator.validateM0AccountOpening(request);
-                m0AccountOpeningResponse = integrationService.m0AccountOpeningResponse(request);
-//                    m0AccountOpeningResponse.setResponseCode("00");
-//                    m0AccountOpeningResponse.setResponseDescription("Successfull");
-//                    m0AccountOpeningResponse.setHashData("ABCD0026156156565645656");
-            } catch (ValidationException ve) {
-                m0AccountOpeningResponse.setResponseCode("420");
-                m0AccountOpeningResponse.setResponseDescription(ve.getMessage());
-                logger.error("ERROR: Request Validation", ve);
-            } catch (Exception e) {
-                m0AccountOpeningResponse.setResponseCode("220");
-                m0AccountOpeningResponse.setResponseDescription(e.getMessage());
-                logger.error("ERROR: General Processing ", e);
-            }
-            logger.info("******* DEBUG LOGS FOR  Fee Payment Request  TRANSACTION *********");
-            logger.info("ResponseCode: " + m0AccountOpeningResponse.getResponseCode());
-        } else {
-            logger.info("******* DEBUG LOGS FOR  Fee Payment Request TRANSACTION AUTHENTICATION *********");
-            m0AccountOpeningResponse = new MinorAccountOpeningResponse();
-            m0AccountOpeningResponse.setResponseCode("420");
-            m0AccountOpeningResponse.setResponseDescription("Request is not authenticated");
-            m0AccountOpeningResponse.setRrn(request.getRrn());
-            logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-        }
-        } else {
-            logger.info("******* DEBUG LOGS FOR Fee Payment Request Request TRANSACTION *********");
-            m0AccountOpeningResponse = new MinorAccountOpeningResponse();
-            m0AccountOpeningResponse.setResponseCode("111");
-            m0AccountOpeningResponse.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
-        long end = System.currentTimeMillis() - start;
-        logger.info("M0 Account Opening  Request  Processed in : {} ms {}", end, m0AccountOpeningResponse);
-        return m0AccountOpeningResponse;
-    }
-
-    @RequestMapping(value = "api/M0AccountVerification", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    M0VerifyAccountResponse m0VerifyAccountResponse(@Valid @RequestBody M0VerifyAccountRequest request) {
-        logger.info("Start Processing Account Verify Transaction Request with {}");
-        long start = System.currentTimeMillis();
-        M0VerifyAccountResponse response = new M0VerifyAccountResponse();
-        String requestXML = JSONUtil.getJSON(request);
-        logger.info("Start Processing Account Verify Transaction Request with {}", request);
-        StringBuffer stringText = new StringBuffer(
-                request.getUserName() +
-                        request.getPassword() +
-                        request.getCnic() +
-                        request.getDateTime() +
-                        request.getMobileNumber() +
-                        request.getRrn() +
-                        request.getTransactionType() +
-                        request.getChannelId() +
-                        request.getReserved1() +
-                        request.getReserved2() +
-                        request.getReserved3() +
-                        request.getReserved4() +
-                        request.getReserved5());
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (sha256hex.equalsIgnoreCase(request.getHashData())) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-
-                try {
-                    HostRequestValidator.validateM0VerifyAccount(request);
-//                    //for Mock
-//                    response.setResponseCode("14");
-//                    response.setResponseDescription("No Customer Found Against Mobile number");
-//                    response.setHashData("ABCD0026156156565645656");
-
-                    response = integrationService.m0VerifyAccount(request);
-
-                } catch (ValidationException ve) {
-                    response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-                logger.info("******* DEBUG LOGS FOR ACCOUNT VERIFY TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR  Verify Account TRANSACTION AUTHENTICATION *********");
-                response = new M0VerifyAccountResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-            }
-        } else {
-            logger.info("******* DEBUG LOGS FOR ACCOUNT VERIFY TRANSACTION *********");
-            response = new M0VerifyAccountResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
-
-
-        long end = System.currentTimeMillis() - start;
-        logger.info("Account Verify Transaction Request  Processed in : {} ms {}", end, response);
-
-        return response;
-    }
-
+//    @RequestMapping(value = "api/M0AccountOpening", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public MinorAccountOpeningResponse m0AccountOpeningResponse(@RequestBody MinorAccountOpeningRequest request) throws ParseException {
+//
+//        logger.info("M0 Account Opening  Request Recieve at Controller at time: ");
+//
+//        MinorAccountOpeningResponse m0AccountOpeningResponse = new MinorAccountOpeningResponse();
+//        String res = null;
+//        long start = System.currentTimeMillis();
+//        logger.info("M0 Account Opening  Request Recieve at Controller at time: " + start);//        JSONParser parser = new JSONParser();
+//        StringBuilder stringText = new StringBuilder()
+//                .append(request.getUserName())
+//                .append(request.getPassword())
+//                .append(request.getRrn())
+//                .append(request.getDateTime())
+//                .append(request.getName())
+//                .append(request.getNic())
+//                .append(request.getIssuanceDate())
+//                .append(request.getMobileNumber())
+//                .append(request.getMotherMedianName())
+//                .append(request.getFatherName())
+//                .append(request.getPlaceOfbirth())
+//                .append(request.getDateOfBirth())
+//                .append(request.getAddress())
+//                .append(request.getNicExpiry())
+//                .append(request.getParentCnicPic())
+//                .append(request.getSnicPic())
+//                .append(request.getMinorCutomerPic())
+//                .append(request.getFatherMotherMobileNumber())
+//                .append(request.getFatherCnic())
+//                .append(request.getFatherCnicIssuanceDate())
+//                .append(request.getFatherCnicExpiryDate())
+//                .append(request.getMotherCnic())
+//                .append(request.getEmail())
+//                .append(request.getBFormPic())
+//                .append(request.getChannelId())
+//                .append(request.getTerminalId())
+//                .append(request.getReserved1())
+//                .append(request.getReserved2())
+//                .append(request.getReserved3())
+//                .append(request.getReserved4())
+//                .append(request.getReserved5())
+//                .append(request.getReserved6())
+//                .append(request.getReserved7())
+//                .append(request.getReserved8())
+//                .append(request.getReserved9())
+//                .append(request.getReserved10());
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//        if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+//            try {
+//                    HostRequestValidator.validateM0AccountOpening(request);
+//                m0AccountOpeningResponse = integrationService.m0AccountOpeningResponse(request);
+////                    m0AccountOpeningResponse.setResponseCode("00");
+////                    m0AccountOpeningResponse.setResponseDescription("Successfull");
+////                    m0AccountOpeningResponse.setHashData("ABCD0026156156565645656");
+//            } catch (ValidationException ve) {
+//                m0AccountOpeningResponse.setResponseCode("420");
+//                m0AccountOpeningResponse.setResponseDescription(ve.getMessage());
+//                logger.error("ERROR: Request Validation", ve);
+//            } catch (Exception e) {
+//                m0AccountOpeningResponse.setResponseCode("220");
+//                m0AccountOpeningResponse.setResponseDescription(e.getMessage());
+//                logger.error("ERROR: General Processing ", e);
+//            }
+//            logger.info("******* DEBUG LOGS FOR  Fee Payment Request  TRANSACTION *********");
+//            logger.info("ResponseCode: " + m0AccountOpeningResponse.getResponseCode());
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR  Fee Payment Request TRANSACTION AUTHENTICATION *********");
+//            m0AccountOpeningResponse = new MinorAccountOpeningResponse();
+//            m0AccountOpeningResponse.setResponseCode("420");
+//            m0AccountOpeningResponse.setResponseDescription("Request is not authenticated");
+//            m0AccountOpeningResponse.setRrn(request.getRrn());
+//            logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+//        }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR Fee Payment Request Request TRANSACTION *********");
+//            m0AccountOpeningResponse = new MinorAccountOpeningResponse();
+//            m0AccountOpeningResponse.setResponseCode("111");
+//            m0AccountOpeningResponse.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
+//        long end = System.currentTimeMillis() - start;
+//        logger.info("M0 Account Opening  Request  Processed in : {} ms {}", end, m0AccountOpeningResponse);
+//        return m0AccountOpeningResponse;
+//    }
+//
+//    @RequestMapping(value = "api/M0AccountVerification", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseBody
+//    M0VerifyAccountResponse m0VerifyAccountResponse(@Valid @RequestBody M0VerifyAccountRequest request) {
+//        logger.info("Start Processing Account Verify Transaction Request with {}");
+//        long start = System.currentTimeMillis();
+//        M0VerifyAccountResponse response = new M0VerifyAccountResponse();
+//        String requestXML = JSONUtil.getJSON(request);
+//        logger.info("Start Processing Account Verify Transaction Request with {}", request);
+//        StringBuffer stringText = new StringBuffer(
+//                request.getUserName() +
+//                        request.getPassword() +
+//                        request.getCnic() +
+//                        request.getDateTime() +
+//                        request.getMobileNumber() +
+//                        request.getRrn() +
+//                        request.getTransactionType() +
+//                        request.getChannelId() +
+//                        request.getReserved1() +
+//                        request.getReserved2() +
+//                        request.getReserved3() +
+//                        request.getReserved4() +
+//                        request.getReserved5());
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//        if (sha256hex.equalsIgnoreCase(request.getHashData())) {
+//            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+//
+//                try {
+//                    HostRequestValidator.validateM0VerifyAccount(request);
+////                    //for Mock
+////                    response.setResponseCode("14");
+////                    response.setResponseDescription("No Customer Found Against Mobile number");
+////                    response.setHashData("ABCD0026156156565645656");
+//
+//                    response = integrationService.m0VerifyAccount(request);
+//
+//                } catch (ValidationException ve) {
+//                    response.setResponseCode("420");
+//                    response.setResponseDescription(ve.getMessage());
+//
+//                    logger.error("ERROR: Request Validation", ve);
+//                } catch (Exception e) {
+//                    response.setResponseCode("220");
+//                    response.setResponseDescription(e.getMessage());
+//                    logger.error("ERROR: General Processing ", e);
+//                }
+//                logger.info("******* DEBUG LOGS FOR ACCOUNT VERIFY TRANSACTION *********");
+//                logger.info("ResponseCode: " + response.getResponseCode());
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR  Verify Account TRANSACTION AUTHENTICATION *********");
+//                response = new M0VerifyAccountResponse();
+//                response.setResponseCode("420");
+//                response.setResponseDescription("Request is not authenticated");
+//                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+//            }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR ACCOUNT VERIFY TRANSACTION *********");
+//            response = new M0VerifyAccountResponse();
+//            response.setResponseCode("111");
+//            response.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
+//
+//
+//        long end = System.currentTimeMillis() - start;
+//        logger.info("Account Verify Transaction Request  Processed in : {} ms {}", end, response);
+//
+//        return response;
+//    }
+//
 
     @RequestMapping(value = "api/chequeBookStatusUpdate", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody

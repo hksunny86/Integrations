@@ -6,6 +6,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 
+import javax.annotation.Generated;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import java.io.Serializable;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "statusCode",
@@ -13,7 +21,7 @@ import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
         "message",
         "data"
 })
-public class CustomAnalyticsResponse extends Response {
+public class CustomAnalyticsResponse extends Response implements Serializable {
 
     @JsonProperty("statusCode")
     private String statusCode;
@@ -22,8 +30,9 @@ public class CustomAnalyticsResponse extends Response {
     @JsonProperty("message")
     private String message;
     @JsonProperty("data")
-    private CustomerAnalyticsData data;
+    private CustomAnalyticsData data;
     private String responseCode;
+    private String responseDescription;
 
     @JsonProperty("statusCode")
     public String getStatusCode() {
@@ -56,12 +65,12 @@ public class CustomAnalyticsResponse extends Response {
     }
 
     @JsonProperty("data")
-    public CustomerAnalyticsData getData() {
+    public CustomAnalyticsData getData() {
         return data;
     }
 
     @JsonProperty("data")
-    public void setData(CustomerAnalyticsData data) {
+    public void setData(CustomAnalyticsData data) {
         this.data = data;
     }
 
@@ -71,6 +80,14 @@ public class CustomAnalyticsResponse extends Response {
 
     public void setResponseCode(String responseCode) {
         this.responseCode = responseCode;
+    }
+
+    public String getResponseDescription() {
+        return responseDescription;
+    }
+
+    public void setResponseDescription(String responseDescription) {
+        this.responseDescription = responseDescription;
     }
 
     @Override
@@ -93,6 +110,8 @@ public class CustomAnalyticsResponse extends Response {
         i8SBSwitchControllerResponseVO.setCNIC(this.data.getCnic());
         i8SBSwitchControllerResponseVO.setCity(this.data.getCity());
         i8SBSwitchControllerResponseVO.setDob(this.data.getDob());
+        i8SBSwitchControllerResponseVO.setNoOfActiveAccounts(String.valueOf(this.data.getNoOfActiveAccounts()));
+        i8SBSwitchControllerResponseVO.setTotalOutstandingBalance(this.data.getTotalOutstandingBalance());
         i8SBSwitchControllerResponseVO.setPlus3024m(this.data.getPlus3024m());
         i8SBSwitchControllerResponseVO.setPlus6024m(this.data.getPlus6024m());
         i8SBSwitchControllerResponseVO.setPlus9024m(this.data.getPlus9024m());
@@ -115,8 +134,10 @@ public class CustomAnalyticsResponse extends Response {
         "refNo",
         "NAME",
         "CNIC",
-        "CITY",
         "DOB",
+        "CITY",
+        "noOfActiveAccounts",
+        "totalOutstandingBalance",
         "PLUS_30_24M",
         "PLUS_60_24M",
         "PLUS_90_24M",
@@ -127,7 +148,7 @@ public class CustomAnalyticsResponse extends Response {
         "disclaimerText",
         "remarks"
 })
-class CustomerAnalyticsData {
+class CustomAnalyticsData {
 
     @JsonProperty("reportDate")
     private String reportDate;
@@ -139,10 +160,14 @@ class CustomerAnalyticsData {
     private String name;
     @JsonProperty("CNIC")
     private String cnic;
-    @JsonProperty("CITY")
-    private String city;
     @JsonProperty("DOB")
     private String dob;
+    @JsonProperty("CITY")
+    private String city;
+    @JsonProperty("noOfActiveAccounts")
+    private Integer noOfActiveAccounts;
+    @JsonProperty("totalOutstandingBalance")
+    private String totalOutstandingBalance;
     @JsonProperty("PLUS_30_24M")
     private String plus3024m;
     @JsonProperty("PLUS_60_24M")
@@ -212,6 +237,16 @@ class CustomerAnalyticsData {
         this.cnic = cnic;
     }
 
+    @JsonProperty("DOB")
+    public String getDob() {
+        return dob;
+    }
+
+    @JsonProperty("DOB")
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
     @JsonProperty("CITY")
     public String getCity() {
         return city;
@@ -222,14 +257,24 @@ class CustomerAnalyticsData {
         this.city = city;
     }
 
-    @JsonProperty("DOB")
-    public String getDob() {
-        return dob;
+    @JsonProperty("noOfActiveAccounts")
+    public Integer getNoOfActiveAccounts() {
+        return noOfActiveAccounts;
     }
 
-    @JsonProperty("DOB")
-    public void setDob(String dob) {
-        this.dob = dob;
+    @JsonProperty("noOfActiveAccounts")
+    public void setNoOfActiveAccounts(Integer noOfActiveAccounts) {
+        this.noOfActiveAccounts = noOfActiveAccounts;
+    }
+
+    @JsonProperty("totalOutstandingBalance")
+    public String getTotalOutstandingBalance() {
+        return totalOutstandingBalance;
+    }
+
+    @JsonProperty("totalOutstandingBalance")
+    public void setTotalOutstandingBalance(String totalOutstandingBalance) {
+        this.totalOutstandingBalance = totalOutstandingBalance;
     }
 
     @JsonProperty("PLUS_30_24M")

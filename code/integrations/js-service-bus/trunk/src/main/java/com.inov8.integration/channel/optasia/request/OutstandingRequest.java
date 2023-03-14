@@ -11,7 +11,9 @@ import org.apache.commons.lang.StringUtils;
 @JsonPropertyOrder({
         "identityType",
         "origSource",
-        "identityValue"
+        "identityValue",
+        "commodityType",
+
 })
 public class OutstandingRequest extends Request {
 
@@ -21,6 +23,16 @@ public class OutstandingRequest extends Request {
     private String origSource;
     @JsonProperty("identityValue")
     private String identityValue;
+    @JsonProperty("commodityType")
+    private String commodityType;
+
+    public String getCommodityType() {
+        return commodityType;
+    }
+
+    public void setCommodityType(String commodityType) {
+        this.commodityType = commodityType;
+    }
 
     public String getIdentityType() {
         return identityType;
@@ -52,6 +64,7 @@ public class OutstandingRequest extends Request {
         this.setIdentityType(i8SBSwitchControllerRequestVO.getIdentityType());
         this.setIdentityValue(i8SBSwitchControllerRequestVO.getIdentityValue());
         this.setOrigSource(i8SBSwitchControllerRequestVO.getOrigSource());
+        this.setCommodityType(i8SBSwitchControllerRequestVO.getCommodityType());
     }
 
     @Override

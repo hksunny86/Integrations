@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
+import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
+import com.inov8.integration.middleware.enums.ResponseCodeEnum;
 import com.inov8.integration.webservice.optasiaVO.*;
 import com.inov8.integration.webservice.optasiaVO.Interest;
 import com.inov8.integration.webservice.optasiaVO.LoanOffers;
@@ -20,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "identityValue",
@@ -28,10 +29,11 @@ import java.util.Map;
         "origSource",
         "receivedTimestamp",
         "eligibilityStatus",
-        "loanOffersByLoanProductGroup",
+        "loanOffersByProductGroup",
         "outstandingStatus"
 })
 public class OfferListForCommodityResponse extends Response implements Serializable {
+
 
     private static final long serialVersionUID = 5824473488070382311L;
 
@@ -44,31 +46,13 @@ public class OfferListForCommodityResponse extends Response implements Serializa
     @JsonProperty("receivedTimestamp")
     private String receivedTimestamp;
     @JsonProperty("eligibilityStatus")
-    private List<OfferEligibilitystatus> eligibilityStatus;
-    @JsonProperty("loanOffersByLoanProductGroup")
-    private List<LoanOffersByLoanProductGroup> loanOffersByLoanProductGroup;
+    private EligibilityStatus eligibilityStatus;
+    @JsonProperty("loanOffersByProductGroup")
+    private List<LoanOffersByProductGroup> loanOffersByProductGroup;
     @JsonProperty("outstandingStatus")
-    private List<OfferOutstandingstatus> outstandingStatus;
+    private List<Outstandingstatus> outstandingStatus;
     private String responseCode;
-    private String responseDescription;
     private Map<String, List<?>> collectionOfList = new HashMap();
-
-
-    public String getResponseCode() {
-        return responseCode;
-    }
-
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
-    }
-
-    public String getResponseDescription() {
-        return responseDescription;
-    }
-
-    public void setResponseDescription(String responseDescription) {
-        this.responseDescription = responseDescription;
-    }
 
     @JsonProperty("identityValue")
     public String getIdentityValue() {
@@ -111,124 +95,142 @@ public class OfferListForCommodityResponse extends Response implements Serializa
     }
 
     @JsonProperty("eligibilityStatus")
-    public List<OfferEligibilitystatus> getEligibilityStatus() {
+    public EligibilityStatus getEligibilityStatus() {
         return eligibilityStatus;
     }
 
     @JsonProperty("eligibilityStatus")
-    public void setEligibilityStatus(List<OfferEligibilitystatus> eligibilityStatus) {
+    public void setEligibilityStatus(EligibilityStatus eligibilityStatus) {
         this.eligibilityStatus = eligibilityStatus;
     }
 
-    @JsonProperty("loanOffersByLoanProductGroup")
-    public List<LoanOffersByLoanProductGroup> getLoanOffersByLoanProductGroup() {
-        return loanOffersByLoanProductGroup;
+    @JsonProperty("loanOffersByProductGroup")
+    public List<LoanOffersByProductGroup> getLoanOffersByProductGroup() {
+        return loanOffersByProductGroup;
     }
 
-    @JsonProperty("loanOffersByLoanProductGroup")
-    public void setLoanOffersByLoanProductGroup(List<LoanOffersByLoanProductGroup> loanOffersByLoanProductGroup) {
-        this.loanOffersByLoanProductGroup = loanOffersByLoanProductGroup;
+    @JsonProperty("loanOffersByProductGroup")
+    public void setLoanOffersByProductGroup(List<LoanOffersByProductGroup> loanOffersByProductGroup) {
+        this.loanOffersByProductGroup = loanOffersByProductGroup;
     }
 
     @JsonProperty("outstandingStatus")
-    public List<OfferOutstandingstatus> getOutstandingStatus() {
+    public List<Outstandingstatus> getOutstandingStatus() {
         return outstandingStatus;
     }
 
     @JsonProperty("outstandingStatus")
-    public void setOutstandingStatus(List<OfferOutstandingstatus> outstandingStatus) {
+    public void setOutstandingStatus(List<Outstandingstatus> outstandingStatus) {
         this.outstandingStatus = outstandingStatus;
+    }
+
+    public String getResponseCode() {
+        return responseCode;
+    }
+
+    public void setResponseCode(String responseCode) {
+        this.responseCode = responseCode;
     }
 
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
+//        if (this.getResponseCode().equals("00")) {
+//            i8SBSwitchControllerResponseVO.setResponseCode("00");
+//        } else {
+//            i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
+//        }
+
         i8SBSwitchControllerResponseVO.setResponseCode("00");
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
         i8SBSwitchControllerResponseVO.setReceptionTimestamp(this.getReceivedTimestamp());
+        i8SBSwitchControllerResponseVO.setEligibilityStatus(this.getEligibilityStatus().getEligibilityStatus());
+        i8SBSwitchControllerResponseVO.setEligible(this.getEligibilityStatus().getIsEligible());
 
-        if (eligibilityStatus != null) {
-            com.inov8.integration.webservice.optasiaVO.EligibilityStatus eligibilityStatus;
-            List<com.inov8.integration.webservice.optasiaVO.EligibilityStatus> eligibilityStatusList = new ArrayList<>();
-            for (int i = 0; i < this.getEligibilityStatus().size(); i++) {
-                eligibilityStatus = new com.inov8.integration.webservice.optasiaVO.EligibilityStatus();
-                eligibilityStatus.setEligible(this.getEligibilityStatus().get(i).getIsEligible());
-                eligibilityStatus.setEligibilityStatus(this.getEligibilityStatus().get(i).getEligibilityStatus());
+//        if (eligibilityStatus != null) {
+//            com.inov8.integration.webservice.optasiaVO.EligibilityStatus eligibilityStatus;
+//            List<com.inov8.integration.webservice.optasiaVO.EligibilityStatus> eligibilityStatusList = new ArrayList<>();
+//            for (int i = 0; i < this.getEligibilityStatus().size(); i++) {
+//                eligibilityStatus = new com.inov8.integration.webservice.optasiaVO.EligibilityStatus();
+//                eligibilityStatus.setEligible(this.getEligibilityStatus().get(i).getIsEligible());
+//                eligibilityStatus.setEligibilityStatus(this.getEligibilityStatus().get(i).getEligibilityStatus());
+//
+//                eligibilityStatusList.add(eligibilityStatus);
+//
+//                collectionOfList.put("EligibilityStatus", eligibilityStatusList);
+//                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+//            }
+//        }
 
-                eligibilityStatusList.add(eligibilityStatus);
 
-                collectionOfList.put("EligibilityStatus", eligibilityStatusList);
-                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
-            }
-        }
-
-
-        if (loanOffersByLoanProductGroup != null) {
+        if (loanOffersByProductGroup != null) {
             List<com.inov8.integration.webservice.optasiaVO.LoanOffersByLoanProductGroup> loanOffersByLoanProductGroupList = new ArrayList<>();
             List<com.inov8.integration.webservice.optasiaVO.MaturityDetails> maturityDetailsList = new ArrayList<>();
-            List<com.inov8.integration.webservice.optasiaVO.Interest> interestList = new ArrayList<>();
+//            List<com.inov8.integration.webservice.optasiaVO.Interest> interestList = new ArrayList<>();
             List<com.inov8.integration.webservice.optasiaVO.OneOffCharges> oneOffChargesList = new ArrayList<>();
             List<com.inov8.integration.webservice.optasiaVO.RecurringCharges> recurringChargesList = new ArrayList<>();
             List<com.inov8.integration.webservice.optasiaVO.LoanOffers> loanOffersList = new ArrayList<>();
 
             com.inov8.integration.webservice.optasiaVO.LoanOffersByLoanProductGroup loanOffersByLoanProductGroup;
             com.inov8.integration.webservice.optasiaVO.MaturityDetails maturityDetails;
-            com.inov8.integration.webservice.optasiaVO.Interest interest;
+//            com.inov8.integration.webservice.optasiaVO.Interest interest;
             com.inov8.integration.webservice.optasiaVO.OneOffCharges oneOffCharges;
             com.inov8.integration.webservice.optasiaVO.RecurringCharges recurringCharges;
             com.inov8.integration.webservice.optasiaVO.LoanOffers loanOffers;
 
-            for (int i = 0; i < this.getLoanOffersByLoanProductGroup().size(); i++) {
+            for (int i = 0; i < this.getLoanOffersByProductGroup().size(); i++) {
 
                 loanOffersByLoanProductGroup = new com.inov8.integration.webservice.optasiaVO.LoanOffersByLoanProductGroup();
                 maturityDetails = new com.inov8.integration.webservice.optasiaVO.MaturityDetails();
-                interest = new com.inov8.integration.webservice.optasiaVO.Interest();
+//                interest = new com.inov8.integration.webservice.optasiaVO.Interest();
                 oneOffCharges = new com.inov8.integration.webservice.optasiaVO.OneOffCharges();
                 recurringCharges = new com.inov8.integration.webservice.optasiaVO.RecurringCharges();
                 loanOffers = new com.inov8.integration.webservice.optasiaVO.LoanOffers();
 
 
-                loanOffersByLoanProductGroup.setLoanProductGroup(this.getLoanOffersByLoanProductGroup().get(i).getLoanProductGroup());
-                loanOffers.setOfferClass(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getOfferClass());
-                loanOffers.setOfferName(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getOfferName());
-                loanOffers.setCurrencyCode(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getCurrencyCode());
-                loanOffers.setPrincipalFrom(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getPrincipalFrom()));
-                loanOffers.setPrincipalTo(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getPrincipalTo()));
-                loanOffers.setSetupFees(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getSetupFees()));
-                loanOffers.setCommodityType(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getCommodityType());
-                loanOffers.setLoanPlanId(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getLoanPlanId()));
-                loanOffers.setLoanPlanName(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getLoanPlanName());
-                loanOffersByLoanProductGroup.setLoanProductGroup(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getLoanProductGroup());
-                maturityDetails.setMaturityDuration(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getMaturityDuration()));
-                interest.setInterestName(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestName());
-                interest.setInterestType(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestType());
-                interest.setInterestValue(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestValue()));
-                interest.setInterestVAT(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestVAT()));
-                interest.setDaysOffset(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getDaysOffset()));
-                interest.setInterval(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterval()));
-                oneOffCharges.setChargeName(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeName());
-                oneOffCharges.setChargeType(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeType());
-                oneOffCharges.setChargeValue(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeValue()));
-                oneOffCharges.setChargeVAT(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeVAT()));
-                oneOffCharges.setDaysOffset(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getDaysOffset()));
-                recurringCharges.setChargeName(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeName());
-                recurringCharges.setChargeType(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeType());
-                recurringCharges.setChargeValue(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeValue()));
-                recurringCharges.setChargeVAT(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeVAT()));
-                recurringCharges.setInterval(String.valueOf(this.getLoanOffersByLoanProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getInterval()));
+                loanOffersByLoanProductGroup.setLoanProductGroup(this.getLoanOffersByProductGroup().get(i).getLoanProductGroup());
+                loanOffers.setOfferClass(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getOfferClass());
+                loanOffers.setOfferName(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getOfferName());
+                loanOffers.setCommodityType(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getCommodityType());
+                loanOffers.setCurrencyCode(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getCurrencyCode());
+                loanOffers.setSetupFees(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getSetupFees()));
+                loanOffers.setLoanProductGroup(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getLoanProductGroup());
+                loanOffers.setLoanPlanId(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getLoanPlanId()));
+                loanOffers.setLoanPlanName(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getLoanPlanName());
+                maturityDetails.setMaturityDuration(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getMaturityDuration()));
 
-                interestList.add(interest);
+//                interest.setInterestName(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestName());
+//                interest.setInterestType(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestType());
+//                interest.setInterestValue(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestValue()));
+//                interest.setInterestVAT(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterestVAT()));
+//                interest.setDaysOffset(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getDaysOffset()));
+//                interest.setInterval(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getInterest().getInterval()));
+
+                oneOffCharges.setChargeName(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeName());
+                oneOffCharges.setChargeType(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeType());
+                oneOffCharges.setChargeValue(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeValue()));
+                oneOffCharges.setChargeVAT(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getChargeVAT()));
+                oneOffCharges.setDaysOffset(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getOneOffCharges().get(i).getDaysOffset()));
+                recurringCharges.setChargeName(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeName());
+                recurringCharges.setChargeType(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeType());
+                recurringCharges.setChargeValue(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeValue()));
+                recurringCharges.setChargeVAT(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getChargeVAT()));
+                recurringCharges.setInterval(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getMaturityDetails().getRecurringCharges().get(i).getInterval()));
+                loanOffers.setPrincipalFrom(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getPrincipalFrom()));
+                loanOffers.setPrincipalTo(String.valueOf(this.getLoanOffersByProductGroup().get(i).getLoanOffers().get(i).getPrincipalTo()));
+
+//                interestList.add(interest);
                 loanOffersList.add(loanOffers);
                 maturityDetailsList.add(maturityDetails);
                 oneOffChargesList.add(oneOffCharges);
                 recurringChargesList.add(recurringCharges);
                 loanOffersByLoanProductGroupList.add(loanOffersByLoanProductGroup);
 
-                collectionOfList.put("Interest", interestList);
-                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+//                collectionOfList.put("Interest", interestList);
+//                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
                 collectionOfList.put("LoanOffers", loanOffersList);
                 i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
@@ -256,6 +258,8 @@ public class OfferListForCommodityResponse extends Response implements Serializa
             for (int i = 0; i < this.getOutstandingStatus().size(); i++) {
                 outstandingStatus = new com.inov8.integration.webservice.optasiaVO.OutstandingStatus();
                 outstandingStatus.setCurrencyCode(this.getOutstandingStatus().get(i).getCurrencyCode());
+                outstandingStatus.setAvailableCreditLimit(String.valueOf(this.getOutstandingStatus().get(i).getAvailableCreditLimit()));
+                outstandingStatus.setDynamicCreditLimit(String.valueOf(this.getOutstandingStatus().get(i).getDynamicCreditLimit()));
                 outstandingStatus.setNumOutstandingLoans(String.valueOf(this.getOutstandingStatus().get(i).getNumOutstandingLoans()));
                 outstandingStatus.setTotalGross(String.valueOf(this.getOutstandingStatus().get(i).getTotalGross()));
                 outstandingStatus.setTotalPrincipal(String.valueOf(this.getOutstandingStatus().get(i).getTotalPrincipal()));
@@ -278,29 +282,17 @@ public class OfferListForCommodityResponse extends Response implements Serializa
     }
 }
 
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "isEligible",
-        "eligibilityStatus"
+        "eligibilityStatus",
+        "isEligible"
 })
-@Generated("jsonschema2pojo")
-class OfferEligibilitystatus implements Serializable {
+class EligibilityStatus {
 
-    @JsonProperty("isEligible")
-    private Boolean isEligible;
     @JsonProperty("eligibilityStatus")
     private String eligibilityStatus;
-
     @JsonProperty("isEligible")
-    public Boolean getIsEligible() {
-        return isEligible;
-    }
-
-    @JsonProperty("isEligible")
-    public void setIsEligible(Boolean isEligible) {
-        this.isEligible = isEligible;
-    }
+    private Boolean isEligible;
 
     @JsonProperty("eligibilityStatus")
     public String getEligibilityStatus() {
@@ -312,90 +304,14 @@ class OfferEligibilitystatus implements Serializable {
         this.eligibilityStatus = eligibilityStatus;
     }
 
-}
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-        "interestName",
-        "interestType",
-        "interestValue",
-        "interestVAT",
-        "daysOffset",
-        "interval"
-})
-class OfferInterest implements Serializable {
-
-    @JsonProperty("interestName")
-    private String interestName;
-    @JsonProperty("interestType")
-    private String interestType;
-    @JsonProperty("interestValue")
-    private Float interestValue;
-    @JsonProperty("interestVAT")
-    private Integer interestVAT;
-    @JsonProperty("daysOffset")
-    private Integer daysOffset;
-    @JsonProperty("interval")
-    private Integer interval;
-
-    @JsonProperty("interestName")
-    public String getInterestName() {
-        return interestName;
+    @JsonProperty("isEligible")
+    public Boolean getIsEligible() {
+        return isEligible;
     }
 
-    @JsonProperty("interestName")
-    public void setInterestName(String interestName) {
-        this.interestName = interestName;
-    }
-
-    @JsonProperty("interestType")
-    public String getInterestType() {
-        return interestType;
-    }
-
-    @JsonProperty("interestType")
-    public void setInterestType(String interestType) {
-        this.interestType = interestType;
-    }
-
-    @JsonProperty("interestValue")
-    public Float getInterestValue() {
-        return interestValue;
-    }
-
-    @JsonProperty("interestValue")
-    public void setInterestValue(Float interestValue) {
-        this.interestValue = interestValue;
-    }
-
-    @JsonProperty("interestVAT")
-    public Integer getInterestVAT() {
-        return interestVAT;
-    }
-
-    @JsonProperty("interestVAT")
-    public void setInterestVAT(Integer interestVAT) {
-        this.interestVAT = interestVAT;
-    }
-
-    @JsonProperty("daysOffset")
-    public Integer getDaysOffset() {
-        return daysOffset;
-    }
-
-    @JsonProperty("daysOffset")
-    public void setDaysOffset(Integer daysOffset) {
-        this.daysOffset = daysOffset;
-    }
-
-    @JsonProperty("interval")
-    public Integer getInterval() {
-        return interval;
-    }
-
-    @JsonProperty("interval")
-    public void setInterval(Integer interval) {
-        this.interval = interval;
+    @JsonProperty("isEligible")
+    public void setIsEligible(Boolean isEligible) {
+        this.isEligible = isEligible;
     }
 
 }
@@ -404,40 +320,40 @@ class OfferInterest implements Serializable {
 @JsonPropertyOrder({
         "offerClass",
         "offerName",
-        "currencyCode",
-        "principalFrom",
-        "principalTo",
-        "setupFees",
         "commodityType",
+        "currencyCode",
+        "setupFees",
+        "loanProductGroup",
         "loanPlanId",
         "loanPlanName",
-        "loanProductGroup",
-        "maturityDetails"
+        "maturityDetails",
+        "principalFrom",
+        "principalTo"
 })
-class OfferLoanOffer implements Serializable {
+class OfferLoanOffer {
 
     @JsonProperty("offerClass")
     private String offerClass;
     @JsonProperty("offerName")
     private String offerName;
-    @JsonProperty("currencyCode")
-    private String currencyCode;
-    @JsonProperty("principalFrom")
-    private Integer principalFrom;
-    @JsonProperty("principalTo")
-    private Integer principalTo;
-    @JsonProperty("setupFees")
-    private Integer setupFees;
     @JsonProperty("commodityType")
     private String commodityType;
+    @JsonProperty("currencyCode")
+    private String currencyCode;
+    @JsonProperty("setupFees")
+    private Float setupFees;
+    @JsonProperty("loanProductGroup")
+    private String loanProductGroup;
     @JsonProperty("loanPlanId")
     private Integer loanPlanId;
     @JsonProperty("loanPlanName")
     private String loanPlanName;
-    @JsonProperty("loanProductGroup")
-    private String loanProductGroup;
     @JsonProperty("maturityDetails")
     private OfferMaturityDetails maturityDetails;
+    @JsonProperty("principalFrom")
+    private Float principalFrom;
+    @JsonProperty("principalTo")
+    private Float principalTo;
 
     @JsonProperty("offerClass")
     public String getOfferClass() {
@@ -459,6 +375,16 @@ class OfferLoanOffer implements Serializable {
         this.offerName = offerName;
     }
 
+    @JsonProperty("commodityType")
+    public String getCommodityType() {
+        return commodityType;
+    }
+
+    @JsonProperty("commodityType")
+    public void setCommodityType(String commodityType) {
+        this.commodityType = commodityType;
+    }
+
     @JsonProperty("currencyCode")
     public String getCurrencyCode() {
         return currencyCode;
@@ -469,44 +395,24 @@ class OfferLoanOffer implements Serializable {
         this.currencyCode = currencyCode;
     }
 
-    @JsonProperty("principalFrom")
-    public Integer getPrincipalFrom() {
-        return principalFrom;
-    }
-
-    @JsonProperty("principalFrom")
-    public void setPrincipalFrom(Integer principalFrom) {
-        this.principalFrom = principalFrom;
-    }
-
-    @JsonProperty("principalTo")
-    public Integer getPrincipalTo() {
-        return principalTo;
-    }
-
-    @JsonProperty("principalTo")
-    public void setPrincipalTo(Integer principalTo) {
-        this.principalTo = principalTo;
-    }
-
     @JsonProperty("setupFees")
-    public Integer getSetupFees() {
+    public Float getSetupFees() {
         return setupFees;
     }
 
     @JsonProperty("setupFees")
-    public void setSetupFees(Integer setupFees) {
+    public void setSetupFees(Float setupFees) {
         this.setupFees = setupFees;
     }
 
-    @JsonProperty("commodityType")
-    public String getCommodityType() {
-        return commodityType;
+    @JsonProperty("loanProductGroup")
+    public String getLoanProductGroup() {
+        return loanProductGroup;
     }
 
-    @JsonProperty("commodityType")
-    public void setCommodityType(String commodityType) {
-        this.commodityType = commodityType;
+    @JsonProperty("loanProductGroup")
+    public void setLoanProductGroup(String loanProductGroup) {
+        this.loanProductGroup = loanProductGroup;
     }
 
     @JsonProperty("loanPlanId")
@@ -529,16 +435,6 @@ class OfferLoanOffer implements Serializable {
         this.loanPlanName = loanPlanName;
     }
 
-    @JsonProperty("loanProductGroup")
-    public String getLoanProductGroup() {
-        return loanProductGroup;
-    }
-
-    @JsonProperty("loanProductGroup")
-    public void setLoanProductGroup(String loanProductGroup) {
-        this.loanProductGroup = loanProductGroup;
-    }
-
     @JsonProperty("maturityDetails")
     public OfferMaturityDetails getMaturityDetails() {
         return maturityDetails;
@@ -549,6 +445,26 @@ class OfferLoanOffer implements Serializable {
         this.maturityDetails = maturityDetails;
     }
 
+    @JsonProperty("principalFrom")
+    public Float getPrincipalFrom() {
+        return principalFrom;
+    }
+
+    @JsonProperty("principalFrom")
+    public void setPrincipalFrom(Float principalFrom) {
+        this.principalFrom = principalFrom;
+    }
+
+    @JsonProperty("principalTo")
+    public Float getPrincipalTo() {
+        return principalTo;
+    }
+
+    @JsonProperty("principalTo")
+    public void setPrincipalTo(Float principalTo) {
+        this.principalTo = principalTo;
+    }
+
 }
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -556,7 +472,7 @@ class OfferLoanOffer implements Serializable {
         "loanProductGroup",
         "loanOffers"
 })
-class LoanOffersByLoanProductGroup implements Serializable {
+class LoanOffersByProductGroup {
 
     @JsonProperty("loanProductGroup")
     private String loanProductGroup;
@@ -588,20 +504,17 @@ class LoanOffersByLoanProductGroup implements Serializable {
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "maturityDuration",
-        "interest",
         "oneOffCharges",
         "recurringCharges"
 })
-class OfferMaturityDetails implements Serializable {
+class OfferMaturityDetails {
 
     @JsonProperty("maturityDuration")
     private Integer maturityDuration;
-    @JsonProperty("interest")
-    private OfferInterest interest;
     @JsonProperty("oneOffCharges")
-    private List<OfferOneOffCharge> oneOffCharges;
+    private List<OneOffCharge> oneOffCharges;
     @JsonProperty("recurringCharges")
-    private List<OfferRecurringCharge> recurringCharges;
+    private List<RecurringCharge> recurringCharges;
 
     @JsonProperty("maturityDuration")
     public Integer getMaturityDuration() {
@@ -613,33 +526,23 @@ class OfferMaturityDetails implements Serializable {
         this.maturityDuration = maturityDuration;
     }
 
-    @JsonProperty("interest")
-    public OfferInterest getInterest() {
-        return interest;
-    }
-
-    @JsonProperty("interest")
-    public void setInterest(OfferInterest interest) {
-        this.interest = interest;
-    }
-
     @JsonProperty("oneOffCharges")
-    public List<OfferOneOffCharge> getOneOffCharges() {
+    public List<OneOffCharge> getOneOffCharges() {
         return oneOffCharges;
     }
 
     @JsonProperty("oneOffCharges")
-    public void setOneOffCharges(List<OfferOneOffCharge> oneOffCharges) {
+    public void setOneOffCharges(List<OneOffCharge> oneOffCharges) {
         this.oneOffCharges = oneOffCharges;
     }
 
     @JsonProperty("recurringCharges")
-    public List<OfferRecurringCharge> getRecurringCharges() {
+    public List<RecurringCharge> getRecurringCharges() {
         return recurringCharges;
     }
 
     @JsonProperty("recurringCharges")
-    public void setRecurringCharges(List<OfferRecurringCharge> recurringCharges) {
+    public void setRecurringCharges(List<RecurringCharge> recurringCharges) {
         this.recurringCharges = recurringCharges;
     }
 
@@ -653,14 +556,14 @@ class OfferMaturityDetails implements Serializable {
         "chargeVAT",
         "daysOffset"
 })
-class OfferOneOffCharge implements Serializable {
+class OneOffCharge {
 
     @JsonProperty("chargeName")
     private String chargeName;
     @JsonProperty("chargeType")
     private String chargeType;
     @JsonProperty("chargeValue")
-    private Integer chargeValue;
+    private Object chargeValue;
     @JsonProperty("chargeVAT")
     private Float chargeVAT;
     @JsonProperty("daysOffset")
@@ -687,12 +590,12 @@ class OfferOneOffCharge implements Serializable {
     }
 
     @JsonProperty("chargeValue")
-    public Integer getChargeValue() {
+    public Object getChargeValue() {
         return chargeValue;
     }
 
     @JsonProperty("chargeValue")
-    public void setChargeValue(Integer chargeValue) {
+    public void setChargeValue(Object chargeValue) {
         this.chargeValue = chargeValue;
     }
 
@@ -721,6 +624,8 @@ class OfferOneOffCharge implements Serializable {
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "currencyCode",
+        "availableCreditLimit",
+        "dynamicCreditLimit",
         "numOutstandingLoans",
         "totalGross",
         "totalPrincipal",
@@ -732,30 +637,35 @@ class OfferOneOffCharge implements Serializable {
         "totalPendingLoans",
         "totalPendingRecoveries"
 })
-class OfferOutstandingstatus implements Serializable {
+@Generated("jsonschema2pojo")
+class Outstandingstatus {
 
     @JsonProperty("currencyCode")
     private String currencyCode;
+    @JsonProperty("availableCreditLimit")
+    private Float availableCreditLimit;
+    @JsonProperty("dynamicCreditLimit")
+    private Float dynamicCreditLimit;
     @JsonProperty("numOutstandingLoans")
     private Integer numOutstandingLoans;
     @JsonProperty("totalGross")
-    private Integer totalGross;
+    private Float totalGross;
     @JsonProperty("totalPrincipal")
-    private Integer totalPrincipal;
+    private Float totalPrincipal;
     @JsonProperty("totalSetupFees")
-    private Integer totalSetupFees;
+    private Float totalSetupFees;
     @JsonProperty("totalInterest")
-    private Integer totalInterest;
+    private Float totalInterest;
     @JsonProperty("totalInterestVAT")
-    private Integer totalInterestVAT;
+    private Float totalInterestVAT;
     @JsonProperty("totalCharges")
-    private Integer totalCharges;
+    private Float totalCharges;
     @JsonProperty("totalChargesVAT")
-    private Integer totalChargesVAT;
+    private Float totalChargesVAT;
     @JsonProperty("totalPendingLoans")
-    private Integer totalPendingLoans;
+    private Float totalPendingLoans;
     @JsonProperty("totalPendingRecoveries")
-    private Integer totalPendingRecoveries;
+    private Float totalPendingRecoveries;
 
     @JsonProperty("currencyCode")
     public String getCurrencyCode() {
@@ -765,6 +675,26 @@ class OfferOutstandingstatus implements Serializable {
     @JsonProperty("currencyCode")
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
+    }
+
+    @JsonProperty("availableCreditLimit")
+    public Float getAvailableCreditLimit() {
+        return availableCreditLimit;
+    }
+
+    @JsonProperty("availableCreditLimit")
+    public void setAvailableCreditLimit(Float availableCreditLimit) {
+        this.availableCreditLimit = availableCreditLimit;
+    }
+
+    @JsonProperty("dynamicCreditLimit")
+    public Float getDynamicCreditLimit() {
+        return dynamicCreditLimit;
+    }
+
+    @JsonProperty("dynamicCreditLimit")
+    public void setDynamicCreditLimit(Float dynamicCreditLimit) {
+        this.dynamicCreditLimit = dynamicCreditLimit;
     }
 
     @JsonProperty("numOutstandingLoans")
@@ -778,92 +708,92 @@ class OfferOutstandingstatus implements Serializable {
     }
 
     @JsonProperty("totalGross")
-    public Integer getTotalGross() {
+    public Float getTotalGross() {
         return totalGross;
     }
 
     @JsonProperty("totalGross")
-    public void setTotalGross(Integer totalGross) {
+    public void setTotalGross(Float totalGross) {
         this.totalGross = totalGross;
     }
 
     @JsonProperty("totalPrincipal")
-    public Integer getTotalPrincipal() {
+    public Float getTotalPrincipal() {
         return totalPrincipal;
     }
 
     @JsonProperty("totalPrincipal")
-    public void setTotalPrincipal(Integer totalPrincipal) {
+    public void setTotalPrincipal(Float totalPrincipal) {
         this.totalPrincipal = totalPrincipal;
     }
 
     @JsonProperty("totalSetupFees")
-    public Integer getTotalSetupFees() {
+    public Float getTotalSetupFees() {
         return totalSetupFees;
     }
 
     @JsonProperty("totalSetupFees")
-    public void setTotalSetupFees(Integer totalSetupFees) {
+    public void setTotalSetupFees(Float totalSetupFees) {
         this.totalSetupFees = totalSetupFees;
     }
 
     @JsonProperty("totalInterest")
-    public Integer getTotalInterest() {
+    public Float getTotalInterest() {
         return totalInterest;
     }
 
     @JsonProperty("totalInterest")
-    public void setTotalInterest(Integer totalInterest) {
+    public void setTotalInterest(Float totalInterest) {
         this.totalInterest = totalInterest;
     }
 
     @JsonProperty("totalInterestVAT")
-    public Integer getTotalInterestVAT() {
+    public Float getTotalInterestVAT() {
         return totalInterestVAT;
     }
 
     @JsonProperty("totalInterestVAT")
-    public void setTotalInterestVAT(Integer totalInterestVAT) {
+    public void setTotalInterestVAT(Float totalInterestVAT) {
         this.totalInterestVAT = totalInterestVAT;
     }
 
     @JsonProperty("totalCharges")
-    public Integer getTotalCharges() {
+    public Float getTotalCharges() {
         return totalCharges;
     }
 
     @JsonProperty("totalCharges")
-    public void setTotalCharges(Integer totalCharges) {
+    public void setTotalCharges(Float totalCharges) {
         this.totalCharges = totalCharges;
     }
 
     @JsonProperty("totalChargesVAT")
-    public Integer getTotalChargesVAT() {
+    public Float getTotalChargesVAT() {
         return totalChargesVAT;
     }
 
     @JsonProperty("totalChargesVAT")
-    public void setTotalChargesVAT(Integer totalChargesVAT) {
+    public void setTotalChargesVAT(Float totalChargesVAT) {
         this.totalChargesVAT = totalChargesVAT;
     }
 
     @JsonProperty("totalPendingLoans")
-    public Integer getTotalPendingLoans() {
+    public Float getTotalPendingLoans() {
         return totalPendingLoans;
     }
 
     @JsonProperty("totalPendingLoans")
-    public void setTotalPendingLoans(Integer totalPendingLoans) {
+    public void setTotalPendingLoans(Float totalPendingLoans) {
         this.totalPendingLoans = totalPendingLoans;
     }
 
     @JsonProperty("totalPendingRecoveries")
-    public Integer getTotalPendingRecoveries() {
+    public Float getTotalPendingRecoveries() {
         return totalPendingRecoveries;
     }
 
     @JsonProperty("totalPendingRecoveries")
-    public void setTotalPendingRecoveries(Integer totalPendingRecoveries) {
+    public void setTotalPendingRecoveries(Float totalPendingRecoveries) {
         this.totalPendingRecoveries = totalPendingRecoveries;
     }
 
@@ -878,14 +808,14 @@ class OfferOutstandingstatus implements Serializable {
         "daysOffset",
         "interval"
 })
-class OfferRecurringCharge implements Serializable {
+class RecurringCharge {
 
     @JsonProperty("chargeName")
     private String chargeName;
     @JsonProperty("chargeType")
     private String chargeType;
     @JsonProperty("chargeValue")
-    private Integer chargeValue;
+    private Float chargeValue;
     @JsonProperty("chargeVAT")
     private Float chargeVAT;
     @JsonProperty("daysOffset")
@@ -914,12 +844,12 @@ class OfferRecurringCharge implements Serializable {
     }
 
     @JsonProperty("chargeValue")
-    public Integer getChargeValue() {
+    public Float getChargeValue() {
         return chargeValue;
     }
 
     @JsonProperty("chargeValue")
-    public void setChargeValue(Integer chargeValue) {
+    public void setChargeValue(Float chargeValue) {
         this.chargeValue = chargeValue;
     }
 

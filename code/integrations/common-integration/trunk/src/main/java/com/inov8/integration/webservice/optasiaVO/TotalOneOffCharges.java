@@ -9,7 +9,7 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "chargeName",
-        "chargeAmount",
+        "charge",
         "chargeVAT"
 })
 public class TotalOneOffCharges implements Serializable {
@@ -18,8 +18,8 @@ public class TotalOneOffCharges implements Serializable {
 
     @JsonProperty("chargeName")
     private String chargeName;
-    @JsonProperty("chargeAmount")
-    private String chargeAmount;
+    @JsonProperty("charge")
+    private String charge;
     @JsonProperty("chargeVAT")
     private String chargeVAT;
 
@@ -31,12 +31,12 @@ public class TotalOneOffCharges implements Serializable {
         this.chargeName = chargeName;
     }
 
-    public String getChargeAmount() {
-        return chargeAmount;
+    public String getCharge() {
+        return charge;
     }
 
-    public void setChargeAmount(String chargeAmount) {
-        this.chargeAmount = chargeAmount;
+    public void setCharge(String charge) {
+        this.charge = charge;
     }
 
     public String getChargeVAT() {

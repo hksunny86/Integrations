@@ -24,6 +24,7 @@ import java.util.List;
         "totalCharges",
         "totalChargesVAT",
         "totalOneOffCharges",
+        "totalRecurringCharges",
         "milestones",
 })
 public class PeriodsProjection implements Serializable {
@@ -59,6 +60,8 @@ public class PeriodsProjection implements Serializable {
     private String totalChargesVAT;
     @JsonProperty("totalOneOffCharges")
     private List<TotalOneOffCharges> totalOneOffChargesList;
+    @JsonProperty("totalRecurringCharges")
+    private List<TotalRecurringCharge> totalRecurringCharges;
     @JsonProperty("milestones")
     private List<Milestones> milestonesList;
 
@@ -172,6 +175,14 @@ public class PeriodsProjection implements Serializable {
 
     public void setTotalOneOffChargesList(List<TotalOneOffCharges> totalOneOffChargesList) {
         this.totalOneOffChargesList = totalOneOffChargesList;
+    }
+
+    public List<TotalRecurringCharge> getTotalRecurringCharges() {
+        return totalRecurringCharges;
+    }
+
+    public void setTotalRecurringCharges(List<TotalRecurringCharge> totalRecurringCharges) {
+        this.totalRecurringCharges = totalRecurringCharges;
     }
 
     public List<Milestones> getMilestonesList() {

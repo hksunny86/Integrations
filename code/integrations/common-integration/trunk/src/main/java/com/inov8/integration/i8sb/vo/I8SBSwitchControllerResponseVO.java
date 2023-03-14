@@ -457,6 +457,15 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String messageCode;
     private Boolean isEligible;
     private String eligibilityStatus;
+    private String refNo;
+
+    public String getRefNo() {
+        return refNo;
+    }
+
+    public void setRefNo(String refNo) {
+        this.refNo = refNo;
+    }
 
     public Boolean getEligible() {
         return isEligible;

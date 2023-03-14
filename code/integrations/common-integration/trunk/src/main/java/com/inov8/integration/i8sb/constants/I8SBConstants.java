@@ -69,6 +69,18 @@ public class I8SBConstants {
     public static String I8SB_Channel_ID_ZINDIGI = "ZINDIGI";
     public static String I8SB_Channel_ID_TELENOR = "TELENOR";
     public static String I8SB_Channel_ID_VISION = "VISION";
+    public static String I8SB_Channel_ID_PUSHNOTIFICATION = "PUSHNOTIFICATION";
+    public static String I8SB_Channel_ID_OFFLINE_BILLER = "OFFLINEBILLER";
+    public static String I8SB_Channel_ID_REFFERAL_CUSTOMER = "REFFERALCUSTOMER";
+    public static String I8SB_Channel_ID_CUSTOMER_DEVICE_VERIFICATION = "CUSTOMERDEVICEVERIFICATION";
+    public static String I8SB_Channel_ID_MERCHANTCAMPING = "MERCHANTCAMPING";
+    public static String I8SB_Channel_ID_T24API = "T24API";
+    public static String I8SB_Channel_ID_LOANINTIMATION = "LOANINTIMATION";
+    public static String I8SB_Channel_ID_OPTASIA = "OPTASIA";
+    public static String I8SB_Channel_ID_TASDEEQ = "TASDEEQ";
+    public static String I8SB_Channel_ID_EOCEAN_NEW = "EOCEANNEWAPI";
+    public static String I8SB_Channel_ID_ZINDIGI_CUSTOMER_ACTIVITY = "ZINDIGICUSTOMERACTIVITY";
+    public static String I8SB_Channel_ID_ZINDIGI_CUSTOMER = "ZINDIGICUSTOMER";
 
 
     public static String I8SB_Channel_ID_ETPaymentCollection = "ETPaymentCollection";
@@ -78,6 +90,7 @@ public class I8SBConstants {
     public static String RequestType_CustomerValidation = "CustomerValidation"; // PanPinVerification|CNICValidation|AccountBalanceInquiry
     public static String RequestType_GetMyAccounts = "GetMyAccounts"; // CheckingAccountSummary|LoanAccountSummary|TDRAccountSummary
     public static String RequestType_CustomerInformation = "GetCustomerInformation";
+    public static String RequestType_ZINDIGI_CUSTOMER_ACTIVITY = "ZINDIGICUSTOMERACTIVITY";
 
     public static String RequestType_EChallanInquiry = "EChallan_Inquiry";
     public static String RequestType_EChallanPayment = "EChallan_Payment";
@@ -104,6 +117,10 @@ public class I8SBConstants {
     public static String RequestType_AccountBalanceInquiry = "AccountBalanceInquiry";
     public static String RequestType_CoreAccountMiniStatement = "CoreAccountMiniStatement";
     public static String RequestType_DebitCardList = "DebitCardList";
+    public static String RequestType_REFFERAL_CUSTOMER = "RefferalCustomer";
+    public static String RequestType_GET_CUSTOMER_DEVICE_DETAIL = "GetCustomerDeviceDetail";
+    public static String RequestType_UPDATE_CUSTOMER_DEVICE_DETAIL = "UpdateCustomerDeviceDetail";
+
 
     public static String RequestType_CLSJS_ImportScreening = "CLSJSImportScreening";
     public static String RequestType_DebitCardDetails = "DebitCardDetails";
@@ -147,6 +164,8 @@ public class I8SBConstants {
     public static String RequestType_SIIBFT = "SIIBFT";
     public static String RequestType_SIMiniStatement = "SIMiniStatement";
     public static String RequestType_SIList = "SIList";
+    public static String RequestType_LOANINTIMATION = "LOANINTIMATION";
+
     public static String RequestType_CardLessWithdrawalRequest = "CardLessWithdrawalRequest";
     public static String RequestType_mVisaPushPayment = "mVisaPushPayment";
     public static String RequestType_CardActivationDeactivation = "CardActivationDeactivation";
@@ -208,6 +227,7 @@ public class I8SBConstants {
     public static String RequestType_Stop = "Stop";
     public static String RequestType_BlockUser = "BlockUser";
     public static String RequestType_AccountStatment = "AccountStatement";
+    public static String RequestType_MinorAccountSync = "MinorAccountSync";
 
     // APIGEE calls
     public static String RequestType_PayMTCN = "PayMTCN";
@@ -319,6 +339,20 @@ public class I8SBConstants {
     public static String RequestType_BenificiaryDetails = "BenificiaryDetails";
     public static String RequestType_BenificiaryVisit = "BenificiaryVisit";
     public static String RequestType_Transaction = "Transaction";
+    public static String RequestType_Cls_Pending_Bot_Status_Update = "clsPendingBotStatusUpdtae";
+    public static String RequestType_SendPushNotification = "SendPushNotification";
+    public static String RequestType_OPTASIA_OfferListForCommodity = "OptasiaOfferListForCommodity";
+    public static String RequestType_OPTASIA_LOANOFFER = "OptasiaLoanOffer";
+    public static String RequestType_OPTASIA_CALLBACK = "OptasiaCallBack";
+    public static String RequestType_OPTASIA_LOANS = "OptasiaLoans";
+    public static String RequestType_OPTASIA_PROJECTION = "OptasiaProjection";
+    public static String RequestType_OPTASIA_OUTSTANDING = "OptasiaOutstanding";
+    public static String RequestType_OPTASIA_TRANSACTIONS = "OptasiaTransactions";
+    public static String RequestType_OPTASIA_LOANSUMMARY = "OptasiaLoanSummary";
+    public static String RequestType_OPTASIA_PAYLOAN = "OptasiaPayLoan";
+    public static String RequestType_OPTASIA_REPAYLOAN = "OptasiaRepayLoan";
+    public static String RequestType_Tasdeeq_AuthenticateUpdated = "TasdeeqAuthenticateUpdated";
+    public static String RequestType_Tasdeeq_CustomAnalytics = "TasdeeqCustomAnalytics";
 
 
 

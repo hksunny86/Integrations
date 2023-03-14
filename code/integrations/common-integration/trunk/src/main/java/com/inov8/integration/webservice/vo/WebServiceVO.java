@@ -400,9 +400,18 @@ public class WebServiceVO implements Serializable {
     private List<Repayment> repaymentList;
     private List<Plan> planList;
     private List<TotalOneOffCharges> totalOneOffChargesList;
+    private List<TotalRecurringCharge> totalRecurringChargeList;
     private List<InterestAdjustment> interestAdjustmentsList;
     private List<ChargeAdjustments> chargeAdjustmentsList;
     private List<Milestones> milestonesList;
+
+    public List<TotalRecurringCharge> getTotalRecurringChargeList() {
+        return totalRecurringChargeList;
+    }
+
+    public void setTotalRecurringChargeList(List<TotalRecurringCharge> totalRecurringChargeList) {
+        this.totalRecurringChargeList = totalRecurringChargeList;
+    }
 
     public String getRefNo() {
         return refNo;

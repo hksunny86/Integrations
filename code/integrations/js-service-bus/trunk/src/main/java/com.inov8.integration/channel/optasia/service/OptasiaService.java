@@ -70,32 +70,23 @@ public class OptasiaService {
             logger.info("Response of Offer List For Commodity Request : " + response);
             logger.info("Response Code for Offer List For Commodity Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
+            String requestJson = JSONUtil.getJSON(offerListForCommodityRequest);
+            logger.info("Offer List for Commodity Request " + requestJson);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Username", usernmae);
             headers.add("Password", password);
-
-//            if (optasiaOfferListForCommodity != null && optasiaOfferListForCommodity.contains("{0}")) {
-//                optasiaOfferListForCommodity = optasiaOfferListForCommodity.
-//                        replace("{0}", offerListForCommodityRequest.getIdentityType())
-//                        .replace("{1}", offerListForCommodityRequest.getIdentityValue())
-//                        .replace("{2}", offerListForCommodityRequest.getOrigSource())
-//                        .replace("{3}", offerListForCommodityRequest.getCommodityType());
-//            }
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromHttpUrl(optasiaOfferListForCommodity)
                     .queryParam("identityType", offerListForCommodityRequest.getIdentityType())
                     .queryParam("identityValue", offerListForCommodityRequest.getIdentityValue())
                     .queryParam("origSource", offerListForCommodityRequest.getOrigSource())
                     .queryParam("commodityType", offerListForCommodityRequest.getCommodityType());
-//                    .queryParam("sourceRequestId", offerListForCommodityRequest.getSourceRequestId())
-//                    .queryParam("offerName", offerListForCommodityRequest.getOfferName())
-//                    .queryParam("amount", offerListForCommodityRequest.getAmount());
 
             String url = uri.toUriString();
-            logger.info("Requesting URL ", url);
+            logger.info("Requesting URL " + url);
             HttpEntity httpEntity = new HttpEntity(headers);
-            logger.info("Sending Offer List For Commodity Request Sent to Client " + httpEntity.getBody().toString());
+            logger.info("Sending Offer List For Commodity Request Sent to Client " + httpEntity);
             HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Response received from client " + res.getBody());
             offerListForCommodityResponse = (OfferListForCommodityResponse) JSONUtil.jsonToObject(res.getBody(), OfferListForCommodityResponse.class);
@@ -145,7 +136,8 @@ public class OptasiaService {
             }
             String response;
             try {
-                logger.info("Requesting URL ", uri.toUriString());
+                String url = uri.toUriString();
+                logger.info("Requesting URL " + url);
                 logger.info("Sending Loan Offer Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
@@ -226,7 +218,8 @@ public class OptasiaService {
             }
             String response;
             try {
-                logger.info("Requesting URL ", uri.toUriString());
+                String url = uri.toUriString();
+                logger.info("Requesting URL " + url);
                 logger.info("Sending Call Back Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
@@ -294,7 +287,7 @@ public class OptasiaService {
 //                        .replace("{1}", loansRequest.getIdentityValue());
 //            }
 
-            UriComponentsBuilder uri = UriComponentsBuilder.fromHttpUrl(optasiaOfferListForCommodity)
+            UriComponentsBuilder uri = UriComponentsBuilder.fromHttpUrl(optasiaLoans)
                     .queryParam("identityType", loansRequest.getIdentityType())
                     .queryParam("origSource", loansRequest.getOrigSource())
                     .queryParam("identityValue", loansRequest.getIdentityValue());
@@ -302,10 +295,10 @@ public class OptasiaService {
             String response;
 //            try {
             String url = uri.toUriString();
-            logger.info("Requesting URL", url);
+            logger.info("Requesting URL " + url);
 //            String url = tem.replaceAll("%20", "");
             HttpEntity httpEntity = new HttpEntity(headers);
-            logger.info("Sending Customer Loans Request Sent to Client " + httpEntity.getBody().toString());
+            logger.info("Sending Customer Loans Request Sent to Client " + httpEntity);
             HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Response received from client " + res.getBody());
             loansResponse = (LoansResponse) JSONUtil.jsonToObject(res.getBody(), LoansResponse.class);
@@ -361,7 +354,8 @@ public class OptasiaService {
             }
             String response;
             try {
-                logger.info("Requesting URL ", uri.toUriString());
+                String url = uri.toUriString();
+                logger.info("Requesting URL " + url);
                 logger.info("Sending Projection Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
@@ -435,9 +429,9 @@ public class OptasiaService {
 //            Iterator res = this.restTemplate.getMessageConverters().iterator();
 
             String url = uri.toUriString();
-            logger.info("Requesting URL ", url);
+            logger.info("Requesting URL " + url);
             HttpEntity httpEntity = new HttpEntity(headers);
-            logger.info("Sending Outstanding Request Sent to Client " + httpEntity.getBody().toString());
+            logger.info("Sending Outstanding Request Sent to Client " + httpEntity);
             HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Response received from client " + res.getBody());
             outstandingResponse = (OutstandingResponse) JSONUtil.jsonToObject(res.getBody(), OutstandingResponse.class);
@@ -472,7 +466,7 @@ public class OptasiaService {
             headers.add("Username", usernmae);
             headers.add("Password", password);
 
-            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaOutstanding)
+            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaTransactions)
                     .queryParam("identityType", transactionStatusRequest.getIdentityType())
                     .queryParam("origSource", transactionStatusRequest.getOrigSource())
                     .queryParam("identityValue", transactionStatusRequest.getIdentityValue())
@@ -484,9 +478,9 @@ public class OptasiaService {
 //            Iterator res = this.restTemplate.getMessageConverters().iterator();
 
             String url = uri.toUriString();
-            logger.info("Requesting URL ", url);
+            logger.info("Requesting URL " + url);
             HttpEntity httpEntity = new HttpEntity(headers);
-            logger.info("Sending Transaction Status Request Sent to Client " + httpEntity.getBody().toString());
+            logger.info("Sending Transaction Status Request Sent to Client " + httpEntity);
             HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Response received from client " + res.getBody());
             transactionStatusResponse = (TransactionStatusResponse) JSONUtil.jsonToObject(res.getBody(), TransactionStatusResponse.class);
@@ -519,7 +513,7 @@ public class OptasiaService {
             headers.add("Username", usernmae);
             headers.add("Password", password);
 
-            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaOutstanding)
+            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaStatus)
                     .queryParam("identityType", loanStatusRequest.getIdentityType())
                     .queryParam("origSource", loanStatusRequest.getOrigSource())
                     .queryParam("identityValue", loanStatusRequest.getIdentityValue());
@@ -530,9 +524,9 @@ public class OptasiaService {
 //            Iterator res = this.restTemplate.getMessageConverters().iterator();
 
             String url = uri.toUriString();
-            logger.info("Requesting URL ", url);
+            logger.info("Requesting URL " + url);
             HttpEntity httpEntity = new HttpEntity(headers);
-            logger.info("Sending Loan Status Request Sent to Client " + httpEntity.getBody().toString());
+            logger.info("Sending Loan Status Request Sent to Client " + httpEntity);
             HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Response received from client " + res.getBody());
             loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(res.getBody(), LoanStatusResponse.class);
@@ -584,7 +578,8 @@ public class OptasiaService {
             }
             String response;
             try {
-                logger.info("Requesting URL ", uri.toUriString());
+                String url = uri.toUriString();
+                logger.info("Requesting URL " + url);
                 logger.info("Sending Loan Payment Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());

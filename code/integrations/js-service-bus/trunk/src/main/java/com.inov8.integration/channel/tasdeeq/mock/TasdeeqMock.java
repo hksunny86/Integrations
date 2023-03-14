@@ -9,13 +9,15 @@ public class TasdeeqMock {
                 "    \"messageCode\": \"00922001\",\n" +
                 "    \"message\": \"Report generated successfully\",\n" +
                 "    \"data\": {\n" +
-                "        \"reportDate\": \"13 Aug 2020\",\n" +
-                "        \"reportTime\": \"15:26:38\", \n" +
-                "        \"refNo\":\"1234324523\",\n" +
-                "        \"NAME\": \"\",\n" +
-                "        \"CNIC\": \"xxxxx-xxxxxxx-x\",\n" +
-                "        \"CITY\": \"\",\n" +
-                "        \"DOB\": \"\",\n" +
+                "        \"reportDate\": \"13 Mar 2023\",\n" +
+                "        \"reportTime\": \"13:55:45\",\n" +
+                "        \"refNo\": \"202303-39138371\",\n" +
+                "        \"NAME\": \"AIMAN ZAFFAR\",\n" +
+                "        \"CNIC\": \"35202-5171747-4\",\n" +
+                "        \"DOB\": \"31/12/1992\",\n" +
+                "        \"CITY\": \"*\",\n" +
+                "        \"noOfActiveAccounts\": 0,\n" +
+                "        \"totalOutstandingBalance\": \"*\",\n" +
                 "        \"PLUS_30_24M\": \"*\",\n" +
                 "        \"PLUS_60_24M\": \"*\",\n" +
                 "        \"PLUS_90_24M\": \"*\",\n" +

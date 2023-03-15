@@ -41,6 +41,7 @@ public interface TransactionDetailMasterDAO
     public long getPaidChallan(String consumerNo,String productCode);
 
     TransactionDetailMasterModel  loadTDMbyRRN(String rrn);
+    TransactionDetailMasterModel  loadTDMbyReserved2(String reserved2);
     TransactionDetailMasterModel  loadTDMbyMobileNumber(String mobileNo, String productId);
     TransactionDetailMasterModel  loadTDMbyProductId(String mobileNo, String productId);
 //    TransactionDetailMasterModel  loadTDMbyMobileandDateRange(String mobileNo, String startDate, String endDate);

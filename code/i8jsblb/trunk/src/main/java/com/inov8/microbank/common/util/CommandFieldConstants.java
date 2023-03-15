@@ -769,6 +769,7 @@ public class CommandFieldConstants
     public static final String KEY_PRODUCT_NAME = "PNAME";
     public static final String KEY_PROFIT_KEY = "PKEY";
     public static final String KEY_RESERVED_4 = "RESERVED4";
+    public static final String KEY_RESERVED_3 = "RESERVED3";
     public static final String KEY_RESERVED_5 = "RESERVED5";
     public static final String KEY_RESERVED_1 = "RESERVED1";
     public static final String KEY_RESERVED_2 = "RESERVED2";

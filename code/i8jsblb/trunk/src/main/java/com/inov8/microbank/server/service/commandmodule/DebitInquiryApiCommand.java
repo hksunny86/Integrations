@@ -131,7 +131,7 @@ public class DebitInquiryApiCommand extends BaseCommand {
                         commissionWrapper = getCommonCommandManager().calculateCommission(workFlowWrapper);
                         commissionAmountsHolder = (CommissionAmountsHolder) commissionWrapper.getCommissionWrapperHashMap().get(CommissionConstantsInterface.COMMISSION_AMOUNTS_HOLDER);
 
-//                        commonCommandManager.validateBalance(appUserModel, smartMoneyAccountModel, commissionAmountsHolder.getTotalAmount(), true);
+                        commonCommandManager.validateBalance(appUserModel, smartMoneyAccountModel, commissionAmountsHolder.getTotalAmount(), true);
 
                     } else {
                         logger.error("[DebitInfoApiCommand.execute] Throwing Exception in Product ID: " + productId + " - Agent AppUserID: " + ThreadLocalAppUser.getAppUserModel().getAppUserId());

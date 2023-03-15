@@ -10,6 +10,8 @@ import com.inov8.microbank.common.model.RetailerContactModel;
 import com.inov8.microbank.common.model.SmartMoneyAccountModel;
 import com.inov8.microbank.server.service.smartmoneymodule.SmartMoneyAccountManager;
 
+import java.util.List;
+
 /**
  * <p>Title: </p>
  *
@@ -315,6 +317,15 @@ public int countSmartMoneyAccountModel(BaseWrapper baseWrapper)
 
         catch (FrameworkCheckedException e) {
             frameworkExceptionTranslator.translate(e, FrameworkExceptionTranslator.FIND_ACTION);
+        }
+    }
+
+    @Override
+    public List<SmartMoneyAccountModel> loadSmartMoneyAccountByIsOptasiaDebitBlocked() throws FrameworkCheckedException {
+        try{
+            return this.smartMoneyAccountManager.loadSmartMoneyAccountByIsOptasiaDebitBlocked();
+        }catch (Exception ex){
+            throw this.frameworkExceptionTranslator.translate(ex,this.frameworkExceptionTranslator.FIND_ACTION);
         }
     }
 

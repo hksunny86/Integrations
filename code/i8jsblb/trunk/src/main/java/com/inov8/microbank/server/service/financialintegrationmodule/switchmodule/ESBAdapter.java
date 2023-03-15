@@ -926,7 +926,8 @@ public class ESBAdapter {
             } else {
                 logger.error("[ESBAdapter.processI8sbResponseCode] 3rd Party Error response description : " + errorMessage);
                 //if(!errorMessage.contains("Finger") && !errorMessage.contains("finger"))
-                throw new WorkFlowException(errorMessage);
+                errorCode = responseCode;
+                throw new WorkFlowException(errorMessage, errorCode);
             }
         }
         return responseCode;

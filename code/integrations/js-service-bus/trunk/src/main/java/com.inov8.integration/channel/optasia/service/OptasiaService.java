@@ -50,10 +50,11 @@ public class OptasiaService {
     private String optasiaInitiateLoan = PropertyReader.getProperty("optasia.projection");
     private String optasiaOutstanding = PropertyReader.getProperty("optasia.outstanding");
     private String optasiaTransactions = PropertyReader.getProperty("optasia.transactions");
-    private String optasiaStatus = PropertyReader.getProperty("optasia.status");
+    private String optasiaLoanStatus = PropertyReader.getProperty("optasia.status");
     private String optasiaPayment = PropertyReader.getProperty("optasia.payment");
     private String usernmae = PropertyReader.getProperty("optasia.username");
     private String password = PropertyReader.getProperty("optasia.password");
+    private String optasiaAuthorization = PropertyReader.getProperty("optasia.authorization");
 
     public OfferListForCommodityResponse sendOfferListForCommodityResponse(OfferListForCommodityRequest offerListForCommodityRequest) {
 
@@ -76,6 +77,7 @@ public class OptasiaService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Username", usernmae);
             headers.add("Password", password);
+            headers.add("Authorization", "Basic " + optasiaAuthorization);
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromHttpUrl(optasiaOfferListForCommodity)
                     .queryParam("identityType", offerListForCommodityRequest.getIdentityType())
@@ -117,6 +119,7 @@ public class OptasiaService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Username", usernmae);
             headers.add("Password", password);
+            headers.add("Authorization", "Basic " + optasiaAuthorization);
 //            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaLoanOffer)
@@ -198,6 +201,8 @@ public class OptasiaService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Username", usernmae);
             headers.add("Password", password);
+            headers.add("Authorization", "Basic " + optasiaAuthorization);
+
 //            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaCallback)
                     .queryParam("loanEvent", callBackRequest.getLoanEvent())
@@ -280,6 +285,7 @@ public class OptasiaService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Username", usernmae);
             headers.add("Password", password);
+            headers.add("Authorization", "Basic " + optasiaAuthorization);
 //            if (optasiaLoans != null && optasiaLoans.contains("{0}")) {
 //                optasiaLoans = optasiaLoans.
 //                        replace("{0}", loansRequest.getIdentityType())
@@ -341,6 +347,7 @@ public class OptasiaService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Username", usernmae);
             headers.add("Password", password);
+            headers.add("Authorization", "Basic " + optasiaAuthorization);
 //            headers.add("auth_token", i8SBSwitchControllerResponseVO.getAuthToken());
             String requestJSON = JSONUtil.getJSON(initiateLoanRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
@@ -417,6 +424,7 @@ public class OptasiaService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Username", usernmae);
             headers.add("Password", password);
+            headers.add("Authorization", "Basic " + optasiaAuthorization);
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaOutstanding)
                     .queryParam("identityType", outstandingRequest.getIdentityType())
@@ -465,6 +473,7 @@ public class OptasiaService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Username", usernmae);
             headers.add("Password", password);
+            headers.add("Authorization", "Basic " + optasiaAuthorization);
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaTransactions)
                     .queryParam("identityType", transactionStatusRequest.getIdentityType())
@@ -512,8 +521,9 @@ public class OptasiaService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Username", usernmae);
             headers.add("Password", password);
+            headers.add("Authorization", "Basic " + optasiaAuthorization);
 
-            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaStatus)
+            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaLoanStatus)
                     .queryParam("identityType", loanStatusRequest.getIdentityType())
                     .queryParam("origSource", loanStatusRequest.getOrigSource())
                     .queryParam("identityValue", loanStatusRequest.getIdentityValue());
@@ -559,6 +569,7 @@ public class OptasiaService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("Username", usernmae);
             headers.add("Password", password);
+            headers.add("Authorization", "Basic " + optasiaAuthorization);
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaPayment)
                     .queryParam("identityType", loanPaymentRequest.getIdentityType())

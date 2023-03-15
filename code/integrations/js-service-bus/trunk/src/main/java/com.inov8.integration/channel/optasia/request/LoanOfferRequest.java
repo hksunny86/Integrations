@@ -21,7 +21,7 @@ import java.util.List;
         "offerName",
         "amount",
         "externalLoanId",
-        "additionalIds"
+        "additionalInfo"
 })
 @Generated("jsonschema2pojo")
 public class LoanOfferRequest extends Request {
@@ -34,7 +34,7 @@ public class LoanOfferRequest extends Request {
     private String amount;
     @JsonProperty("externalLoanId")
     private String externalLoanId;
-    @JsonProperty("additionalIds")
+    @JsonProperty("additionalInfo")
     private List<AdditionalId> additionalIds;
     private List<AdditionalId> additionalIdList;
     private String identityType;
@@ -114,12 +114,12 @@ public class LoanOfferRequest extends Request {
         this.externalLoanId = externalLoanId;
     }
 
-    @JsonProperty("additionalIds")
+    @JsonProperty("additionalInfo")
     public List<AdditionalId> getAdditionalIds() {
         return additionalIds;
     }
 
-    @JsonProperty("additionalIds")
+    @JsonProperty("additionalInfo")
     public void setAdditionalIds(List<AdditionalId> additionalIds) {
         this.additionalIds = additionalIds;
     }

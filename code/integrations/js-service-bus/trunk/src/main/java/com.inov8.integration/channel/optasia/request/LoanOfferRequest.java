@@ -136,6 +136,9 @@ public class LoanOfferRequest extends Request {
 
         additionalIdList.add(request);
 
+        this.setIdentityType(i8SBSwitchControllerRequestVO.getIdentityType());
+        this.setIdentityValue(i8SBSwitchControllerRequestVO.getIdentityValue());
+        this.setOrigSource(i8SBSwitchControllerRequestVO.getOrigSource());
         this.setSourceRequestId(i8SBSwitchControllerRequestVO.getSourceRequestId());
         this.setOfferName(i8SBSwitchControllerRequestVO.getOfferName());
         this.setAmount(i8SBSwitchControllerRequestVO.getAmount());

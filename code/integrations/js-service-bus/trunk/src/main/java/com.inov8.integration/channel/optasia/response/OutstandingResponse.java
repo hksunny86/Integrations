@@ -41,6 +41,10 @@ public class OutstandingResponse extends Response implements Serializable {
     private String responseCode;
     private String responseDescription;
     private Map<String, List<?>> collectionOfList = new HashMap();
+    @JsonProperty("code")
+    private String code;
+    @JsonProperty("message")
+    private String message;
 
     public String getResponseCode() {
         return responseCode;
@@ -108,12 +112,33 @@ public class OutstandingResponse extends Response implements Serializable {
         this.outstandingPerCurrency = outstandingPerCurrency;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
 
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
-        i8SBSwitchControllerResponseVO.setResponseCode("00");
+        if (this.getResponseCode().equals("200")) {
+            i8SBSwitchControllerResponseVO.setResponseCode("00");
+        } else {
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
+            i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
+        }
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());

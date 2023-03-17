@@ -53,7 +53,7 @@ public class OptasiaService {
     private String optasiaTransactions = PropertyReader.getProperty("optasia.transactions");
     private String optasiaLoanStatus = PropertyReader.getProperty("optasia.status");
     private String optasiaPayment = PropertyReader.getProperty("optasia.payment");
-    private String usernmae = PropertyReader.getProperty("optasia.username");
+    private String username = PropertyReader.getProperty("optasia.username");
     private String password = PropertyReader.getProperty("optasia.password");
     private String optasiaAuthorization = PropertyReader.getProperty("optasia.authorization");
 
@@ -78,12 +78,11 @@ public class OptasiaService {
                 logger.info("Offer List for Commodity Request " + requestJson);
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
-                headers.add("Username", usernmae);
+                headers.add("Username", username);
                 headers.add("Password", password);
                 headers.add("Authorization", "Basic " + optasiaAuthorization);
 
 
-//            String fed = String.valueOf(offerListForCommodityRequest.getAdditionalInfo());
                 UriComponentsBuilder uri = UriComponentsBuilder.fromHttpUrl(optasiaOfferListForCommodity)
                         .queryParam("identityType", offerListForCommodityRequest.getIdentityType())
                         .queryParam("identityValue", offerListForCommodityRequest.getIdentityValue())
@@ -97,10 +96,12 @@ public class OptasiaService {
                 logger.info("Requesting URL " + url);
                 HttpEntity httpEntity = new HttpEntity(headers);
                 logger.info("Sending Offer List For Commodity Request Sent to Client " + httpEntity);
-                HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
+                ResponseEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
                 logger.info("Response received from client " + res.getBody());
-                offerListForCommodityResponse = (OfferListForCommodityResponse) JSONUtil.jsonToObject(res.getBody(), OfferListForCommodityResponse.class);
-
+                if (res.getStatusCode().toString().equals("200")) {
+                    offerListForCommodityResponse.setResponseCode("200");
+                    offerListForCommodityResponse = (OfferListForCommodityResponse) JSONUtil.jsonToObject(res.getBody(), OfferListForCommodityResponse.class);
+                }
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();
@@ -151,7 +152,7 @@ public class OptasiaService {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Username", usernmae);
+            headers.add("Username", username);
             headers.add("Password", password);
             headers.add("Authorization", "Basic " + optasiaAuthorization);
 
@@ -168,13 +169,12 @@ public class OptasiaService {
                 String url = uri.toUriString();
                 logger.info("Requesting URL " + url);
                 logger.info("Sending Loan Offer Request Sent to Client " + httpEntity);
-                ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
-                logger.info("Response Code received from client " + res1.getStatusCode().toString());
-                logger.info("Response received from client " + res1.getBody());
-                if (res1.getStatusCode().toString().equals("200")) {
-                    response = res1.getBody();
-                    loanOfferResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
-                    loanOfferResponse.setResponseDescription("Success");
+                ResponseEntity<String> res = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
+                logger.info("Response Code received from client " + res.getStatusCode().toString());
+                logger.info("Response received from client " + res.getBody());
+                if (res.getStatusCode().toString().equals("200")) {
+                    response = res.getBody();
+                    loanOfferResponse.setResponseCode("200");
                     loanOfferResponse = (LoanOfferResponse) JSONUtil.jsonToObject(response, LoanOfferResponse.class);
                 }
             } catch (RestClientException e) {
@@ -225,7 +225,7 @@ public class OptasiaService {
         } else {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Username", usernmae);
+            headers.add("Username", username);
             headers.add("Password", password);
             headers.add("Authorization", "Basic " + optasiaAuthorization);
 
@@ -256,9 +256,8 @@ public class OptasiaService {
                 logger.info("Response Code received from client " + res1.getStatusCode().toString());
                 if (res1.getStatusCode().toString().equals("200")) {
                     response = res1.getBody();
+                    callBackResponse.setResponseCode("200");
                     callBackResponse = (CallBackResponse) JSONUtil.jsonToObject(response, CallBackResponse.class);
-                    callBackResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
-                    callBackResponse.setResponseDescription("Success");
                 }
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
@@ -310,7 +309,7 @@ public class OptasiaService {
             try {
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
-                headers.add("Username", usernmae);
+                headers.add("Username", username);
                 headers.add("Password", password);
                 headers.add("Authorization", "Basic " + optasiaAuthorization);
 
@@ -324,9 +323,12 @@ public class OptasiaService {
                 logger.info("Requesting URL " + url);
                 HttpEntity httpEntity = new HttpEntity(headers);
                 logger.info("Sending Customer Loans Request Sent to Client " + httpEntity);
-                HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
+                ResponseEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
                 logger.info("Response received from client " + res.getBody());
-                loansResponse = (LoansResponse) JSONUtil.jsonToObject(res.getBody(), LoansResponse.class);
+                if (res.getStatusCode().toString().equals("200")) {
+                    loansResponse.setResponseCode("200");
+                    loansResponse = (LoansResponse) JSONUtil.jsonToObject(res.getBody(), LoansResponse.class);
+                }
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();
@@ -388,7 +390,7 @@ public class OptasiaService {
 
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
-                headers.add("Username", usernmae);
+                headers.add("Username", username);
                 headers.add("Password", password);
                 headers.add("Authorization", "Basic " + optasiaAuthorization);
 
@@ -398,10 +400,13 @@ public class OptasiaService {
                 String url = uri.toUriString();
                 logger.info("Requesting URL " + url);
                 logger.info("Sending Projection Request Sent to Client " + httpEntity);
-                HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
+                ResponseEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
                 logger.info("Response received from client " + res.getBody());
                 response = res.getBody();
-                initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(response, InitiateLoanResponse.class);
+                if (res.getStatusCode().toString().equals("200")) {
+                    initiateLoanResponse.setResponseCode("200");
+                    initiateLoanResponse = (InitiateLoanResponse) JSONUtil.jsonToObject(response, InitiateLoanResponse.class);
+                }
 
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
@@ -454,7 +459,7 @@ public class OptasiaService {
             try {
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_JSON);
-                headers.add("Username", usernmae);
+                headers.add("Username", username);
                 headers.add("Password", password);
                 headers.add("Authorization", "Basic " + optasiaAuthorization);
 
@@ -468,9 +473,12 @@ public class OptasiaService {
                 logger.info("Requesting URL " + url);
                 HttpEntity httpEntity = new HttpEntity(headers);
                 logger.info("Sending Outstanding Request Sent to Client " + httpEntity);
-                HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
+                ResponseEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
                 logger.info("Response received from client " + res.getBody());
-                outstandingResponse = (OutstandingResponse) JSONUtil.jsonToObject(res.getBody(), OutstandingResponse.class);
+                if (res.getStatusCode().toString().equals("200")) {
+                    outstandingResponse.setResponseCode("200");
+                    outstandingResponse = (OutstandingResponse) JSONUtil.jsonToObject(res.getBody(), OutstandingResponse.class);
+                }
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();
@@ -524,7 +532,7 @@ public class OptasiaService {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Username", usernmae);
+            headers.add("Username", username);
             headers.add("Password", password);
             headers.add("Authorization", "Basic " + optasiaAuthorization);
 
@@ -539,7 +547,7 @@ public class OptasiaService {
             logger.info("Requesting URL " + url);
             HttpEntity httpEntity = new HttpEntity(headers);
             logger.info("Sending Transaction Status Request Sent to Client " + httpEntity);
-            HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
+            ResponseEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Response received from client " + res.getBody());
             transactionStatusResponse = (TransactionStatusResponse) JSONUtil.jsonToObject(res.getBody(), TransactionStatusResponse.class);
         }
@@ -568,7 +576,7 @@ public class OptasiaService {
         } else {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Username", usernmae);
+            headers.add("Username", username);
             headers.add("Password", password);
             headers.add("Authorization", "Basic " + optasiaAuthorization);
 
@@ -582,7 +590,7 @@ public class OptasiaService {
             logger.info("Requesting URL " + url);
             HttpEntity httpEntity = new HttpEntity(headers);
             logger.info("Sending Loan Status Request Sent to Client " + httpEntity);
-            HttpEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
+            ResponseEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
             logger.info("Response received from client " + res.getBody());
             loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(res.getBody(), LoanStatusResponse.class);
         }
@@ -612,7 +620,7 @@ public class OptasiaService {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Username", usernmae);
+            headers.add("Username", username);
             headers.add("Password", password);
             headers.add("Authorization", "Basic " + optasiaAuthorization);
 
@@ -641,7 +649,7 @@ public class OptasiaService {
                 logger.info("Response received from client " + res1.getBody());
                 if (res1.getStatusCode().toString().equals("200")) {
                     response = res1.getBody();
-                    loanPaymentResponse.setResponseCode(I8SBResponseCodeEnum.PROCESSED.getValue());
+                    loanPaymentResponse.setResponseCode("200");
                     loanPaymentResponse.setResponseDescription("Success");
                     loanPaymentResponse = (LoanPaymentResponse) JSONUtil.jsonToObject(response, LoanPaymentResponse.class);
                 }

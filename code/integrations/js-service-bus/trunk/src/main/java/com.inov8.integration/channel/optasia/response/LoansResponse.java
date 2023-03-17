@@ -23,7 +23,6 @@ import java.util.Map;
         "receivedTimestamp",
         "loansPerState"
 })
-@Generated("jsonschema2pojo")
 public class LoansResponse extends Response implements Serializable {
 
     private static final long serialVersionUID = 5824473488070382311L;
@@ -42,6 +41,26 @@ public class LoansResponse extends Response implements Serializable {
     private String responseCode;
     private String responseDescription;
     private Map<String, List<?>> collectionOfList = new HashMap();
+    @JsonProperty("code")
+    private String code;
+    @JsonProperty("message")
+    private String message;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getResponseCode() {
         return responseCode;
@@ -114,7 +133,12 @@ public class LoansResponse extends Response implements Serializable {
 
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
-        i8SBSwitchControllerResponseVO.setResponseCode("00");
+        if (this.getResponseCode().equals("200")) {
+            i8SBSwitchControllerResponseVO.setResponseCode("00");
+        } else {
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
+            i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
+        }
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
@@ -421,7 +445,6 @@ class LoanOffer implements Serializable {
         "loanReason",
         "loanOffer"
 })
-@Generated("jsonschema2pojo")
 class Loan__1 implements Serializable {
 
     @JsonProperty("internalLoanId")
@@ -504,7 +527,6 @@ class Loan__1 implements Serializable {
         "loanState",
         "loans"
 })
-@Generated("jsonschema2pojo")
 class LoansPerState implements Serializable {
 
     @JsonProperty("loanState")
@@ -546,7 +568,6 @@ class LoansPerState implements Serializable {
         "totalChargesVAT",
         "totalPendingRecoveries"
 })
-@Generated("jsonschema2pojo")
 class Outstanding implements Serializable {
 
     @JsonProperty("currencyCode")
@@ -666,7 +687,6 @@ class Outstanding implements Serializable {
         "daysLeftInPeriod",
         "nextPeriod"
 })
-@Generated("jsonschema2pojo")
 class Plan implements Serializable {
 
     @JsonProperty("currentPeriod")
@@ -719,7 +739,6 @@ class Plan implements Serializable {
         "charges",
         "chargesVAT"
 })
-@Generated("jsonschema2pojo")
 class Repayment implements Serializable {
 
     @JsonProperty("repaymentsCount")
@@ -827,7 +846,6 @@ class Repayment implements Serializable {
         "outstanding",
         "plan"
 })
-@Generated("jsonschema2pojo")
 class Report implements Serializable {
 
     @JsonProperty("repayment")

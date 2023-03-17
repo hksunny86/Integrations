@@ -127,6 +127,8 @@ public class OutstandingResponse extends Response implements Serializable {
                 outstandingPerCurrency = new com.inov8.integration.webservice.optasiaVO.OutstandingPerCurrency();
 
                 outstandingPerCurrency.setCurrencyCode(this.getOutstandingPerCurrency().get(i).getCurrencyCode());
+                outstandingPerCurrency.setAvailableCreditLimit(this.getOutstandingPerCurrency().get(i).getAvailableCreditLimit());
+                outstandingPerCurrency.setDynamicCreditLimit(this.getOutstandingPerCurrency().get(i).getDynamicCreditLimit());
                 outstandingPerCurrency.setNumOutstandingLoans(this.getOutstandingPerCurrency().get(i).getNumOutstandingLoans());
                 outstandingPerCurrency.setTotalGross(this.getOutstandingPerCurrency().get(i).getTotalGross());
                 outstandingPerCurrency.setTotalPrincipal(this.getOutstandingPerCurrency().get(i).getTotalPrincipal());
@@ -152,6 +154,8 @@ public class OutstandingResponse extends Response implements Serializable {
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "currencyCode",
+        "availableCreditLimit",
+        "dynamicCreditLimit",
         "numOutstandingLoans",
         "totalGross",
         "totalPrincipal",
@@ -167,6 +171,10 @@ class OutstandingPerCurrency implements Serializable {
 
     @JsonProperty("currencyCode")
     private String currencyCode;
+    @JsonProperty("availableCreditLimit")
+    private Float availableCreditLimit;
+    @JsonProperty("dynamicCreditLimit")
+    private Float dynamicCreditLimit;
     @JsonProperty("numOutstandingLoans")
     private String numOutstandingLoans;
     @JsonProperty("totalGross")
@@ -197,6 +205,27 @@ class OutstandingPerCurrency implements Serializable {
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
     }
+
+    @JsonProperty("availableCreditLimit")
+    public Float getAvailableCreditLimit() {
+        return availableCreditLimit;
+    }
+
+    @JsonProperty("availableCreditLimit")
+    public void setAvailableCreditLimit(Float availableCreditLimit) {
+        this.availableCreditLimit = availableCreditLimit;
+    }
+
+    @JsonProperty("dynamicCreditLimit")
+    public Float getDynamicCreditLimit() {
+        return dynamicCreditLimit;
+    }
+
+    @JsonProperty("dynamicCreditLimit")
+    public void setDynamicCreditLimit(Float dynamicCreditLimit) {
+        this.dynamicCreditLimit = dynamicCreditLimit;
+    }
+
 
     @JsonProperty("numOutstandingLoans")
     public String getNumOutstandingLoans() {

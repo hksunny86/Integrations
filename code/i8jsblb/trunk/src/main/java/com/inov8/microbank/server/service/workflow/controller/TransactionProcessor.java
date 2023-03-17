@@ -41,39 +41,48 @@ public abstract class TransactionProcessor
      * @return
      */
 
-    private void saveThirdPartyParameters(WorkFlowWrapper wrapper) {
+    private void saveThirdPartyParameters(WorkFlowWrapper wrapper){
         logger.info("******************* Start of TransactionProcessor.saveThirdPartyParameters() ************************");
-        if (wrapper.getDeviceTypeModel() != null && wrapper.getDeviceTypeModel().getDeviceTypeId() != null
-                && (wrapper.getDeviceTypeModel().getDeviceTypeId().equals(DeviceTypeConstantsInterface.WEB_SERVICE) || wrapper.getDeviceTypeModel().getDeviceTypeId().equals(DeviceTypeConstantsInterface.ATM))) {
-            if (wrapper.getObject(CommandFieldConstants.KEY_TERMINAL_ID) != null)
+        if(wrapper.getDeviceTypeModel() != null && wrapper.getDeviceTypeModel().getDeviceTypeId() != null
+                && (wrapper.getDeviceTypeModel().getDeviceTypeId().equals(DeviceTypeConstantsInterface.WEB_SERVICE)||wrapper.getDeviceTypeModel().getDeviceTypeId().equals(DeviceTypeConstantsInterface.ATM))){
+            if(wrapper.getObject(CommandFieldConstants.KEY_TERMINAL_ID) != null)
                 wrapper.getTransactionDetailMasterModel().setTerminalId(wrapper.getObject(CommandFieldConstants.KEY_TERMINAL_ID).toString());
-            if (wrapper.getObject(CommandFieldConstants.KEY_CHANNEL_ID) != null)
+            if(wrapper.getObject(CommandFieldConstants.KEY_CHANNEL_ID) != null)
                 wrapper.getTransactionDetailMasterModel().setChannelId(wrapper.getObject(CommandFieldConstants.KEY_CHANNEL_ID).toString());
-            if (wrapper.getObject(FonePayConstants.KEY_EXTERNAL_TRANSACTION_CODE) != null) {
+            if(wrapper.getObject(FonePayConstants.KEY_EXTERNAL_TRANSACTION_CODE) != null){
                 wrapper.getTransactionDetailMasterModel().setFonepayTransactionCode((String) wrapper.getObject(FonePayConstants.KEY_EXTERNAL_TRANSACTION_CODE));
             }
-            if (wrapper.getObject(CommandFieldConstants.KEY_STAN) != null) {
+            if(wrapper.getObject(CommandFieldConstants.KEY_STAN) != null){
                 wrapper.getTransactionDetailMasterModel().setStan((String) wrapper.getObject(CommandFieldConstants.KEY_STAN));
             }
-            if (wrapper.getObject(FonePayConstants.KEY_EXTERNAL_PRODUCT_NAME) != null) {
+            if(wrapper.getObject(FonePayConstants.KEY_EXTERNAL_PRODUCT_NAME) != null){
                 wrapper.getTransactionDetailMasterModel().setExternalProductName((String) wrapper.getObject(FonePayConstants.KEY_EXTERNAL_PRODUCT_NAME));
             }
-            if (wrapper.getObject(CommandFieldConstants.KEY_PROFIT_KEY) != null) {
+            if(wrapper.getObject(CommandFieldConstants.KEY_RESERVED_2) != null){
+                wrapper.getTransactionDetailMasterModel().setReserved2((String) wrapper.getObject(CommandFieldConstants.KEY_RESERVED_2));
+            }
+            if(wrapper.getObject(CommandFieldConstants.KEY_PROFIT_KEY) != null){
                 wrapper.getTransactionDetailMasterModel().setReserved3((String) wrapper.getObject(CommandFieldConstants.KEY_PROFIT_KEY));
             }
-            if (wrapper.getObject(CommandFieldConstants.KEY_RESERVED_4) != null) {
+            if(wrapper.getObject(CommandFieldConstants.KEY_RESERVED_4) != null){
                 wrapper.getTransactionDetailMasterModel().setReserved4((String) wrapper.getObject(CommandFieldConstants.KEY_RESERVED_4));
             }
-            if (wrapper.getObject(CommandFieldConstants.KEY_RESERVED_5) != null) {
+            if(wrapper.getObject(CommandFieldConstants.KEY_RESERVED_5) != null){
                 wrapper.getTransactionDetailMasterModel().setReserved5((String) wrapper.getObject(CommandFieldConstants.KEY_RESERVED_5));
             }
-            if (wrapper.getObject(CommandFieldConstants.KEY_RESERVED_8) != null) {
+            if(wrapper.getObject(CommandFieldConstants.KEY_RESERVED_6) != null){
+                wrapper.getTransactionDetailMasterModel().setReserved6((String) wrapper.getObject(CommandFieldConstants.KEY_RESERVED_6));
+            }
+            if(wrapper.getObject(CommandFieldConstants.KEY_RESERVED_7) != null){
+                wrapper.getTransactionDetailMasterModel().setReserved7((String) wrapper.getObject(CommandFieldConstants.KEY_RESERVED_7));
+            }
+            if(wrapper.getObject(CommandFieldConstants.KEY_RESERVED_8) != null){
                 wrapper.getTransactionDetailMasterModel().setReserved8((String) wrapper.getObject(CommandFieldConstants.KEY_RESERVED_8));
             }
-            if (wrapper.getObject(CommandFieldConstants.KEY_RESERVED_9) != null) {
+            if(wrapper.getObject(CommandFieldConstants.KEY_RESERVED_9) != null){
                 wrapper.getTransactionDetailMasterModel().setReserved9((String) wrapper.getObject(CommandFieldConstants.KEY_RESERVED_9));
             }
-            if (wrapper.getObject(CommandFieldConstants.KEY_RESERVED_10) != null) {
+            if(wrapper.getObject(CommandFieldConstants.KEY_RESERVED_10) != null){
                 wrapper.getTransactionDetailMasterModel().setReserved10((String) wrapper.getObject(CommandFieldConstants.KEY_RESERVED_10));
             }
 

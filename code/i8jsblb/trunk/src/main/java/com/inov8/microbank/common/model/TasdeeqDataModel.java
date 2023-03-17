@@ -36,6 +36,7 @@ public class TasdeeqDataModel extends BasePersistableModel implements
     private String plus1504M;
     private String plus18024M;
     private String writeOff;
+    private String referenceNumber;
     private String validStatus;
     private Date createdOn;
     private Date updatedOn;
@@ -271,5 +272,14 @@ public class TasdeeqDataModel extends BasePersistableModel implements
 
     public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    @Column(name = "REFERENCE_NUMBER"  )
+    public String getReferenceNumber() {
+        return referenceNumber;
+    }
+
+    public void setReferenceNumber(String referenceNumber) {
+        this.referenceNumber = referenceNumber;
     }
 }

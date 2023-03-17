@@ -4,9 +4,12 @@ import com.inov8.framework.common.exception.FrameworkCheckedException;
 import com.inov8.framework.common.util.CustomList;
 import com.inov8.framework.common.wrapper.BaseWrapper;
 import com.inov8.framework.common.wrapper.SearchBaseWrapper;
+import com.inov8.microbank.common.model.AdvanceSalaryLoanModel;
 import com.inov8.microbank.common.model.AppUserModel;
 import com.inov8.microbank.common.model.RetailerContactModel;
 import com.inov8.microbank.common.model.SmartMoneyAccountModel;
+
+import java.util.List;
 
 /**
  * <p>Title: </p>
@@ -69,4 +72,7 @@ public interface SmartMoneyAccountManager
 	public BaseWrapper updateDebitBlockWithAuthorization(BaseWrapper baseWrapper) throws FrameworkCheckedException;
 	public BaseWrapper updateDebitBlock(Long appUserId, Double amount,Boolean isDebitBlocked) throws FrameworkCheckedException;
 	void validateDebitBlock(SmartMoneyAccountModel smaModel, Double txAmount, Double balance) throws FrameworkCheckedException;
+
+	List<SmartMoneyAccountModel> loadSmartMoneyAccountByIsOptasiaDebitBlocked() throws FrameworkCheckedException;
+
 }

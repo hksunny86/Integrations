@@ -5,6 +5,7 @@ import java.util.List;
 import com.inov8.framework.common.exception.FrameworkCheckedException;
 import com.inov8.framework.common.util.CustomList;
 import com.inov8.framework.server.dao.framework.BaseDAO;
+import com.inov8.microbank.common.model.AdvanceSalaryLoanModel;
 import com.inov8.microbank.common.model.SmartMoneyAccountModel;
 import com.inov8.microbank.common.model.veriflymodule.DebitCardChargesSafRepoModel;
 
@@ -40,4 +41,6 @@ public interface SmartMoneyAccountDAO
 	void updateSmartMoneyAccountCardTypeId(SmartMoneyAccountModel model) throws FrameworkCheckedException;
 
 	List<SmartMoneyAccountModel> getLastClosedSMAAccount(SmartMoneyAccountModel sma);
+	List<SmartMoneyAccountModel> loadSmartMoneyAccountByIsOptasiaDebitBlocked() throws FrameworkCheckedException;
+
 }

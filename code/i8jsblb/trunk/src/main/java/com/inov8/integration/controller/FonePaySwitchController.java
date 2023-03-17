@@ -61,6 +61,7 @@ import com.inov8.microbank.server.service.financialintegrationmodule.switchmodul
 import com.inov8.microbank.server.service.mfsmodule.CommonCommandManager;
 import com.inov8.microbank.server.service.portal.mfsaccountmodule.MfsAccountManager;
 import com.inov8.microbank.server.service.smartmoneymodule.SmartMoneyAccountManager;
+import com.inov8.microbank.server.service.transactionmodule.TransactionDetailMasterManager;
 import com.inov8.microbank.server.service.transactionreversal.TransactionReversalManager;
 import com.inov8.microbank.updatecustomername.dao.UpdateCustomerNameDAO;
 import com.inov8.microbank.updatecustomername.facade.UpdateCustomerNameFacade;
@@ -125,6 +126,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
     private TransactionReversalManager transactionReversalManager;
     private TransactionDetailMasterDAO transactionDetailMasterDAO;
+    private TransactionDetailMasterManager transactionDetailMasterManager;
 
 
     private boolean defaultUserLogin() {
@@ -5466,7 +5468,12 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         baseWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_MOBILE, mobileNo);
         baseWrapper.putObject(CommandFieldConstants.KEY_CHANNEL_ID, webServiceVO.getChannelId());
         baseWrapper.putObject(CommandFieldConstants.KEY_TX_AMOUNT, webServiceVO.getTransactionAmount());
-        baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, webServiceVO.getProductID());
+        if(webServiceVO.getProductID().equals("xtraCash")) {
+            baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, ProductConstantsInterface.LOAN_XTRA_CASH);
+        }
+        else{
+            baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, webServiceVO.getProductID());
+        }
 
         baseWrapper.putObject(CommandFieldConstants.KEY_RRN, webServiceVO.getRetrievalReferenceNumber());
         baseWrapper.putObject(CommandFieldConstants.KEY_TERMINAL_ID, webServiceVO.getTerminalId());
@@ -5648,7 +5655,12 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         baseWrapper.putObject(CommandFieldConstants.KEY_CHANNEL_ID, webServiceVO.getChannelId());
         baseWrapper.putObject(CommandFieldConstants.KEY_STAN, webServiceVO.getReserved2());
         baseWrapper.putObject(CommandFieldConstants.KEY_TX_AMOUNT, webServiceVO.getTransactionAmount());
-        baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, webServiceVO.getProductID());
+        if(webServiceVO.getProductID().equals("xtraCash")) {
+            baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, ProductConstantsInterface.LOAN_XTRA_CASH);
+        }
+        else{
+            baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, webServiceVO.getProductID());
+        }
 
         baseWrapper.putObject(FonePayConstants.KEY_EXTERNAL_TRANSACTION_CODE, webServiceVO.getRetrievalReferenceNumber());
         baseWrapper.putObject(CommandFieldConstants.KEY_TERMINAL_ID, webServiceVO.getTerminalId());
@@ -6209,8 +6221,12 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         baseWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_MOBILE, mobileNo);
         baseWrapper.putObject(CommandFieldConstants.KEY_CHANNEL_ID, webServiceVO.getChannelId());
         baseWrapper.putObject(CommandFieldConstants.KEY_TX_AMOUNT, webServiceVO.getTransactionAmount());
-        baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, webServiceVO.getProductID());
-
+        if(webServiceVO.getProductID().equals("xtraCash")) {
+            baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, ProductConstantsInterface.LOAN_XTRA_CASH);
+        }
+        else{
+            baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, webServiceVO.getProductID());
+        }
         baseWrapper.putObject(CommandFieldConstants.KEY_RRN, webServiceVO.getRetrievalReferenceNumber());
         baseWrapper.putObject(CommandFieldConstants.KEY_TERMINAL_ID, webServiceVO.getTerminalId());
         baseWrapper.putObject(CommandFieldConstants.KEY_APP_ID, appId);
@@ -6332,13 +6348,26 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         baseWrapper.putObject(CommandFieldConstants.KEY_CHANNEL_ID, webServiceVO.getChannelId());
         baseWrapper.putObject(CommandFieldConstants.KEY_STAN, webServiceVO.getReserved2());
         baseWrapper.putObject(CommandFieldConstants.KEY_TX_AMOUNT, webServiceVO.getTransactionAmount());
-        baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, webServiceVO.getProductID());
+        if(webServiceVO.getProductID().equals("xtraCash")) {
+            baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, ProductConstantsInterface.LOAN_XTRA_CASH);
+        }
+        else{
+            baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, webServiceVO.getProductID());
+        }
 
         baseWrapper.putObject(FonePayConstants.KEY_EXTERNAL_TRANSACTION_CODE, webServiceVO.getRetrievalReferenceNumber());
         baseWrapper.putObject(CommandFieldConstants.KEY_TERMINAL_ID, webServiceVO.getTerminalId());
         baseWrapper.putObject(CommandFieldConstants.KEY_APP_ID, appId);
         baseWrapper.putObject(CommandFieldConstants.KEY_DEVICE_TYPE_ID, DeviceTypeConstantsInterface.WEB_SERVICE);
-
+        baseWrapper.putObject(CommandFieldConstants.KEY_RESERVED_2, webServiceVO.getReserved2());
+        baseWrapper.putObject(CommandFieldConstants.KEY_RESERVED_3, webServiceVO.getReserved3());
+        baseWrapper.putObject(CommandFieldConstants.KEY_RESERVED_4, webServiceVO.getReserved4());
+        baseWrapper.putObject(CommandFieldConstants.KEY_RESERVED_5, webServiceVO.getReserved5());
+        baseWrapper.putObject(CommandFieldConstants.KEY_RESERVED_6, webServiceVO.getReserved6());
+        baseWrapper.putObject(CommandFieldConstants.KEY_RESERVED_7, webServiceVO.getReserved7());
+        baseWrapper.putObject(CommandFieldConstants.KEY_RESERVED_8, webServiceVO.getReserved8());
+        baseWrapper.putObject(CommandFieldConstants.KEY_RESERVED_9, webServiceVO.getReserved9());
+        baseWrapper.putObject(CommandFieldConstants.KEY_RESERVED_10, webServiceVO.getReserved10());
         try {
             webServiceVO = this.validateRRN(webServiceVO);
             if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
@@ -10511,10 +10540,10 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
         BaseWrapper baseWrapper = new BaseWrapperImpl();
         try {
-            webServiceVO = this.validateRRN(webServiceVO);
-            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
-                return webServiceVO;
-            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "transactionStatus");
+//            webServiceVO = this.validateRRN(webServiceVO);
+//            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+//                return webServiceVO;
+//            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "transactionStatus");
 
 //            if (!getCommonCommandManager().checkActiveAppUserForOpenAPI(webServiceVO, appUserModel)) {
 //                return webServiceVO;
@@ -10586,7 +10615,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 CustomerModel customerModel = getCommonCommandManager().getCustomerModelById(appUserModel.getCustomerId());
                 webServiceVO.setWalletType(customerModel.getCustomerAccountTypeIdCustomerAccountTypeModel().getName());
                 webServiceVO.setWalletStatus(String.valueOf(appUserModel.getRegistrationStateModel().getName()));
-                webServiceVO.setTaxRegime(String.valueOf(customerModel.getTaxRegimeIdTaxRegimeModel().getName()));
+                webServiceVO.setTaxRegime(String.valueOf(customerModel.getTaxRegimeIdTaxRegimeModel().getTaxRegimeCode()));
 
                 SmartMoneyAccountModel sma = getCommonCommandManager().getSmartMoneyAccountByAppUserModelAndPaymentModId
                         (appUserModel, PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT);
@@ -10711,12 +10740,13 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         String xml = "";
         Date currentDate = new Date();
         DateFormat dateFormat1 = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormat2 = new SimpleDateFormat("dd-MMM-yyyy");
 
         BaseWrapper baseWrapper = new BaseWrapperImpl();
         try {
-            webServiceVO = this.validateRRN(webServiceVO);
-            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
-                return webServiceVO;
+//            webServiceVO = this.validateRRN(webServiceVO);
+//            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+//                return webServiceVO;
             fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "initiateLoan");
 
             appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
@@ -10752,6 +10782,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         webServiceVO.setPlus15024m(tasdeeqDataModel.getPlus1504M());
                         webServiceVO.setPlus18024m(tasdeeqDataModel.getPlus18024M());
                         webServiceVO.setWriteOff(tasdeeqDataModel.getWriteOff());
+                        webServiceVO.setRefNo(tasdeeqDataModel.getReferenceNumber());
                     }
                     else{
                         requestVO = ESBAdapter.ecibData(I8SBConstants.RequestType_Tasdeeq_CustomAnalytics); //Request type ecibdata api
@@ -10792,6 +10823,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                             tasdeeqDataModel.setPlus1504M(responseVO.getPlus15024m());
                             tasdeeqDataModel.setPlus18024M(responseVO.getPlus18024m());
                             tasdeeqDataModel.setWriteOff(responseVO.getWriteOff());
+                            tasdeeqDataModel.setReferenceNumber(responseVO.getRefNo());
                             tasdeeqDataModel.setValidStatus("1");
                             tasdeeqDataModel.setCreatedOn(new Date());
                             tasdeeqDataModel.setUpdatedOn(new Date());
@@ -10808,9 +10840,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 else {
                     requestVO = ESBAdapter.ecibData(I8SBConstants.RequestType_Tasdeeq_CustomAnalytics); //Request type ecibdata api
                     requestVO.setCNIC(appUserModel.getNic());
-                    requestVO.setFullName(appUserModel.getFirstName() + "" + appUserModel.getLastName());
-                    requestVO.setDob(dateFormat1.format(appUserModel.getDob()));
-                    requestVO.setCity(appUserModel.getCity());
+                    requestVO.setFullName(appUserModel.getFirstName() + " " + appUserModel.getLastName());
+                    requestVO.setDob(dateFormat2.format(appUserModel.getDob()));
+                    requestVO.setCity(customerModel.getBirthPlace());
                     requestVO.setAmount(webServiceVO.getAmount());
                     requestVO.setGenderCode(customerModel.getGender());
                     requestVO.setAddress(appUserModel.getAddress1());
@@ -10845,6 +10877,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         tasdeeqDataModel.setPlus18024M(responseVO.getPlus18024m());
                         tasdeeqDataModel.setWriteOff(responseVO.getWriteOff());
                         tasdeeqDataModel.setValidStatus("1");
+                        tasdeeqDataModel.setReferenceNumber(responseVO.getRefNo());
                         tasdeeqDataModel.setCreatedOn(new Date());
                         tasdeeqDataModel.setUpdatedOn(new Date());
                         tasdeeqDataModel.setCreatedBy(String.valueOf(UserUtils.getCurrentUser().getAppUserId()));
@@ -10870,7 +10903,8 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 requestVO.setSourceRequestId("EXT123");
                 requestVO.setOfferName(webServiceVO.getOfferName());
                 requestVO.setAmount(webServiceVO.getAmount());
-                requestVO.setFed(webServiceVO.getFed());
+                //tax regime in additional info
+                requestVO.setFed(customerModel.getTaxRegimeIdTaxRegimeModel().getName());
 
                 SwitchWrapper sWrapper = new SwitchWrapperImpl();
                 sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
@@ -10916,6 +10950,8 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                             List<OutstandingStatus> outstandingStatusList = new ArrayList<>();
 
                             outstandingStatus.setCurrencyCode(((OutstandingStatus)outstandingList.get(i)).getCurrencyCode());
+                            outstandingStatus.setAvailableCreditLimit(((OutstandingStatus)outstandingList.get(i)).getAvailableCreditLimit());
+                            outstandingStatus.setDynamicCreditLimit(((OutstandingStatus)outstandingList.get(i)).getDynamicCreditLimit());
                             outstandingStatus.setNumOutstandingLoans(((OutstandingStatus)outstandingList.get(i)).getNumOutstandingLoans());
                             outstandingStatus.setTotalGross(((OutstandingStatus)outstandingList.get(i)).getTotalGross());
                             outstandingStatus.setTotalPrincipal(((OutstandingStatus)outstandingList.get(i)).getTotalPrincipal());
@@ -11087,7 +11123,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             logger.error("[FonePaySwitchController.initiateLoan] Error occured: " + e.getMessage(), e);
 
             this.logger.error("[FonePaySwitchController.initiateLoan] Error occured: " + e.getMessage(), e);
-            webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+            webServiceVO.setResponseCode(((WorkFlowException) e).getErrorCode());
             webServiceVO.setResponseCodeDescription(e.getMessage());
             if (e instanceof NullPointerException
                     || e instanceof HibernateException
@@ -11162,9 +11198,11 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     LoanOffers loanOffers = new LoanOffers();
                     loanOffers.setOfferName(responseVO.getOfferName());
                     loanOffers.setOfferClass(responseVO.getOfferClass());
+                    loanOffers.setAdvanceOfferId(responseVO.getAdvanceOfferId());
                     loanOffers.setCurrencyCode(responseVO.getCurrencyCode());
                     loanOffers.setPrincipalFrom(responseVO.getPrincipalFrom());
                     loanOffers.setPrincipalTo(responseVO.getPrincipalTo());
+                    loanOffers.setPrincipalAmount(responseVO.getPrincipalAmount());
                     loanOffers.setSetupFees(responseVO.getSetupFees());
                     loanOffers.setCommodityType(responseVO.getCommodityType());
                     loanOffers.setLoanPlanId(responseVO.getLoanPlanId());
@@ -11175,27 +11213,79 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     maturityDetails.setMaturityDuration(responseVO.getMaturityDuration());
 
                     List<MaturityDetails> maturityDetailsList = new ArrayList<>();
+
+                    ArrayList<?> data = new ArrayList<>();
+
+                    List<?> oneOffChargesList = new ArrayList<>();
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("OneOffCharges");
+                    if (data != null) {
+                        oneOffChargesList = data;
+                        for (int i=0; i<oneOffChargesList.size(); i++) {
+
+                            OneOffCharges oneOffCharges = new OneOffCharges();
+                            List<OneOffCharges> oneOffCharges1 = new ArrayList<>();
+
+
+                            oneOffCharges.setChargeName(((OneOffCharges) oneOffChargesList.get(i)).getChargeName());
+                            oneOffCharges.setChargeType(((OneOffCharges) oneOffChargesList.get(i)).getChargeType());
+                            oneOffCharges.setChargeValue(String.valueOf(((OneOffCharges) oneOffChargesList.get(i)).getChargeValue()));
+                            oneOffCharges.setChargeVAT(String.valueOf(((OneOffCharges) oneOffChargesList.get(i)).getChargeVAT()));
+                            oneOffCharges.setDaysOffset(String.valueOf(((OneOffCharges) oneOffChargesList.get(i)).getDaysOffset()));
+
+                            oneOffCharges1.add(oneOffCharges);
+                            webServiceVO.setOneOffChargesList(oneOffCharges1);
+
+                        }
+                    }
+
+                    List<?> recurringChargesList = new ArrayList<>();
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("RecurringCharges");
+                    if (data != null) {
+                        recurringChargesList = data;
+                        for (int i=0; i<recurringChargesList.size(); i++) {
+
+                            RecurringCharges recurringCharges = new RecurringCharges();
+                            List<RecurringCharges> recurringCharges1 = new ArrayList<>();
+
+
+                            recurringCharges.setChargeName(((RecurringCharges) recurringChargesList.get(i)).getChargeName());
+                            recurringCharges.setChargeType(((RecurringCharges) recurringChargesList.get(i)).getChargeType());
+                            recurringCharges.setChargeValue(String.valueOf(((RecurringCharges) recurringChargesList.get(i)).getChargeValue()));
+                            recurringCharges.setChargeVAT(String.valueOf(((RecurringCharges) recurringChargesList.get(i)).getChargeVAT()));
+                            recurringCharges.setInterval(String.valueOf(((RecurringCharges) recurringChargesList.get(i)).getDaysOffset()));
+
+                            recurringCharges1.add(recurringCharges);
+                            webServiceVO.setRecurringChargesList(recurringCharges1);
+
+                        }
+                    }
+
+                    maturityDetails.setOneOffChargesList(webServiceVO.getOneOffChargesList());
+                    maturityDetails.setRecurringChargesList(webServiceVO.getRecurringChargesList());
+                    maturityDetailsList.add(maturityDetails);
+
+                    webServiceVO.setMaturityDetailsList(maturityDetailsList);
+
                     loanOffers.setMaturityDetailsList(maturityDetailsList);
 
-                    maturityDetailsList.add(maturityDetails);
+//                    maturityDetailsList.add(maturityDetails);
 
                     loanOffersList.add(loanOffers);
                     webServiceVO.setLoanOffersList(loanOffersList);
-
-                    List<Interest> interestList = new ArrayList<>();
-                    Interest interest = new Interest();
-                    interest.setInterestName(responseVO.getInterestName());
-                    interest.setInterestType(responseVO.getInterestType());
-                    interest.setInterestValue(responseVO.getInterestValue());
-                    interest.setInterestVAT(responseVO.getInterestVAT());
-                    interest.setDaysOffset(responseVO.getDaysOffset());
-                    interest.setInterval(responseVO.getInterval());
-
-                    interestList.add(interest);
-
-
-                    interestList.add(interest);
-                    maturityDetails.setInterestList(interestList);
+//                    List<Interest> interestList = new ArrayList<>();
+//                    Interest interest = new Interest();
+//                    interest.setInterestName(responseVO.getInterestName());
+//                    interest.setInterestType(responseVO.getInterestType());
+//                    interest.setInterestValue(responseVO.getInterestValue());
+//                    interest.setInterestVAT(responseVO.getInterestVAT());
+//                    interest.setDaysOffset(responseVO.getDaysOffset());
+//                    interest.setInterval(responseVO.getInterval());
+//
+//                    interestList.add(interest);
+//
+//
+//                    interestList.add(interest);
+//                    maturityDetails.setInterestList(interestList);
 
 //                    List<OneOffCharges> oneOffChargesList = new ArrayList<>();
 //                    OneOffCharges oneOffCharges = new OneOffCharges();
@@ -11207,12 +11297,12 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 //                    oneOffChargesList.add(oneOffCharges);
 
 
-                    ArrayList<?> data = new ArrayList<>();
 
                     List<?> chargeAdjustmentList = new ArrayList<>();
                     data = (ArrayList<?>) responseVO.getCollectionOfList().get("ChargeAdjustments");
                     if (data != null) {
                         chargeAdjustmentList = data;
+                        List<ChargeAdjustments> chargeAdjustmentList1 = new ArrayList<>();
                         for (int i=0; i<chargeAdjustmentList.size(); i++) {
                             ChargeAdjustments chargeAdjustments = new ChargeAdjustments();
 
@@ -11222,7 +11312,6 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                             chargeAdjustments.setName(((ChargeAdjustments) chargeAdjustmentList.get(i)).getName());
 
 
-                            List<ChargeAdjustments> chargeAdjustmentList1 = new ArrayList<>();
                             chargeAdjustmentList1.add(chargeAdjustments);
 
                             webServiceVO.setChargeAdjustmentsList(chargeAdjustmentList1);
@@ -11233,6 +11322,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     data = (ArrayList<?>) responseVO.getCollectionOfList().get("InterestAdjustment");
                     if (data != null) {
                         interestAdjustmentList = data;
+                        List<InterestAdjustment> interestAdjustmentList1 = new ArrayList<>();
                         for (int i=0; i<interestAdjustmentList.size(); i++) {
                             InterestAdjustment interestAdjustment = new InterestAdjustment();
 
@@ -11241,7 +11331,6 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                             interestAdjustment.setVat(((InterestAdjustment) interestAdjustmentList.get(i)).getVat());
 
 
-                            List<InterestAdjustment> interestAdjustmentList1 = new ArrayList<>();
                             interestAdjustmentList1.add(interestAdjustment);
 
                             webServiceVO.setInterestAdjustmentsList(interestAdjustmentList1);
@@ -11252,6 +11341,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     data = (ArrayList<?>) responseVO.getCollectionOfList().get("Milestones");
                     if (data != null) {
                         milestonesList = data;
+                        List<Milestones> milestonesList1 = new ArrayList<>();
                         for (int i=0; i<milestonesList.size(); i++) {
                             Milestones milestones = new Milestones();
 
@@ -11268,7 +11358,6 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                             milestones.setInterestAdjustmentList(webServiceVO.getInterestAdjustmentsList());
                             milestones.setChargeAdjustmentsList(webServiceVO.getChargeAdjustmentsList());
 
-                            List<Milestones> milestonesList1 = new ArrayList<>();
                             milestonesList1.add(milestones);
 
                             webServiceVO.setMilestonesList(milestonesList1);
@@ -11279,23 +11368,42 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     data = (ArrayList<?>) responseVO.getCollectionOfList().get("TotalOneOffCharges");
                     if (data != null) {
                         totalOneOffChargesList = data;
+                        List<TotalOneOffCharges> totalOneOffChargesList1 = new ArrayList<>();
                         for (int i=0; i<totalOneOffChargesList.size(); i++) {
                             TotalOneOffCharges totalOneOffCharges = new TotalOneOffCharges();
 
-                            totalOneOffCharges.setChargeAmount(((TotalOneOffCharges) totalOneOffChargesList.get(i)).getChargeAmount());
+                            totalOneOffCharges.setCharge(((TotalOneOffCharges) totalOneOffChargesList.get(i)).getCharge());
                             totalOneOffCharges.setChargeName(((TotalOneOffCharges) totalOneOffChargesList.get(i)).getChargeName());
                             totalOneOffCharges.setChargeVAT(((TotalOneOffCharges) totalOneOffChargesList.get(i)).getChargeVAT());
 
-                            List<TotalOneOffCharges> totalOneOffChargesList1 = new ArrayList<>();
                             totalOneOffChargesList1.add(totalOneOffCharges);
 
                             webServiceVO.setTotalOneOffChargesList(totalOneOffChargesList1);
                         }
                     }
 
+                    List<?> totalRecurringChargesList = new ArrayList<>();
+                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("TotalRecurringCharges");
+                    if (data != null) {
+                        totalRecurringChargesList = data;
+                        List<TotalRecurringCharge> totalRecurringChargesList1 = new ArrayList<>();
+                        for (int i=0; i<totalOneOffChargesList.size(); i++) {
+                            TotalRecurringCharge totalRecurringCharge = new TotalRecurringCharge();
+
+                            totalRecurringCharge.setCharge(((TotalRecurringCharge) totalRecurringChargesList1.get(i)).getCharge());
+                            totalRecurringCharge.setChargeName(((TotalRecurringCharge) totalRecurringChargesList1.get(i)).getChargeName());
+                            totalRecurringCharge.setChargeVAT(((TotalRecurringCharge) totalRecurringChargesList1.get(i)).getChargeVAT());
+
+                            totalRecurringChargesList1.add(totalRecurringCharge);
+
+                            webServiceVO.setTotalRecurringChargeList(totalRecurringChargesList1);
+                        }
+                    }
+
                     data = (ArrayList<?>) responseVO.getCollectionOfList().get("Projections");
                     if (data != null) {
                         List<?> projectionsList = data;
+                        List<PeriodsProjection> periodsProjectionList = new ArrayList<>();
                         for (int i=0; i<projectionsList.size(); i++) {
                             PeriodsProjection periodsProjection = new PeriodsProjection();
 
@@ -11313,9 +11421,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                             periodsProjection.setTotalCharges(((PeriodsProjection) projectionsList.get(i)).getTotalCharges());
                             periodsProjection.setTotalChargesVAT(((PeriodsProjection) projectionsList.get(i)).getTotalChargesVAT());
 
-                            List<PeriodsProjection> periodsProjectionList = new ArrayList<>();
                             periodsProjection.setTotalOneOffChargesList(webServiceVO.getTotalOneOffChargesList());
                             periodsProjection.setMilestonesList(webServiceVO.getMilestonesList());
+                            periodsProjection.setTotalRecurringCharges(webServiceVO.getTotalRecurringChargeList());
                             periodsProjectionList.add(periodsProjection);
 
 
@@ -12173,7 +12281,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                             h1.setStatus("Avail");
                         }
                         h1.setAmount(l1.getTotalAmount().toString());
-                        h1.setDateTime(webServiceVO.getDateTime());
+                        h1.setDateTime(String.valueOf(l1.getCreatedOn()));
                         historyList.add(h1);
                     }
 
@@ -12283,6 +12391,98 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             getFonePayManager().updateFonePayIntegrationLogModel(fonePayLogModel, webServiceVO);
         }
         logger.info("[FonePaySwitchController.transactionActive] (In End) Response Code: " + webServiceVO.getResponseCode());
+        return webServiceVO;
+    }
+
+    @Override
+    public WebServiceVO loanCallBack(WebServiceVO webServiceVO) {
+        logger.info("[FonePaySwitchController.loanCallBack] Start:: ");
+        FonePayLogModel fonePayLogModel = null;
+        ActionLogModel actionLogModel = null;
+        AppUserModel appUserModel = new AppUserModel();
+        String xml = "";
+
+        BaseWrapper baseWrapper = new BaseWrapperImpl();
+        try {
+            webServiceVO = this.validateRRN(webServiceVO);
+            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+                return webServiceVO;
+            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "loanCallBack");
+
+            TransactionDetailMasterModel tdm = getTransactionReversalManager().loadTDMbyReserved2(webServiceVO.getReserved2());
+            if(tdm != null){
+                if(tdm.getSupProcessingStatusId().equals(SupplierProcessingStatusConstants.COMPLETED)){
+                    webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
+                    webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
+                }
+                else{
+                    webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+                    webServiceVO.setResponseCodeDescription("Transaction Status Failed");
+                }
+            }
+
+        } catch (Exception e) {
+            logger.error("[FonePaySwitchController.loanCallBack] Error occured: " + e.getMessage(), e);
+
+            this.logger.error("[FonePaySwitchController.loanCallBack] Error occured: " + e.getMessage(), e);
+            webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+            webServiceVO.setResponseCodeDescription(e.getMessage());
+            if (e instanceof NullPointerException
+                    || e instanceof HibernateException
+                    || e instanceof SQLException
+                    || e instanceof DataAccessException
+                    || (e.getMessage() != null && e.getMessage().indexOf("Exception") != -1)) {
+
+                logger.error("Converting Exception (" + e.getClass() + ") to generic error message...");
+                webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR.toString());
+            }
+
+        } finally {
+            ThreadLocalAppUser.remove();
+            ThreadLocalUserDeviceAccounts.remove();
+            getFonePayManager().updateFonePayIntegrationLogModel(fonePayLogModel, webServiceVO);
+        }
+        logger.info("[FonePaySwitchController.loanCallBack] (In End) Response Code: " + webServiceVO.getResponseCode());
+        return webServiceVO;
+    }
+
+    @Override
+    public WebServiceVO simpleAccountOpening(WebServiceVO webServiceVO) {
+        try {
+            AppUserModel appUserModel = getCommonCommandManager().loadAppUserByCnicAndType(webServiceVO.getCnicNo());
+            if(appUserModel != null){
+                String cnic = appUserModel.getNic();
+                appUserModel = null;
+                appUserModel = getCommonCommandManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo());
+                if(appUserModel != null){
+                    logger.info("FonePaySwitchController.simpleAccountOpening(): Account already exit with mobile no: "+appUserModel.getMobileNo()+" and CNIC: "+appUserModel.getNic());
+                    return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_MOBILE_ALREADY_EXIST_AS_CUSTOMER);
+                }
+                logger.info("FonePaySwitchController.simpleAccountOpening(): Account already exit with CNIC: "+cnic);
+                return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_CNIC_ALREADY_EXIST_AS_CUSTOMER);
+            }
+            if (this.getCommonCommandManager().isCnicBlacklisted(webServiceVO.getCnicNo()))
+                return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.CUSTOMER_CNIC_BLACKLISTED);
+            webServiceVO = getFonePayManager().simpleAccountOpening(webServiceVO);
+            return webServiceVO;
+        } catch (Exception e) {
+            logger.error("[FonePaySwitchController.simpleAccountOpening] Error occured: " + e.getMessage(), e);
+
+            this.logger.error("[FonePaySwitchController.simpleAccountOpening] Error occured: " + e.getMessage(), e);
+            webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+            webServiceVO.setResponseCodeDescription(e.getMessage());
+            if (e instanceof NullPointerException
+                    || e instanceof HibernateException
+                    || e instanceof SQLException
+                    || e instanceof DataAccessException
+                    || (e.getMessage() != null && e.getMessage().indexOf("Exception") != -1)) {
+
+                logger.error("Converting Exception (" + e.getClass() + ") to generic error message...");
+                webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR.toString());
+            }
+
+        }
+        logger.info("[FonePaySwitchController.simpleAccountOpening] (In End) Response Code: " + webServiceVO.getResponseCode());
         return webServiceVO;
     }
 
@@ -12519,5 +12719,8 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
     public void setTransactionDetailMasterDAO(TransactionDetailMasterDAO transactionDetailMasterDAO) {
         this.transactionDetailMasterDAO = transactionDetailMasterDAO;
+    }
+    public void setTransactionDetailMasterManager(TransactionDetailMasterManager transactionDetailMasterManager) {
+        this.transactionDetailMasterManager = transactionDetailMasterManager;
     }
 }

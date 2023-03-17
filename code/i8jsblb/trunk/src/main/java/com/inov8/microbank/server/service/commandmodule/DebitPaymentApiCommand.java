@@ -224,6 +224,7 @@ public class DebitPaymentApiCommand extends BaseCommand {
                 workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_9, reserved9);
                 workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_10, reserved10);
 
+                commonCommandManager.validateBalance(appUserModel, olaSmartMoneyAccountModel, Double.valueOf(transactionAmount), true);
 
                 logger.info("[DebitPaymentCommand.execute] Product ID: " + productId + " Logged In AppUserID:" + appUserModel.getAppUserId() +
                         " Customer Mobile No:" + customerMobileNo);

@@ -60,4 +60,7 @@ public interface FonePayManager {
 	public void updateFonePayIntegrationLogModelForDebitCard(FonePayLogModel model , MiddlewareMessageVO webServiceVO);
 
 	Boolean validateApiGeeRRN(WebServiceVO webServiceVO) throws FrameworkCheckedException;
+
+	WebServiceVO simpleAccountOpening(WebServiceVO webServiceVO) throws Exception;
+
 }

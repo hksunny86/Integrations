@@ -93,6 +93,9 @@ public class CustomerBBToCoreCommand extends BaseCommand {
                         customerSMAModel = (SmartMoneyAccountModel) searchBaseWrapper.getCustomList().getResultsetList().get(0);
                     }
 
+                    if ((this.channelId.equals("PAYFAST") || this.channelId.equals("PAYFAST-COMM") || this.channelId.equals("PAYFAST-UBPS") || this.channelId.equals("PAYFAST-WTOW")) && customerModel.getSegmentId() != 10372L) {
+                        throw new CommandException("PayFast Channel Not Allowed Other Segment Transaction", ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.HIGH, new Throwable());
+                    }
                     AccountInfoModel accountInfoModel = new AccountInfoModel();
                     accountInfoModel.setOldPin("");//should not be used
                     accountInfoModel.setCustomerId(appUserModel.getAppUserId());

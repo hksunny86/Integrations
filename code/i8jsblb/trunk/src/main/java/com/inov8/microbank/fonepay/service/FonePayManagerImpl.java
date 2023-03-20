@@ -12,6 +12,7 @@ import com.inov8.framework.common.wrapper.SearchBaseWrapperImpl;
 import com.inov8.framework.server.dao.framework.v2.GenericDao;
 import com.inov8.integration.common.model.LedgerModel;
 import com.inov8.integration.common.model.OlaCustomerAccountTypeModel;
+import com.inov8.integration.enums.ResponseCodeEnum;
 import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
@@ -5180,6 +5181,45 @@ public class FonePayManagerImpl implements FonePayManager {
         smsSender.send(smsMessage);
     }
 
+    @Override
+    public WebServiceVO simpleAccountOpening(WebServiceVO webServiceVO) throws Exception {
+        NadraIntegrationVO iVo = new NadraIntegrationVO();
+        String mobileNo = webServiceVO.getMobileNo();
+        String cnic = webServiceVO.getCnicNo();
+        String cnicIssueDate = webServiceVO.getCnicIssuanceDate();
+        iVo.setCnicIssuanceDate(cnicIssueDate);
+        iVo.setContactNo(mobileNo);
+        iVo.setCitizenNumber(cnic);
+        iVo.setAreaName("Punjab");
+        logger.info("Nadra Info: ");
+//        prepareNadraVO(iVo);
+        iVo = this.getNadraIntegrationController().getCitizenData(iVo);
+        if (!iVo.getResponseCode().equals("100")) {
+            logger.info("Nadra Verification data for NIC: " + cnic +" Nadra Response Code: "+iVo.getResponseCode()+
+                    "Nadra Response Description: "+iVo.getResponseDescription() + " RRN: "+webServiceVO.getRetrievalReferenceNumber());
+            throw new CommandException(iVo.getResponseDescription(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, null);
+        }
+        logger.info("Nadra Verification data for NIC: " + cnic + " Mother Name: " + iVo.getMotherName() + " RRN: "+webServiceVO.getRetrievalReferenceNumber());
+        webServiceVO.setUserName(iVo.getUserName());
+        webServiceVO.setCustomerPassword(iVo.getPassword());
+        webServiceVO.setDateTime(new Date().toString());
+        webServiceVO.setConsumerName(iVo.getFullName());
+        webServiceVO.setAccountTitle("Simple Account Opening");
+        webServiceVO.setBirthPlace(iVo.getBirthPlace());
+        webServiceVO.setPresentAddress(iVo.getPresentAddress());
+        webServiceVO.setDateOfBirth(iVo.getDateOfBirth());
+        webServiceVO.setFatherHusbandName(iVo.getFatherName());
+        webServiceVO.setMotherMaiden(iVo.getMotherName());
+        webServiceVO.setGender(iVo.getGender());
+        webServiceVO.setAccountType(String.valueOf(CustomerAccountTypeConstants.LEVEL_0));
+        webServiceVO.setCnicIssuanceDate(iVo.getCnicIssuanceDate());
+        webServiceVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+        webServiceVO.setResponseCodeDescription(iVo.getResponseDescription());
+
+        webServiceVO.setEmailAddress("");
+
+        return webServiceVO;
+    }
 
     public MessageSource getMessageSource() {
         return messageSource;

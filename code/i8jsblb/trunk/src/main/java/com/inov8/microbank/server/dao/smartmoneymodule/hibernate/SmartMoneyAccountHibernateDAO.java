@@ -5,6 +5,7 @@ import java.util.*;
 
 import com.inov8.framework.common.exception.FrameworkCheckedException;
 import com.inov8.microbank.common.CreateNewDateFormat;
+import com.inov8.microbank.common.model.AdvanceSalaryLoanModel;
 import com.inov8.microbank.common.util.*;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.hibernate.criterion.Criterion;
@@ -267,5 +268,19 @@ public class SmartMoneyAccountHibernateDAO
 				+" order by sma.updatedOn desc";
 
 		return this.getHibernateTemplate().find(hql) ;
+	}
+
+	@Override
+	public List<SmartMoneyAccountModel> loadSmartMoneyAccountByIsOptasiaDebitBlocked() throws FrameworkCheckedException {
+		String hql = "FROM SmartMoneyAccountModel sma WHERE sma.isOptasiaDebitBlocked = true";
+
+		return this.getHibernateTemplate().find(hql) ;
+//		StringBuilder sb = new StringBuilder();
+//		Date date = new Date();
+//		sb.append("SELECT * FROM LOAN ");
+//		sb.append("WHERE IS_COMPLETED =1");
+//		sb.append(" AND IS_INTIMATED =0 ");
+//		List<AdvanceSalaryLoanModel> list = (List<AdvanceSalaryLoanModel>) jdbcTemplate.query(sb.toString(),new AdvanceSalaryLoanModel());
+//		return list;
 	}
 }

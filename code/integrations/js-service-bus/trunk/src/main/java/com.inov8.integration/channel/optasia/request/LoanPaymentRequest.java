@@ -96,6 +96,9 @@ public class LoanPaymentRequest extends Request{
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
+        this.setIdentityType(i8SBSwitchControllerRequestVO.getIdentityType());
+        this.setIdentityValue(i8SBSwitchControllerRequestVO.getIdentityValue());
+        this.setOrigSource(i8SBSwitchControllerRequestVO.getOrigSource());
         this.setSourceRequestId(i8SBSwitchControllerRequestVO.getSourceRequestId());
         this.setAmount(i8SBSwitchControllerRequestVO.getAmount());
         this.setCurrencyCode(i8SBSwitchControllerRequestVO.getCurrencyCode());

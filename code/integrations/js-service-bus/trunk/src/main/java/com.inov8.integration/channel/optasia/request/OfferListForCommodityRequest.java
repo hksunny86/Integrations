@@ -28,6 +28,15 @@ public class OfferListForCommodityRequest extends Request {
     private String identityValue;
     private String origSource;
     private String commodityType;
+    private String fed;
+
+    public String getFed() {
+        return fed;
+    }
+
+    public void setFed(String fed) {
+        this.fed = fed;
+    }
 
     public String getIdentityType() {
         return identityType;
@@ -112,6 +121,7 @@ public class OfferListForCommodityRequest extends Request {
         this.setOfferName(i8SBSwitchControllerRequestVO.getOfferName());
         this.setAmount(i8SBSwitchControllerRequestVO.getAmount());
         this.getAdditionalInfo().setFed(i8SBSwitchControllerRequestVO.getFed());
+        this.setFed(this.getAdditionalInfo().getFed());
 
     }
 

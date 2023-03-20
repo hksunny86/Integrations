@@ -301,6 +301,21 @@ public class TransactionDetailMasterHibernateDAO
     }
 
     @Override
+    public TransactionDetailMasterModel loadTDMbyReserved2(String reserved2) {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(TransactionDetailMasterModel.class);
+
+        detachedCriteria.add(Restrictions.eq("reserved2", reserved2));
+
+        List<TransactionDetailMasterModel> list = this.getHibernateTemplate().findByCriteria(detachedCriteria);
+
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+
+        return list.get(0);
+    }
+
+    @Override
     public TransactionDetailMasterModel loadTDMbyMobileNumber(String mobileNo, String productId) {
         //query to be added
         StringBuilder sb = new StringBuilder();
@@ -340,7 +355,7 @@ public class TransactionDetailMasterHibernateDAO
         String dateStr = format.format(startDate) ;
         String endStr = format.format(endDate);
 
-        String query = "select * from TRANSACTION_DETAIL_MASTER where SALE_MOBILE_NO='" + mobileNo + "' " +
+        String query = "select * from TRANSACTION_DETAIL_MASTER where (SALE_MOBILE_NO || RECIPIENT_MOBILE_NO)='" + mobileNo + "' " +
                 "and PRODUCT_ID='" + productId + "'" + "and trunc(CREATED_ON) between '" + dateStr + "'and'" + endStr + "'";
 
         List<TransactionDetailMasterModel> result = jdbcTemplate.query

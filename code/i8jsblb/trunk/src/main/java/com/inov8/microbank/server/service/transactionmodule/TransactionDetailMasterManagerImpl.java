@@ -258,6 +258,20 @@ public class TransactionDetailMasterManagerImpl implements TransactionDetailMast
 	}
 
 	@Override
+	public TransactionDetailMasterModel loadTDMByReserved2(String reserved2) throws FrameworkCheckedException {
+		TransactionDetailMasterModel tdm = new TransactionDetailMasterModel();
+		tdm.setReserved2(reserved2);
+
+//		ExampleConfigHolderModel exampleHolder = new ExampleConfigHolderModel();
+//		exampleHolder.setEnableLike(Boolean.TRUE);
+//		exampleHolder.setMatchMode(MatchMode.EXACT);
+//
+		tdm = this.transactionDetailMasterDAO.loadTDMbyReserved2(reserved2);
+
+		return tdm;
+	}
+
+	@Override
 	public TransactionDetailMasterModel loadTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException {
 		TransactionDetailMasterModel tdm = new TransactionDetailMasterModel();
 		tdm = this.transactionDetailMasterDAO.loadTDMbyMobileNumber(mobileNo, productId);

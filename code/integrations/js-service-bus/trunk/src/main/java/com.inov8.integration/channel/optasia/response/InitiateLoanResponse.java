@@ -43,6 +43,10 @@ public class InitiateLoanResponse extends Response implements Serializable {
     private String responseCode;
     private String responseDescription;
     private Map<String, List<?>> collectionOfList = new HashMap();
+    @JsonProperty("code")
+    private String code;
+    @JsonProperty("message")
+    private String message;
 
     @JsonProperty("identityValue")
     public String getIdentityValue() {
@@ -104,6 +108,22 @@ public class InitiateLoanResponse extends Response implements Serializable {
         this.periodsProjections = periodsProjections;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public String getResponseCode() {
         return responseCode;
     }
@@ -130,7 +150,12 @@ public class InitiateLoanResponse extends Response implements Serializable {
         com.inov8.integration.webservice.optasiaVO.OneOffCharges oneOffCharges;
         com.inov8.integration.webservice.optasiaVO.RecurringCharges recurringCharges;
 
-        i8SBSwitchControllerResponseVO.setResponseCode("00");
+        if (this.getResponseCode().equals("200")) {
+            i8SBSwitchControllerResponseVO.setResponseCode("00");
+        } else {
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
+            i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
+        }
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());

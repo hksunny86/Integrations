@@ -53,6 +53,11 @@ public class OfferListForCommodityResponse extends Response implements Serializa
     private List<Outstandingstatus> outstandingStatus;
     private String responseCode;
     private Map<String, List<?>> collectionOfList = new HashMap();
+    @JsonProperty("code")
+    private String code;
+    @JsonProperty("message")
+    private String message;
+
 
     @JsonProperty("identityValue")
     public String getIdentityValue() {
@@ -132,17 +137,32 @@ public class OfferListForCommodityResponse extends Response implements Serializa
         this.responseCode = responseCode;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
-//        if (this.getResponseCode().equals("00")) {
-//            i8SBSwitchControllerResponseVO.setResponseCode("00");
-//        } else {
-//            i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
-//        }
-
-        i8SBSwitchControllerResponseVO.setResponseCode("00");
+        if (this.getResponseCode().equals("200")) {
+            i8SBSwitchControllerResponseVO.setResponseCode("00");
+        } else {
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
+            i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
+        }
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());

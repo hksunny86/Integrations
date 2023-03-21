@@ -90,15 +90,15 @@ public class AuthenticateUpdatedResponse extends Response {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
         I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
 
-        if (this.getStatusCode().equalsIgnoreCase("111")) {
+        if (this.getStatusCode().equals("111")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
         } else {
-            i8SBSwitchControllerResponseVO.setResponseCode(this.getStatusCode());
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getMessageCode());
         }
         i8SBSwitchControllerResponseVO.setStatusCode(this.getStatusCode());
         i8SBSwitchControllerResponseVO.setMessageCode(this.getMessageCode());
         i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
-        i8SBSwitchControllerResponseVO.setAuthToken(this.data.getAuthToken());
+        i8SBSwitchControllerResponseVO.setAuthToken(this.getData().getAuthToken());
         i8SBSwitchControllerResponseVO.setRrn(i8SBSwitchControllerRequestVO.getRRN());
         return i8SBSwitchControllerResponseVO;
     }

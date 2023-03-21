@@ -1,9 +1,10 @@
 package com.inov8.integration.channel.T24Api.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class IbftTitleFetchResponse extends Response {
 
     @JsonProperty("ISOMessage")
@@ -27,15 +28,17 @@ public class IbftTitleFetchResponse extends Response {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
         i8SBSwitchControllerResponseVO.setResponseCode(this.getISOMessage().ResponseCode_039);
         i8SBSwitchControllerResponseVO.setAccountTitle(this.getISOMessage().getToAccountTitle());
+//        i8SBSwitchControllerResponseVO.setAccountTitle("Title-1");
         i8SBSwitchControllerResponseVO.setBranchName(this.getISOMessage().getBranchName());
         i8SBSwitchControllerResponseVO.setAccountId1(this.getISOMessage().getAccountIdentification1_102());
         i8SBSwitchControllerResponseVO.setTransactionDate(this.getISOMessage().getTransmissionDatetime_007());
         i8SBSwitchControllerResponseVO.setTimeLocalTransaction(this.getISOMessage().getTimeLocalTransaction_012());
         i8SBSwitchControllerResponseVO.setDateLocalTransaction(this.getISOMessage().getDateLocalTransaction_013());
         i8SBSwitchControllerResponseVO.setBranchName(this.getISOMessage().getBranchName());
+        i8SBSwitchControllerResponseVO.setAccountTitle(this.getISOMessage().reservedPrivate_120.trim());
         return i8SBSwitchControllerResponseVO;
     }
-
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public class ISOMessage {
         @JsonProperty("MTI")
         private String MTI;
@@ -67,6 +70,9 @@ public class IbftTitleFetchResponse extends Response {
         private String ToAccountTitle;
         @JsonProperty("BranchName")
         private String BranchName;
+        @JsonProperty("ReservedPrivate_120")
+        private String reservedPrivate_120;
+
 
 
         // Getter Methods
@@ -193,5 +199,12 @@ public class IbftTitleFetchResponse extends Response {
             this.BranchName = BranchName;
         }
 
+        public String getReservedPrivate_120() {
+            return reservedPrivate_120;
+        }
+
+        public void setReservedPrivate_120(String reservedPrivate_120) {
+            this.reservedPrivate_120 = reservedPrivate_120;
+        }
     }
 }

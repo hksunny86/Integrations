@@ -7,6 +7,7 @@ import com.inov8.framework.common.wrapper.BaseWrapperImpl;
 import com.inov8.microbank.common.exception.WorkFlowException;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.bankmodule.MemberBankModel;
+import com.inov8.microbank.common.model.messagemodule.NovaAlertMessage;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.util.*;
 import com.inov8.microbank.common.wrapper.commission.CommissionWrapper;
@@ -271,6 +272,7 @@ public class CustomerBBToCoreTransaction extends SalesTransaction {
         }
 
         ArrayList<SmsMessage> messageList = new ArrayList<SmsMessage>(0);
+        ArrayList<NovaAlertMessage> messageList2 = new ArrayList<NovaAlertMessage>(0);
         String custSMS = null;
         String maskedSenderAccNo = wrapper.getAppUserModel().getMobileNo();
         maskedSenderAccNo = maskedSenderAccNo.replaceAll("(\\d+)(\\d{2})","****$2");
@@ -350,6 +352,7 @@ public class CustomerBBToCoreTransaction extends SalesTransaction {
         }
 
         messageList.add(new SmsMessage(wrapper.getAppUserModel().getMobileNo(), custSMS));
+        messageList2.add(new NovaAlertMessage(wrapper.getAppUserModel().getMobileNo(), custSMS,"","","",""));
 
         wrapper.getTransactionModel().setConfirmationMessage(custSMS);
 
@@ -367,6 +370,8 @@ public class CustomerBBToCoreTransaction extends SalesTransaction {
                     }, null);
 
             messageList.add(new SmsMessage(wrapper.getTransactionDetailModel().getCustomField5(), receiverSMS));
+            messageList2.add(new NovaAlertMessage(wrapper.getTransactionDetailModel().getCustomField5(), receiverSMS,"","","",""));
+
         }
         else if (!StringUtil.isNullOrEmpty(wrapper.getTransactionDetailModel().getCustomField5())) {
             //{0}\nTrx ID {1}\nYou have received Rs. {2} at {3} on {4} into JSBL A/c {5} from {6}
@@ -382,11 +387,14 @@ public class CustomerBBToCoreTransaction extends SalesTransaction {
                     }, null);
 
             messageList.add(new SmsMessage(wrapper.getTransactionDetailModel().getCustomField5(), receiverSMS));
+            messageList2.add(new NovaAlertMessage(wrapper.getTransactionDetailModel().getCustomField5(), receiverSMS,"","","",""));
+
         }
 
         txManager.saveTransaction(wrapper);
         this.settlementManager.settleCommission(commissionWrapper, wrapper);
 
+        wrapper.putObject(CommandFieldConstants.KEY_NOVA_ALERT_SMS_MESSAGES,messageList2);
         wrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGES, messageList);
 
         return wrapper;

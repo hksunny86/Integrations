@@ -34,6 +34,7 @@ public class TaxRegimeModel extends BasePersistableModel {
 	private static final long	serialVersionUID	= -3353125641665087673L;
 	private Long				taxRegimeId;
 	private String				name;
+	private String				taxRegimeCode;
 	private String				description;
 	private Double				fed;
 	private AppUserModel		createdByAppUserModel;
@@ -321,4 +322,12 @@ public class TaxRegimeModel extends BasePersistableModel {
 		return associationModelList;
 	}
 
+	@Column(name = "TAX_REGIME_CODE")
+	public String getTaxRegimeCode() {
+		return taxRegimeCode;
+	}
+
+	public void setTaxRegimeCode(String taxRegimeCode) {
+		this.taxRegimeCode = taxRegimeCode;
+	}
 }

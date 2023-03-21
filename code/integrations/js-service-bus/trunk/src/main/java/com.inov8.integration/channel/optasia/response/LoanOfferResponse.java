@@ -54,6 +54,7 @@ public class LoanOfferResponse extends Response implements Serializable {
     private String responseCode;
     private String responseDescription;
 
+
     public String getResponseCode() {
         return responseCode;
     }
@@ -185,8 +186,11 @@ public class LoanOfferResponse extends Response implements Serializable {
 
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
-        i8SBSwitchControllerResponseVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-//        i8SBSwitchControllerResponseVO.setResponseCode("00");
+        if (this.getResponseCode().equals("200")) {
+            i8SBSwitchControllerResponseVO.setResponseCode("00");
+        } else {
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
+        }
         i8SBSwitchControllerResponseVO.setCode(this.getCode());
         i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());

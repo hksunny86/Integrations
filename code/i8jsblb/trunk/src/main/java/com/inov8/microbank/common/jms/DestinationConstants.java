@@ -6,6 +6,8 @@ public interface DestinationConstants
 	public static final String PHOENIX_BILL_PAYMENT_DESTINATION = "phoenixBillPaymentQueue";
 	public static final String EMAIL_DESTINATION = "emailServiceQueue";
 	public static final String DELAYED_SMS_DESTINATION = "delayedSmsQueue";
+	public static final String ALERT_NOVA_SMS_DESTINATION = "alertNovaSmsQueue";
+
 	public static final String OLA_DEBIT_DESTINATION = "olaDebitQueue";
 	public static final String OLA_COMMISSION_DESTINATION = "olaCommissionQueue";
 	public static final String BULK_CUSTOMER_DESTINATION = "bulkCustomerQueue";

@@ -535,6 +535,9 @@ public interface CommonCommandManager {
 
     public void sendSMS(BaseWrapper baseWrapper) throws FrameworkCheckedException;
 
+    public void novaAlertMessage(BaseWrapper baseWrapper) throws FrameworkCheckedException;
+
+
     public void initiateUserGeneratedPinIvrCall(IvrRequestDTO ivrDTO) throws FrameworkCheckedException;
 
     int countCustomerPendingTrxByMobile(String mobile) throws FrameworkCheckedException;

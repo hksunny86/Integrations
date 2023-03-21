@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
+import com.inov8.microbank.common.model.messagemodule.NovaAlertMessage;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapper;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapperImpl;
 import com.inov8.microbank.server.service.financialintegrationmodule.switchmodule.ESBAdapter;
@@ -72,6 +73,13 @@ public class SmsSenderImpl implements SmsSender
 		sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
 		this.esbAdapter.makeI8SBCall(sWrapper);
 		logger.info("SmsSenderImpl.pushNotification() response Code received from I8SB " + sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO().getResponseCode());
+
+	}
+
+
+	@Override
+	public void alertNovaMessage(NovaAlertMessage smsMessage) throws FrameworkCheckedException {
+		this.jmsProducer.produce(smsMessage, DestinationConstants.ALERT_NOVA_SMS_DESTINATION);
 
 	}
 

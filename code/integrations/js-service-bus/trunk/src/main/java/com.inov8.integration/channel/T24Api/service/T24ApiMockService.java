@@ -42,7 +42,11 @@ public class T24ApiMockService {
                      "    \"BranchName\": \"\"\n" +
                      "  }\n" +
                      "}";
-        return cardReIssuance;
+
+
+
+
+            return cardReIssuance;
     }
 
 
@@ -65,6 +69,18 @@ public class T24ApiMockService {
                 "\"AccountIdentification1_102\": \"120211005\",\n" +
                 "\"AccountIdentification2_103\": \"12312321321\"\n" +
                 "}}";
+
+
+
+        return cardReIssuance;
+    }
+
+    public String transactionValidation() {
+        String cardReIssuance = "{\n" +
+                "    \"ResponseCode\": \"404\",\n" +
+                "    \"ResponseDescription\": \"Not Found\",\n" +
+                "    \"PushNotification\": null\n" +
+                "}\n";
 
 
 

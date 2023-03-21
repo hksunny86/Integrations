@@ -54,6 +54,15 @@ public class CreditPaymentApiCommand extends BaseCommand {
     private String cashInType;
     private String stan;
     private Date datetime;
+    private String reserved2;
+    private String reserved3;
+    private String reserved4;
+    private String reserved5;
+    private String reserved6;
+    private String reserved7;
+    private String reserved8;
+    private String reserved9;
+    private String reserved10;
 
     DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
     DateTimeFormatter tf = DateTimeFormat.forPattern("h:mm a");
@@ -85,6 +94,15 @@ public class CreditPaymentApiCommand extends BaseCommand {
         thirdPartyTransactionId = getCommandParameter(baseWrapper, FonePayConstants.KEY_EXTERNAL_TRANSACTION_CODE);
         stan=this.getCommandParameter(baseWrapper,CommandFieldConstants.KEY_STAN);
         datetime=(Date) baseWrapper.getObject(CommandFieldConstants.KEY_TX_DATE);
+        reserved2 = this.getCommandParameter(baseWrapper , CommandFieldConstants.KEY_RESERVED_2);
+        reserved3 = this.getCommandParameter(baseWrapper , CommandFieldConstants.KEY_RESERVED_3);
+        reserved4 = this.getCommandParameter(baseWrapper , CommandFieldConstants.KEY_RESERVED_4);
+        reserved5 = this.getCommandParameter(baseWrapper , CommandFieldConstants.KEY_RESERVED_5);
+        reserved6 = this.getCommandParameter(baseWrapper , CommandFieldConstants.KEY_RESERVED_6);
+        reserved7 = this.getCommandParameter(baseWrapper , CommandFieldConstants.KEY_RESERVED_7);
+        reserved8 = this.getCommandParameter(baseWrapper , CommandFieldConstants.KEY_RESERVED_8);
+        reserved9 = this.getCommandParameter(baseWrapper , CommandFieldConstants.KEY_RESERVED_9);
+        reserved10 = this.getCommandParameter(baseWrapper , CommandFieldConstants.KEY_RESERVED_10);
         logger.info("[CreditPaymentApiCommand.prepare] Product ID: " + productId + " Logged In AppUserID:" + appUserModel.getAppUserId() + " Customer Mobile No:" + customerMobileNo + " Trx Amount: " + txAmount + " Commission: " + commissionAmount);
 
         BaseWrapper bWrapper = new BaseWrapperImpl();
@@ -204,6 +222,15 @@ public class CreditPaymentApiCommand extends BaseCommand {
                 workFlowWrapper.putObject(CommandFieldConstants.KEY_STAN, stan);
                 workFlowWrapper.putObject(CommandFieldConstants.KEY_TX_DATE, datetime);
                 workFlowWrapper.putObject(FonePayConstants.KEY_EXTERNAL_TRANSACTION_CODE, thirdPartyTransactionId);
+                workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_2, reserved2);
+                workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_3, reserved3);
+                workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_4, reserved4);
+                workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_5, reserved5);
+                workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_6, reserved6);
+                workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_7, reserved7);
+                workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_8, reserved8);
+                workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_9, reserved9);
+                workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_10, reserved10);
                 logger.info("[CreditPaymentApiCommand.execute] Product ID: " + productId + " Logged In AppUserID:" + appUserModel.getAppUserId() +
                         " Customer Mobile No:" + customerMobileNo + " Trx Amount: " + txAmount + " Commission: " + commissionAmount);
 
@@ -217,6 +244,7 @@ public class CreditPaymentApiCommand extends BaseCommand {
                 successMessage = workFlowWrapper.getSuccessMessage().getSmsMessageText();
                 workFlowWrapper.putObject("productTile",productModel.getName());
                 commonCommandManager.sendSMS(workFlowWrapper);
+                commonCommandManager.novaAlertMessage(workFlowWrapper);
 
             } else {
                 logger.error("[CreditPaymentApiCommand.prepare] Throwing Exception for Product ID: " + productId + " Logged In AppUserID:" + appUserModel.getAppUserId() + " Customer Mobile No:" + customerMobileNo + " Trx Amount: " + txAmount + " Commission: " + commissionAmount);

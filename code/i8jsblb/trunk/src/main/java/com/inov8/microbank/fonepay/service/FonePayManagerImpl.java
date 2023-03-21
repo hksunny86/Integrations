@@ -12,6 +12,7 @@ import com.inov8.framework.common.wrapper.SearchBaseWrapperImpl;
 import com.inov8.framework.server.dao.framework.v2.GenericDao;
 import com.inov8.integration.common.model.LedgerModel;
 import com.inov8.integration.common.model.OlaCustomerAccountTypeModel;
+import com.inov8.integration.enums.ResponseCodeEnum;
 import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
@@ -26,6 +27,7 @@ import com.inov8.microbank.common.exception.CommandException;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.customermodule.BlinkCustomerPictureModel;
 import com.inov8.microbank.common.model.customermodule.CustomerPictureModel;
+import com.inov8.microbank.common.model.messagemodule.NovaAlertMessage;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.model.portal.inovtransactiondetailmodule.MiniStatementListViewModel;
 import com.inov8.microbank.common.util.*;
@@ -553,10 +555,14 @@ public class FonePayManagerImpl implements FonePayManager {
                     customerModel.setUpdatedOn(nowDate);
                     customerModel.setCustomerAccountTypeId(Long.valueOf(messageVO.getCustomerAccountyType()));
                     customerModel.setApplicationN0(getCommonCommandManager().getDeviceApplicationNoGenerator().nextLongValue().toString());
+
+
                     customerModel.setContactNo(messageVO.getMobileNo());
                     customerModel.setName(messageVO.getCustomerName());
+
+
                     customerModel.setMobileNo(messageVO.getMobileNo());
-                    customerModel.setFatherHusbandName(webServiceVO.getFatherHusbandName());
+                    customerModel.setFatherHusbandName(messageVO.getFatherHusbandName());
                     customerModel.setRelationAskari(0);
                     customerModel.setRelationZong(0);
                     customerModel.setBirthPlace(messageVO.getBirthPlace());
@@ -622,7 +628,8 @@ public class FonePayManagerImpl implements FonePayManager {
                         else {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("PayFastSegmentId")));
                         }
-                    } else if (isConsumerApp || MessageUtil.getMessage("BrandVerseChannelId").equals(webServiceVO.getChannelId())) {
+                    }
+                    else if (isConsumerApp || MessageUtil.getMessage("BrandVerseChannelId").equals(webServiceVO.getChannelId())) {
                         if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("1")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Minor_segment_id")));
 
@@ -709,7 +716,8 @@ public class FonePayManagerImpl implements FonePayManager {
                     }
 
                     else {
-                        appUserModel.setLastName(" ");
+                        appUserModel.setLastName(nameArray[0]);
+//                        appUserModel.setLastName(" ");
                     }
                     appUserModel.setAddress1(messageVO.getPresentAddress());
                     appUserModel.setAddress2(messageVO.getPermanentAddress());
@@ -1878,7 +1886,7 @@ public class FonePayManagerImpl implements FonePayManager {
                     requestVO.setNationality("Pakistan");
                     requestVO.setRequestId(transmissionDateTime + stan);
                     requestVO.setMobileNumber(webServiceVO.getMobileNo());
-                    requestVO.setFatherName(UserUtils.getCurrentUser().getCustomerIdCustomerModel().getFatherHusbandName());
+//                    requestVO.setFatherName(UserUtils.getCurrentUser().getCustomerIdCustomerModel().getFatherHusbandName());
 
                     SwitchWrapper sWrapper = new SwitchWrapperImpl();
                     sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
@@ -1901,7 +1909,7 @@ public class FonePayManagerImpl implements FonePayManager {
                         requestVO.setNationality("Pakistan");
                         requestVO.setRequestId(transmissionDateTime + stan);
                         requestVO.setMobileNumber(webServiceVO.getMobileNo());
-                        requestVO.setFatherName(UserUtils.getCurrentUser().getCustomerIdCustomerModel().getFatherHusbandName());
+//                        requestVO.setFatherName(UserUtils.getCurrentUser().getCustomerIdCustomerModel().getFatherHusbandName());
 
                         SwitchWrapper sWrapper = new SwitchWrapperImpl();
                         sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
@@ -2029,7 +2037,7 @@ public class FonePayManagerImpl implements FonePayManager {
                     customerModel.setContactNo(messageVO.getMobileNo());
                     customerModel.setName(messageVO.getCustomerName());
                     customerModel.setMobileNo(messageVO.getMobileNo());
-                    customerModel.setFatherHusbandName(webServiceVO.getFatherHusbandName());
+                    customerModel.setFatherHusbandName(messageVO.getFatherHusbandName());
                     customerModel.setRelationAskari(0);
                     customerModel.setRelationZong(0);
                     customerModel.setAccountPurposeId(1l);
@@ -2128,7 +2136,9 @@ public class FonePayManagerImpl implements FonePayManager {
                     }
 
                     else {
-                        appUserModel.setLastName(" ");
+                        appUserModel.setLastName(nameArray[0]);
+
+//                        appUserModel.setLastName(" ");
                     }
                     appUserModel.setAddress1(messageVO.getPresentAddress());
                     appUserModel.setAddress2(messageVO.getPermanentAddress());
@@ -4185,8 +4195,11 @@ public class FonePayManagerImpl implements FonePayManager {
                             trxId,
                             dtf.print(new DateTime()),
                             tf.print(new LocalTime()),});
+                    NovaAlertMessage novaAlertMessage=new NovaAlertMessage(mobileNo,smsText,"","","","");
                     SmsMessage smsMessage = new SmsMessage(mobileNo, smsText);
                     smsSender.send(smsMessage);
+                    smsSender.alertNovaMessage(novaAlertMessage);
+
                 } else if ((webServiceVO.getChannelId().equals("NOVA")) && !(txDetailMaster.getProductId().equals(Long.parseLong(MessageUtil.getMessage("Z-spin.Product.Id"))))) {
                     String smsText = MessageUtil.getMessage("trxreversal.sender.sms", new String[]{
                             trxId,
@@ -4197,8 +4210,10 @@ public class FonePayManagerImpl implements FonePayManager {
                             PortalDateUtils.formatDate(wrapper.getTransactionModel().getCreatedOn(), PortalDateUtils.SHORT_DATE_FORMAT),
 
                     });
+                    NovaAlertMessage novaAlertMessage=new NovaAlertMessage(mobileNo,smsText,"","","","");
                     SmsMessage smsMessage = new SmsMessage(mobileNo, smsText);
                     smsSender.send(smsMessage);
+                    smsSender.alertNovaMessage(novaAlertMessage);
                 }
 
                 String channelId = MessageUtil.getMessage("merchantCamping.channel.ids");
@@ -5166,6 +5181,45 @@ public class FonePayManagerImpl implements FonePayManager {
         smsSender.send(smsMessage);
     }
 
+    @Override
+    public WebServiceVO simpleAccountOpening(WebServiceVO webServiceVO) throws Exception {
+        NadraIntegrationVO iVo = new NadraIntegrationVO();
+        String mobileNo = webServiceVO.getMobileNo();
+        String cnic = webServiceVO.getCnicNo();
+        String cnicIssueDate = webServiceVO.getCnicIssuanceDate();
+        iVo.setCnicIssuanceDate(cnicIssueDate);
+        iVo.setContactNo(mobileNo);
+        iVo.setCitizenNumber(cnic);
+        iVo.setAreaName("Punjab");
+        logger.info("Nadra Info: ");
+//        prepareNadraVO(iVo);
+        iVo = this.getNadraIntegrationController().getCitizenData(iVo);
+        if (!iVo.getResponseCode().equals("100")) {
+            logger.info("Nadra Verification data for NIC: " + cnic +" Nadra Response Code: "+iVo.getResponseCode()+
+                    "Nadra Response Description: "+iVo.getResponseDescription() + " RRN: "+webServiceVO.getRetrievalReferenceNumber());
+            throw new CommandException(iVo.getResponseDescription(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, null);
+        }
+        logger.info("Nadra Verification data for NIC: " + cnic + " Mother Name: " + iVo.getMotherName() + " RRN: "+webServiceVO.getRetrievalReferenceNumber());
+        webServiceVO.setUserName(iVo.getUserName());
+        webServiceVO.setCustomerPassword(iVo.getPassword());
+        webServiceVO.setDateTime(new Date().toString());
+        webServiceVO.setConsumerName(iVo.getFullName());
+        webServiceVO.setAccountTitle("Simple Account Opening");
+        webServiceVO.setBirthPlace(iVo.getBirthPlace());
+        webServiceVO.setPresentAddress(iVo.getPresentAddress());
+        webServiceVO.setDateOfBirth(iVo.getDateOfBirth());
+        webServiceVO.setFatherHusbandName(iVo.getFatherName());
+        webServiceVO.setMotherMaiden(iVo.getMotherName());
+        webServiceVO.setGender(iVo.getGender());
+        webServiceVO.setAccountType(String.valueOf(CustomerAccountTypeConstants.LEVEL_0));
+        webServiceVO.setCnicIssuanceDate(iVo.getCnicIssuanceDate());
+        webServiceVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+        webServiceVO.setResponseCodeDescription(iVo.getResponseDescription());
+
+        webServiceVO.setEmailAddress("");
+
+        return webServiceVO;
+    }
 
     public MessageSource getMessageSource() {
         return messageSource;

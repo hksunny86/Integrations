@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
+import com.inov8.microbank.common.model.messagemodule.NovaAlertMessage;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapper;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapperImpl;
 import com.inov8.microbank.server.service.financialintegrationmodule.switchmodule.ESBAdapter;
@@ -59,9 +60,15 @@ public class NonTransactedSmsSenderImpl implements SmsSender
 		requestVO.setTitle(smsMessage.getTitle());
 		requestVO.setMessage(smsMessage.getMessageText());
 		requestVO.setMessageType(smsMessage.getMessageType());
-		requestVO.setRequestType(I8SBConstants.RequestType_SendPushNotification);
+//		requestVO.setRequestType(I8SBConstants.RequestType_SendPushNotification);
 		sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
 		this.esbAdapter.makeI8SBCall(sWrapper);
+	}
+
+
+	@Override
+	public void alertNovaMessage(NovaAlertMessage smsMessage) throws FrameworkCheckedException {
+
 	}
 
 	public void sendDelayed(SmsMessage smsMessage) throws FrameworkCheckedException

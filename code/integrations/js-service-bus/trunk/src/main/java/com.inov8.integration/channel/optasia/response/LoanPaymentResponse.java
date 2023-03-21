@@ -132,7 +132,11 @@ public class LoanPaymentResponse extends Response implements Serializable {
 
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
-        i8SBSwitchControllerResponseVO.setResponseCode("00");
+        if (this.getResponseCode().equals("200")) {
+            i8SBSwitchControllerResponseVO.setResponseCode("00");
+        } else {
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
+        }
         i8SBSwitchControllerResponseVO.setCode(this.getCode());
         i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());

@@ -14,64 +14,34 @@ import java.io.Serializable;
 )
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "UserName",
-        "Password",
-        "CustomerId",
-        "DateTime",
-        "Rrn",
-        "ChannelId",
-        "TerminalId",
-        "Reserved1",
-        "Reserved2",
-        "Reserved3",
-        "Reserved4",
-        "Reserved5",
-        "Reserved6",
-        "Reserved7",
-        "Reserved8",
-        "Reserved9",
-        "Reserved10",
-        "HashData",
+        "userName",
+        "password",
+        "customerId",
+        "dateTime",
+        "rrn",
+        "channelId",
+        "terminalId",
+        "hashData",
 })
 public class LienStatusRequest implements Serializable {
 
     private final static long serialVersionUID = 1L;
 
-    @JsonProperty("UserName")
+    @JsonProperty("userName")
     private String userName;
-    @JsonProperty("Password")
+    @JsonProperty("password")
     private String password;
-    @JsonProperty("CustomerId")
+    @JsonProperty("customerId")
     private String customerId;
-    @JsonProperty("DateTime")
+    @JsonProperty("dateTime")
     private String dateTime;
-    @JsonProperty("Rrn")
+    @JsonProperty("rrn")
     private String rrn;
-    @JsonProperty("ChannelId")
+    @JsonProperty("channelId")
     private String channelId;
-    @JsonProperty("TerminalId")
+    @JsonProperty("terminalId")
     private String terminalId;
-    @JsonProperty("Reserved1")
-    private String reserved1;
-    @JsonProperty("Reserved2")
-    private String reserved2;
-    @JsonProperty("Reserved3")
-    private String reserved3;
-    @JsonProperty("Reserved4")
-    private String reserved4;
-    @JsonProperty("Reserved5")
-    private String reserved5;
-    @JsonProperty("Reserved6")
-    private String reserved6;
-    @JsonProperty("Reserved7")
-    private String reserved7;
-    @JsonProperty("Reserved8")
-    private String reserved8;
-    @JsonProperty("Reserved9")
-    private String reserved9;
-    @JsonProperty("Reserved10")
-    private String reserved10;
-    @JsonProperty("HashData")
+    @JsonProperty("hashData")
     private String hashData;
 
     public String getUserName() {
@@ -128,86 +98,6 @@ public class LienStatusRequest implements Serializable {
 
     public void setTerminalId(String terminalId) {
         this.terminalId = terminalId;
-    }
-
-    public String getReserved1() {
-        return reserved1;
-    }
-
-    public void setReserved1(String reserved1) {
-        this.reserved1 = reserved1;
-    }
-
-    public String getReserved2() {
-        return reserved2;
-    }
-
-    public void setReserved2(String reserved2) {
-        this.reserved2 = reserved2;
-    }
-
-    public String getReserved3() {
-        return reserved3;
-    }
-
-    public void setReserved3(String reserved3) {
-        this.reserved3 = reserved3;
-    }
-
-    public String getReserved4() {
-        return reserved4;
-    }
-
-    public void setReserved4(String reserved4) {
-        this.reserved4 = reserved4;
-    }
-
-    public String getReserved5() {
-        return reserved5;
-    }
-
-    public void setReserved5(String reserved5) {
-        this.reserved5 = reserved5;
-    }
-
-    public String getReserved6() {
-        return reserved6;
-    }
-
-    public void setReserved6(String reserved6) {
-        this.reserved6 = reserved6;
-    }
-
-    public String getReserved7() {
-        return reserved7;
-    }
-
-    public void setReserved7(String reserved7) {
-        this.reserved7 = reserved7;
-    }
-
-    public String getReserved8() {
-        return reserved8;
-    }
-
-    public void setReserved8(String reserved8) {
-        this.reserved8 = reserved8;
-    }
-
-    public String getReserved9() {
-        return reserved9;
-    }
-
-    public void setReserved9(String reserved9) {
-        this.reserved9 = reserved9;
-    }
-
-    public String getReserved10() {
-        return reserved10;
-    }
-
-    public void setReserved10(String reserved10) {
-        this.reserved10 = reserved10;
     }
 
     public String getHashData() {

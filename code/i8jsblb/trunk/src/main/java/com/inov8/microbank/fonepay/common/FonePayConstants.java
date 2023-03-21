@@ -109,6 +109,10 @@ public interface FonePayConstants {
     public static final String VOUCH365_CHANNEL= "VOUCH365";
     public static final String PUBLISHEX_CHANNEL= "PUBLISHEX";
     public static final String TAPMAD_CHANNEL= "TAPMAD";
+    public static final String OPTASIA_CHANNEL= "OPTASIA";
+    public static final String ECOMM_CHANNEL="ECOMM";
+    public static final String KUICK_PAY_CHANNEL="KUICKPAY";
+
 
 
 

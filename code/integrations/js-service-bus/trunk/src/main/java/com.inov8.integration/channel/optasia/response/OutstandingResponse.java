@@ -41,6 +41,10 @@ public class OutstandingResponse extends Response implements Serializable {
     private String responseCode;
     private String responseDescription;
     private Map<String, List<?>> collectionOfList = new HashMap();
+    @JsonProperty("code")
+    private String code;
+    @JsonProperty("message")
+    private String message;
 
     public String getResponseCode() {
         return responseCode;
@@ -108,38 +112,66 @@ public class OutstandingResponse extends Response implements Serializable {
         this.outstandingPerCurrency = outstandingPerCurrency;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
 
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
-        i8SBSwitchControllerResponseVO.setResponseCode("00");
+        if (this.getResponseCode().equals("200")) {
+            i8SBSwitchControllerResponseVO.setResponseCode("00");
+        } else {
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
+            i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
+        }
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
         i8SBSwitchControllerResponseVO.setReceivedTimestamp(this.getReceivedTimestamp());
-        for (int i = 0; i < outstandingPerCurrency.size(); i++) {
-
-            com.inov8.integration.webservice.optasiaVO.OutstandingPerCurrency outstandingPerCurrency = new com.inov8.integration.webservice.optasiaVO.OutstandingPerCurrency();
+        if (outstandingPerCurrency != null) {
+            com.inov8.integration.webservice.optasiaVO.OutstandingPerCurrency outstandingPerCurrency;
             List<com.inov8.integration.webservice.optasiaVO.OutstandingPerCurrency> outstandingPerCurrencyList = new ArrayList<>();
 
-            outstandingPerCurrency.setCurrencyCode(this.getOutstandingPerCurrency().get(i).getCurrencyCode());
-            outstandingPerCurrency.setNumOutstandingLoans(this.getOutstandingPerCurrency().get(i).getNumOutstandingLoans());
-            outstandingPerCurrency.setTotalGross(this.getOutstandingPerCurrency().get(i).getTotalGross());
-            outstandingPerCurrency.setTotalPrincipal(this.getOutstandingPerCurrency().get(i).getTotalPrincipal());
-            outstandingPerCurrency.setTotalSetupFees(this.getOutstandingPerCurrency().get(i).getTotalSetupFees());
-            outstandingPerCurrency.setTotalInterest(this.getOutstandingPerCurrency().get(i).getTotalInterest());
-            outstandingPerCurrency.setTotalInterestVAT(this.getOutstandingPerCurrency().get(i).getTotalInterestVAT());
-            outstandingPerCurrency.setTotalCharges(this.getOutstandingPerCurrency().get(i).getTotalCharges());
-            outstandingPerCurrency.setTotalChargesVAT(this.getOutstandingPerCurrency().get(i).getTotalChargesVAT());
-            outstandingPerCurrency.setTotalPendingLoans(this.getOutstandingPerCurrency().get(i).getTotalPendingLoans());
-            outstandingPerCurrency.setTotalPendingRecoveries(this.getOutstandingPerCurrency().get(i).getTotalPendingRecoveries());
+            for (int i = 0; i < this.getOutstandingPerCurrency().size(); i++) {
 
-            outstandingPerCurrencyList.add(outstandingPerCurrency);
-            collectionOfList.put("OutstandingPerCurrency", outstandingPerCurrencyList);
-            i8SBSwitchControllerResponseVO.setTotalGross(this.getOutstandingPerCurrency().get(0).getTotalGross());
-            i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+                outstandingPerCurrency = new com.inov8.integration.webservice.optasiaVO.OutstandingPerCurrency();
+
+                outstandingPerCurrency.setCurrencyCode(this.getOutstandingPerCurrency().get(i).getCurrencyCode());
+                outstandingPerCurrency.setAvailableCreditLimit(this.getOutstandingPerCurrency().get(i).getAvailableCreditLimit());
+                outstandingPerCurrency.setDynamicCreditLimit(this.getOutstandingPerCurrency().get(i).getDynamicCreditLimit());
+                outstandingPerCurrency.setNumOutstandingLoans(this.getOutstandingPerCurrency().get(i).getNumOutstandingLoans());
+                outstandingPerCurrency.setTotalGross(this.getOutstandingPerCurrency().get(i).getTotalGross());
+                outstandingPerCurrency.setTotalPrincipal(this.getOutstandingPerCurrency().get(i).getTotalPrincipal());
+                outstandingPerCurrency.setTotalSetupFees(this.getOutstandingPerCurrency().get(i).getTotalSetupFees());
+                outstandingPerCurrency.setTotalInterest(this.getOutstandingPerCurrency().get(i).getTotalInterest());
+                outstandingPerCurrency.setTotalInterestVAT(this.getOutstandingPerCurrency().get(i).getTotalInterestVAT());
+                outstandingPerCurrency.setTotalCharges(this.getOutstandingPerCurrency().get(i).getTotalCharges());
+                outstandingPerCurrency.setTotalChargesVAT(this.getOutstandingPerCurrency().get(i).getTotalChargesVAT());
+                outstandingPerCurrency.setTotalPendingLoans(this.getOutstandingPerCurrency().get(i).getTotalPendingLoans());
+                outstandingPerCurrency.setTotalPendingRecoveries(this.getOutstandingPerCurrency().get(i).getTotalPendingRecoveries());
+
+                outstandingPerCurrencyList.add(outstandingPerCurrency);
+                collectionOfList.put("OutstandingPerCurrency", outstandingPerCurrencyList);
+                i8SBSwitchControllerResponseVO.setTotalGross(this.getOutstandingPerCurrency().get(0).getTotalGross());
+                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+            }
         }
+
         return i8SBSwitchControllerResponseVO;
     }
 }
@@ -147,6 +179,8 @@ public class OutstandingResponse extends Response implements Serializable {
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "currencyCode",
+        "availableCreditLimit",
+        "dynamicCreditLimit",
         "numOutstandingLoans",
         "totalGross",
         "totalPrincipal",
@@ -158,10 +192,14 @@ public class OutstandingResponse extends Response implements Serializable {
         "totalPendingLoans",
         "totalPendingRecoveries"
 })
-class OutstandingPerCurrency implements Serializable{
+class OutstandingPerCurrency implements Serializable {
 
     @JsonProperty("currencyCode")
     private String currencyCode;
+    @JsonProperty("availableCreditLimit")
+    private Float availableCreditLimit;
+    @JsonProperty("dynamicCreditLimit")
+    private Float dynamicCreditLimit;
     @JsonProperty("numOutstandingLoans")
     private String numOutstandingLoans;
     @JsonProperty("totalGross")
@@ -192,6 +230,27 @@ class OutstandingPerCurrency implements Serializable{
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
     }
+
+    @JsonProperty("availableCreditLimit")
+    public Float getAvailableCreditLimit() {
+        return availableCreditLimit;
+    }
+
+    @JsonProperty("availableCreditLimit")
+    public void setAvailableCreditLimit(Float availableCreditLimit) {
+        this.availableCreditLimit = availableCreditLimit;
+    }
+
+    @JsonProperty("dynamicCreditLimit")
+    public Float getDynamicCreditLimit() {
+        return dynamicCreditLimit;
+    }
+
+    @JsonProperty("dynamicCreditLimit")
+    public void setDynamicCreditLimit(Float dynamicCreditLimit) {
+        this.dynamicCreditLimit = dynamicCreditLimit;
+    }
+
 
     @JsonProperty("numOutstandingLoans")
     public String getNumOutstandingLoans() {

@@ -8,6 +8,7 @@ import com.inov8.microbank.common.exception.CommandException;
 import com.inov8.microbank.common.exception.WorkFlowException;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.agenthierarchy.RegionModel;
+import com.inov8.microbank.common.model.messagemodule.NovaAlertMessage;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.util.*;
 import com.inov8.microbank.common.wrapper.commission.CommissionWrapper;
@@ -418,6 +419,8 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
     private void sendCashDepositSMS(WorkFlowWrapper wrapper) throws Exception {
 
         ArrayList<SmsMessage> messageList = new ArrayList<SmsMessage>(0);
+        ArrayList<NovaAlertMessage> messageList2 = new ArrayList<NovaAlertMessage>(0);
+
 //        Double agentBalance = ((CashInVO)wrapper.getProductVO()).getAgentBalance();
         String customerSMS = "";
         if(wrapper.getObject(CommandFieldConstants.KEY_CHANNEL_ID) != null && wrapper.getObject(CommandFieldConstants.KEY_CHANNEL_ID).equals("NOVA")) {
@@ -441,9 +444,13 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
                         null);
 
                 messageList.add(new SmsMessage(wrapper.getCustomerAppUserModel().getMobileNo(), customerSMS));
+                messageList2.add(new NovaAlertMessage(wrapper.getCustomerAppUserModel().getMobileNo(), customerSMS,"","","",""));
+
 
                 wrapper.getTransactionModel().setConfirmationMessage(customerSMS);
                 wrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGES, messageList);
+                wrapper.putObject(CommandFieldConstants.KEY_NOVA_ALERT_SMS_MESSAGES, messageList2);
+
             }
 
             if (pItems.contains(wrapper.getProductModel().getProductId().toString())) {
@@ -456,9 +463,12 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
                         null);
 
                 messageList.add(new SmsMessage(wrapper.getCustomerAppUserModel().getMobileNo(), customerSMS));
+                messageList2.add(new NovaAlertMessage(wrapper.getCustomerAppUserModel().getMobileNo(), customerSMS,"","","",""));
 
                 wrapper.getTransactionModel().setConfirmationMessage(customerSMS);
                 wrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGES, messageList);
+                wrapper.putObject(CommandFieldConstants.KEY_NOVA_ALERT_SMS_MESSAGES, messageList2);
+
             }
 
             if (otherProductItems.contains(wrapper.getProductModel().getProductId().toString())) {
@@ -474,9 +484,12 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
                         null);
 
                 messageList.add(new SmsMessage(wrapper.getCustomerAppUserModel().getMobileNo(), customerSMS));
+                messageList2.add(new NovaAlertMessage(wrapper.getCustomerAppUserModel().getMobileNo(), customerSMS,"","","",""));
 
                 wrapper.getTransactionModel().setConfirmationMessage(customerSMS);
                 wrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGES, messageList);
+                wrapper.putObject(CommandFieldConstants.KEY_NOVA_ALERT_SMS_MESSAGES, messageList2);
+
             }
 
         }
@@ -502,7 +515,7 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
                         },
                         null);
             }
-             else if (wrapper.getProductModel().getProductId().equals(ProductConstantsInterface.STOCK_PURCHASED)) {
+             else if (wrapper.getProductModel().getProductId().equals(ProductConstantsInterface.STOCK_WITHDRAWAL)) {
                 Double charges = wrapper.getCommissionAmountsHolder().getTransactionProcessingAmount();
                 customerSMS = this.getMessageSource().getMessage(
                         "stockSold.SMS",
@@ -533,9 +546,12 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
                         null);
             }
             messageList.add(new SmsMessage(wrapper.getCustomerAppUserModel().getMobileNo(), customerSMS));
+            messageList2.add(new NovaAlertMessage(wrapper.getCustomerAppUserModel().getMobileNo(), customerSMS,"","","",""));
 
             wrapper.getTransactionModel().setConfirmationMessage(customerSMS);
             wrapper.putObject(CommandFieldConstants.KEY_SMS_MESSAGES, messageList);
+            wrapper.putObject(CommandFieldConstants.KEY_NOVA_ALERT_SMS_MESSAGES, messageList2);
+
         }
     }
 

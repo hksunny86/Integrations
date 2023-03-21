@@ -115,6 +115,11 @@ public class FonePayFacadeImpl implements FonePayFacade {
 	}
 
 	@Override
+	public WebServiceVO simpleAccountOpening(WebServiceVO webServiceVO) throws Exception {
+		return fonePayManager.simpleAccountOpening(webServiceVO);
+	}
+
+	@Override
 	public void updateFonePayIntegrationLogModel(FonePayLogModel model , WebServiceVO webServiceVO) {
 		try{
 			fonePayManager.updateFonePayIntegrationLogModel(model,webServiceVO);

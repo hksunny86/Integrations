@@ -6240,6 +6240,12 @@ public class OLAVeriflyFinancialInstitutionImpl extends VeriflyFinancialInstitut
 
         utilityBillPoolCreditAmount = (utilityBillPoolCreditAmount == null ? 0.0D : utilityBillPoolCreditAmount);
         Long utilityBillPoolAccountId = PoolAccountConstantsInterface.UTILITY_BILL_POOL_ACCOUNT_ID;
+
+        if (workFlowWrapper.getProductModel().getProductId().equals(10245384L))
+            utilityBillPoolAccountId = PoolAccountConstantsInterface.OFFLINE_BILLER_BLB_POOL_ACCOUNT_ID;
+        if (workFlowWrapper.getProductModel().getProductId().equals(10245397L))
+            utilityBillPoolAccountId = PoolAccountConstantsInterface.OFFLINE_BILLER_ASKARI_BLB_POOL_ACCOUNT_ID;
+
         if (OneBillProductEnum.contains(workFlowWrapper.getProductModel().getProductId().toString()))
             utilityBillPoolAccountId = PoolAccountConstantsInterface.UTILITY_ONE_BILL_BLB_POOL_ACCOUNT_ID;
         if (BookMeProductEnum.contains((workFlowWrapper.getProductModel().getProductId().toString())))
@@ -6822,7 +6828,7 @@ public class OLAVeriflyFinancialInstitutionImpl extends VeriflyFinancialInstitut
             reasonId = ReasonConstants.COLLECTION_PAYMENT;
             olaAccount = PoolAccountConstantsInterface.SARHAD_UNIVERSITY_COLLECTION_POOL_ACCOUNT;
             coreAccount = PoolAccountConstantsInterface.SARHAD_UNIVERSITY_COLLECTION_ACCOUNT_GL;
-        }else if (productId.equals(ProductConstantsInterface.CUSTOMER_VALLENCIA_COLLECTION)) {
+        } else if (productId.equals(ProductConstantsInterface.CUSTOMER_VALLENCIA_COLLECTION)) {
             reasonId = ReasonConstants.VALENCIA_COLLECTION_PAYMENT;
             olaAccount = PoolAccountConstantsInterface.COLLECTION_POOL_ACCOUNT_OLA;
             coreAccount = PoolAccountConstantsInterface.COLLECTION_POOL_ACCOUNT_CORE;

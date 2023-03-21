@@ -6,32 +6,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 @JsonPropertyOrder({
-        "Rrn",
-        "ResponseCode",
-        "ResponseDescription",
-        "ResponseDateTime",
-        "CommissionAmount",
-        "InclusiveExclusiveCommission",
-        "TotalAmount",
-        "HashData",
+        "rrn",
+        "responseCode",
+        "responseDescription",
+        "dateTime",
+        "transactionId",
+        "commission",
+        "amount",
+        "totalAmount",
+        "hashData",
 })
 public class OptasiaCreditInquiryResponse implements Serializable {
 
-    @JsonProperty("Rrn")
+    @JsonProperty("rrn")
     private String rrn;
-    @JsonProperty("ResponseCode")
+    @JsonProperty("responseCode")
     private String responseCode;
-    @JsonProperty("ResponseDescription")
+    @JsonProperty("responseDescription")
     private String responseDescription;
-    @JsonProperty("ResponseDateTime")
+    @JsonProperty("dateTime")
     private String responseDateTime;
-    @JsonProperty("CommissionAmount")
+    @JsonProperty("transactionId")
+    private String transactionId;
+    @JsonProperty("commission")
     private String comissionAmount;
-    @JsonProperty("InclusiveExclusiveCommission")
-    private String inclusiveExclusiveComissionAmount;
-    @JsonProperty("TotalAmount")
+    @JsonProperty("amount")
+    private String amount;
+    @JsonProperty("totalAmount")
     private String totalAmount;
-    @JsonProperty("HashData")
+    @JsonProperty("hashData")
     private String hashData;
 
     public String getRrn() {
@@ -66,6 +69,14 @@ public class OptasiaCreditInquiryResponse implements Serializable {
         this.responseDateTime = responseDateTime;
     }
 
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
     public String getComissionAmount() {
         return comissionAmount;
     }
@@ -74,12 +85,12 @@ public class OptasiaCreditInquiryResponse implements Serializable {
         this.comissionAmount = comissionAmount;
     }
 
-    public String getInclusiveExclusiveComissionAmount() {
-        return inclusiveExclusiveComissionAmount;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setInclusiveExclusiveComissionAmount(String inclusiveExclusiveComissionAmount) {
-        this.inclusiveExclusiveComissionAmount = inclusiveExclusiveComissionAmount;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
     public String getTotalAmount() {

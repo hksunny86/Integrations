@@ -267,6 +267,8 @@ public class DebitCardCashWithDrawlCommand extends BaseCommand {
             commissionAmountsHolder = workFlowWrapper.getCommissionAmountsHolder();
             workFlowWrapper.putObject("productTile",productModel.getName());
             commonCommandManager.sendSMS(workFlowWrapper);
+            commonCommandManager.novaAlertMessage(workFlowWrapper);
+
 
         } catch (Exception e) {
             logger.error("Debit Card Cash Withdrawal Command Execution Error :: " + e.getMessage(), e);

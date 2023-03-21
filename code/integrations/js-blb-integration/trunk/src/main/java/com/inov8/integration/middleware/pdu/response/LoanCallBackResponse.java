@@ -1,24 +1,31 @@
 package com.inov8.integration.middleware.pdu.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
-@XmlType(name = "")
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "LoanCallBackResponse")
+@JsonPropertyOrder({
+        "rrn",
+        "responseCode",
+        "responseDescription",
+        "dateTime",
+        "hashData",
+})
 public class LoanCallBackResponse implements Serializable {
 
     private final static long serialVersionUID = 1L;
 
-    @XmlElement(name = "Rrn")
+    @JsonProperty("rrn")
     private String rrn;
-    @XmlElement(name = "ResponseCode")
+    @JsonProperty("responseCode")
     private String responseCode;
-    @XmlElement(name = "ResponseDescription")
+    @JsonProperty("responseDescription")
     private String responseDescription;
-    @XmlElement(name = "ResponseDateTime")
+    @JsonProperty("dateTime")
     private String responseDateTime;
-    @XmlElement(name = "HashData")
+    @JsonProperty("hashData")
     private String hashData;
 
     public String getRrn() {

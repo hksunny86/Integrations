@@ -13,6 +13,9 @@ import javax.jws.soap.SOAPBinding;
 public interface JsBLBIntegration {
     public VerifyAccountResponse verifyAccount(@WebParam(name = "verifyAccountRequest") VerifyAccountRequest request);
 
+    public VerifyLoginAccountResponse verifyLoginAccount(@WebParam(name = "verifyLoginAccountRequest") VerifyLoginAccountRequest request);
+
+
     public AccountOpeningResponse accountOpening(@WebParam(name = "accountOpeningRequest") AccountOpeningRequest request);
 
     public ConventionalAccountOpeningResponse conventionalAccountOpening(@WebParam(name = "conventionalAccountOpening") ConventionalAccountOpening request);
@@ -116,6 +119,9 @@ public interface JsBLBIntegration {
     public HRACashWithdrawalResponse hraCashWithdrawal(@WebParam(name = "HRACashWithdrawalRequest") HRACashWithdrawalRequest hraCashWithdrawalRequest);
 
     public LoginAuthenticationResponse loginAuthentication(@WebParam(name = "LoginAuthenticationRequest") LoginAuthenticationRequest loginAuthenticationRequest);
+
+    public ZindigiLoginAuthenticationResponse zindigiLoginAuthentication(@WebParam(name = "ZindigiLoginAuthenticationRequest") ZindigiLoginAuthenticationRequest zindigiLoginAuthenticationRequest);
+
 
     public LoginPinResponse loginPin(@WebParam (name = "LoginPinRequest") LoginPinRequest loginPinRequest);
 

@@ -325,6 +325,7 @@ public class CustomerBillPaymentsCommand extends BaseCommand {
 
 				workFlowWrapper.putObject("productTile",productModel.getName());
 				commonCommandManager.sendSMS(workFlowWrapper);
+				commonCommandManager.novaAlertMessage(workFlowWrapper);
 				
 			} else {
 				

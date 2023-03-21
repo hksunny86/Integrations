@@ -1,5 +1,4 @@
 package com.inov8.integration.channel.CLSJS.service;
-
 import com.inov8.integration.channel.CLSJS.client.ScreenMSPortType;
 import com.inov8.integration.channel.CLSJS.mock.CLSJSMock;
 import com.inov8.integration.channel.CLSJS.request.ImportScreeningRequest;

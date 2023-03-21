@@ -107,17 +107,15 @@ public class CreditInquiryApiCommand extends BaseCommand {
             baseWrapper.setBasePersistableModel(productModel);
             baseWrapper = commonCommandManager.loadProduct(baseWrapper);
             productModel = (ProductModel) baseWrapper.getBasePersistableModel();
-            if (productModel == null) {
-                throw new CommandException("Product not loaded", ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, new Throwable());
-            }
-//            if (productModel.getProductIntgModuleInfoId() != null && !"".equals(productModel.getProductIntgModuleInfoId()) && productModel.getProductIntgVoId() != null && !"".equals(productModel.getProductIntgVoId())) {
-//                ProductVO productVO = commonCommandManager.loadProductVO(preparedBaseWrapper);
-//                if (productVO == null) {
-//                    throw new CommandException("ProductVo is not loaded", ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, new Throwable());
-//                }
-//
-//                logger.info("productVo populating");
-//                productVO.populateVO(productVO, preparedBaseWrapper);
+
+            if (productModel.getProductIntgModuleInfoId() != null && !"".equals(productModel.getProductIntgModuleInfoId()) && productModel.getProductIntgVoId() != null && !"".equals(productModel.getProductIntgVoId())) {
+                ProductVO productVO = commonCommandManager.loadProductVO(preparedBaseWrapper);
+                if (productVO == null) {
+                    throw new CommandException("ProductVo is not loaded", ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, new Throwable());
+                }
+
+                logger.info("productVo populating");
+                productVO.populateVO(productVO, preparedBaseWrapper);
 
                 workFlowWrapper.setProductModel(productModel);
 
@@ -151,7 +149,7 @@ public class CreditInquiryApiCommand extends BaseCommand {
                 userDeviceAccountsModel = (UserDeviceAccountsModel) ThreadLocalUserDeviceAccounts.getUserDeviceAccountsModel();
 
 //                p = cashInVO;
-//            }
+            }
 
         } catch (CommandException e) {
             logger.error(e.getMessage());

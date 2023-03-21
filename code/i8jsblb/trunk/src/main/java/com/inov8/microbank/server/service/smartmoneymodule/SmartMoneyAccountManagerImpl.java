@@ -706,6 +706,11 @@ public class SmartMoneyAccountManagerImpl
     }
   }
 
+  @Override
+  public List<SmartMoneyAccountModel> loadSmartMoneyAccountByIsOptasiaDebitBlocked() throws FrameworkCheckedException {
+    return smartMoneyAccountDAO.loadSmartMoneyAccountByIsOptasiaDebitBlocked();
+  }
+
   public SmartMoneyAccountModel getSMAccountByCustomerId(Long customerId)
           throws FrameworkCheckedException {
     SmartMoneyAccountModel smartMoneyAccountModel = new SmartMoneyAccountModel();

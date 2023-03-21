@@ -6,34 +6,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 @JsonPropertyOrder({
-        "Rrn",
-        "ResponseCode",
-        "ResponseDescription",
-        "ResponseDateTime",
-        "TransactionId",
-        "TransactionAmount",
-        "TotalAmount",
-        "HashData",
+        "rrn",
+        "responseCode",
+        "responseDescription",
+        "dateTime",
+        "transactionId",
+        "amount",
+        "totalAmount",
+        "hashData",
 })
 public class TransactionStatusResponse implements Serializable {
 
     private final static long serialVersionUID = 1L;
 
-    @JsonProperty("Rrn")
+    @JsonProperty("rrn")
     private String rrn;
-    @JsonProperty("ResponseCode")
+    @JsonProperty("responseCode")
     private String responseCode;
-    @JsonProperty("ResponseDescription")
+    @JsonProperty("responseDescription")
     private String responseDescription;
-    @JsonProperty("ResponseDateTime")
+    @JsonProperty("dateTime")
     private String responseDateTime;
-    @JsonProperty("TransactionId")
+    @JsonProperty("transactionId")
     private String transactionId;
-    @JsonProperty("TransactionAmount")
+    @JsonProperty("amount")
     private String transactionAmount;
-    @JsonProperty("TotalAmount")
+    @JsonProperty("totalAmount")
     private String totalAmount;
-    @JsonProperty("HashData")
+    @JsonProperty("hashData")
     private String hashData;
 
     public String getRrn() {

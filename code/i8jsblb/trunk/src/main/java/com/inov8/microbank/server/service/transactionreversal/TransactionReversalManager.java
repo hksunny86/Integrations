@@ -61,6 +61,7 @@ public interface TransactionReversalManager
     IBFTRetryAdviceModel findIBFTRetryByStanAndStatus(MiddlewareAdviceVO adviceVO) throws FrameworkCheckedException;
 
     TransactionDetailMasterModel loadTDMbyThridPartyRRN(String rrn) throws Exception;
+    TransactionDetailMasterModel loadTDMbyReserved2(String reservedField2) throws Exception;
 
     TransactionDetailMasterModel loadTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException;
     TransactionDetailMasterModel loadTDMbyProductId(String mobileNo, String productId) throws FrameworkCheckedException;

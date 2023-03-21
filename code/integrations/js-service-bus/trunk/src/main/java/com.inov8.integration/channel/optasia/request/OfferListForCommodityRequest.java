@@ -23,11 +23,20 @@ public class OfferListForCommodityRequest extends Request {
     @JsonProperty("amount")
     private String amount;
     @JsonProperty("additionalInfo")
-    private AdditionalInfo additionalInfo;
+    private AdditionalInfo additionalInfo=new AdditionalInfo();
     private String identityType;
     private String identityValue;
     private String origSource;
     private String commodityType;
+    private String fed;
+
+    public String getFed() {
+        return fed;
+    }
+
+    public void setFed(String fed) {
+        this.fed = fed;
+    }
 
     public String getIdentityType() {
         return identityType;
@@ -111,7 +120,8 @@ public class OfferListForCommodityRequest extends Request {
         this.setSourceRequestId(i8SBSwitchControllerRequestVO.getSourceRequestId());
         this.setOfferName(i8SBSwitchControllerRequestVO.getOfferName());
         this.setAmount(i8SBSwitchControllerRequestVO.getAmount());
-//        this.getAdditionalInfo().setFed(i8SBSwitchControllerRequestVO.getFed());
+        this.getAdditionalInfo().setFed(i8SBSwitchControllerRequestVO.getFed());
+        this.setFed(this.getAdditionalInfo().getFed());
 
     }
 

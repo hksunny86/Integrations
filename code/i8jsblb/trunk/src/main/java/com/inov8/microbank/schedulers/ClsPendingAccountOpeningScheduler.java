@@ -233,7 +233,7 @@ public class ClsPendingAccountOpeningScheduler {
                                 String transmissionDateTime = new SimpleDateFormat("yyyyMMddHHss").format(new Date());
                                 String stan = String.valueOf((new Random().nextInt(90000000)));
                                 requestVO = ESBAdapter.prepareCLSRequest(I8SBConstants.RequestType_CLSJS_ImportScreening);
-                                requestVO.setName(model.getFirstName() + model.getLastName());
+                                requestVO.setName(model.getFirstName() +" "+ model.getLastName());
                                 requestVO.setCNIC(model.getNic());
                                 requestVO.setDateOfBirth(new SimpleDateFormat("yyyy").format(dateOfBirth));
                                 requestVO.setNationality("Pakistan");

@@ -137,6 +137,7 @@ public class OutstandingResponse extends Response implements Serializable {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
+            i8SBSwitchControllerResponseVO.setCode(this.getCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
         }
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());

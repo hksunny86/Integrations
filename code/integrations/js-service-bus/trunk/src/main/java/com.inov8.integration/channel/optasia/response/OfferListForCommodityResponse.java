@@ -5,6 +5,7 @@ import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.inov8.integration.channel.optasia.service.OptasiaService;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
@@ -14,6 +15,7 @@ import com.inov8.integration.webservice.optasiaVO.Interest;
 import com.inov8.integration.webservice.optasiaVO.LoanOffers;
 import com.inov8.integration.webservice.optasiaVO.MaturityDetails;
 import com.inov8.integration.webservice.optasiaVO.OneOffCharges;
+import org.slf4j.LoggerFactory;
 
 import java.awt.font.TextHitInfo;
 import java.io.Serializable;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -34,6 +37,8 @@ import java.util.Map;
 })
 public class OfferListForCommodityResponse extends Response implements Serializable {
 
+
+    private static org.slf4j.Logger logger = LoggerFactory.getLogger(OfferListForCommodityResponse.class.getSimpleName());
 
     private static final long serialVersionUID = 5824473488070382311L;
 
@@ -161,14 +166,17 @@ public class OfferListForCommodityResponse extends Response implements Serializa
             i8SBSwitchControllerResponseVO.setResponseCode("00");
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
+            i8SBSwitchControllerResponseVO.setCode(this.getCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
         }
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
         i8SBSwitchControllerResponseVO.setReceptionTimestamp(this.getReceivedTimestamp());
-        i8SBSwitchControllerResponseVO.setEligibilityStatus(this.getEligibilityStatus().getEligibilityStatus());
-        i8SBSwitchControllerResponseVO.setEligible(this.getEligibilityStatus().getIsEligible());
+        if (this.getEligibilityStatus() != null) {
+            i8SBSwitchControllerResponseVO.setEligibilityStatus(this.getEligibilityStatus().getEligibilityStatus());
+            i8SBSwitchControllerResponseVO.setEligible(this.getEligibilityStatus().getIsEligible());
+        }
 
 //        if (eligibilityStatus != null) {
 //            com.inov8.integration.webservice.optasiaVO.EligibilityStatus eligibilityStatus;

@@ -7,9 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
-import com.inov8.integration.loyalty.Ad;
-import org.apache.commons.lang.StringUtils;
-import org.bouncycastle.ocsp.Req;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +32,8 @@ public class LoanOfferRequest extends Request {
     @JsonProperty("externalLoanId")
     private String externalLoanId;
     @JsonProperty("additionalInfo")
-    private List<AdditionalId> additionalIds;
-    private List<AdditionalId> additionalIdList;
+    private List<AdditionalInfoLoanOffer> additionalInfoLoanOfferList;
+    private List<com.inov8.integration.webservice.optasiaVO.AdditionalInfo> additionalInfoList;
     private String identityType;
     private String identityValue;
     private String origSource;
@@ -115,27 +112,32 @@ public class LoanOfferRequest extends Request {
     }
 
     @JsonProperty("additionalInfo")
-    public List<AdditionalId> getAdditionalIds() {
-        return additionalIds;
+    public List<AdditionalInfoLoanOffer> getAdditionalIds() {
+        return additionalInfoLoanOfferList;
     }
 
     @JsonProperty("additionalInfo")
-    public void setAdditionalIds(List<AdditionalId> additionalIds) {
-        this.additionalIds = additionalIds;
+    public void setAdditionalIds(List<AdditionalInfoLoanOffer> additionalIds) {
+        this.additionalInfoLoanOfferList = additionalIds;
     }
 
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        additionalIdList = new ArrayList<>();
-        AdditionalId request = new AdditionalId();
+        additionalInfoLoanOfferList = new ArrayList<>();
+        additionalInfoList = i8SBSwitchControllerRequestVO.getAdditionalInfoList();
 
-        request.setMerchantId(i8SBSwitchControllerRequestVO.getMerchantId());
-        request.setFed(i8SBSwitchControllerRequestVO.getFed());
-        request.setLoanPurpose(i8SBSwitchControllerRequestVO.getLoanPurpose());
 
-        additionalIdList.add(request);
+        if (additionalInfoList != null) {
+            for (int i = 0; i < additionalInfoList.size(); i++) {
+                AdditionalInfoLoanOffer request = new AdditionalInfoLoanOffer();
 
+                request.setInfoKey(additionalInfoList.get(i).getInfoKey());
+                request.setInfoValue(additionalInfoList.get(i).getInfoValue());
+                additionalInfoLoanOfferList.add(request);
+
+            }
+        }
         this.setIdentityType(i8SBSwitchControllerRequestVO.getIdentityType());
         this.setIdentityValue(i8SBSwitchControllerRequestVO.getIdentityValue());
         this.setOrigSource(i8SBSwitchControllerRequestVO.getOrigSource());
@@ -143,7 +145,7 @@ public class LoanOfferRequest extends Request {
         this.setOfferName(i8SBSwitchControllerRequestVO.getOfferName());
         this.setAmount(i8SBSwitchControllerRequestVO.getAmount());
         this.setExternalLoanId(i8SBSwitchControllerRequestVO.getExternalLoanId());
-        this.setAdditionalIds(additionalIdList);
+        this.setAdditionalIds(additionalInfoLoanOfferList);
     }
 
     @Override
@@ -166,49 +168,83 @@ public class LoanOfferRequest extends Request {
     }
 }
 
+//@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonPropertyOrder({
+//        "merchantId",
+//        "FED",
+//        "loanPurpose"
+//})
+//class AdditionalId {
+//
+//    @JsonProperty("merchantId")
+//    private String merchantId;
+//    @JsonProperty("FED")
+//    private String fed;
+//    @JsonProperty("loanPurpose")
+//    private String loanPurpose;
+//
+//    @JsonProperty("merchantId")
+//    public String getMerchantId() {
+//        return merchantId;
+//    }
+//
+//    @JsonProperty("merchantId")
+//    public void setMerchantId(String merchantId) {
+//        this.merchantId = merchantId;
+//    }
+//
+//    @JsonProperty("FED")
+//    public String getFed() {
+//        return fed;
+//    }
+//
+//    @JsonProperty("FED")
+//    public void setFed(String fed) {
+//        this.fed = fed;
+//    }
+//
+//    @JsonProperty("loanPurpose")
+//    public String getLoanPurpose() {
+//        return loanPurpose;
+//    }
+//
+//    @JsonProperty("loanPurpose")
+//    public void setLoanPurpose(String loanPurpose) {
+//        this.loanPurpose = loanPurpose;
+//    }
+//
+//}
+
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "merchantId",
-        "FED",
-        "loanPurpose"
+        "infoKey",
+        "infoValue"
 })
-class AdditionalId {
+class AdditionalInfoLoanOffer {
 
-    @JsonProperty("merchantId")
-    private String merchantId;
-    @JsonProperty("FED")
-    private String fed;
-    @JsonProperty("loanPurpose")
-    private String loanPurpose;
+    @JsonProperty("infoKey")
+    private String infoKey;
+    @JsonProperty("infoValue")
+    private String infoValue;
 
-    @JsonProperty("merchantId")
-    public String getMerchantId() {
-        return merchantId;
+    @JsonProperty("infoKey")
+    public String getInfoKey() {
+        return infoKey;
     }
 
-    @JsonProperty("merchantId")
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
+    @JsonProperty("infoKey")
+    public void setInfoKey(String infoKey) {
+        this.infoKey = infoKey;
     }
 
-    @JsonProperty("FED")
-    public String getFed() {
-        return fed;
+    @JsonProperty("infoValue")
+    public String getInfoValue() {
+        return infoValue;
     }
 
-    @JsonProperty("FED")
-    public void setFed(String fed) {
-        this.fed = fed;
+    @JsonProperty("infoValue")
+    public void setInfoValue(String infoValue) {
+        this.infoValue = infoValue;
     }
-
-    @JsonProperty("loanPurpose")
-    public String getLoanPurpose() {
-        return loanPurpose;
-    }
-
-    @JsonProperty("loanPurpose")
-    public void setLoanPurpose(String loanPurpose) {
-        this.loanPurpose = loanPurpose;
-    }
-
 }

@@ -146,6 +146,7 @@ public interface WebServiceSwitchController {
 //    WebServiceVO getLoanSummary(WebServiceVO webServiceVO);
     WebServiceVO payLoan(WebServiceVO webServiceVO);
     WebServiceVO outstandingLoanStatus(WebServiceVO webServiceVO);
+    WebServiceVO getOutstandingLoan(WebServiceVO webServiceVO);
     WebServiceVO loanPlan(WebServiceVO webServiceVO);
     WebServiceVO loanHistory(WebServiceVO webServiceVO);
     WebServiceVO transactionActive(WebServiceVO webServiceVO);

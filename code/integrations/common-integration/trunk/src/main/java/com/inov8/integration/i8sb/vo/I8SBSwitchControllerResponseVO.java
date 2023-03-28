@@ -458,6 +458,15 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private Boolean isEligible;
     private String eligibilityStatus;
     private String refNo;
+    private String primaryLoanId;
+
+    public String getPrimaryLoanId() {
+        return primaryLoanId;
+    }
+
+    public void setPrimaryLoanId(String primaryLoanId) {
+        this.primaryLoanId = primaryLoanId;
+    }
 
     public String getRefNo() {
         return refNo;

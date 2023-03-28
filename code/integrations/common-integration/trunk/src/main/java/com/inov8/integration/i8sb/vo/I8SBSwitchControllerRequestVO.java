@@ -1,6 +1,7 @@
 package com.inov8.integration.i8sb.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.inov8.integration.webservice.optasiaVO.AdditionalInfo;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import javax.xml.bind.annotation.XmlTransient;
@@ -483,6 +484,15 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String filterLoanState;
     private String filterType;
     private String fullName;
+    private List<AdditionalInfo> additionalInfoList;
+
+    public List<AdditionalInfo> getAdditionalInfoList() {
+        return additionalInfoList;
+    }
+
+    public void setAdditionalInfoList(List<AdditionalInfo> additionalInfoList) {
+        this.additionalInfoList = additionalInfoList;
+    }
 
     public String getFullName() {
         return fullName;

@@ -22,6 +22,7 @@ import java.io.Serializable;
         "externalLoanId",
         "internalLoanId",
         "advanceOfferId",
+        "primaryLoanId",
         "offerName"
 })
 public class LoanOfferResponse extends Response implements Serializable {
@@ -49,6 +50,8 @@ public class LoanOfferResponse extends Response implements Serializable {
     private String internalLoanId;
     @JsonProperty("advanceOfferId")
     private String advanceOfferId;
+    @JsonProperty("primaryLoanId")
+    private String primaryLoanId;
     @JsonProperty("offerName")
     private String offerName;
     private String responseCode;
@@ -171,6 +174,16 @@ public class LoanOfferResponse extends Response implements Serializable {
         this.advanceOfferId = advanceOfferId;
     }
 
+    @JsonProperty("primaryLoanId")
+    public String getPrimaryLoanId() {
+        return primaryLoanId;
+    }
+
+    @JsonProperty("primaryLoanId")
+    public void setPrimaryLoanId(String primaryLoanId) {
+        this.primaryLoanId = primaryLoanId;
+    }
+
     @JsonProperty("offerName")
     public String getOfferName() {
         return offerName;
@@ -189,7 +202,9 @@ public class LoanOfferResponse extends Response implements Serializable {
         if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
         } else {
-            i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
+            i8SBSwitchControllerResponseVO.setCode(this.getCode());
+            i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
         }
         i8SBSwitchControllerResponseVO.setCode(this.getCode());
         i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
@@ -201,6 +216,7 @@ public class LoanOfferResponse extends Response implements Serializable {
         i8SBSwitchControllerResponseVO.setExternalLoanId(this.getExternalLoanId());
         i8SBSwitchControllerResponseVO.setInternalLoanId(this.getInternalLoanId());
         i8SBSwitchControllerResponseVO.setAdvanceOfferId(this.getAdvanceOfferId());
+        i8SBSwitchControllerResponseVO.setPrimaryLoanId(this.getPrimaryLoanId());
         i8SBSwitchControllerResponseVO.setOfferName(this.getOfferName());
 
 

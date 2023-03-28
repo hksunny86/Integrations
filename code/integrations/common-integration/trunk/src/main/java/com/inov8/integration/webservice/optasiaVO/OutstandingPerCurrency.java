@@ -9,6 +9,8 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "currencyCode",
+        "availableCreditLimit",
+        "dynamicCreditLimit",
         "numOutstandingLoans",
         "totalGross",
         "totalPrincipal",
@@ -26,6 +28,10 @@ public class OutstandingPerCurrency implements Serializable {
 
     @JsonProperty("currencyCode")
     private String currencyCode;
+    @JsonProperty("availableCreditLimit")
+    private Float availableCreditLimit;
+    @JsonProperty("dynamicCreditLimit")
+    private Float dynamicCreditLimit;
     @JsonProperty("numOutstandingLoans")
     private String numOutstandingLoans;
     @JsonProperty("totalGross")
@@ -55,6 +61,26 @@ public class OutstandingPerCurrency implements Serializable {
     @JsonProperty("currencyCode")
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
+    }
+
+    @JsonProperty("availableCreditLimit")
+    public Float getAvailableCreditLimit() {
+        return availableCreditLimit;
+    }
+
+    @JsonProperty("availableCreditLimit")
+    public void setAvailableCreditLimit(Float availableCreditLimit) {
+        this.availableCreditLimit = availableCreditLimit;
+    }
+
+    @JsonProperty("dynamicCreditLimit")
+    public Float getDynamicCreditLimit() {
+        return dynamicCreditLimit;
+    }
+
+    @JsonProperty("dynamicCreditLimit")
+    public void setDynamicCreditLimit(Float dynamicCreditLimit) {
+        this.dynamicCreditLimit = dynamicCreditLimit;
     }
 
     @JsonProperty("numOutstandingLoans")

@@ -18,4 +18,7 @@ public interface HostTransactionController {
     public MiddlewareMessageVO posRefundTransaction(MiddlewareMessageVO middlewareMessageVO) throws RuntimeException;
 
     public MiddlewareMessageVO coreToWalletAdvice(MiddlewareMessageVO middlewareMessageVO) throws RuntimeException;
+
+    public MiddlewareMessageVO cardLessCashWithDrawal(MiddlewareMessageVO middlewareMessageVO) throws RuntimeException;
+
 }

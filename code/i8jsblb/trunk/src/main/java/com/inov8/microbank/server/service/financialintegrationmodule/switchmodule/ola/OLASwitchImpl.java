@@ -1129,6 +1129,7 @@ public class OLASwitchImpl extends SwitchProcessor {
         }
         if (productId != null && (productId.equals(ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_OFF_US)
                 || productId.equals(ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_ON_US)
+                ||productId.equals(ProductConstantsInterface.DEBIT_CARD_LESS_CASH_WITHDRAWAL)
                 || productId.equals(ProductConstantsInterface.POS_DEBIT_CARD_CASH_WITHDRAWAL)
                 || productId.equals(ProductConstantsInterface.POS_DEBIT_CARD_REFUND)
                 || productId.equals(ProductConstantsInterface.INTERNATIONAL_DEBIT_CARD_CASH_WITHDRAWAL_OFF_US)

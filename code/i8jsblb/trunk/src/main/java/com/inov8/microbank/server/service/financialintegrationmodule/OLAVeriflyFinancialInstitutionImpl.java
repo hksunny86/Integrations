@@ -1808,6 +1808,7 @@ public class OLAVeriflyFinancialInstitutionImpl extends VeriflyFinancialInstitut
             prepareCommissionCreditList(switchWrapper, creditList, ReasonConstants.CNIC_TO_BB_AC);
 
         } else if (productId == TransactionProductEnum.DEBIT_CARD_CASH_WITHDRAWL_ON_US_PRODUCT.getProductId()
+                ||productId == TransactionProductEnum.DEBIT_CARD_LESS_CASH_WITHDRAWAL.getProductId()
                 || productId == TransactionProductEnum.DEBIT_CARD_CASH_WITHDRAWL_OFF_US_PRODUCT.getProductId()
                 || productId == TransactionProductEnum.POS_DEBIT_CARD_CASH_WITHDRAWL_PRODUCT.getProductId()
                 || productId == TransactionProductEnum.DEBIT_CARD_ANNUAL_FEE_PRODUCT.getProductId()

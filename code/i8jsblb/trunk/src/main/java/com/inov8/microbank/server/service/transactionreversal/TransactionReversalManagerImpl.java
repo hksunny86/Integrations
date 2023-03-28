@@ -825,6 +825,8 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
         model = (MiddlewareRetryAdviceModel) baseWrapper.getBasePersistableModel();
         if (model.getProductId() == null || (model.getProductId() != null && model.getProductId().equals(ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_OFF_US)
                 || model.getProductId().equals(ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_ON_US)
+                || model.getProductId().equals(ProductConstantsInterface.DEBIT_CARD_LESS_CASH_WITHDRAWAL)
+
                 || model.getProductId().equals(ProductConstantsInterface.POS_DEBIT_CARD_CASH_WITHDRAWAL)
                 || model.getProductId().equals(ProductConstantsInterface.INTERNATIONAL_DEBIT_CARD_CASH_WITHDRAWAL_OFF_US)
                 || model.getProductId().equals(ProductConstantsInterface.International_POS_DEBIT_CARD_CASH_WITHDRAWAL)

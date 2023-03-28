@@ -119,7 +119,7 @@ public interface FonePayConstants {
 
 
 
-
+    public static final String DEBIT_CARD_CARDLESS_CHANNEL="DEBIT_CARD_CARDLESS";
     public static final String DEBIT_CARD_CHANNEL="DEBIT_CARD";
     public static final String WALLET_2_WALLET_INFO="WALLET_TO_WALLET_INFO";
     public static final String WALLET_2_WALLET="WALLET_TO_WALLET";
@@ -139,6 +139,8 @@ public interface FonePayConstants {
     public static final Long MPIN_REFRESH_TIME =new Long(60);
 
     public static final String REQ_DEBIT_CARD_CASH_WITHDRAWL_ON_US = "Debit Card Cash WithDrawl ON - US";
+    public static final String REQ_DEBIT_CARD_LESS_CASH_WITHDRAWL = "Card Less Cash WithDrawl";
+
     public static final String REQ_DEBIT_CARD_CASH_WITHDRAWL_OFF_US = "Debit Card Cash WithDrawl OFF - US";
     public static final String REQ_INTERNATIONAL_DEBIT_CARD_CASH_WITHDRAWL_OFF_US = "International Debit Card Cash WithDrawl OFF - US";
 

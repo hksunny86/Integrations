@@ -700,7 +700,6 @@ public class FonePayManagerImpl implements FonePayManager {
                         customerModel.setFed(taxRegimeModel.getFed());
                     }
 
-
                     baseWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_MODEL, customerModel);
 
                     //***************************************************************************************
@@ -751,7 +750,12 @@ public class FonePayManagerImpl implements FonePayManager {
                     appUserModel.setEmail(webServiceVO.getEmailAddress());
                     //Below parameter are set to change cnic issuance Date format change  for api dd-mm-yyyy to yyyy-mm-dd
                     if ((!webServiceVO.getCnicIssuanceDate().equals("") || webServiceVO.getCnicIssuanceDate() == null) && (webServiceVO.getReserved10().equals(DeviceTypeConstantsInterface.WEB_SERVICE.toString()))) {
-                        appUserModel.setCnicIssuanceDate(dateFormat.parse(webServiceVO.getCnicIssuanceDate()));
+                        if(webServiceVO.getReserved3()!=null && webServiceVO.getReserved3().equals("0")){
+                            appUserModel.setCnicIssuanceDate(dateFormat1.parse(webServiceVO.getCnicIssuanceDate()));
+                        }
+                        else {
+                            appUserModel.setCnicIssuanceDate(dateFormat.parse(webServiceVO.getCnicIssuanceDate()));
+                        }
                     } else if (!webServiceVO.getCnicIssuanceDate().equals("") || webServiceVO.getCnicIssuanceDate() == null) {
                         appUserModel.setCnicIssuanceDate(dateFormat1.parse(webServiceVO.getCnicIssuanceDate()));
                     }
@@ -5211,8 +5215,9 @@ public class FonePayManagerImpl implements FonePayManager {
         webServiceVO.setFatherHusbandName(iVo.getFatherName());
         webServiceVO.setMotherMaiden(iVo.getMotherName());
         webServiceVO.setGender(iVo.getGender());
+        webServiceVO.setCnicExpiry(iVo.getCardExpire());
+        webServiceVO.setReserved3("0");
         webServiceVO.setAccountType(String.valueOf(CustomerAccountTypeConstants.LEVEL_0));
-        webServiceVO.setCnicIssuanceDate(iVo.getCnicIssuanceDate());
         webServiceVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
         webServiceVO.setResponseCodeDescription(iVo.getResponseDescription());
 
@@ -5220,6 +5225,21 @@ public class FonePayManagerImpl implements FonePayManager {
 
         return webServiceVO;
     }
+//    public NadraIntegrationVO prepareNadraVO(NadraIntegrationVO ivo){
+//        ivo.setUserName("FonePay@JS");
+//        ivo.setPassword("FonePay@JS");
+//        ivo.setFullName("Aqeel");
+//        ivo.setBirthPlace("Pakistan");
+//        ivo.setPresentAddress("Lahore");
+//        ivo.setDateOfBirth("2001-06-26");
+//        ivo.setFatherName("fkjds");
+//        ivo.setMotherName("jsfkus");
+//        ivo.setGender("M");
+//        ivo.setCardExpiry("2000-03-23");
+//        ivo.setResponseCode("100");
+//        ivo.setResponseDescription("Success");
+//        return ivo;
+//    }
 
     public MessageSource getMessageSource() {
         return messageSource;

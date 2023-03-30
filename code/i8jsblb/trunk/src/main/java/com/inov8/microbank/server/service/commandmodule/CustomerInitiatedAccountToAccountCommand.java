@@ -76,7 +76,9 @@ public class CustomerInitiatedAccountToAccountCommand extends BaseCommand {
 
                     AccountInfoModel accountInfoModel = new AccountInfoModel();
                     //accountInfoModel.setOldPin(pin);
-
+                    if ((this.channelId.equals("PAYFAST") || this.channelId.equals("PAYFAST-COMM") || this.channelId.equals("PAYFAST-UBPS") || this.channelId.equals("PAYFAST-WTOW")) && fromSegmentId != 10372L) {
+                        throw new CommandException("PayFast Channel Not Allowed Other Segment Transaction", ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.HIGH, new Throwable());
+                    }
 
                     productModel = new ProductModel();
                     productModel.setProductId(Long.parseLong(productId));

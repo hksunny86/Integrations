@@ -139,7 +139,7 @@ public class PostedTransactionReportHibernateDAO extends BaseHibernateDAO<Posted
         sqlBuilder.append("select count(*) FROM POSTED_TRANSACTION_REPORT ptr ");
         sqlBuilder.append("INNER JOIN TRANSACTION_DETAIL_MASTER tdm on tdm.TRANSACTION_CODE_ID = ptr.TRANSACTION_CODE_ID ");
         sqlBuilder.append("WHERE ptr.PRODUCT_ID IN (");
-        sqlBuilder.append(productIds[0]).append(',').append(productIds[1]).append(',').append(productIds[2]).append(',').append(productIds[3]).append(',').append(productIds[4]);
+        sqlBuilder.append(productIds[0]).append(',').append(productIds[1]).append(',').append(productIds[2]).append(',').append(productIds[3]).append(',').append(productIds[4]).append(',').append(productIds[5]);
         sqlBuilder.append(')');
         sqlBuilder.append(" AND tdm.RECIPIENT_MFS_ID = '").append(recipientMfsId).append("'");
         sqlBuilder.append("AND ptr.STAN = '").append(stan).append("'");

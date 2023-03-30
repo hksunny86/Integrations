@@ -118,6 +118,8 @@ public class ManualReversalManagerImpl implements ManualReversalManager {
 		if(manualReversalVO.getAdjustmentType() != null && manualReversalVO.getAdjustmentType().longValue() == 1){
 			if(manualReversalVO.getProductId() != null && (manualReversalVO.getProductId().equals(ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_OFF_US)
 					|| manualReversalVO.getProductId().equals(ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_ON_US)
+					|| manualReversalVO.getProductId().equals(ProductConstantsInterface.DEBIT_CARD_LESS_CASH_WITHDRAWAL)
+
 					|| manualReversalVO.getProductId().equals(ProductConstantsInterface.POS_DEBIT_CARD_CASH_WITHDRAWAL)
 					||manualReversalVO.getProductId().equals(ProductConstantsInterface.International_POS_DEBIT_CARD_CASH_WITHDRAWAL)
 					||manualReversalVO.getProductId().equals(ProductConstantsInterface.INTERNATIONAL_DEBIT_CARD_CASH_WITHDRAWAL_OFF_US)

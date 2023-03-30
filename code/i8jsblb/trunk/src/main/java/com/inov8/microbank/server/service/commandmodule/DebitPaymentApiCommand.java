@@ -168,6 +168,9 @@ public class DebitPaymentApiCommand extends BaseCommand {
                     workFlowWrapper.setTotalCommissionAmount(0.0D);
                 }
 
+                if ((channelId.equals("PAYFAST")||channelId.equals("PAYFAST-COMM")||channelId.equals("PAYFAST-UBPS")||channelId.equals("PAYFAST-WTOW")) && !segmentId.equals(10372L)){
+                    throw new CommandException("PayFast Channel Not Allowed Other Segment Transaction", ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.HIGH, new Throwable());
+                }
 
                 baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, productId);
 

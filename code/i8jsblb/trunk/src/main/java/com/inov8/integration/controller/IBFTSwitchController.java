@@ -1,26 +1,26 @@
 package com.inov8.integration.controller;
 
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 import com.inov8.framework.common.exception.FrameworkCheckedException;
 import com.inov8.framework.common.model.DateRangeHolderModel;
 import com.inov8.framework.common.model.SortingOrder;
+import com.inov8.framework.common.util.CustomList;
+import com.inov8.framework.common.wrapper.BaseWrapper;
+import com.inov8.framework.common.wrapper.BaseWrapperImpl;
 import com.inov8.framework.common.wrapper.SearchBaseWrapper;
 import com.inov8.framework.common.wrapper.SearchBaseWrapperImpl;
 import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
+import com.inov8.integration.ibft.controller.HostTransactionController;
+import com.inov8.integration.vo.MiddlewareMessageVO;
 import com.inov8.integration.webservice.vo.WebServiceVO;
+import com.inov8.microbank.common.exception.CommandException;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.commissionmodule.CommissionTransactionViewModel;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.model.portal.ola.BbStatementAllViewModel;
 import com.inov8.microbank.common.model.postedrransactionreportmodule.PostedTransactionReportModel;
 import com.inov8.microbank.common.util.*;
-import com.inov8.microbank.common.util.Formatter;
 import com.inov8.microbank.common.vo.transactionreversal.ManualReversalVO;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapper;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapperImpl;
@@ -41,40 +41,39 @@ import com.inov8.microbank.server.dao.transactionmodule.TransactionReversalDAO;
 import com.inov8.microbank.server.facade.ReversalAdviceQueingPreProcessor;
 import com.inov8.microbank.server.facade.portal.commissionmodule.CommissionTransactionViewFacade;
 import com.inov8.microbank.server.facade.portal.ola.PortalOlaFacade;
+import com.inov8.microbank.server.service.actionlogmodule.ActionLogManager;
+import com.inov8.microbank.server.service.commandmodule.CommandManager;
+import com.inov8.microbank.server.service.devicemodule.DeviceTypeCommandManager;
 import com.inov8.microbank.server.service.financialintegrationmodule.switchmodule.ESBAdapter;
+import com.inov8.microbank.server.service.integration.vo.MiddlewareAdviceVO;
 import com.inov8.microbank.server.service.manualadjustmentmodule.ManualAdjustmentManager;
 import com.inov8.microbank.server.service.manualadjustmentmodule.ManualReversalManager;
+import com.inov8.microbank.server.service.mfsmodule.CommonCommandManager;
 import com.inov8.microbank.server.service.transactionmodule.TransactionDetailMasterManager;
+import com.inov8.microbank.server.service.transactionreversal.TransactionReversalManager;
+import com.inov8.microbank.webapp.action.allpayweb.AllPayWebResponseDataPopulator;
 import com.inov8.ola.util.CustomerAccountTypeConstants;
 import com.inov8.ola.util.TransactionTypeConstants;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
-import org.joda.time.DateTime;
-import org.joda.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.context.ContextLoader;
 
-import com.inov8.framework.common.util.CustomList;
-import com.inov8.framework.common.wrapper.BaseWrapper;
-import com.inov8.framework.common.wrapper.BaseWrapperImpl;
-import com.inov8.integration.ibft.controller.HostTransactionController;
-import com.inov8.integration.vo.MiddlewareMessageVO;
-import com.inov8.microbank.common.exception.CommandException;
-import com.inov8.microbank.server.service.actionlogmodule.ActionLogManager;
-import com.inov8.microbank.server.service.commandmodule.CommandManager;
-import com.inov8.microbank.server.service.devicemodule.DeviceTypeCommandManager;
-import com.inov8.microbank.server.service.integration.vo.MiddlewareAdviceVO;
-import com.inov8.microbank.server.service.mfsmodule.CommonCommandManager;
-import com.inov8.microbank.server.service.transactionreversal.TransactionReversalManager;
-import com.inov8.microbank.webapp.action.allpayweb.AllPayWebResponseDataPopulator;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 public class IBFTSwitchController implements HostTransactionController {
 
+    protected final Log logger = LogFactory.getLog(getClass());
     private MessageSource messageSource;
     private FonePaySwitchController fonePaySwitchController;
     private ManualReversalManager manualReversalFacade;
@@ -92,11 +91,6 @@ public class IBFTSwitchController implements HostTransactionController {
     private ESBAdapter esbAdapter;
     @Autowired
     private SmsSender smsSender;
-
-
-
-
-    protected final Log logger = LogFactory.getLog(getClass());
 
     public FonePayManager getFonePayManager() {
         ApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
@@ -388,6 +382,185 @@ public class IBFTSwitchController implements HostTransactionController {
         return middlewareMessageVO;
     }
 
+    @Override
+    public MiddlewareMessageVO cardLessCashWithDrawal(MiddlewareMessageVO middlewareMessageVO) throws RuntimeException {
+        logger.info("*** Debit Card CashWith Transaction Received with Stan ***" + middlewareMessageVO.getStan());
+
+        FonePayLogModel fonePayLogModel = null;
+        CommonCommandManager commonCommandManager = this.getCommonCommandManager();
+        AppUserModel appUserModel1 = new AppUserModel();
+        try {
+
+
+                logger.info("*** Load App User against Mobile No***" + middlewareMessageVO.getAccountNo1());
+
+                appUserModel1 = commonCommandManager.loadAppUserByMobileAndType(middlewareMessageVO.getAccountNo1(), UserTypeConstantsInterface.CUSTOMER);
+                if (appUserModel1==null) {
+                middlewareMessageVO.setResponseCode(FonePayResponseCodes.CUSTOMER_NOT_FOUND.toString());
+                middlewareMessageVO.setResponseDescription(FonePayResponseCodes.CUSTOMER_NOT_FOUND);
+                FonePayUtils.prepareErrorResponseForDebitCard(middlewareMessageVO, middlewareMessageVO.getResponseCode());
+                return middlewareMessageVO;
+            }
+
+        } catch (FrameworkCheckedException e) {
+            e.getMessage();
+        }
+        CustomerModel customerModel = new CustomerModel();
+        try {
+            customerModel = commonCommandManager.getCustomerModelById(appUserModel1.getCustomerId());
+        } catch (CommandException e) {
+            e.printStackTrace();
+        }
+
+        if (customerModel != null && customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)) {
+            middlewareMessageVO.setResponseCode("07");
+            middlewareMessageVO.setResponseDescription("Upgrade Account L0 to L1 to perform Transaction.");
+            FonePayUtils.prepareErrorResponseForDebitCard(middlewareMessageVO, "07");
+            return middlewareMessageVO;
+        }
+        try {
+            String productId = null;
+            String reqType = null;
+            String terminalId = null;
+            if (middlewareMessageVO.getCurrencyCode() == null || middlewareMessageVO.getCurrencyCode().equals("") || middlewareMessageVO.getCurrencyCode().equals("586")) {
+                        productId = ProductConstantsInterface.DEBIT_CARD_LESS_CASH_WITHDRAWAL.toString();
+                        reqType = FonePayConstants.REQ_DEBIT_CARD_LESS_CASH_WITHDRAWL;
+                        terminalId = "ATM";
+
+
+                }
+
+            //below check add against product id to send merchant Camping Transaction validation  and Transaction Update
+                ActionLogModel actionLogModel = new ActionLogModel();
+                actionLogBeforeStart(middlewareMessageVO, actionLogModel, false);
+                fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModelForDebitCardReq(middlewareMessageVO, reqType);
+                BaseWrapper baseWrapper = new BaseWrapperImpl();
+                WebServiceVO webServiceVO = new WebServiceVO();
+//                DebitCardModel debitCardModel = commonCommandManager.getDebitCardModelDao().getDebitCardModelByCardNumber(middlewareMessageVO.getPAN());
+//                    DebitCardUtill.verifyDebitCard(webServiceVO, debitCardModel);
+//                    if (webServiceVO.getResponseCode().equals("00")) {
+                    Boolean isBlackListed = commonCommandManager.isCnicBlacklisted(appUserModel1.getNic());
+                    if (isBlackListed) {
+                        middlewareMessageVO.setResponseCode(FonePayResponseCodes.CUSTOMER_CNIC_BLACKLISTED);
+                        FonePayUtils.prepareErrorResponseForDebitCard(middlewareMessageVO, FonePayResponseCodes.CUSTOMER_CNIC_BLACKLISTED);
+                        getFonePayManager().updateFonePayIntegrationLogModelForDebitCard(fonePayLogModel, middlewareMessageVO);
+                        return middlewareMessageVO;
+                    }
+            Long[] productIds = new Long[]{ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_OFF_US,
+                    ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_ON_US,
+                    ProductConstantsInterface.POS_DEBIT_CARD_CASH_WITHDRAWAL
+                    , ProductConstantsInterface.INTERNATIONAL_DEBIT_CARD_CASH_WITHDRAWAL_OFF_US, ProductConstantsInterface.International_POS_DEBIT_CARD_CASH_WITHDRAWAL,
+                    ProductConstantsInterface.DEBIT_CARD_LESS_CASH_WITHDRAWAL
+            };
+                    UserDeviceAccountsModel uda = userDeviceAccountsDAO.findUserDeviceAccountByAppUserId(appUserModel1.getAppUserId());
+                    Boolean isValid = postedTransactionReportDAO.validateDuplicateStan(productIds, middlewareMessageVO.getStan(), uda.getUserId());
+                    if (!isValid) {
+                        logger.error("Debit Card Transaction with Stan " + middlewareMessageVO.getStan() + " already performed on date " + new Date().toString() +
+                                " against the Recipient USER_ID: " + uda.getUserId());
+                        logger.info("*** Duplicate Stan ***");
+                        middlewareMessageVO.setResponseCode(FonePayResponseCodes.STAN_ALREADY_EXISTS.toString());
+                        middlewareMessageVO.setResponseDescription(FonePayResponseCodes.STAN_ALREADY_EXISTS_DESCRIPTION);
+                        getFonePayManager().updateFonePayIntegrationLogModelForDebitCard(fonePayLogModel, middlewareMessageVO);
+                        return middlewareMessageVO;
+                    }
+                    webServiceVO = this.prepareWebServiceVOForCardLessBalanceInquiry(middlewareMessageVO, webServiceVO);
+                    webServiceVO = fonePaySwitchController.balanceInquiry(webServiceVO);
+                    if (!webServiceVO.getResponseCode().equals("00")) {
+                        middlewareMessageVO.setResponseCode(webServiceVO.getResponseCode());
+                        FonePayUtils.prepareErrorResponseForDebitCard(middlewareMessageVO, middlewareMessageVO.getResponseCode());
+                        getFonePayManager().updateFonePayIntegrationLogModelForDebitCard(fonePayLogModel, middlewareMessageVO);
+                        return middlewareMessageVO;
+                    }
+                    String paymentMode = null;
+                    Double balance = Double.parseDouble(webServiceVO.getBalance());
+                    if (Double.parseDouble(middlewareMessageVO.getTransactionAmount()) > balance) {
+                        SmartMoneyAccountModel smartMoneyAccountModel = commonCommandManager.getSmartMoneyAccountByAppUserModelAndPaymentModId(appUserModel1, PaymentModeConstantsInterface.HOME_REMMITTANCE_ACCOUNT);
+                        if (smartMoneyAccountModel != null) {
+                            webServiceVO = this.prepareWebServiceVOForCardLessBalanceInquiry(middlewareMessageVO, webServiceVO);
+                            webServiceVO.setPaymentMode("HRA");
+                            logger.info("*** Debit Card Balance check");
+                            webServiceVO = fonePaySwitchController.balanceInquiry(webServiceVO);
+                            logger.info("*** Debit Card Balance check Time");
+                            balance = Double.parseDouble(webServiceVO.getBalance());
+                            if (Double.parseDouble(middlewareMessageVO.getTransactionAmount()) > balance) {
+                                middlewareMessageVO.setResponseCode(FonePayResponseCodes.LOW_BALANCE);
+                                middlewareMessageVO.setResponseDescription("Low Balance in HRA Account.");
+                                FonePayUtils.prepareErrorResponseForDebitCard(middlewareMessageVO, FonePayResponseCodes.LOW_BALANCE);
+                                //getFonePayManager().updateFonePayIntegrationLogModelForDebitCard(fonePayLogModel, middlewareMessageVO);
+                                return middlewareMessageVO;
+                            }
+                            paymentMode = "HRA";
+                        } else {
+                            middlewareMessageVO.setResponseCode(FonePayResponseCodes.LOW_BALANCE);
+                            FonePayUtils.prepareErrorResponseForDebitCard(middlewareMessageVO, FonePayResponseCodes.LOW_BALANCE);
+                            //getFonePayManager().updateFonePayIntegrationLogModelForDebitCard(fonePayLogModel, middlewareMessageVO);
+                            return middlewareMessageVO;
+                        }
+                    } else
+                        paymentMode = "";
+                    webServiceVO.setRetrievalReferenceNumber(middlewareMessageVO.getRetrievalReferenceNumber());
+                    baseWrapper.putObject(CommandFieldConstants.KEY_MOB_NO, appUserModel1.getMobileNo());
+                    baseWrapper.putObject(CommandFieldConstants.KEY_AMOUNT, middlewareMessageVO.getTransactionAmount());
+                    String response = null;
+                    baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, productId);
+                    baseWrapper.putObject(CommandFieldConstants.KEY_DEVICE_TYPE_ID, DeviceTypeConstantsInterface.ATM);
+                    baseWrapper.putObject(CommandFieldConstants.KEY_TXAM, middlewareMessageVO.getTransactionAmount());
+                    baseWrapper.putObject(CommandFieldConstants.KEY_TPAM, "0");
+                    baseWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_MOBILE, appUserModel1.getMobileNo());
+                    baseWrapper.putObject(CommandFieldConstants.KEY_TAMT, middlewareMessageVO.getTransactionAmount());
+                    baseWrapper.putObject(CommandFieldConstants.KEY_TERMINAL_ID, terminalId);
+                    baseWrapper.putObject(CommandFieldConstants.KEY_STAN, middlewareMessageVO.getStan());
+                    baseWrapper.putObject(CommandFieldConstants.KEY_PAYMENT_MODE, paymentMode);
+                    baseWrapper.putObject("RRN", middlewareMessageVO.getRetrievalReferenceNumber());
+                    baseWrapper.putObject(CommandFieldConstants.KEY_APP_ID, "2");
+                    baseWrapper.putObject("ACCEPTOR_DETAILS", middlewareMessageVO.getCardAcceptorNameAndLocation());
+                    response = getCommandManager().executeCommand(baseWrapper, CommandFieldConstants.CMD_DEBIT_CARD_CW);
+                    middlewareMessageVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
+                    middlewareMessageVO.setResponseDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
+                    middlewareMessageVO.setResponseContentXML(response);
+                    logger.info("Remaining Balance: " + middlewareMessageVO.getAccountBalance());
+//                } else {
+//                    middlewareMessageVO.setResponseCode(webServiceVO.getResponseCode());
+//                    FonePayUtils.prepareErrorResponseForDebitCard(middlewareMessageVO, webServiceVO.getResponseCode());
+//                    getFonePayManager().updateFonePayIntegrationLogModelForDebitCard(fonePayLogModel, middlewareMessageVO);
+//                    return middlewareMessageVO;
+//                }
+//            }
+        } catch (CommandException e) {
+            if (e.getErrorCode() == 9023) {
+                FonePayUtils.prepareErrorResponseForDebitCard(middlewareMessageVO, FonePayResponseCodes.DEVICE_OTP_INVALID.toString());
+            } else if (e.getErrorCode() == 9029) {
+                FonePayUtils.prepareErrorResponseForDebitCard(middlewareMessageVO, FonePayResponseCodes.DEVICE_OTP_EXPIRED.toString());
+            } else {
+                logger.error("[FonePaySwitchController.CashIn] Command Exception Error occured:" + e.getMessage(), e);
+                middlewareMessageVO.setResponseCode(FonePayResponseCodes.COMMAND_GENERAL_EXCEPTION);
+                middlewareMessageVO.setResponseDescription(e.getMessage());
+            }
+        } catch (Exception e) {
+
+            this.logger.error("[FonePaySwitchController.CashIn] Error occured: " + e.getMessage(), e);
+            middlewareMessageVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+            middlewareMessageVO.setResponseDescription(e.getMessage());
+            if (e instanceof NullPointerException
+                    || e instanceof HibernateException
+                    || e instanceof SQLException
+                    || e instanceof DataAccessException
+                    || (e.getMessage() != null && e.getMessage().indexOf("Exception") != -1)) {
+
+                logger.error("Converting Exception (" + e.getClass() + ") to generic error message...");
+                middlewareMessageVO = FonePayUtils.prepareErrorResponseForDebitCard(middlewareMessageVO, FonePayResponseCodes.GENERAL_ERROR.toString());
+            }
+        } finally {
+            ThreadLocalAppUser.remove();
+            ThreadLocalUserDeviceAccounts.remove();
+            getFonePayManager().updateFonePayIntegrationLogModelForDebitCard(fonePayLogModel, middlewareMessageVO);
+        }
+        this.logger.info("Debit Card Cash With Drawl => Response Code: " + middlewareMessageVO.getResponseCode() + ", Description: " +
+                middlewareMessageVO.getResponseDescription() + ", Mobile No: " + middlewareMessageVO.getMobileNo() +
+                ", PAN: " + middlewareMessageVO.getPAN() + ", Amount: " + middlewareMessageVO.getTransactionAmount());
+        return middlewareMessageVO;
+    }
+
     private boolean checkAlreadyExists(String stan, Date requestTime) throws FrameworkCheckedException {
         boolean result = false;
 
@@ -431,15 +604,30 @@ public class IBFTSwitchController implements HostTransactionController {
         return webServiceVO;
     }
 
+    private WebServiceVO prepareWebServiceVOForCardLessBalanceInquiry(MiddlewareMessageVO middlewareMessageVO, WebServiceVO webServiceVO) {
+        webServiceVO.setChannelId(FonePayConstants.DEBIT_CARD_CARDLESS_CHANNEL);
+        webServiceVO.setTerminalId(FonePayConstants.DEBIT_CARD_CARDLESS_CHANNEL);
+        webServiceVO.setMobileNo(middlewareMessageVO.getAccountNo1());
+        webServiceVO.setRetrievalReferenceNumber(middlewareMessageVO.getRetrievalReferenceNumber());
+        webServiceVO.setResponseCode("");
+        webServiceVO.setResponseCodeDescription("");
+        return webServiceVO;
+    }
+
     private MiddlewareMessageVO debitCardCashWithDrawlTransaction(MiddlewareMessageVO middlewareMessageVO, Boolean isPosTrx) {
+        logger.info("*** Debit Card CashWith Transaction Received with Stan ***" + middlewareMessageVO.getStan());
+
         FonePayLogModel fonePayLogModel = null;
         CommonCommandManager commonCommandManager = this.getCommonCommandManager();
         AppUserModel appUserModel1 = new AppUserModel();
         try {
+            logger.info("*** Debit Card Load Against Card No***" + middlewareMessageVO.getPAN());
 
             DebitCardModel debitCardModel = commonCommandManager.getDebitCardModelDao().getDebitCardModelByCardNumber(middlewareMessageVO.getPAN());
 
             if (debitCardModel != null) {
+                logger.info("*** Load App User against Mobile No***" + debitCardModel.getMobileNo());
+
                 appUserModel1 = commonCommandManager.loadAppUserByMobileAndType(debitCardModel.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
             } else {
                 middlewareMessageVO.setResponseCode(FonePayResponseCodes.CUSTOMER_NOT_FOUND.toString());
@@ -470,13 +658,22 @@ public class IBFTSwitchController implements HostTransactionController {
             String terminalId = null;
             if (middlewareMessageVO.getCurrencyCode() == null || middlewareMessageVO.getCurrencyCode().equals("") || middlewareMessageVO.getCurrencyCode().equals("586")) {
                 if (middlewareMessageVO.getMerchantType().equals("0000") && !isPosTrx) {
-                    productId = ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_ON_US.toString();
-                    reqType = FonePayConstants.REQ_DEBIT_CARD_CASH_WITHDRAWL_ON_US;
-                    terminalId = "ATM";
+                    if (middlewareMessageVO.getTerminalId() != null && middlewareMessageVO.getTerminalId().equals("CARD_LESS_DEBIT_CARD")) {
+
+                    } else {
+                        productId = ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_ON_US.toString();
+                        reqType = FonePayConstants.REQ_DEBIT_CARD_CASH_WITHDRAWL_ON_US;
+                        terminalId = "ATM";
+                    }
                 } else if (!isPosTrx) {
-                    productId = ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_OFF_US.toString();
-                    reqType = FonePayConstants.REQ_DEBIT_CARD_CASH_WITHDRAWL_OFF_US;
-                    terminalId = "ATM";
+                    if (middlewareMessageVO.getTerminalId() != null && middlewareMessageVO.getTerminalId().equals("CARD_LESS_DEBIT_CARD")) {
+
+                    } else {
+                        productId = ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_OFF_US.toString();
+                        reqType = FonePayConstants.REQ_DEBIT_CARD_CASH_WITHDRAWL_OFF_US;
+                        terminalId = "ATM";
+                    }
+
                 } else {
                     productId = ProductConstantsInterface.POS_DEBIT_CARD_CASH_WITHDRAWAL.toString();
                     reqType = FonePayConstants.REQ_POS_DEBIT_CARD_CASH_WITHDRAWL;
@@ -579,7 +776,11 @@ public class IBFTSwitchController implements HostTransactionController {
                         return middlewareMessageVO;
                     }
                     webServiceVO = this.prepareWebServiceVOForBalanceInquiry(middlewareMessageVO, webServiceVO);
+                    logger.info("*** Debit Card Balance check");
+
                     webServiceVO = fonePaySwitchController.balanceInquiry(webServiceVO);
+                    logger.info("*** Debit Card Balance check Time");
+
                     if (!webServiceVO.getResponseCode().equals("00")) {
                         middlewareMessageVO.setResponseCode(webServiceVO.getResponseCode());
                         FonePayUtils.prepareErrorResponseForDebitCard(middlewareMessageVO, middlewareMessageVO.getResponseCode());
@@ -721,7 +922,9 @@ public class IBFTSwitchController implements HostTransactionController {
                         if (smartMoneyAccountModel != null) {
                             webServiceVO = this.prepareWebServiceVOForBalanceInquiry(middlewareMessageVO, webServiceVO);
                             webServiceVO.setPaymentMode("HRA");
+                            logger.info("*** Debit Card Balance check");
                             webServiceVO = fonePaySwitchController.balanceInquiry(webServiceVO);
+                            logger.info("*** Debit Card Balance check Time");
                             balance = Double.parseDouble(webServiceVO.getBalance());
                             if (Double.parseDouble(middlewareMessageVO.getTransactionAmount()) > balance) {
                                 middlewareMessageVO.setResponseCode(FonePayResponseCodes.LOW_BALANCE);
@@ -994,13 +1197,15 @@ public class IBFTSwitchController implements HostTransactionController {
                         ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_ON_US,
                         ProductConstantsInterface.POS_DEBIT_CARD_CASH_WITHDRAWAL,
                         ProductConstantsInterface.International_POS_DEBIT_CARD_CASH_WITHDRAWAL,
-                        ProductConstantsInterface.INTERNATIONAL_DEBIT_CARD_CASH_WITHDRAWAL_OFF_US};
+                        ProductConstantsInterface.INTERNATIONAL_DEBIT_CARD_CASH_WITHDRAWAL_OFF_US
+                ,ProductConstantsInterface.DEBIT_CARD_LESS_CASH_WITHDRAWAL};
 //                AppUserModel appUserModel = getCommonCommandManager().loadAppUserByMobileAndType(debitCardModel.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
 //                UserDeviceAccountsModel uda = userDeviceAccountsDAO.findUserDeviceAccountByAppUserId(appUserModel.getAppUserId());
 //                postedTransactionReportModel = postedTransactionReportDAO.getTransactionCodeIdForReversalByStanAndUserId(middlewareMessageVO, productIds, uda.getUserId());
                 if (postedTransactionReportModel != null)
                     transactionCodeId = postedTransactionReportModel.getTransactionCodeId();
                 DebitCardReversalVO debitCardReversalVO = new DebitCardReversalVO();
+
                 debitCardReversalVO.setCardPan(middlewareMessageVO.getPAN());
                 debitCardReversalVO.setOriginalStan(middlewareMessageVO.getOrignalStan());
                 debitCardReversalVO.setReversalStan(middlewareMessageVO.getReversalSTAN());
@@ -1232,11 +1437,14 @@ public class IBFTSwitchController implements HostTransactionController {
         return messageSource;
     }
 
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     public TransactionReversalManager getTransactionReversalManager() {
         ApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
         return (TransactionReversalManager) applicationContext.getBean("transactionReversalManager");
     }
-
 
     public IBFTIncomingRequestQueue getIBFTIncomingRequestQueue() {
         ApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
@@ -1271,10 +1479,6 @@ public class IBFTSwitchController implements HostTransactionController {
     public ActionLogManager getActionLogManager() {
         ApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
         return (ActionLogManager) applicationContext.getBean("actionLogManager");
-    }
-
-    public void setMessageSource(MessageSource messageSource) {
-        this.messageSource = messageSource;
     }
 
     public void setFonePaySwitchController(FonePaySwitchController fonePaySwitchController) {

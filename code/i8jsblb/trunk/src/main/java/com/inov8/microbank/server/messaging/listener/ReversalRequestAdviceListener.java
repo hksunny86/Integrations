@@ -65,22 +65,30 @@ public class ReversalRequestAdviceListener implements MessageListener {
 
                         Long[] productIds = new Long[]{ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_OFF_US,
                                 ProductConstantsInterface.DEBIT_CARD_CASH_WITHDRAWAL_ON_US,
+                                ProductConstantsInterface.DEBIT_CARD_LESS_CASH_WITHDRAWAL,
                                 ProductConstantsInterface.POS_DEBIT_CARD_CASH_WITHDRAWAL,
                                 ProductConstantsInterface.INTERNATIONAL_DEBIT_CARD_CASH_WITHDRAWAL_OFF_US,
                                 ProductConstantsInterface.International_POS_DEBIT_CARD_CASH_WITHDRAWAL};
                         UserDeviceAccountsModel uda = null;
 
-                        DebitCardModel debitCardModel = commonCommandManager.getDebitCardModelDao().getDebitCardModelByCardNumber(reversalVO.getCardPan());
 
-                        if (debitCardModel != null) {
-                            DebitCardUtill.verifyDebitCard(new WebServiceVO(), debitCardModel);
-                            AppUserModel appUserModel = commonCommandManager.loadAppUserByMobileAndType(debitCardModel.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
+                        if (reversalVO.getProductId()!=null && !reversalVO.getProductId().equals(ProductConstantsInterface.DEBIT_CARD_LESS_CASH_WITHDRAWAL)) {
+                            DebitCardModel debitCardModel = commonCommandManager.getDebitCardModelDao().getDebitCardModelByCardNumber(reversalVO.getCardPan());
+
+                            if (debitCardModel != null) {
+                                DebitCardUtill.verifyDebitCard(new WebServiceVO(), debitCardModel);
+                                AppUserModel appUserModel = commonCommandManager.loadAppUserByMobileAndType(debitCardModel.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
+                                uda = commonCommandManager.getUserDeviceAccountListViewManager().findUserDeviceByAppUserId(appUserModel.getAppUserId());
+                                middlewareMessageVO.setOrignalStan(reversalVO.getOriginalStan());
+                                middlewareMessageVO.setOrignalTransactionDateTime(reversalVO.getReversalRequestTime());
+                            }
+
+                        }else {
+                            AppUserModel appUserModel = commonCommandManager.loadAppUserByMobileAndType(reversalVO.getCardPan(), UserTypeConstantsInterface.CUSTOMER);
                             uda = commonCommandManager.getUserDeviceAccountListViewManager().findUserDeviceByAppUserId(appUserModel.getAppUserId());
                             middlewareMessageVO.setOrignalStan(reversalVO.getOriginalStan());
                             middlewareMessageVO.setOrignalTransactionDateTime(reversalVO.getReversalRequestTime());
                         }
-
-
                         PostedTransactionReportModel postedTransactionReportModel = null;
                         Long transactionCodeId = reversalVO.getTransactionCodeId();
                         if (transactionCodeId == null)

@@ -163,6 +163,9 @@ public class CustomerModel extends BasePersistableModel implements Serializable 
     private String nicBackPicCheckerComments;
     private String pNicBackPicMakerComments;
     private String pNicBackPicCheckerComments;
+    private String riskLevel;
+    private Boolean isPep;
+    private Date pepMarkDate;
 
     private List<CustomerACNatureMarkingVo> customerACNatureMarkingVoList;
 
@@ -2549,5 +2552,34 @@ public class CustomerModel extends BasePersistableModel implements Serializable 
 
     public void setBvs(Boolean bvs) {
         Bvs = bvs;
+    }
+
+    @Column(name = "RISK_LEVEL")
+    public String getRiskLevel() {
+        return riskLevel;
+    }
+
+    public void setRiskLevel(String riskLevel) {
+        this.riskLevel = riskLevel;
+    }
+
+    @Column(name = "IS_PEP")
+    public Boolean getPep() {
+        return isPep;
+    }
+
+    public void setPep(Boolean pep) {
+        isPep = pep;
+    }
+
+
+
+    @Column(name = "PEP_MARK_DATE")
+    public Date getPepMarkDate() {
+        return pepMarkDate;
+    }
+
+    public void setPepMarkDate(Date pepMarkDate) {
+        this.pepMarkDate = pepMarkDate;
     }
 }

@@ -2532,6 +2532,9 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
             mfsAccountModel.setNokNic(customerModel.getNokNic());
             mfsAccountModel.setNokRelationship(customerModel.getNokRelationship());
             mfsAccountModel.setNokMobile(customerModel.getNokMobile());
+            mfsAccountModel.setPepRiskLevel(customerModel.getRiskLevel());
+            mfsAccountModel.setIsPep(customerModel.getPep());
+            mfsAccountModel.setPepMarkDate(customerModel.getPepMarkDate());
 
             if (null != customerModel.getBirthPlace()) {
                 mfsAccountModel.setBirthPlaceName(customerModel.getBirthPlace());
@@ -3210,4 +3213,5 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
     public void setCustomerDAO(CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
     }
+
 }

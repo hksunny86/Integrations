@@ -21,7 +21,7 @@ import java.util.List;
         "loanProductGroup",
         "advanceOfferId",
         "principalAmount",
-        "maturityDetails",
+        "maturityDetails"
 })
 public class LoanOffers implements Serializable {
 

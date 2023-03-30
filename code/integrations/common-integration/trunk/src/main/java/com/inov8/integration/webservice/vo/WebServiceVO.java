@@ -1,5 +1,6 @@
 package com.inov8.integration.webservice.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.vo.CardType;
 import com.inov8.integration.vo.CatalogList;
 import com.inov8.integration.vo.SegmentList;
@@ -404,6 +405,60 @@ public class WebServiceVO implements Serializable {
     private List<InterestAdjustment> interestAdjustmentsList;
     private List<ChargeAdjustments> chargeAdjustmentsList;
     private List<Milestones> milestonesList;
+    private String outStandingAmount;
+    private String serviceFee;
+    private String disbursementDate;
+    private String maturityDate;
+    private String duration;
+    private String primaryLoanId;
+
+    public String getPrimaryLoanId() {
+        return primaryLoanId;
+    }
+
+    public void setPrimaryLoanId(String primaryLoanId) {
+        this.primaryLoanId = primaryLoanId;
+    }
+
+    public String getOutStandingAmount() {
+        return outStandingAmount;
+    }
+
+    public void setOutStandingAmount(String outStandingAmount) {
+        this.outStandingAmount = outStandingAmount;
+    }
+
+    public String getServiceFee() {
+        return serviceFee;
+    }
+
+    public void setServiceFee(String serviceFee) {
+        this.serviceFee = serviceFee;
+    }
+
+    public String getDisbursementDate() {
+        return disbursementDate;
+    }
+
+    public void setDisbursementDate(String disbursementDate) {
+        this.disbursementDate = disbursementDate;
+    }
+
+    public String getMaturityDate() {
+        return maturityDate;
+    }
+
+    public void setMaturityDate(String maturityDate) {
+        this.maturityDate = maturityDate;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
 
     public List<TotalRecurringCharge> getTotalRecurringChargeList() {
         return totalRecurringChargeList;

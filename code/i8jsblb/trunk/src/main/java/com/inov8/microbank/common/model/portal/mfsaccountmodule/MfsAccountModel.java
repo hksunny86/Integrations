@@ -330,36 +330,8 @@ public class MfsAccountModel implements Serializable, Cloneable {
     private String pNicBackPicCheckerComments;
     private String deviceStatus;
     private String reasonOfBlock;
-    private Boolean isPep;
-    private Date pepMarkDate;
-    private String pepRiskLevel;
 
-    public MfsAccountModel() {
-    }
 
-    public String getPepRiskLevel() {
-        return this.pepRiskLevel;
-    }
-
-    public void setPepRiskLevel(String pepRiskLevel) {
-        this.pepRiskLevel = pepRiskLevel;
-    }
-
-    public Date getPepMarkDate() {
-        return this.pepMarkDate;
-    }
-
-    public void setPepMarkDate(Date pepMarkDate) {
-        this.pepMarkDate = pepMarkDate;
-    }
-
-    public Boolean getIsPep() {
-        return this.isPep;
-    }
-
-    public void setIsPep(Boolean isPep) {
-        this.isPep = isPep;
-    }
     public String getReasonOfBlock() {
         return reasonOfBlock;
     }

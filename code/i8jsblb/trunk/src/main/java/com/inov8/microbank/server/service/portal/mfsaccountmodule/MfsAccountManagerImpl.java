@@ -320,10 +320,6 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
         customerModel.setFed(mfsAccountModel.getFed());
         customerModel.setIsMPINGenerated(Boolean.FALSE);
         customerModel.setWebServiceEnabled(false);
-
-        customerModel.setPep(mfsAccountModel.getIsPep());
-        customerModel.setPepMarkDate(mfsAccountModel.getPepMarkDate());
-        customerModel.setRiskLevel(mfsAccountModel.getPepRiskLevel());
         // Populating Present Home Address
 
         AddressModel presentHomeAddress = new AddressModel();
@@ -2385,7 +2381,7 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
             customerModel.setUpdatedOn(new Date());
             customerModel.setName(mfsAccountModel.getName());
 
-            if (mfsAccountModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)) {
+            if (mfsAccountModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)||mfsAccountModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_1)) {
                 if (oldAccountTypeId.equals(CustomerAccountTypeConstants.LEVEL_1)) {
                     customerModel.setCustomerAccountTypeId(oldAccountTypeId);
                 } else {
@@ -2406,10 +2402,6 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
             customerModel.setBirthPlace(mfsAccountModel.getBirthPlace());
             customerModel.setEmail(mfsAccountModel.getEmail());
             customerModel.setRegStateComments(mfsAccountModel.getRegStateComments());
-
-            customerModel.setPep(mfsAccountModel.getIsPep());
-            customerModel.setPepMarkDate(mfsAccountModel.getPepMarkDate());
-            customerModel.setRiskLevel(mfsAccountModel.getPepRiskLevel());
 //            if(mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
 //                customerModel.setCustPicMakerComments(mfsAccountModel.getCustPicMakerComments());
 //                customerModel.setpNicPicMakerComments(mfsAccountModel.getpNicPicMakerComments());

@@ -345,140 +345,140 @@
                         </div>
                     </c:if>
                     <c:if test="${mfsAccountModel.segmentId == 10319}">
-                        <div align="left" bgcolor="F3F3F3" class="formText">
-                            Maker Comments:
-                        </div>
-                        <div>
-                            <html:textarea style="height:15px;" path="custPicMakerComments" tabindex="41" cssClass="textBox"
-                                           maxlength="250"/>
-                        </div>
-                        <div align="left" bgcolor="F3F3F3" class="formText">
-                            Checker Comments:
-                        </div>
-                        <div>
-                            <html:textarea style="height:15px; background: #D3D3D3;"  readonly="true" path="custPicCheckerComments" tabindex="41" cssClass="textBox"
-                                           maxlength="250"/>
-                        </div>
+                    <div align="left" bgcolor="F3F3F3" class="formText">
+                    Maker Comments:
+                     </div>
+                    <div>
+                    <html:textarea style="height:15px;" path="custPicMakerComments" tabindex="41" cssClass="textBox"
+                                   maxlength="250"/>
+                    </div>
+                    <div align="left" bgcolor="F3F3F3" class="formText">
+                       Checker Comments:
+                    </div>
+                    <div>
+                        <html:textarea style="height:15px; background: #D3D3D3;"  readonly="true" path="custPicCheckerComments" tabindex="41" cssClass="textBox"
+                                       maxlength="250"/>
+                    </div>
                     </c:if>
                 </td>
                 <c:choose>
-                    <c:when test="${mfsAccountModel.segmentId == 10319}">
-                        <td height="16" align="right" bgcolor="F3F3F3" class="formText"
-                            width="25%">
-                            Parent Cnic Pic:
-                        </td>
-                        <td bgcolor="FBFBFB" class="text" width="25%">
-                            <spring:bind path="mfsAccountModel.parentCnicPic">
+                <c:when test="${mfsAccountModel.segmentId == 10319}">
+                    <td height="16" align="right" bgcolor="F3F3F3" class="formText"
+                        width="25%">
+                        Parent Cnic Pic:
+                    </td>
+                    <td bgcolor="FBFBFB" class="text" width="25%">
+                        <spring:bind path="mfsAccountModel.parentCnicPic">
 
+                            <c:choose>
+                                <c:when test="${not empty param.appUserId}">
+                                    <input type="file" tabindex="6" disabled="true" id="parentCnicPic"
+                                           onchange="markNonDiscrepent(this);" name="parentCnicPic" class="upload"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="file" tabindex="6" id="signPic" onchange="markNonDiscrepent(this);"
+                                           name="parentCnicPic" class="upload"/>
+                                </c:otherwise>
+                            </c:choose>
+
+
+                            <!-- <input type="file" tabindex="6" id="signPic" onchange="markNonDiscrepent(this);" name="signPic" class="upload" /> -->
+                        </spring:bind>
+                        &nbsp;&nbsp;
+                        <c:if test="${mfsAccountModel.registrationStateId ne 1}">
+                            <c:choose>
+                                <c:when test="${not empty param.appUserId}">
+                                    <img src="${contextPath}/images/upload_dir/parentCnicPic_${mfsAccountModel.appUserId}.${mfsAccountModel.parentCnicPicExt}?time=<%=System.currentTimeMillis()%>"
+                                         width="100" height="100"/>
+                                </c:when>
+                                <c:when test="${param.isReSubmit}">
+                                    <img src="${contextPath}/images/upload_dir/authorization/parentCnicPic_${param.authId}.${mfsAccountModel.parentCnicPicExt}?time=<%=System.currentTimeMillis()%>"
+                                         width="100" height="100"/>
+                                </c:when>
+                            </c:choose>
+                            <div style="display: none;" bgcolor="FBFBFB" class="text discrepant" width="10%">
+                                Discrepant
                                 <c:choose>
-                                    <c:when test="${not empty param.appUserId}">
-                                        <input type="file" tabindex="6" disabled="true" id="parentCnicPic"
-                                               onchange="markNonDiscrepent(this);" name="parentCnicPic" class="upload"/>
+                                    <c:when test="${appUserTypeId == 3}">
+                                        <html:checkbox title="Discrepant" disabled="true" readonly="readonly"
+                                                       path="parentCnicPicDiscrepant"/>
+                                        <html:hidden id="parentCnicPicDiscrepant2" path="parentCnicPicDiscrepant"/>
                                     </c:when>
                                     <c:otherwise>
-                                        <input type="file" tabindex="6" id="signPic" onchange="markNonDiscrepent(this);"
-                                               name="parentCnicPic" class="upload"/>
+                                        <html:checkbox title="Discrepant" path="parentCnicPicDiscrepant"/>
                                     </c:otherwise>
                                 </c:choose>
+                            </div>
+                        </c:if>
+                        <c:if test="${mfsAccountModel.segmentId == 10319}">
+                            <div align="left" bgcolor="F3F3F3" class="formText">
+                                Maker Comments:
+                            </div>
+                            <div>
+                                <html:textarea style="height:15px;" path="pNicPicMakerComments" tabindex="41" cssClass="textBox"
+                                               maxlength="250"/>
+                            </div>
+                            <div align="left" bgcolor="F3F3F3" class="formText">
+                                Checker Comments:
+                            </div>
+                            <div>
+                                <html:textarea style="height:15px; background: #D3D3D3;"  readonly="true" path="pNicPicCheckerComments" tabindex="41" cssClass="textBox"
+                                               maxlength="250"/>
+                            </div>
+                        </c:if>
+                    </td>
+                </c:when>
+
+                <c:otherwise>
+                <td height="16" align="right" bgcolor="F3F3F3" class="formText"
+                    width="25%">
+                    Signature Picture:
+                </td>
+                <td bgcolor="FBFBFB" class="text" width="25%">
+                    <spring:bind path="mfsAccountModel.signPic">
+
+                        <c:choose>
+                            <c:when test="${not empty param.appUserId}">
+                                <input type="file" tabindex="6" disabled="true" id="signPic"
+                                       onchange="markNonDiscrepent(this);" name="signPic" class="upload"/>
+                            </c:when>
+                            <c:otherwise>
+                                <input type="file" tabindex="6" id="signPic" onchange="markNonDiscrepent(this);"
+                                       name="signPic" class="upload"/>
+                            </c:otherwise>
+                        </c:choose>
 
 
-                                <!-- <input type="file" tabindex="6" id="signPic" onchange="markNonDiscrepent(this);" name="signPic" class="upload" /> -->
-                            </spring:bind>
-                            &nbsp;&nbsp;
-                            <c:if test="${mfsAccountModel.registrationStateId ne 1}">
-                                <c:choose>
-                                    <c:when test="${not empty param.appUserId}">
-                                        <img src="${contextPath}/images/upload_dir/parentCnicPic_${mfsAccountModel.appUserId}.${mfsAccountModel.parentCnicPicExt}?time=<%=System.currentTimeMillis()%>"
-                                             width="100" height="100"/>
-                                    </c:when>
-                                    <c:when test="${param.isReSubmit}">
-                                        <img src="${contextPath}/images/upload_dir/authorization/parentCnicPic_${param.authId}.${mfsAccountModel.parentCnicPicExt}?time=<%=System.currentTimeMillis()%>"
-                                             width="100" height="100"/>
-                                    </c:when>
-                                </c:choose>
-                                <div style="display: none;" bgcolor="FBFBFB" class="text discrepant" width="10%">
-                                    Discrepant
-                                    <c:choose>
-                                        <c:when test="${appUserTypeId == 3}">
-                                            <html:checkbox title="Discrepant" disabled="true" readonly="readonly"
-                                                           path="parentCnicPicDiscrepant"/>
-                                            <html:hidden id="parentCnicPicDiscrepant2" path="parentCnicPicDiscrepant"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <html:checkbox title="Discrepant" path="parentCnicPicDiscrepant"/>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
-                            </c:if>
-                            <c:if test="${mfsAccountModel.segmentId == 10319}">
-                                <div align="left" bgcolor="F3F3F3" class="formText">
-                                    Maker Comments:
-                                </div>
-                                <div>
-                                    <html:textarea style="height:15px;" path="pNicPicMakerComments" tabindex="41" cssClass="textBox"
-                                                   maxlength="250"/>
-                                </div>
-                                <div align="left" bgcolor="F3F3F3" class="formText">
-                                    Checker Comments:
-                                </div>
-                                <div>
-                                    <html:textarea style="height:15px; background: #D3D3D3;"  readonly="true" path="pNicPicCheckerComments" tabindex="41" cssClass="textBox"
-                                                   maxlength="250"/>
-                                </div>
-                            </c:if>
-                        </td>
-                    </c:when>
-
-                    <c:otherwise>
-                        <td height="16" align="right" bgcolor="F3F3F3" class="formText"
-                            width="25%">
-                            Signature Picture:
-                        </td>
-                        <td bgcolor="FBFBFB" class="text" width="25%">
-                            <spring:bind path="mfsAccountModel.signPic">
-
-                                <c:choose>
-                                    <c:when test="${not empty param.appUserId}">
-                                        <input type="file" tabindex="6" disabled="true" id="signPic"
-                                               onchange="markNonDiscrepent(this);" name="signPic" class="upload"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <input type="file" tabindex="6" id="signPic" onchange="markNonDiscrepent(this);"
-                                               name="signPic" class="upload"/>
-                                    </c:otherwise>
-                                </c:choose>
-
-
-                                <!-- <input type="file" tabindex="6" id="signPic" onchange="markNonDiscrepent(this);" name="signPic" class="upload" /> -->
-                            </spring:bind>
-                            &nbsp;&nbsp;
-                            <c:if test="${mfsAccountModel.registrationStateId ne 1}">
-                                <c:choose>
-                                    <c:when test="${not empty param.appUserId}">
-                                        <img src="${contextPath}/images/upload_dir/signPic_${mfsAccountModel.appUserId}.${mfsAccountModel.signPicExt}?time=<%=System.currentTimeMillis()%>"
-                                             width="100" height="100"/>
-                                    </c:when>
-                                    <c:when test="${param.isReSubmit}">
-                                        <img src="${contextPath}/images/upload_dir/authorization/signPic_${param.authId}.${mfsAccountModel.signPicExt}?time=<%=System.currentTimeMillis()%>"
-                                             width="100" height="100"/>
-                                    </c:when>
-                                </c:choose>
-                                <div style="display: none;" bgcolor="FBFBFB" class="text discrepant" width="10%">
-                                    Discrepant
-                                    <c:choose>
-                                        <c:when test="${appUserTypeId == 3}">
-                                            <html:checkbox title="Discrepant" disabled="true" readonly="readonly"
-                                                           path="signPicDiscrepant"/>
-                                            <html:hidden id="signPicDiscrepant2" path="signPicDiscrepant"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <html:checkbox title="Discrepant" path="signPicDiscrepant"/>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
-                            </c:if>
-                        </td>
-                    </c:otherwise>
+                        <!-- <input type="file" tabindex="6" id="signPic" onchange="markNonDiscrepent(this);" name="signPic" class="upload" /> -->
+                    </spring:bind>
+                    &nbsp;&nbsp;
+                    <c:if test="${mfsAccountModel.registrationStateId ne 1}">
+                        <c:choose>
+                            <c:when test="${not empty param.appUserId}">
+                                <img src="${contextPath}/images/upload_dir/signPic_${mfsAccountModel.appUserId}.${mfsAccountModel.signPicExt}?time=<%=System.currentTimeMillis()%>"
+                                     width="100" height="100"/>
+                            </c:when>
+                            <c:when test="${param.isReSubmit}">
+                                <img src="${contextPath}/images/upload_dir/authorization/signPic_${param.authId}.${mfsAccountModel.signPicExt}?time=<%=System.currentTimeMillis()%>"
+                                     width="100" height="100"/>
+                            </c:when>
+                        </c:choose>
+                        <div style="display: none;" bgcolor="FBFBFB" class="text discrepant" width="10%">
+                            Discrepant
+                            <c:choose>
+                                <c:when test="${appUserTypeId == 3}">
+                                    <html:checkbox title="Discrepant" disabled="true" readonly="readonly"
+                                                   path="signPicDiscrepant"/>
+                                    <html:hidden id="signPicDiscrepant2" path="signPicDiscrepant"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <html:checkbox title="Discrepant" path="signPicDiscrepant"/>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </c:if>
+                </td>
+                </c:otherwise>
                 </c:choose>
             </tr>
             <tr>
@@ -668,109 +668,109 @@
             </tr>
 
             <c:if test="${mfsAccountModel.segmentId != 10319}">
-                <tr>
-                    <td height="16" align="right" bgcolor="F3F3F3" class="formText"
-                        width="25%">
-                        Source of Income Pic:
-                    </td>
-                    <td bgcolor="FBFBFB" class="text" width="25%">
-                        <spring:bind path="mfsAccountModel.sourceOfIncomePic">
+            <tr>
+                <td height="16" align="right" bgcolor="F3F3F3" class="formText"
+                    width="25%">
+                    Source of Income Pic:
+                </td>
+                <td bgcolor="FBFBFB" class="text" width="25%">
+                    <spring:bind path="mfsAccountModel.sourceOfIncomePic">
 
+                        <c:choose>
+                            <c:when test="${not empty param.appUserId}">
+                                <input type="file" tabindex="9" id="sourceOfIncomePic"
+                                       onchange="markNonDiscrepent(this);" name="sourceOfIncomePic" class="upload"/>
+                            </c:when>
+                            <c:otherwise>
+                                <input type="file" tabindex="9" id="sourceOfIncomePic"
+                                       onchange="markNonDiscrepent(this);"
+                                       name="sourceOfIncomePic" class="upload"/>
+                            </c:otherwise>
+                        </c:choose>
+
+
+                        <!-- <input type="file" tabindex="9" id="cnicBackPic" onchange="markNonDiscrepent(this);" name="cnicBackPic" class="upload" /> -->
+                    </spring:bind>
+                    &nbsp;&nbsp;
+                    <c:if test="${mfsAccountModel.registrationStateId ne 1}">
+                        <c:choose>
+                            <c:when test="${not empty param.appUserId}">
+                                <img src="${contextPath}/images/upload_dir/sourceOfIncomePic_${mfsAccountModel.appUserId}.${mfsAccountModel.sourceOfIncomePicExt}?time=<%=System.currentTimeMillis()%>"
+                                     width="100" height="100"/>
+                            </c:when>
+                            <c:when test="${param.isReSubmit}">
+                                <img src="${contextPath}/images/upload_dir/authorization/sourceOfIncomePic_${param.authId}.${mfsAccountModel.sourceOfIncomePicExt}?time=<%=System.currentTimeMillis()%>"
+                                     width="100" height="100"/>
+                            </c:when>
+                        </c:choose>
+                        <div style="display: none;" bgcolor="FBFBFB" class="text discrepant" width="10%">
+                            Discrepant
                             <c:choose>
-                                <c:when test="${not empty param.appUserId}">
-                                    <input type="file" tabindex="9" id="sourceOfIncomePic"
-                                           onchange="markNonDiscrepent(this);" name="sourceOfIncomePic" class="upload"/>
+                                <c:when test="${appUserTypeId == 3}">
+                                    <html:checkbox title="Discrepant" disabled="true" readonly="readonly"
+                                                   path="sourceOfIncomePicDiscrepant"/>
+                                    <html:hidden id="cnicBackPicDiscrepant2" path="sourceOfIncomePicDiscrepant"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <input type="file" tabindex="9" id="sourceOfIncomePic"
-                                           onchange="markNonDiscrepent(this);"
-                                           name="sourceOfIncomePic" class="upload"/>
+                                    <html:checkbox title="Discrepant" path="sourceOfIncomePicDiscrepant"/>
                                 </c:otherwise>
                             </c:choose>
+                        </div>
+                    </c:if>
+                </td>
+            </tr>
+            <tr class="blinklform-feilds">
+                <td height="16" align="right" bgcolor="F3F3F3" class="formText"
+                    width="25%">
+                    Proof of Profession:
+                </td>
+                <td bgcolor="FBFBFB" class="text" width="25%">
+                    <spring:bind path="mfsAccountModel.proofOfProfessionPic">
+
+                        <c:choose>
+                            <c:when test="${not empty param.appUserId}">
+                                <input type="file" tabindex="9" disabled="true" id="proofOfProfessionPic"
+                                       onchange="markNonDiscrepent(this);" name="proofOfProfessionPic" class="upload"/>
+                            </c:when>
+                            <c:otherwise>
+                                <input type="file" tabindex="9" id="proofOfProfessionPic"
+                                       onchange="markNonDiscrepent(this);"
+                                       name="proofOfProfessionPic" class="upload"/>
+                            </c:otherwise>
+                        </c:choose>
 
 
-                            <!-- <input type="file" tabindex="9" id="cnicBackPic" onchange="markNonDiscrepent(this);" name="cnicBackPic" class="upload" /> -->
-                        </spring:bind>
-                        &nbsp;&nbsp;
-                        <c:if test="${mfsAccountModel.registrationStateId ne 1}">
+                    </spring:bind>
+                    &nbsp;&nbsp;
+                    <c:if test="${mfsAccountModel.registrationStateId ne 1}">
+                        <c:choose>
+                            <c:when test="${not empty param.appUserId}">
+                                <img src="${contextPath}/images/upload_dir/proofOfProfessionPic_${mfsAccountModel.appUserId}.${mfsAccountModel.proofOfProfessionExt}?time=<%=System.currentTimeMillis()%>"
+                                     width="100" height="100"/>
+                            </c:when>
+                            <c:when test="${param.isReSubmit}">
+                                <img src="${contextPath}/images/upload_dir/authorization/proofOfProfessionPic_${param.authId}.${mfsAccountModel.proofOfProfessionExt}?time=<%=System.currentTimeMillis()%>"
+                                     width="100" height="100"/>
+                            </c:when>
+                        </c:choose>
+                        <div style="display: none;" bgcolor="FBFBFB" class="text discrepant" width="10%">
+                            Discrepant
                             <c:choose>
-                                <c:when test="${not empty param.appUserId}">
-                                    <img src="${contextPath}/images/upload_dir/sourceOfIncomePic_${mfsAccountModel.appUserId}.${mfsAccountModel.sourceOfIncomePicExt}?time=<%=System.currentTimeMillis()%>"
-                                         width="100" height="100"/>
-                                </c:when>
-                                <c:when test="${param.isReSubmit}">
-                                    <img src="${contextPath}/images/upload_dir/authorization/sourceOfIncomePic_${param.authId}.${mfsAccountModel.sourceOfIncomePicExt}?time=<%=System.currentTimeMillis()%>"
-                                         width="100" height="100"/>
-                                </c:when>
-                            </c:choose>
-                            <div style="display: none;" bgcolor="FBFBFB" class="text discrepant" width="10%">
-                                Discrepant
-                                <c:choose>
-                                    <c:when test="${appUserTypeId == 3}">
-                                        <html:checkbox title="Discrepant" disabled="true" readonly="readonly"
-                                                       path="sourceOfIncomePicDiscrepant"/>
-                                        <html:hidden id="cnicBackPicDiscrepant2" path="sourceOfIncomePicDiscrepant"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <html:checkbox title="Discrepant" path="sourceOfIncomePicDiscrepant"/>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                        </c:if>
-                    </td>
-                </tr>
-                <tr class="blinklform-feilds">
-                    <td height="16" align="right" bgcolor="F3F3F3" class="formText"
-                        width="25%">
-                        Proof of Profession:
-                    </td>
-                    <td bgcolor="FBFBFB" class="text" width="25%">
-                        <spring:bind path="mfsAccountModel.proofOfProfessionPic">
-
-                            <c:choose>
-                                <c:when test="${not empty param.appUserId}">
-                                    <input type="file" tabindex="9" disabled="true" id="proofOfProfessionPic"
-                                           onchange="markNonDiscrepent(this);" name="proofOfProfessionPic" class="upload"/>
+                                <c:when test="${appUserTypeId == 3}">
+                                    <html:checkbox title="Discrepant" disabled="true" readonly="readonly"
+                                                   path="proofOfProfessionPicDiscrepant"/>
+                                    <html:hidden id="proofOfProfessionPicDiscrepant2"
+                                                 path="proofOfProfessionPicDiscrepant"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <input type="file" tabindex="9" id="proofOfProfessionPic"
-                                           onchange="markNonDiscrepent(this);"
-                                           name="proofOfProfessionPic" class="upload"/>
+                                    <html:checkbox title="Discrepant" path="proofOfProfessionPicDiscrepant"/>
                                 </c:otherwise>
                             </c:choose>
-
-
-                        </spring:bind>
-                        &nbsp;&nbsp;
-                        <c:if test="${mfsAccountModel.registrationStateId ne 1}">
-                            <c:choose>
-                                <c:when test="${not empty param.appUserId}">
-                                    <img src="${contextPath}/images/upload_dir/proofOfProfessionPic_${mfsAccountModel.appUserId}.${mfsAccountModel.proofOfProfessionExt}?time=<%=System.currentTimeMillis()%>"
-                                         width="100" height="100"/>
-                                </c:when>
-                                <c:when test="${param.isReSubmit}">
-                                    <img src="${contextPath}/images/upload_dir/authorization/proofOfProfessionPic_${param.authId}.${mfsAccountModel.proofOfProfessionExt}?time=<%=System.currentTimeMillis()%>"
-                                         width="100" height="100"/>
-                                </c:when>
-                            </c:choose>
-                            <div style="display: none;" bgcolor="FBFBFB" class="text discrepant" width="10%">
-                                Discrepant
-                                <c:choose>
-                                    <c:when test="${appUserTypeId == 3}">
-                                        <html:checkbox title="Discrepant" disabled="true" readonly="readonly"
-                                                       path="proofOfProfessionPicDiscrepant"/>
-                                        <html:hidden id="proofOfProfessionPicDiscrepant2"
-                                                     path="proofOfProfessionPicDiscrepant"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <html:checkbox title="Discrepant" path="proofOfProfessionPicDiscrepant"/>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                        </c:if>
-                    </td>
-                </tr>
-            </c:if>
+                        </div>
+                    </c:if>
+                </td>
+            </tr>
+        </c:if>
 
             <tr>
                 <td height="16" align="right" bgcolor="F3F3F3" class="formText"
@@ -840,105 +840,105 @@
 
                 <c:if test="${mfsAccountModel.segmentId != 10319}">
 
-                    <td class="formText l1form-feilds" style="display: none;" height="16" align="right" bgcolor="F3F3F3"
-                        class="formText" width="25%">
-                        <span class="l0form-asteric-feilds" style="color: #FF0000">*</span>Level 1 Form:
-                    </td>
-                    <td class="l1form-feilds" style="display: none;" bgcolor="FBFBFB" class="text" width="25%">
-                        <spring:bind path="mfsAccountModel.level1FormPic">
-                            <input type="file" tabindex="10" id="level1FormPic" onchange="markNonDiscrepent(this);"
-                                   name="level1FormPic" class="upload"/>
-                        </spring:bind>
-                        &nbsp;&nbsp;
-                        <c:if test="${mfsAccountModel.registrationStateId ne 1}">
+                <td class="formText l1form-feilds" style="display: none;" height="16" align="right" bgcolor="F3F3F3"
+                    class="formText" width="25%">
+                    <span class="l0form-asteric-feilds" style="color: #FF0000">*</span>Level 1 Form:
+                </td>
+                <td class="l1form-feilds" style="display: none;" bgcolor="FBFBFB" class="text" width="25%">
+                    <spring:bind path="mfsAccountModel.level1FormPic">
+                        <input type="file" tabindex="10" id="level1FormPic" onchange="markNonDiscrepent(this);"
+                               name="level1FormPic" class="upload"/>
+                    </spring:bind>
+                    &nbsp;&nbsp;
+                    <c:if test="${mfsAccountModel.registrationStateId ne 1}">
+                        <c:choose>
+                            <c:when test="${not empty param.appUserId}">
+                                <img src="${contextPath}/images/upload_dir/level1FormPic_${mfsAccountModel.appUserId}.${mfsAccountModel.level1FormPicExt}?time=<%=System.currentTimeMillis()%>"
+                                     width="100" height="100"/>
+                            </c:when>
+                        </c:choose>
+                        <div style="display: none;" bgcolor="FBFBFB" class="text discrepant" width="10%">
+                            Discrepant
                             <c:choose>
-                                <c:when test="${not empty param.appUserId}">
-                                    <img src="${contextPath}/images/upload_dir/level1FormPic_${mfsAccountModel.appUserId}.${mfsAccountModel.level1FormPicExt}?time=<%=System.currentTimeMillis()%>"
-                                         width="100" height="100"/>
+                                <c:when test="${appUserTypeId == 3}">
+                                    <html:checkbox title="Discrepant" disabled="true" readonly="readonly"
+                                                   path="level1FormPicDiscrepant"/>
+                                    <html:hidden id="level1FormPicDiscrepant2" path="level1FormPicDiscrepant"/>
                                 </c:when>
+                                <c:otherwise>
+                                    <html:checkbox title="Discrepant" path="level1FormPicDiscrepant"/>
+                                </c:otherwise>
                             </c:choose>
-                            <div style="display: none;" bgcolor="FBFBFB" class="text discrepant" width="10%">
-                                Discrepant
-                                <c:choose>
-                                    <c:when test="${appUserTypeId == 3}">
-                                        <html:checkbox title="Discrepant" disabled="true" readonly="readonly"
-                                                       path="level1FormPicDiscrepant"/>
-                                        <html:hidden id="level1FormPicDiscrepant2" path="level1FormPicDiscrepant"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <html:checkbox title="Discrepant" path="level1FormPicDiscrepant"/>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                        </c:if>
-                    </td>
+                        </div>
+                    </c:if>
+                </td>
                 </c:if>
 
                 <c:if test="${mfsAccountModel.segmentId == 10319}">
-                    <td height="16" align="right" bgcolor="F3F3F3" class="formText"
-                        width="25%">
-                        Parent CNIC Back:
-                    </td>
-                    <td bgcolor="FBFBFB" class="text" width="25%">
-                        <spring:bind path="mfsAccountModel.parentCnicBackPic">
+                <td height="16" align="right" bgcolor="F3F3F3" class="formText"
+                    width="25%">
+                    Parent CNIC Back:
+                </td>
+                <td bgcolor="FBFBFB" class="text" width="25%">
+                    <spring:bind path="mfsAccountModel.parentCnicBackPic">
 
+                        <c:choose>
+                            <c:when test="${not empty param.appUserId}">
+                                <input type="file" tabindex="9" disabled="true" id="cnicBaparentBackCnicPicckPic"
+                                       onchange="markNonDiscrepent(this);" name="parentCnicBackPic" class="upload"/>
+                            </c:when>
+                            <c:otherwise>
+                                <input type="file" tabindex="9" id="parentCnicBackPic" onchange="markNonDiscrepent(this);"
+                                       name="parentCnicBackPic" class="upload"/>
+                            </c:otherwise>
+                        </c:choose>
+
+
+                        <!-- <input type="file" tabindex="9" id="cnicBackPic" onchange="markNonDiscrepent(this);" name="cnicBackPic" class="upload" /> -->
+                    </spring:bind>
+                    &nbsp;&nbsp;
+                    <c:if test="${mfsAccountModel.registrationStateId ne 1}">
+                        <c:choose>
+                            <c:when test="${not empty param.appUserId}">
+                                <img src="${contextPath}/images/upload_dir/parentCnicBackPic_${mfsAccountModel.appUserId}.${mfsAccountModel.parentCnicBackPicExt}?time=<%=System.currentTimeMillis()%>"
+                                     width="100" height="100"/>
+                            </c:when>
+                            <c:when test="${param.isReSubmit}">
+                                <img src="${contextPath}/images/upload_dir/authorization/parentCnicBackPic_${param.authId}.${mfsAccountModel.parentCnicBackPicExt}?time=<%=System.currentTimeMillis()%>"
+                                     width="100" height="100"/>
+                            </c:when>
+                        </c:choose>
+                        <div style="display: none;" bgcolor="FBFBFB" class="text discrepant" width="10%">
+                            Discrepant
                             <c:choose>
-                                <c:when test="${not empty param.appUserId}">
-                                    <input type="file" tabindex="9" disabled="true" id="cnicBaparentBackCnicPicckPic"
-                                           onchange="markNonDiscrepent(this);" name="parentCnicBackPic" class="upload"/>
+                                <c:when test="${appUserTypeId == 3}">
+                                    <html:checkbox title="Discrepant" disabled="true" readonly="readonly"
+                                                   path="parentCnicBackPicDiscrepant"/>
+                                    <html:hidden id="parentCnicBackPicDiscrepant2" path="parentCnicBackPicDiscrepant"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <input type="file" tabindex="9" id="parentCnicBackPic" onchange="markNonDiscrepent(this);"
-                                           name="parentCnicBackPic" class="upload"/>
+                                    <html:checkbox title="Discrepant" path="parentCnicBackPicDiscrepant"/>
                                 </c:otherwise>
                             </c:choose>
-
-
-                            <!-- <input type="file" tabindex="9" id="cnicBackPic" onchange="markNonDiscrepent(this);" name="cnicBackPic" class="upload" /> -->
-                        </spring:bind>
-                        &nbsp;&nbsp;
-                        <c:if test="${mfsAccountModel.registrationStateId ne 1}">
-                            <c:choose>
-                                <c:when test="${not empty param.appUserId}">
-                                    <img src="${contextPath}/images/upload_dir/parentCnicBackPic_${mfsAccountModel.appUserId}.${mfsAccountModel.parentCnicBackPicExt}?time=<%=System.currentTimeMillis()%>"
-                                         width="100" height="100"/>
-                                </c:when>
-                                <c:when test="${param.isReSubmit}">
-                                    <img src="${contextPath}/images/upload_dir/authorization/parentCnicBackPic_${param.authId}.${mfsAccountModel.parentCnicBackPicExt}?time=<%=System.currentTimeMillis()%>"
-                                         width="100" height="100"/>
-                                </c:when>
-                            </c:choose>
-                            <div style="display: none;" bgcolor="FBFBFB" class="text discrepant" width="10%">
-                                Discrepant
-                                <c:choose>
-                                    <c:when test="${appUserTypeId == 3}">
-                                        <html:checkbox title="Discrepant" disabled="true" readonly="readonly"
-                                                       path="parentCnicBackPicDiscrepant"/>
-                                        <html:hidden id="parentCnicBackPicDiscrepant2" path="parentCnicBackPicDiscrepant"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <html:checkbox title="Discrepant" path="parentCnicBackPicDiscrepant"/>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                        </c:if>
-                        <c:if test="${mfsAccountModel.segmentId == 10319}">
-                            <div align="left" bgcolor="F3F3F3" class="formText">
-                                Maker Comments:
-                            </div>
-                            <div>
-                                <html:textarea style="height:15px;" path="pNicBackPicMakerComments" tabindex="41" cssClass="textBox"
-                                               maxlength="250"/>
-                            </div>
-                            <div align="left" bgcolor="F3F3F3" class="formText">
-                                Checker Comments:
-                            </div>
-                            <div>
-                                <html:textarea style="height:15px; background: #D3D3D3;"  readonly="true" path="pNicBackPicCheckerComments" tabindex="41" cssClass="textBox"
-                                               maxlength="250"/>
-                            </div>
-                        </c:if>
-                    </td>
+                        </div>
+                    </c:if>
+                    <c:if test="${mfsAccountModel.segmentId == 10319}">
+                        <div align="left" bgcolor="F3F3F3" class="formText">
+                            Maker Comments:
+                        </div>
+                        <div>
+                            <html:textarea style="height:15px;" path="pNicBackPicMakerComments" tabindex="41" cssClass="textBox"
+                                           maxlength="250"/>
+                        </div>
+                        <div align="left" bgcolor="F3F3F3" class="formText">
+                            Checker Comments:
+                        </div>
+                        <div>
+                            <html:textarea style="height:15px; background: #D3D3D3;"  readonly="true" path="pNicBackPicCheckerComments" tabindex="41" cssClass="textBox"
+                                           maxlength="250"/>
+                        </div>
+                    </c:if>
+                </td>
                 </c:if>
             </tr>
 
@@ -1143,39 +1143,6 @@
                              border="0"/>
                     </td>
                 </tr>
-                <tr>
-                    <td height="16" align="right" bgcolor="F3F3F3" class="formText"
-                        width="25%">
-                        Is Pep:
-                    <td align="left" bgcolor="FBFBFB" class="formText" width="25%">
-                        <html:checkbox path="isPep" tabindex="19"/>
-                    </td>
-                    <td height="16" align="right" bgcolor="F3F3F3" class="formText">
-                        <span class="l0form-asteric-feilds" style="color: #FF0000"></span>Pep Mark Date:
-                    </td>
-                    <td bgcolor="FBFBFB">
-                        <html:input path="pepMarkDate" cssClass="textBox" tabindex="15" maxlength="50"/>
-                        <img id="pepDate" tabindex="16" name="popcal" align="top"
-                             style="cursor:pointer" src="${pageContext.request.contextPath}/images/cal.gif" border="0"/>
-                        <img id="pepDate" tabindex="17" name="popcal" title="Clear Date"
-                             onclick="javascript:$('pepMarkDate').value=''" align="middle"
-                             style="cursor:pointer" src="${pageContext.request.contextPath}/images/refresh.png"
-                             border="0"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td height="16" align="right" bgcolor="F3F3F3" class="formText">
-                        <span class="l0form-asteric-feilds" style="color: #FF0000"></span>Marked checked:
-                    </td>
-                    <td align="left">
-                        <html:select path="pepRiskLevel" tabindex="2" cssClass="textBox">
-                            <html:option value="">---All---</html:option>
-                            <c:if test="${riskLevelList != null}">
-                                <html:options items="${riskLevelList}" itemValue="value" itemLabel="label"/>
-                            </c:if>
-                        </html:select>
-                    </td>
-                </tr>
             </c:if>
             <c:if test="${appUserTypeId == 3}">
                 <tr style="display:none;">
@@ -1193,14 +1160,14 @@
             </c:if>
 
             <c:if test="${mfsAccountModel.segmentId == 10319}">
-                <tr>
-                    <td height="16" align="right" bgcolor="F3F3F3" class="formText"
-                        width="25%">
-                        <span class="l0form-asteric-feilds" style="color: #FF0000">*</span>Father BVS:
-                    <td align="left" bgcolor="FBFBFB" class="formText" width="25%">
-                        <html:checkbox path="fatherBvs" tabindex="19" onclick="return false;"/>
-                    </td>
-                </tr>
+            <tr>
+                <td height="16" align="right" bgcolor="F3F3F3" class="formText"
+                    width="25%">
+                    <span class="l0form-asteric-feilds" style="color: #FF0000">*</span>Father BVS:
+                <td align="left" bgcolor="FBFBFB" class="formText" width="25%">
+                    <html:checkbox path="fatherBvs" tabindex="19" onclick="return false;"/>
+                </td>
+            </tr>
             </c:if>
 
             <c:if test="${appUserTypeId == 6}">
@@ -1834,12 +1801,12 @@
         }
         else {
 
-            var accTypeId = document.getElementById('customerAccountTypeId').value;
-            var updateCustomerFlag = false;
-            if (${not empty param.appUserId && not empty mfsAccountModel.appUserId}) {
-                updateCustomerFlag = true;
+        var accTypeId = document.getElementById('customerAccountTypeId').value;
+        var updateCustomerFlag = false;
+        if (${not empty param.appUserId && not empty mfsAccountModel.appUserId}) {
+            updateCustomerFlag = true;
 
-            }
+        }
             if (updateCustomerFlag == false) {
 
                 //New Customer Case
@@ -2404,14 +2371,6 @@
             inputField: "cnicIssuanceDate", // id of the input field
             ifFormat: "%d/%m/%Y",      // the date format
             button: "nicIssueDate",    // id of the button
-            showsTime: false
-        }
-    );
-    Calendar.setup(
-        {
-            inputField: "pepMarkDate", // id of the input field
-            ifFormat: "%d/%m/%Y",      // the date format
-            button: "pepDate",    // id of the button
             showsTime: false
         }
     );

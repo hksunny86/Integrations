@@ -171,130 +171,130 @@
 		<html:form  name = "actionDetailForm" id = "actionDetailForm" commandName="actionAuthorizationModel"
 					action="p-updatecustomerauthorizationdetail.html"
 					enctype="multipart/form-data" method="post" onsubmit="return onFormSubmit()">
-			<table class="tableRegion" width="100%">
-				<tr class="titleRow">
-					<td>
+		<table class="tableRegion" width="100%">
+		<tr class="titleRow">
+		<td>
 
-						<input type="hidden" id= "printCheck" name="printCheck" value="0"/>
+			<input type="hidden" id= "printCheck" name="printCheck" value="0"/>
 
-						<c width="100%" border="0" cellpadding="0" cellspacing="1">
+			<c width="100%" border="0" cellpadding="0" cellspacing="1">
+
+			<tr bgcolor="FBFBFB">
+				<td colspan="2" align="center">&nbsp;</td>
+			</tr>
+			<tr>
+				<td width="49%" height="16" align="right" bgcolor="F3F3F3" class="formText">Action ID:&nbsp;&nbsp;</td>
+				<td width="51%" align="left" bgcolor="FBFBFB">
+					<html:input path="actionAuthorizationId" id="actionAuthorizationId" cssClass="textBox" maxlength="50" tabindex="1" readonly="true" />
+				</td>
+			</tr>
+			<tr>
+				<td width="49%" height="16" align="right" bgcolor="F3F3F3" class="formText">Action Type:&nbsp;&nbsp;</td>
+				<td width="51%" align="left" bgcolor="FBFBFB">
+					<html:input path="usecaseName" id="usecaseName" cssClass="textBox" maxlength="50" tabindex="1" readonly="true"/>
+				</td>
+			</tr>
+
+			<c:if test="${not approvedOrDenied }">
+				<tr>
+					<td width="49%" height="16" align="right" bgcolor="F3F3F3" class="formText">Escalation Level:&nbsp;&nbsp;</td>
+					<td width="51%" align="left" bgcolor="FBFBFB">
+						<html:input path="escalationLevel" id="escalationLevel" cssClass="textBox" maxlength="50" tabindex="1" readonly="true"/>
+					</td>
+				</tr>
+				</tr>
+				<tr>
+					<td width="49%" height="16" align="right" bgcolor="F3F3F3" class="formText">Created By:&nbsp;&nbsp;</td>
+					<td width="51%" align="left" bgcolor="FBFBFB">
+						<html:input path="createdByUsername" id="createdByUsername" cssClass="textBox" maxlength="50" tabindex="1" readonly="true"/>
+					</td>
+				</tr>
+				<tr>
+					<td width="49%" height="16" align="right" bgcolor="F3F3F3" class="formText">Created On:&nbsp;&nbsp;</td>
+					<td width="51%" align="left" bgcolor="FBFBFB">
+						<html:input path="createdOn" id="createdOn" cssClass="textBox" maxlength="50" tabindex="1" readonly="true"/>
+					</td>
+
+
+				<tr>
+					<td align="right" bgcolor="F3F3F3" class="formText">Initiator Comments:&nbsp;&nbsp; </td>
+					<td align="left" bgcolor="FBFBFB">
+						<html:textarea path="comments"   id="comments"  onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);" cssClass="textBox" rows="6" readonly="true" cssStyle="overflow: auto; width: 163px; height: 102px;"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="right" bgcolor="F3F3F3" class="formText">Authorization Status:&nbsp;&nbsp; </td>
+					<td align="left" bgcolor="FBFBFB">
+						<html:select path="actionStatusId" id="actionStatus" onchange="onChangeStatus()">
+							<html:options items="${actionStatusModel}" itemLabel="name" itemValue="actionStatusId" />
+						</html:select>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="right" bgcolor="F3F3F3" class="formText">Authorizer Comments:&nbsp;&nbsp; </td>
+					<td align="left" bgcolor="FBFBFB">
+						<html:textarea path="checkerComments"   id="checkerComments" onkeyup="textAreaLengthCounter(this,250);"  onkeypress="return maskCommon(this,event)" cssClass="textBox" rows="6"  readonly="${approvedOrDenied }"  cssStyle="overflow: auto; width: 163px; height: 102px;"  />
+					</td>
+				</tr>
 
 				<tr bgcolor="FBFBFB">
 					<td colspan="2" align="center">&nbsp;</td>
 				</tr>
 				<tr>
-					<td width="49%" height="16" align="right" bgcolor="F3F3F3" class="formText">Action ID:&nbsp;&nbsp;</td>
-					<td width="51%" align="left" bgcolor="FBFBFB">
-						<html:input path="actionAuthorizationId" id="actionAuthorizationId" cssClass="textBox" maxlength="50" tabindex="1" readonly="true" />
+
+					<input type="hidden" name="escalateRequest" value="${param.escalateRequest}">
+					<input type="hidden" name="resolveRequest"  value="${param.resolveRequest}">
+
+					<td align="center" colspan="2">
+						<authz:authorize ifAnyGranted="<%=updatePermission%>">
+							<input name="_save" id="_save" type="submit" class="button"  value=" Update " /> &nbsp;
+						</authz:authorize>
+						<authz:authorize ifNotGranted="<%=updatePermission%>">
+							<input name="_save" id="_save" type="submit" class="button"  value=" Update " disabled="disabled" /> &nbsp;
+						</authz:authorize>
+						<input name="cancel" type="button" class="button" value=" Cancel " onclick="javascript:window.close();"/>
+			<c:if test="${mfsAccountModel.usecaseId==1526 or actionAuthorizationModel.usecaseId==1526}">
+			<input type="submit" id="pdfButton" class="button" value="PrintPDF" onclick="return checkFormPrint(this)"
+							   tabindex="42" formtarget="_blank"/>&nbsp;
+						<input class="coupon_question" type="checkbox" tabindex="42" name="coupon_question" id="coupon_question" value="1" onchange="valueChanged(this)">
+			</c:if>
 					</td>
 				</tr>
-				<tr>
-					<td width="49%" height="16" align="right" bgcolor="F3F3F3" class="formText">Action Type:&nbsp;&nbsp;</td>
-					<td width="51%" align="left" bgcolor="FBFBFB">
-						<html:input path="usecaseName" id="usecaseName" cssClass="textBox" maxlength="50" tabindex="1" readonly="true"/>
-					</td>
-				</tr>
-
-				<c:if test="${not approvedOrDenied }">
-					<tr>
-						<td width="49%" height="16" align="right" bgcolor="F3F3F3" class="formText">Escalation Level:&nbsp;&nbsp;</td>
-						<td width="51%" align="left" bgcolor="FBFBFB">
-							<html:input path="escalationLevel" id="escalationLevel" cssClass="textBox" maxlength="50" tabindex="1" readonly="true"/>
-						</td>
-					</tr>
-					</tr>
-					<tr>
-						<td width="49%" height="16" align="right" bgcolor="F3F3F3" class="formText">Created By:&nbsp;&nbsp;</td>
-						<td width="51%" align="left" bgcolor="FBFBFB">
-							<html:input path="createdByUsername" id="createdByUsername" cssClass="textBox" maxlength="50" tabindex="1" readonly="true"/>
-						</td>
-					</tr>
-					<tr>
-						<td width="49%" height="16" align="right" bgcolor="F3F3F3" class="formText">Created On:&nbsp;&nbsp;</td>
-						<td width="51%" align="left" bgcolor="FBFBFB">
-							<html:input path="createdOn" id="createdOn" cssClass="textBox" maxlength="50" tabindex="1" readonly="true"/>
-						</td>
-
-
-					<tr>
-						<td align="right" bgcolor="F3F3F3" class="formText">Initiator Comments:&nbsp;&nbsp; </td>
-						<td align="left" bgcolor="FBFBFB">
-							<html:textarea path="comments"   id="comments"  onkeypress="return maskCommon(this,event)" onkeyup="textAreaLengthCounter(this,250);" cssClass="textBox" rows="6" readonly="true" cssStyle="overflow: auto; width: 163px; height: 102px;"/>
-						</td>
-					</tr>
-					<tr>
-						<td align="right" bgcolor="F3F3F3" class="formText">Authorization Status:&nbsp;&nbsp; </td>
-						<td align="left" bgcolor="FBFBFB">
-							<html:select path="actionStatusId" id="actionStatus" onchange="onChangeStatus()">
-								<html:options items="${actionStatusModel}" itemLabel="name" itemValue="actionStatusId" />
-							</html:select>
-						</td>
-					</tr>
-
-					<tr>
-						<td align="right" bgcolor="F3F3F3" class="formText">Authorizer Comments:&nbsp;&nbsp; </td>
-						<td align="left" bgcolor="FBFBFB">
-							<html:textarea path="checkerComments"   id="checkerComments" onkeyup="textAreaLengthCounter(this,250);"  onkeypress="return maskCommon(this,event)" cssClass="textBox" rows="6"  readonly="${approvedOrDenied }"  cssStyle="overflow: auto; width: 163px; height: 102px;"  />
-						</td>
-					</tr>
-
+			</c:if>
+			<c:if test="${isAssignedBack}">
+				<c:if test="${mfsAccountModel.usecaseId==1526 or actionAuthorizationModel.usecaseId==1526}">
 					<tr bgcolor="FBFBFB">
 						<td colspan="2" align="center">&nbsp;</td>
 					</tr>
 					<tr>
-
-						<input type="hidden" name="escalateRequest" value="${param.escalateRequest}">
-						<input type="hidden" name="resolveRequest"  value="${param.resolveRequest}">
-
 						<td align="center" colspan="2">
-							<authz:authorize ifAnyGranted="<%=updatePermission%>">
-								<input name="_save" id="_save" type="submit" class="button"  value=" Update " /> &nbsp;
-							</authz:authorize>
-							<authz:authorize ifNotGranted="<%=updatePermission%>">
-								<input name="_save" id="_save" type="submit" class="button"  value=" Update " disabled="disabled" /> &nbsp;
-							</authz:authorize>
-							<input name="cancel" type="button" class="button" value=" Cancel " onclick="javascript:window.close();"/>
-							<c:if test="${mfsAccountModel.usecaseId==1526 or actionAuthorizationModel.usecaseId==1526}">
-								<input type="submit" id="pdfButton" class="button" value="PrintPDF" onclick="return checkFormPrint(this)"
-									   tabindex="42" formtarget="_blank"/>&nbsp;
-								<input class="coupon_question" type="checkbox" tabindex="42" name="coupon_question" id="coupon_question" value="1" onchange="valueChanged(this)">
-							</c:if>
+							<input name="modify" type="button" class="button" value=" Modify " onclick="javascript:doModify('p_updateaccounttoblinkdetail.html?isReSubmit=true&authId='+${actionAuthorizationModel.actionAuthorizationId}+'&actionId=1');window.close();"/>
 						</td>
 					</tr>
 				</c:if>
-				<c:if test="${isAssignedBack}">
-					<c:if test="${mfsAccountModel.usecaseId==1526 or actionAuthorizationModel.usecaseId==1526}">
-						<tr bgcolor="FBFBFB">
-							<td colspan="2" align="center">&nbsp;</td>
-						</tr>
-						<tr>
-							<td align="center" colspan="2">
-								<input name="modify" type="button" class="button" value=" Modify " onclick="javascript:doModify('p_updateaccounttoblinkdetail.html?isReSubmit=true&authId='+${actionAuthorizationModel.actionAuthorizationId}+'&actionId=1');window.close();"/>
-							</td>
-						</tr>
-					</c:if>
-					<c:if test="${mfsAccountModel.usecaseId!=1526}">
-						<tr bgcolor="FBFBFB">
-							<td colspan="2" align="center">&nbsp;</td>
-						</tr>
-						<tr>
-							<td align="center" colspan="2">
-								<input name="modify" type="button" class="button" value=" Modify " onclick="javascript:doModify('p_mnonewmfsaccountform.html?isReSubmit=true&authId='+${actionAuthorizationModel.actionAuthorizationId}+'&actionId=1');window.close();"/>
-							</td>
-						</tr>
-					</c:if>
+				<c:if test="${mfsAccountModel.usecaseId!=1526}">
+					<tr bgcolor="FBFBFB">
+						<td colspan="2" align="center">&nbsp;</td>
+					</tr>
+					<tr>
+						<td align="center" colspan="2">
+							<input name="modify" type="button" class="button" value=" Modify " onclick="javascript:doModify('p_mnonewmfsaccountform.html?isReSubmit=true&authId='+${actionAuthorizationModel.actionAuthorizationId}+'&actionId=1');window.close();"/>
+						</td>
+					</tr>
 				</c:if>
-				<tr bgcolor="FBFBFB">
-					<td colspan="2" align="center">&nbsp;</td>
-				</tr>
-			</table>
-			<%--		</html:form>--%>
-			</td>
+			</c:if>
+			<tr bgcolor="FBFBFB">
+				<td colspan="2" align="center">&nbsp;</td>
 			</tr>
 			</table>
+<%--		</html:form>--%>
+		</td>
+		</tr>
+		</table>
 
-			<table  class="tableRegion" width="100%">
-			<%--		<html:form  name = "actionDetailForm" id = "actionDetailForm" commandName="actionAuthorizationModel" action="p-updatecustomerauthorizationdetail.html" method="post" onsubmit="return onFormSubmit()">--%>
+		<table  class="tableRegion" width="100%">
+<%--		<html:form  name = "actionDetailForm" id = "actionDetailForm" commandName="actionAuthorizationModel" action="p-updatecustomerauthorizationdetail.html" method="post" onsubmit="return onFormSubmit()">--%>
 			<tr>
 				<c:if test="${actionAuthorizationModel.actionStatusId == 3}">
 					<td colspan="4"><h3 class="header" id="detailHeader">Previous State</h3></td>
@@ -409,7 +409,7 @@
 							<html:textarea style="height: 20px; width: 140px" path="custPicCheckerComments" id="custPicCheckerComments" tabindex="41" cssClass="textBox"
 										   maxlength="250"/>
 						</div>
-					</c:if>
+				</c:if>
 				</td>
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Account Title</td>
 				<td width="13%" height="16" align="left"  class="formText">${currentMfsAccountModel.name }
@@ -868,36 +868,6 @@
 				<td width="25%" height="16" align="left" bgcolor="F3F3F3" class="formText">City</td>
 				<td width="25%" height="16" align="left"  class="formText">${currentMfsAccountModel.city }</td>
 			</tr>
-			<tr>
-				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Is Pep</td>
-				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.isPep }</td>
-
-				<td width="25%" height="16" align="left" bgcolor="F3F3F3" class="formText">Pep Mark Date</td>
-				<td width="25%" height="16" align="left"  class="formText"><fmt:formatDate  type="both"
-																							dateStyle="short" timeStyle="short" value="${mfsAccountModel.pepMarkDate }" /></td>
-
-				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Is Pep</td>
-				<td width="13%" height="16" align="left"  class="formText">${currentMfsAccountModel.isPep }</td>
-
-				<td width="25%" height="16" align="left" bgcolor="F3F3F3" class="formText">Pep Mark Date</td>
-				<td width="25%" height="16" align="left"  class="formText"><fmt:formatDate  type="both"
-																							dateStyle="short" timeStyle="short" value="${currentMfsAccountModel.pepMarkDate }" /></td>
-			</tr>
-
-			<tr>
-				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Risk Level</td>
-				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.pepRiskLevel }</td>
-
-				<td></td>
-				<td></td>
-
-				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Risk Level</td>
-				<td width="13%" height="16" align="left"  class="formText">${currentMfsAccountModel.pepRiskLevel }</td>
-
-				<td></td>
-				<td></td>
-			</tr>
-
 			<c:if test="${mfsAccountModel.usecaseId == 1526 or actionAuthorizationModel.usecaseId==1526}">
 				<tr>
 					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Expected Turn Over</td>
@@ -1058,10 +1028,10 @@
 
 			<c:if test="${mfsAccountModel.segmentId == 10319}">
 				<tr>
-					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Father Bvs</td>
-					<td width="13%" height="16" align="left"  class="formText">
-						<input type="checkbox" <c:if test="${mfsAccountModel.fatherBvs==true}"> checked</c:if> onclick="return false;"/>
-					</td>
+				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Father Bvs</td>
+				<td width="13%" height="16" align="left"  class="formText">
+				<input type="checkbox" <c:if test="${mfsAccountModel.fatherBvs==true}"> checked</c:if> onclick="return false;"/>
+				</td>
 
 					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Father Bvs</td>
 					<td width="13%" height="16" align="left"  class="formText">

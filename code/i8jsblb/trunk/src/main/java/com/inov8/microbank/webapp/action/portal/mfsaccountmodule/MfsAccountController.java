@@ -58,7 +58,6 @@ import java.nio.file.Files;
 import java.sql.Timestamp;
 import java.util.*;
 
-
 public class MfsAccountController extends AdvanceAuthorizationFormController {
 
 
@@ -811,10 +810,6 @@ public class MfsAccountController extends AdvanceAuthorizationFormController {
                 mfsAccountModel.setNicFrontPicMakerComments(customerModel.getNicFrontPicMakerComments());
                 mfsAccountModel.setpNicBackPicMakerComments(customerModel.getpNicBackPicMakerComments());
 
-                mfsAccountModel.setIsPep(customerModel.getPep());
-                mfsAccountModel.setPepMarkDate(customerModel.getPepMarkDate());
-                mfsAccountModel.setPepRiskLevel(customerModel.getRiskLevel());
-
                 if (customerModel.getTaxRegimeId() != null) {
                     mfsAccountModel.setTaxRegimeId(customerModel.getTaxRegimeId());
                     TaxRegimeModel taxRegimeModel = new TaxRegimeModel();
@@ -1030,15 +1025,6 @@ public class MfsAccountController extends AdvanceAuthorizationFormController {
         filer = new LabelValueBean("Non Filer", "0");
         filerList.add(filer);
         referenceDataMap.put("filerList", filerList);
-
-        List<LabelValueBean> riskLevelList = new ArrayList<>();
-        LabelValueBean markCheckedValueBean = new LabelValueBean("High", "High");
-        riskLevelList.add(markCheckedValueBean);
-        markCheckedValueBean = new LabelValueBean("Medium", "Medium");
-        riskLevelList.add(markCheckedValueBean);
-        markCheckedValueBean = new LabelValueBean("Low", "Low");
-        riskLevelList.add(markCheckedValueBean);
-        referenceDataMap.put("riskLevelList", riskLevelList);
 
         return referenceDataMap;
     }
@@ -2111,5 +2097,4 @@ public class MfsAccountController extends AdvanceAuthorizationFormController {
     public void setLimitManager(LimitManager limitManager) {
         this.limitManager = limitManager;
     }
-
 }

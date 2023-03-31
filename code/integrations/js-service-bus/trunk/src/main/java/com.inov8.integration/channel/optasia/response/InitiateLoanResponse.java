@@ -280,52 +280,57 @@ public class InitiateLoanResponse extends Response implements Serializable {
                     }
                 }
 
-                if (!(periodsProjections.get(i).getMilestones().isEmpty())) {
-                    interestAdjustment = new com.inov8.integration.webservice.optasiaVO.InterestAdjustment();
-                    milestones = new com.inov8.integration.webservice.optasiaVO.Milestones();
-                    interestAdjustment.setGross(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getGross()));
-                    interestAdjustment.setNet(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getNet()));
-                    interestAdjustment.setVat(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getVat()));
-                    interestAdjustmentList.add(interestAdjustment);
-                    milestones.setInterestAdjustmentList(interestAdjustmentList);
+                List<Milestone> milestonesList1 = periodsProjections.get(i).getMilestones();
+                if (milestonesList1 != null) {
+                    for (l = 0; l < milestonesList1.size(); l++) {
+                        milestones = new com.inov8.integration.webservice.optasiaVO.Milestones();
+                        milestones.setDate(periodsProjections.get(i).getMilestones().get(i).getDate());
+                        milestones.setDayOfLoan(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getDayOfLoanIndex()));
 
-                    List<ChargeAdjustment> chargeAdjustmentList1 = periodsProjections.get(i).getMilestones().get(i).getChargeAdjustments();
-                    if (chargeAdjustmentList1 != null) {
-                        for (k = 0; k < chargeAdjustmentList1.size(); k++) {
-                            chargeAdjustment = new com.inov8.integration.webservice.optasiaVO.ChargeAdjustments();
-                            milestones = new com.inov8.integration.webservice.optasiaVO.Milestones();
-                            if (!(periodsProjections.get(k).getMilestones().isEmpty()) &&
-                                    !(periodsProjections.get(k).getMilestones().get(k).getChargeAdjustments().isEmpty())) {
-                                chargeAdjustment.setName(periodsProjections.get(k).getMilestones().get(k).getChargeAdjustments().get(k).getName());
-                                chargeAdjustment.setGross(String.valueOf(periodsProjections.get(k).getMilestones().get(k).getChargeAdjustments().get(k).getGross()));
-                                chargeAdjustment.setNet(String.valueOf(periodsProjections.get(k).getMilestones().get(k).getChargeAdjustments().get(k).getNet()));
-                                chargeAdjustment.setVat(String.valueOf(periodsProjections.get(k).getMilestones().get(k).getChargeAdjustments().get(k).getVat()));
-                                chargeAdjustmentList.add(chargeAdjustment);
-                                milestones.setChargeAdjustmentsList(chargeAdjustmentList);
+                        List<ChargeAdjustment> chargeAdjustmentList1 = milestonesList1.get(l).getChargeAdjustments();
+                        if (chargeAdjustmentList1 != null) {
+                            for (k = 0; k < chargeAdjustmentList1.size(); k++) {
+                                chargeAdjustment = new com.inov8.integration.webservice.optasiaVO.ChargeAdjustments();
+                                milestones = new com.inov8.integration.webservice.optasiaVO.Milestones();
+//                                List<?> milestonesList2 = periodsProjections.get(k).getMilestones();
+//                                if (!milestonesList2.isEmpty()) {
+//                                List<?> chargeAdjustmentsList1 = periodsProjections.get(k).getMilestones().get(k).getChargeAdjustments();
+                                if (!(chargeAdjustmentList1.isEmpty())) {
+                                    chargeAdjustment.setName(chargeAdjustmentList1.get(k).getName());
+                                    chargeAdjustment.setGross(String.valueOf(chargeAdjustmentList1.get(k).getGross()));
+                                    chargeAdjustment.setNet(String.valueOf(chargeAdjustmentList1.get(k).getNet()));
+                                    chargeAdjustment.setVat(String.valueOf(chargeAdjustmentList1.get(k).getVat()));
+                                    chargeAdjustmentList.add(chargeAdjustment);
+                                    milestones.setChargeAdjustmentsList(chargeAdjustmentList);
+//                                    }
+                                }
                             }
                         }
-                    }
 
-                    List<Milestone> milestonesList1 = periodsProjections.get(i).getMilestones();
-                    if (milestonesList1 != null) {
-                        for (l = 0; l < milestonesList1.size(); l++) {
+                        if (milestonesList1.get(l).getInterestAdjustment() != null) {
+                            interestAdjustment = new com.inov8.integration.webservice.optasiaVO.InterestAdjustment();
                             milestones = new com.inov8.integration.webservice.optasiaVO.Milestones();
-                            milestones.setDate(periodsProjections.get(i).getMilestones().get(i).getDate());
-                            milestones.setDayOfLoan(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getDayOfLoanIndex()));
-                            milestones.setPrincipal(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getPrincipal()));
-                            milestones.setTotalExpenses(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalExpenses()));
-                            milestones.setTotalGross(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalGross()));
-                            milestones.setTotalInterest(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalInterest()));
-                            milestones.setTotalInterestVAT(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalInterestVAT()));
-                            milestones.setTotalCharges(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalCharges()));
-                            milestones.setTotalChargesVAT(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalChargesVAT()));
+                            interestAdjustment.setGross(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getGross()));
+                            interestAdjustment.setNet(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getNet()));
+                            interestAdjustment.setVat(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getVat()));
+                            interestAdjustmentList.add(interestAdjustment);
+                            milestones.setInterestAdjustmentList(interestAdjustmentList);
+                        }
+
+                        milestones.setPrincipal(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getPrincipal()));
+                        milestones.setTotalExpenses(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalExpenses()));
+                        milestones.setTotalGross(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalGross()));
+                        milestones.setTotalInterest(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalInterest()));
+                        milestones.setTotalInterestVAT(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalInterestVAT()));
+                        milestones.setTotalCharges(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalCharges()));
+                        milestones.setTotalChargesVAT(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalChargesVAT()));
 //                        milestones.setInterestAdjustmentList(interestAdjustmentList);
 //                        milestones.setChargeAdjustmentsList(chargeAdjustmentList);
-                            milestonesList.add(milestones);
-                            periodsProjection.setMilestonesList(milestonesList);
-                        }
+                        milestonesList.add(milestones);
+                        periodsProjection.setMilestonesList(milestonesList);
                     }
                 }
+//                }
 
 
 //                milestones.setInterestAdjustmentList(interestAdjustmentList);

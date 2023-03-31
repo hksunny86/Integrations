@@ -162,6 +162,7 @@ public class OfferListForCommodityResponse extends Response implements Serializa
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
+
         if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
         } else {
@@ -169,14 +170,25 @@ public class OfferListForCommodityResponse extends Response implements Serializa
             i8SBSwitchControllerResponseVO.setCode(this.getCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
         }
+        i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
+        i8SBSwitchControllerResponseVO.setCode(this.getCode());
+        i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
         i8SBSwitchControllerResponseVO.setReceptionTimestamp(this.getReceivedTimestamp());
+
+
+        List<com.inov8.integration.webservice.optasiaVO.EligibilityStatus> eligibilityStatusList = new ArrayList<>();
         if (this.getEligibilityStatus() != null) {
-            i8SBSwitchControllerResponseVO.setEligibilityStatus(this.getEligibilityStatus().getEligibilityStatus());
-            i8SBSwitchControllerResponseVO.setEligible(this.getEligibilityStatus().getIsEligible());
+            com.inov8.integration.webservice.optasiaVO.EligibilityStatus eligibilityStatus = new com.inov8.integration.webservice.optasiaVO.EligibilityStatus();
+            eligibilityStatus.setEligibilityStatus(this.getEligibilityStatus().getEligibilityStatus());
+            eligibilityStatus.setEligible(this.getEligibilityStatus().getIsEligible());
+            eligibilityStatusList.add(eligibilityStatus);
         }
+        collectionOfList.put("EligibilityStatus", eligibilityStatusList);
+        i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
 
 //        if (eligibilityStatus != null) {
 //            com.inov8.integration.webservice.optasiaVO.EligibilityStatus eligibilityStatus;

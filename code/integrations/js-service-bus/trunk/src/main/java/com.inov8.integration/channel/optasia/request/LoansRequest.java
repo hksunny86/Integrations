@@ -13,6 +13,8 @@ import org.apache.commons.lang.StringUtils;
         "identityType",
         "origSource",
         "identityValue",
+        "filterCommodityType",
+        "filterLoanState"
 })
 public class LoansRequest extends Request {
 
@@ -22,6 +24,10 @@ public class LoansRequest extends Request {
     private String origSource;
     @JsonProperty("identityValue")
     private String identityValue;
+    @JsonProperty("filterCommodityType")
+    private String filterCommodityType;
+    @JsonProperty("filterLoanState")
+    private String filterLoanState;
 
     public String getIdentityType() {
         return identityType;
@@ -47,12 +53,30 @@ public class LoansRequest extends Request {
         this.identityValue = identityValue;
     }
 
+    public String getFilterCommodityType() {
+        return filterCommodityType;
+    }
+
+    public void setFilterCommodityType(String filterCommodityType) {
+        this.filterCommodityType = filterCommodityType;
+    }
+
+    public String getFilterLoanState() {
+        return filterLoanState;
+    }
+
+    public void setFilterLoanState(String filterLoanState) {
+        this.filterLoanState = filterLoanState;
+    }
+
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
         this.setIdentityType(i8SBSwitchControllerRequestVO.getIdentityType());
         this.setIdentityValue(i8SBSwitchControllerRequestVO.getIdentityValue());
         this.setOrigSource(i8SBSwitchControllerRequestVO.getOrigSource());
+        this.setFilterCommodityType(i8SBSwitchControllerRequestVO.getFilterCommodityType());
+        this.setFilterLoanState(i8SBSwitchControllerRequestVO.getFilterLoanState());
     }
 
     @Override

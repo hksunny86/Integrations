@@ -54,6 +54,8 @@ import java.util.List;
 
 public class Events implements Serializable {
 
+    private static final long serialVersionUID = 5824473488070382311L;
+
     @JsonProperty("eventType")
     private String eventType;
     @JsonProperty("eventTypeDetails")

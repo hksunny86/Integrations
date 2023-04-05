@@ -9,7 +9,10 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "repayment"
+        "repayment",
+        "outstanding",
+        "outstanding",
+        "plan"
 })
 public class Report implements Serializable {
 
@@ -17,6 +20,28 @@ public class Report implements Serializable {
 
     @JsonProperty("repayment")
     private List<Repayment> repaymentList;
+    @JsonProperty("outstanding")
+    private List<OutstandingStatus> outstandingStatusList;
+    @JsonProperty("endOfPeriodOutstanding")
+    private List<EndOfPeriodOutstanding> endOfPeriodOutstandingList;
+    @JsonProperty("plan")
+    private List<Plan> planList;
+
+    public List<OutstandingStatus> getOutstandingStatusList() {
+        return outstandingStatusList;
+    }
+
+    public void setOutstandingStatusList(List<OutstandingStatus> outstandingStatusList) {
+        this.outstandingStatusList = outstandingStatusList;
+    }
+
+    public List<Plan> getPlanList() {
+        return planList;
+    }
+
+    public void setPlanList(List<Plan> planList) {
+        this.planList = planList;
+    }
 
     public List<Repayment> getRepaymentList() {
         return repaymentList;
@@ -24,5 +49,13 @@ public class Report implements Serializable {
 
     public void setRepaymentList(List<Repayment> repaymentList) {
         this.repaymentList = repaymentList;
+    }
+
+    public List<EndOfPeriodOutstanding> getEndOfPeriodOutstandingList() {
+        return endOfPeriodOutstandingList;
+    }
+
+    public void setEndOfPeriodOutstandingList(List<EndOfPeriodOutstanding> endOfPeriodOutstandingList) {
+        this.endOfPeriodOutstandingList = endOfPeriodOutstandingList;
     }
 }

@@ -12,7 +12,8 @@ import java.util.List;
         "loan",
         "report",
         "outstanding",
-        "plan"
+        "plan",
+        "events"
 })
 public class Loans implements Serializable {
 
@@ -27,6 +28,8 @@ public class Loans implements Serializable {
     private List<OutstandingStatus> outstandingStatusList;
     @JsonProperty("plan")
     private List<Plan> planList;
+    @JsonProperty("events")
+    private List<Events> eventsList;
 
     public List<Loan> getLoanList() {
         return loanList;
@@ -58,5 +61,13 @@ public class Loans implements Serializable {
 
     public void setPlanList(List<Plan> planList) {
         this.planList = planList;
+    }
+
+    public List<Events> getEventsList() {
+        return eventsList;
+    }
+
+    public void setEventsList(List<Events> eventsList) {
+        this.eventsList = eventsList;
     }
 }

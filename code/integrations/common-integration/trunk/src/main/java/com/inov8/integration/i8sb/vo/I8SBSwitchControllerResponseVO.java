@@ -3,6 +3,9 @@ package com.inov8.integration.i8sb.vo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.i8sb.vo.CardDetailVO;
 import com.inov8.integration.vo.StatementVo;
+import com.inov8.integration.webservice.optasiaVO.Account;
+import com.inov8.integration.webservice.optasiaVO.Charge;
+import com.inov8.integration.webservice.optasiaVO.ThirdPartyData;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import javax.xml.bind.annotation.XmlTransient;
@@ -459,6 +462,33 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String eligibilityStatus;
     private String refNo;
     private String primaryLoanId;
+    private List<Charge> chargeList;
+    private List<Account> accountList;
+    private List<ThirdPartyData> thirdPartyDataList;
+
+    public List<Account> getAccountList() {
+        return accountList;
+    }
+
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
+    }
+
+    public List<ThirdPartyData> getThirdPartyDataList() {
+        return thirdPartyDataList;
+    }
+
+    public void setThirdPartyDataList(List<ThirdPartyData> thirdPartyDataList) {
+        this.thirdPartyDataList = thirdPartyDataList;
+    }
+
+    public List<Charge> getChargeList() {
+        return chargeList;
+    }
+
+    public void setChargeList(List<Charge> chargeList) {
+        this.chargeList = chargeList;
+    }
 
     public String getPrimaryLoanId() {
         return primaryLoanId;

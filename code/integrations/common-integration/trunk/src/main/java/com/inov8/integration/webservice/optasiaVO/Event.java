@@ -52,6 +52,7 @@ import java.io.Serializable;
         "maturityDetails"
 })
 public class Event implements Serializable {
+
     private static final long serialVersionUID = 5824473488070382311L;
 
     @JsonProperty("eventType")

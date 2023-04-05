@@ -13,6 +13,8 @@ import java.io.Serializable;
 
 public class MaturityDetails__1 implements Serializable {
 
+    private static final long serialVersionUID = 5824473488070382311L;
+
     @JsonProperty("maturityDuration")
     private Integer maturityDuration;
 

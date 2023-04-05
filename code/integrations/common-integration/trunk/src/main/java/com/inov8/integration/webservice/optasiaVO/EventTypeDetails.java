@@ -15,6 +15,8 @@ import java.io.Serializable;
 
 public class EventTypeDetails implements Serializable {
 
+    private static final long serialVersionUID = 5824473488070382311L;
+
     @JsonProperty("is.passive.advance")
     private Boolean isPassiveAdvance;
     @JsonProperty("pending.operation.id")

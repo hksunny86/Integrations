@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.io.Serializable;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -19,6 +20,7 @@ import java.io.Serializable;
         "totalInterestVAT",
         "totalCharges",
         "totalChargesVAT",
+        "charges",
         "totalPendingLoans",
         "totalPendingRecoveries"
 })
@@ -49,6 +51,8 @@ public class OutstandingStatus implements Serializable {
     private String totalCharges;
     @JsonProperty("totalChargesVAT")
     private String totalChargesVAT;
+    @JsonProperty("charges")
+    private List<Charge> charges;
     @JsonProperty("totalPendingLoans")
     private String totalPendingLoans;
     @JsonProperty("totalPendingRecoveries")
@@ -140,6 +144,14 @@ public class OutstandingStatus implements Serializable {
 
     public void setTotalChargesVAT(String totalChargesVAT) {
         this.totalChargesVAT = totalChargesVAT;
+    }
+
+    public List<Charge> getCharges() {
+        return charges;
+    }
+
+    public void setCharges(List<Charge> charges) {
+        this.charges = charges;
     }
 
     public String getTotalPendingLoans() {

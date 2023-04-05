@@ -405,12 +405,48 @@ public class WebServiceVO implements Serializable {
     private List<InterestAdjustment> interestAdjustmentsList;
     private List<ChargeAdjustments> chargeAdjustmentsList;
     private List<Milestones> milestonesList;
+    private List<Events> eventsList;
+    private List<Charge> chargeList;
+    private List<Account> accountList;
+    private List<ThirdPartyData> thirdPartyDataList;
     private String outStandingAmount;
     private String serviceFee;
     private String disbursementDate;
     private String maturityDate;
     private String duration;
     private String primaryLoanId;
+
+    public List<Account> getAccountList() {
+        return accountList;
+    }
+
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
+    }
+
+    public List<ThirdPartyData> getThirdPartyDataList() {
+        return thirdPartyDataList;
+    }
+
+    public void setThirdPartyDataList(List<ThirdPartyData> thirdPartyDataList) {
+        this.thirdPartyDataList = thirdPartyDataList;
+    }
+
+    public List<Charge> getChargeList() {
+        return chargeList;
+    }
+
+    public void setChargeList(List<Charge> chargeList) {
+        this.chargeList = chargeList;
+    }
+
+    public List<Events> getEventsList() {
+        return eventsList;
+    }
+
+    public void setEventsList(List<Events> eventsList) {
+        this.eventsList = eventsList;
+    }
 
     public String getPrimaryLoanId() {
         return primaryLoanId;

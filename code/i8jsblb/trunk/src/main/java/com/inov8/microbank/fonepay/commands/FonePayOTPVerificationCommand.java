@@ -47,6 +47,7 @@ public class FonePayOTPVerificationCommand extends BaseCommand {
                 || this.getCommandParameter(baseWrapper, CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.PUBLISHEX_CHANNEL)
                 || this.getCommandParameter(baseWrapper, CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.TAPMAD_CHANNEL)
                 || this.getCommandParameter(baseWrapper, CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.KUICK_PAY_CHANNEL)
+                || this.getCommandParameter(baseWrapper, CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.QUWAT_CHANNEL)
                 || this.getCommandParameter(baseWrapper, CommandFieldConstants.KEY_CHANNEL_ID).equals(FonePayConstants.ECOMM_CHANNEL)) {
             pin = ThirdPartyEncryptionUtil.decryptWithAES(XMLConstants.THIRD_PARTY_ENCRYPTION_KEY, pin);
         } else {

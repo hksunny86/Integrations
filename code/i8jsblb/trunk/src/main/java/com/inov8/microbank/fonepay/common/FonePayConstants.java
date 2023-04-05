@@ -112,6 +112,7 @@ public interface FonePayConstants {
     public static final String OPTASIA_CHANNEL= "OPTASIA";
     public static final String ECOMM_CHANNEL="ECOMM";
     public static final String KUICK_PAY_CHANNEL="KUICKPAY";
+    public static final String QUWAT_CHANNEL="QUWAT";
 
 
 

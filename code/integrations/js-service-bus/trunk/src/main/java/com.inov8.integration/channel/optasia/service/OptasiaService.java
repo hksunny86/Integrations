@@ -376,7 +376,8 @@ public class OptasiaService {
             OptasiaMock optasiaMock = new OptasiaMock();
             String response = optasiaMock.outstanding();
             outstandingResponse = (OutstandingResponse) JSONUtil.jsonToObject(response, OutstandingResponse.class);
-            logger.info("Response Code of Outstanding Request : " + response);
+            Objects.requireNonNull(outstandingResponse).setResponseCode("200");
+//            logger.info("Response Code of Outstanding Request : " + response);
             logger.info("Response Code for Loan Offer Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
             String response;
@@ -452,7 +453,8 @@ public class OptasiaService {
             OptasiaMock optasiaMock = new OptasiaMock();
             String response = optasiaMock.payment();
             loanPaymentResponse = (LoanPaymentResponse) JSONUtil.jsonToObject(response, LoanPaymentResponse.class);
-            logger.info("Response Code of Loan Payment Request : " + response);
+            Objects.requireNonNull(loanPaymentResponse).setResponseCode("200");
+//            logger.info("Response Code of Loan Payment Request : " + response);
             logger.info("Response Code for Loan Payment Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
 

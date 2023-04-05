@@ -9,7 +9,11 @@ import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import com.inov8.integration.webservice.optasiaVO.ChargeAdjustments;
 import com.inov8.integration.webservice.optasiaVO.Milestones;
+import com.inov8.integration.webservice.optasiaVO.OneOffCharges;
 import com.inov8.integration.webservice.optasiaVO.TotalOneOffCharges;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,6 +31,9 @@ import java.util.Map;
         "periodsProjections"
 })
 public class InitiateLoanResponse extends Response implements Serializable {
+
+    private static Logger logger = LoggerFactory.getLogger(InitiateLoanResponse.class.getSimpleName());
+
 
     @JsonProperty("identityValue")
     private String identityValue;
@@ -153,9 +160,11 @@ public class InitiateLoanResponse extends Response implements Serializable {
         if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
         } else {
-            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
         }
+        i8SBSwitchControllerResponseVO.setCode(this.getCode());
+        i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
@@ -175,37 +184,39 @@ public class InitiateLoanResponse extends Response implements Serializable {
             i8SBSwitchControllerResponseVO.setLoanPlanName(this.getLoanOffer().getLoanPlanName());
             i8SBSwitchControllerResponseVO.setMaturityDuration(String.valueOf(this.getLoanOffer().getMaturityDetails().getMaturityDuration()));
 
-            if (this.getLoanOffer().getMaturityDetails().getOneOffCharges() != null) {
-
-                oneOffCharges = new com.inov8.integration.webservice.optasiaVO.OneOffCharges();
-
-                for (int i = 0; i < this.getLoanOffer().getMaturityDetails().getOneOffCharges().size(); i++) {
-                    oneOffCharges.setChargeName(this.getLoanOffer().getMaturityDetails().getOneOffCharges().get(i).getChargeName());
-                    oneOffCharges.setChargeType(this.getLoanOffer().getMaturityDetails().getOneOffCharges().get(i).getChargeType());
-                    oneOffCharges.setChargeValue(String.valueOf(this.getLoanOffer().getMaturityDetails().getOneOffCharges().get(i).getChargeValue()));
-                    oneOffCharges.setChargeVAT(String.valueOf(this.getLoanOffer().getMaturityDetails().getOneOffCharges().get(i).getChargeVAT()));
-                    oneOffCharges.setDaysOffset(String.valueOf(this.getLoanOffer().getMaturityDetails().getOneOffCharges().get(i).getDaysOffset()));
+            List<ProjectionOneOffCharge> projectionOneOffChargeList = this.getLoanOffer().getMaturityDetails().getOneOffCharges();
+            if (projectionOneOffChargeList != null) {
+                oneOffChargesList = new ArrayList<>();
+                for (int i = 0; i < projectionOneOffChargeList.size(); i++) {
+                    oneOffCharges = new com.inov8.integration.webservice.optasiaVO.OneOffCharges();
+                    oneOffCharges.setChargeName(projectionOneOffChargeList.get(i).getChargeName());
+                    oneOffCharges.setChargeType(projectionOneOffChargeList.get(i).getChargeType());
+                    oneOffCharges.setChargeValue(String.valueOf(projectionOneOffChargeList.get(i).getChargeValue()));
+                    oneOffCharges.setChargeVAT(String.valueOf(projectionOneOffChargeList.get(i).getChargeVAT()));
+                    oneOffCharges.setDaysOffset(String.valueOf(projectionOneOffChargeList.get(i).getDaysOffset()));
                     oneOffChargesList.add(oneOffCharges);
+                    collectionOfList.put("OneOffCharges", oneOffChargesList);
+                    i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
                 }
-                collectionOfList.put("OneOffCharges", oneOffChargesList);
-                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
-
             }
 
-            if (this.getLoanOffer().getMaturityDetails().getRecurringCharges() != null) {
+            List<ProjectionRecurringCharge> projectionRecurringChargeList = this.getLoanOffer().getMaturityDetails().getRecurringCharges();
+            if (projectionRecurringChargeList != null) {
+                recurringChargesList = new ArrayList<>();
+                for (int j = 0; j < projectionRecurringChargeList.size(); j++) {
+                    recurringCharges = new com.inov8.integration.webservice.optasiaVO.RecurringCharges();
 
-                recurringCharges = new com.inov8.integration.webservice.optasiaVO.RecurringCharges();
-
-                for (int j = 0; j < this.getLoanOffer().getMaturityDetails().getRecurringCharges().size(); j++) {
-                    recurringCharges.setChargeName(this.getLoanOffer().getMaturityDetails().getRecurringCharges().get(j).getChargeName());
-                    recurringCharges.setChargeType(this.getLoanOffer().getMaturityDetails().getRecurringCharges().get(j).getChargeType());
-                    recurringCharges.setChargeValue(String.valueOf(this.getLoanOffer().getMaturityDetails().getRecurringCharges().get(j).getChargeValue()));
-                    recurringCharges.setChargeVAT(String.valueOf(this.getLoanOffer().getMaturityDetails().getRecurringCharges().get(j).getChargeVAT()));
-                    recurringCharges.setInterval(String.valueOf(this.getLoanOffer().getMaturityDetails().getRecurringCharges().get(j).getInterval()));
+                    recurringCharges.setChargeName(projectionRecurringChargeList.get(j).getChargeName());
+                    recurringCharges.setChargeType(projectionRecurringChargeList.get(j).getChargeType());
+                    recurringCharges.setChargeValue(String.valueOf(projectionRecurringChargeList.get(j).getChargeValue()));
+                    recurringCharges.setChargeVAT(String.valueOf(projectionRecurringChargeList.get(j).getChargeVAT()));
+                    recurringCharges.setInterval(String.valueOf(projectionRecurringChargeList.get(j).getInterval()));
                     recurringChargesList.add(recurringCharges);
+
+                    collectionOfList.put("RecurringCharges", recurringChargesList);
+                    i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
                 }
-                collectionOfList.put("RecurringCharges", recurringChargesList);
-                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
             }
 
         }
@@ -258,40 +269,47 @@ public class InitiateLoanResponse extends Response implements Serializable {
 
                 List<TotalOneOffCharge> totalOneOffChargesList1 = periodsProjections.get(i).getTotalOneOffCharges();
                 if (totalOneOffChargesList1 != null) {
+                    totalOneOffChargesList = new ArrayList<>();
                     for (j = 0; j < totalOneOffChargesList1.size(); j++) {
                         totalOneOffCharges = new com.inov8.integration.webservice.optasiaVO.TotalOneOffCharges();
-                        totalOneOffCharges.setChargeName(periodsProjections.get(j).getTotalOneOffCharges().get(j).getChargeName());
-                        totalOneOffCharges.setCharge(String.valueOf(periodsProjections.get(j).getTotalOneOffCharges().get(j).getCharge()));
-                        totalOneOffCharges.setChargeVAT(String.valueOf(periodsProjections.get(j).getTotalOneOffCharges().get(j).getChargeVAT()));
+                        totalOneOffCharges.setChargeName(totalOneOffChargesList1.get(j).getChargeName());
+                        totalOneOffCharges.setCharge(String.valueOf(totalOneOffChargesList1.get(j).getCharge()));
+                        totalOneOffCharges.setChargeVAT(String.valueOf(totalOneOffChargesList1.get(j).getChargeVAT()));
                         totalOneOffChargesList.add(totalOneOffCharges);
                         periodsProjection.setTotalOneOffChargesList(totalOneOffChargesList);
+
                     }
+//                    periodsProjection.setTotalOneOffChargesList(totalOneOffChargesList);
                 }
 
                 List<TotalRecurringCharge> totalRecurringChargesList1 = periodsProjections.get(i).getTotalRecurringCharges();
                 if (totalOneOffChargesList1 != null) {
+                    totalRecurringChargeList = new ArrayList<>();
                     for (j = 0; j < totalRecurringChargesList1.size(); j++) {
                         totalRecurringCharge = new com.inov8.integration.webservice.optasiaVO.TotalRecurringCharge();
-                        totalRecurringCharge.setChargeName(periodsProjections.get(j).getTotalOneOffCharges().get(j).getChargeName());
-                        totalRecurringCharge.setCharge(periodsProjections.get(j).getTotalOneOffCharges().get(j).getCharge());
-                        totalRecurringCharge.setChargeVAT(periodsProjections.get(j).getTotalOneOffCharges().get(j).getChargeVAT());
+                        totalRecurringCharge.setChargeName(totalRecurringChargesList1.get(j).getChargeName());
+                        totalRecurringCharge.setCharge(totalRecurringChargesList1.get(j).getCharge());
+                        totalRecurringCharge.setChargeVAT(totalRecurringChargesList1.get(j).getChargeVAT());
                         totalRecurringChargeList.add(totalRecurringCharge);
                         periodsProjection.setTotalRecurringCharges(totalRecurringChargeList);
+
                     }
+//                    periodsProjection.setTotalRecurringCharges(totalRecurringChargeList);
                 }
 
                 List<Milestone> milestonesList1 = periodsProjections.get(i).getMilestones();
                 if (milestonesList1 != null) {
+                    milestonesList = new ArrayList<>();
                     for (l = 0; l < milestonesList1.size(); l++) {
                         milestones = new com.inov8.integration.webservice.optasiaVO.Milestones();
-                        milestones.setDate(periodsProjections.get(i).getMilestones().get(i).getDate());
-                        milestones.setDayOfLoan(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getDayOfLoanIndex()));
+                        milestones.setDate(milestonesList1.get(l).getDate());
+                        milestones.setDayOfLoan(String.valueOf(milestonesList1.get(l).getDayOfLoanIndex()));
 
                         List<ChargeAdjustment> chargeAdjustmentList1 = milestonesList1.get(l).getChargeAdjustments();
                         if (chargeAdjustmentList1 != null) {
+                            chargeAdjustmentList = new ArrayList<>();
                             for (k = 0; k < chargeAdjustmentList1.size(); k++) {
                                 chargeAdjustment = new com.inov8.integration.webservice.optasiaVO.ChargeAdjustments();
-                                milestones = new com.inov8.integration.webservice.optasiaVO.Milestones();
 //                                List<?> milestonesList2 = periodsProjections.get(k).getMilestones();
 //                                if (!milestonesList2.isEmpty()) {
 //                                List<?> chargeAdjustmentsList1 = periodsProjections.get(k).getMilestones().get(k).getChargeAdjustments();
@@ -302,33 +320,48 @@ public class InitiateLoanResponse extends Response implements Serializable {
                                     chargeAdjustment.setVat(String.valueOf(chargeAdjustmentList1.get(k).getVat()));
                                     chargeAdjustmentList.add(chargeAdjustment);
                                     milestones.setChargeAdjustmentsList(chargeAdjustmentList);
-//                                    }
+
                                 }
                             }
+//                            milestones.setChargeAdjustmentsList(chargeAdjustmentList);
                         }
 
+
+                        interestAdjustmentList = new ArrayList<>();
                         if (milestonesList1.get(l).getInterestAdjustment() != null) {
                             interestAdjustment = new com.inov8.integration.webservice.optasiaVO.InterestAdjustment();
-                            milestones = new com.inov8.integration.webservice.optasiaVO.Milestones();
-                            interestAdjustment.setGross(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getGross()));
-                            interestAdjustment.setNet(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getNet()));
-                            interestAdjustment.setVat(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getInterestAdjustment().getVat()));
+                            interestAdjustment.setGross(String.valueOf(milestonesList1.get(l).getInterestAdjustment().getGross()));
+                            interestAdjustment.setNet(String.valueOf(milestonesList1.get(l).getInterestAdjustment().getNet()));
+                            interestAdjustment.setVat(String.valueOf(milestonesList1.get(l).getInterestAdjustment().getVat()));
                             interestAdjustmentList.add(interestAdjustment);
                             milestones.setInterestAdjustmentList(interestAdjustmentList);
                         }
-
-                        milestones.setPrincipal(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getPrincipal()));
-                        milestones.setTotalExpenses(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalExpenses()));
-                        milestones.setTotalGross(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalGross()));
-                        milestones.setTotalInterest(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalInterest()));
-                        milestones.setTotalInterestVAT(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalInterestVAT()));
-                        milestones.setTotalCharges(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalCharges()));
-                        milestones.setTotalChargesVAT(String.valueOf(periodsProjections.get(i).getMilestones().get(i).getTotalChargesVAT()));
+                        milestones.setPrincipal(String.valueOf(milestonesList1.get(l).getPrincipal()));
+                        milestones.setTotalExpenses(String.valueOf(milestonesList1.get(l).getTotalExpenses()));
+                        milestones.setTotalGross(String.valueOf(milestonesList1.get(l).getTotalGross()));
+                        milestones.setTotalInterest(String.valueOf(milestonesList1.get(l).getTotalInterest()));
+                        milestones.setTotalInterestVAT(String.valueOf(milestonesList1.get(l).getTotalInterestVAT()));
+                        milestones.setTotalCharges(String.valueOf(milestonesList1.get(l).getTotalCharges()));
+                        milestones.setTotalChargesVAT(String.valueOf(milestonesList1.get(l).getTotalChargesVAT()));
 //                        milestones.setInterestAdjustmentList(interestAdjustmentList);
 //                        milestones.setChargeAdjustmentsList(chargeAdjustmentList);
                         milestonesList.add(milestones);
+
                         periodsProjection.setMilestonesList(milestonesList);
+
+                        collectionOfList.put("ChargeAdjustments", chargeAdjustmentList);
+                        i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+                        collectionOfList.put("InterestAdjustment", interestAdjustmentList);
+                        i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
+//                        collectionOfList.put("Milestones", milestonesList);
+//                        i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+
                     }
+                    collectionOfList.put("Milestones", milestonesList);
+                    i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
+//                    periodsProjection.setMilestonesList(milestonesList);
                 }
 //                }
 
@@ -338,25 +371,19 @@ public class InitiateLoanResponse extends Response implements Serializable {
 
                 periodsProjectionList.add(periodsProjection);
 
-                collectionOfList.put("ChargeAdjustments", chargeAdjustmentList);
-                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
-
-                collectionOfList.put("InterestAdjustment", interestAdjustmentList);
-                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
-
-                collectionOfList.put("Milestones", milestonesList);
-                i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
                 collectionOfList.put("TotalOneOffCharges", totalOneOffChargesList);
                 i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
-                collectionOfList.put("TotalRecurringCharge", totalRecurringChargeList);
+                collectionOfList.put("TotalRecurringCharges", totalRecurringChargeList);
                 i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
 
                 collectionOfList.put("Projections", periodsProjectionList);
                 i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
             }
+
         }
+
         return i8SBSwitchControllerResponseVO;
     }
 }

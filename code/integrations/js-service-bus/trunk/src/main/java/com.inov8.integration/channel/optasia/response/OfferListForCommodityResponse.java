@@ -5,25 +5,18 @@ import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inov8.integration.channel.optasia.service.OptasiaService;
 import com.inov8.integration.exception.I8SBRunTimeException;
-import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
-import com.inov8.integration.middleware.enums.ResponseCodeEnum;
-import com.inov8.integration.webservice.optasiaVO.*;
-import com.inov8.integration.webservice.optasiaVO.Interest;
-import com.inov8.integration.webservice.optasiaVO.LoanOffers;
-import com.inov8.integration.webservice.optasiaVO.MaturityDetails;
-import com.inov8.integration.webservice.optasiaVO.OneOffCharges;
-import org.slf4j.LoggerFactory;
 
-import java.awt.font.TextHitInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -37,8 +30,8 @@ import java.util.logging.Logger;
 })
 public class OfferListForCommodityResponse extends Response implements Serializable {
 
+    private static Logger logger = LoggerFactory.getLogger(OfferListForCommodityResponse.class.getSimpleName());
 
-    private static org.slf4j.Logger logger = LoggerFactory.getLogger(OfferListForCommodityResponse.class.getSimpleName());
 
     private static final long serialVersionUID = 5824473488070382311L;
 
@@ -160,19 +153,16 @@ public class OfferListForCommodityResponse extends Response implements Serializa
 
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
+
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
-
-
         if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
         } else {
-            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
-            i8SBSwitchControllerResponseVO.setCode(this.getCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
         }
-        i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
         i8SBSwitchControllerResponseVO.setCode(this.getCode());
-        i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
+        i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
@@ -295,6 +285,11 @@ public class OfferListForCommodityResponse extends Response implements Serializa
             List<com.inov8.integration.webservice.optasiaVO.OutstandingStatus> outstandingStatusList = new ArrayList<>();
             com.inov8.integration.webservice.optasiaVO.OutstandingStatus outstandingStatus;
 
+            com.inov8.integration.webservice.optasiaVO.Charge charge;
+            List<com.inov8.integration.webservice.optasiaVO.Charge> chargeList = new ArrayList<>();
+
+            List<OfferListForCommodityCharge> chargeList1 = new ArrayList<>();
+
             for (int i = 0; i < this.getOutstandingStatus().size(); i++) {
                 outstandingStatus = new com.inov8.integration.webservice.optasiaVO.OutstandingStatus();
                 outstandingStatus.setCurrencyCode(this.getOutstandingStatus().get(i).getCurrencyCode());
@@ -308,6 +303,17 @@ public class OfferListForCommodityResponse extends Response implements Serializa
                 outstandingStatus.setTotalInterestVAT(String.valueOf(this.getOutstandingStatus().get(i).getTotalInterestVAT()));
                 outstandingStatus.setTotalCharges(String.valueOf(this.getOutstandingStatus().get(i).getTotalCharges()));
                 outstandingStatus.setTotalChargesVAT(String.valueOf(this.getOutstandingStatus().get(i).getTotalChargesVAT()));
+                chargeList1 = this.getOutstandingStatus().get(i).getCharges();
+                if (chargeList1 != null) {
+                    for (OfferListForCommodityCharge value : chargeList1) {
+                        charge = new com.inov8.integration.webservice.optasiaVO.Charge();
+                        charge.setCharge(value.getCharge());
+                        charge.setChargeName(value.getChargeName());
+                        charge.setChargeVAT(value.getChargeVAT());
+                        chargeList.add(charge);
+                    }
+                }
+                outstandingStatus.setCharges(chargeList);
                 outstandingStatus.setTotalPendingLoans(String.valueOf(this.getOutstandingStatus().get(i).getTotalPendingLoans()));
                 outstandingStatus.setTotalPendingRecoveries(String.valueOf(this.getOutstandingStatus().get(i).getTotalPendingRecoveries()));
 
@@ -316,7 +322,6 @@ public class OfferListForCommodityResponse extends Response implements Serializa
                 i8SBSwitchControllerResponseVO.setCollectionOfList(collectionOfList);
             }
         }
-
 
         return i8SBSwitchControllerResponseVO;
     }
@@ -674,6 +679,7 @@ class OneOffCharge {
         "totalInterestVAT",
         "totalCharges",
         "totalChargesVAT",
+        "charges",
         "totalPendingLoans",
         "totalPendingRecoveries"
 })
@@ -702,6 +708,8 @@ class Outstandingstatus {
     private Float totalCharges;
     @JsonProperty("totalChargesVAT")
     private Float totalChargesVAT;
+    @JsonProperty("charges")
+    private List<OfferListForCommodityCharge> charges;
     @JsonProperty("totalPendingLoans")
     private Float totalPendingLoans;
     @JsonProperty("totalPendingRecoveries")
@@ -817,6 +825,16 @@ class Outstandingstatus {
         this.totalChargesVAT = totalChargesVAT;
     }
 
+    @JsonProperty("charges")
+    public List<OfferListForCommodityCharge> getCharges() {
+        return charges;
+    }
+
+    @JsonProperty("charges")
+    public void setCharges(List<OfferListForCommodityCharge> charges) {
+        this.charges = charges;
+    }
+
     @JsonProperty("totalPendingLoans")
     public Float getTotalPendingLoans() {
         return totalPendingLoans;
@@ -921,6 +939,53 @@ class RecurringCharge {
     @JsonProperty("interval")
     public void setInterval(Integer interval) {
         this.interval = interval;
+    }
+
+}
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+        "chargeName",
+        "charge",
+        "chargeVAT"
+})
+class OfferListForCommodityCharge {
+
+    @JsonProperty("chargeName")
+    private String chargeName;
+    @JsonProperty("charge")
+    private Float charge;
+    @JsonProperty("chargeVAT")
+    private Float chargeVAT;
+
+    @JsonProperty("chargeName")
+    public String getChargeName() {
+        return chargeName;
+    }
+
+    @JsonProperty("chargeName")
+    public void setChargeName(String chargeName) {
+        this.chargeName = chargeName;
+    }
+
+    @JsonProperty("charge")
+    public Float getCharge() {
+        return charge;
+    }
+
+    @JsonProperty("charge")
+    public void setCharge(Float charge) {
+        this.charge = charge;
+    }
+
+    @JsonProperty("chargeVAT")
+    public Float getChargeVAT() {
+        return chargeVAT;
+    }
+
+    @JsonProperty("chargeVAT")
+    public void setChargeVAT(Float chargeVAT) {
+        this.chargeVAT = chargeVAT;
     }
 
 }

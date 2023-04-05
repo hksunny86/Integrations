@@ -7,6 +7,9 @@ import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import com.inov8.integration.middleware.enums.ResponseCodeEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 
@@ -26,6 +29,8 @@ import java.io.Serializable;
         "offerName"
 })
 public class LoanOfferResponse extends Response implements Serializable {
+
+    private static Logger logger = LoggerFactory.getLogger(LoanOfferResponse.class.getSimpleName());
 
     private static final long serialVersionUID = 5824473488070382311L;
 
@@ -198,13 +203,11 @@ public class LoanOfferResponse extends Response implements Serializable {
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
 
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
-
         if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
         } else {
+            i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
             i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
-            i8SBSwitchControllerResponseVO.setCode(this.getCode());
-            i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
         }
         i8SBSwitchControllerResponseVO.setCode(this.getCode());
         i8SBSwitchControllerResponseVO.setMessage(this.getMessage());

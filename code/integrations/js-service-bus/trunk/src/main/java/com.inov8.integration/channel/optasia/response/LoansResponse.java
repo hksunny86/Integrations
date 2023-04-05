@@ -1,14 +1,15 @@
 
 package com.inov8.integration.channel.optasia.response;
 
-import javax.annotation.Generated;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
-import com.inov8.integration.webservice.optasiaVO.Loans;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "identityValue",
@@ -25,8 +27,10 @@ import java.util.Map;
         "receivedTimestamp",
         "loansPerState"
 })
-
 public class LoansResponse extends Response implements Serializable {
+
+    private static Logger logger = LoggerFactory.getLogger(LoansResponse.class.getSimpleName());
+
 
     private static final long serialVersionUID = 5824473488070382311L;
 
@@ -138,9 +142,11 @@ public class LoansResponse extends Response implements Serializable {
         if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
         } else {
-            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
         }
+        i8SBSwitchControllerResponseVO.setCode(this.getCode());
+        i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
@@ -155,6 +161,7 @@ public class LoansResponse extends Response implements Serializable {
             List<com.inov8.integration.webservice.optasiaVO.Loans> loansList = new ArrayList<>();
             List<com.inov8.integration.webservice.optasiaVO.Repayment> repaymentList = new ArrayList<>();
             List<com.inov8.integration.webservice.optasiaVO.OutstandingStatus> outstandingStatusList = new ArrayList<>();
+            List<com.inov8.integration.webservice.optasiaVO.EndOfPeriodOutstanding> endOfPeriodOutstandingList = new ArrayList<>();
             List<com.inov8.integration.webservice.optasiaVO.Plan> planList = new ArrayList<>();
             List<com.inov8.integration.webservice.optasiaVO.LoanReasonDetail> loanReasonDetailList = new ArrayList<>();
             List<com.inov8.integration.webservice.optasiaVO.LoanReasonDetail__1> loanReasonDetail__1s = new ArrayList<>();
@@ -176,6 +183,8 @@ public class LoansResponse extends Response implements Serializable {
 
             com.inov8.integration.webservice.optasiaVO.OutstandingStatus outstandingStatus;
 
+            com.inov8.integration.webservice.optasiaVO.EndOfPeriodOutstanding endOfPeriodOutstanding;
+
             com.inov8.integration.webservice.optasiaVO.Plan plan;
 
             com.inov8.integration.webservice.optasiaVO.LoanReasonDetail loanReasonDetail;
@@ -192,6 +201,7 @@ public class LoansResponse extends Response implements Serializable {
 
             com.inov8.integration.webservice.optasiaVO.LoanReasonDetail__1 loanReasonDetail__1;
 
+            EndOfPeriodOutstanding endOfPeriodOutstanding1;
 
             for (int i = 0; i < this.getLoansPerState().size(); i++) {
 
@@ -202,6 +212,7 @@ public class LoansResponse extends Response implements Serializable {
                 loans = new com.inov8.integration.webservice.optasiaVO.Loans();
                 repayment = new com.inov8.integration.webservice.optasiaVO.Repayment();
                 outstandingStatus = new com.inov8.integration.webservice.optasiaVO.OutstandingStatus();
+                endOfPeriodOutstanding = new com.inov8.integration.webservice.optasiaVO.EndOfPeriodOutstanding();
                 plan = new com.inov8.integration.webservice.optasiaVO.Plan();
                 loanReasonDetail = new com.inov8.integration.webservice.optasiaVO.LoanReasonDetail();
                 maturityDetails = new com.inov8.integration.webservice.optasiaVO.MaturityDetails();
@@ -232,7 +243,7 @@ public class LoansResponse extends Response implements Serializable {
                 loanOffers.setLoanPlanId(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanPlanId()));
                 loanOffers.setLoanPlanName(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanPlanName());
                 loanOffers.setLoanProductGroup(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getLoanProductGroup());
-                maturityDetails.setMaturityDuration(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getMaturityDetails()));
+                maturityDetails.setMaturityDuration(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getLoan().getLoanOffer().getMaturityDetails().getMaturityDuration()));
                 maturityDetailsList.add(maturityDetails);
                 loanOffers.setMaturityDetailsList(maturityDetailsList);
 
@@ -244,7 +255,8 @@ public class LoansResponse extends Response implements Serializable {
                 repayment.setInterestVAT(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getInterestVAT()));
                 repayment.setCharges(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getCharges()));
                 repayment.setChargesVAT(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getChargesVAT()));
-
+                repaymentList.add(repayment);
+                report.setRepaymentList(repaymentList);
 
                 outstandingStatus.setCurrencyCode(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getCurrencyCode());
                 outstandingStatus.setTotalGross(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalGross()));
@@ -255,11 +267,33 @@ public class LoansResponse extends Response implements Serializable {
                 outstandingStatus.setTotalCharges(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalCharges()));
                 outstandingStatus.setTotalChargesVAT(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalChargesVAT()));
                 outstandingStatus.setTotalPendingRecoveries(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getReport().getOutstanding().getTotalPendingRecoveries()));
+                outstandingStatusList.add(outstandingStatus);
+                report.setOutstandingStatusList(outstandingStatusList);
+
+                endOfPeriodOutstanding1 = this.getLoansPerState().get(i).getLoans().get(i).getReport().getEndOfPeriodOutstanding();
+                if (endOfPeriodOutstanding1 != null) {
+                    endOfPeriodOutstanding.setDueDate(endOfPeriodOutstanding1.getDueDate());
+                    endOfPeriodOutstanding.setCurrencyCode(endOfPeriodOutstanding1.getCurrencyCode());
+                    endOfPeriodOutstanding.setTotalGross(endOfPeriodOutstanding1.getTotalGross());
+                    endOfPeriodOutstanding.setTotalPrincipal(endOfPeriodOutstanding1.getTotalPrincipal());
+                    endOfPeriodOutstanding.setTotalExpenses(endOfPeriodOutstanding1.getTotalExpenses());
+                    endOfPeriodOutstanding.setTotalSetupFees(endOfPeriodOutstanding1.getTotalSetupFees());
+                    endOfPeriodOutstanding.setTotalInterest(endOfPeriodOutstanding1.getTotalInterest());
+                    endOfPeriodOutstanding.setTotalInterestVAT(endOfPeriodOutstanding1.getTotalInterestVAT());
+                    endOfPeriodOutstanding.setTotalCharges(endOfPeriodOutstanding1.getTotalCharges());
+                    endOfPeriodOutstanding.setTotalChargesVAT(endOfPeriodOutstanding1.getTotalChargesVAT());
+                    endOfPeriodOutstanding.setTotalOneOffCharges(endOfPeriodOutstanding1.getTotalOneOffCharges());
+                    endOfPeriodOutstanding.setTotalRecurringCharges(endOfPeriodOutstanding1.getTotalRecurringCharges());
+                    endOfPeriodOutstandingList.add(endOfPeriodOutstanding);
+                }
+                report.setEndOfPeriodOutstandingList(endOfPeriodOutstandingList);
 
 
                 plan.setCurrentPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getCurrentPeriod());
                 plan.setDaysLeftInPeriod(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getDaysLeftInPeriod()));
                 plan.setNextPeriod(this.getLoansPerState().get(i).getLoans().get(i).getReport().getPlan().getNextPeriod());
+                planList.add(plan);
+                report.setPlanList(planList);
 
                 events.setEventType(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getEventType());
                 eventTypeDetails.setIsPassiveAdvance(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getEventTypeDetails().getIsPassiveAdvance());
@@ -305,7 +339,7 @@ public class LoansResponse extends Response implements Serializable {
                 events.setLoanPlanName(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getLoanPlanName());
                 maturityDetails__1.setMaturityDuration(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getMaturityDetails().getMaturityDuration());
                 events.setMaturityDetails(maturityDetails__1);
-                events.setProjectSpecific(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getProjectSpecific());
+//                events.setProjectSpecific(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getProjectSpecific());
                 events.setLoanReason(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getLoanReason());
                 loanReasonDetail__1.setUserApp(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getLoanReasonDetails().get(i).getUserApp());
                 loanReasonDetail__1s.add(loanReasonDetail__1);
@@ -319,10 +353,10 @@ public class LoansResponse extends Response implements Serializable {
 //            loans.setLoanList(loanList);
 //            loansPerState.setLoansList(loansList);
 
+//                planList.add(plan);
+//                outstandingStatusList.add(outstandingStatus);
+//                repaymentList.add(repayment);
                 eventsList.add(events);
-                planList.add(plan);
-                outstandingStatusList.add(outstandingStatus);
-                repaymentList.add(repayment);
                 reportList.add(report);
                 loanOffersList.add(loanOffers);
                 loanList.add(loan);
@@ -358,7 +392,6 @@ public class LoansResponse extends Response implements Serializable {
 
             }
         }
-
 
         return i8SBSwitchControllerResponseVO;
     }
@@ -487,7 +520,7 @@ class Events implements Serializable {
     @JsonProperty("maturityDetails")
     private MaturityDetails__1 maturityDetails;
     @JsonProperty("projectSpecific")
-    private ProjectSpecific projectSpecific;
+    private com.inov8.integration.webservice.optasiaVO.ProjectSpecific projectSpecific;
     @JsonProperty("loanReason")
     private String loanReason;
     @JsonProperty("loanReasonDetails")
@@ -874,12 +907,12 @@ class Events implements Serializable {
     }
 
     @JsonProperty("projectSpecific")
-    public ProjectSpecific getProjectSpecific() {
+    public com.inov8.integration.webservice.optasiaVO.ProjectSpecific getProjectSpecific() {
         return projectSpecific;
     }
 
     @JsonProperty("projectSpecific")
-    public void setProjectSpecific(ProjectSpecific projectSpecific) {
+    public void setProjectSpecific(com.inov8.integration.webservice.optasiaVO.ProjectSpecific projectSpecific) {
         this.projectSpecific = projectSpecific;
     }
 
@@ -1552,7 +1585,7 @@ class Plan implements Serializable {
 @JsonPropertyOrder({
 
 })
-class ProjectSpecific extends com.inov8.integration.webservice.optasiaVO.ProjectSpecific {
+class ProjectSpecific implements Serializable {
 }
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -1671,6 +1704,7 @@ class Repayment implements Serializable {
 @JsonPropertyOrder({
         "repayment",
         "outstanding",
+        "endOfPeriodOutstanding",
         "plan"
 })
 class Report implements Serializable {
@@ -1679,6 +1713,8 @@ class Report implements Serializable {
     private Repayment repayment;
     @JsonProperty("outstanding")
     private Outstanding outstanding;
+    @JsonProperty("outstanding")
+    private EndOfPeriodOutstanding endOfPeriodOutstanding;
     @JsonProperty("plan")
     private Plan plan;
 
@@ -1702,6 +1738,16 @@ class Report implements Serializable {
         this.outstanding = outstanding;
     }
 
+    @JsonProperty("endOfPeriodOutstanding")
+    public EndOfPeriodOutstanding getEndOfPeriodOutstanding() {
+        return endOfPeriodOutstanding;
+    }
+
+    @JsonProperty("endOfPeriodOutstanding")
+    public void setEndOfPeriodOutstanding(EndOfPeriodOutstanding endOfPeriodOutstanding) {
+        this.endOfPeriodOutstanding = endOfPeriodOutstanding;
+    }
+
     @JsonProperty("plan")
     public Plan getPlan() {
         return plan;
@@ -1712,4 +1758,168 @@ class Report implements Serializable {
         this.plan = plan;
     }
 
+}
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+        "dueDate",
+        "currencyCode",
+        "totalGross",
+        "totalPrincipal",
+        "totalExpenses",
+        "totalSetupFees",
+        "totalInterest",
+        "totalInterestVAT",
+        "totalCharges",
+        "totalChargesVAT",
+        "totalOneOffCharges",
+        "totalRecurringCharges"
+})
+class EndOfPeriodOutstanding implements Serializable {
+
+    @JsonProperty("dueDate")
+    private String dueDate;
+    @JsonProperty("currencyCode")
+    private String currencyCode;
+    @JsonProperty("totalGross")
+    private Float totalGross;
+    @JsonProperty("totalPrincipal")
+    private Float totalPrincipal;
+    @JsonProperty("totalExpenses")
+    private Float totalExpenses;
+    @JsonProperty("totalSetupFees")
+    private Float totalSetupFees;
+    @JsonProperty("totalInterest")
+    private Float totalInterest;
+    @JsonProperty("totalInterestVAT")
+    private Float totalInterestVAT;
+    @JsonProperty("totalCharges")
+    private Float totalCharges;
+    @JsonProperty("totalChargesVAT")
+    private Float totalChargesVAT;
+    @JsonProperty("totalOneOffCharges")
+    private Float totalOneOffCharges;
+    @JsonProperty("totalRecurringCharges")
+    private Float totalRecurringCharges;
+
+    @JsonProperty("currencyCode")
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    @JsonProperty("currencyCode")
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
+
+    @JsonProperty("totalGross")
+    public Float getTotalGross() {
+        return totalGross;
+    }
+
+    @JsonProperty("totalGross")
+    public void setTotalGross(Float totalGross) {
+        this.totalGross = totalGross;
+    }
+
+    @JsonProperty("totalPrincipal")
+    public Float getTotalPrincipal() {
+        return totalPrincipal;
+    }
+
+    @JsonProperty("totalPrincipal")
+    public void setTotalPrincipal(Float totalPrincipal) {
+        this.totalPrincipal = totalPrincipal;
+    }
+
+    @JsonProperty("totalExpenses")
+    public Float getTotalExpenses() {
+        return totalExpenses;
+    }
+
+    @JsonProperty("totalExpenses")
+    public void setTotalExpenses(Float totalExpenses) {
+        this.totalExpenses = totalExpenses;
+    }
+
+    @JsonProperty("totalSetupFees")
+    public Float getTotalSetupFees() {
+        return totalSetupFees;
+    }
+
+    @JsonProperty("totalSetupFees")
+    public void setTotalSetupFees(Float totalSetupFees) {
+        this.totalSetupFees = totalSetupFees;
+    }
+
+    @JsonProperty("totalInterest")
+    public Float getTotalInterest() {
+        return totalInterest;
+    }
+
+    @JsonProperty("totalInterest")
+    public void setTotalInterest(Float totalInterest) {
+        this.totalInterest = totalInterest;
+    }
+
+    @JsonProperty("totalInterestVAT")
+    public Float getTotalInterestVAT() {
+        return totalInterestVAT;
+    }
+
+    @JsonProperty("totalInterestVAT")
+    public void setTotalInterestVAT(Float totalInterestVAT) {
+        this.totalInterestVAT = totalInterestVAT;
+    }
+
+    @JsonProperty("totalCharges")
+    public Float getTotalCharges() {
+        return totalCharges;
+    }
+
+    @JsonProperty("totalCharges")
+    public void setTotalCharges(Float totalCharges) {
+        this.totalCharges = totalCharges;
+    }
+
+    @JsonProperty("totalChargesVAT")
+    public Float getTotalChargesVAT() {
+        return totalChargesVAT;
+    }
+
+    @JsonProperty("totalChargesVAT")
+    public void setTotalChargesVAT(Float totalChargesVAT) {
+        this.totalChargesVAT = totalChargesVAT;
+    }
+
+    @JsonProperty("dueDate")
+    public String getDueDate() {
+        return dueDate;
+    }
+
+    @JsonProperty("dueDate")
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    @JsonProperty("totalOneOffCharges")
+    public Float getTotalOneOffCharges() {
+        return totalOneOffCharges;
+    }
+
+    @JsonProperty("totalOneOffCharges")
+    public void setTotalOneOffCharges(Float totalOneOffCharges) {
+        this.totalOneOffCharges = totalOneOffCharges;
+    }
+
+
+    @JsonProperty("totalRecurringCharges")
+    public Float getTotalRecurringCharges() {
+        return totalRecurringCharges;
+    }
+
+    @JsonProperty("totalRecurringCharges")
+    public void setTotalRecurringCharges(Float totalRecurringCharges) {
+        this.totalRecurringCharges = totalRecurringCharges;
+    }
 }

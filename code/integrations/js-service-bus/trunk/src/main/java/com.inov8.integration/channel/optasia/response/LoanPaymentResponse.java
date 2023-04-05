@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 
@@ -20,6 +23,7 @@ import java.io.Serializable;
 })
 public class LoanPaymentResponse extends Response implements Serializable {
 
+    private static Logger logger = LoggerFactory.getLogger(OutstandingResponse.class.getSimpleName());
     private static final long serialVersionUID = 5824473488070382311L;
 
     @JsonProperty("code")
@@ -135,15 +139,17 @@ public class LoanPaymentResponse extends Response implements Serializable {
         if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
         } else {
+            i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
             i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
-            i8SBSwitchControllerResponseVO.setCode(this.getCode());
-            i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
         }
+        i8SBSwitchControllerResponseVO.setCode(this.getCode());
+        i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
         i8SBSwitchControllerResponseVO.setReceivedTimestamp(this.getReceivedTimestamp());
         i8SBSwitchControllerResponseVO.setSourceRequestId(this.getSourceRequestId());
+
 
         return i8SBSwitchControllerResponseVO;
     }

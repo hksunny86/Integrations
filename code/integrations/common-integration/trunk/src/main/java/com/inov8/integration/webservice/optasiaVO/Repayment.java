@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
+        "lastRepaymentDate",
         "repaymentsCount",
         "gross",
         "principal",
@@ -15,13 +16,15 @@ import java.io.Serializable;
         "interest",
         "interestVAT",
         "charges",
-        "chargesVAT",
+        "chargesVAT"
 })
 public class Repayment implements Serializable {
 
     private static final long serialVersionUID = 5824473488070382311L;
 
 
+    @JsonProperty("lastRepaymentDate")
+    private String lastRepaymentDate;
     @JsonProperty("repaymentsCount")
     private String repaymentsCount;
     @JsonProperty("gross")
@@ -38,6 +41,14 @@ public class Repayment implements Serializable {
     private String charges;
     @JsonProperty("chargesVAT")
     private String chargesVAT;
+
+    public String getLastRepaymentDate() {
+        return lastRepaymentDate;
+    }
+
+    public void setLastRepaymentDate(String lastRepaymentDate) {
+        this.lastRepaymentDate = lastRepaymentDate;
+    }
 
     public String getRepaymentsCount() {
         return repaymentsCount;

@@ -9,6 +9,7 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "is.passive.advance",
+        "is.passive.recovery",
         "pending.operation.id",
         "advance.failed.failure.type"
 })
@@ -19,6 +20,8 @@ public class EventTypeDetails implements Serializable {
 
     @JsonProperty("is.passive.advance")
     private Boolean isPassiveAdvance;
+    @JsonProperty("is.passive.recovery")
+    private Boolean isPassiveRecovery;
     @JsonProperty("pending.operation.id")
     private Integer pendingOperationId;
     @JsonProperty("advance.failed.failure.type")
@@ -33,6 +36,7 @@ public class EventTypeDetails implements Serializable {
     public void setIsPassiveAdvance(Boolean isPassiveAdvance) {
         this.isPassiveAdvance = isPassiveAdvance;
     }
+
 
     @JsonProperty("pending.operation.id")
     public Integer getPendingOperationId() {

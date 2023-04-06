@@ -247,6 +247,8 @@ public class LoansResponse extends Response implements Serializable {
                 maturityDetailsList.add(maturityDetails);
                 loanOffers.setMaturityDetailsList(maturityDetailsList);
 
+
+                repayment.setLastRepaymentDate(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getLastRepaymentDate());
                 repayment.setRepaymentsCount(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getRepaymentsCount()));
                 repayment.setGross(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getGross()));
                 repayment.setPrincipal(String.valueOf(this.getLoansPerState().get(i).getLoans().get(i).getReport().getRepayment().getPrincipal()));
@@ -295,55 +297,64 @@ public class LoansResponse extends Response implements Serializable {
                 planList.add(plan);
                 report.setPlanList(planList);
 
-                events.setEventType(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getEventType());
-                eventTypeDetails.setIsPassiveAdvance(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getEventTypeDetails().getIsPassiveAdvance());
-                eventTypeDetails.setPendingOperationId(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getEventTypeDetails().getPendingOperationId());
-                events.setEventTypeDetails(eventTypeDetails);
-                events.setEventTypeStatus(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getEventTypeStatus());
-                events.setEventTransactionId(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getEventTransactionId());
-                events.setThirdPartyTransactionId(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getThirdPartyTransactionId());
-                events.setEventReason(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getEventReason());
-                eventReasonDetail.setUserApp(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getEventReasonDetails().get(i).getUserApp());
-                eventReasonDetailList.add(eventReasonDetail);
-                events.setEventReasonDetails(eventReasonDetailList);
-                events.setPeriod(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getPeriod());
-                events.setPeriodIndex(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getPeriodIndex());
-                events.setPeriodExpirationTimestamp(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getPeriodExpirationTimestamp());
-                events.setPrincipalAdjustment(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getPrincipalAdjustment());
-                events.setPrincipalBefore(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getPrincipalBefore());
-                events.setPrincipalAfter(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getPrincipalAfter());
-                events.setSetupFeesAdjustment(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getSetupFeesAdjustment());
-                events.setSetupFeesBefore(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getSetupFeesBefore());
-                events.setSetupFeesAfter(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getSetupFeesAfter());
-                events.setInterestAdjustment(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getInterestAdjustment());
-                events.setInterestAdjustmentVAT(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getInterestAdjustmentVAT());
-                events.setInterestBefore(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getInterestBefore());
-                events.setInterestAfter(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getInterestAfter());
-                events.setTotalChargesAfter(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getTotalChargesAfter());
-                events.setTotalChargesAdjustment(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getTotalChargesAdjustment());
-                events.setTotalChargesAdjustmentVAT(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getTotalChargesAdjustmentVAT());
-                events.setTotalChargesBefore(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getTotalChargesBefore());
-                events.setTotalChargesAfter(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getTotalChargesAfter());
-                events.setEventTimestamp(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getEventTimestamp());
-                events.setReceptionTimestamp(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getReceptionTimestamp());
-                events.setProcessingTimestamp(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getProcessingTimestamp());
-                events.setSourceRequestId(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getSourceRequestId());
-                events.setOfferName(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getOfferName());
-                events.setCommodityType(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getCommodityType());
-                events.setCurrencyCode(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getCurrencyCode());
-                events.setPrincipalAmount(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getPrincipalAmount());
-                events.setSetupFees(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getSetupFees());
-                events.setLoanProductGroup(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getLoanProductGroup());
-                events.setLoanPlanId(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getLoanPlanId());
-                events.setLoanPlanName(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getLoanPlanName());
-                events.setLoanPlanName(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getLoanPlanName());
-                maturityDetails__1.setMaturityDuration(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getMaturityDetails().getMaturityDuration());
-                events.setMaturityDetails(maturityDetails__1);
-//                events.setProjectSpecific(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getProjectSpecific());
-                events.setLoanReason(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getLoanReason());
-                loanReasonDetail__1.setUserApp(this.getLoansPerState().get(i).getLoans().get(i).getEvents().get(i).getLoanReasonDetails().get(i).getUserApp());
-                loanReasonDetail__1s.add(loanReasonDetail__1);
-                events.setLoanReasonDetails(loanReasonDetail__1s);
+                List<Events> eventsList1 = this.getLoansPerState().get(i).getLoans().get(i).getEvents();
+                if (eventsList1 != null) {
+                    events.setEventType(eventsList1.get(i).getEventType());
+                    eventTypeDetails.setIsPassiveAdvance(eventsList1.get(i).getEventTypeDetails().getIsPassiveAdvance());
+                    eventTypeDetails.setPendingOperationId(eventsList1.get(i).getEventTypeDetails().getPendingOperationId());
+                    events.setEventTypeDetails(eventTypeDetails);
+                    events.setEventTypeStatus(eventsList1.get(i).getEventTypeStatus());
+                    events.setEventTransactionId(eventsList1.get(i).getEventTransactionId());
+                    events.setThirdPartyTransactionId(eventsList1.get(i).getThirdPartyTransactionId());
+                    events.setEventReason(eventsList1.get(i).getEventReason());
+                    List<EventReasonDetail> eventReasonDetailList1 = eventsList1.get(i).getEventReasonDetails();
+                    if (eventReasonDetailList1 != null) {
+                        for (EventReasonDetail reasonDetail : eventReasonDetailList1) {
+                            eventReasonDetail.setUserApp(reasonDetail.getUserApp());
+                            eventReasonDetailList.add(eventReasonDetail);
+                        }
+                    }
+                    events.setEventReasonDetails(eventReasonDetailList);
+                    events.setPeriod(eventsList1.get(i).getPeriod());
+                    events.setPeriodIndex(eventsList1.get(i).getPeriodIndex());
+                    events.setPeriodExpirationTimestamp(eventsList1.get(i).getPeriodExpirationTimestamp());
+                    events.setPrincipalAdjustment(eventsList1.get(i).getPrincipalAdjustment());
+                    events.setPrincipalBefore(eventsList1.get(i).getPrincipalBefore());
+                    events.setPrincipalAfter(eventsList1.get(i).getPrincipalAfter());
+                    events.setSetupFeesAdjustment(eventsList1.get(i).getSetupFeesAdjustment());
+                    events.setSetupFeesBefore(eventsList1.get(i).getSetupFeesBefore());
+                    events.setSetupFeesAfter(eventsList1.get(i).getSetupFeesAfter());
+                    events.setInterestAdjustment(eventsList1.get(i).getInterestAdjustment());
+                    events.setInterestAdjustmentVAT(eventsList1.get(i).getInterestAdjustmentVAT());
+                    events.setInterestBefore(eventsList1.get(i).getInterestBefore());
+                    events.setInterestAfter(eventsList1.get(i).getInterestAfter());
+                    events.setTotalChargesAfter(eventsList1.get(i).getTotalChargesAfter());
+                    events.setTotalChargesAdjustment(eventsList1.get(i).getTotalChargesAdjustment());
+                    events.setTotalChargesAdjustmentVAT(eventsList1.get(i).getTotalChargesAdjustmentVAT());
+                    events.setTotalChargesBefore(eventsList1.get(i).getTotalChargesBefore());
+                    events.setTotalChargesAfter(eventsList1.get(i).getTotalChargesAfter());
+                    events.setEventTimestamp(eventsList1.get(i).getEventTimestamp());
+                    events.setReceptionTimestamp(eventsList1.get(i).getReceptionTimestamp());
+                    events.setProcessingTimestamp(eventsList1.get(i).getProcessingTimestamp());
+                    events.setSourceRequestId(eventsList1.get(i).getSourceRequestId());
+                    events.setOfferName(eventsList1.get(i).getOfferName());
+                    events.setCommodityType(eventsList1.get(i).getCommodityType());
+                    events.setCurrencyCode(eventsList1.get(i).getCurrencyCode());
+                    events.setPrincipalAmount(eventsList1.get(i).getPrincipalAmount());
+                    events.setSetupFees(eventsList1.get(i).getSetupFees());
+                    events.setLoanProductGroup(eventsList1.get(i).getLoanProductGroup());
+                    events.setLoanPlanId(eventsList1.get(i).getLoanPlanId());
+                    events.setLoanPlanName(eventsList1.get(i).getLoanPlanName());
+                    events.setLoanPlanName(eventsList1.get(i).getLoanPlanName());
+                    maturityDetails__1.setMaturityDuration(eventsList1.get(i).getMaturityDetails().getMaturityDuration());
+                    events.setMaturityDetails(maturityDetails__1);
+//                events.setProjectSpecific(eventsList1.get(i).getProjectSpecific());
+                    events.setLoanReason(eventsList1.get(i).getLoanReason());
+                    loanReasonDetail__1.setUserApp(eventsList1.get(i).getLoanReasonDetails().get(i).getUserApp());
+                    loanReasonDetail__1s.add(loanReasonDetail__1);
+                    events.setLoanReasonDetails(loanReasonDetail__1s);
+                }
+
 
 //            loans.setPlanList(planList);
 //            loans.setOutstandingStatusList(outstandingStatusList);
@@ -959,12 +970,8 @@ class EventReasonDetail implements Serializable {
 
 }
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-        "is.passive.advance",
-        "pending.operation.id",
-        "advance.failed.failure.type"
-})
 class EventTypeDetails implements Serializable {
 
     @JsonProperty("is.passive.advance")
@@ -1590,6 +1597,7 @@ class ProjectSpecific implements Serializable {
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
+        "lastRepaymentDate",
         "repaymentsCount",
         "gross",
         "principal",
@@ -1601,6 +1609,8 @@ class ProjectSpecific implements Serializable {
 })
 class Repayment implements Serializable {
 
+    @JsonProperty("lastRepaymentDate")
+    private String lastRepaymentDate;
     @JsonProperty("repaymentsCount")
     private Integer repaymentsCount;
     @JsonProperty("gross")
@@ -1617,6 +1627,16 @@ class Repayment implements Serializable {
     private Float charges;
     @JsonProperty("chargesVAT")
     private Float chargesVAT;
+
+    @JsonProperty("lastRepaymentDate")
+    public String getLastRepaymentDate() {
+        return lastRepaymentDate;
+    }
+
+    @JsonProperty("lastRepaymentDate")
+    public void setLastRepaymentDate(String lastRepaymentDate) {
+        this.lastRepaymentDate = lastRepaymentDate;
+    }
 
     @JsonProperty("repaymentsCount")
     public Integer getRepaymentsCount() {

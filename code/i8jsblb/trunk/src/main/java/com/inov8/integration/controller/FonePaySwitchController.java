@@ -27,7 +27,6 @@ import com.inov8.microbank.common.exception.WorkFlowException;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.customermodule.CustomerPictureModel;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
-import com.inov8.microbank.common.model.portal.inovtransactiondetailmodule.MiniStatementListViewModel;
 import com.inov8.microbank.common.util.*;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapper;
 import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapperImpl;
@@ -127,6 +126,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
     private TransactionReversalManager transactionReversalManager;
     private TransactionDetailMasterDAO transactionDetailMasterDAO;
     private TransactionDetailMasterManager transactionDetailMasterManager;
+    private List ecofinChannelIds;
 
 
     private boolean defaultUserLogin() {
@@ -875,6 +875,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
     public WebServiceVO accountOpening(WebServiceVO webServiceVO) {
         FonePayLogModel fonePayLogModel = null;
+        ecofinChannelIds = Arrays.asList(MessageUtil.getMessage("ChannelIds").split(","));
         String mobileNumber = webServiceVO.getMobileNo();
         String cnic = webServiceVO.getCnicNo();
         String rrn = webServiceVO.getRetrievalReferenceNumber();
@@ -922,14 +923,21 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             ActionLogModel actionLogModel = actionLogBeforeStart(PortalConstants.ACTION_CREATE, Long.valueOf(1002L), Long.valueOf(Long.parseLong("121")), mobileNumber);
 
             int pendingTransactionCount = getCommonCommandManager().countCustomerPendingTrx(cnic);
-            if (webServiceVO.getChannelId().equalsIgnoreCase(MessageUtil.getMessage("EcofinChannelId"))) {
+            if(ecofinChannelIds.contains(webServiceVO.getChannelId())){
+                EcofinSubAgentModel ecofinSubAgent = ecofinSubAgentDAO.findByPrimaryKey(Long.valueOf(webServiceVO.getReserved3()));
+
+                if (ecofinSubAgent == null) {
+                    this.logger.error("Channel_id error with: "+webServiceVO.getChannelId());
+                }
+            }
+            /* if (webServiceVO.getChannelId().equalsIgnoreCase(MessageUtil.getMessage("EcofinChannelId"))) {
 
                 EcofinSubAgentModel ecofinSubAgent = ecofinSubAgentDAO.findByPrimaryKey(Long.valueOf(webServiceVO.getReserved3()));
 
                 if (ecofinSubAgent == null) {
                     this.logger.error("Ecofin Sub Agent Error:");
                 }
-            }
+            }*/
 //            AppUserModel appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(MessageUtil.getMessage("EcofinMobileNumberR"), UserTypeConstantsInterface.RETAILER);
 //            if (appUserModel != null) {
             if (pendingTransactionCount > 0) {
@@ -8188,6 +8196,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
     public WebServiceVO agentCashDepositInquiry(WebServiceVO webServiceVO) {
         logger.info("[FonePaySwitchController.agentCashDepositInquiry] Start:: ");
         String xml = "";
+        ecofinChannelIds = Arrays.asList(MessageUtil.getMessage("ChannelIds").split(","));
         String isValidationRequired = webServiceVO.getReserved1();
         FonePayLogModel fonePayLogModel = null;
         AppUserModel customerAppUserModel = new AppUserModel();
@@ -8213,13 +8222,21 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 return webServiceVO;
             }
 //            uda = getCommonCommandManager().loadUserDeviceAccountByUserId(webServiceVO.getAgentId());
-            if (webServiceVO.getChannelId().equalsIgnoreCase(MessageUtil.getMessage("EcofinChannelId"))) {
+
+            if(ecofinChannelIds.contains(webServiceVO.getChannelId())){
+                EcofinSubAgentModel ecofinSubAgent = ecofinSubAgentDAO.findByPrimaryKey(Long.valueOf(webServiceVO.getReserved3()));
+
+                if (ecofinSubAgent == null) {
+                    this.logger.error("Channel_id error with: "+webServiceVO.getChannelId());
+                }
+            }
+            /*if (webServiceVO.getChannelId().equalsIgnoreCase(MessageUtil.getMessage("EcofinChannelId"))) {
                 EcofinSubAgentModel ecofinSubAgent = ecofinSubAgentDAO.findByPrimaryKey(Long.valueOf(webServiceVO.getReserved3()));
 
                 if (ecofinSubAgent == null) {
                     this.logger.error("Ecofin Sub Agent Error:");
                 }
-            }
+            }*/
             uda = getCommonCommandManager().loadUserDeviceAccountByUserId(webServiceVO.getAgentId());
 
             if (uda == null) {
@@ -8345,6 +8362,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
     @Override
     public WebServiceVO agentCashDepositPayment(WebServiceVO webServiceVO) {
         logger.info("[FonePaySwitchController.agentCashDepositPayment] Start:: ");
+        ecofinChannelIds = Arrays.asList(MessageUtil.getMessage("ChannelIds").split(","));
         String mobileNo = webServiceVO.getMobileNo();
         String trxnAmount = webServiceVO.getTransactionAmount();
         String consumerNo = webServiceVO.getConsumerNo();
@@ -8369,12 +8387,20 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
             fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, FonePayConstants.REQ_CASH_IN);
             ActionLogModel actionLogModel = actionLogBeforeStart(PortalConstants.ACTION_CREATE, Long.valueOf(1002L), Long.valueOf(Long.parseLong("121")), webServiceVO.getAgentMobileNumber());
-            if (webServiceVO.getChannelId().equalsIgnoreCase(MessageUtil.getMessage("EcofinChannelId"))) {
+            if(ecofinChannelIds.contains(webServiceVO.getChannelId())){
+                EcofinSubAgentModel ecofinSubAgent = ecofinSubAgentDAO.findByPrimaryKey(Long.valueOf(webServiceVO.getReserved3()));
+
+                if (ecofinSubAgent == null) {
+                    this.logger.error("Channel_id error with: "+webServiceVO.getChannelId());
+                }
+            }
+
+            /*    if (webServiceVO.getChannelId().equalsIgnoreCase(MessageUtil.getMessage("EcofinChannelId"))) {
                 EcofinSubAgentModel ecofinSubAgent = ecofinSubAgentDAO.findByPrimaryKey(Long.valueOf(webServiceVO.getReserved3()));
                 if (ecofinSubAgent == null) {
                     this.logger.error("Ecofin Sub Agent Not Found:");
                 }
-            }
+            }*/
             uda = getCommonCommandManager().loadUserDeviceAccountByUserId(webServiceVO.getAgentId());
             if (uda == null) {
                 logger.info("[FonePaySwitchController.agentCashDepositPayment] Agent Not Found against the Agent Id :: " + webServiceVO.getAgentId());
@@ -8557,6 +8583,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         bWrapper.putObject("PID", PID);
         bWrapper.putObject(CommandFieldConstants.KEY_IS_OTP_REQUIRED, webServiceVO.getIsOtpRequest());
         bWrapper.putObject("DTID", DeviceTypeConstantsInterface.WEB_SERVICE);
+        ecofinChannelIds = Arrays.asList(MessageUtil.getMessage("ChannelIds").split(","));
 
         FonePayMessageVO fonePayMessageVO = new FonePayMessageVO();
         FonePayLogModel fonePayLogModel = null;
@@ -8578,13 +8605,20 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 webServiceVO.setResponseCodeDescription("Product ID is Incorrect.");
                 return webServiceVO;
             }
-            if (webServiceVO.getChannelId().equalsIgnoreCase(MessageUtil.getMessage("EcofinChannelId"))) {
+            if(ecofinChannelIds.contains(webServiceVO.getChannelId())){
+                EcofinSubAgentModel ecofinSubAgent = ecofinSubAgentDAO.findByPrimaryKey(Long.valueOf(webServiceVO.getReserved3()));
+
+                if (ecofinSubAgent == null) {
+                    this.logger.error("Channel_id error with: "+webServiceVO.getChannelId());
+                }
+            }
+            /* if (webServiceVO.getChannelId().equalsIgnoreCase(MessageUtil.getMessage("EcofinChannelId"))) {
                 EcofinSubAgentModel ecofinSubAgent = ecofinSubAgentDAO.findByPrimaryKey(Long.valueOf(webServiceVO.getReserved3()));
 
                 if (ecofinSubAgent == null) {
                     this.logger.error("Ecofin Sub Agent Error:");
                 }
-            }
+            }*/
             uda = getCommonCommandManager().loadUserDeviceAccountByUserId(webServiceVO.getAgentId());
 
             if (uda == null) {
@@ -8714,6 +8748,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         String txProcessingAmount = webServiceVO.getTransactionProcessingAmount();
         String commissionAmount = webServiceVO.getCommissionAmount();
         String xml = "";
+        ecofinChannelIds = Arrays.asList(MessageUtil.getMessage("ChannelIds").split(","));
         FonePayLogModel fonePayLogModel = null;
         AppUserModel appUserModel = new AppUserModel();
         BaseWrapper bWrapper = new BaseWrapperImpl();
@@ -8733,14 +8768,21 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             if (webServiceVO.getTransactionAmount() == null || Double.valueOf(webServiceVO.getTransactionAmount()) <= 0) {
                 return FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.INVALID_AMOUNT);
             }
-            if (webServiceVO.getChannelId().equalsIgnoreCase(MessageUtil.getMessage("EcofinChannelId"))) {
+            if(ecofinChannelIds.contains(webServiceVO.getChannelId())){
+                EcofinSubAgentModel ecofinSubAgent = ecofinSubAgentDAO.findByPrimaryKey(Long.valueOf(webServiceVO.getReserved3()));
+
+                if (ecofinSubAgent == null) {
+                    this.logger.error("Channel_id error with: "+webServiceVO.getChannelId());
+                }
+            }
+           /* if (webServiceVO.getChannelId().equalsIgnoreCase(MessageUtil.getMessage("EcofinChannelId"))) {
                 EcofinSubAgentModel ecofinSubAgent = ecofinSubAgentDAO.findByPrimaryKey(Long.valueOf(webServiceVO.getReserved3()));
 
                 if (ecofinSubAgent == null) {
                     this.logger.error("Ecofin Sub Agent Error:");
                 }
 
-            }
+            }*/
             uda = getCommonCommandManager().loadUserDeviceAccountByUserId(webServiceVO.getAgentId());
             if (uda == null) {
                 logger.info("[FonePaySwitchController.agentCashWithdrawalPayment] Agent Not Found against the Agent Id :: " + webServiceVO.getAgentId());

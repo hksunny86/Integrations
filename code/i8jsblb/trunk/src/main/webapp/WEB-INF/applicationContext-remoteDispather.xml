@@ -59,6 +59,7 @@
         <property name="esbAdapter" ref="esbAdapter"></property>
         <property name="reversalAdviceQueingPreProcessor" ref="reversalAdviceQueingPreProcessor"/>
         <property name="transactionDetailMasterDAO" ref="transactionDetailMasterDAO"/>
+        <property name="transactionDetailMasterManager" ref="transactionDetailMasterManager"/>
 
 <!--        <property name="ibftRetryAdviceDAO" ref="ibftRetryAdviceDAO"></property>-->
 

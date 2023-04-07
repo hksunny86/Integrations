@@ -1437,6 +1437,14 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
         String isValidationRequired = webServiceVO.getReserved1();
         String terminalId = webServiceVO.getTerminalId();
+        if(validationForCommandId.equals(CommandFieldConstants.CMD_CASH_OUT_INFO) || validationForCommandId.equals(CommandFieldConstants.CASH_DEPOSIT_INFO_COMMAND)){
+            if(isValidationRequired != null && isValidationRequired.equals("3")) {
+                webServiceVO.setMobileNo(webServiceVO.getAgentMobileNumber());
+            }
+            else {
+                webServiceVO.setMobileNo(webServiceVO.getConsumerMobileNo());
+            }
+        }
         if (isValidationRequired != null && isValidationRequired.equals("02") && terminalId != null && !terminalId.equals(FonePayConstants.DEBIT_CARD_CHANNEL) && validationForCommandId != null) {
             this.validateOTP(webServiceVO, validationForCommandId);
             return webServiceVO;
@@ -1783,8 +1791,8 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         while (it.hasNext()) {
                             CommandResponseXML.Param param = it.next();
 
-                            if (param.getName().equals(CommandFieldConstants.KEY_PESSENGER_NAME)) {
-                                webServiceVO.setDueDate(param.getValue());
+                            if (param.getName().equals(CommandFieldConstants.KEY_CUSTOMER_NAME)) {
+                                webServiceVO.setProductName(param.getValue());
                             } else if (param.getName().equals(CommandFieldConstants.KEY_TOTAL_AMOUNT)) {
                                 webServiceVO.setTotalAmount(param.getValue());
                             } else if (param.getName().equals("AFTER_DUE_DATE")) {
@@ -5480,7 +5488,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         baseWrapper.putObject(CommandFieldConstants.KEY_CHANNEL_ID, webServiceVO.getChannelId());
         baseWrapper.putObject(CommandFieldConstants.KEY_TX_AMOUNT, webServiceVO.getTransactionAmount());
         if(webServiceVO.getProductID().equals("xtraCash")) {
-            baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, ProductConstantsInterface.LOAN_XTRA_CASH);
+            baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, ProductConstantsInterface.LOAN_XTRA_CASH_REPAYMENT);
         }
         else{
             baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, webServiceVO.getProductID());
@@ -5667,7 +5675,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         baseWrapper.putObject(CommandFieldConstants.KEY_STAN, webServiceVO.getReserved2());
         baseWrapper.putObject(CommandFieldConstants.KEY_TX_AMOUNT, webServiceVO.getTransactionAmount());
         if(webServiceVO.getProductID().equals("xtraCash")) {
-            baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, ProductConstantsInterface.LOAN_XTRA_CASH);
+            baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, ProductConstantsInterface.LOAN_XTRA_CASH_REPAYMENT);
         }
         else{
             baseWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, webServiceVO.getProductID());
@@ -5847,7 +5855,8 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.MONTHLY_CREDIT_LIMIT_BUSTED);
                 } else if (e.getMessage().equals("Incorrect MPIN, Please retry.\n")) {
                     FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.INVALID_PIN.toString());
-                } else if (e.getMessage().equals("Transaction cannot be processed due to insufficient balance.")) {
+                } else if (e.getMessage().equals("Transaction cannot be processed due to insufficient balance.") ||
+                        e.getMessage().equals("Request cannot be processed. Insufficient account balance.")) {
                     FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.INSUFFICIENT_ACC_BALANCE);
                 } else {
                     logger.error("[FonePaySwitchController.debitPayment] Error occured: " + e.getMessage(), e);
@@ -6305,9 +6314,22 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
         } catch (CommandException e) {
             logger.error("[FonePaySwitchController.creditInquiry] Error occured: " + e.getMessage(), e);
-            webServiceVO.setResponseContentXML(xml);
-            webServiceVO.setResponseCode(String.valueOf(e.getErrorCode()));
-            webServiceVO.setResponseCodeDescription(e.getMessage());
+            if (e.getErrorCode() == 9001L) {
+                if (e.getMessage().equals("Per day limit of Recipient exceeded.")) {
+                    FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.DAILY_CREDIT_LIMIT_BUSTED);
+                } else if (e.getMessage().equals("Per month limit of Recipient exceeded.")) {
+                    FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.MONTHLY_CREDIT_LIMIT_BUSTED);
+                } else {
+                    logger.error("[FonePaySwitchController.creditPayment] Error occured: " + e.getMessage(), e);
+                    webServiceVO.setResponseCode(FonePayResponseCodes.COMMAND_GENERAL_EXCEPTION);
+                    webServiceVO.setResponseCodeDescription(e.getMessage());
+                }
+            }
+            else {
+                webServiceVO.setResponseContentXML(xml);
+                webServiceVO.setResponseCode(String.valueOf(e.getErrorCode()));
+                webServiceVO.setResponseCodeDescription(e.getMessage());
+            }
         } catch (Exception e) {
             logger.error("[FonePaySwitchController.creditInquiry] Error occured: " + e.getMessage(), e);
             if (StringUtil.isNullOrEmpty(webServiceVO.getResponseCode())) {
@@ -6348,7 +6370,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         String appId = "2";
         String transactionType = webServiceVO.getTransactionType();
         String messageType = "credit Payment";
-        Long productId = Long.valueOf(webServiceVO.getProductID());
+//        Long productId = Long.valueOf(webServiceVO.getProductID());
         UserDeviceAccountsModel uda = new UserDeviceAccountsModel();
         this.logger.info("[FonePay creditPayment] [Mobile:" + mobileNo + "]");
         AdvanceSalaryLoanModel advanceSalaryLoanModel = new AdvanceSalaryLoanModel();
@@ -10703,7 +10725,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 CustomerModel customerModel = getCommonCommandManager().getCustomerModelById(appUserModel.getCustomerId());
                 webServiceVO.setWalletType(customerModel.getCustomerAccountTypeIdCustomerAccountTypeModel().getName());
                 webServiceVO.setWalletStatus(String.valueOf(appUserModel.getRegistrationStateModel().getName()));
-                webServiceVO.setTaxRegime(String.valueOf(customerModel.getTaxRegimeIdTaxRegimeModel().getTaxRegimeCode()));
+                webServiceVO.setTaxRegime(customerModel.getTaxRegimeIdTaxRegimeModel().getTaxRegimeCode());
 
                 SmartMoneyAccountModel sma = getCommonCommandManager().getSmartMoneyAccountByAppUserModelAndPaymentModId
                         (appUserModel, PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT);
@@ -10832,9 +10854,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
         BaseWrapper baseWrapper = new BaseWrapperImpl();
         try {
-//            webServiceVO = this.validateRRN(webServiceVO);
-//            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
-//                return webServiceVO;
+            webServiceVO = this.validateRRN(webServiceVO);
+            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+                return webServiceVO;
             fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "initiateLoan");
 
             appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
@@ -10992,7 +11014,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 requestVO.setOfferName(webServiceVO.getOfferName());
                 requestVO.setAmount(webServiceVO.getAmount());
                 //tax regime in additional info
-                requestVO.setFed(customerModel.getTaxRegimeIdTaxRegimeModel().getName());
+                requestVO.setFed(customerModel.getTaxRegimeIdTaxRegimeModel().getTaxRegimeCode());
 
                 SwitchWrapper sWrapper = new SwitchWrapperImpl();
                 sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
@@ -11265,6 +11287,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 //                requestVO.setSTAN(webServiceVO.getReserved2());
 //                requestVO.setRRN(webServiceVO.getRetrievalReferenceNumber());
                 requestVO.setAmount(webServiceVO.getLoanAmount());
+                requestVO.setUpToPeriod(webServiceVO.getUpToPeriod());
 
                 SwitchWrapper sWrapper = new SwitchWrapperImpl();
                 sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
@@ -11308,10 +11331,10 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     data = (ArrayList<?>) responseVO.getCollectionOfList().get("OneOffCharges");
                     if (data != null) {
                         oneOffChargesList = data;
+                        List<OneOffCharges> oneOffCharges1 = new ArrayList<>();
                         for (int i=0; i<oneOffChargesList.size(); i++) {
 
                             OneOffCharges oneOffCharges = new OneOffCharges();
-                            List<OneOffCharges> oneOffCharges1 = new ArrayList<>();
 
 
                             oneOffCharges.setChargeName(((OneOffCharges) oneOffChargesList.get(i)).getChargeName());
@@ -11330,10 +11353,10 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     data = (ArrayList<?>) responseVO.getCollectionOfList().get("RecurringCharges");
                     if (data != null) {
                         recurringChargesList = data;
+                        List<RecurringCharges> recurringCharges1 = new ArrayList<>();
                         for (int i=0; i<recurringChargesList.size(); i++) {
 
                             RecurringCharges recurringCharges = new RecurringCharges();
-                            List<RecurringCharges> recurringCharges1 = new ArrayList<>();
 
 
                             recurringCharges.setChargeName(((RecurringCharges) recurringChargesList.get(i)).getChargeName());
@@ -11425,32 +11448,32 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         }
                     }
 
-                    List<?> milestonesList = new ArrayList<>();
-                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("Milestones");
-                    if (data != null) {
-                        milestonesList = data;
-                        List<Milestones> milestonesList1 = new ArrayList<>();
-                        for (int i=0; i<milestonesList.size(); i++) {
-                            Milestones milestones = new Milestones();
-
-                            milestones.setDayOfLoan(((Milestones) milestonesList.get(i)).getDayOfLoan());
-                            milestones.setDate(((Milestones) milestonesList.get(i)).getDate());
-                            milestones.setPrincipal(((Milestones) milestonesList.get(i)).getPrincipal());
-                            milestones.setTotalExpenses(((Milestones) milestonesList.get(i)).getTotalExpenses());
-                            milestones.setTotalGross(((Milestones) milestonesList.get(i)).getTotalGross());
-                            milestones.setTotalInterest(((Milestones) milestonesList.get(i)).getTotalInterest());
-                            milestones.setTotalInterestVAT(((Milestones) milestonesList.get(i)).getTotalInterestVAT());
-                            milestones.setTotalCharges(((Milestones) milestonesList.get(i)).getTotalCharges());
-                            milestones.setTotalChargesVAT(((Milestones) milestonesList.get(i)).getTotalChargesVAT());
-
-                            milestones.setInterestAdjustmentList(webServiceVO.getInterestAdjustmentsList());
-                            milestones.setChargeAdjustmentsList(webServiceVO.getChargeAdjustmentsList());
-
-                            milestonesList1.add(milestones);
-
-                            webServiceVO.setMilestonesList(milestonesList1);
-                        }
-                    }
+//                    List<?> milestonesList = new ArrayList<>();
+//                    data = (ArrayList<?>) responseVO.getCollectionOfList().get("Milestones");
+//                    if (data != null) {
+//                        milestonesList = data;
+//                        List<Milestones> milestonesList1 = new ArrayList<>();
+//                        for (int i=0; i<milestonesList.size(); i++) {
+//                            Milestones milestones = new Milestones();
+//
+//                            milestones.setDayOfLoan(((Milestones) milestonesList.get(i)).getDayOfLoan());
+//                            milestones.setDate(((Milestones) milestonesList.get(i)).getDate());
+//                            milestones.setPrincipal(((Milestones) milestonesList.get(i)).getPrincipal());
+//                            milestones.setTotalExpenses(((Milestones) milestonesList.get(i)).getTotalExpenses());
+//                            milestones.setTotalGross(((Milestones) milestonesList.get(i)).getTotalGross());
+//                            milestones.setTotalInterest(((Milestones) milestonesList.get(i)).getTotalInterest());
+//                            milestones.setTotalInterestVAT(((Milestones) milestonesList.get(i)).getTotalInterestVAT());
+//                            milestones.setTotalCharges(((Milestones) milestonesList.get(i)).getTotalCharges());
+//                            milestones.setTotalChargesVAT(((Milestones) milestonesList.get(i)).getTotalChargesVAT());
+//
+//                            milestones.setInterestAdjustmentList(webServiceVO.getInterestAdjustmentsList());
+//                            milestones.setChargeAdjustmentsList(webServiceVO.getChargeAdjustmentsList());
+//
+//                            milestonesList1.add(milestones);
+//
+//                            webServiceVO.setMilestonesList(milestonesList1);
+//                        }
+//                    }
 
                     List<?> totalOneOffChargesList = new ArrayList<>();
                     data = (ArrayList<?>) responseVO.getCollectionOfList().get("TotalOneOffCharges");
@@ -11478,9 +11501,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         for (int i=0; i<totalOneOffChargesList.size(); i++) {
                             TotalRecurringCharge totalRecurringCharge = new TotalRecurringCharge();
 
-                            totalRecurringCharge.setCharge(((TotalRecurringCharge) totalRecurringChargesList1.get(i)).getCharge());
-                            totalRecurringCharge.setChargeName(((TotalRecurringCharge) totalRecurringChargesList1.get(i)).getChargeName());
-                            totalRecurringCharge.setChargeVAT(((TotalRecurringCharge) totalRecurringChargesList1.get(i)).getChargeVAT());
+                            totalRecurringCharge.setCharge(((TotalRecurringCharge) totalRecurringChargesList.get(i)).getCharge());
+                            totalRecurringCharge.setChargeName(((TotalRecurringCharge) totalRecurringChargesList.get(i)).getChargeName());
+                            totalRecurringCharge.setChargeVAT(((TotalRecurringCharge) totalRecurringChargesList.get(i)).getChargeVAT());
 
                             totalRecurringChargesList1.add(totalRecurringCharge);
 
@@ -11509,11 +11532,11 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                             periodsProjection.setTotalCharges(((PeriodsProjection) projectionsList.get(i)).getTotalCharges());
                             periodsProjection.setTotalChargesVAT(((PeriodsProjection) projectionsList.get(i)).getTotalChargesVAT());
 
+                            periodsProjection.setMilestonesList(((PeriodsProjection) projectionsList.get(i)).getMilestonesList());
                             periodsProjection.setTotalOneOffChargesList(webServiceVO.getTotalOneOffChargesList());
-                            periodsProjection.setMilestonesList(webServiceVO.getMilestonesList());
+//                            periodsProjection.setMilestonesList(webServiceVO.getMilestonesList());
                             periodsProjection.setTotalRecurringCharges(webServiceVO.getTotalRecurringChargeList());
                             periodsProjectionList.add(periodsProjection);
-
 
                             webServiceVO.setPeriodsProjectionList(periodsProjectionList);
                         }
@@ -11534,7 +11557,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             logger.error("[FonePaySwitchController.selectLoanOffer] Error occured: " + e.getMessage(), e);
 
             this.logger.error("[FonePaySwitchController.selectLoanOffer] Error occured: " + e.getMessage(), e);
-            webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+            webServiceVO.setResponseCode(((WorkFlowException) e).getErrorCode());
             webServiceVO.setResponseCodeDescription(e.getMessage());
             if (e instanceof NullPointerException
                     || e instanceof HibernateException
@@ -11577,6 +11600,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 if (!getCommonCommandManager().checkActiveAppUserForOpenAPI(webServiceVO, appUserModel)) {
                     return webServiceVO;
                 }
+                CustomerModel customerModel = getCommonCommandManager().getCustomerModelById(appUserModel.getCustomerId());
                 I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
                 I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
                 requestVO = ESBAdapter.loans(I8SBConstants.RequestType_OPTASIA_LOANOFFER);
@@ -11584,9 +11608,30 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 requestVO.setIdentityValue(appUserModel.getShaNic());
                 requestVO.setOrigSource("mobileApp");
                 requestVO.setSourceRequestId(webServiceVO.getRetrievalReferenceNumber());
-                requestVO.setOfferName(appUserModel.getMobileNo());
-                requestVO.setAmount(webServiceVO.getLoanAmount());
-                requestVO.setFed("Fed");
+                requestVO.setOfferName(webServiceVO.getOfferName());
+                requestVO.setAmount(webServiceVO.getAmount());
+//                requestVO.setFed(customerModel.getTaxRegimeIdTaxRegimeModel().getTaxRegimeCode());
+//                requestVO.setMerchantId(webServiceVO.getMerchantId());
+//                requestVO.setLoanPurpose(webServiceVO.getLoanPurpose());
+
+                ArrayList additionalInfolist = new ArrayList<>();
+
+                AdditionalInfo additionalInfo = new AdditionalInfo();
+                additionalInfo.setInfoKey("loanPurpose");
+                additionalInfo.setInfoValue(webServiceVO.getLoanPurpose());
+                additionalInfolist.add(additionalInfo);
+
+                additionalInfo = new AdditionalInfo();
+                additionalInfo.setInfoKey("merchantId");
+                additionalInfo.setInfoValue(webServiceVO.getMerchantId());
+                additionalInfolist.add(additionalInfo);
+
+                additionalInfo = new AdditionalInfo();
+                additionalInfo.setInfoKey("FED");
+                additionalInfo.setInfoValue(customerModel.getTaxRegimeIdTaxRegimeModel().getTaxRegimeCode());
+                additionalInfolist.add(additionalInfo);
+
+                requestVO.setAdditionalInfoList(additionalInfolist);
 
                 SwitchWrapper sWrapper = new SwitchWrapperImpl();
                 sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
@@ -11600,13 +11645,20 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     webServiceVO.setResponseCodeDescription("No success response from I8SB");
                 }
                 else{
+                    TransactionDetailMasterModel tdm = getTransactionReversalManager().loadCurrentTDMbyMobileNumber
+                            (webServiceVO.getMobileNo(), String.valueOf(ProductConstantsInterface.LOAN_XTRA_CASH));
+
+                    if(tdm != null){
+                        webServiceVO.setTransactionId(tdm.getTransactionCode());
+                        webServiceVO.setLoanAmount(String.valueOf(tdm.getTransactionAmount()));
+                        webServiceVO.setProcessingFee(String.valueOf(tdm.getExclusiveCharges()));
+                        webServiceVO.setTotalAmount(String.valueOf(tdm.getTotalAmount()));
+                    }
                     webServiceVO.setRetrievalReferenceNumber(webServiceVO.getRetrievalReferenceNumber());
-                    webServiceVO.setTransactionId("");
-                    webServiceVO.setLoanAmount(webServiceVO.getLoanAmount());
-                    webServiceVO.setProcessingFee(webServiceVO.getProcessingFee());
-                    webServiceVO.setTotalAmount(webServiceVO.getTotalAmount());
+
                     webServiceVO.setStatus(responseVO.getCode());
                     webServiceVO.setMessage(responseVO.getMessage());
+                    webServiceVO.setPrimaryLoanId(responseVO.getPrimaryLoanId());
                     webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
                     webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
                 }
@@ -11622,7 +11674,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             logger.error("[FonePaySwitchController.selectLoan] Error occured: " + e.getMessage(), e);
 
             this.logger.error("[FonePaySwitchController.selectLoan] Error occured: " + e.getMessage(), e);
-            webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+            webServiceVO.setResponseCode(((WorkFlowException) e).getErrorCode());
             webServiceVO.setResponseCodeDescription(e.getMessage());
             if (e instanceof NullPointerException
                     || e instanceof HibernateException
@@ -11653,7 +11705,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
         BaseWrapper baseWrapper = new BaseWrapperImpl();
         try {
-//            webServiceVO = this.validateRRN(webServiceVO);
+            webServiceVO = this.validateRRN(webServiceVO);
 //            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
 //                return webServiceVO;
 //            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "payloan");
@@ -11685,28 +11737,28 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 }
                 else{
                     webServiceVO.setProcessingFee(responseVO.getTotalCharges());
-                    webServiceVO.setProductID(String.valueOf(ProductConstantsInterface.LOAN_XTRA_CASH));
+                    webServiceVO.setProductID(String.valueOf(ProductConstantsInterface.LOAN_XTRA_CASH_REPAYMENT));
                     webServiceVO.setTransactionAmount(webServiceVO.getAmount());
                     this.debit(webServiceVO);
                     if(webServiceVO.getResponseCode().equals("00")) {
 
-                        Double outStandingAmount = Double.valueOf(responseVO.getTotalGross());
-                        Double payAmount = Double.valueOf(webServiceVO.getAmount());
+//                        Double outStandingAmount = Double.valueOf(responseVO.getTotalGross());
+//                        Double payAmount = Double.valueOf(webServiceVO.getAmount());
 
-                        Double remainingAmount = outStandingAmount - payAmount;
+//                        Double remainingAmount = outStandingAmount - payAmount;
 
-                        SmartMoneyAccountModel sma = getCommonCommandManager().getSmartMoneyAccountByAppUserModelAndPaymentModId
-                                (appUserModel, PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT);
-                        if (sma != null) {
-                            if (remainingAmount > 0) {
-                                sma.setIsDebitBlocked(true);
-                                sma.setDebitBlockAmount(remainingAmount);
-                                sma.setIsOptasiaDebitBlocked(true);
-                                sma.setDebitBlockReason("Debit Blocked By Optasia");
-                                sma.setUpdatedOn(new Date());
-                                smartMoneyAccountDAO.saveOrUpdate(sma);
-                            }
-                        }
+//                        SmartMoneyAccountModel sma = getCommonCommandManager().getSmartMoneyAccountByAppUserModelAndPaymentModId
+//                                (appUserModel, PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT);
+//                        if (sma != null) {
+//                            if (remainingAmount > 0) {
+//                                sma.setIsDebitBlocked(true);
+//                                sma.setDebitBlockAmount(remainingAmount);
+//                                sma.setIsOptasiaDebitBlocked(true);
+//                                sma.setDebitBlockReason("Debit Blocked By Optasia");
+//                                sma.setUpdatedOn(new Date());
+//                                smartMoneyAccountDAO.saveOrUpdate(sma);
+//                            }
+//                        }
 
                         requestVO = new I8SBSwitchControllerRequestVO();
                         responseVO = new I8SBSwitchControllerResponseVO();
@@ -11714,7 +11766,10 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         requestVO.setIdentityType("customerIdentity");
                         requestVO.setIdentityValue(appUserModel.getShaNic());
                         requestVO.setOrigSource("mobileApp");
+                        requestVO.setSourceRequestId(webServiceVO.getRetrievalReferenceNumber());
                         requestVO.setAmount(webServiceVO.getAmount());
+                        requestVO.setCurrencyCode(webServiceVO.getCurrencyCode());
+                        requestVO.setReason(webServiceVO.getReason());
 
                         sWrapper = new SwitchWrapperImpl();
                         sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
@@ -11747,8 +11802,8 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         }
                     }
                     else{
-                        webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
-                        webServiceVO.setResponseCodeDescription("Error in Debit API");
+                        webServiceVO.setResponseCode(webServiceVO.getResponseCode());
+                        webServiceVO.setResponseCodeDescription(webServiceVO.getResponseCodeDescription());
                     }
                 }
             }
@@ -11763,7 +11818,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             logger.error("[FonePaySwitchController.payloan] Error occured: " + e.getMessage(), e);
 
             this.logger.error("[FonePaySwitchController.payloan] Error occured: " + e.getMessage(), e);
-            webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+            webServiceVO.setResponseCode(((WorkFlowException) e).getErrorCode());
             webServiceVO.setResponseCodeDescription(e.getMessage());
             if (e instanceof NullPointerException
                     || e instanceof HibernateException
@@ -12149,6 +12204,62 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         }
                     }
 
+                    data = (ArrayList)responseVO.getCollectionOfList().get("Events");
+                    ArrayList eventsList;
+                    ArrayList eventsList1;
+
+                    if (data != null) {
+                        eventsList = data;
+                        for (i = 0; i < eventsList.size(); ++i) {
+
+                            Events events = new Events();
+                            events.setEventType(((Events) eventsList.get(i)).getEventType());
+                            events.setEventTypeDetails(((Events) eventsList.get(i)).getEventTypeDetails());
+                            events.setEventTypeStatus(((Events) eventsList.get(i)).getEventTypeStatus());
+                            events.setEventTransactionId(((Events) eventsList.get(i)).getEventTransactionId());
+                            events.setThirdPartyTransactionId(((Events) eventsList.get(i)).getThirdPartyTransactionId());
+                            events.setEventReason(((Events) eventsList.get(i)).getEventReason());
+                            events.setEventReasonDetails(((Events) eventsList.get(i)).getEventReasonDetails());
+                            events.setPeriod(((Events) eventsList.get(i)).getPeriod());
+                            events.setPeriodIndex(((Events) eventsList.get(i)).getPeriodIndex());
+                            events.setPeriodExpirationTimestamp(((Events) eventsList.get(i)).getPeriodExpirationTimestamp());
+                            events.setPrincipalAdjustment(((Events) eventsList.get(i)).getPrincipalAdjustment());
+                            events.setPrincipalBefore(((Events) eventsList.get(i)).getPrincipalBefore());
+                            events.setPrincipalAfter(((Events) eventsList.get(i)).getPrincipalAfter());
+                            events.setSetupFeesAdjustment(((Events) eventsList.get(i)).getSetupFeesAdjustment());
+                            events.setSetupFeesBefore(((Events) eventsList.get(i)).getSetupFeesBefore());
+                            events.setSetupFeesAfter(((Events) eventsList.get(i)).getSetupFeesAfter());
+                            events.setInterestAdjustment(((Events) eventsList.get(i)).getInterestAdjustment());
+                            events.setInterestAdjustmentVAT(((Events) eventsList.get(i)).getInterestAdjustmentVAT());
+                            events.setInterestBefore(((Events) eventsList.get(i)).getInterestBefore());
+                            events.setInterestAfter(((Events) eventsList.get(i)).getInterestAfter());
+                            events.setTotalChargesAdjustment(((Events) eventsList.get(i)).getTotalChargesAdjustment());
+                            events.setTotalChargesAdjustmentVAT(((Events) eventsList.get(i)).getTotalChargesAdjustmentVAT());
+                            events.setTotalChargesBefore(((Events) eventsList.get(i)).getTotalChargesBefore());
+                            events.setTotalChargesAfter(((Events) eventsList.get(i)).getTotalChargesAfter());
+                            events.setEventTimestamp(((Events) eventsList.get(i)).getEventTimestamp());
+                            events.setReceptionTimestamp(((Events) eventsList.get(i)).getReceptionTimestamp());
+                            events.setProcessingTimestamp(((Events) eventsList.get(i)).getProcessingTimestamp());
+                            events.setRemoteRequestId(((Events) eventsList.get(i)).getRemoteRequestId());
+                            events.setSourceRequestId(((Events) eventsList.get(i)).getSourceRequestId());
+                            events.setOfferName(((Events) eventsList.get(i)).getOfferName());
+                            events.setCommodityType(((Events) eventsList.get(i)).getCommodityType());
+                            events.setCurrencyCode(((Events) eventsList.get(i)).getCurrencyCode());
+                            events.setPrincipalAmount(((Events) eventsList.get(i)).getPrincipalAmount());
+                            events.setSetupFees(((Events) eventsList.get(i)).getSetupFees());
+                            events.setLoanProductGroup(((Events) eventsList.get(i)).getLoanProductGroup());
+                            events.setLoanPlanId(((Events) eventsList.get(i)).getLoanPlanId());
+                            events.setLoanPlanName(((Events) eventsList.get(i)).getLoanPlanName());
+                            events.setMaturityDetails(((Events) eventsList.get(i)).getMaturityDetails());
+//                            events.setProjectSpecific(((Events) eventsList.get(i)).getProjectSpecific());
+                            events.setLoanReason(((Events) eventsList.get(i)).getLoanReason());
+                            events.setLoanReasonDetails(((Events) eventsList.get(i)).getLoanReasonDetails());
+                            eventsList1 = new ArrayList();
+                            eventsList1.add(events);
+                            webServiceVO.setEventsList(eventsList1);
+                        }
+                    }
+
                     data = (ArrayList)responseVO.getCollectionOfList().get("Outstanding");
                     if (data != null) {
                         repaymentList = data;
@@ -12203,6 +12314,8 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         for(i = 0; i < loanOffersList.size(); ++i) {
                             Report report = new Report();
                             report.setRepaymentList(webServiceVO.getRepaymentList());
+                            report.setOutstandingStatusList(webServiceVO.getOutstandingStatusList());
+                            report.setPlanList(webServiceVO.getPlanList());
                             loanOffersList1 = new ArrayList();
                             loanOffersList1.add(report);
                             webServiceVO.setReportList(loanOffersList1);
@@ -12217,14 +12330,15 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         for(i = 0; i < loanOffersList.size(); ++i) {
                             LoanOffers loanOffers = new LoanOffers();
                             loanOffers.setOfferName(((LoanOffers)loanOffersList.get(i)).getOfferName());
+                            loanOffers.setAdvanceOfferId(((LoanOffers)loanOffersList.get(i)).getAdvanceOfferId());
+                            loanOffers.setCommodityType(((LoanOffers)loanOffersList.get(i)).getCommodityType());
                             loanOffers.setCurrencyCode(((LoanOffers)loanOffersList.get(i)).getCurrencyCode());
                             loanOffers.setSetupFees(((LoanOffers)loanOffersList.get(i)).getSetupFees());
-                            loanOffers.setCommodityType(((LoanOffers)loanOffersList.get(i)).getCommodityType());
                             loanOffers.setLoanPlanId(((LoanOffers)loanOffersList.get(i)).getLoanPlanId());
                             loanOffers.setLoanPlanName(((LoanOffers)loanOffersList.get(i)).getLoanPlanName());
                             loanOffers.setLoanProductGroup(((LoanOffers)loanOffersList.get(i)).getLoanProductGroup());
-                            loanOffers.setAdvanceOfferId(((LoanOffers)loanOffersList.get(i)).getAdvanceOfferId());
                             loanOffers.setPrincipalAmount(((LoanOffers)loanOffersList.get(i)).getPrincipalAmount());
+                            loanOffers.setMaturityDetailsList(((LoanOffers)loanOffersList.get(i)).getMaturityDetailsList());
                             loanOffersList1 = new ArrayList();
                             loanOffersList1.add(loanOffers);
                             webServiceVO.setLoanOffersList(loanOffersList1);
@@ -12240,10 +12354,12 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
                         for(i = 0; i < loansPerStateList.size(); ++i) {
                             Loan loan = new Loan();
+                            loan.setLoanId(((Loan)loansPerStateList.get(i)).getLoanId());
                             loan.setInternalLoanId(((Loan)loansPerStateList.get(i)).getInternalLoanId());
                             loan.setLoanState(((Loan)loansPerStateList.get(i)).getLoanState());
                             loan.setLoanTimestamp(((Loan)loansPerStateList.get(i)).getLoanTimestamp());
                             loan.setLoanReason(((Loan)loansPerStateList.get(i)).getLoanReason());
+                            loan.setLoanReasonDetails(((Loan)loansPerStateList.get(i)).getLoanReasonDetails());
                             loansPerStateList1 = new ArrayList();
                             loan.setLoanOffersList(webServiceVO.getLoanOffersList());
                             loansPerStateList1.add(loan);
@@ -12261,8 +12377,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                             loansPerStateList1 = new ArrayList();
                             loans.setLoanList(webServiceVO.getLoanList());
                             loans.setReportList(webServiceVO.getReportList());
-                            loans.setOutstandingStatusList(webServiceVO.getOutstandingStatusList());
-                            loans.setPlanList(webServiceVO.getPlanList());
+                            loans.setEventsList(webServiceVO.getEventsList());
+//                            loans.setOutstandingStatusList(webServiceVO.getOutstandingStatusList());
+//                            loans.setPlanList(webServiceVO.getPlanList());
                             loansPerStateList1.add(loans);
                             webServiceVO.setLoansList(loansPerStateList1);
                         }
@@ -12296,7 +12413,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             logger.error("[FonePaySwitchController.outstandingLoanStatus] Error occured: " + e.getMessage(), e);
 
             this.logger.error("[FonePaySwitchController.outstandingLoanStatus] Error occured: " + e.getMessage(), e);
-            webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+            webServiceVO.setResponseCode(((WorkFlowException) e).getErrorCode());
             webServiceVO.setResponseCodeDescription(e.getMessage());
             if (e instanceof NullPointerException
                     || e instanceof HibernateException
@@ -12315,6 +12432,11 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         }
         logger.info("[FonePaySwitchController.outstandingLoanStatus] (In End) Response Code: " + webServiceVO.getResponseCode());
         return webServiceVO;
+    }
+
+    @Override
+    public WebServiceVO getOutstandingLoan(WebServiceVO webServiceVO) {
+        return null;
     }
 
     @Override
@@ -12497,16 +12619,22 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 return webServiceVO;
             fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "loanCallBack");
 
-            TransactionDetailMasterModel tdm = getTransactionReversalManager().loadTDMbyReserved2(webServiceVO.getReserved2());
+            logger.info("[FonePaySwitchController.loanCallBack] Checking tdm against internalLoanId: " + webServiceVO.getInternalLoanId());
+            TransactionDetailMasterModel tdm = getTransactionReversalManager().loadTDMbyReserved2(webServiceVO.getInternalLoanId());
             if(tdm != null){
                 if(tdm.getSupProcessingStatusId().equals(SupplierProcessingStatusConstants.COMPLETED)){
                     webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
                     webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
                 }
                 else{
-                    webServiceVO.setResponseCode(FonePayResponseCodes.GENERAL_ERROR);
+                    webServiceVO.setResponseCode("166");
                     webServiceVO.setResponseCodeDescription("Transaction Status Failed");
                 }
+            }
+            else{
+                logger.info("[FonePaySwitchController.loanCallBack] data not found against internalLoanId: " + webServiceVO.getInternalLoanId());
+                webServiceVO.setResponseCode(FonePayResponseCodes.TRANSACTION_NOT_FOUND);
+                webServiceVO.setResponseCodeDescription("Transaction Not Found");
             }
 
         } catch (Exception e) {

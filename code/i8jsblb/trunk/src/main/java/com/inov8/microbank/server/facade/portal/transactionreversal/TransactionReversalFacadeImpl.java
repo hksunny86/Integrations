@@ -309,6 +309,11 @@ public class TransactionReversalFacadeImpl implements TransactionReversalFacade
 	}
 
 	@Override
+	public TransactionDetailMasterModel loadCurrentTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException {
+		return transactionReversalManager.loadCurrentTDMbyMobileNumber(mobileNo, productId);
+	}
+
+	@Override
 	public TransactionDetailMasterModel loadTDMbyProductId(String mobileNo, String productId) throws FrameworkCheckedException {
 		return transactionReversalManager.loadTDMbyProductId(mobileNo, productId);
 	}

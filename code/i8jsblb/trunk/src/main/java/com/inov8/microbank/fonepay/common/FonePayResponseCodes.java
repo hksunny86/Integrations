@@ -131,4 +131,6 @@ public interface FonePayResponseCodes {
     String FINGER_PRINT_NOT_MATCHED="121";
     String INVALID_FINGER_INDEX="122";
     String INVALID_FINGER_TEMPLETE_TYPE="123";
+    String TRANSACTION_NOT_FOUND="165";
+
 }

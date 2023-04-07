@@ -64,6 +64,7 @@ public interface TransactionReversalManager
     TransactionDetailMasterModel loadTDMbyReserved2(String reservedField2) throws Exception;
 
     TransactionDetailMasterModel loadTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException;
+    TransactionDetailMasterModel loadCurrentTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException;
     TransactionDetailMasterModel loadTDMbyProductId(String mobileNo, String productId) throws FrameworkCheckedException;
 
 //    List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, String startDate, String endDate) throws FrameworkCheckedException;

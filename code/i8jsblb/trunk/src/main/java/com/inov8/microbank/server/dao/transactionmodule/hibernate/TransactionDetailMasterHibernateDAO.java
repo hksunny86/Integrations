@@ -370,7 +370,7 @@ public class TransactionDetailMasterHibernateDAO
         String endStr = format.format(endDate);
 
         String query = "select * from TRANSACTION_DETAIL_MASTER where (SALE_MOBILE_NO || RECIPIENT_MOBILE_NO)='" + mobileNo + "' " +
-                "and PRODUCT_ID='" + productId + "'" + "and trunc(CREATED_ON) between '" + dateStr + "'and'" + endStr + "'";
+                "and PRODUCT_ID='" + productId + "'" + "and trunc(CREATED_ON) between '" + dateStr + "'and'" + endStr + "' order by created_On desc";
 
         List<TransactionDetailMasterModel> result = jdbcTemplate.query
                 (query, new BeanPropertyRowMapper<TransactionDetailMasterModel>(TransactionDetailMasterModel.class));

@@ -11693,7 +11693,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     if(tdm != null){
                         webServiceVO.setTransactionId(tdm.getTransactionCode());
                         webServiceVO.setLoanAmount(String.valueOf(tdm.getTransactionAmount()));
-                        webServiceVO.setProcessingFee(String.valueOf(tdm.getExclusiveCharges()));
+                        webServiceVO.setProcessingFee(String.valueOf(tdm.getInclusiveCharges()));
                         webServiceVO.setTotalAmount(String.valueOf(tdm.getTotalAmount()));
                     }
                     webServiceVO.setRetrievalReferenceNumber(webServiceVO.getRetrievalReferenceNumber());

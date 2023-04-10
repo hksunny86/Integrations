@@ -529,6 +529,22 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
                         },
                         null);
             }
+            else if (wrapper.getProductModel().getProductId().equals(ProductConstantsInterface.LOAN_XTRA_CASH)) {
+                Double charges = wrapper.getCommissionAmountsHolder().getTotalCommissionAmount();
+                customerSMS = this.getMessageSource().getMessage(
+                        "advanceCash.SMS",
+                        new Object[]{
+                                brandName,
+                                wrapper.getTransactionCodeModel().getCode(),
+                                Formatter.formatDouble(wrapper.getCommissionAmountsHolder().getTransactionAmount()),
+                                tf.print(new LocalTime()),
+                                dtf.print(new DateTime()),
+                                wrapper.getProductModel().getName(),
+                                Formatter.formatDouble(charges),
+                                Formatter.formatDouble(wrapper.getOLASwitchWrapper().getOlavo().getToBalanceAfterTransaction())
+                        },
+                        null);
+            }
             else {
                 Double charges = wrapper.getCommissionAmountsHolder().getTransactionProcessingAmount();
                 customerSMS = this.getMessageSource().getMessage(

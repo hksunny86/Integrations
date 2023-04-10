@@ -43,6 +43,7 @@ public interface TransactionDetailMasterDAO
     TransactionDetailMasterModel  loadTDMbyRRN(String rrn);
     TransactionDetailMasterModel  loadTDMbyReserved2(String reserved2);
     TransactionDetailMasterModel  loadTDMbyMobileNumber(String mobileNo, String productId);
+    TransactionDetailMasterModel  loadCurrentTDMbyMobileNumber(String mobileNo, String productId);
     TransactionDetailMasterModel  loadTDMbyProductId(String mobileNo, String productId);
 //    TransactionDetailMasterModel  loadTDMbyMobileandDateRange(String mobileNo, String startDate, String endDate);
     List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, Date startDate, Date endDate, String productId) throws FrameworkCheckedException;

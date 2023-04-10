@@ -178,5 +178,7 @@ public interface ProductConstantsInterface {
     Long VC_TRANSFER_PRODUCT = 10245343L;
     Long RELIEF_FUND_PRODUCT = 10245355L;
     Long LOAN_XTRA_CASH = 10245400L;
+    Long LOAN_XTRA_CASH_REPAYMENT = 10245420L;
 
+//    10245253
 }

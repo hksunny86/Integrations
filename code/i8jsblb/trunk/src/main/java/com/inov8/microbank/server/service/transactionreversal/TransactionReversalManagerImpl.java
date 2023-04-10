@@ -1512,6 +1512,11 @@ public class TransactionReversalManagerImpl extends ApplicationObjectSupport imp
     }
 
     @Override
+    public TransactionDetailMasterModel loadCurrentTDMbyMobileNumber(String mobileNo, String productId) throws FrameworkCheckedException {
+        return transactionDetailMasterManager.loadCurrentTDMbyMobileNumber(mobileNo, productId);
+    }
+
+    @Override
     public TransactionDetailMasterModel loadTDMbyProductId(String mobileNo, String productId) throws FrameworkCheckedException {
         return transactionDetailMasterManager.loadTDMbyProductId(mobileNo, productId);
     }

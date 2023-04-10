@@ -320,8 +320,22 @@ public class TransactionDetailMasterHibernateDAO
         //query to be added
         StringBuilder sb = new StringBuilder();
 
+        String query = "select * from TRANSACTION_DETAIL_MASTER a inner join APP_USER b on a.SALE_MOBILE_NO = b.MOBILE_NO where SALE_MOBILE_NO='" + mobileNo + "' " + "and trunc(b.CREATED_ON)+180 <= trunc(sysdate) and trunc(a.CREATED_ON) between trunc(sysdate)-180 and trunc(sysdate)";
+
+        List<TransactionDetailMasterModel> result = jdbcTemplate.query
+                (query, new BeanPropertyRowMapper<TransactionDetailMasterModel>(TransactionDetailMasterModel.class));
+        if(!result.isEmpty()) {
+            return result.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public TransactionDetailMasterModel loadCurrentTDMbyMobileNumber(String mobileNo, String productId) {
+        StringBuilder sb = new StringBuilder();
+
         String query = "select * from TRANSACTION_DETAIL_MASTER where SALE_MOBILE_NO='" + mobileNo + "' " +
-                "and PRODUCT_ID='" + productId + "'" + "and trunc(CREATED_ON) between trunc(sysdate)-180 and trunc(sysdate)";
+                "and PRODUCT_ID='" + productId + "'"+ "and TRUNC(CREATED_ON) =TRUNC(SYSDATE)";
 
         List<TransactionDetailMasterModel> result = jdbcTemplate.query
                 (query, new BeanPropertyRowMapper<TransactionDetailMasterModel>(TransactionDetailMasterModel.class));

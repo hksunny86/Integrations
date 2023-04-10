@@ -7,6 +7,7 @@ import com.inov8.integration.middleware.pdu.response.*;
 import com.inov8.integration.middleware.service.hostService.HostIntegrationService;
 import com.inov8.integration.middleware.util.JSONUtil;
 import com.inov8.integration.middleware.util.XMLUtil;
+import io.swagger.annotations.Api;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.json.Json;
-import java.awt.*;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+@Api(value = "Restful APIs", description = "SwaggerUI is located under /documentation. This mapping redirects the necessary resources for the ui.", hidden = true)
 @RestController
 public class JSController {
 
@@ -684,7 +680,8 @@ public class JSController {
         }
 
         long end = System.currentTimeMillis() - start;
-        logger.info("Optasia Debit Inquiry Payment Request  Processed in : {} ms {}", end, response);
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Optasia Debit Inquiry Payment Request  Processed in : {} ms {}", end + "\n", responseXML);
 
         return response;
     }
@@ -774,7 +771,8 @@ public class JSController {
         }
 
         long end = System.currentTimeMillis() - start;
-        logger.info("Optasia Debit Payment Request  Processed in : {} ms {}", end, response);
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Optasia Debit Payment Request  Processed in : {} ms {}", end + "\n", responseXML);
 
         return response;
     }
@@ -868,7 +866,8 @@ public class JSController {
         }
 
         long end = System.currentTimeMillis() - start;
-        logger.info("Optasia Credit Inquiry Request Processed in : {} ms {}", end, optasiaCreditInquiryResponse);
+        String responseXML = JSONUtil.getJSON(optasiaCreditInquiryResponse);
+        logger.info("Optasia Credit Inquiry Request Processed in : {} ms {}", end + "\n", responseXML);
 
         return optasiaCreditInquiryResponse;
     }
@@ -957,7 +956,8 @@ public class JSController {
         }
 
         long end = System.currentTimeMillis() - start;
-        logger.info("Optasia Credit Payment Request  Processed in : {} ms {}", end, response);
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Optasia Credit Payment Request  Processed in : {} ms {}", end + "\n", responseXML);
 
         return response;
     }
@@ -1037,7 +1037,8 @@ public class JSController {
             logger.info("Critical Error ::" + e.getLocalizedMessage());
         }
         long end = System.currentTimeMillis() - start;
-        logger.info("Transaction Status Request Processed in : {} ms {}", end, transactionStatusResponse);
+        String responseXML = JSONUtil.getJSON(transactionStatusResponse);
+        logger.info("Transaction Status Request Processed in : {} ms {}", end + "\n", responseXML);
 
         return transactionStatusResponse;
     }
@@ -1113,7 +1114,8 @@ public class JSController {
         }
 
         long end = System.currentTimeMillis() - start;
-        logger.info("Profile Status Request Processed in : {} ms {}", end, profileStatusResponse);
+        String responseXML = JSONUtil.getJSON(profileStatusResponse);
+        logger.info("Profile Status Request Processed in : {} ms {}", end + "\n", responseXML);
 
         return profileStatusResponse;
     }
@@ -1192,7 +1194,8 @@ public class JSController {
             logger.info("Critical Error ::" + e.getLocalizedMessage());
         }
         long end = System.currentTimeMillis() - start;
-        logger.info("Lien Status Request Processed in : {} ms {}", end, lienStatusResponse);
+        String responseXML = JSONUtil.getJSON(lienStatusResponse);
+        logger.info("Lien Status Request Processed in : {} ms {}", end + "\n", responseXML);
 
         return lienStatusResponse;
     }
@@ -1270,7 +1273,8 @@ public class JSController {
             logger.info("Critical Error ::" + e.getLocalizedMessage());
         }
         long end = System.currentTimeMillis() - start;
-        logger.info("Optasia Sms Generation Request  Processed in : {} ms {}", end, response);
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Optasia Sms Generation Request  Processed in : {} ms {}" + "\n", end, responseXML);
 
         return response;
     }
@@ -1366,7 +1370,8 @@ public class JSController {
         }
 
         long end = System.currentTimeMillis() - start;
-        logger.info("Initiate Loan Request Processed in : {} ms {}", end, offerListForCommodityResponse);
+        String responseXML = JSONUtil.getJSON(offerListForCommodityResponse);
+        logger.info("Initiate Loan Request Processed in : {} ms {}", end + "\n", responseXML);
 
         return offerListForCommodityResponse;
     }
@@ -1463,7 +1468,8 @@ public class JSController {
             logger.info("Critical Error ::" + e.getLocalizedMessage());
         }
         long end = System.currentTimeMillis() - start;
-        logger.info("Select Loan Request Processed in : {} ms {}", end, loanOfferResponse);
+        String responseXML = JSONUtil.getJSON(loanOfferResponse);
+        logger.info("Select Loan Request Processed in : {} ms {}", end + "\n", responseXML);
 
         return loanOfferResponse;
     }
@@ -1511,42 +1517,42 @@ public class JSController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        HostRequestValidator.validateSelectLoanOffer(request);
-                        projectionResponse = integrationService.selectLoanOfferResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+//                        HostRequestValidator.validateSelectLoanOffer(request);
+                    projectionResponse = integrationService.selectLoanOfferResponse(request);
 
-                    } catch (ValidationException ve) {
-                        projectionResponse.setResponseCode("420");
-                        projectionResponse.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        projectionResponse.setResponseCode("220");
-                        projectionResponse.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Loan Offer Request *********");
-                    logger.info("ResponseCode: " + projectionResponse.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Loan Offer Request AUTHENTICATION *********");
-                    projectionResponse = new ProjectionResponse();
+                } catch (ValidationException ve) {
                     projectionResponse.setResponseCode("420");
-                    projectionResponse.setResponseDescription("Request is not authenticated");
-                    projectionResponse.setRrn(request.getRrn());
-                    projectionResponse.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    projectionResponse.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    projectionResponse.setResponseCode("220");
+                    projectionResponse.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR Loan Offer Request *********");
+                logger.info("ResponseCode: " + projectionResponse.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Loan Offer Request AUTHENTICATION *********");
                 projectionResponse = new ProjectionResponse();
-                projectionResponse.setResponseCode("111");
-                projectionResponse.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                projectionResponse.setResponseCode("420");
+                projectionResponse.setResponseDescription("Request is not authenticated");
+                projectionResponse.setRrn(request.getRrn());
+                projectionResponse.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Loan Offer Request *********");
+//                projectionResponse = new ProjectionResponse();
+//                projectionResponse.setResponseCode("111");
+//                projectionResponse.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             projectionResponse = new ProjectionResponse();
@@ -1559,7 +1565,8 @@ public class JSController {
         }
 
         long end = System.currentTimeMillis() - start;
-        logger.info("Loan Offer Request Processed in : {} ms {}", end, projectionResponse);
+        String responseXML = JSONUtil.getJSON(projectionResponse);
+        logger.info("Loan Offer Request Processed in : {} ms {}", end + "\n", responseXML);
 
         return projectionResponse;
     }
@@ -1609,42 +1616,42 @@ public class JSController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        HostRequestValidator.validateLoanPayment(request);
-                        loanPaymentResponse = integrationService.loanPaymentResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+//                        HostRequestValidator.validateLoanPayment(request);
+                    loanPaymentResponse = integrationService.loanPaymentResponse(request);
 
-                    } catch (ValidationException ve) {
-                        loanPaymentResponse.setResponseCode("420");
-                        loanPaymentResponse.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        loanPaymentResponse.setResponseCode("220");
-                        loanPaymentResponse.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Loan Payment Request *********");
-                    logger.info("ResponseCode: " + loanPaymentResponse.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Loan Payment Request AUTHENTICATION *********");
-                    loanPaymentResponse = new LoanPaymentResponse();
+                } catch (ValidationException ve) {
                     loanPaymentResponse.setResponseCode("420");
-                    loanPaymentResponse.setResponseDescription("Request is not authenticated");
-                    loanPaymentResponse.setRrn(request.getRrn());
-                    loanPaymentResponse.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    loanPaymentResponse.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    loanPaymentResponse.setResponseCode("220");
+                    loanPaymentResponse.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR Loan Payment Request *********");
+                logger.info("ResponseCode: " + loanPaymentResponse.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Loan Payment Request AUTHENTICATION *********");
                 loanPaymentResponse = new LoanPaymentResponse();
-                loanPaymentResponse.setResponseCode("111");
-                loanPaymentResponse.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                loanPaymentResponse.setResponseCode("420");
+                loanPaymentResponse.setResponseDescription("Request is not authenticated");
+                loanPaymentResponse.setRrn(request.getRrn());
+                loanPaymentResponse.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Loan Payment Request *********");
+//                loanPaymentResponse = new LoanPaymentResponse();
+//                loanPaymentResponse.setResponseCode("111");
+//                loanPaymentResponse.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
             loanPaymentResponse = new LoanPaymentResponse();
             loanPaymentResponse.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
@@ -1655,7 +1662,8 @@ public class JSController {
             logger.info("Critical Error ::" + e.getLocalizedMessage());
         }
         long end = System.currentTimeMillis() - start;
-        logger.info("Loan Payment Request Processed in : {} ms {}", end, loanPaymentResponse);
+        String responseXML = JSONUtil.getJSON(loanPaymentResponse);
+        logger.info("Loan Payment Request Processed in : {} ms {}", end + "\n", responseXML);
 
         return loanPaymentResponse;
     }
@@ -1700,42 +1708,42 @@ public class JSController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        HostRequestValidator.validateOutstanding(request);
-                        loansResponse = integrationService.outstandingResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+//                        HostRequestValidator.validateOutstanding(request);
+                    loansResponse = integrationService.outstandingResponse(request);
 
-                    } catch (ValidationException ve) {
-                        loansResponse.setResponseCode("420");
-                        loansResponse.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        loansResponse.setResponseCode("220");
-                        loansResponse.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Outstanding Loan Request *********");
-                    logger.info("ResponseCode: " + loansResponse.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Outstanding Loan Request AUTHENTICATION *********");
-                    loansResponse = new LoansResponse();
+                } catch (ValidationException ve) {
                     loansResponse.setResponseCode("420");
-                    loansResponse.setResponseDescription("Request is not authenticated");
-                    loansResponse.setRrn(request.getRrn());
-                    loansResponse.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    loansResponse.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    loansResponse.setResponseCode("220");
+                    loansResponse.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
+
+                logger.info("******* DEBUG LOGS FOR Outstanding Loan Request *********");
+                logger.info("ResponseCode: " + loansResponse.getResponseCode());
             } else {
-                logger.info("******* DEBUG LOGS FOR Customer Loans Request *********");
+                logger.info("******* DEBUG LOGS FOR Outstanding Loan Request AUTHENTICATION *********");
                 loansResponse = new LoansResponse();
-                loansResponse.setResponseCode("111");
-                loansResponse.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                loansResponse.setResponseCode("420");
+                loansResponse.setResponseDescription("Request is not authenticated");
+                loansResponse.setRrn(request.getRrn());
+                loansResponse.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Customer Loans Request *********");
+//                loansResponse = new LoansResponse();
+//                loansResponse.setResponseCode("111");
+//                loansResponse.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             loansResponse = new LoansResponse();
@@ -1747,7 +1755,8 @@ public class JSController {
             logger.info("Critical Error ::" + e.getLocalizedMessage());
         }
         long end = System.currentTimeMillis() - start;
-        logger.info("Outstanding Loan Request Processed in : {} ms {}", end, loansResponse);
+        String responseXML = JSONUtil.getJSON(loansResponse);
+        logger.info("Outstanding Loan Request Processed in : {} ms {}", end + "\n", responseXML);
 
         return loansResponse;
     }
@@ -1791,39 +1800,39 @@ public class JSController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-//                        HostRequestValidator.validateLoanHistory(request);
-                    response = integrationService.loansHistoryResponse(request);
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
+                        HostRequestValidator.validateLoanHistory(request);
+                        response = integrationService.loansHistoryResponse(request);
 
-                } catch (ValidationException ve) {
+                    } catch (ValidationException ve) {
+                        response.setResponseCode("420");
+                        response.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        response.setResponseCode("220");
+                        response.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR Loan History Request TRANSACTION *********");
+                    logger.info("ResponseCode: " + response.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR Loan History Request TRANSACTION AUTHENTICATION *********");
+                    response = new LoansHistoryResponse();
                     response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
+                    response.setResponseDescription("Request is not authenticated");
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
                 }
-
-                logger.info("******* DEBUG LOGS FOR Loan History Request TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
             } else {
-                logger.info("******* DEBUG LOGS FOR Loan History Request TRANSACTION AUTHENTICATION *********");
+                logger.info("******* DEBUG LOGS FOR Loan History Request TRANSACTION *********");
                 response = new LoansHistoryResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
             }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Loan History Request TRANSACTION *********");
-//                response = new LoansHistoryResponse();
-//                response.setResponseCode("111");
-//                response.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
         } catch (Exception e) {
 
             response = new LoansHistoryResponse();
@@ -1836,7 +1845,8 @@ public class JSController {
         }
 
         long end = System.currentTimeMillis() - start;
-        logger.info("Loan History Request  Processed in : {} ms {}", end, response);
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Loan History Request  Processed in : {} ms {}", end + "\n", responseXML);
 
         return response;
     }
@@ -1925,7 +1935,8 @@ public class JSController {
         }
 
         long end = System.currentTimeMillis() - start;
-        logger.info("Loan Plan Request  Processed in : {} ms {}", end, response);
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Loan Plan Request  Processed in : {} ms {}", end + "\n", responseXML);
 
         return response;
     }
@@ -2012,7 +2023,8 @@ public class JSController {
             logger.info("Critical Error ::" + e.getLocalizedMessage());
         }
         long end = System.currentTimeMillis() - start;
-        logger.info("Transaction Active Request  Processed in : {} ms {}", end, response);
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Transaction Active Request  Processed in : {} ms {}", end + "\n", responseXML);
 
         return response;
     }
@@ -2045,10 +2057,10 @@ public class JSController {
                     .append(request.getLoanEvent())
                     .append(request.getLoanEventStatus())
                     .append(request.getOrigSource())
-                    .append(request.getInternalLoanId())
-                    .append(request.getThirdPartyTransactionId())
-                    .append(request.getReserved1())
-                    .append(request.getReserved2());
+                    .append(request.getInternalLoanId());
+//                    .append(request.getThirdPartyTransactionId())
+//                    .append(request.getReserved1())
+//                    .append(request.getReserved2());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
@@ -2099,7 +2111,8 @@ public class JSController {
         }
 
         long end = System.currentTimeMillis() - start;
-        logger.info("Loan Call Back Request Processed in : {} ms {}", end, loanCallBackResponse);
+        String responseXML = JSONUtil.getJSON(loanCallBackResponse);
+        logger.info("Loan Call Back Request Processed in : {} ms {}", end + "\n", responseXML);
 
         return loanCallBackResponse;
     }
@@ -2186,9 +2199,99 @@ public class JSController {
             logger.info("Critical Error ::" + e.getLocalizedMessage());
         }
         long end = System.currentTimeMillis() - start;
-        logger.info("Simple Account Opening Request  Processed in : {} ms {}", end, response);
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Simple Account Opening Request  Processed in : {} ms {}", end + "\n", responseXML);
 
         return response;
+    }
+
+    @RequestMapping(value = "api/getOutstandingLoan", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    OutstandingLoanResponse outstandingLoanResponse(@RequestBody OutstandingLoanRequest request) throws Exception {
+        OutstandingLoanResponse outstandingLoanResponse = new OutstandingLoanResponse();
+
+        String className = this.getClass().getSimpleName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+        long start = System.currentTimeMillis();
+
+        try {
+
+            logger.info("Get Outstanding Loan Request Received at Controller at time: " + start);
+            String requestXML = JSONUtil.getJSON(request);
+            //        requestXML = XMLUtil.maskPassword(requestXML);
+            logger.info("Start Processing Get Outstanding Loan Request with {}", requestXML);
+
+            StringBuilder stringText = new StringBuilder()
+                    .append(request.getUserName())
+                    .append(request.getPassword())
+                    .append(request.getMobileNumber())
+                    .append(request.getDateTime())
+                    .append(request.getRrn())
+                    .append(request.getChannelId())
+                    .append(request.getTerminalId())
+                    .append(request.getReserved1())
+                    .append(request.getReserved2())
+                    .append(request.getReserved3())
+                    .append(request.getReserved4())
+                    .append(request.getReserved5())
+                    .append(request.getReserved6())
+                    .append(request.getReserved7())
+                    .append(request.getReserved8())
+                    .append(request.getReserved9())
+                    .append(request.getReserved10());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
+                        HostRequestValidator.validateOutstandingLoan(request);
+                        outstandingLoanResponse = integrationService.outstandingLoanResponse(request);
+
+                    } catch (ValidationException ve) {
+                        outstandingLoanResponse.setResponseCode("420");
+                        outstandingLoanResponse.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        outstandingLoanResponse.setResponseCode("220");
+                        outstandingLoanResponse.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR Get Outstanding Loan Request *********");
+                    logger.info("ResponseCode: " + outstandingLoanResponse.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR Get Outstanding Loan Request AUTHENTICATION *********");
+                    outstandingLoanResponse = new OutstandingLoanResponse();
+                    outstandingLoanResponse.setResponseCode("420");
+                    outstandingLoanResponse.setResponseDescription("Request is not authenticated");
+                    outstandingLoanResponse.setRrn(request.getRrn());
+                    outstandingLoanResponse.setResponseDateTime(request.getDateTime());
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
+                }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Get Outstanding Loan Request *********");
+                outstandingLoanResponse = new OutstandingLoanResponse();
+                outstandingLoanResponse.setResponseCode("111");
+                outstandingLoanResponse.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
+        } catch (Exception e) {
+
+            outstandingLoanResponse = new OutstandingLoanResponse();
+            outstandingLoanResponse.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            outstandingLoanResponse.setResponseDescription(e.getLocalizedMessage());
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
+            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
+            logger.info("Critical Error ::" + e.getLocalizedMessage());
+        }
+        long end = System.currentTimeMillis() - start;
+        logger.info("Get Outstanding Loan Request Processed in : {} ms {}", end, outstandingLoanResponse);
+
+        return outstandingLoanResponse;
     }
 
 /*    @RequestMapping(value = "api/outstanding", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

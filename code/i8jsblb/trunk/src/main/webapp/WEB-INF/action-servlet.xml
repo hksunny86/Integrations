@@ -1616,6 +1616,7 @@
 				<prop key="/p_digipostedrdvreport.html">digiPostedRdvReportController</prop>
 				<prop key="/p_ivrMpinVerificationReport.html">ivrMpinVerificationController</prop>
 				<prop key="/p_currentDayIvrMpinVerificationReport.html">currentDayIvrMpinVerificationController</prop>
+				<prop key="/p_zongprepaidbalance.html">zongPreparedBalanceController</prop>
 
 
 
@@ -6926,6 +6927,12 @@
 		<property name="ivrMpinVerificationManager">
 			<ref bean="ivrMpinVerificationManager"/>
 		</property>
+	</bean>
+	<bean id="zongPreparedBalanceController"
+		  class="com.inov8.microbank.common.ZongPrepaidBalanceController"
+		  parent="baseFormSearchController" autowire="byName">
+		<property name="esbAdapter" ref="esbAdapter"/>
+		<property name="successView" value="p_zongprepaidbalance.html"/>
 	</bean>
 
 	<!--<bean id="displayActionLogXML" class="com.inov8.microbank.webapp.action.portal.mnologsmodule.DisplayActionLogXMLController"

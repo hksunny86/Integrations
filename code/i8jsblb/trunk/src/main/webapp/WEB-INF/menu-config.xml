@@ -416,6 +416,8 @@
                       roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R"/>
                 <Item title="Debit Card Charge" location="debitcardchargeviewform.html"
                       roles="ADM_GP_R,PG_GP_R,BLCK_NIC_RPT_R"/>
+                <Item title="Zong Prepaid Balance" location="p_zongprepaidbalance.html"
+                      roles="ADM_GP_R,PG_GP_R,BLCK_NIC_RPT_R"/>
             </Item>
             <Item title="Tax Reports"
                   roles="MNO_GP_R,ADM_GP_R,PG_GP_R,RPT_AGENT_WHT_R,RPT_AGENT_WHT_231_A_R, RPT_AGENT_WHT_236_P_R,RPT_FED_DETAILED_R,RPT_WHT_DETAILED_R,TRG_WHT_DET_RPT_R">

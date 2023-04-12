@@ -530,7 +530,7 @@ public class CreditPaymentApiTransaction extends SalesTransaction {
                         null);
             }
             else if (wrapper.getProductModel().getProductId().equals(ProductConstantsInterface.LOAN_XTRA_CASH)) {
-                Double charges = wrapper.getCommissionAmountsHolder().getTotalCommissionAmount();
+                Double charges = wrapper.getCommissionAmountsHolder().getInclusivePercentAmount();
                 customerSMS = this.getMessageSource().getMessage(
                         "advanceCash.SMS",
                         new Object[]{

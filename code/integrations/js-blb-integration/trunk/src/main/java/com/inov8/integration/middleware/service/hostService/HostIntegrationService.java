@@ -15986,6 +15986,7 @@ public class HostIntegrationService {
         messageVO.setMerchantId(request.getMerchantId());
         messageVO.setFed(request.getFed());
         messageVO.setLoanPurpose(request.getLoanPurpose());
+        messageVO.setProcessingFee(request.getProcessingFee());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());
@@ -17628,6 +17629,7 @@ public class HostIntegrationService {
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setProductID(request.getProductId());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());

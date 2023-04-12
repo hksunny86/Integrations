@@ -3824,22 +3824,25 @@ public class HostRequestValidator {
 
     public static void validateOutstandingLoan(OutstandingLoanRequest integrationVO) throws ValidationException {
 
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
         if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
             throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
         }
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
         }
-
-        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
-            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
-        }
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
         }
-        if (StringUtils.isEmpty(integrationVO.getRrn())) {
-            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
         }
+        if (StringUtils.isEmpty(integrationVO.getProductId())) {
+            throw new ValidationException("[FAILED] Validation Failed Product ID: " + integrationVO.getProductId());
+        }
+
 
     }
 

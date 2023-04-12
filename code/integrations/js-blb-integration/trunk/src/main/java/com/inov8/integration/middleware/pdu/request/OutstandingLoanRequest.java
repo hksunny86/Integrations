@@ -21,6 +21,7 @@ import java.io.Serializable;
         "rrn",
         "channelId",
         "terminalId",
+        "productId",
         "reserved1",
         "reserved2",
         "reserved3",
@@ -51,6 +52,8 @@ public class OutstandingLoanRequest implements Serializable {
     private String channelId;
     @JsonProperty("terminalId")
     private String terminalId;
+    @JsonProperty("productId")
+    private String productId;
     @JsonProperty("reserved1")
     private String reserved1;
     @JsonProperty("reserved2")
@@ -128,6 +131,14 @@ public class OutstandingLoanRequest implements Serializable {
 
     public void setTerminalId(String terminalId) {
         this.terminalId = terminalId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getReserved1() {

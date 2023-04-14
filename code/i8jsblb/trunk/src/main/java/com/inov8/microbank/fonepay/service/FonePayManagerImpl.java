@@ -750,7 +750,8 @@ public class FonePayManagerImpl implements FonePayManager {
                     appUserModel.setEmail(webServiceVO.getEmailAddress());
                     //Below parameter are set to change cnic issuance Date format change  for api dd-mm-yyyy to yyyy-mm-dd
                     if ((!webServiceVO.getCnicIssuanceDate().equals("") || webServiceVO.getCnicIssuanceDate() == null) && (webServiceVO.getReserved10().equals(DeviceTypeConstantsInterface.WEB_SERVICE.toString()))) {
-                        if(webServiceVO.getReserved3()!=null && webServiceVO.getReserved3().equals("0")){
+                        if((webServiceVO.getReserved3()!=null && webServiceVO.getReserved3().equals("0")) ||
+                                (webServiceVO.getReserved1()!=null && webServiceVO.getReserved1().equals("1"))){
                             appUserModel.setCnicIssuanceDate(dateFormat1.parse(webServiceVO.getCnicIssuanceDate()));
                         }
                         else {
@@ -3832,10 +3833,10 @@ public class FonePayManagerImpl implements FonePayManager {
         String jsonInString = "";
 //||reqType.equals(FonePayConstants.REQ_ACCOUNT_OPENING_L2)
         if (reqType.equals(FonePayConstants.REQ_ACCOUNT_OPENING_CONVENTIONAL) || reqType.equals(FonePayConstants.REQ_ACCOUNT_OPENING_L2) ||
-                reqType.equals(FonePayConstants.REQ_L2_UPGRADE) || reqType.equals(FonePayConstants.REQ_ACCOUNT_OPENING) || reqType.equals("Minor Account Opening") || reqType.equals("UpdateMinorAccount")) {
+                reqType.equals(FonePayConstants.REQ_L2_UPGRADE) || reqType.equals(FonePayConstants.REQ_ACCOUNT_OPENING) || reqType.equals("Minor Account Opening") || reqType.equals("UpdateMinorAccount") || reqType.equals("Upgrade L1 Account Request")) {
             WebServiceVO cloneVoObject = new WebServiceVO();
             BeanUtils.copyProperties(webServiceVO, cloneVoObject, new String[]{"customerPhoto", "cnicFrontPhoto",
-                    "cnicBackPhoto", "signaturePhoto", "termsPhoto", "sourceOfIncomePic", "reserved3", "reserved2", "reserved5", "reserved6", "parentCnicPic", "bFormPic", "snicPic", "minorCustomerPic", "sNicBackPic", "parentNicBackPic"});
+                    "cnicBackPhoto", "signaturePhoto", "termsPhoto", "sourceOfIncomePic", "reserved3", "reserved2", "reserved5", "reserved6", "parentCnicPic", "bFormPic", "snicPic", "minorCustomerPic", "sNicBackPic", "parentNicBackPic","fingerTemplate","fingerIndex"});
             jsonInString = mapper.writeValueAsString(cloneVoObject);
         } else {
             jsonInString = mapper.writeValueAsString(webServiceVO);
@@ -3905,10 +3906,10 @@ public class FonePayManagerImpl implements FonePayManager {
         try {
             //||model.getRequestType().equals(FonePayConstants.REQ_ACCOUNT_OPENING_L2)
             if (model.getRequestType().equals(FonePayConstants.REQ_ACCOUNT_OPENING_CONVENTIONAL) || model.getRequestType().equals(FonePayConstants.REQ_ACCOUNT_OPENING_L2)
-                    || model.getRequestType().equals(FonePayConstants.REQ_L2_UPGRADE) || model.getRequestType().equals(FonePayConstants.REQ_ACCOUNT_OPENING) || model.getRequestType().equals("Minor Account Opening") || model.getRequestType().equals("UpdateMinorAccount")) {
+                    || model.getRequestType().equals(FonePayConstants.REQ_L2_UPGRADE) || model.getRequestType().equals(FonePayConstants.REQ_ACCOUNT_OPENING) || model.getRequestType().equals("Minor Account Opening") || model.getRequestType().equals("UpdateMinorAccount") || model.equals("Upgrade L1 Account Request")) {
                 WebServiceVO cloneVoObject = new WebServiceVO();
                 BeanUtils.copyProperties(webServiceVO, cloneVoObject, new String[]{"customerPhoto", "cnicFrontPhoto", "cnicBackPhoto",
-                        "signaturePhoto", "termsPhoto", "sourceOfIncomePic", "reserved2", "reserved3", "reserved6", "reserved5", "parentCnicPic", "bFormPic", "snicPic", "minorCustomerPic", "sNicBackPic", "parentNicBackPic"});
+                        "signaturePhoto", "termsPhoto", "sourceOfIncomePic", "reserved2", "reserved3", "reserved6", "reserved5", "parentCnicPic", "bFormPic", "snicPic", "minorCustomerPic", "sNicBackPic", "parentNicBackPic","fingerTemplate","fingerIndex"});
                 jsonOutString = mapper.writeValueAsString(cloneVoObject);
             } else {
                 jsonOutString = mapper.writeValueAsString(webServiceVO);

@@ -415,6 +415,88 @@ public class WebServiceVO implements Serializable {
     private String maturityDate;
     private String duration;
     private String primaryLoanId;
+    private String startDate;
+    private String businessName;
+    private String businessAddress;
+    private String estimatedMonthlySales;
+    private String typeOfBusiness;
+    private String profilePic;
+    private String iDType;
+    private String idN;
+    private String tillID;
+
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
+    public String getBusinessAddress() {
+        return businessAddress;
+    }
+
+    public void setBusinessAddress(String businessAddress) {
+        this.businessAddress = businessAddress;
+    }
+
+    public String getEstimatedMonthlySales() {
+        return estimatedMonthlySales;
+    }
+
+    public void setEstimatedMonthlySales(String estimatedMonthlySales) {
+        this.estimatedMonthlySales = estimatedMonthlySales;
+    }
+
+    public String getTypeOfBusiness() {
+        return typeOfBusiness;
+    }
+
+    public void setTypeOfBusiness(String typeOfBusiness) {
+        this.typeOfBusiness = typeOfBusiness;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    public String getiDType() {
+        return iDType;
+    }
+
+    public void setiDType(String iDType) {
+        this.iDType = iDType;
+    }
+
+    public String getIdN() {
+        return idN;
+    }
+
+    public void setIdN(String idN) {
+        this.idN = idN;
+    }
+
+    public String getTillID() {
+        return tillID;
+    }
+
+    public void setTillID(String tillID) {
+        this.tillID = tillID;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
 
     public List<Account> getAccountList() {
         return accountList;

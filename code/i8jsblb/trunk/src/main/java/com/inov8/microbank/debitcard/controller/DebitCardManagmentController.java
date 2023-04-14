@@ -14,6 +14,7 @@ import com.inov8.microbank.cardconfiguration.model.CardStateModel;
 import com.inov8.microbank.cardconfiguration.model.CardStatusModel;
 import com.inov8.microbank.common.model.CardProdCodeModel;
 import com.inov8.microbank.common.model.SegmentModel;
+import com.inov8.microbank.common.util.LabelValueBean;
 import com.inov8.microbank.debitcard.model.DebitCardRequestsViewModel;
 import com.inov8.microbank.debitcard.service.DebitCardManager;
 import org.springframework.web.servlet.ModelAndView;
@@ -80,6 +81,15 @@ public class DebitCardManagmentController extends BaseFormSearchController {
         appModel.setAppName("Vision");
 
         appList.add(appModel);
+        List<LabelValueBean> riskLevelList = new ArrayList<>();
+        LabelValueBean markCheckedValueBean = new LabelValueBean("High", "High");
+        riskLevelList.add(markCheckedValueBean);
+        markCheckedValueBean = new LabelValueBean("Medium", "Medium");
+        riskLevelList.add(markCheckedValueBean);
+        markCheckedValueBean = new LabelValueBean("Low", "Low");
+        riskLevelList.add(markCheckedValueBean);
+        referenceDataMap.put("riskLevelList", riskLevelList);
+
 
 
         referenceDataMap.put("segmentList", segmentList);

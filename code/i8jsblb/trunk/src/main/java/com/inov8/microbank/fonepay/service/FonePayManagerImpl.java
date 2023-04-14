@@ -582,7 +582,7 @@ public class FonePayManagerImpl implements FonePayManager {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Minor_segment_id")));
 
                         }
-                        else if (webServiceVO.getReserved3() != null && webServiceVO.getReserved3().equals("MERCHANT")) {
+                        else if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("MERCHANT")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Merchant_segment_id")));
 
                         }
@@ -594,7 +594,7 @@ public class FonePayManagerImpl implements FonePayManager {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Minor_segment_id")));
 
                         }
-                        else if (webServiceVO.getReserved3() != null && webServiceVO.getReserved4().equals("MERCHANT")) {
+                        else if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("MERCHANT")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Merchant_segment_id")));
 
                         }
@@ -606,7 +606,7 @@ public class FonePayManagerImpl implements FonePayManager {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Minor_segment_id")));
 
                         }
-                        else if (webServiceVO.getReserved3() != null && webServiceVO.getReserved4().equals("MERCHANT")) {
+                        else if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("MERCHANT")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Merchant_segment_id")));
 
                         }
@@ -621,12 +621,25 @@ public class FonePayManagerImpl implements FonePayManager {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Minor_segment_id")));
 
                         }
-                        else if (webServiceVO.getReserved3() != null && webServiceVO.getReserved4().equals("Merchant")) {
+                        else if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("Merchant")) {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Merchant_segment_id")));
 
                         }
                         else {
                             customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("PayFastSegmentId")));
+                        }
+                    }
+                    else if (isConsumerApp || MessageUtil.getMessage("NeemChannelId").equals(webServiceVO.getChannelId())) {
+                        if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("1")) {
+                            customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Minor_segment_id")));
+
+                        }
+                        else if (webServiceVO.getReserved4() != null && webServiceVO.getReserved4().equals("Merchant")) {
+                            customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("Merchant_segment_id")));
+
+                        }
+                        else {
+                            customerModel.setSegmentId(Long.valueOf(MessageUtil.getMessage("NeemSegmentId")));
                         }
                     }
                     else if (isConsumerApp || MessageUtil.getMessage("BrandVerseChannelId").equals(webServiceVO.getChannelId())) {

@@ -16,8 +16,19 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+
+	<bean id="merchantAccountPictureDAO"
+		  class="com.inov8.microbank.server.dao.customermodule.hibernate.MerchantAccountPictureHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 	<bean id="blinkCustomerModelDAO"
 		  class="com.inov8.microbank.server.dao.customermodule.hibernate.BlinkCustomerModelHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="merchantAccountModelDAO"
+		  class="com.inov8.microbank.server.dao.customermodule.hibernate.MerchantAccountModelHibernateDAO">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 

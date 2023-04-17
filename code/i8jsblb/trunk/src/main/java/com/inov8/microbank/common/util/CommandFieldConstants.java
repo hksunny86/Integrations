@@ -1003,6 +1003,9 @@ public class CommandFieldConstants
     public static final String KEY_CMD_ACC_DELINK = "262";
     public static final String KEY_CMD_THIRD_PARTY_BALANCE_INQUIRY = "228";
     public static final String CMD_UPGRADE_L2_ACCOUNT = "304";
+
+    public static final String CMD_UPGRADE_MERCHANT_ACCOUNT = "314";
+
     public static final String CMD_BLINK_BVS_VERIFICATION_INQUIRY = "307";
     public static final String CMD_FEE_PAYMENT_INQUIRY = "309";
     public static final String CMD_FEE_PAYMENT = "310";

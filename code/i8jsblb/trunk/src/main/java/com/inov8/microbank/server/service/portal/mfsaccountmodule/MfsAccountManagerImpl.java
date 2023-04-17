@@ -27,6 +27,7 @@ import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.agenthierarchy.SalesHierarchyModel;
 import com.inov8.microbank.common.model.customermodule.BlinkCustomerPictureModel;
 import com.inov8.microbank.common.model.customermodule.CustomerPictureModel;
+import com.inov8.microbank.common.model.customermodule.MerchantAccountPictureModel;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
 import com.inov8.microbank.common.model.portal.mfsaccountmodule.*;
 import com.inov8.microbank.common.model.portal.partnergroupmodule.PartnerPermissionViewModel;
@@ -185,6 +186,8 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
     private WalkinCustomerDAO walkinCustomerDAO;
     private CustomerPictureDAO customerPictureDAO;
     private BlinkCustomerPictureDAO blinkCustomerPictureDAO;
+    private MerchantAccountPictureDAO merchantAccountPictureDAO;
+
     private JmsProducer jmsProducer;
     private XmlMarshaller<BulkCustomerAccountVo> xmlMarshaller;
     private FailureReasonDAO failureReasonDao;
@@ -6419,6 +6422,11 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
     }
 
     @Override
+    public MerchantAccountPictureModel getMerchantCustomerPictureByTypeId(Long pictureTypeId, Long customerId) throws FrameworkCheckedException {
+        MerchantAccountPictureModel customerPictureModel = merchantAccountPictureDAO.getMerchantAccountPictureByTypeId(pictureTypeId, customerId);
+        return customerPictureModel;    }
+
+    @Override
     public List<CustomerPictureModel> getAllCustomerPictures(Long customerId)
             throws FrameworkCheckedException {
         List<CustomerPictureModel> customerPictureList = customerPictureDAO.getAllCustomerPictures(customerId);
@@ -8242,6 +8250,11 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
 
     public void setBlinkCustomerPictureDAO(BlinkCustomerPictureDAO blinkCustomerPictureDAO) {
         this.blinkCustomerPictureDAO = blinkCustomerPictureDAO;
+    }
+
+
+    public void setMerchantAccountPictureDAO(MerchantAccountPictureDAO merchantAccountPictureDAO) {
+        this.merchantAccountPictureDAO = merchantAccountPictureDAO;
     }
 
     public void setBlinkCustomerModelDAO(BlinkCustomerModelDAO blinkCustomerModelDAO) {

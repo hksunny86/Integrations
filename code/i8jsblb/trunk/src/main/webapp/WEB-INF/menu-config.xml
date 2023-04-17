@@ -561,6 +561,9 @@
             <Item title="Smart Money Account" target="" location="smartmoneyaccountmanagement.html" roles="ADM_GP_R"/>
             <Item title="Update Account to Blink" target="" location="p_updateaccounttoblinkinfo.html"
                   roles="Upd_Acc_To_Blink_R,Upd_Acc_To_Blink_U,Upd_Acc_To_Blink_C"/>
+
+            <Item title="Update Account to Merchant" target="" location="p_updateaccounttoMerchantinfo.html"
+                  roles="Upd_Acc_To_Blink_R,Upd_Acc_To_Blink_U,Upd_Acc_To_Blink_C"/>
             <Item title="Update Customer Name" roles="MNG_GEN_ACC_R,RET_GP_R,ADM_GP_R,PG_GP_R,MNG_BB_CUST_R"
                   location="p_updateCustomerNameInfo.html"/>
             <Item title="Screening Performed Upload" target="" location="p-updatecustomerscreening.html"

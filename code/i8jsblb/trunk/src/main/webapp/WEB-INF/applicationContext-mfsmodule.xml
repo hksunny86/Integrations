@@ -419,10 +419,8 @@
           <property name="blinkCustomerRegistrationStateDAO" ref="blinkCustomerRegistrationStateDAO"/>
           <property name="clsDebitCreditDAO" ref="clsDebitCreditDAO"/>
           <property name="offlineBillersConfigDAO" ref="offlineBillersConfigDAO"/>
-          <property name="tasdeeqDataDAO" ref="tasdeeqDataDAO"/>
-          <property name="limitManager" ref="limitManager"/>
-          <property name="ledgerDAO" ref="ledgerDAO" />
-          <property name="jsLoansDAO" ref="jsLoansDAO" />
+          <property name="merchantAccountModelDAO" ref="merchantAccountModelDAO"/>
+          <property name="merchantAccountPictureDAO" ref="merchantAccountPictureDAO"/>
       </bean>
     </property>
 

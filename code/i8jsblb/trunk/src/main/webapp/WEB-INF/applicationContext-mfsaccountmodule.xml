@@ -65,6 +65,7 @@
               <ref bean="blinkCustomerDAO"/>
           </property>
           <property name="blinkCustomerPictureDAO" ref="blinkCustomerPictureDAO"/>
+          <property name="merchantAccountPictureDAO" ref="merchantAccountPictureDAO"/>
           <property name="blinkCustomerModelDAO" ref="blinkCustomerModelDAO"/>
           <property name="blinkDefaultLimitDAO" ref="blinkDefaultLimitDAO"/>
         <property name="userInfoListViewDAO">

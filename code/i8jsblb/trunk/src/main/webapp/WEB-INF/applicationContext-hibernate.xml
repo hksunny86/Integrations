@@ -994,7 +994,9 @@
 		<value>com.inov8.microbank.common.model.portal.blbnewreports.DigiPostedRdvReportViewModel</value>
 		<value>com.inov8.microbank.common.model.IVRMpinVerificationViewModel</value>
 		<value>com.inov8.microbank.common.model.TasdeeqDataModel</value>
-		<value>com.inov8.microbank.common.model.JSLoansModel</value>
+		<value>com.inov8.microbank.common.model.MerchantAccountModel</value>
+		<value>com.inov8.microbank.common.model.customermodule.MerchantAccountPictureModel</value>
+
 
 	</util:list>
 

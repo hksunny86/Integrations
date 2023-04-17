@@ -67,6 +67,7 @@ public interface FonePayConstants {
     public static final String REQ_ADVANCE_SALARY_LOAN= "Advance Salary Loan";
     public static final String REQ_MPIN_Verification= "MPIN Verificaton";
     public static final String REQ_L2_UPGRADE = "UpgradeL2Account";
+    public static final String REQ_MERCHANT_ACCOUNT_UPGRADE = "MerchantAccountUpgrade";
 
 
     // FONE PAY PAYMENT TRANSACTION TYPES

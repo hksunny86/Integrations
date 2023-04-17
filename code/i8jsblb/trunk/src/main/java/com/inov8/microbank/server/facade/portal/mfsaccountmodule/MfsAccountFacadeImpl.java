@@ -13,6 +13,7 @@ import com.inov8.microbank.common.exception.CommandException;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.customermodule.BlinkCustomerPictureModel;
 import com.inov8.microbank.common.model.customermodule.CustomerPictureModel;
+import com.inov8.microbank.common.model.customermodule.MerchantAccountPictureModel;
 import com.inov8.microbank.common.model.portal.mfsaccountmodule.ApplicantDetailModel;
 import com.inov8.microbank.common.model.portal.mfsaccountmodule.BusinessDetailModel;
 import com.inov8.microbank.common.model.portal.mfsaccountmodule.MfsAccountModel;
@@ -360,6 +361,15 @@ public class MfsAccountFacadeImpl implements MfsAccountFacade {
                     FrameworkExceptionTranslator.FIND_ACTION);
         }
     }
+
+    @Override
+    public MerchantAccountPictureModel getMerchantCustomerPictureByTypeId(Long pictureTypeId, Long customerId) throws FrameworkCheckedException {
+        try {
+            return mfsAccountManager.getMerchantCustomerPictureByTypeId(pictureTypeId, customerId);
+        } catch (Exception exp) {
+            throw this.frameworkExceptionTranslator.translate(exp,
+                    FrameworkExceptionTranslator.FIND_ACTION);
+        }    }
 
     @Override
     public SearchBaseWrapper searchCustomerPictures(SearchBaseWrapper searchBaseWrapper) throws FrameworkCheckedException {

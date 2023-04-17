@@ -17,6 +17,7 @@ import com.inov8.microbank.common.exception.WorkFlowException;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.customermodule.BlinkCustomerPictureModel;
 import com.inov8.microbank.common.model.customermodule.CustomerPictureModel;
+import com.inov8.microbank.common.model.customermodule.MerchantAccountPictureModel;
 import com.inov8.microbank.common.model.portal.inovtransactiondetailmodule.ExtendedTransactionDetailPortalListModel;
 import com.inov8.microbank.common.model.portal.inovtransactiondetailmodule.MiniStatementListViewModel;
 import com.inov8.microbank.common.model.portal.inovtransactiondetailmodule.TransactionDetailPortalListModel;
@@ -134,7 +135,13 @@ public interface CommonCommandManager {
 
     public BlinkCustomerModel loadBlinkCustomerByMobileAndAccUpdate(String mobileNo, Long accUpdate) throws FrameworkCheckedException;
 
+    public MerchantAccountModel loadMerchantCustomerByMobileAndAccUpdate(String mobileNo, Long accUpdate) throws FrameworkCheckedException;
+
+
     public BlinkCustomerModel loadBlinkCustomerByBlinkCustomerId(Long accType) throws FrameworkCheckedException;
+
+    public MerchantAccountModel loadMerchantCustomerByBlinkCustomerId(Long accType) throws FrameworkCheckedException;
+
 
     public AppUserModel loadAppUserByMobileAndType(String mobileNo, Long... appUserTypes) throws FrameworkCheckedException;
 
@@ -553,6 +560,11 @@ public interface CommonCommandManager {
 
     public void saveOrUpdateBlinkCustomerPictureModel(BlinkCustomerPictureModel blinkCustomerPictureModel) throws FrameworkCheckedException;
 
+    public void saveOrUpdateMerchantAccountPictureModel(List<MerchantAccountPictureModel> list) throws FrameworkCheckedException;
+
+    public void saveOrUpdateMerchantAccountPictureModel(MerchantAccountPictureModel merchantAccountPictureModel) throws FrameworkCheckedException;
+
+
     public RetailerContactModel saveOrUpdateRetailerContactModel(RetailerContactModel retailerContactModel) throws FrameworkCheckedException;
 
     public void saveRootedMobileHistory(BaseWrapper baseWrapper) throws FrameworkCheckedException;
@@ -778,6 +790,8 @@ public interface CommonCommandManager {
     JSLoansModel saveOrUpdateJSLoansModel(JSLoansModel jsLoansModel);
 
     BlinkCustomerModel createBlinkCustomerModel(BlinkCustomerModel blinkCustomerModel);
+    MerchantAccountModel createMerchantAccountModel(MerchantAccountModel merchantAccountModel);
+
 
     ClsPendingBlinkCustomerModel createClsPendingBlinkCustomerModel(ClsPendingBlinkCustomerModel blinkCustomerModel);
 
@@ -806,6 +820,9 @@ public interface CommonCommandManager {
     public DebitCardRequestsViewModel getDebitCardRequestsViewModelByDebitCardId(Long debitCardId) throws CommandException;
 
     public BlinkCustomerPictureModel getBlinkCustomerPictureByTypeId(Long pictureTypeId, Long customerId) throws FrameworkCheckedException;
+
+
+    public MerchantAccountPictureModel getMerchantAccountPictureByTypeId(Long pictureTypeId, Long customerId) throws FrameworkCheckedException;
 
     List<ClsDebitCreditBlockModel> loadClsDebitCreditModel() throws FrameworkCheckedException;
 

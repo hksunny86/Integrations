@@ -495,6 +495,10 @@
 				</prop>
 				<prop key="/p_updateaccounttoblinkdetail.html">updateAccountToBlinkDetailController</prop>
 				<prop key="/p_updateaccounttoblinkinfo.html">updateAccountToBlinkInfoController</prop>
+				<prop key="/p_updateaccounttoMerchantinfo.html">updateAccountToMerchantInfoController</prop>
+				<prop key="/p_updateaccounttomerchantdetail.html">updateAccountToMerchantDetailController</prop>
+
+
 				<prop key="/p_vcfile.html">searchVcFileController</prop>
 				<prop key="/p_merchantcampaing.html">merchantCampingController</prop>
 
@@ -6123,6 +6127,17 @@
 		<property name="formView" value="p_updateaccounttoblinkinfo"/>
 		<property name="successView" value="p_updateaccounttoblinkdetail"/>
 	</bean>
+
+	<bean id="updateAccountToMerchantInfoController" class="com.inov8.microbank.common.model.portal.levelupgradationmodule.controller.UpdateAccountToMerchantInfoController"
+		  parent="baseFormSearchController" lazy-init="default" autowire="byName">
+		<property name="referenceDataManager" ref="commonFacade" />
+		<property name="merchantAccountModelDAO" ref="merchantAccountModelDAO"/>
+		<property name="commonCommandManager"
+				  ref="commonCommandManager"/>
+		<property name="formView" value="p_updateaccounttoMerchantinfo"/>
+		<property name="successView" value="p_updateaccounttoblinkdetail"/>
+	</bean>
+
 	<bean id="updateAccountToBlinkDetailController" class="com.inov8.microbank.common.model.portal.levelupgradationmodule.controller.UpdateAccountToBlinkDetailController"
 		  parent="advanceAuthorizationFormController" lazy-init="default" autowire="byName">
 		<property name="referenceDataManager" ref="commonFacade" />
@@ -6145,6 +6160,31 @@
 		<property name="blinkCustomerModelDAO" ref="blinkCustomerModelDAO"/>
 		<property name="formView" value="p_updateaccounttoblinkdetail"/>
 		<property name="successView" value="p_updateaccounttoblinkdetail"/>
+	</bean>
+
+
+	<bean id="updateAccountToMerchantDetailController" class="com.inov8.microbank.common.model.portal.levelupgradationmodule.controller.UpdateAccountToMerchantDetailController"
+		  parent="advanceAuthorizationFormController" lazy-init="default" autowire="byName">
+		<property name="referenceDataManager" ref="commonFacade" />
+		<property name="mfsAccountManager" ref="mfsAccountFacade" />
+		<property name="financialIntegrationManager"
+				  ref="financialIntegrationManager" />
+		<property name="customerPendingTrxManager"
+				  ref="customerPendingTrxManager"/>
+		<property name="commonCommandManager"
+				  ref="commonCommandManager"/>
+		<property name="appUserManager"
+				  ref="userManager" />
+		<property name="allPayWebResponseDataPopulator"
+				  ref="allPayWebResponseDataPopulator" />
+		<property name="arbitraryResourceLoader"
+				  ref="arbitraryResourceLoader" />
+		<property name="taxManager"
+				  ref="taxManager" />
+		<property name="merchantAccountModelDAO" ref="merchantAccountModelDAO"/>
+		<property name="cityDAO" ref="cityDAO"></property>
+		<property name="formView" value="p_updateaccounttomerchantdetail"/>
+		<property name="successView" value="p_updateaccounttomerchantdetail"/>
 	</bean>
 	<bean id="errorController"
 		  class="com.inov8.microbank.webapp.action.portal.errormodule.ErrorPageController"

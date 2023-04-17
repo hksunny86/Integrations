@@ -35,6 +35,7 @@ import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.appversionmodule.AppVersionListViewModel;
 import com.inov8.microbank.common.model.customermodule.BlinkCustomerPictureModel;
 import com.inov8.microbank.common.model.customermodule.CustomerPictureModel;
+import com.inov8.microbank.common.model.customermodule.MerchantAccountPictureModel;
 import com.inov8.microbank.common.model.favoritenumbermodule.FavoriteNumberListViewModel;
 import com.inov8.microbank.common.model.messagemodule.NovaAlertMessage;
 import com.inov8.microbank.common.model.messagemodule.SmsMessage;
@@ -42,8 +43,6 @@ import com.inov8.microbank.common.model.portal.inovtransactiondetailmodule.Exten
 import com.inov8.microbank.common.model.portal.inovtransactiondetailmodule.MiniStatementListViewModel;
 import com.inov8.microbank.common.model.portal.inovtransactiondetailmodule.TransactionDetailPortalListModel;
 import com.inov8.microbank.common.model.productmodule.*;
-//import com.inov8.microbank.common.model.schedulemodule.ScheduleFundsTransferDetailModel;
-//import com.inov8.microbank.common.model.schedulemodule.ScheduleLoanPaymentModel;
 import com.inov8.microbank.common.model.smartmoneymodule.SmAcctInfoListViewModel;
 import com.inov8.microbank.common.model.transactionmodule.FetchTransactionListViewModel;
 import com.inov8.microbank.common.model.transactionmodule.SalesSummaryListViewModel;
@@ -114,8 +113,6 @@ import com.inov8.microbank.server.dao.portal.taxregimemodule.TaxRegimeDAO;
 import com.inov8.microbank.server.dao.productmodule.*;
 import com.inov8.microbank.server.dao.retailermodule.RetailerContactDAO;
 import com.inov8.microbank.server.dao.retailermodule.RetailerDAO;
-//import com.inov8.microbank.server.dao.schedulemodule.ScheduleFundsTransferDetailDao;
-//import com.inov8.microbank.server.dao.schedulemodule.ScheduleBillPaymentDao;
 import com.inov8.microbank.server.dao.safrepo.WalletSafRepoDAO;
 import com.inov8.microbank.server.dao.securitymodule.AppUserDAO;
 import com.inov8.microbank.server.dao.smartmoneymodule.SmartMoneyAccountDAO;
@@ -172,12 +169,8 @@ import com.inov8.microbank.server.service.userdeviceaccount.UserDeviceAccountLis
 import com.inov8.microbank.server.webserviceclient.ivr.IvrRequestDTO;
 import com.inov8.microbank.tax.dao.OfflineBillersConfigDAO;
 import com.inov8.ola.integration.vo.OLAVO;
-import com.inov8.ola.server.dao.blinkcustomerlimit.BlinkCustomerDAO;
-import com.inov8.ola.server.dao.ledger.LedgerDAO;
 import com.inov8.ola.server.service.account.AccountManager;
-import com.inov8.ola.server.service.limit.LimitManager;
 import com.inov8.ola.util.CustomerAccountTypeConstants;
-import com.inov8.ola.util.LimitTypeConstants;
 import com.inov8.ola.util.TransactionTypeConstants;
 import com.inov8.verifly.common.constants.CardTypeConstants;
 import com.inov8.verifly.common.model.AccountInfoModel;
@@ -186,7 +179,6 @@ import com.inov8.verifly.common.wrapper.VeriflyBaseWrapper;
 import com.inov8.verifly.common.wrapper.VeriflyBaseWrapperImpl;
 import com.inov8.verifly.server.dao.mainmodule.AccountInfoDAO;
 import com.inov8.verifly.server.service.mainmodule.VeriflyManager;
-//import com.sun.xml.registry.common.tools.bindings_v3.Command;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
@@ -209,9 +201,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+//import com.inov8.microbank.common.model.schedulemodule.ScheduleFundsTransferDetailModel;
+//import com.inov8.microbank.common.model.schedulemodule.ScheduleLoanPaymentModel;
+//import com.inov8.microbank.server.dao.schedulemodule.ScheduleFundsTransferDetailDao;
+//import com.inov8.microbank.server.dao.schedulemodule.ScheduleBillPaymentDao;
+//import com.sun.xml.registry.common.tools.bindings_v3.Command;
+
 
 public class CommonCommandManagerImpl implements CommonCommandManager {
 
+    protected final Log logger = LogFactory.getLog(CommonCommandManagerImpl.class);
+    FinancialInstitution olaVeriflyFinancialInstitution;
     private MemberBankDAO memberBankDAO;
     private BankSegmentsDAO bankSegmentsDAO;
     private ThirdPartyAcOpeningDAO thirdPartyAcOpeningDAO;
@@ -283,23 +283,21 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     private OracleSequenceGeneratorJdbcDAO sequenceGenerator;
     private OracleSequenceGeneratorJdbcDAO deviceApplicationNoGenerator;
     private ArbitraryResourceLoader arbitraryResourceLoader;
-
     private GoldenNosDAO goldenNosDAO;
     private CustomerPictureDAO customerPictureDAO;
     private BlinkCustomerModelDAO blinkCustomerModelDAO;
+    private MerchantAccountModelDAO merchantAccountModelDAO;
     private BlinkCustomerPictureDAO blinkCustomerPictureDAO;
+    private MerchantAccountPictureDAO merchantAccountPictureDAO;
     private ClsDebitCreditDAO clsDebitCreditDAO;
     private OfflineBillersConfigDAO offlineBillersConfigDAO;
     private BankDAO bankDAO;
-    FinancialInstitution olaVeriflyFinancialInstitution;
     private LinkPaymentModeDAO linkPaymentModeDAO;
     private CreditAccountQueingPreProcessor creditAccountQueingPreProcessor;
     private AccountManager accountManager;
-
     private CustomerPendingTrxManager customerPendingTrxManager;
     private HandlerDAO handlerDAO;
     private FaqManager faqManager;
-
     private SmartMoneyAccountManager smartMoneyAccountManager;
     private IvrAuthenticationRequestQueue ivrAuthenticationRequestQueueSender;
     private DemographicsManager demographicsManager;
@@ -308,47 +306,29 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     private AgentTransferRuleDAO agentTransferRuleDAO;
     private OTPAuthentication otpAuthentication;
     private AccountControlManager accountControlManager;
-
-
     private AddressDAO addressDAO;
     private CustomerAddressesDAO customerAddressesDAO;
-
     private FonePayManager fonePayManager;
     private AgentSegmentRestrictionManager agentSegmentRestrictionManager;
     private VerisysDataDAO verisysDataHibernateDAO;
-
     private VirtualCardHibernateDAO virtualCardHibernateDAO;
-
     private CustTransManager custTransManager;
-
-
     private UserDeviceAccountListViewManager userDeviceAccountListViewManager;
-
     private ESBAdapter esbAdapter;
-
     private OlaCustomerAccountTypeDao olaCustomerAccountTypeDao;
-
     private CustomerDetailsCommandDAO customerDetailsCommandDAO;
-
     private ApiCityDAO apiCityDAO;
-
     private CityDAO cityDAO;
-
     private TaxRegimeDAO taxRegimeDAO;
-
     private BillStatusDAO billStatusDAO;
-
     //Debit Card
     private DebitCardModelDAO debitCardModelDAO;
     private DebitCardMailingAddressDAO debitCardMailingAddressDAO;
     private ActionAuthorizationModelDAO actionAuthorizationModelDAO;
     private ActionAuthorizationFacade actionAuthorizationFacade;
-
     //Agent Network and SCO
     private MnoUserDAO mnoUserDAO;
-
     private UsecaseDAO usecaseDAO;
-
     //HRA/Debit-Card Phase-2
     private CardConfigurationManager cardConfigurationManager;
     private PayMtncRequestDAO payMtncRequestDAO;
@@ -364,15 +344,28 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     private PendingDebitCardSafRepoDAO pendingDebitCardSafRepoDAO;
     private PendingAccountOpeningDAO pendingAccountOpeningDAO;
     private AdvanceSalaryLoanDAO advanceSalaryLoanDAO;
-    private JSLoansDAO jsLoansDAO;
     private ActionAuthorizationManager actionAuthorizationManager;
     private AgentBvsStatManager agentBvsStatManager;
     private AgentBvsStatDAO agentBvsStatDAO;
     private AgentLocationStatManager agentLocationStatManager;
     private DebitCardRequestsViewModelDAO debitCardRequestsViewModelDAO;
     private TasdeeqDataDAO tasdeeqDataDAO;
-    private LimitManager limitManager;
-    private LedgerDAO ledgerDAO;
+    private MiniCommandLogDAO miniCommandLogDAO;
+    private int minExpiryYear;
+    private int maxExpiryYear;
+
+    public static String escapeUnicode(String input) {
+        StringBuilder b = new StringBuilder(input.length());
+        java.util.Formatter f = new java.util.Formatter(b);
+        for (char c : input.toCharArray()) {
+            if (c < 128) {
+                b.append(c);
+            } else {
+                f.format("\\%04x", (int) c);
+            }
+        }
+        return b.toString();
+    }
 
     //private AgentLocationStatDAO agentLocationStatDAO;
     //	private ScheduleBillPaymentDao scheduleBillPaymentDao;
@@ -387,13 +380,24 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return bankModel;
     }
 
+//	@Override
+//	public void updateScheduleFundsTransferList(List<ScheduleFundsTransferDetailModel> sftList) throws FrameworkCheckedException {
+//
+//	}
+
     public List<CustomerPictureModel> getDiscrepantCustomerPictures(Long customerId) throws FrameworkCheckedException {
         List<CustomerPictureModel> customerPictureModelList = customerPictureDAO.getDiscrepantCustomerPictures(customerId);
         return customerPictureModelList;
     }
+    //*******************************************************************************
 
     public OracleSequenceGeneratorJdbcDAO getDeviceApplicationNoGenerator() {
         return deviceApplicationNoGenerator;
+    }
+
+    public void setDeviceApplicationNoGenerator(
+            OracleSequenceGeneratorJdbcDAO deviceApplicationNoGenerator) {
+        this.deviceApplicationNoGenerator = deviceApplicationNoGenerator;
     }
 
     public WorkFlowWrapper makeCustomerTrxByTransactionCode(String transactionId, String cnicCustomer) throws FrameworkCheckedException {
@@ -408,11 +412,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     public AbstractFinancialInstitution loadAbstractFinancialInstitution(SwitchWrapper switchWrapper) throws FrameworkCheckedException {
         return this.financialIntegrationManager.loadFinancialInstitution(switchWrapper);
     }
-
-//	@Override
-//	public void updateScheduleFundsTransferList(List<ScheduleFundsTransferDetailModel> sftList) throws FrameworkCheckedException {
-//
-//	}
 
     // Discrepant Save or Update Method
     //*******************************************************************************
@@ -629,7 +628,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
         return baseWrapper;
     }
-    //*******************************************************************************
 
     public BaseWrapper saveOrUpdateAccountOpeningL0Request(BaseWrapper baseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -1007,6 +1005,11 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return sequenceGenerator;
     }
 
+    public void setSequenceGenerator(
+            OracleSequenceGeneratorJdbcDAO sequenceGenerator) {
+        this.sequenceGenerator = sequenceGenerator;
+    }
+
     public File loadImage(String path) throws IOException {
         if (this.arbitraryResourceLoader != null) {
             return this.arbitraryResourceLoader.loadImage(path);
@@ -1081,9 +1084,22 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     }
 
     @Override
+    public MerchantAccountModel loadMerchantCustomerByMobileAndAccUpdate(String mobileNo, Long accUpdate) throws FrameworkCheckedException {
+        MerchantAccountModel merchantAccountModel = merchantAccountModelDAO.loadMerchantCustomerModelByMobileAndAccUpdate(mobileNo, accUpdate);
+        return merchantAccountModel;
+    }
+
+    @Override
     public BlinkCustomerModel loadBlinkCustomerByBlinkCustomerId(Long accType) throws FrameworkCheckedException {
         BlinkCustomerModel blinkCustomerModel = blinkCustomerModelDAO.loadBlinkCustomerModelByBlinkCustomerId(accType);
         return blinkCustomerModel;
+    }
+
+
+    @Override
+    public MerchantAccountModel loadMerchantCustomerByBlinkCustomerId(Long accType) throws FrameworkCheckedException {
+        MerchantAccountModel merchantAccountModel = merchantAccountModelDAO.loadMerchantModelByBlinkCustomerId(accType);
+        return merchantAccountModel;
     }
 
     @Override
@@ -1143,14 +1159,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.miniCommandLogDAO = miniCommandLogDAO;
     }
 
-    private MiniCommandLogDAO miniCommandLogDAO;
-
-    private int minExpiryYear;
-    private int maxExpiryYear;
-
-
-    protected final Log logger = LogFactory.getLog(CommonCommandManagerImpl.class);
-
     public BaseWrapper loadOLAAccount(BaseWrapper baseWrapper) {
         SmartMoneyAccountModel sma = (SmartMoneyAccountModel) baseWrapper.getBasePersistableModel();
         sma.setBankIdBankModel(new BankModel());
@@ -1185,7 +1193,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
         return baseWrapper;
     }
-
 
     public boolean checkTPin(BaseWrapper baseWrapper) {
         if (logger.isDebugEnabled()) {
@@ -1431,7 +1438,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return validationError;
     }
 
-
     public ValidationErrors checkUserCredentials(UserDeviceAccountsModel userDeviceAccountModel) {
         if (logger.isDebugEnabled()) {
             logger.debug("Start of CommonCommandManagerImpl.checkUserCredentials()");
@@ -1573,6 +1579,19 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     private WebServiceVO validateUserCredentials(WebServiceVO webServiceVO, AppUserModel appUserModel) {
         return webServiceVO;
     }
+
+
+    //	@Override
+//	public BaseWrapper updateDebitBlock(BaseWrapper baseWrapper) throws FrameworkCheckedException {
+//		AppUserModel appUserModel = null;
+//		CustomerModel customerModel = null;
+//		try{
+//			customerModel = getCommonCommandManager().loadCustomer(customerModel);
+//			appUserModel = appUserManager.loadAppUser(appUserModel.getPrimaryKey());
+//		}
+//		catch (Exception ex){}
+//		return baseWrapper;
+//	}
 
     @Override
     public Boolean checkActiveAgentAppUserForOpenAPI(WebServiceVO webServiceVO, AppUserModel appUserModel) throws Exception {
@@ -1811,19 +1830,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return isValid;
     }
 
-
-    //	@Override
-//	public BaseWrapper updateDebitBlock(BaseWrapper baseWrapper) throws FrameworkCheckedException {
-//		AppUserModel appUserModel = null;
-//		CustomerModel customerModel = null;
-//		try{
-//			customerModel = getCommonCommandManager().loadCustomer(customerModel);
-//			appUserModel = appUserManager.loadAppUser(appUserModel.getPrimaryKey());
-//		}
-//		catch (Exception ex){}
-//		return baseWrapper;
-//	}
-
     public ValidationErrors checkActiveAppUser(AppUserModel appUserModel) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
             logger.debug("Start of CommonCommandManagerImpl.checkActiveAppUser()");
@@ -1936,7 +1942,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return validationError;
     }
 
-
     public BaseWrapper updateMfsPin(BaseWrapper baseWrapper) {
         if (logger.isDebugEnabled()) {
             logger.debug("Start of CommonCommandManagerImpl.updateMfsPin()");
@@ -1950,7 +1955,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return baseWrapper;
     }
-
 
     public BaseWrapper loadMfs(BaseWrapper baseWrapper) {
         if (logger.isDebugEnabled()) {
@@ -2046,7 +2050,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return baseWrapper;
     }
 
-
     public SearchBaseWrapper getFavoriteNumbers(SearchBaseWrapper searchBaseWrapper) {
         if (logger.isDebugEnabled()) {
             logger.debug("Start of CommonCommandManagerImpl.getFavoriteNumbers()");
@@ -2073,7 +2076,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return baseWrapper;
     }
-
 
     public SearchBaseWrapper loadProdCatalogForDiscAndVar(SearchBaseWrapper searchBaseWrapper) {
         if (logger.isDebugEnabled()) {
@@ -2104,7 +2106,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return searchBaseWrapper;
     }
-
 
     public SearchBaseWrapper loadCatalogProductsForRetailers(SearchBaseWrapper searchBaseWrapper) {
         if (logger.isDebugEnabled()) {
@@ -2160,7 +2161,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return searchBaseWrapper;
     }
 
-
     public BaseWrapper updateSmartMoneyAccount(BaseWrapper baseWrapper) {
         if (logger.isDebugEnabled()) {
             logger.debug("Start of CommonCommandManagerImpl.updateSmartMoneyAccount()");
@@ -2210,6 +2210,11 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return baseWrapper;
     }
 
+//	@Override
+//	public List<ScheduleFundsTransferDetailModel> fetchScheduleFundsTransferDetailList(Date date) throws FrameworkCheckedException {
+//		return null;
+//	}
+
     public BaseWrapper loadAppUser(BaseWrapper baseWrapper) {
         if (logger.isDebugEnabled()) {
             logger.debug("Start of CommonCommandManagerImpl.loadAppUser()");
@@ -2256,11 +2261,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return searchBaseWrapper;
     }
 
-//	@Override
-//	public List<ScheduleFundsTransferDetailModel> fetchScheduleFundsTransferDetailList(Date date) throws FrameworkCheckedException {
-//		return null;
-//	}
-
     public SearchBaseWrapper searchAppUserByExample(SearchBaseWrapper searchBaseWrapper) throws FrameworkCheckedException {
 
         return mfsAccountManager.loadAppUserByMobileNumberAndType(searchBaseWrapper);
@@ -2292,7 +2292,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
     }
 
-
     public SearchBaseWrapper checkLogin(SearchBaseWrapper searchBaseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
             logger.debug("Start of CommonCommandManagerImpl.checkLogin()");
@@ -2319,7 +2318,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return searchBaseWrapper;
     }
-
 
     public BaseWrapper loadVerifly(BaseWrapper baseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -2391,7 +2389,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return searchBaseWrapper;
     }
 
-
     public VeriflyManager loadVeriflyManagerByAccountId(BaseWrapper baseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
             logger.debug("Start of CommonCommandManagerImpl.loadVeriflyManagerByAccountId()");
@@ -2403,7 +2400,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return veriflyManager;
     }
-
 
     public VeriflyBaseWrapper changeVeriflyPin(VeriflyManager veriflyManager, VeriflyBaseWrapper veriflyBaseWrapper) throws Exception {
         if (logger.isDebugEnabled()) {
@@ -2426,7 +2422,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return veriflyBaseWrapper;
     }
-
 
     /**
      * @param appUserModel
@@ -2516,7 +2511,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return switchWrapper;
     }
 
-
     public SearchBaseWrapper loadSmartMoneyAccountInfo(SearchBaseWrapper searchBaseWrapper) throws
             FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -2559,7 +2553,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return baseWrapper;
     }
-
 
     public BaseWrapper setDefaultSmartMoneyAccount(BaseWrapper baseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -2646,7 +2639,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
     }
 
-
     public AppUserModel loadAppUserByRetailerContractId(long retailerContactId) throws FrameworkCheckedException {
         return appUserDAO.findByRetailerContractId(retailerContactId);
     }
@@ -2666,7 +2658,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return baseWrapper;
     }
 
-
     public SearchBaseWrapper searchTransaction(SearchBaseWrapper searchBaseWrapper) throws
             FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -2681,7 +2672,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return searchBaseWrapper;
     }
 
-
     public WorkFlowWrapper executeSaleCreditTransaction(WorkFlowWrapper workFlowWrapper) throws Exception {
         if (logger.isDebugEnabled()) {
             logger.debug("Start of CommonCommandManagerImpl.executeSaleCreditTransaction()");
@@ -2692,7 +2682,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return workFlowWrapper;
     }
-
 
     public SearchBaseWrapper fetchTransactions(SearchBaseWrapper searchBaseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -2710,7 +2699,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return searchBaseWrapper;
     }
-
 
     public SearchBaseWrapper fetchSalesTransactions(SearchBaseWrapper searchBaseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -2734,7 +2722,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return searchBaseWrapper;
     }
-
 
     public BaseWrapper loadCustomer(BaseWrapper baseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -2786,6 +2773,42 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         blinkCustomerPictureDAO.saveOrUpdate(blinkCustomerPictureModel);
     }
 
+    @Override
+    public void saveOrUpdateMerchantAccountPictureModel(List<MerchantAccountPictureModel> list) throws FrameworkCheckedException {
+        merchantAccountPictureDAO.saveOrUpdateCollection(list);
+    }
+
+    @Override
+    public void saveOrUpdateMerchantAccountPictureModel(MerchantAccountPictureModel merchantAccountPictureModel) throws FrameworkCheckedException {
+        merchantAccountPictureDAO.saveOrUpdate(merchantAccountPictureModel);
+    }
+
+//	public SwitchWrapper checkAccountBalance(SwitchWrapper switchWrapper) throws FrameworkCheckedException
+//	{
+//		if(logger.isDebugEnabled())
+//		{
+//			logger.debug("Start of CommonCommandManagerImpl.checkAccountBalance()");
+//		}
+//		try
+//        {
+//			switchWrapper = this.switchController.checkBalance(switchWrapper);
+//        }
+//        catch (WorkFlowException ex)
+//        {
+//        	if (ex instanceof WorkFlowException)
+//            {
+//        		throw new FrameworkCheckedException( this.workflowExceptionTranslator.translateWorkFlowException(ex,
+//                this.workflowExceptionTranslator.FIND_BY_PRIMARY_KEY_ACTION).getMessage() );
+//                  }
+//
+//                }
+//                if(logger.isDebugEnabled())
+//        		{
+//        			logger.debug("End of CommonCommandManagerImpl.checkAccountBalance()");
+//        		}
+//		return switchWrapper;
+//	}
+
     public RetailerContactModel saveOrUpdateRetailerContactModel(RetailerContactModel retailerContactModel) throws FrameworkCheckedException {
 
         return this.retailerContactDAO.saveOrUpdate(retailerContactModel);
@@ -2816,32 +2839,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return baseWrapper;
     }
-
-//	public SwitchWrapper checkAccountBalance(SwitchWrapper switchWrapper) throws FrameworkCheckedException
-//	{
-//		if(logger.isDebugEnabled())
-//		{
-//			logger.debug("Start of CommonCommandManagerImpl.checkAccountBalance()");
-//		}
-//		try
-//        {
-//			switchWrapper = this.switchController.checkBalance(switchWrapper);
-//        }
-//        catch (WorkFlowException ex)
-//        {
-//        	if (ex instanceof WorkFlowException)
-//            {
-//        		throw new FrameworkCheckedException( this.workflowExceptionTranslator.translateWorkFlowException(ex,
-//                this.workflowExceptionTranslator.FIND_BY_PRIMARY_KEY_ACTION).getMessage() );
-//                  }
-//
-//                }
-//                if(logger.isDebugEnabled())
-//        		{
-//        			logger.debug("End of CommonCommandManagerImpl.checkAccountBalance()");
-//        		}
-//		return switchWrapper;
-//	}
 
     public BaseWrapper searchProduct(BaseWrapper baseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -2884,7 +2881,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return productModel;
     }
-
 
     public Double getCommissionAmount(WorkFlowWrapper _workFlowWrapper) {
 
@@ -2931,7 +2927,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
         return _commissionAmount;
     }
-
 
     public SearchBaseWrapper getCommissionRateData(CommissionRateModel commissionRateModel) throws FrameworkCheckedException {
 
@@ -2980,7 +2975,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return baseWrapper;
     }
 
-
     public BaseWrapper loadOperator(BaseWrapper baseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
             logger.debug("Start of CommonCommandManagerImpl.loadOperator()");
@@ -2994,7 +2988,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return baseWrapper;
     }
-
 
     public BaseWrapper createMfsAccountThroughSMS(BaseWrapper baseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -3018,7 +3011,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return baseWrapper;
     }
-
 
     public SearchBaseWrapper loadUserDeviceAccounts(SearchBaseWrapper searchBaseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -3049,7 +3041,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return searchBaseWrapper;
     }
-
 
     public BaseWrapper updateMfsAccount(BaseWrapper baseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -3104,7 +3095,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return baseWrapper;
     }
 
-
     public boolean checkExpiryDate(Date expiryDate) {
         if (logger.isDebugEnabled()) {
             logger.debug("Start of CommonCommandManagerImpl.checkExpiryDate()");
@@ -3151,7 +3141,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return abstractFinancialInstitution;
     }
 
-
     @Override
     public void updateSmartMoneyAccountCardType(SmartMoneyAccountModel smartMoneyAccountModel) throws FrameworkCheckedException {
         smartMoneyAccountDAO.updateSmartMoneyAccountCardTypeId(smartMoneyAccountModel);
@@ -3162,7 +3151,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return financialIntegrationManager.loadFinancialInstitutionByClassName(className);
     }
 
-
     public void setVeriflyController(VeriflyManagerService veriflyController) {
         this.veriflyController = veriflyController;
     }
@@ -3170,6 +3158,11 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     public void setProdCatalogDetailListViewDAO(ProdCatalogDetailListViewDAO prodCatalogDetailListViewDAO) {
         this.prodCatalogDetailListViewDAO = prodCatalogDetailListViewDAO;
     }
+
+//	public void setAppVersionDAO(AppVersionDAO appVersionDAO)
+//	{
+//		this.appVersionDAO = appVersionDAO;
+//	}
 
     public void setGenericDao(GenericDao genericDao) {
         this.genericDao = genericDao;
@@ -3182,11 +3175,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     public void setVeriflyListViewDAO(VeriflyListViewDAO veriflyListViewDAO) {
         this.veriflyListViewDAO = veriflyListViewDAO;
     }
-
-//	public void setAppVersionDAO(AppVersionDAO appVersionDAO)
-//	{
-//		this.appVersionDAO = appVersionDAO;
-//	}
 
     public void setTickerDAO(TickerDAO tickerDAO) {
         this.tickerDAO = tickerDAO;
@@ -3272,12 +3260,12 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.workflowExceptionTranslator = workflowExceptionTranslator;
     }
 
-    public void setMessageSource(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
-
     public MessageSource getMessageSource() {
         return messageSource;
+    }
+
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 
     public void setOperatorDAO(OperatorDAO operatorDAO) {
@@ -3287,7 +3275,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     public void setMfsAccountManager(MfsAccountManager mfsAccountManager) {
         this.mfsAccountManager = mfsAccountManager;
     }
-
 
     public SmsSender getSmsSender() {
         return smsSender;
@@ -3320,7 +3307,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     public void setFinancialIntegrationManager(FinancialIntegrationManager financialIntegrationManager) {
         this.financialIntegrationManager = financialIntegrationManager;
     }
-
 
     public boolean isAccountValidationRequired(BaseWrapper baseWrapper) {
         if (logger.isDebugEnabled()) {
@@ -3451,7 +3437,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return baseWrapper;
     }
 
-
     public void deleteFavoriteNumber(BaseWrapper baseWrapper) {
         if (logger.isDebugEnabled()) {
             logger.debug("Start of CommonCommandManagerImpl.deleteFavoriteNumber()");
@@ -3466,7 +3451,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
             logger.debug("End of CommonCommandManagerImpl.deleteFavoriteNumber()");
         }
     }
-
 
     public void setSalesSummaryListViewDAO(SalesSummaryListViewDAO salesSummaryListViewDAO) {
         this.salesSummaryListViewDAO = salesSummaryListViewDAO;
@@ -3635,7 +3619,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
     }
 
-
     public SearchBaseWrapper loadMiniTransactionByTransactionCode(SearchBaseWrapper baseWrapper) throws FrameworkCheckedException {
 
 
@@ -3648,7 +3631,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     public MiniTransactionModel loadMiniTransactionByTransactionCode(String transactionCode) throws FrameworkCheckedException {
         return miniTransactionDAO.loadMiniTransactionByTransactionCode(transactionCode);
     }
-
 
     public Boolean isCVVReqForSMA(BaseWrapper baseWrapper) throws FrameworkCheckedException {
 //		SmartMoneyAccountModel smartMoneyAccountModel = (SmartMoneyAccountModel)baseWrapper.getBasePersistableModel();
@@ -3668,7 +3650,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
         return false;
     }
-
 
     public VeriflyBaseWrapper verifyVeriflyOneTimePin(VeriflyManager veriflyManager, VeriflyBaseWrapper veriflyBaseWrapper) throws Exception {
         veriflyBaseWrapper = veriflyManager.verifyOneTimePin(veriflyBaseWrapper);
@@ -3711,6 +3692,8 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.transactionManager = transactionManager;
     }
 
+    //Added by atiq butt
+
     public BaseWrapper generateTransactionCode() {
         BaseWrapper baseWrapper = new BaseWrapperImpl();
         DeviceTypeModel deviceTypeModel = new DeviceTypeModel();
@@ -3745,7 +3728,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return baseWrapper;
     }
 
-
     /**
      * @param CNIC
      * @param mobileNumber
@@ -3764,8 +3746,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
         return isAlreadyRegistered;
     }
-
-    //Added by atiq butt
 
     public Boolean isAlreadyRegisteredWalkIn(String CNIC, String mobileNumber, String senderMobileNumber) throws FrameworkCheckedException {
 
@@ -3789,6 +3769,8 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return mfsAccountManager.isAlreadyRegistered(CNIC);
     }
 
+    //Added by atiq butt
+
     /**
      * This method is copy of sAlreadyRegistered(..) to make solve readOnly transaction issue ( <prop key="is*">PROPAGATION_REQUIRED,readOnly</prop> in conf.)
      *
@@ -3803,7 +3785,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return isAlreadyRegistered(CNIC, mobileNumber, senderMobileNumber);
 
     }
-
 
     //Added by atiq butt
     public Boolean createNewWalkinCustomer(String CNIC, String mobileNumber, String senderMobileNumber) throws FrameworkCheckedException {
@@ -3839,8 +3820,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return isWalkinCustomerExists;
     }
 
-    //Added by atiq butt
-
     public Boolean createWalkinCustomer(String walkInCNIC, String walkInMobileNumber, String senderMobileNumber) throws FrameworkCheckedException {
 
         Boolean isWalkinCustomerExists = null;
@@ -3860,7 +3839,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
         return isWalkinCustomerExists;
     }
-
 
     public WalkinCustomerModel getWalkinCustomerModel(WalkinCustomerModel _walkinCustomerModel) throws FrameworkCheckedException {
 
@@ -3951,7 +3929,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 		return searchBaseWrapper;*/
 
     }
-
 
     public SearchBaseWrapper loadTransactionDetailMaster(SearchBaseWrapper searchBaseWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
@@ -4063,7 +4040,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return titleOfTheAccount;
     }
 
-
     public AccountInfoModel getAccountInfoModel(Long customerId, Long paymentModeId) throws Exception {
 
         return veriflyManager.getAccountInfoModel(customerId, paymentModeId);
@@ -4122,7 +4098,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return commissionManager.loadAgentCommission(baseWrapper);
     }
 
-
     /* (non-Javadoc)
      * @see com.inov8.microbank.server.service.mfsmodule.CommonCommandManager#titleFetch(java.lang.String, com.inov8.microbank.common.model.TransactionCodeModel, com.inov8.microbank.common.model.ProductModel)
      */
@@ -4152,7 +4127,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
         return StringUtil.isNullOrEmpty(accountTitle);
     }
-
 
     public TransactionModel saveTransactionModel(TransactionModel transactionModel) {
 
@@ -4327,7 +4301,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return switchWrapper;
     }
 
-
     public SwitchWrapper checkCustomerBalanceForHra(String customerMobileNumber, double totalAmount) throws WorkFlowException, FrameworkCheckedException, Exception {
 
         AppUserModel customerAppUserModel = new AppUserModel();
@@ -4442,7 +4415,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return switchWrapper;
     }
 
-
     @Override
     public void blockSmartMoneyAccount(AppUserModel appUserModel) throws Exception {
         //block smart money account of given user
@@ -4468,7 +4440,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.phoenixFinancialInstitution = phoenixFinancialInstitution;
     }
 
-
     @Override
     public BaseWrapper saveTillBalance(BaseWrapper baseWrapper)
             throws FrameworkCheckedException {
@@ -4488,14 +4459,9 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return searchBaseWrapper;
     }
 
-    public void setAppUserManager(AppUserManager appUserManager) {
-        this.appUserManager = appUserManager;
-    }
-
     public void setVeriflyManager(VeriflyManager veriflyManager) {
         this.veriflyManager = veriflyManager;
     }
-
 
     public void setCommissionRateDAO(CommissionRateDAO commissionRateDAO) {
         this.commissionRateDAO = commissionRateDAO;
@@ -4740,14 +4706,12 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return rate;
     }
 
-
     public CommissionWrapper calculateCommission(WorkFlowWrapper workFlowWrapper) throws FrameworkCheckedException {
         if (logger.isDebugEnabled()) {
             logger.debug("Start/End of CommonCommandManagerImpl.calculateCommission()");
         }
         return this.commissionManager.calculateCommission(workFlowWrapper);
     }
-
 
     public CommissionWrapper calculateCommissionInfo(WorkFlowWrapper workFlowWrapper) throws FrameworkCheckedException {
 
@@ -4786,7 +4750,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.miniStatementListViewDAO = miniStatementListViewDAO;
     }
 
-
     /**
      * @param productModel
      * @return
@@ -4823,7 +4786,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
         return reasonId;
     }
-
 
     /*
      * this method intended for CW product, we will load segment id of customer and send here, will incorporate it with other product as well.
@@ -5076,7 +5038,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return true;
     }
 
-
     public VeriflyBaseWrapper changePIN(VeriflyBaseWrapper wrapper) throws
             Exception {
         return mfsAccountManager.changePIN(wrapper);
@@ -5090,7 +5051,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
         return stakeholderBankInfoManager.loadStakeHolderBankInfo(searchBaseWrapper);
     }
-
 
     public SupplierBankInfoModel loadSupplierBankInfo(BaseWrapper baseWrapper) throws FrameworkCheckedException {
 
@@ -5139,16 +5099,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.actionLogManager = actionLogManager;
     }
 
-    public void setSequenceGenerator(
-            OracleSequenceGeneratorJdbcDAO sequenceGenerator) {
-        this.sequenceGenerator = sequenceGenerator;
-    }
-
-    public void setDeviceApplicationNoGenerator(
-            OracleSequenceGeneratorJdbcDAO deviceApplicationNoGenerator) {
-        this.deviceApplicationNoGenerator = deviceApplicationNoGenerator;
-    }
-
     public void setArbitraryResourceLoader(
             ArbitraryResourceLoader arbitraryResourceLoader) {
         this.arbitraryResourceLoader = arbitraryResourceLoader;
@@ -5156,10 +5106,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
     public void setGoldenNosDAO(GoldenNosDAO goldenNosDAO) {
         this.goldenNosDAO = goldenNosDAO;
-    }
-
-    public void setCustomerPictureDAO(CustomerPictureDAO customerPictureDAO) {
-        this.customerPictureDAO = customerPictureDAO;
     }
 
     public void setBankDAO(BankDAO bankDAO) {
@@ -5403,7 +5349,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return list;
     }
 
-
     @Override
     public Boolean isCnicBlacklisted(String cnicNo) {
         return accountControlManager.isCnicBlacklisted(cnicNo);
@@ -5412,6 +5357,10 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     @Override
     public CustomerPictureDAO getCustomerPictureDAO() {
         return customerPictureDAO;
+    }
+
+    public void setCustomerPictureDAO(CustomerPictureDAO customerPictureDAO) {
+        this.customerPictureDAO = customerPictureDAO;
     }
 
     public void saveRootedMobileHistory(BaseWrapper baseWrapper) throws FrameworkCheckedException {
@@ -5692,13 +5641,13 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.creditAccountQueingPreProcessor = creditAccountQueingPreProcessor;
     }
 
-    public void setDemographicsManager(DemographicsManager demographicsManager) {
-        this.demographicsManager = demographicsManager;
-    }
-
     @Override
     public DemographicsManager getDemographicsManager() {
         return demographicsManager;
+    }
+
+    public void setDemographicsManager(DemographicsManager demographicsManager) {
+        this.demographicsManager = demographicsManager;
     }
 
     @Override
@@ -5706,29 +5655,35 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return agentBvsStatManager;
     }
 
+    public void setAgentBvsStatManager(AgentBvsStatManager agentBvsStatManager) {
+        this.agentBvsStatManager = agentBvsStatManager;
+    }
+
     public AppManager getAppManager() {
         return appManager;
     }
 
-
     public void setAppManager(AppManager appManager) {
         this.appManager = appManager;
     }
-
 
     @Override
     public AppUserManager getAppUserManager() {
         return appUserManager;
     }
 
-    @Override
-    public void setMiniTransactionManager(MiniTransactionManager miniTransactionManager) {
-        this.miniTransactionManager = miniTransactionManager;
+    public void setAppUserManager(AppUserManager appUserManager) {
+        this.appUserManager = appUserManager;
     }
 
     @Override
     public MiniTransactionManager getMiniTransactionManager() {
         return miniTransactionManager;
+    }
+
+    @Override
+    public void setMiniTransactionManager(MiniTransactionManager miniTransactionManager) {
+        this.miniTransactionManager = miniTransactionManager;
     }
 
     public void setAgentTransferRuleDAO(AgentTransferRuleDAO agentTransferRuleDAO) {
@@ -5738,7 +5693,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     public void setAddressDAO(AddressDAO addressDAO) {
         this.addressDAO = addressDAO;
     }
-
 
     public void setAccountControlManager(AccountControlManager accountControlManager) {
         this.accountControlManager = accountControlManager;
@@ -5754,16 +5708,14 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return fonePayManager;
     }
 
+    public void setFonePayManager(FonePayManager fonePayManager) {
+        this.fonePayManager = fonePayManager;
+    }
 
     @Override
     public AgentSegmentRestrictionManager getAgentSegmentRestriction() {
         return agentSegmentRestrictionManager;
     }
-
-    public void setFonePayManager(FonePayManager fonePayManager) {
-        this.fonePayManager = fonePayManager;
-    }
-
 
     public void setAgentSegmentRestrictionManager(AgentSegmentRestrictionManager agentSegmentRestrictionManager) {
         this.agentSegmentRestrictionManager = agentSegmentRestrictionManager;
@@ -5857,19 +5809,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.virtualCardHibernateDAO = virtualCardHibernateDAO;
     }
 
-    public static String escapeUnicode(String input) {
-        StringBuilder b = new StringBuilder(input.length());
-        java.util.Formatter f = new java.util.Formatter(b);
-        for (char c : input.toCharArray()) {
-            if (c < 128) {
-                b.append(c);
-            } else {
-                f.format("\\%04x", (int) c);
-            }
-        }
-        return b.toString();
-    }
-
     @Override
     public void makeIVRCallForPinRegenerate(IvrRequestDTO ivrRequestDTO) throws FrameworkCheckedException {
         this.mfsAccountManager.initiateUserGeneratedPinIvrCall(ivrRequestDTO);
@@ -5942,7 +5881,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
     }
 
-
     //Challan payment is already in process or paid throws exception according to paidCound
     @Override
     public void throwsChallanException(Long paidCount) throws FrameworkCheckedException {
@@ -5974,10 +5912,13 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
     }
 
-
     @Override
     public UserDeviceAccountListViewManager getUserDeviceAccountListViewManager() {
         return userDeviceAccountListViewManager;
+    }
+
+    public void setUserDeviceAccountListViewManager(UserDeviceAccountListViewManager userDeviceAccountListViewManager) {
+        this.userDeviceAccountListViewManager = userDeviceAccountListViewManager;
     }
 
     @Override
@@ -6190,8 +6131,7 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
             if (nameArray.length > 1) {
                 lName = vo.getName().substring(
                         fName.length() + 1);
-            }
-            else {
+            } else {
                 lName = " ";
             }
 
@@ -6331,6 +6271,10 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     @Override
     public TaxRegimeDAO getTaxRegimeDAO() {
         return taxRegimeDAO;
+    }
+
+    public void setTaxRegimeDAO(TaxRegimeDAO taxRegimeDAO) {
+        this.taxRegimeDAO = taxRegimeDAO;
     }
 
     @Override
@@ -6533,7 +6477,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return workFlowWrapper;
     }
 
-
     @Override
     public WorkFlowWrapper calculateDebitCardFeeForAPI(String mobileNo, String cNic, AppUserModel appUserModel, CustomerModel customerModel, ProductModel productModel,
                                                        Long productId, Long cardFeeTypeId, Long cardProductCode, Long deviceTypeId, DebitCardModel debitCardModel) throws FrameworkCheckedException {
@@ -6639,7 +6582,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return workFlowWrapper;
     }
 
-
     @Override
     public DebitCardModelDAO getDebitCardModelDao() {
         return debitCardModelDAO;
@@ -6650,14 +6592,26 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return debitCardMailingAddressDAO;
     }
 
+    public void setDebitCardMailingAddressDAO(DebitCardMailingAddressDAO debitCardMailingAddressDAO) {
+        this.debitCardMailingAddressDAO = debitCardMailingAddressDAO;
+    }
+
     @Override
     public ActionAuthorizationModelDAO getActionAuthorizationModelDAO() {
         return actionAuthorizationModelDAO;
     }
 
+    public void setActionAuthorizationModelDAO(ActionAuthorizationModelDAO actionAuthorizationModelDAO) {
+        this.actionAuthorizationModelDAO = actionAuthorizationModelDAO;
+    }
+
     @Override
     public ActionAuthorizationFacade getActionAuthorizationFacade() {
         return actionAuthorizationFacade;
+    }
+
+    public void setActionAuthorizationFacade(ActionAuthorizationFacade actionAuthorizationFacade) {
+        this.actionAuthorizationFacade = actionAuthorizationFacade;
     }
 
     @Override
@@ -6795,7 +6749,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return customerModel;
     }
 
-
     @Override
     public AccountModel getAccountModelByCnicAndCustomerAccountTypeAndStatusId(String cnic, Long customerAccountTypeId, Long statusId) {
         return accountManager.getAccountModelByCnicAndCustomerAccountTypeAndStatusId(cnic, customerAccountTypeId, statusId);
@@ -6871,19 +6824,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     public List<LimitModel> getLimitsByCustomerAccountType(Long customerAccountTypeId) throws FrameworkCheckedException {
         return customerDetailsCommandDAO.getLimitsByCustomerAccountType(customerAccountTypeId);
     }
-
-    public void setUserDeviceAccountListViewManager(UserDeviceAccountListViewManager userDeviceAccountListViewManager) {
-        this.userDeviceAccountListViewManager = userDeviceAccountListViewManager;
-    }
-
-    public void setEsbAdapter(ESBAdapter esbAdapter) {
-        this.esbAdapter = esbAdapter;
-    }
-
-    public void setOlaCustomerAccountTypeDao(OlaCustomerAccountTypeDao olaCustomerAccountTypeDao) {
-        this.olaCustomerAccountTypeDao = olaCustomerAccountTypeDao;
-    }
-
 
     public void setCustomerDetailsCommandDAO(CustomerDetailsCommandDAO customerDetailsCommandDAO) {
         this.customerDetailsCommandDAO = customerDetailsCommandDAO;
@@ -7195,9 +7135,17 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return cardConfigurationManager;
     }
 
+    public void setCardConfigurationManager(CardConfigurationManager cardConfigurationManager) {
+        this.cardConfigurationManager = cardConfigurationManager;
+    }
+
     @Override
     public CityDAO getCityDAO() {
         return cityDAO;
+    }
+
+    public void setCityDAO(CityDAO cityDAO) {
+        this.cityDAO = cityDAO;
     }
 
     @Override
@@ -7208,6 +7156,10 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     @Override
     public ESBAdapter getEsbAdapter() {
         return esbAdapter;
+    }
+
+    public void setEsbAdapter(ESBAdapter esbAdapter) {
+        this.esbAdapter = esbAdapter;
     }
 
     @Override
@@ -7223,6 +7175,10 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     @Override
     public BISPCustNadraVerificationDAO getBispCustNadraVerificationDAO() {
         return bispCustNadraVerificationDAO;
+    }
+
+    public void setBispCustNadraVerificationDAO(BISPCustNadraVerificationDAO bispCustNadraVerificationDAO) {
+        this.bispCustNadraVerificationDAO = bispCustNadraVerificationDAO;
     }
 
     @Override
@@ -7244,7 +7200,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     public FetchCardTypeDAO getCardTypeDao() {
         return fetchCardTypeDAO;
     }
-
 
     @Override
     public SegmentDAO getSegmentDao() {
@@ -7281,6 +7236,10 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return walletSafRepoDAO;
     }
 
+    public void setWalletSafRepoDAO(WalletSafRepoDAO walletSafRepoDAO) {
+        this.walletSafRepoDAO = walletSafRepoDAO;
+    }
+
     @Override
     public DebitCardPendingSafRepo debitCardPendingSafRepo(DebitCardPendingSafRepo debitCardPendingSafRepo) {
         return this.genericDao.createEntity(debitCardPendingSafRepo);
@@ -7298,9 +7257,8 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
     @Override
     public JSLoansModel saveOrUpdateJSLoansModel(JSLoansModel jsLoansModel) {
-        return this.genericDao.createEntity(jsLoansModel);
+        return null;
     }
-
 
     @Override
     public BlinkCustomerModel createBlinkCustomerModel(BlinkCustomerModel blinkCustomerModel) {
@@ -7308,9 +7266,21 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     }
 
     @Override
+    public MerchantAccountModel createMerchantAccountModel(MerchantAccountModel merchantAccountModel) {
+        return this.genericDao.createEntity(merchantAccountModel);
+    }
+
+    @Override
     public ClsPendingBlinkCustomerModel createClsPendingBlinkCustomerModel(ClsPendingBlinkCustomerModel blinkCustomerModel) {
         return this.genericDao.createEntity(blinkCustomerModel);
     }
+
+
+//	@Override
+//	public List<ScheduleLoanPaymentModel> loadAllDebitBlockRequired() throws FrameworkCheckedException {
+////		return scheduleBillPaymentDao.loadAllDebitBlockRequired();
+//		return null;
+//	}
 
     @Override
     public AccountOpeningPendingSafRepoModel getAccountOpeningPendingSafRepoModel(AccountOpeningPendingSafRepoModel accountOpeningPendingSafRepoModel) {
@@ -7511,16 +7481,13 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return switchWrapper;
     }
 
-
-//	@Override
-//	public List<ScheduleLoanPaymentModel> loadAllDebitBlockRequired() throws FrameworkCheckedException {
-////		return scheduleBillPaymentDao.loadAllDebitBlockRequired();
-//		return null;
-//	}
-
     @Override
     public OlaCustomerAccountTypeDao getOlaCustomerAccountTypeDao() {
         return olaCustomerAccountTypeDao;
+    }
+
+    public void setOlaCustomerAccountTypeDao(OlaCustomerAccountTypeDao olaCustomerAccountTypeDao) {
+        this.olaCustomerAccountTypeDao = olaCustomerAccountTypeDao;
     }
 
     private BaseWrapper convertModelToVO(BaseWrapper baseWrapper) {
@@ -7658,18 +7625,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.debitCardModelDAO = debitCardModelDAO;
     }
 
-    public void setDebitCardMailingAddressDAO(DebitCardMailingAddressDAO debitCardMailingAddressDAO) {
-        this.debitCardMailingAddressDAO = debitCardMailingAddressDAO;
-    }
-
-    public void setActionAuthorizationModelDAO(ActionAuthorizationModelDAO actionAuthorizationModelDAO) {
-        this.actionAuthorizationModelDAO = actionAuthorizationModelDAO;
-    }
-
-    public void setActionAuthorizationFacade(ActionAuthorizationFacade actionAuthorizationFacade) {
-        this.actionAuthorizationFacade = actionAuthorizationFacade;
-    }
-
     public void setUsecaseDAO(UsecaseDAO usecaseDAO) {
         this.usecaseDAO = usecaseDAO;
     }
@@ -7682,28 +7637,12 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.remitanceInfoDAO = remitanceInfoDAO;
     }
 
-    public void setCardConfigurationManager(CardConfigurationManager cardConfigurationManager) {
-        this.cardConfigurationManager = cardConfigurationManager;
-    }
-
-    public void setCityDAO(CityDAO cityDAO) {
-        this.cityDAO = cityDAO;
-    }
-
-    public void setTaxRegimeDAO(TaxRegimeDAO taxRegimeDAO) {
-        this.taxRegimeDAO = taxRegimeDAO;
-    }
-
     public void setTransactionPurposeDAO(TransactionPurposeDAO transactionPurposeDAO) {
         this.transactionPurposeDAO = transactionPurposeDAO;
     }
 
     public void setGeoLocationDAO(GeoLocationDAO geoLocationDAO) {
         this.geoLocationDAO = geoLocationDAO;
-    }
-
-    public void setBispCustNadraVerificationDAO(BISPCustNadraVerificationDAO bispCustNadraVerificationDAO) {
-        this.bispCustNadraVerificationDAO = bispCustNadraVerificationDAO;
     }
 
     public void setThirdPartyCashOutQueingPreProcessor(ThirdPartyCashOutQueingPreProcessor thirdPartyCashOutQueingPreProcessor) {
@@ -7718,7 +7657,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         ApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
         return (CommonCommandManager) applicationContext.getBean("commonCommandManager");
     }
-
 
     public void setThirdPartyAcOpeningDAO(ThirdPartyAcOpeningDAO thirdPartyAcOpeningDAO) {
         this.thirdPartyAcOpeningDAO = thirdPartyAcOpeningDAO;
@@ -7744,7 +7682,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.fetchCardTypeDAO = fetchCardTypeDAO;
     }
 
-
     public void setSegmentDAO(SegmentDAO segmentDAO) {
         this.segmentDAO = segmentDAO;
     }
@@ -7753,18 +7690,13 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.accountInfoDAO = accountInfoDAO;
     }
 
-
-    public void setDebitCardManager(DebitCardManager debitCardManager) {
-        this.debitCardManager = debitCardManager;
-    }
-
     public DebitCardManager getDebitCardManager() {
         ApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
         return (DebitCardManager) applicationContext.getBean("debitCardManager");
     }
 
-    public void setWalletSafRepoDAO(WalletSafRepoDAO walletSafRepoDAO) {
-        this.walletSafRepoDAO = walletSafRepoDAO;
+    public void setDebitCardManager(DebitCardManager debitCardManager) {
+        this.debitCardManager = debitCardManager;
     }
 
     public void setPendingAccountOpeningDAO(PendingAccountOpeningDAO pendingAccountOpeningDAO) {
@@ -7775,14 +7707,17 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.pendingDebitCardSafRepoDAO = pendingDebitCardSafRepoDAO;
     }
 
-
     public AdvanceSalaryLoanDAO getAdvanceSalaryLoanDAO() {
         return advanceSalaryLoanDAO;
     }
 
     @Override
     public JSLoansDAO getJSLoansDAO() {
-        return jsLoansDAO;
+        return null;
+    }
+
+    public void setAdvanceSalaryLoanDAO(AdvanceSalaryLoanDAO advanceSalaryLoanDAO) {
+        this.advanceSalaryLoanDAO = advanceSalaryLoanDAO;
     }
 
     @Override
@@ -7801,6 +7736,14 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     public BlinkCustomerPictureModel getBlinkCustomerPictureByTypeId(Long pictureTypeId, Long customerId) throws FrameworkCheckedException {
         BlinkCustomerPictureModel customerPictureModel = blinkCustomerPictureDAO.getBlinkCustomerPictureByTypeId(pictureTypeId, customerId);
         return customerPictureModel;
+    }
+
+    @Override
+    public MerchantAccountPictureModel getMerchantAccountPictureByTypeId(Long pictureTypeId, Long customerId) throws FrameworkCheckedException {
+        MerchantAccountPictureModel customerPictureModel = merchantAccountPictureDAO.getMerchantAccountPictureByTypeId(pictureTypeId, customerId);
+        return customerPictureModel;
+
+
     }
 
     @Override
@@ -7825,99 +7768,12 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
     @Override
     public String verifyDailyLimitForCredit(Date transactionDateTime, Double amountToAdd, Long accountId, Long customerAccountTypeId, Long handlerId) throws FrameworkCheckedException {
-        logger.info("Start of verifyDailyLimitForCredit at Time :: " + new Date());
-        String responseCode = "";
-        try {
-            LimitModel limitModel=new LimitModel();
-            if (customerAccountTypeId.equals(CustomerAccountTypeConstants.BLINK)) {
-                BlinkCustomerLimitModel blinkCustomerLimitModel = this.limitManager.getBlinkCustomerLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.DAILY,customerAccountTypeId,accountId);
-                if (blinkCustomerLimitModel != null) {
-                    limitModel.setMaximum(Double.valueOf(blinkCustomerLimitModel.getMaximum()));
-                    if (blinkCustomerLimitModel.getIsApplicable()==1) {
-                        limitModel.setIsApplicable(true);
-                    }
-                    limitModel.setCustomerAccountTypeId(blinkCustomerLimitModel.getCustomerAccTypeId());
-                }
-            }else {
-                limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.DAILY, customerAccountTypeId);
-            }
-            if (limitModel != null) {
-
-                if (limitModel.getIsApplicable() && limitModel.getMaximum() != null) {
-                    Double consumedBalance = ledgerDAO.getDailyConsumedBalance(accountId, TransactionTypeConstants.CREDIT, transactionDateTime, handlerId);
-                    if (consumedBalance != null) {
-                        if (consumedBalance + amountToAdd > limitModel.getMaximum()) {
-                            responseCode = "09"; // Your entered amount will exceed the customer's Maximum transaction Credit Limit per Day, please try again.
-                            logger.error("Your entered amount will exceed the customer's Maximum transaction Credit Limit per Day, please try again.");
-                        } else {
-                            responseCode = "00"; //Success Message
-                        }
-                    }
-                } else {
-                    responseCode = "00"; //Success Message when limit is not applicable
-                }
-            } else {
-                responseCode = "08"; // No Limit is defined for this data (Daily Limit for Credit).
-                logger.error("No Limit is defined for this data (Daily Limit for Credit).");
-            }
-        } catch (Exception e) {
-            logger.error("Error in AccountManagerImpl.verifyDailyLimitForCredit() :: " + e.getMessage() + " :: Exception " + e);
-            responseCode = "25";
-        }
-        logger.info("End of verifyDailyLimitForCredit at Time :: " + new Date());
-        return responseCode;
+        return null;
     }
 
     @Override
     public String verifyMonthlyLimitForCredit(Date transactionDateTime, Double amountToAdd, Long accountId, Long customerAccountTypeId, Long handlerId) throws FrameworkCheckedException {
-        String responseCode = "";
-        try {
-            LimitModel limitModel=new LimitModel();
-            if (customerAccountTypeId.equals(CustomerAccountTypeConstants.BLINK)) {
-                BlinkCustomerLimitModel blinkCustomerLimitModel = this.limitManager.getBlinkCustomerLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.MONTHLY,customerAccountTypeId,accountId);
-                if (blinkCustomerLimitModel != null) {
-                    limitModel.setMaximum(Double.valueOf(blinkCustomerLimitModel.getMaximum()));
-                    if (blinkCustomerLimitModel.getIsApplicable()==1) {
-                        limitModel.setIsApplicable(true);
-                    }
-                    limitModel.setCustomerAccountTypeId(blinkCustomerLimitModel.getCustomerAccTypeId());
-                }
-            }else {
-
-                limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.MONTHLY, customerAccountTypeId);
-            }
-            if (limitModel != null) {
-                if (limitModel.getIsApplicable() && limitModel.getMaximum() != null) {
-                    Calendar startCalendar = Calendar.getInstance();
-                    startCalendar.setTime(transactionDateTime);
-                    startCalendar.set(Calendar.DAY_OF_MONTH, 1);
-                    PortalDateUtils.resetTime(startCalendar);
-                    Date startDate = startCalendar.getTime();
-                    Double consumedBalance = ledgerDAO.getConsumedBalanceByDateRange(accountId, TransactionTypeConstants.CREDIT, startDate, transactionDateTime, handlerId);
-                    if (consumedBalance != null) {
-                        if (consumedBalance + amountToAdd > limitModel.getMaximum()) {
-                            responseCode = "11";// Your entered amount will exceed the customer's Maximum transaction Credit Limit per Month, please try again.
-                            logger.error("Your entered amount will exceed the customer's Maximum transaction Credit Limit per Month, please try again.");
-                        } else {
-                            responseCode = "00";//Success Message
-                        }
-                    }
-                } else {
-                    responseCode = "00"; //Success Message when limit is not applicable
-                }
-            } else {
-                responseCode = "10"; // No Limit is defined for this data (Monthly Limit for Credit).
-                logger.error("No Limit is defined for this data (Monthly Limit for Credit.");
-            }
-        } catch (Exception ex) {
-            logger.error("Error in AccountManagerImpl.verifyMonthlyLimitForCredit() :: " + ex.getMessage() + " :: Exception " + ex);
-            responseCode = "26";
-        }
-        return responseCode;
-    }
-
-    public void setAdvanceSalaryLoanDAO(AdvanceSalaryLoanDAO advanceSalaryLoanDAO) {
-        this.advanceSalaryLoanDAO = advanceSalaryLoanDAO;
+        return null;
     }
 
     public ActionAuthorizationManager getActionAuthorizationManager() {
@@ -7931,10 +7787,6 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     public void setBillStatusDAO(BillStatusDAO billStatusDAO) {
 
         this.billStatusDAO = billStatusDAO;
-    }
-
-    public void setAgentBvsStatManager(AgentBvsStatManager agentBvsStatManager) {
-        this.agentBvsStatManager = agentBvsStatManager;
     }
 
     public void setAgentBvsStatDAO(AgentBvsStatDAO agentBvsStatDAO) {
@@ -7958,6 +7810,10 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.blinkCustomerPictureDAO = blinkCustomerPictureDAO;
     }
 
+    public void setMerchantAccountPictureDAO(MerchantAccountPictureDAO merchantAccountPictureDAO) {
+        this.merchantAccountPictureDAO = merchantAccountPictureDAO;
+    }
+
     public void setDebitCardRequestsViewModelDAO(DebitCardRequestsViewModelDAO debitCardRequestsViewModelDAO) {
         this.debitCardRequestsViewModelDAO = debitCardRequestsViewModelDAO;
     }
@@ -7978,15 +7834,7 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         this.tasdeeqDataDAO = tasdeeqDataDAO;
     }
 
-    public void setLimitManager(LimitManager limitManager) {
-        this.limitManager = limitManager;
-    }
-
-    public void setLedgerDAO(LedgerDAO ledgerDAO) {
-        this.ledgerDAO = ledgerDAO;
-    }
-
-    public void setJsLoansDAO(JSLoansDAO jsLoansDAO) {
-        this.jsLoansDAO = jsLoansDAO;
+    public void setMerchantAccountModelDAO(MerchantAccountModelDAO merchantAccountModelDAO) {
+        this.merchantAccountModelDAO = merchantAccountModelDAO;
     }
 }

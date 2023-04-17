@@ -12939,6 +12939,103 @@ public class FonePaySwitchController implements WebServiceSwitchController {
         }
     }
 
+    @Override
+    public WebServiceVO MerchantAccountUpgrade(WebServiceVO webServiceVO) {
+        logger.info("[FonePaySwitchController.MerchantAccountUpgrade] Start:: ");
+        FonePayLogModel fonePayLogModel = null;
+        AppUserModel appUserModel = null;
+        ActionLogModel actionLogModel = null;
+        CustomerModel customerModel = new CustomerModel();
+        try {
+            webServiceVO = this.validateRRN(webServiceVO);
+            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+                return webServiceVO;
+            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, FonePayConstants.REQ_MERCHANT_ACCOUNT_UPGRADE);
+            actionLogModel = actionLogBeforeStart(PortalConstants.ACTION_CREATE, null,
+                    Long.parseLong(CommandFieldConstants.CMD_UPGRADE_MERCHANT_ACCOUNT),
+                    webServiceVO.getMobileNo());
+
+            appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
+            if (appUserModel != null) {
+                customerModel = getCommonCommandManager().getCustomerModelById(appUserModel.getCustomerId());
+            }
+            if (!getCommonCommandManager().checkActiveAppUserForOpenAPI(webServiceVO, appUserModel)) {
+                return webServiceVO;
+            }
+
+            this.userValidation(webServiceVO, CommandFieldConstants.CMD_UPGRADE_MERCHANT_ACCOUNT);
+            if (webServiceVO.getResponseCode() != null && !webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+                return webServiceVO;
+
+            webServiceVO = getFonePayManager().makevalidateCustomer(webServiceVO);
+            if ("00".equals(webServiceVO.getResponseCode())) {
+                String response = null;
+                BaseWrapper bWrapper = new BaseWrapperImpl();
+                if (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)) {
+                    webServiceVO.setResponseCode("07");
+                    webServiceVO.setResponseCodeDescription("Please Upgrade Level 0 to Level 1.");
+                    return webServiceVO;
+                }else {
+
+                    bWrapper = new BaseWrapperImpl();
+                    bWrapper.putObject(CommandFieldConstants.KEY_DEVICE_TYPE_ID, DeviceTypeConstantsInterface.WEB_SERVICE.toString());
+                    bWrapper.putObject(CommandFieldConstants.KEY_ENCRYPTION_TYPE, "1");
+                    bWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_MOBILE, webServiceVO.getMobileNo());
+                    bWrapper.putObject(CommandFieldConstants.KEY_DATE, webServiceVO.getDateTime());
+                    bWrapper.putObject(CommandFieldConstants.KEY_RRN, webServiceVO.getRetrievalReferenceNumber());
+                    bWrapper.putObject(CommandFieldConstants.KEY_CHANNEL_ID, webServiceVO.getChannelId());
+                    bWrapper.putObject(CommandFieldConstants.KEY_TERMINAL_ID, webServiceVO.getTerminalId());
+                    bWrapper.putObject(CommandFieldConstants.KEY_CNIC, webServiceVO.getCnicNo());
+                    bWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_NAME, webServiceVO.getName());
+
+                    bWrapper.putObject(CommandFieldConstants.KEY_PRESENT_ADDR, webServiceVO.getBusinessAddress());
+                    bWrapper.putObject("INCOME_SOURCE", webServiceVO.getTypeOfBusiness());
+                    bWrapper.putObject("BUSINESS_NAME", webServiceVO.getBusinessName());
+                    bWrapper.putObject("CITY", webServiceVO.getCity());
+                    bWrapper.putObject("EXPECTED_MONTHLY_TURNOVER", webServiceVO.getEstimatedMonthlySales());
+                    bWrapper.putObject("TILL_ID", webServiceVO.getTillID());
+                    bWrapper.putObject("ID_TYPE",webServiceVO.getiDType());
+                    bWrapper.putObject("ID_N",webServiceVO.getIdN());
+                    bWrapper.putObject(CommandFieldConstants.KEY_CNIC_FRONT_PHOTO, webServiceVO.getCnicFrontPhoto());
+                    bWrapper.putObject(CommandFieldConstants.KEY_CNIC_BACK_PHOTO, webServiceVO.getCnicBackPhoto());
+
+                    bWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_PHOTO, webServiceVO.getCustomerPhoto());
+                    bWrapper.putObject(CommandFieldConstants.KEY_LATITUDE, webServiceVO.getLatitude());
+                    bWrapper.putObject(CommandFieldConstants.KEY_LONGITUDE, webServiceVO.getLongitude());
+                    response = getCommandManager().executeCommand(bWrapper, CommandFieldConstants.CMD_UPGRADE_MERCHANT_ACCOUNT);
+                }
+                logger.info("UpgradeMerchantAccountCommand response for Mobile #:: " + appUserModel.getMobileNo() + "\n" + response);
+                if (MfsWebUtil.isErrorXML(response)) {
+                    return mfsWebResponseDataPopulator.populateErrorMessagesForOpenAPI(webServiceVO, response);
+                }
+            }
+        } catch (CommandException ex) {
+        if (ex.getErrorCode() == 1024L) {
+            logger.error("Error Occurred while Upgrade Account for Mobile # :: " + webServiceVO.getMobileNo());
+            logger.error("[FonePaySwitchController.upgradeAccount] Error occured: " + ex.getMessage(), ex);
+            FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.BLINK_CUSTOMER_DATA_ALREADY_EXISTS);
+            webServiceVO.setResponseCodeDescription(ex.getMessage());
+        } else {
+            logger.error("Error Occurred while Upgrade Account for Mobile # :: " + webServiceVO.getMobileNo());
+            logger.error("[FonePaySwitchController.upgradeAccount] Error occured: " + ex.getMessage(), ex);
+            FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR);
+            webServiceVO.setResponseCodeDescription(ex.getMessage());
+        }
+    } catch (Exception ex) {
+        logger.error("Error Occurred while Upgrade Account for Mobile # :: " + webServiceVO.getMobileNo());
+        logger.error("[FonePaySwitchController.upgradeAccount] Error occured: " + ex.getMessage(), ex);
+        FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR);
+        webServiceVO.setResponseCodeDescription(ex.getMessage());
+    } finally {
+        ThreadLocalAppUser.remove();
+        ThreadLocalUserDeviceAccounts.remove();
+        getFonePayManager().updateFonePayIntegrationLogModel(fonePayLogModel, webServiceVO);
+        actionLogAfterEnd(actionLogModel);
+        logger.info("[FonePaySwitchController.l2AccountUpgrade] End:: ");
+    }
+        return webServiceVO;
+    }
+
     public RetailerModel loadRetailerModel(Long retailerId) throws CommandException {
 
         RetailerModel retailerModel = new RetailerModel();

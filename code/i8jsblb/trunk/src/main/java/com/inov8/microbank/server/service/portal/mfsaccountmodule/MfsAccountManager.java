@@ -6,6 +6,7 @@ import com.inov8.integration.common.model.AccountModel;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import com.inov8.microbank.common.model.*;
 import com.inov8.microbank.common.model.customermodule.BlinkCustomerPictureModel;
+import com.inov8.microbank.common.model.customermodule.MerchantAccountPictureModel;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.inov8.framework.common.exception.FrameworkCheckedException;
@@ -29,6 +30,8 @@ public interface MfsAccountManager
 	public CustomerPictureModel getCustomerPictureByTypeId(Long pictureTypeId, Long customerId) throws FrameworkCheckedException;
 	public CustomerPictureModel getCustomerPictureByTypeIdAndStatus(Long pictureTypeId, Long customerId) throws FrameworkCheckedException;
 	public BlinkCustomerPictureModel getBlinkCustomerPictureByTypeId(Long pictureTypeId, Long customerId) throws FrameworkCheckedException;
+	public MerchantAccountPictureModel getMerchantCustomerPictureByTypeId(Long pictureTypeId, Long customerId) throws FrameworkCheckedException;
+
 	public List<CustomerPictureModel> getAllCustomerPictures(Long customerId) throws FrameworkCheckedException;
 	public SearchBaseWrapper searchCustomerPictures(SearchBaseWrapper searchBaseWrapper) throws FrameworkCheckedException;
 	public static final String	KEY_IS_ACTIVE = "isActive";

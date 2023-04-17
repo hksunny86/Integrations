@@ -110,6 +110,7 @@ public interface WebServiceSwitchController {
 //      WebServiceVO agentCnicToCorePayment(WebServiceVO webServiceVO);
 
 
+
     WebServiceVO agentCashDepositInquiry(WebServiceVO webServiceVO);
     WebServiceVO agentCashDepositPayment(WebServiceVO webServiceVO);
     WebServiceVO agentCashWithdrawalInquiry(WebServiceVO webServiceVO);

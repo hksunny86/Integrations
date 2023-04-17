@@ -20,6 +20,8 @@ import com.inov8.ola.integration.vo.OLAVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import java.util.Date;
+
 import static com.inov8.microbank.common.util.XMLConstants.*;
 import static com.inov8.microbank.common.util.XMLConstants.TAG_PARAMS;
 import static com.inov8.microbank.common.util.XMLConstants.TAG_SYMBOL_CLOSE;
@@ -108,14 +110,14 @@ public class CreditInquiryApiCommand extends BaseCommand {
             baseWrapper = commonCommandManager.loadProduct(baseWrapper);
             productModel = (ProductModel) baseWrapper.getBasePersistableModel();
 
-            if (productModel.getProductIntgModuleInfoId() != null && !"".equals(productModel.getProductIntgModuleInfoId()) && productModel.getProductIntgVoId() != null && !"".equals(productModel.getProductIntgVoId())) {
-                ProductVO productVO = commonCommandManager.loadProductVO(preparedBaseWrapper);
-                if (productVO == null) {
+//            if (productModel.getProductIntgModuleInfoId() != null && !"".equals(productModel.getProductIntgModuleInfoId()) && productModel.getProductIntgVoId() != null && !"".equals(productModel.getProductIntgVoId())) {
+//                ProductVO productVO = commonCommandManager.loadProductVO(preparedBaseWrapper);
+                if (productModel == null) {
                     throw new CommandException("ProductVo is not loaded", ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, new Throwable());
                 }
 
                 logger.info("productVo populating");
-                productVO.populateVO(productVO, preparedBaseWrapper);
+//                productVO.populateVO(productVO, preparedBaseWrapper);
 
                 workFlowWrapper.setProductModel(productModel);
 
@@ -148,8 +150,31 @@ public class CreditInquiryApiCommand extends BaseCommand {
 
                 userDeviceAccountsModel = (UserDeviceAccountsModel) ThreadLocalUserDeviceAccounts.getUserDeviceAccountsModel();
 
+                CustomerModel customerModel = getCommonCommandManager().getCustomerModelById(appUserModel.getCustomerId());
+                Long statusId = OlaStatusConstants.ACCOUNT_STATUS_ACTIVE;
+
+                AccountModel accountModel = getCommonCommandManager().getAccountModelByCnicAndCustomerAccountTypeAndStatusId
+                        (appUserModel.getNic(), customerModel.getCustomerAccountTypeId(), statusId);
+
+                String responseCode = commonCommandManager.verifyDailyLimitForCredit(new Date(), commissionAmountsHolder.getTotalAmount(),
+                        accountModel.getAccountId(), customerModel.getCustomerAccountTypeId(), null);
+                if (responseCode.equals("09")) {
+                    throw new WorkFlowException("Per day limit of Recipient exceeded.");
+                }
+                else if (responseCode.equals("08")){
+                    throw new WorkFlowException("No Limit is defined for this data (Daily Limit for Credit).");
+                }
+                responseCode = commonCommandManager.verifyMonthlyLimitForCredit(new Date(), commissionAmountsHolder.getTotalAmount(),
+                        accountModel.getAccountId(), customerModel.getCustomerAccountTypeId(), null);
+                if (responseCode.equals("11")) {
+                    throw new WorkFlowException("Per month limit of Recipient exceeded.");
+                }
+                else if (responseCode.equals("08")){
+                    throw new WorkFlowException("No Limit is defined for this data (Monthly Limit for Credit).");
+                }
+
 //                p = cashInVO;
-            }
+//            }
 
         } catch (CommandException e) {
             logger.error(e.getMessage());

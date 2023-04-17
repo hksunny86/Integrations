@@ -82,6 +82,7 @@ public class MiniXMLUtil
 	public static final String TRANS_AUTH_CODE_NODEREF = "//trans/trn/@bcode";
 	public static final String TRANS_BILL_AMT_NODEREF = "//trans/trn/@bAmtF";
 	public static final String TRANS_SERVICE_CHARGES_NODEREF = "//trans/trn/@TPAMF";
+	public static final String TRANS_INCLUSIVE_CHARGES = "//trans/trn/@incrhge";
 	public static final String TRANS_COMMISSION_CHARGES_NODEREF = "//trans/trn/@CAMT";
 	public static final String TRANS_AMOUNT_NODEREF = "//trans/trn/@TXAMF";
 	public static final String TRANS_TOTAL_AMT_NODEREF = "//trans/trn/@amtf";

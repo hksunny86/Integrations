@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="jsLoansDAO"
+          class="com.inov8.microbank.server.dao.jsloansmodule.hibernate.JSLoansHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+    <bean id="advanceSalaryLoanManager" parent="baseTransactionProxy">
+        <property name="target">
+            <bean class="com.inov8.microbank.server.service.advancesalaryloanmodule.AdvanceSalaryLoanManagerImpl">
+                <property name="advanceSalaryLoanDAO" ref="advanceSalaryLoanDao"/>
+                <property name="smartMoneyAccountDAO" ref="smartMoneyAccountDAO"/>
+                <property name="commandManager" ref="cmdManager"/>
+
+
+            </bean>
+        </property>
+
+
+    </bean>
+
+</beans>

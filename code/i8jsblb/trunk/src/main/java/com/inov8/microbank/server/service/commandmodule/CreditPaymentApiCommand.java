@@ -242,9 +242,46 @@ public class CreditPaymentApiCommand extends BaseCommand {
                 productModel = workFlowWrapper.getProductModel();
                 userDeviceAccountsModel = workFlowWrapper.getUserDeviceAccountModel();
                 successMessage = workFlowWrapper.getSuccessMessage().getSmsMessageText();
-                workFlowWrapper.putObject("productTile",productModel.getName());
-                commonCommandManager.sendSMS(workFlowWrapper);
-                commonCommandManager.novaAlertMessage(workFlowWrapper);
+
+//                commonCommandManager.sendSMS(workFlowWrapper);
+//                commonCommandManager.novaAlertMessage(workFlowWrapper);
+
+                if(productId.equals(MessageUtil.getMessage("jsLoansId"))){
+                    JSLoansModel jsLoansModel = new JSLoansModel();
+                    jsLoansModel = getCommonCommandManager().getJSLoansDAO().loadJSLoansByMobileNumber(customerMobileNo);
+                    if(jsLoansModel != null){
+                        jsLoansModel.setPartialPayment(Long.valueOf(txAmount));
+                        jsLoansModel.setServiceFees(0L);
+                        jsLoansModel.setTotalServiceFees(0L);
+                        jsLoansModel.setLastPaymentDate(null);
+                        jsLoansModel.setRemainingAmount(jsLoansModel.getLoanAmount() - jsLoansModel.getPartialPayment());
+                        jsLoansModel.setCreatedBy(UserUtils.getCurrentUser().getCreatedBy());
+                        jsLoansModel.setUpdatedBy(UserUtils.getCurrentUser().getUpdatedBy());
+                        jsLoansModel.setCreatedOn(new Date());
+                        jsLoansModel.setUpdatedOn(new Date());
+                    }
+                    else {
+                        jsLoansModel = new JSLoansModel();
+                        jsLoansModel.setMobileNo(customerMobileNo);
+                        jsLoansModel.setCnic(appUserModel.getNic());
+                        jsLoansModel.setProductId(Long.valueOf(productId));
+                        jsLoansModel.setLoanAmount(Long.valueOf(txAmount));
+                        jsLoansModel.setLoanDuration("");
+                        jsLoansModel.setPartialPayment(null);
+                        jsLoansModel.setServiceFees(0L);
+                        jsLoansModel.setTotalServiceFees(0L);
+                        jsLoansModel.setLastPaymentDate(null);
+                        jsLoansModel.setRemainingAmount(Long.valueOf(txAmount));
+//                        jsLoansModel.setRemainingAmount(jsLoansModel.getLoanAmount() - jsLoansModel.getPartialPayment());
+                        jsLoansModel.setIsCompleted(false);
+                        jsLoansModel.setCreatedBy(UserUtils.getCurrentUser().getCreatedBy());
+                        jsLoansModel.setUpdatedBy(UserUtils.getCurrentUser().getUpdatedBy());
+                        jsLoansModel.setCreatedOn(new Date());
+                        jsLoansModel.setUpdatedOn(new Date());
+                        jsLoansModel.setDisbursementDate(new Date());
+                        getCommonCommandManager().saveOrUpdateJSLoansModel(jsLoansModel);
+                    }
+                }
 
             } else {
                 logger.error("[CreditPaymentApiCommand.prepare] Throwing Exception for Product ID: " + productId + " Logged In AppUserID:" + appUserModel.getAppUserId() + " Customer Mobile No:" + customerMobileNo + " Trx Amount: " + txAmount + " Commission: " + commissionAmount);
@@ -303,6 +340,7 @@ public class CreditPaymentApiCommand extends BaseCommand {
         params.add(new LabelValueBean(ATTR_TXAM, replaceNullWithEmpty(transactionModel.getTransactionAmount() + "")));
         params.add(new LabelValueBean(ATTR_TXAMF, Formatter.formatNumbers(transactionModel.getTransactionAmount())));
         params.add(new LabelValueBean(ATTR_BALF, Formatter.formatNumbers(workFlowWrapper.getSwitchWrapper().getAgentBalance())));
+        params.add(new LabelValueBean(INCLUSIVE_CHARGES, Formatter.formatNumbers(workFlowWrapper.getCommissionAmountsHolder().getInclusivePercentAmount())));
 
         return MiniXMLUtil.createResponseXMLByParams(params);
 

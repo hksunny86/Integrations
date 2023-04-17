@@ -602,6 +602,7 @@ public class CustomerBillPaymentsInfoCommand extends BaseCommand {
             DateTime nowDate = new DateTime();
             DateTime _i8sbDueDate = new DateTime(i8sbDueDate).withTime(23, 59, 59, 0);
 
+            responseBuilder.append(MiniXMLUtil.createXMLParameterTag(CommandFieldConstants.KEY_CUSTOMER_NAME, responseVO.getCustomerName()));
             responseBuilder.append(MiniXMLUtil.createXMLParameterTag(CommandFieldConstants.CMD_AGNETMATE_DUEDATER, responseVO.getDueDate()));
             responseBuilder.append(MiniXMLUtil.createXMLParameterTag("ISOVERDUE", nowDate.isAfter(_i8sbDueDate) ? "1" : "0"));
         }

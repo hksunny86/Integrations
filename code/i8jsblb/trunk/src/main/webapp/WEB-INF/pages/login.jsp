@@ -117,8 +117,7 @@ if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
                 <input name="j_password" id="j_password" maxlength="18" autocomplete="off" type="password" tabindex="2" class="login password"/>
                 <c:if test="${not empty captchaEnc}">
                     <img src="data:image/png;base64,${captchaEnc}" class="captchaimg"/></br>
-                    <input type='password' name='j_captcha' id="j_captcha" onchange="defineTabID()" maxlength="5"
-						   autocomplete="off" tabindex="3" class = "login captcha" value="aqeel"/>
+                    <input type='text' name='j_captcha' id="j_captcha" onchange="defineTabID()" maxlength="5" autocomplete="off" tabindex="3" class = "login captcha" />
                 </c:if>
             </div>
 

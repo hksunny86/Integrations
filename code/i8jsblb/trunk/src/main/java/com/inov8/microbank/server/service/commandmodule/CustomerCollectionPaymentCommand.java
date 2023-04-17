@@ -252,7 +252,7 @@ private String channelId;
 
                 //Customer Balance
                 balance = workFlowWrapper.getOLASwitchWrapper().getOlavo().getFromBalanceAfterTransaction();
-                workFlowWrapper.putObject("productTile",productModel.getName());
+
                 commonCommandManager.sendSMS(workFlowWrapper);
                 commonCommandManager.novaAlertMessage(workFlowWrapper);
 

@@ -242,7 +242,7 @@ public class CreditPaymentApiCommand extends BaseCommand {
                 productModel = workFlowWrapper.getProductModel();
                 userDeviceAccountsModel = workFlowWrapper.getUserDeviceAccountModel();
                 successMessage = workFlowWrapper.getSuccessMessage().getSmsMessageText();
-                workFlowWrapper.putObject("productTile",productModel.getName());
+
                 commonCommandManager.sendSMS(workFlowWrapper);
                 commonCommandManager.novaAlertMessage(workFlowWrapper);
 

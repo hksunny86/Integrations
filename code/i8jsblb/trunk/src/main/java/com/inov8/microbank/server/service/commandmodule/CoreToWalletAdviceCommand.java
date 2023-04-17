@@ -198,7 +198,7 @@ public class CoreToWalletAdviceCommand extends BaseCommand {
             workFlowWrapper.putObject(CommandFieldConstants.KEY_BANK_ID, senderBankId);
 
             workFlowWrapper = commonCommandManager.executeSaleCreditTransaction(workFlowWrapper);
-            workFlowWrapper.putObject("productTile",productModel.getName());
+
             commonCommandManager.sendSMS(workFlowWrapper);
 
             this.actionLogAfterEnd(actionLogModel);

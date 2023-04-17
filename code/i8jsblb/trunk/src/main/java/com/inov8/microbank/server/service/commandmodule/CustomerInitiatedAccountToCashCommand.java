@@ -209,7 +209,7 @@ public class CustomerInitiatedAccountToCashCommand extends MiniBaseCommand {
 					}*/
 
                     //Double charges = workFlowWrapper.getTransactionModel().getTotalCommissionAmount();
-                    workFlowWrapper.putObject("productTile",productModel.getName());
+
                     commonCommandManager.sendSMS(workFlowWrapper);
 
                 } else {

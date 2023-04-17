@@ -28,7 +28,7 @@ public class CaptchaDaoAuthenticationProvider extends DaoAuthenticationProvider 
 			String expected = captcha.getAnswer();
 			String actual = captchaDetails.getAnswer();
 			if (!expected.equals(actual)) {
-//				throw new BadCredentialsException("Captcha does not match.");
+				throw new BadCredentialsException("Captcha does not match.");
 			}
 		}
 	}

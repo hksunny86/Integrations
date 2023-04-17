@@ -214,7 +214,7 @@ public class CustomerBBToCoreCommand extends BaseCommand {
                     productModel = workFlowWrapper.getProductModel();
                     userDeviceAccountsModel = workFlowWrapper.getUserDeviceAccountModel();
                     commissionAmountsHolder = workFlowWrapper.getCommissionAmountsHolder();
-                    workFlowWrapper.putObject("productTile",productModel.getName());
+
                     commonCommandManager.sendSMS(workFlowWrapper);
                     commonCommandManager.novaAlertMessage(workFlowWrapper);
                 } else {

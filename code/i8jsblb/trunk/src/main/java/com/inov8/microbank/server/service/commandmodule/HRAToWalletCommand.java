@@ -254,7 +254,7 @@ public class HRAToWalletCommand extends BaseCommand {
             if (((CashWithdrawalVO) workFlowWrapper.getProductVO()).getCustomerBalance() != null) {
                 customerBalance = ((CashWithdrawalVO) workFlowWrapper.getProductVO()).getCustomerBalance();
             }
-            workFlowWrapper.putObject("productTile",productModel.getName());
+
             getCommonCommandManager().sendSMS(workFlowWrapper);
 
         } catch (CommandException e) {

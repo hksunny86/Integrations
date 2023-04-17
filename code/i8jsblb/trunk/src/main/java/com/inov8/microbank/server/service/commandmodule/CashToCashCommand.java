@@ -354,7 +354,6 @@ public class CashToCashCommand extends MiniBaseCommand {
 								
 							// already sent in transaction
 //							this.sendSMS(workFlowWrapper);
-							workFlowWrapper.putObject("productTile",productModel.getName());
 							getCommonCommandManager().sendSMS(workFlowWrapper);
 //							getCommonCommandManager().intimateAppInSnapForSendMoneyRequiresNewTransaction(workFlowWrapper);
 

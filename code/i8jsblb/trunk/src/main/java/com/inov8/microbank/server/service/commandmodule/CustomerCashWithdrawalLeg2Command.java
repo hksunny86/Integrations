@@ -148,8 +148,6 @@ public class CustomerCashWithdrawalLeg2Command extends BaseCommand {
             commonCommandManager.executeSaleCreditTransaction(workFlowWrapper);
 
             commissionAmountsHolder = workFlowWrapper.getCommissionAmountsHolder();
-
-            workFlowWrapper.putObject("productTile",productModel.getName());
             commonCommandManager.sendSMS(workFlowWrapper);
             
         }catch(Exception e){

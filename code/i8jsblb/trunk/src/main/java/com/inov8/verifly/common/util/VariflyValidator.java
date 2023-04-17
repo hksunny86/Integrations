@@ -96,7 +96,7 @@ public class VariflyValidator {
         //getting accountInfoModel
     	logger.info("<--------Start validateForGenerateModify()------------------------>");
         AccountInfoModel accountInfoModel = baseWrapper.getAccountInfoModel();
-                    LogModel logModel = baseWrapper.getLogModel();
+        LogModel logModel = baseWrapper.getLogModel();
 
 
         //first need check payment mode
@@ -162,26 +162,26 @@ public class VariflyValidator {
         } else if (accountInfoModel.getPaymentModeId() == PaymentModeConstants.BANK_ACCOUNT) {
             //incase if the mode is account then account no cannot be null
         	logger.info("Payment Mode is Bank A/C------------------>" );
-         /*   if (accountInfoModel.getAccountNo() == null || accountInfoModel.getAccountNo().trim().length() < 1) {
+            if (accountInfoModel.getAccountNo() == null || accountInfoModel.getAccountNo().trim().length() < 1) {
             	logger.info("Invalid Bank A/C------------------>" + accountInfoModel.getAccountNo());
             	throw new InvalidDataException (String.valueOf(FailureReasonConstants.INCORRECT_DATA_FOR_ACCOUNT_NO));
-            }*/
+            }
 
             //checking account no maximum length should not exceed from db
-           /* if (accountInfoModel.getAccountNo().length() > AccountInfoConstants.ACCOUNT_NO_LENGTH) {
+            if (accountInfoModel.getAccountNo().length() > AccountInfoConstants.ACCOUNT_NO_LENGTH) {
             	logger.info("Invalid Account Length------------------>" + accountInfoModel.getAccountNo().length());
             	throw new InvalidDataException (String.valueOf(FailureReasonConstants.INCORRECT_FIELD_LENGTH));
-            }*/
+            }
 
             AccountInfoModel accountInfoModelAccountNo = new AccountInfoModel();
             accountInfoModelAccountNo.setAccountNo(accountInfoModel.getAccountNo());
 
-//            accountInfoModelAccountNo.setAccountNo(encryptionHandler.encrypt(accountInfoModelAccountNo.getAccountNo()));
+            accountInfoModelAccountNo.setAccountNo(encryptionHandler.encrypt(accountInfoModelAccountNo.getAccountNo()));
             
-         /*   if (isExist(accountInfoModelAccountNo)){
+            if (isExist(accountInfoModelAccountNo)){
             	logger.info("<--------Account No already exists------------------>") ;
             	throw new InvalidDataException (String.valueOf(FailureReasonConstants.ACCOUNT_NO_ALREADY_EXIST));
-            }*/
+            }	
 
         } 
 

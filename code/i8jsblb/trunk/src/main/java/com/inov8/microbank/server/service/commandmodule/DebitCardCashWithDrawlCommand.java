@@ -265,7 +265,6 @@ public class DebitCardCashWithDrawlCommand extends BaseCommand {
             commonCommandManager.executeSaleCreditTransaction(workFlowWrapper);
             transactionModel = workFlowWrapper.getTransactionModel();
             commissionAmountsHolder = workFlowWrapper.getCommissionAmountsHolder();
-            workFlowWrapper.putObject("productTile",productModel.getName());
             commonCommandManager.sendSMS(workFlowWrapper);
             commonCommandManager.novaAlertMessage(workFlowWrapper);
 

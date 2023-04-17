@@ -236,7 +236,6 @@ public class AgentRetailPaymentCommand extends MiniBaseCommand
 					productModel = workFlowWrapper.getProductModel();
 					userDeviceAccountsModel =  workFlowWrapper.getUserDeviceAccountModel();
 					successMessage = workFlowWrapper.getSuccessMessage().getSmsMessageText();
-					workFlowWrapper.putObject("productTile",productModel.getName());
 
 					commonCommandManager.sendSMS(workFlowWrapper);
 				}

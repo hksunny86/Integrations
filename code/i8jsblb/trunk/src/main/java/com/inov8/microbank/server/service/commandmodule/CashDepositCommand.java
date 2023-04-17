@@ -193,7 +193,6 @@ public class CashDepositCommand extends BaseCommand
 					userDeviceAccountsModel =  workFlowWrapper.getUserDeviceAccountModel();
 					discountAmount = workFlowWrapper.getDiscountAmount();
 					successMessage = workFlowWrapper.getSuccessMessage().getSmsMessageText();
-					workFlowWrapper.putObject("productTile",productModel.getName());
 
 					commonCommandManager.sendSMS(workFlowWrapper);
 					

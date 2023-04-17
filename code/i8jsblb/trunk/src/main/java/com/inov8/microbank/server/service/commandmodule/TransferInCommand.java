@@ -197,7 +197,7 @@ public class TransferInCommand extends BaseCommand  {
 					logger.error("[TransferInCommand.prepare] Throwing Exception for Product ID: " + productId + " Logged In AppUserID:" + appUserModel.getAppUserId() + " Customer Mobile No:" + mobileNo + " Trx Amount: " + amount + " Commission: " + commissionAmount);
 					throw new CommandException(validationErrors.getErrors(),ErrorCodes.COMMAND_EXECUTION_ERROR,ErrorLevel.MEDIUM,new Throwable());
 				}
-			workFlowWrapper.putObject("productTile",productModel.getName());
+
 				commonCommandManager.sendSMS(workFlowWrapper);
 				
 			} catch(FrameworkCheckedException ex) {

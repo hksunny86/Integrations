@@ -220,7 +220,7 @@ public class ReceiveCashCommand extends BaseCommand  {
 			transactionModel = workFlowWrapper.getTransactionModel();
 			productModel = workFlowWrapper.getProductModel();
 			userDeviceAccountsModel =  workFlowWrapper.getUserDeviceAccountModel();
-			workFlowWrapper.putObject("productTile",productModel.getName());
+				
 			commonCommandManager.sendSMS(workFlowWrapper);
 				
 		} catch(FrameworkCheckedException ex) {

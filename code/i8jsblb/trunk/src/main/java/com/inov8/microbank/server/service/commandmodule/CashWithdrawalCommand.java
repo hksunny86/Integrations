@@ -410,7 +410,7 @@ public class CashWithdrawalCommand extends BaseCommand {
 			if (((CashWithdrawalVO)workFlowWrapper.getProductVO()).getCustomerBalance() != null) {
 				customerBalance = ((CashWithdrawalVO)workFlowWrapper.getProductVO()).getCustomerBalance();
 			}
-			workFlowWrapper.putObject("productTile",productModel.getName());
+
 			getCommonCommandManager().sendSMS(workFlowWrapper);
 
 			/*if (((CashWithdrawalVO)workFlowWrapper.getProductVO()).getAgentBalance() != null) {

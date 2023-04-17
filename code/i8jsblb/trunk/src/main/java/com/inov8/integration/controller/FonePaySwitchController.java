@@ -6475,6 +6475,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     String transactionAmount = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_AMOUNT_NODEREF);
                     String totalAmount = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRAN_TOTAL_AMT_NODEREF);
                     String charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_SERVICE_CHARGES_NODEREF);
+                    if (charges == null || charges.equals("0.00")) {
+                        charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_INCLUSIVE_CHARGES);
+                    }
                     String transactionCode = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_ID_NODEREF);
                     webServiceVO.setResponseContentXML(xml);
                     webServiceVO.setResponseCode("00");
@@ -6875,9 +6878,14 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     this.getCommonCommandManager().updateUserDeviceAccounts(baseWrapper);
                     if (uda.getLoginAttemptCount() == 3) {
                         uda.setAccountLocked(true);
+                        uda.setUpdatedOn(new Date());
+                        uda.setUpdatedBy(uda.getAppUserId());
+                        uda.setComments("Account Block Due to Invalid Attempts");
                         baseWrapper.setBasePersistableModel(uda);
                         this.getCommonCommandManager().updateUserDeviceAccounts(baseWrapper);
                         appUserModel.setAccountStateId(AccountStateConstants.ACCOUNT_STATE_WARM);
+                        appUserModel.setUpdatedOn(new Date());
+                        appUserModel.setUpdatedBy(uda.getAppUserId());
                         baseWrapper.setBasePersistableModel(appUserModel);
                         this.getCommonCommandManager().updateAppUser(baseWrapper);
                     }
@@ -6887,6 +6895,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 }
                 if (webServiceVO.getResponseCode() != null && webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
                     uda.setLoginAttemptCount(new Integer(0));
+                    uda.setLastLoginAttemptTime(new Timestamp(System.currentTimeMillis()));
                     baseWrapper.setBasePersistableModel(uda);
                     this.getCommonCommandManager().updateUserDeviceAccounts(baseWrapper);
                     webServiceVO.setResponseCode("00");
@@ -6900,13 +6909,20 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         webServiceVO.setIsBVSAccount("1");
                     } else if (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.BLINK)) {
                         webServiceVO.setAccountType("blink");
-                        if (customerModel.getBlinkBvs().equals(true)){
+                        if (customerModel.getBlinkBvs() != null &&customerModel.getBlinkBvs().equals(true)){
                             webServiceVO.setReserved3("1");
                         }else {
                             webServiceVO.setReserved3("0");
                         }
+
+
                     } else if (customerModel.getCustomerAccountTypeId().equals(56L)) {
                         webServiceVO.setAccountType("Zindigi Ultra");
+                        if (customerModel.getBlinkBvs() != null && customerModel.getBlinkBvs().equals(true)) {
+                            webServiceVO.setReserved3("1");
+                        } else {
+                            webServiceVO.setReserved3("0");
+                        }
                     }
 
                     if (customerModel.getIban() != null) {
@@ -7272,11 +7288,11 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             if ("00".equals(webServiceVO.getResponseCode())) {
                 AdvanceSalaryLoanModel advanceSalaryLoanModel = new AdvanceSalaryLoanModel();
                 advanceSalaryLoanModel.setCnic(webServiceVO.getCnicNo());
-                advanceSalaryLoanModel.setLoanAmount(Long.valueOf(webServiceVO.getLoanAmount()));
+                advanceSalaryLoanModel.setLoanAmount(Double.valueOf(webServiceVO.getLoanAmount()));
                 advanceSalaryLoanModel.setNoOfInstallment(Long.valueOf(webServiceVO.getNumberOfInstallments()));
                 advanceSalaryLoanModel.setEarlyPaymentCharges(Long.valueOf(webServiceVO.getEarlyPaymentCharges()));
                 advanceSalaryLoanModel.setLatePaymentCharges(Long.valueOf(webServiceVO.getLatePaymentCharges()));
-                advanceSalaryLoanModel.setInstallmentAmount(Long.valueOf(webServiceVO.getInstallmentAmount()));
+                advanceSalaryLoanModel.setInstallmentAmount(Double.valueOf(webServiceVO.getInstallmentAmount()));
                 advanceSalaryLoanModel.setMobileNo(webServiceVO.getMobileNo());
                 advanceSalaryLoanModel.setProductId(Long.valueOf(webServiceVO.getProductID()));
                 advanceSalaryLoanModel.setGracePeriodDays(Long.valueOf(webServiceVO.getGracePeriod()));
@@ -12467,7 +12483,73 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
     @Override
     public WebServiceVO getOutstandingLoan(WebServiceVO webServiceVO) {
-        return null;
+        logger.info("[FonePaySwitchController.getOutstandingLoan] Start:: ");
+        FonePayLogModel fonePayLogModel = null;
+        ActionLogModel actionLogModel = null;
+        AppUserModel appUserModel = new AppUserModel();
+        String xml = "";
+
+        BaseWrapper baseWrapper = new BaseWrapperImpl();
+        try {
+            webServiceVO = this.validateRRN(webServiceVO);
+            if (!webServiceVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE))
+                return webServiceVO;
+            fonePayLogModel = getFonePayManager().saveFonePayIntegrationLogModel(webServiceVO, "getOutstandingLoan");
+
+            appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(webServiceVO.getMobileNo(), UserTypeConstantsInterface.CUSTOMER);
+            if(appUserModel != null) {
+                if (!getCommonCommandManager().checkActiveAppUserForOpenAPI(webServiceVO, appUserModel)) {
+                    return webServiceVO;
+                }
+
+//                JSLoansModel jsLoansModel = new JSLoansModel();
+//                jsLoansModel = getCommonCommandManager().getJSLoansDAO().loadJSLoansByMobileNumber(webServiceVO.getMobileNo());
+//
+//                if(jsLoansModel != null){
+//                    webServiceVO.setOutStandingAmount(String.valueOf(jsLoansModel.getRemainingAmount()));
+//                    webServiceVO.setServiceFee(String.valueOf(jsLoansModel.getServiceFees()));
+//                    webServiceVO.setTotalAmount(String.valueOf(jsLoansModel.getLoanAmount()));
+//                    webServiceVO.setDisbursementDate(String.valueOf(jsLoansModel.getDisbursementDate()));
+//                    webServiceVO.setMaturityDate(String.valueOf(jsLoansModel.getMaturityDate()));
+//                    webServiceVO.setMaturityDuration(String.valueOf(jsLoansModel.getLoanDuration()));
+//                    webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
+//                    webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
+//                }
+//                else{
+//                    webServiceVO.setResponseCode("250");
+//                    webServiceVO.setResponseCodeDescription("No Data Found in JS Loans against given mobile Number: " +webServiceVO.getMobileNo());
+//                }
+            }
+            else {
+                logger.info("[FonePaySwitchController.getOutstandingLoan] User Not Found against the Mobile # :: " + webServiceVO.getMobileNo());
+                webServiceVO.setResponseCode(FonePayResponseCodes.CUSTOMER_NOT_FOUND);
+                webServiceVO.setResponseCodeDescription("User Not Found.");
+                return webServiceVO;
+            }
+
+        } catch (Exception e) {
+            logger.error("[FonePaySwitchController.getOutstandingLoan] Error occured: " + e.getMessage(), e);
+
+            this.logger.error("[FonePaySwitchController.getOutstandingLoan] Error occured: " + e.getMessage(), e);
+            webServiceVO.setResponseCode(((WorkFlowException) e).getErrorCode());
+            webServiceVO.setResponseCodeDescription(e.getMessage());
+            if (e instanceof NullPointerException
+                    || e instanceof HibernateException
+                    || e instanceof SQLException
+                    || e instanceof DataAccessException
+                    || (e.getMessage() != null && e.getMessage().indexOf("Exception") != -1)) {
+
+                logger.error("Converting Exception (" + e.getClass() + ") to generic error message...");
+                webServiceVO = FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR.toString());
+            }
+
+        } finally {
+            ThreadLocalAppUser.remove();
+            ThreadLocalUserDeviceAccounts.remove();
+            getFonePayManager().updateFonePayIntegrationLogModel(fonePayLogModel, webServiceVO);
+        }
+        logger.info("[FonePaySwitchController.getOutstandingLoan] (In End) Response Code: " + webServiceVO.getResponseCode());
+        return webServiceVO;
     }
 
     @Override
@@ -12507,9 +12589,10 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 Date endStr = format.parse(webServiceVO.getToDate());
 
 //                dateStr = startCalendar.setTime(webServiceVO.getFromDate());
+                String[] productIds = new String[]{String.valueOf(ProductConstantsInterface.LOAN_XTRA_CASH), String.valueOf(ProductConstantsInterface.LOAN_XTRA_CASH_REPAYMENT)};
 
                 toBeProcessedList = transactionDetailMasterDAO.loadTDMbyMobileandDateRange
-                        (webServiceVO.getMobileNo(), dateStr, endStr, String.valueOf(ProductConstantsInterface.LOAN_XTRA_CASH));
+                        (webServiceVO.getMobileNo(), dateStr, endStr, productIds);
 
                 if(toBeProcessedList != null && !toBeProcessedList.isEmpty()){
                     for (TransactionDetailMasterModel l1 : toBeProcessedList) {

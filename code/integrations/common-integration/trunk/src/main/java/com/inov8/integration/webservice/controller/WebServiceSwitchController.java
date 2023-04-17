@@ -110,6 +110,7 @@ public interface WebServiceSwitchController {
 //      WebServiceVO agentCnicToCorePayment(WebServiceVO webServiceVO);
 
 
+
     WebServiceVO agentCashDepositInquiry(WebServiceVO webServiceVO);
     WebServiceVO agentCashDepositPayment(WebServiceVO webServiceVO);
     WebServiceVO agentCashWithdrawalInquiry(WebServiceVO webServiceVO);
@@ -135,6 +136,7 @@ public interface WebServiceSwitchController {
     WebServiceVO verifyLoginAccount(WebServiceVO webServiceVO);
     WebServiceVO minorFatherBvsVerification(WebServiceVO webServiceVO);
     WebServiceVO checqueBookStatus(WebServiceVO webServiceVO);
+    WebServiceVO MerchantAccountUpgrade(WebServiceVO webServiceVO);
     WebServiceVO cnicTo256(WebServiceVO webServiceVO);
     WebServiceVO transactionStatus(WebServiceVO webServiceVO);
     WebServiceVO profileStatus(WebServiceVO webServiceVO);

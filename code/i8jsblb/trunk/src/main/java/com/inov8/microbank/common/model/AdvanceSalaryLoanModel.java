@@ -17,9 +17,9 @@ public class AdvanceSalaryLoanModel extends BasePersistableModel implements Seri
     private Long advaceSalaryLoanId;
     private String mobileNo;
     private String cnic;
-    private Long loanAmount;
+    private Double loanAmount;
     private Long noOfInstallment;
-    private Long installmentAmount;
+    private Double installmentAmount;
     private Long gracePeriodDays;
     private Long earlyPaymentCharges;
     private Long latePaymentCharges;
@@ -65,11 +65,11 @@ public class AdvanceSalaryLoanModel extends BasePersistableModel implements Seri
     }
 
     @Column(name = "LOAN_AMOUNT")
-    public Long getLoanAmount() {
+    public Double getLoanAmount() {
         return loanAmount;
     }
 
-    public void setLoanAmount(Long loanAmount) {
+    public void setLoanAmount(Double loanAmount) {
         this.loanAmount = loanAmount;
     }
 
@@ -83,11 +83,11 @@ public class AdvanceSalaryLoanModel extends BasePersistableModel implements Seri
     }
 
     @Column(name = "INSTALLMENT_AMOUNT")
-    public Long getInstallmentAmount() {
+    public Double getInstallmentAmount() {
         return installmentAmount;
     }
 
-    public void setInstallmentAmount(Long installmentAmount) {
+    public void setInstallmentAmount(Double installmentAmount) {
         this.installmentAmount = installmentAmount;
     }
 
@@ -231,10 +231,10 @@ public class AdvanceSalaryLoanModel extends BasePersistableModel implements Seri
         model.setAdvaceSalaryLoanId(resultSet.getLong("ADVANCE_SALARY_LOAN_ID"));
         model.setCnic(resultSet.getString("CNIC"));
         model.setMobileNo(resultSet.getString("MOBILE_NUMBER"));
-        model.setInstallmentAmount(resultSet.getLong("INSTALLMENT_AMOUNT"));
+        model.setInstallmentAmount(resultSet.getDouble("INSTALLMENT_AMOUNT"));
         model.setNoOfInstallment(resultSet.getLong("TOTAL_NO_OF_INSTALLMENTS"));
         model.setProductId(resultSet.getLong("PRODUCT_ID"));
-        model.setLoanAmount(resultSet.getLong("LOAN_AMOUNT"));
+        model.setLoanAmount(resultSet.getDouble("LOAN_AMOUNT"));
         model.setGracePeriodDays(resultSet.getLong("TOTAL_GRACE_PERIOD_DAYS"));
         model.setEarlyPaymentCharges(resultSet.getLong("EARLY_PAYMENT_CHARGES"));
         model.setLatePaymentCharges(resultSet.getLong("LATE_PAYMENT_CHARGES"));

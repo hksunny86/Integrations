@@ -103,7 +103,7 @@ public class OutStandingLoanDeductionScheduler {
                                 } else {
                                     BaseWrapper dWrapper = new BaseWrapperImpl();
                                     dWrapper.putObject(CommandFieldConstants.KEY_AMOUNT, responseVO.getTotalGross());
-                                    dWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, ProductConstantsInterface.LOAN_XTRA_CASH);
+//                                    dWrapper.putObject(CommandFieldConstants.KEY_PROD_ID, ProductConstantsInterface.LOAN_XTRA_CASH);
                                     response = commandManager.executeCommand(dWrapper, CommandFieldConstants.CMD_DEBIT_PAYMENT_API);
                                 }
                             }

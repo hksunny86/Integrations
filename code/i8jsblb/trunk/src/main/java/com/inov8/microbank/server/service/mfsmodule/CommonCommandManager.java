@@ -49,6 +49,7 @@ import com.inov8.microbank.server.dao.customermodule.CustomerPictureDAO;
 import com.inov8.microbank.server.dao.customermodule.SegmentDAO;
 import com.inov8.microbank.server.dao.fetchcardtype.FetchCardTypeDAO;
 import com.inov8.microbank.server.dao.geolocationmodule.GeoLocationDAO;
+import com.inov8.microbank.server.dao.jsloansmodule.JSLoansDAO;
 import com.inov8.microbank.server.dao.mnomodule.MnoUserDAO;
 import com.inov8.microbank.server.dao.portal.apicitymodule.ApiCityDAO;
 import com.inov8.microbank.server.dao.portal.authorizationmodule.ActionAuthorizationModelDAO;
@@ -774,6 +775,8 @@ public interface CommonCommandManager {
 
     AdvanceSalaryLoanModel saveOrUpdateAdvanceSalaryLoan(AdvanceSalaryLoanModel adavceSalaryLoanModel);
 
+    JSLoansModel saveOrUpdateJSLoansModel(JSLoansModel jsLoansModel);
+
     BlinkCustomerModel createBlinkCustomerModel(BlinkCustomerModel blinkCustomerModel);
 
     ClsPendingBlinkCustomerModel createClsPendingBlinkCustomerModel(ClsPendingBlinkCustomerModel blinkCustomerModel);
@@ -797,6 +800,7 @@ public interface CommonCommandManager {
     SwitchWrapper checkBalance(AppUserModel appUserModel, SmartMoneyAccountModel smaModel) throws FrameworkCheckedException;
 
     AdvanceSalaryLoanDAO getAdvanceSalaryLoanDAO();
+    JSLoansDAO getJSLoansDAO();
 
     public DebitCardRequestsViewModel getDebitCardRequestsViewModelByAppUserId(Long appUserId, String mobileNo) throws CommandException;
     public DebitCardRequestsViewModel getDebitCardRequestsViewModelByDebitCardId(Long debitCardId) throws CommandException;
@@ -811,4 +815,9 @@ public interface CommonCommandManager {
 
     public TasdeeqDataModel loadTasdeeqDataModelByMobile(String mobileNo) throws FrameworkCheckedException;
 
+    public String verifyDailyLimitForCredit(Date transactionDateTime, Double amountToAdd, Long accountId, Long customerAccountTypeId, Long handlerId)
+            throws FrameworkCheckedException;
+
+    public String verifyMonthlyLimitForCredit(Date transactionDateTime, Double amountToAdd, Long accountId, Long customerAccountTypeId, Long handlerId)
+            throws FrameworkCheckedException;
 }

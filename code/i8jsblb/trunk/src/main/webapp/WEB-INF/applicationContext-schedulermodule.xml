@@ -546,9 +546,29 @@
         <property name="cronExpression" value="0 0/1 * 1/1 * ? *"/>
     </bean>
 
+    <!-- advanceSalaryLoanDeductionScheduler -->
+
+    <bean id="outstandingLoanDeductionJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="outstandingLoanScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="outstandingLoanDeductionCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="outstandingLoanDeductionJob"/>
+        <property name="cronExpression" value="0 0/20 * 1/1 * ? *"/>
+    </bean>
+    <bean id="outstandingLoanScheduler" class="com.inov8.microbank.schedulers.OutStandingLoanDeductionScheduler">
+        <property name="commandManager" ref="cmdManager"/>
+        <property name="appUserManager" ref="userManager"/>
+        <property name="smartMoneyAccountManager" ref="smartMoneyAccountManager"/>
+        <property name="smartMoneyAccountDAO" ref="smartMoneyAccountDAO"/>
+        <property name="esbAdapter" ref="esbAdapter"/>
+    </bean>
+
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
+<!--                                <ref bean="outstandingLoanDeductionCronTrigger"></ref>-->
                 <!--				<ref bean="pendingAccountOpeningCronTrigger"></ref>-->
                 <!--								<ref bean="clsPendingBlinkCustomerCronTrigger"></ref>-->
                 <!--				<ref bean="markAmaAccountDebitBlockCronTrigger"></ref>-->

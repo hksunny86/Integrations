@@ -9,6 +9,7 @@ import com.inov8.framework.common.wrapper.BaseWrapper;
 import com.inov8.integration.common.model.AccountModel;
 import com.inov8.microbank.common.model.MiniTransactionModel;
 import com.inov8.microbank.common.model.WalletSafRepoModel;
+import com.inov8.microbank.common.util.ProductConstantsInterface;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -361,7 +362,7 @@ public class TransactionDetailMasterHibernateDAO
     }
 
     @Override
-    public List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, Date startDate, Date endDate, String productId) {
+    public List<TransactionDetailMasterModel> loadTDMbyMobileandDateRange(String mobileNo, Date startDate, Date endDate, String... productIds) {
         StringBuilder sb = new StringBuilder();
 //        sb.append("SELECT * FROM WALLET_SAF_REPO");
 //        sb.append(" where IS_COMPLETE=0");
@@ -370,7 +371,8 @@ public class TransactionDetailMasterHibernateDAO
         String endStr = format.format(endDate);
 
         String query = "select * from TRANSACTION_DETAIL_MASTER where (SALE_MOBILE_NO || RECIPIENT_MOBILE_NO)='" + mobileNo + "' " +
-                "and PRODUCT_ID='" + productId + "'" + "and trunc(CREATED_ON) between '" + dateStr + "'and'" + endStr + "' order by created_On desc";
+                "and PRODUCT_ID in (" + ProductConstantsInterface.LOAN_XTRA_CASH + "," + ProductConstantsInterface.LOAN_XTRA_CASH_REPAYMENT + ")"
+                + "and trunc(CREATED_ON) between '" + dateStr + "'and'" + endStr + "' order by created_On desc";
 
         List<TransactionDetailMasterModel> result = jdbcTemplate.query
                 (query, new BeanPropertyRowMapper<TransactionDetailMasterModel>(TransactionDetailMasterModel.class));

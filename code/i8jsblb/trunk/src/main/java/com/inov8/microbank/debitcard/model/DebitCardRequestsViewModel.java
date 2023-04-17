@@ -74,6 +74,7 @@ public class DebitCardRequestsViewModel extends BasePersistableModel implements 
         return parameters;
     }
 
+
     @javax.persistence.Transient
     public String getPrimaryKeyFieldName() {
         String primaryKeyFieldName = "debitCardId";

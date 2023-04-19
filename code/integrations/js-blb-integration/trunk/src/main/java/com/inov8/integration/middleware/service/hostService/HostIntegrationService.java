@@ -17460,8 +17460,9 @@ public class HostIntegrationService {
         messageVO.setCity(request.getCity());
         messageVO.setEstimatedMonthlySales(request.getEstimatedMonthlySales());
         messageVO.setTypeOfBusiness(request.getTypeOfBusiness());
-        messageVO.setProfilePic(request.getProfilePic());
-        messageVO.setCnicFrontPhoto(request.getCNICPic());
+        messageVO.setCustomerPhoto(request.getProfilePic());
+        messageVO.setCnicFrontPhoto(request.getCNICFrontPic());
+        messageVO.setCnicBackPhoto(request.getCNICBackPic());
         messageVO.setLongitude(request.getLongitude());
         messageVO.setLatitude(request.getLatitude());
         messageVO.setiDType(request.getIDType());
@@ -17508,7 +17509,7 @@ public class HostIntegrationService {
             // Call i8
             try {
                 logger.info("[HOST] Sent Merchant Account Upgrade Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-                messageVO = response.merchantAccountUpgradeResponse(messageVO);
+                messageVO = switchController.MerchantAccountUpgrade(messageVO);
             } catch (Exception e) {
 
                 logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);

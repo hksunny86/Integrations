@@ -1,5 +1,7 @@
 package com.inov8.integration.middleware.pdu.request;
 
+import javax.annotation.Generated;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -23,7 +25,8 @@ import java.io.Serializable;
         "EstimatedMonthlySales",
         "TypeOfBusiness",
         "ProfilePic",
-        "CNICPic",
+        "CNICFrontPic",
+        "CNICBackPic",
         "longitude",
         "latitude",
         "IDType",
@@ -42,7 +45,6 @@ import java.io.Serializable;
         "HashData"
 })
 public class MerchantAccountUpgradeRequest implements Serializable {
-
     private final static long serialVersionUID = 1L;
 
     @JsonProperty("UserName")
@@ -75,8 +77,10 @@ public class MerchantAccountUpgradeRequest implements Serializable {
     private String typeOfBusiness;
     @JsonProperty("ProfilePic")
     private String profilePic;
-    @JsonProperty("CNICPic")
-    private String cNICPic;
+    @JsonProperty("CNICFrontPic")
+    private String cNICFrontPic;
+    @JsonProperty("CNICBackPic")
+    private String cNICBackPic;
     @JsonProperty("longitude")
     private String longitude;
     @JsonProperty("latitude")
@@ -260,14 +264,24 @@ public class MerchantAccountUpgradeRequest implements Serializable {
         this.profilePic = profilePic;
     }
 
-    @JsonProperty("CNICPic")
-    public String getCNICPic() {
-        return cNICPic;
+    @JsonProperty("CNICFrontPic")
+    public String getCNICFrontPic() {
+        return cNICFrontPic;
     }
 
-    @JsonProperty("CNICPic")
-    public void setCNICPic(String cNICPic) {
-        this.cNICPic = cNICPic;
+    @JsonProperty("CNICFrontPic")
+    public void setCNICFrontPic(String cNICFrontPic) {
+        this.cNICFrontPic = cNICFrontPic;
+    }
+
+    @JsonProperty("CNICBackPic")
+    public String getCNICBackPic() {
+        return cNICBackPic;
+    }
+
+    @JsonProperty("CNICBackPic")
+    public void setCNICBackPic(String cNICBackPic) {
+        this.cNICBackPic = cNICBackPic;
     }
 
     @JsonProperty("longitude")

@@ -146,19 +146,19 @@ public class MerchantAccountUpgradeResponse implements Serializable {
         this.hashData = hashData;
     }
 
-    public WebServiceVO merchantAccountUpgradeResponse(WebServiceVO messageVO) {
-        WebServiceVO webServiceVO = new WebServiceVO();
-
-        webServiceVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-        webServiceVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-        webServiceVO.setResponseCodeDescription("Success");
-        webServiceVO.setDateTime(messageVO.getDateTime());
-        webServiceVO.setReserved1(messageVO.getReserved1());
-        webServiceVO.setReserved2(messageVO.getReserved2());
-        webServiceVO.setReserved3(messageVO.getReserved3());
-        webServiceVO.setReserved4(messageVO.getReserved4());
-        webServiceVO.setReserved5(messageVO.getReserved5());
-
-        return webServiceVO;
-    }
+//    public WebServiceVO merchantAccountUpgradeResponse(WebServiceVO messageVO) {
+//        WebServiceVO webServiceVO = new WebServiceVO();
+//
+//        webServiceVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+//        webServiceVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+//        webServiceVO.setResponseCodeDescription("Success");
+//        webServiceVO.setDateTime(messageVO.getDateTime());
+//        webServiceVO.setReserved1(messageVO.getReserved1());
+//        webServiceVO.setReserved2(messageVO.getReserved2());
+//        webServiceVO.setReserved3(messageVO.getReserved3());
+//        webServiceVO.setReserved4(messageVO.getReserved4());
+//        webServiceVO.setReserved5(messageVO.getReserved5());
+//
+//        return webServiceVO;
+//    }
 }

@@ -351,6 +351,7 @@ public class I8SBConstants {
     public static String RequestType_OPTASIA_LOANSUMMARY = "OptasiaLoanSummary";
     public static String RequestType_OPTASIA_PAYLOAN = "OptasiaPayLoan";
     public static String RequestType_OPTASIA_REPAYLOAN = "OptasiaRepayLoan";
+    public static String RequestType_OPTASIA_ECIB_DATA = "OptasiaEcibData";
     public static String RequestType_Tasdeeq_AuthenticateUpdated = "TasdeeqAuthenticateUpdated";
     public static String RequestType_Tasdeeq_CustomAnalytics = "TasdeeqCustomAnalytics";
 

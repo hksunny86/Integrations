@@ -39,6 +39,7 @@ public class OptasiaService {
     private static Logger logger = LoggerFactory.getLogger(OptasiaService.class.getSimpleName());
     private RestTemplate restTemplate = new RestTemplate();
     private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
+    private String optasiaEcibData = PropertyReader.getProperty("optasia.ecibData");
     private String optasiaOfferListForCommodity = PropertyReader.getProperty("optasia.offerListForCommodity");
     private String optasiaLoanOffer = PropertyReader.getProperty("optasia.loanOffer");
     private String optasiaCallback = PropertyReader.getProperty("optasia.callback");
@@ -51,6 +52,78 @@ public class OptasiaService {
     private String username = PropertyReader.getProperty("optasia.username");
     private String password = PropertyReader.getProperty("optasia.password");
     private String optasiaAuthorization = PropertyReader.getProperty("optasia.authorization");
+
+    public ECIBDataResponse sendEcibDataResponse(ECIBDataRequest ecibDataRequest) {
+
+        ECIBDataResponse ecibDataResponse = new ECIBDataResponse();
+        I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
+        I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
+
+        long start = System.currentTimeMillis();
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+            logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
+            OptasiaMock optasiaMock = new OptasiaMock();
+            String response = optasiaMock.ecibData();
+            ecibDataResponse = (ECIBDataResponse) JSONUtil.jsonToObject(response, ECIBDataResponse.class);
+            Objects.requireNonNull(ecibDataResponse).setResponseCode("200");
+            logger.info("Response of ECIB Data Request : " + response);
+            logger.info("Response Code for ECIB Data Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
+        } else {
+            String response;
+            try {
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                headers.add("Username", username);
+                headers.add("Password", password);
+                headers.add("Authorization", "Basic " + optasiaAuthorization);
+
+                UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaEcibData);
+                String url = uri.toUriString();
+                logger.info("Requesting URL " + url);
+                String requestJSON = JSONUtil.getJSON(ecibDataRequest);
+                HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+                logger.info("Sending ECIB Data Request to Client " + httpEntity);
+                ResponseEntity<String> res = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
+//                ResponseEntity<String> res = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                logger.info("Response Code received from client " + res.getStatusCode().value());
+                logger.info("Response received from client " + res.getBody());
+                String responseCode = String.valueOf(res.getStatusCode().value());
+                if (responseCode.equals("200")) {
+//                    ecibDataResponse = (ECIBDataResponse) JSONUtil.jsonToObject(res.getBody(), ECIBDataResponse.class);
+                    Objects.requireNonNull(ecibDataResponse).setResponseCode(responseCode);
+                } else {
+                    Objects.requireNonNull(ecibDataResponse).setResponseCode(responseCode);
+                }
+            } catch (RestClientException e) {
+                if (e instanceof HttpStatusCodeException) {
+                    response = ((HttpStatusCodeException) e).getStatusCode().toString();
+                    String result;
+                    if (response.equals("400")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+//                        ecibDataResponse = (ECIBDataResponse) JSONUtil.jsonToObject(result, ECIBDataResponse.class);
+                        Objects.requireNonNull(ecibDataResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    } else if (response.equals("422")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+//                        ecibDataResponse = (ECIBDataResponse) JSONUtil.jsonToObject(result, ECIBDataResponse.class);
+                        Objects.requireNonNull(ecibDataResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    } else if (response.equals("500")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+//                        ecibDataResponse = (ECIBDataResponse) JSONUtil.jsonToObject(result, ECIBDataResponse.class);
+                        Objects.requireNonNull(ecibDataResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    } else {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+//                        ecibDataResponse = (ECIBDataResponse) JSONUtil.jsonToObject(result, ECIBDataResponse.class);
+                        Objects.requireNonNull(ecibDataResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    }
+                }
+            }
+        }
+
+        long endTime = (new Date()).getTime();
+        long difference = endTime - start;
+        logger.debug("ECIB Data Request processed in: " + difference + " millisecond");
+        return ecibDataResponse;
+    }
 
     public OfferListForCommodityResponse sendOfferListForCommodityResponse(OfferListForCommodityRequest offerListForCommodityRequest) {
 
@@ -300,7 +373,7 @@ public class OptasiaService {
             String response = optasiaMock.loans();
             loansResponse = (LoansResponse) JSONUtil.jsonToObject(response, LoansResponse.class);
             Objects.requireNonNull(loansResponse).setResponseCode("200");
-            logger.info("Response Code of Loans Request : " + response);
+//            logger.info("Response Code of Loans Request : " + response);
             logger.info("Response Code for Loans Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
             String response;

@@ -1325,34 +1325,34 @@ public class JSController {
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
                         HostRequestValidator.validateInitiateLoan(request);
-                        offerListForCommodityResponse = integrationService.initiateLoanResponse(request);
+                    offerListForCommodityResponse = integrationService.initiateLoanResponse(request);
 
-                    } catch (ValidationException ve) {
-                        offerListForCommodityResponse.setResponseCode("420");
-                        offerListForCommodityResponse.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        offerListForCommodityResponse.setResponseCode("220");
-                        offerListForCommodityResponse.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Initiate Loan Request *********");
-                    logger.info("ResponseCode: " + offerListForCommodityResponse.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Initiate Loan Request AUTHENTICATION *********");
-                    offerListForCommodityResponse = new OfferListForCommodityResponse();
+                } catch (ValidationException ve) {
                     offerListForCommodityResponse.setResponseCode("420");
-                    offerListForCommodityResponse.setResponseDescription("Request is not authenticated");
-                    offerListForCommodityResponse.setRrn(request.getRrn());
-                    offerListForCommodityResponse.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    offerListForCommodityResponse.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    offerListForCommodityResponse.setResponseCode("220");
+                    offerListForCommodityResponse.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
+
+                logger.info("******* DEBUG LOGS FOR Initiate Loan Request *********");
+                logger.info("ResponseCode: " + offerListForCommodityResponse.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Initiate Loan Request AUTHENTICATION *********");
+                offerListForCommodityResponse = new OfferListForCommodityResponse();
+                offerListForCommodityResponse.setResponseCode("420");
+                offerListForCommodityResponse.setResponseDescription("Request is not authenticated");
+                offerListForCommodityResponse.setRrn(request.getRrn());
+                offerListForCommodityResponse.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
+            }
             } else {
                 logger.info("******* DEBUG LOGS FOR Initiate Loan Request *********");
                 offerListForCommodityResponse = new OfferListForCommodityResponse();

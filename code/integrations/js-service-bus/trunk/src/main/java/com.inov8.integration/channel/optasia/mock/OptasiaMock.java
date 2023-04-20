@@ -4,6 +4,15 @@ import java.awt.*;
 
 public class OptasiaMock {
 
+    public String ecibData() {
+        String ecibdata = "{\n" +
+                "    \"responseCode\": \"00\",\n" +
+                "    \"responseDescription\": \"Success\"\n" +
+                "}";
+
+        return ecibdata;
+    }
+
     public String offerListForCommodity() {
         String offerListForCommodity = "{\n" +
                 "    \"identityValue\": \"test\",\n" +

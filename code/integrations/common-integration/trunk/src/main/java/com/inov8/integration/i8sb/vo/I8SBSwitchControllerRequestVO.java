@@ -485,6 +485,96 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String filterType;
     private String fullName;
     private List<AdditionalInfo> additionalInfoList;
+    private String customerId;
+    private String activeAccounts;
+    private String outstandingAmount;
+    private String dpd30;
+    private String dpd60;
+    private String dpd90;
+    private String dpd120;
+    private String dpd150;
+    private String dpd180;
+    private String writeOff;
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getActiveAccounts() {
+        return activeAccounts;
+    }
+
+    public void setActiveAccounts(String activeAccounts) {
+        this.activeAccounts = activeAccounts;
+    }
+
+    public String getOutstandingAmount() {
+        return outstandingAmount;
+    }
+
+    public void setOutstandingAmount(String outstandingAmount) {
+        this.outstandingAmount = outstandingAmount;
+    }
+
+    public String getDpd30() {
+        return dpd30;
+    }
+
+    public void setDpd30(String dpd30) {
+        this.dpd30 = dpd30;
+    }
+
+    public String getDpd60() {
+        return dpd60;
+    }
+
+    public void setDpd60(String dpd60) {
+        this.dpd60 = dpd60;
+    }
+
+    public String getDpd90() {
+        return dpd90;
+    }
+
+    public void setDpd90(String dpd90) {
+        this.dpd90 = dpd90;
+    }
+
+    public String getDpd120() {
+        return dpd120;
+    }
+
+    public void setDpd120(String dpd120) {
+        this.dpd120 = dpd120;
+    }
+
+    public String getDpd150() {
+        return dpd150;
+    }
+
+    public void setDpd150(String dpd150) {
+        this.dpd150 = dpd150;
+    }
+
+    public String getDpd180() {
+        return dpd180;
+    }
+
+    public void setDpd180(String dpd180) {
+        this.dpd180 = dpd180;
+    }
+
+    public String getWriteOff() {
+        return writeOff;
+    }
+
+    public void setWriteOff(String writeOff) {
+        this.writeOff = writeOff;
+    }
 
     public List<AdditionalInfo> getAdditionalInfoList() {
         return additionalInfoList;

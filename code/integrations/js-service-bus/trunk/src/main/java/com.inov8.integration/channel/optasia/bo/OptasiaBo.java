@@ -44,7 +44,9 @@ public class OptasiaBo implements I8SBChannelInterface {
             i8SBSwitchControllerRequestVO.setRequestXML(requestJSON);
             String requestType = i8SBSwitchControllerRequestVO.getRequestType();
 
-            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_OPTASIA_OfferListForCommodity)) {
+            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_OPTASIA_ECIB_DATA)) {
+                response = optasiaService.sendEcibDataResponse((ECIBDataRequest) request);
+            } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_OPTASIA_OfferListForCommodity)) {
                 response = optasiaService.sendOfferListForCommodityResponse((OfferListForCommodityRequest) request);
             } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_OPTASIA_LOANOFFER)) {
                 response = optasiaService.sendLoanOfferResponse((LoanOfferRequest) request);
@@ -107,7 +109,12 @@ public class OptasiaBo implements I8SBChannelInterface {
         Request request = null;
         Response response = null;
         logger.info("Request type: " + requestType);
-        if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_OPTASIA_OfferListForCommodity)) {
+        if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_OPTASIA_ECIB_DATA)) {
+
+            request = new ECIBDataRequest();
+            response = new ECIBDataResponse();
+
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_OPTASIA_OfferListForCommodity)) {
 
             request = new OfferListForCommodityRequest();
             response = new OfferListForCommodityResponse();

@@ -15575,7 +15575,7 @@ public class HostIntegrationService {
             response.setTransactionId(messageVO.getTransactionId());
             response.setTransactionAmount(messageVO.getTransactionAmount());
             response.setTotalAmount(messageVO.getTotalAmount());
-
+            response.setCharges(messageVO.getCharges());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 

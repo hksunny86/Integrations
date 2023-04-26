@@ -12,6 +12,7 @@ import java.io.Serializable;
         "dateTime",
         "transactionId",
         "amount",
+        "charges",
         "totalAmount",
         "hashData",
 })
@@ -31,6 +32,8 @@ public class TransactionStatusResponse implements Serializable {
     private String transactionId;
     @JsonProperty("amount")
     private String transactionAmount;
+    @JsonProperty("charges")
+    private String charges;
     @JsonProperty("totalAmount")
     private String totalAmount;
     @JsonProperty("hashData")
@@ -82,6 +85,14 @@ public class TransactionStatusResponse implements Serializable {
 
     public void setTransactionAmount(String transactionAmount) {
         this.transactionAmount = transactionAmount;
+    }
+
+    public String getCharges() {
+        return charges;
+    }
+
+    public void setCharges(String charges) {
+        this.charges = charges;
     }
 
     public String getTotalAmount() {

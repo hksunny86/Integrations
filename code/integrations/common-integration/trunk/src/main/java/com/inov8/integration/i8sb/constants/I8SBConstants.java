@@ -209,6 +209,7 @@ public class I8SBConstants {
     public static String RequestType_CustomerNameUpdate="CustomerNameUpdate";
 
     public static String RequestType_ZINDIGI_CUSTOMER_SYNC="ZindigiCustomerSync";
+    public static String RequestType_ZINDIGI_P2M_STATUS_UPDATE="P2MStatusUpdate";
     public static String RequestType_L2_ACCOUNT_UPGRADE_VALIDATION="L2AccountUpgradeValidation";
 
     public static String RequestType_EOCEAN="EOCEAN";

@@ -1,14 +1,8 @@
 package com.inov8.integration.channel.zindigi.bo;
 
 import com.inov8.integration.channel.JSBookMe.request.JSBookMeRequest;
-import com.inov8.integration.channel.zindigi.request.L2AccountUpgradeValidationRequest;
-import com.inov8.integration.channel.zindigi.request.MinorAccountSyncRequest;
-import com.inov8.integration.channel.zindigi.request.Request;
-import com.inov8.integration.channel.zindigi.request.ZindigiCustomerSyncRequest;
-import com.inov8.integration.channel.zindigi.response.L2AccountUpgradeValidationResponse;
-import com.inov8.integration.channel.zindigi.response.MinorAccountSyncResponse;
-import com.inov8.integration.channel.zindigi.response.Response;
-import com.inov8.integration.channel.zindigi.response.ZindigiCustomerSyncResponse;
+import com.inov8.integration.channel.zindigi.request.*;
+import com.inov8.integration.channel.zindigi.response.*;
 import com.inov8.integration.channel.zindigi.service.ZindigiCustomerSyncService;
 import com.inov8.integration.controller.I8SBChannelInterface;
 import com.inov8.integration.exception.I8SBValidationException;
@@ -70,6 +64,10 @@ public class ZindigiCustomerSyncBO implements I8SBChannelInterface {
                 response = zindigiCustomerSyncService.sendMinorAccount((MinorAccountSyncRequest) request);
 
             }
+            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ZINDIGI_P2M_STATUS_UPDATE)) {
+                response = zindigiCustomerSyncService.sendP2MStatusUpdateResponse((P2MStatusUpdateRequest) request);
+
+            }
 
             if (response.populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
@@ -127,6 +125,10 @@ public class ZindigiCustomerSyncBO implements I8SBChannelInterface {
         else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_MinorAccountSync)) {
             request = new MinorAccountSyncRequest();
             response = new MinorAccountSyncResponse();
+        }
+        else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ZINDIGI_P2M_STATUS_UPDATE)) {
+            request = new P2MStatusUpdateRequest();
+            response = new P2MStatusUpdateResponse();
         }
         else {
             logger.info("[FAILED] Request type not supported");

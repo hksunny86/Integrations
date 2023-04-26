@@ -5,9 +5,11 @@ import com.inov8.integration.channel.JSBookMe.service.JSBookMeService;
 import com.inov8.integration.channel.zindigi.mock.ZindigiCustomerSyncMock;
 import com.inov8.integration.channel.zindigi.request.L2AccountUpgradeValidationRequest;
 import com.inov8.integration.channel.zindigi.request.MinorAccountSyncRequest;
+import com.inov8.integration.channel.zindigi.request.P2MStatusUpdateRequest;
 import com.inov8.integration.channel.zindigi.request.ZindigiCustomerSyncRequest;
 import com.inov8.integration.channel.zindigi.response.L2AccountUpgradeValidationResponse;
 import com.inov8.integration.channel.zindigi.response.MinorAccountSyncResponse;
+import com.inov8.integration.channel.zindigi.response.P2MStatusUpdateResponse;
 import com.inov8.integration.channel.zindigi.response.ZindigiCustomerSyncResponse;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.enums.I8SBResponseCodeEnum;
@@ -21,10 +23,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -38,6 +37,7 @@ import javax.net.ssl.SSLContext;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 @Service
 public class ZindigiCustomerSyncService {
@@ -56,6 +56,10 @@ public class ZindigiCustomerSyncService {
     private String l2AccountUpgradeValidationUrl;
     @Value("${l2.account.upgrade.validation.access_token}")
     private String l2AccountUpgradeValidationAccessToken;
+    @Value("${p2m.status.update.access_token}")
+    private String p2mStatusUpdateAccessToken;
+    @Value("${p2m.status.update.url}")
+    private String p2mStatusUpdateUrl;
 
     @Value("${zindigi.account.url}")
     private String minorAccountOpeningUrl;
@@ -84,7 +88,7 @@ public class ZindigiCustomerSyncService {
             headers.add("Access_token", accessToken);
 
             String requesJson = JSONUtil.getJSON(request);
-            logger.info("Sending Zindigi Customer Sync Request : "+requesJson);
+            logger.info("Sending Zindigi Customer Sync Request : " + requesJson);
 
             HttpEntity<?> httpEntity = new HttpEntity<>(requesJson, headers);
 
@@ -107,18 +111,17 @@ public class ZindigiCustomerSyncService {
                     if (response.equals("422")) {
                         zindigiCustomerSyncResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                         zindigiCustomerSyncResponse.setDescription(((HttpStatusCodeException) e).getStatusText());
-                    }if (response.equals("404")){
+                    }
+                    if (response.equals("404")) {
                         zindigiCustomerSyncResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                         zindigiCustomerSyncResponse.setDescription(((HttpStatusCodeException) e).getStatusText());
 
 
-                    }
-                    else if (response.equals("500")) {
+                    } else if (response.equals("500")) {
                         zindigiCustomerSyncResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                         zindigiCustomerSyncResponse.setDescription(((HttpStatusCodeException) e).getStatusText());
 
-                    }
-                    else {
+                    } else {
                         zindigiCustomerSyncResponse.setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                         zindigiCustomerSyncResponse.setDescription(((HttpStatusCodeException) e).getStatusText());
 
@@ -131,7 +134,7 @@ public class ZindigiCustomerSyncService {
         return zindigiCustomerSyncResponse;
     }
 
-    public L2AccountUpgradeValidationResponse sendL2AccountUpgradeValidationResponse(L2AccountUpgradeValidationRequest request){
+    public L2AccountUpgradeValidationResponse sendL2AccountUpgradeValidationResponse(L2AccountUpgradeValidationRequest request) {
         L2AccountUpgradeValidationResponse l2AccountUpgradeValidationResponse = new L2AccountUpgradeValidationResponse();
 
         I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
@@ -143,8 +146,7 @@ public class ZindigiCustomerSyncService {
 
             l2AccountUpgradeValidationResponse = (L2AccountUpgradeValidationResponse) JSONUtil.jsonToObject(response, L2AccountUpgradeValidationResponse.class);
             logger.info("Status for L2 Account Upgrade Validation Request : " + l2AccountUpgradeValidationResponse.getResponseDescription());
-        }
-        else {
+        } else {
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(l2AccountUpgradeValidationUrl);
 
@@ -153,7 +155,7 @@ public class ZindigiCustomerSyncService {
             headers.add("Access_token", l2AccountUpgradeValidationAccessToken);
 
             String requesJson = JSONUtil.getJSON(request);
-            logger.info("Sending L2 Account Upgrade Validation Request : "+requesJson);
+            logger.info("Sending L2 Account Upgrade Validation Request : " + requesJson);
 
             HttpEntity<?> httpEntity = new HttpEntity<>(requesJson, headers);
 
@@ -173,7 +175,7 @@ public class ZindigiCustomerSyncService {
         return l2AccountUpgradeValidationResponse;
     }
 
-    public MinorAccountSyncResponse sendMinorAccount(MinorAccountSyncRequest request){
+    public MinorAccountSyncResponse sendMinorAccount(MinorAccountSyncRequest request) {
         MinorAccountSyncResponse minorAccountSyncResponse = new MinorAccountSyncResponse();
 
         I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
@@ -185,8 +187,7 @@ public class ZindigiCustomerSyncService {
 
             minorAccountSyncResponse = (MinorAccountSyncResponse) JSONUtil.jsonToObject(response, MinorAccountSyncResponse.class);
             logger.info("Status for Minor Account Opening Sync Request : " + minorAccountSyncResponse.getDescription());
-        }
-        else {
+        } else {
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(minorAccountOpeningUrl);
 
@@ -195,7 +196,7 @@ public class ZindigiCustomerSyncService {
             headers.add("Access_token", minorAccountOpeningToken);
 
             String requesJson = JSONUtil.getJSON(request);
-            logger.info("Sending Minor Account Opening Sync Request : "+requesJson);
+            logger.info("Sending Minor Account Opening Sync Request : " + requesJson);
 
             HttpEntity<?> httpEntity = new HttpEntity<>(requesJson, headers);
 
@@ -213,6 +214,78 @@ public class ZindigiCustomerSyncService {
         }
 
         return minorAccountSyncResponse;
+    }
+
+    public P2MStatusUpdateResponse sendP2MStatusUpdateResponse(P2MStatusUpdateRequest request) {
+        P2MStatusUpdateResponse p2MStatusUpdateResponse = new P2MStatusUpdateResponse();
+
+        I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
+
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+            logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
+            ZindigiCustomerSyncMock mock = new ZindigiCustomerSyncMock();
+            String response = mock.p2mStatusUpdate();
+
+            p2MStatusUpdateResponse = (P2MStatusUpdateResponse) JSONUtil.jsonToObject(response, P2MStatusUpdateResponse.class);
+            Objects.requireNonNull(p2MStatusUpdateResponse).setResponseCode("200");
+            logger.info("Status for P2M Status Update Request : " + p2MStatusUpdateResponse.getResponseDescription());
+        } else {
+            String response;
+            try {
+                UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(p2mStatusUpdateUrl);
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                headers.add("Access_token", p2mStatusUpdateAccessToken);
+
+                String requesJson = JSONUtil.getJSON(request);
+                logger.info("Sending P2M Status Update Request to Client : " + requesJson);
+
+                HttpEntity<?> httpEntity = new HttpEntity<>(requesJson, headers);
+
+                for (HttpMessageConverter converter : restTemplate.getMessageConverters()) {
+                    if (converter instanceof StringHttpMessageConverter) {
+                        ((StringHttpMessageConverter) converter).setWriteAcceptCharset(false);
+                    }
+                }
+
+                ResponseEntity<String> res = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
+//                ResponseEntity<String> res = new ResponseEntity<>(HttpStatus.OK);
+                logger.info("Response Code received from client " + res.getStatusCode().value());
+                logger.info("P2M Status Update Response Received : " + res.getBody());
+                String responseCode = String.valueOf(res.getStatusCode().value());
+                if (responseCode.equals("200")) {
+//                    p2MStatusUpdateResponse = (P2MStatusUpdateResponse) JSONUtil.jsonToObject(res.getBody(), P2MStatusUpdateResponse.class);
+                    Objects.requireNonNull(p2MStatusUpdateResponse).setResponseCode(responseCode);
+                } else {
+                    Objects.requireNonNull(p2MStatusUpdateResponse).setResponseCode(responseCode);
+                }
+            } catch (RestClientException e) {
+                if (e instanceof HttpStatusCodeException) {
+                    response = ((HttpStatusCodeException) e).getStatusCode().toString();
+                    String result;
+                    if (response.equals("400")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+//                        p2MStatusUpdateResponse = (P2MStatusUpdateResponse) JSONUtil.jsonToObject(result, P2MStatusUpdateResponse.class);
+                        Objects.requireNonNull(p2MStatusUpdateResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    } else if (response.equals("422")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+//                        p2MStatusUpdateResponse = (P2MStatusUpdateResponse) JSONUtil.jsonToObject(result, P2MStatusUpdateResponse.class);
+                        Objects.requireNonNull(p2MStatusUpdateResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    } else if (response.equals("500")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+//                        p2MStatusUpdateResponse = (P2MStatusUpdateResponse) JSONUtil.jsonToObject(result, P2MStatusUpdateResponse.class);
+                        Objects.requireNonNull(p2MStatusUpdateResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    } else {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+//                        p2MStatusUpdateResponse = (P2MStatusUpdateResponse) JSONUtil.jsonToObject(result, P2MStatusUpdateResponse.class);
+                        Objects.requireNonNull(p2MStatusUpdateResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    }
+                }
+            }
+        }
+
+        return p2MStatusUpdateResponse;
     }
 
 

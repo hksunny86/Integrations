@@ -22,4 +22,13 @@ public class ZindigiCustomerSyncMock {
 
         return l2AccountUpgradeValidation;
     }
+
+    public String p2mStatusUpdate(){
+
+     String p2mStatusUpdate = "{\n" +
+            "  \"ResponseCode\":\"00\",\n" +
+            "  \"ResponseDescription\": \"Completed\"\n" +
+            "}";
+        return p2mStatusUpdate;
+}
 }

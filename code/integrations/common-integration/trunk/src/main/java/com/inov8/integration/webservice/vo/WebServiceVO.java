@@ -424,7 +424,15 @@ public class WebServiceVO implements Serializable {
     private String iDType;
     private String idN;
     private String tillID;
+    private String partialRecoveryAmount;
 
+    public String getPartialRecoveryAmount() {
+        return partialRecoveryAmount;
+    }
+
+    public void setPartialRecoveryAmount(String partialRecoveryAmount) {
+        this.partialRecoveryAmount = partialRecoveryAmount;
+    }
 
     public String getBusinessName() {
         return businessName;

@@ -6548,6 +6548,7 @@ public class HostIntegrationService {
             response.setComissionAmount(messageVO.getCommissionAmount());
             response.setTransactionAmount(messageVO.getTransactionAmount());
             response.setTotalTransactionAmount(messageVO.getTotalAmount());
+            response.setPartialRecoveryAmount(messageVO.getPartialRecoveryAmount());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
         } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {

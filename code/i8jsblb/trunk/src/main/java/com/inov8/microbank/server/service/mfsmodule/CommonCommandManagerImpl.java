@@ -169,8 +169,11 @@ import com.inov8.microbank.server.service.userdeviceaccount.UserDeviceAccountLis
 import com.inov8.microbank.server.webserviceclient.ivr.IvrRequestDTO;
 import com.inov8.microbank.tax.dao.OfflineBillersConfigDAO;
 import com.inov8.ola.integration.vo.OLAVO;
+import com.inov8.ola.server.dao.ledger.LedgerDAO;
 import com.inov8.ola.server.service.account.AccountManager;
+import com.inov8.ola.server.service.limit.LimitManager;
 import com.inov8.ola.util.CustomerAccountTypeConstants;
+import com.inov8.ola.util.LimitTypeConstants;
 import com.inov8.ola.util.TransactionTypeConstants;
 import com.inov8.verifly.common.constants.CardTypeConstants;
 import com.inov8.verifly.common.model.AccountInfoModel;
@@ -344,12 +347,15 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     private PendingDebitCardSafRepoDAO pendingDebitCardSafRepoDAO;
     private PendingAccountOpeningDAO pendingAccountOpeningDAO;
     private AdvanceSalaryLoanDAO advanceSalaryLoanDAO;
+//    private JSLoansDAO jsLoansDAO;
     private ActionAuthorizationManager actionAuthorizationManager;
     private AgentBvsStatManager agentBvsStatManager;
     private AgentBvsStatDAO agentBvsStatDAO;
     private AgentLocationStatManager agentLocationStatManager;
     private DebitCardRequestsViewModelDAO debitCardRequestsViewModelDAO;
     private TasdeeqDataDAO tasdeeqDataDAO;
+    private LimitManager limitManager;
+    private LedgerDAO ledgerDAO;
     private MiniCommandLogDAO miniCommandLogDAO;
     private int minExpiryYear;
     private int maxExpiryYear;
@@ -992,6 +998,124 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         return baseWrapper;
     }
+
+
+    public BaseWrapper saveOrUpdateMerchantRequest(BaseWrapper baseWrapper) throws FrameworkCheckedException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Start of CommonCommandManagerImpl.saveOrUpdateAccountOpeningL0Request()");
+        }
+
+        AppUserModel appUserModel = (AppUserModel) baseWrapper.getObject(CommandFieldConstants.KEY_APP_USER_MODEL);
+        CustomerModel customerModel = (CustomerModel) baseWrapper.getObject(CommandFieldConstants.KEY_CUSTOMER_MODEL);
+
+        AppUserModel discrepantAppUserModel = null;
+        CustomerModel discrepantCustomerModel = null;
+
+
+
+        Long customerId = null;
+
+        Long regState = appUserModel.getRegistrationStateId();
+
+        if (regState.equals(RegistrationStateConstants.REQUEST_RECEIVED) ||  regState.equals(RegistrationStateConstants.VERIFIED) ||
+                regState.equals(RegistrationStateConstants.CLSPENDING) || regState.equals(RegistrationStateConstants.REJECTED))
+
+        {
+            customerDAO.saveOrUpdate(customerModel);
+            baseWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_MODEL, customerModel);
+            appUserModel.setCustomerId(customerModel.getCustomerId());
+            customerId = customerModel.getCustomerId();
+            this.appUserDAO.saveOrUpdate(appUserModel);
+            baseWrapper.putObject(CommandFieldConstants.KEY_APP_USER_MODEL, appUserModel);
+            baseWrapper.putObject(CommandFieldConstants.KEY_REGISTRATION_STATE_ID, appUserModel.getRegistrationStateId());
+
+
+            //***************************************************************************
+            //					Saving Customer Remitter
+
+
+            Date nowDate = new Date();
+            //CustomerModel custModel = customerModelMapper(baseWrapper, mfsAccountModel);
+            List<CustomerRemitterModel> customerRemitterModelList = null;
+            try {
+                customerRemitterModelList = (List<CustomerRemitterModel>) baseWrapper.getObject(CommandFieldConstants.CUSTOMER_REMITTENCE_KEY);
+                if ((null != customerRemitterModelList) && (customerRemitterModelList.size() > 0)) {
+                    for (CustomerRemitterModel customerRemitterModel : customerRemitterModelList) {
+                        customerRemitterModel.setCustomerIdCustomerModel(customerModel);
+                        customerModel.addCustomerIdCustomerRemitterModel(customerRemitterModel);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            /**
+             * Saving the CustomerModel
+             */
+            // baseWrapper = new BaseWrapperImpl();
+            baseWrapper.setBasePersistableModel(customerModel);
+            baseWrapper = this.custTransManager.saveOrUpdate(baseWrapper);
+            if (null != customerRemitterModelList && customerRemitterModelList.size() > 0) {
+                this.custTransManager.saveOrUpdateCustomerRemitter(customerRemitterModelList);
+            }
+
+
+
+            //***********************************************************************************************
+            //***********************************************************************************************
+            OLAVO olaVo = (OLAVO) baseWrapper.getObject(CommandFieldConstants.KEY_ONLINE_ACCOUNT_MODEL);
+
+            SwitchWrapper sWrapper = new SwitchWrapperImpl();
+            BankModel bankModel = getOlaBankMadal();
+            sWrapper.setOlavo(olaVo);
+            sWrapper.setBankId(bankModel.getBankId());
+
+            try {
+                sWrapper = olaVeriflyFinancialInstitution.changeAccountDetails(sWrapper);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new FrameworkCheckedException(WorkFlowErrorCodeConstants.PHOENIX_SERVICE_DOWN_MSG);
+            }
+
+            if ("07".equals(olaVo.getResponseCode())) {
+                throw new FrameworkCheckedException("NIC already exisits in the OLA accounts");
+            }
+
+        } else if (regState.equals(RegistrationStateConstants.DISCREPANT) || regState.equals(RegistrationStateConstants.BULK_REQUEST_RECEIVED)) {
+            discrepantAppUserModel = getAppUserWithRegistrationState(appUserModel.getMobileNo(), appUserModel.getNic(), RegistrationStateConstants.BULK_REQUEST_RECEIVED);
+            discrepantAppUserModel.setFirstName(appUserModel.getFirstName());
+            discrepantAppUserModel.setLastName(appUserModel.getLastName());
+            discrepantAppUserModel.setNicExpiryDate(appUserModel.getNicExpiryDate());
+            discrepantAppUserModel.setDob(appUserModel.getDob());
+            discrepantAppUserModel.setRegistrationStateId(RegistrationStateConstants.REQUEST_RECEIVED);
+            this.appUserDAO.saveOrUpdate(discrepantAppUserModel);
+            baseWrapper.putObject(CommandFieldConstants.KEY_APP_USER_MODEL, discrepantAppUserModel);
+
+            customerId = discrepantAppUserModel.getCustomerId();
+            discrepantCustomerModel = new CustomerModel();
+            discrepantCustomerModel.setCustomerId(discrepantAppUserModel.getCustomerId());
+            baseWrapper.setBasePersistableModel(discrepantCustomerModel);
+            loadCustomer(baseWrapper);
+            discrepantCustomerModel = (CustomerModel) baseWrapper.getBasePersistableModel();
+            discrepantCustomerModel.setName(customerModel.getName());
+            discrepantCustomerModel.setInitialDeposit(customerModel.getInitialDeposit());
+            discrepantCustomerModel.setIsCnicSeen(customerModel.getIsCnicSeen());
+
+            customerDAO.saveOrUpdate(discrepantCustomerModel);
+            baseWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_MODEL, discrepantCustomerModel);
+        }
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("End of CommonCommandManagerImpl.saveOrUpdateMerchantAccountRequest");
+        }
+        return baseWrapper;
+    }
+
+
+
+
+
+
 
     public int countByExample(BasePersistableModel basePersistableModel) {
         if (basePersistableModel instanceof AppUserModel) {
@@ -7255,10 +7379,10 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         return this.genericDao.createEntity(adavceSalaryLoanModel);
     }
 
-    @Override
-    public JSLoansModel saveOrUpdateJSLoansModel(JSLoansModel jsLoansModel) {
-        return null;
-    }
+//    @Override
+//    public JSLoansModel saveOrUpdateJSLoansModel(JSLoansModel jsLoansModel) {
+//        return null;
+//    }
 
     @Override
     public BlinkCustomerModel createBlinkCustomerModel(BlinkCustomerModel blinkCustomerModel) {
@@ -7406,13 +7530,13 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
         }
         boolean isNegativeBalanceAllowed = switchWrapper.getOlavo() == null ? false : switchWrapper.getOlavo().isNegativeBalanceAllowed();
 
-        if (balance == null || (balance < Double.valueOf(transactionAmount) && !isNegativeBalanceAllowed)) {
-            logger.error("[CommonCommandManagerImpl.validateBalance] Your balance in insufficient to make this transaction.");
-//            if(appUserModel.getCustomerIdCustomerModel() != null && appUserModel.getCustomerIdCustomerModel().getCustomerAccountTypeId() != null)
-//                throw new CommandException(MessageUtil.getMessage(WorkFlowErrorCodeConstants.INSUFFICIENT_BALANCE), 51L,ErrorLevel.MEDIUM,new Throwable());
-//            else
-            throw new CommandException(MessageUtil.getMessage(WorkFlowErrorCodeConstants.INSUFFICIENT_BALANCE), Long.valueOf(WorkFlowErrorCodeConstants.INSUFFICIENT_BALANCE), ErrorLevel.MEDIUM, new Throwable());
-        }
+//        if (balance == null || (balance < Double.valueOf(transactionAmount) && !isNegativeBalanceAllowed)) {
+//            logger.error("[CommonCommandManagerImpl.validateBalance] Your balance in insufficient to make this transaction.");
+////            if(appUserModel.getCustomerIdCustomerModel() != null && appUserModel.getCustomerIdCustomerModel().getCustomerAccountTypeId() != null)
+////                throw new CommandException(MessageUtil.getMessage(WorkFlowErrorCodeConstants.INSUFFICIENT_BALANCE), 51L,ErrorLevel.MEDIUM,new Throwable());
+////            else
+//            throw new CommandException(MessageUtil.getMessage(WorkFlowErrorCodeConstants.INSUFFICIENT_BALANCE), Long.valueOf(WorkFlowErrorCodeConstants.INSUFFICIENT_BALANCE), ErrorLevel.MEDIUM, new Throwable());
+//        }
 
         return switchWrapper;
     }
@@ -7712,13 +7836,14 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     }
 
     @Override
-    public JSLoansDAO getJSLoansDAO() {
-        return null;
+    public SmartMoneyAccountDAO getSmartMoneyAccountDAO() {
+        return smartMoneyAccountDAO;
     }
 
-    public void setAdvanceSalaryLoanDAO(AdvanceSalaryLoanDAO advanceSalaryLoanDAO) {
-        this.advanceSalaryLoanDAO = advanceSalaryLoanDAO;
-    }
+//    @Override
+//    public JSLoansDAO getJSLoansDAO() {
+//        return null;
+//    }
 
     @Override
     public DebitCardRequestsViewModel getDebitCardRequestsViewModelByAppUserId(Long appUserId, String mobileNo) throws CommandException {
@@ -7768,12 +7893,99 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
 
     @Override
     public String verifyDailyLimitForCredit(Date transactionDateTime, Double amountToAdd, Long accountId, Long customerAccountTypeId, Long handlerId) throws FrameworkCheckedException {
-        return null;
+        logger.info("Start of verifyDailyLimitForCredit at Time :: " + new Date());
+        String responseCode = "";
+        try {
+            LimitModel limitModel = new LimitModel();
+            if (customerAccountTypeId.equals(CustomerAccountTypeConstants.BLINK)) {
+                BlinkCustomerLimitModel blinkCustomerLimitModel = this.limitManager.getBlinkCustomerLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.DAILY, customerAccountTypeId, accountId);
+                if (blinkCustomerLimitModel != null) {
+                    limitModel.setMaximum(Double.valueOf(blinkCustomerLimitModel.getMaximum()));
+                    if (blinkCustomerLimitModel.getIsApplicable() == 1) {
+                        limitModel.setIsApplicable(true);
+                    }
+                    limitModel.setCustomerAccountTypeId(blinkCustomerLimitModel.getCustomerAccTypeId());
+                }
+            } else {
+                limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.DAILY, customerAccountTypeId);
+            }
+            if (limitModel != null) {
+
+                if (limitModel.getIsApplicable() && limitModel.getMaximum() != null) {
+                    Double consumedBalance = ledgerDAO.getDailyConsumedBalance(accountId, TransactionTypeConstants.CREDIT, transactionDateTime, handlerId);
+                    if (consumedBalance != null) {
+                        if (consumedBalance + amountToAdd > limitModel.getMaximum()) {
+                            responseCode = "09"; // Your entered amount will exceed the customer's Maximum transaction Credit Limit per Day, please try again.
+                            logger.error("Your entered amount will exceed the customer's Maximum transaction Credit Limit per Day, please try again.");
+                        } else {
+                            responseCode = "00"; //Success Message
+                        }
+                    }
+                } else {
+                    responseCode = "00"; //Success Message when limit is not applicable
+                }
+            } else {
+                responseCode = "08"; // No Limit is defined for this data (Daily Limit for Credit).
+                logger.error("No Limit is defined for this data (Daily Limit for Credit).");
+            }
+        } catch (Exception e) {
+            logger.error("Error in AccountManagerImpl.verifyDailyLimitForCredit() :: " + e.getMessage() + " :: Exception " + e);
+            responseCode = "25";
+        }
+        logger.info("End of verifyDailyLimitForCredit at Time :: " + new Date());
+        return responseCode;
     }
 
     @Override
     public String verifyMonthlyLimitForCredit(Date transactionDateTime, Double amountToAdd, Long accountId, Long customerAccountTypeId, Long handlerId) throws FrameworkCheckedException {
-        return null;
+        String responseCode = "";
+        try {
+            LimitModel limitModel = new LimitModel();
+            if (customerAccountTypeId.equals(CustomerAccountTypeConstants.BLINK)) {
+                BlinkCustomerLimitModel blinkCustomerLimitModel = this.limitManager.getBlinkCustomerLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.MONTHLY, customerAccountTypeId, accountId);
+                if (blinkCustomerLimitModel != null) {
+                    limitModel.setMaximum(Double.valueOf(blinkCustomerLimitModel.getMaximum()));
+                    if (blinkCustomerLimitModel.getIsApplicable() == 1) {
+                        limitModel.setIsApplicable(true);
+                    }
+                    limitModel.setCustomerAccountTypeId(blinkCustomerLimitModel.getCustomerAccTypeId());
+                }
+            } else {
+
+                limitModel = this.limitManager.getLimitByTransactionType(TransactionTypeConstants.CREDIT, LimitTypeConstants.MONTHLY, customerAccountTypeId);
+            }
+            if (limitModel != null) {
+                if (limitModel.getIsApplicable() && limitModel.getMaximum() != null) {
+                    Calendar startCalendar = Calendar.getInstance();
+                    startCalendar.setTime(transactionDateTime);
+                    startCalendar.set(Calendar.DAY_OF_MONTH, 1);
+                    PortalDateUtils.resetTime(startCalendar);
+                    Date startDate = startCalendar.getTime();
+                    Double consumedBalance = ledgerDAO.getConsumedBalanceByDateRange(accountId, TransactionTypeConstants.CREDIT, startDate, transactionDateTime, handlerId);
+                    if (consumedBalance != null) {
+                        if (consumedBalance + amountToAdd > limitModel.getMaximum()) {
+                            responseCode = "11";// Your entered amount will exceed the customer's Maximum transaction Credit Limit per Month, please try again.
+                            logger.error("Your entered amount will exceed the customer's Maximum transaction Credit Limit per Month, please try again.");
+                        } else {
+                            responseCode = "00";//Success Message
+                        }
+                    }
+                } else {
+                    responseCode = "00"; //Success Message when limit is not applicable
+                }
+            } else {
+                responseCode = "10"; // No Limit is defined for this data (Monthly Limit for Credit).
+                logger.error("No Limit is defined for this data (Monthly Limit for Credit.");
+            }
+        } catch (Exception ex) {
+            logger.error("Error in AccountManagerImpl.verifyMonthlyLimitForCredit() :: " + ex.getMessage() + " :: Exception " + ex);
+            responseCode = "26";
+        }
+        return responseCode;
+    }
+
+    public void setAdvanceSalaryLoanDAO(AdvanceSalaryLoanDAO advanceSalaryLoanDAO) {
+        this.advanceSalaryLoanDAO = advanceSalaryLoanDAO;
     }
 
     public ActionAuthorizationManager getActionAuthorizationManager() {
@@ -7837,4 +8049,16 @@ public class CommonCommandManagerImpl implements CommonCommandManager {
     public void setMerchantAccountModelDAO(MerchantAccountModelDAO merchantAccountModelDAO) {
         this.merchantAccountModelDAO = merchantAccountModelDAO;
     }
+
+    public void setLimitManager(LimitManager limitManager) {
+        this.limitManager = limitManager;
+    }
+
+    public void setLedgerDAO(LedgerDAO ledgerDAO) {
+        this.ledgerDAO = ledgerDAO;
+    }
+
+//    public void setJsLoansDAO(JSLoansDAO jsLoansDAO) {
+//        this.jsLoansDAO = jsLoansDAO;
+//    }
 }

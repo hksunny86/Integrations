@@ -761,6 +761,20 @@ public class ESBAdapter {
         return requestVO;
     }
 
+    public static I8SBSwitchControllerRequestVO sendEcibData(String requestType) {
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_OPTASIA);
+        requestVO.setTransmissionDateAndTime(new SimpleDateFormat("yyMMHHss").format(new Date()));
+        requestVO.setRequestType(requestType);
+
+        logCompleteObject("I8SB loanProjection request - params", requestVO);
+
+        return requestVO;
+    }
+
+
     public static I8SBSwitchControllerRequestVO ecibData(String requestType) {
         I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
         requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);

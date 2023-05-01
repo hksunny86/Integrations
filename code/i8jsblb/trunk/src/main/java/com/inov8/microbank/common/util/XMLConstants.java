@@ -121,8 +121,9 @@ public class XMLConstants
     public static final String ATTR_TRN_PRODUCT_ID = "prodid";
     public static final String ATTR_COMMISSION = "cmsn";
     public static final String EXCLUSIVE_CHARGES = "excrhge";
-    public static final String INCLUSIVE_CHARGES = "incrhge";   
-    
+    public static final String INCLUSIVE_CHARGES = "incrhge";
+    public static final String FIX_INCLUSIVE_CHARGES = "fixIncrhge";
+
 
     // About Tag
     public static final String TAG_SYMBOL_OPEN = "<";

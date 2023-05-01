@@ -5780,8 +5780,14 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     webServiceVO.setResponseCode("00");
                     webServiceVO.setResponseCodeDescription("Successfull");
                     webServiceVO.setCommissionAmount(String.valueOf(charges));
-                    webServiceVO.setTransactionAmount(String.valueOf(tranAmount));
-                    webServiceVO.setTotalAmount(totalAmount);
+                    if (webServiceVO.getProductID().equals(ProductConstantsInterface.LOAN_XTRA_CASH_REPAYMENT.toString())) {
+                        webServiceVO.setTransactionAmount(String.valueOf(tranAmount));
+                        webServiceVO.setTotalAmount(String.valueOf(tranAmount));
+//                        webServiceVO.setPartialRecoveryAmount(String.valueOf(tranAmount));
+                    } else {
+                        webServiceVO.setTransactionAmount(String.valueOf(tranAmount));
+                        webServiceVO.setTotalAmount(totalAmount);
+                    }
                     webServiceVO.setTransactionId(transactionCode);
                 }
                 String channelId = MessageUtil.getMessage("merchantCamping.channel.ids");
@@ -6280,8 +6286,11 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 String charges = null;
                 charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.SERVICE_CHARGES_NODEREF);
                 webServiceVO.setReserved3("ExclusiveCharges");
-                if (charges == null || charges.equals("0.00")) {
-                    charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.CAMTF_NODEREF);
+                if (charges == null || charges.equals("0.00") ) {
+                    charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.PARAM_INCLUSIVE_CHARGES);
+                    if(charges == null || charges.equals("0.00") || charges.equals("")){
+                        charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.PARAM_FIX_INCLUSIVE_CHARGES);
+                    }
                     if (charges == null || charges.equals("0.00")) {
                         webServiceVO.setReserved3("");
                     } else {
@@ -6477,6 +6486,9 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     String charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_SERVICE_CHARGES_NODEREF);
                     if (charges == null || charges.equals("0.00")) {
                         charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_INCLUSIVE_CHARGES);
+                        if(charges == null || charges.equals("0.00") || charges.equals("")){
+                            charges = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_FIX_INCLUSIVE_CHARGES);
+                        }
                     }
                     String transactionCode = MiniXMLUtil.getTagTextValue(xml, MiniXMLUtil.TRANS_ID_NODEREF);
                     webServiceVO.setResponseContentXML(xml);
@@ -10708,12 +10720,23 @@ public class FonePaySwitchController implements WebServiceSwitchController {
 
             TransactionDetailMasterModel tdm = getTransactionReversalManager().loadTDMbyThridPartyRRN(webServiceVO.getThirdPartyTransactionId());
             if(tdm != null){
-                webServiceVO.setTransactionId(tdm.getTransactionCode());
-                webServiceVO.setStatus(tdm.getProcessingStatusName());
-                webServiceVO.setTransactionAmount(String.valueOf(tdm.getTransactionAmount()));
-                webServiceVO.setTotalAmount(String.valueOf(tdm.getTotalAmount()));
-                webServiceVO.setResponseCode("00");
-                webServiceVO.setResponseCodeDescription("Successfull");
+                if(tdm.getSupProcessingStatusId().equals(SupplierProcessingStatusConstants.COMPLETED) ||
+                        tdm.getSupProcessingStatusId().equals(SupplierProcessingStatusConstants.REVERSE_COMPLETED) ||
+                        tdm.getSupProcessingStatusId().equals(SupplierProcessingStatusConstants.REVERSED)) {
+                    webServiceVO.setTransactionId(tdm.getTransactionCode());
+                    webServiceVO.setStatus(tdm.getProcessingStatusName());
+                    webServiceVO.setTransactionAmount(String.valueOf(tdm.getTransactionAmount()));
+                    webServiceVO.setCharges(String.valueOf(tdm.getInclusiveCharges()));
+                    webServiceVO.setTotalAmount(String.valueOf(tdm.getTotalAmount()));
+                    webServiceVO.setResponseCode("00");
+                    webServiceVO.setResponseCodeDescription("Successfull");
+                }
+                else{
+                    logger.info("[FonePaySwitchController.transactionStatus] Transaction Failed against the RRN # :: " + webServiceVO.getRetrievalReferenceNumber());
+                    webServiceVO.setResponseCode("166");
+                    webServiceVO.setResponseCodeDescription("Transaction Status Failed.");
+                    return webServiceVO;
+                }
             }
             else {
                 logger.info("[FonePaySwitchController.transactionStatus] Transaction Not Found against the RRN # :: " + webServiceVO.getRetrievalReferenceNumber());
@@ -10957,7 +10980,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
                         sWrapper = esbAdapter.makeI8SBCall(sWrapper);
                         ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
-                        responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
+                        responseVO = sWrapper.getI8SBSwitchControllerResponseVO().getI8SBSwitchControllerResponseVOList().get(1);
 
                         if (!responseVO.getResponseCode().equals("I8SB-200")) {
                             webServiceVO.setResponseCode("65");
@@ -10966,20 +10989,68 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         }
                         else{
                             tasdeeqDataModel = new TasdeeqDataModel();
-                            tasdeeqDataModel.setReportDate(responseVO.getDate());
+                            tasdeeqDataModel.setReportDate(responseVO.getReportDate());
                             tasdeeqDataModel.setReportTime(responseVO.getReportTime());
                             tasdeeqDataModel.setName(responseVO.getName());
                             tasdeeqDataModel.setCnic(responseVO.getCNIC());
                             tasdeeqDataModel.setCity(responseVO.getCity());
-                            tasdeeqDataModel.setNoOfActiveAccounts(responseVO.getNoOfActiveAccounts());
+
+                            if(!responseVO.getTotalOutstandingBalance().equals("") && StringUtil.isNumeric(responseVO.getTotalOutstandingBalance())){
+                                tasdeeqDataModel.setTotalOutstandingBalance(Double.valueOf(responseVO.getTotalOutstandingBalance()));
+                            }
+                            else{
+                                tasdeeqDataModel.setTotalOutstandingBalance(0.0);
+                            }
+                            if(!responseVO.getNoOfActiveAccounts().equals("") && StringUtil.isNumeric(responseVO.getNoOfActiveAccounts())){
+                                tasdeeqDataModel.setNoOfActiveAccounts(responseVO.getNoOfActiveAccounts());
+                            }
+                            else{
+                                tasdeeqDataModel.setNoOfActiveAccounts("0");
+                            }
+                            if(!responseVO.getPlus3024m().equals("") && StringUtil.isNumeric(responseVO.getPlus3024m())){
+                                tasdeeqDataModel.setPlus3024M(responseVO.getPlus3024m());
+                            }
+                            else{
+                                tasdeeqDataModel.setPlus3024M("0");
+                            }
+                            if(!responseVO.getPlus6024m().equals("") && StringUtil.isNumeric(responseVO.getPlus6024m())){
+                                tasdeeqDataModel.setPlus6024M(responseVO.getPlus6024m());
+                            }
+                            else{
+                                tasdeeqDataModel.setPlus6024M("0");
+                            }
+                            if(!responseVO.getPlus9024m().equals("") && StringUtil.isNumeric(responseVO.getPlus9024m())){
+                                tasdeeqDataModel.setPlus9024M(responseVO.getPlus9024m());
+                            }
+                            else{
+                                tasdeeqDataModel.setPlus9024M("0");
+                            }
+                            if(!responseVO.getPlus12024m().equals("") && StringUtil.isNumeric(responseVO.getPlus12024m())){
+                                tasdeeqDataModel.setPlus12024M(responseVO.getPlus12024m());
+                            }
+                            else{
+                                tasdeeqDataModel.setPlus12024M("0");
+                            }
+                            if(!responseVO.getPlus15024m().equals("") && StringUtil.isNumeric(responseVO.getPlus15024m())){
+                                tasdeeqDataModel.setPlus1504M(responseVO.getPlus15024m());
+                            }
+                            else{
+                                tasdeeqDataModel.setPlus1504M("0");
+                            }
+                            if(!responseVO.getPlus18024m().equals("") && StringUtil.isNumeric(responseVO.getPlus18024m())){
+                                tasdeeqDataModel.setPlus18024M(responseVO.getPlus18024m());
+                            }
+                            else{
+                                tasdeeqDataModel.setPlus18024M("0");
+                            }
+                            if(!responseVO.getWriteOff().equals("") && StringUtil.isNumeric(responseVO.getWriteOff())){
+                                tasdeeqDataModel.setWriteOff(responseVO.getWriteOff());
+                            }
+                            else{
+                                tasdeeqDataModel.setWriteOff("0");
+                            }
+
                             tasdeeqDataModel.setDob(responseVO.getDob());
-                            tasdeeqDataModel.setPlus3024M(responseVO.getPlus3024m());
-                            tasdeeqDataModel.setPlus6024M(responseVO.getPlus6024m());
-                            tasdeeqDataModel.setPlus9024M(responseVO.getPlus9024m());
-                            tasdeeqDataModel.setPlus12024M(responseVO.getPlus12024m());
-                            tasdeeqDataModel.setPlus1504M(responseVO.getPlus15024m());
-                            tasdeeqDataModel.setPlus18024M(responseVO.getPlus18024m());
-                            tasdeeqDataModel.setWriteOff(responseVO.getWriteOff());
                             tasdeeqDataModel.setReferenceNumber(responseVO.getRefNo());
                             tasdeeqDataModel.setValidStatus("1");
                             tasdeeqDataModel.setCreatedOn(new Date());
@@ -11010,7 +11081,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                     sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
                     sWrapper = esbAdapter.makeI8SBCall(sWrapper);
                     ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
-                    responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
+                    responseVO = sWrapper.getI8SBSwitchControllerResponseVO().getI8SBSwitchControllerResponseVOList().get(1);
 
                     if (!responseVO.getResponseCode().equals("I8SB-200")) {
                         webServiceVO.setResponseCode("65");
@@ -11024,15 +11095,63 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         tasdeeqDataModel.setCnic(responseVO.getCNIC());
                         tasdeeqDataModel.setCity(responseVO.getCity());
                         tasdeeqDataModel.setMobileNo(webServiceVO.getMobileNo());
-                        tasdeeqDataModel.setNoOfActiveAccounts(responseVO.getNoOfActiveAccounts());
+
+                        if(!responseVO.getTotalOutstandingBalance().equals("") && StringUtil.isNumeric(responseVO.getTotalOutstandingBalance())){
+                            tasdeeqDataModel.setTotalOutstandingBalance(Double.valueOf(responseVO.getTotalOutstandingBalance()));
+                        }
+                        else{
+                            tasdeeqDataModel.setTotalOutstandingBalance(0.0);
+                        }
+                        if(!responseVO.getNoOfActiveAccounts().equals("") && StringUtil.isNumeric(responseVO.getNoOfActiveAccounts())){
+                            tasdeeqDataModel.setNoOfActiveAccounts(responseVO.getNoOfActiveAccounts());
+                        }
+                        else{
+                            tasdeeqDataModel.setNoOfActiveAccounts("0");
+                        }
+                        if(!responseVO.getPlus3024m().equals("") && StringUtil.isNumeric(responseVO.getPlus3024m())){
+                            tasdeeqDataModel.setPlus3024M(responseVO.getPlus3024m());
+                        }
+                        else{
+                            tasdeeqDataModel.setPlus3024M("0");
+                        }
+                        if(!responseVO.getPlus6024m().equals("") && StringUtil.isNumeric(responseVO.getPlus6024m())){
+                            tasdeeqDataModel.setPlus6024M(responseVO.getPlus6024m());
+                        }
+                        else{
+                            tasdeeqDataModel.setPlus6024M("0");
+                        }
+                        if(!responseVO.getPlus9024m().equals("") && StringUtil.isNumeric(responseVO.getPlus9024m())){
+                            tasdeeqDataModel.setPlus9024M(responseVO.getPlus9024m());
+                        }
+                        else{
+                            tasdeeqDataModel.setPlus9024M("0");
+                        }
+                        if(!responseVO.getPlus12024m().equals("") && StringUtil.isNumeric(responseVO.getPlus12024m())){
+                            tasdeeqDataModel.setPlus12024M(responseVO.getPlus12024m());
+                        }
+                        else{
+                            tasdeeqDataModel.setPlus12024M("0");
+                        }
+                        if(!responseVO.getPlus15024m().equals("") && StringUtil.isNumeric(responseVO.getPlus15024m())){
+                            tasdeeqDataModel.setPlus1504M(responseVO.getPlus15024m());
+                        }
+                        else{
+                            tasdeeqDataModel.setPlus1504M("0");
+                        }
+                        if(!responseVO.getPlus18024m().equals("") && StringUtil.isNumeric(responseVO.getPlus18024m())){
+                            tasdeeqDataModel.setPlus18024M(responseVO.getPlus18024m());
+                        }
+                        else{
+                            tasdeeqDataModel.setPlus18024M("0");
+                        }
+                        if(!responseVO.getWriteOff().equals("") && StringUtil.isNumeric(responseVO.getWriteOff())){
+                            tasdeeqDataModel.setWriteOff(responseVO.getWriteOff());
+                        }
+                        else{
+                            tasdeeqDataModel.setWriteOff("0");
+                        }
+
                         tasdeeqDataModel.setDob(responseVO.getDob());
-                        tasdeeqDataModel.setPlus3024M(responseVO.getPlus3024m());
-                        tasdeeqDataModel.setPlus6024M(responseVO.getPlus6024m());
-                        tasdeeqDataModel.setPlus9024M(responseVO.getPlus9024m());
-                        tasdeeqDataModel.setPlus12024M(responseVO.getPlus12024m());
-                        tasdeeqDataModel.setPlus1504M(responseVO.getPlus15024m());
-                        tasdeeqDataModel.setPlus18024M(responseVO.getPlus18024m());
-                        tasdeeqDataModel.setWriteOff(responseVO.getWriteOff());
                         tasdeeqDataModel.setValidStatus("1");
                         tasdeeqDataModel.setReferenceNumber(responseVO.getRefNo());
                         tasdeeqDataModel.setCreatedOn(new Date());
@@ -11045,6 +11164,36 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                         webServiceVO.setResponseCode(FonePayResponseCodes.SUCCESS_RESPONSE_CODE);
                         webServiceVO.setResponseCodeDescription(FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION);
                     }
+                }
+
+                requestVO = new I8SBSwitchControllerRequestVO();
+                responseVO = new I8SBSwitchControllerResponseVO();
+                requestVO = ESBAdapter.sendEcibData(I8SBConstants.RequestType_OPTASIA_ECIB_DATA);//Request type offer list for commodity api
+                requestVO.setCustomerId(appUserModel.getShaNic());
+                requestVO.setDateTime(webServiceVO.getDateTime());
+                requestVO.setRRN(webServiceVO.getRetrievalReferenceNumber());
+                requestVO.setActiveAccounts(tasdeeqDataModel.getNoOfActiveAccounts());
+                requestVO.setOutstandingAmount(String.valueOf(tasdeeqDataModel.getTotalOutstandingBalance()));
+                requestVO.setDpd30(tasdeeqDataModel.getPlus3024M());
+                requestVO.setDpd60(tasdeeqDataModel.getPlus6024M());
+                requestVO.setDpd90(tasdeeqDataModel.getPlus9024M());
+                requestVO.setDpd120(tasdeeqDataModel.getPlus12024M());
+                requestVO.setDpd150(tasdeeqDataModel.getPlus1504M());
+                requestVO.setDpd180(tasdeeqDataModel.getPlus18024M());
+                requestVO.setWriteOff(tasdeeqDataModel.getWriteOff());
+
+                SwitchWrapper sWrapper = new SwitchWrapperImpl();
+                sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
+                sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
+                logger.info("[FonePaySwitchController.initiateLoan] sending ecib data to Optasia:: ");
+                sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
+                responseVO = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
+
+                if (!responseVO.getResponseCode().equals("I8SB-200")) {
+                    webServiceVO.setResponseCode("65");
+                    webServiceVO.setResponseCodeDescription("No success response from I8SB");
+                    return webServiceVO;
                 }
 
                 requestVO = new I8SBSwitchControllerRequestVO();
@@ -11063,7 +11212,7 @@ public class FonePaySwitchController implements WebServiceSwitchController {
                 //tax regime in additional info
                 requestVO.setFed(customerModel.getTaxRegimeIdTaxRegimeModel().getTaxRegimeCode());
 
-                SwitchWrapper sWrapper = new SwitchWrapperImpl();
+                sWrapper = new SwitchWrapperImpl();
                 sWrapper.setI8SBSwitchControllerRequestVO(requestVO);
                 sWrapper.setI8SBSwitchControllerResponseVO(responseVO);
                 sWrapper = esbAdapter.makeI8SBCall(sWrapper);
@@ -12971,68 +13120,69 @@ public class FonePaySwitchController implements WebServiceSwitchController {
             if ("00".equals(webServiceVO.getResponseCode())) {
                 String response = null;
                 BaseWrapper bWrapper = new BaseWrapperImpl();
+
+                bWrapper = new BaseWrapperImpl();
+                bWrapper.putObject(CommandFieldConstants.KEY_DEVICE_TYPE_ID, DeviceTypeConstantsInterface.WEB_SERVICE.toString());
+                bWrapper.putObject(CommandFieldConstants.KEY_ENCRYPTION_TYPE, "1");
+                bWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_MOBILE, webServiceVO.getMobileNo());
+                bWrapper.putObject(CommandFieldConstants.KEY_DATE, webServiceVO.getDateTime());
+                bWrapper.putObject(CommandFieldConstants.KEY_RRN, webServiceVO.getRetrievalReferenceNumber());
+                bWrapper.putObject(CommandFieldConstants.KEY_CHANNEL_ID, webServiceVO.getChannelId());
+                bWrapper.putObject(CommandFieldConstants.KEY_TERMINAL_ID, webServiceVO.getTerminalId());
+                bWrapper.putObject(CommandFieldConstants.KEY_CNIC, webServiceVO.getCnicNo());
+                bWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_NAME, webServiceVO.getName());
+                bWrapper.putObject(CommandFieldConstants.KEY_PRESENT_ADDR, webServiceVO.getBusinessAddress());
+                bWrapper.putObject("INCOME_SOURCE", webServiceVO.getTypeOfBusiness());
+                bWrapper.putObject("BUSINESS_NAME", webServiceVO.getBusinessName());
+                bWrapper.putObject("CITY", webServiceVO.getCity());
+                bWrapper.putObject("EXPECTED_MONTHLY_TURNOVER", webServiceVO.getEstimatedMonthlySales());
+                bWrapper.putObject("TILL_ID", webServiceVO.getTillID());
+                bWrapper.putObject("ID_TYPE", webServiceVO.getiDType());
+                bWrapper.putObject("ID_N", webServiceVO.getIdN());
+                bWrapper.putObject(CommandFieldConstants.KEY_CNIC_FRONT_PHOTO, webServiceVO.getCnicFrontPhoto());
+                bWrapper.putObject(CommandFieldConstants.KEY_CNIC_BACK_PHOTO, webServiceVO.getCnicBackPhoto());
+
+                bWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_PHOTO, webServiceVO.getCustomerPhoto());
+                bWrapper.putObject(CommandFieldConstants.KEY_LATITUDE, webServiceVO.getLatitude());
+                bWrapper.putObject(CommandFieldConstants.KEY_LONGITUDE, webServiceVO.getLongitude());
                 if (customerModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)) {
-                    webServiceVO.setResponseCode("07");
-                    webServiceVO.setResponseCodeDescription("Please Upgrade Level 0 to Level 1.");
-                    return webServiceVO;
-                }else {
+                    bWrapper.putObject(CommandFieldConstants.KEY_CUST_ACC_TYPE, "60");
 
-                    bWrapper = new BaseWrapperImpl();
-                    bWrapper.putObject(CommandFieldConstants.KEY_DEVICE_TYPE_ID, DeviceTypeConstantsInterface.WEB_SERVICE.toString());
-                    bWrapper.putObject(CommandFieldConstants.KEY_ENCRYPTION_TYPE, "1");
-                    bWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_MOBILE, webServiceVO.getMobileNo());
-                    bWrapper.putObject(CommandFieldConstants.KEY_DATE, webServiceVO.getDateTime());
-                    bWrapper.putObject(CommandFieldConstants.KEY_RRN, webServiceVO.getRetrievalReferenceNumber());
-                    bWrapper.putObject(CommandFieldConstants.KEY_CHANNEL_ID, webServiceVO.getChannelId());
-                    bWrapper.putObject(CommandFieldConstants.KEY_TERMINAL_ID, webServiceVO.getTerminalId());
-                    bWrapper.putObject(CommandFieldConstants.KEY_CNIC, webServiceVO.getCnicNo());
-                    bWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_NAME, webServiceVO.getName());
+                } else {
+                    bWrapper.putObject(CommandFieldConstants.KEY_CUST_ACC_TYPE, "62");
 
-                    bWrapper.putObject(CommandFieldConstants.KEY_PRESENT_ADDR, webServiceVO.getBusinessAddress());
-                    bWrapper.putObject("INCOME_SOURCE", webServiceVO.getTypeOfBusiness());
-                    bWrapper.putObject("BUSINESS_NAME", webServiceVO.getBusinessName());
-                    bWrapper.putObject("CITY", webServiceVO.getCity());
-                    bWrapper.putObject("EXPECTED_MONTHLY_TURNOVER", webServiceVO.getEstimatedMonthlySales());
-                    bWrapper.putObject("TILL_ID", webServiceVO.getTillID());
-                    bWrapper.putObject("ID_TYPE",webServiceVO.getiDType());
-                    bWrapper.putObject("ID_N",webServiceVO.getIdN());
-                    bWrapper.putObject(CommandFieldConstants.KEY_CNIC_FRONT_PHOTO, webServiceVO.getCnicFrontPhoto());
-                    bWrapper.putObject(CommandFieldConstants.KEY_CNIC_BACK_PHOTO, webServiceVO.getCnicBackPhoto());
-
-                    bWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_PHOTO, webServiceVO.getCustomerPhoto());
-                    bWrapper.putObject(CommandFieldConstants.KEY_LATITUDE, webServiceVO.getLatitude());
-                    bWrapper.putObject(CommandFieldConstants.KEY_LONGITUDE, webServiceVO.getLongitude());
-                    response = getCommandManager().executeCommand(bWrapper, CommandFieldConstants.CMD_UPGRADE_MERCHANT_ACCOUNT);
                 }
+                response = getCommandManager().executeCommand(bWrapper, CommandFieldConstants.CMD_UPGRADE_MERCHANT_ACCOUNT);
+
                 logger.info("UpgradeMerchantAccountCommand response for Mobile #:: " + appUserModel.getMobileNo() + "\n" + response);
                 if (MfsWebUtil.isErrorXML(response)) {
                     return mfsWebResponseDataPopulator.populateErrorMessagesForOpenAPI(webServiceVO, response);
                 }
             }
         } catch (CommandException ex) {
-        if (ex.getErrorCode() == 1024L) {
-            logger.error("Error Occurred while Upgrade Account for Mobile # :: " + webServiceVO.getMobileNo());
-            logger.error("[FonePaySwitchController.upgradeAccount] Error occured: " + ex.getMessage(), ex);
-            FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.BLINK_CUSTOMER_DATA_ALREADY_EXISTS);
-            webServiceVO.setResponseCodeDescription(ex.getMessage());
-        } else {
+            if (ex.getErrorCode() == 1024L) {
+                logger.error("Error Occurred while Upgrade Account for Mobile # :: " + webServiceVO.getMobileNo());
+                logger.error("[FonePaySwitchController.upgradeAccount] Error occured: " + ex.getMessage(), ex);
+                FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.BLINK_CUSTOMER_DATA_ALREADY_EXISTS);
+                webServiceVO.setResponseCodeDescription(ex.getMessage());
+            } else {
+                logger.error("Error Occurred while Upgrade Account for Mobile # :: " + webServiceVO.getMobileNo());
+                logger.error("[FonePaySwitchController.upgradeAccount] Error occured: " + ex.getMessage(), ex);
+                FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR);
+                webServiceVO.setResponseCodeDescription(ex.getMessage());
+            }
+        } catch (Exception ex) {
             logger.error("Error Occurred while Upgrade Account for Mobile # :: " + webServiceVO.getMobileNo());
             logger.error("[FonePaySwitchController.upgradeAccount] Error occured: " + ex.getMessage(), ex);
             FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR);
             webServiceVO.setResponseCodeDescription(ex.getMessage());
+        } finally {
+            ThreadLocalAppUser.remove();
+            ThreadLocalUserDeviceAccounts.remove();
+            getFonePayManager().updateFonePayIntegrationLogModel(fonePayLogModel, webServiceVO);
+            actionLogAfterEnd(actionLogModel);
+            logger.info("[FonePaySwitchController.l2AccountUpgrade] End:: ");
         }
-    } catch (Exception ex) {
-        logger.error("Error Occurred while Upgrade Account for Mobile # :: " + webServiceVO.getMobileNo());
-        logger.error("[FonePaySwitchController.upgradeAccount] Error occured: " + ex.getMessage(), ex);
-        FonePayUtils.prepareErrorResponse(webServiceVO, FonePayResponseCodes.GENERAL_ERROR);
-        webServiceVO.setResponseCodeDescription(ex.getMessage());
-    } finally {
-        ThreadLocalAppUser.remove();
-        ThreadLocalUserDeviceAccounts.remove();
-        getFonePayManager().updateFonePayIntegrationLogModel(fonePayLogModel, webServiceVO);
-        actionLogAfterEnd(actionLogModel);
-        logger.info("[FonePaySwitchController.l2AccountUpgrade] End:: ");
-    }
         return webServiceVO;
     }
 

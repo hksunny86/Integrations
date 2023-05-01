@@ -24,6 +24,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.inov8.microbank.common.util.XMLConstants.*;
 
@@ -227,7 +228,15 @@ public class DebitPaymentApiCommand extends BaseCommand {
                 workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_9, reserved9);
                 workFlowWrapper.putObject(CommandFieldConstants.KEY_RESERVED_10, reserved10);
 
-                commonCommandManager.validateBalance(appUserModel, olaSmartMoneyAccountModel, Double.valueOf(transactionAmount), true);
+                switchWrapper = commonCommandManager.validateBalance(appUserModel, olaSmartMoneyAccountModel, Double.valueOf(transactionAmount), true);
+                Double remainingBalanceForDebitBlock = 0.0D;
+                if (this.productId.equals(ProductConstantsInterface.LOAN_XTRA_CASH_REPAYMENT.toString())) {
+                    remainingBalanceForDebitBlock = Double.parseDouble(this.transactionAmount) - switchWrapper.getBalance();
+                    if (remainingBalanceForDebitBlock > 0.0D) {
+                        transactionAmount = String.valueOf(switchWrapper.getBalance());
+                        workFlowWrapper.setTransactionAmount(Double.valueOf(transactionAmount));
+                    }
+                }
 
                 logger.info("[DebitPaymentCommand.execute] Product ID: " + productId + " Logged In AppUserID:" + appUserModel.getAppUserId() +
                         " Customer Mobile No:" + customerMobileNo);
@@ -241,6 +250,14 @@ public class DebitPaymentApiCommand extends BaseCommand {
                 productModel = workFlowWrapper.getProductModel();
                 //Customer Balance
                 balance = workFlowWrapper.getOLASwitchWrapper().getOlavo().getFromBalanceAfterTransaction();
+                if (remainingBalanceForDebitBlock > 0.0D) {
+                    olaSmartMoneyAccountModel.setIsDebitBlocked(true);
+                    olaSmartMoneyAccountModel.setDebitBlockAmount(remainingBalanceForDebitBlock);
+                    olaSmartMoneyAccountModel.setIsOptasiaDebitBlocked(true);
+                    olaSmartMoneyAccountModel.setDebitBlockReason("Debit Blocked By Optasia");
+                    olaSmartMoneyAccountModel.setUpdatedOn(new Date());
+                    this.getCommonCommandManager().getSmartMoneyAccountDAO().saveOrUpdate(olaSmartMoneyAccountModel);
+                }
                 //consumerNumber = ((UtilityBillVO) workFlowWrapper.getProductVO()).getConsumerNo();
                 commonCommandManager.sendSMS(workFlowWrapper);
                 commonCommandManager.novaAlertMessage(workFlowWrapper);

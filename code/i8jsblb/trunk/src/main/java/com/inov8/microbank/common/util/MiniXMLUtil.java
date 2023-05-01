@@ -83,6 +83,10 @@ public class MiniXMLUtil
 	public static final String TRANS_BILL_AMT_NODEREF = "//trans/trn/@bAmtF";
 	public static final String TRANS_SERVICE_CHARGES_NODEREF = "//trans/trn/@TPAMF";
 	public static final String TRANS_INCLUSIVE_CHARGES = "//trans/trn/@incrhge";
+	public static final String TRANS_FIX_INCLUSIVE_CHARGES = "//trans/trn/@fixIncrhge";
+	public static final String PARAM_FIX_INCLUSIVE_CHARGES = "//params/param[@name='fixIncrhge']";
+	public static final String PARAM_INCLUSIVE_CHARGES = "//params/param[@name='incrhge']";
+
 	public static final String TRANS_COMMISSION_CHARGES_NODEREF = "//trans/trn/@CAMT";
 	public static final String TRANS_AMOUNT_NODEREF = "//trans/trn/@TXAMF";
 	public static final String TRANS_TOTAL_AMT_NODEREF = "//trans/trn/@amtf";

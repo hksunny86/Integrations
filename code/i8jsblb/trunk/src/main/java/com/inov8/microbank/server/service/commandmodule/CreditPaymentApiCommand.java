@@ -248,7 +248,7 @@ public class CreditPaymentApiCommand extends BaseCommand {
 
                 if(productId.equals(MessageUtil.getMessage("jsLoansId"))){
                     JSLoansModel jsLoansModel = new JSLoansModel();
-                    jsLoansModel = getCommonCommandManager().getJSLoansDAO().loadJSLoansByMobileNumber(customerMobileNo);
+//                    jsLoansModel = getCommonCommandManager().getJSLoansDAO().loadJSLoansByMobileNumber(customerMobileNo);
                     if(jsLoansModel != null){
                         jsLoansModel.setPartialPayment(Long.valueOf(txAmount));
                         jsLoansModel.setServiceFees(0L);
@@ -279,7 +279,7 @@ public class CreditPaymentApiCommand extends BaseCommand {
                         jsLoansModel.setCreatedOn(new Date());
                         jsLoansModel.setUpdatedOn(new Date());
                         jsLoansModel.setDisbursementDate(new Date());
-                        getCommonCommandManager().saveOrUpdateJSLoansModel(jsLoansModel);
+//                        getCommonCommandManager().saveOrUpdateJSLoansModel(jsLoansModel);
                     }
                 }
 
@@ -343,6 +343,8 @@ public class CreditPaymentApiCommand extends BaseCommand {
         params.add(new LabelValueBean(ATTR_TXAM, replaceNullWithEmpty(transactionModel.getTransactionAmount() + "")));
         params.add(new LabelValueBean(ATTR_TXAMF, Formatter.formatNumbers(transactionModel.getTransactionAmount())));
         params.add(new LabelValueBean(ATTR_BALF, Formatter.formatNumbers(workFlowWrapper.getSwitchWrapper().getAgentBalance())));
+        params.add(new LabelValueBean(INCLUSIVE_CHARGES, Formatter.formatNumbers(workFlowWrapper.getCommissionAmountsHolder().getInclusivePercentAmount())));
+        params.add(new LabelValueBean(FIX_INCLUSIVE_CHARGES, Formatter.formatNumbers(workFlowWrapper.getCommissionAmountsHolder().getInclusiveFixAmount())));
 
         return MiniXMLUtil.createResponseXMLByParams(params);
 

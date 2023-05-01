@@ -60,6 +60,7 @@ import com.inov8.microbank.server.dao.portal.taxregimemodule.TaxRegimeDAO;
 import com.inov8.microbank.server.dao.retailermodule.RetailerContactDAO;
 import com.inov8.microbank.server.dao.retailermodule.RetailerDAO;
 import com.inov8.microbank.server.dao.safrepo.WalletSafRepoDAO;
+import com.inov8.microbank.server.dao.smartmoneymodule.SmartMoneyAccountDAO;
 import com.inov8.microbank.server.dao.thirdpartcashoutmodule.FetchThirdPartySegmentsDAO;
 import com.inov8.microbank.server.dao.thirdpartcashoutmodule.ThirdPartyAcOpeningDAO;
 import com.inov8.microbank.server.dao.transactionmodule.MiniTransactionDAO;
@@ -103,7 +104,10 @@ public interface CommonCommandManager {
 
     public BaseWrapper saveOrUpdateAccountOpeningL0Request(BaseWrapper baseWrapper) throws FrameworkCheckedException;
 
-    ;
+
+
+    public BaseWrapper saveOrUpdateMerchantRequest(BaseWrapper baseWrapper) throws FrameworkCheckedException;
+
 
     public int countByExample(BasePersistableModel basePersistableModel);
 
@@ -787,7 +791,7 @@ public interface CommonCommandManager {
 
     AdvanceSalaryLoanModel saveOrUpdateAdvanceSalaryLoan(AdvanceSalaryLoanModel adavceSalaryLoanModel);
 
-    JSLoansModel saveOrUpdateJSLoansModel(JSLoansModel jsLoansModel);
+//    JSLoansModel saveOrUpdateJSLoansModel(JSLoansModel jsLoansModel);
 
     BlinkCustomerModel createBlinkCustomerModel(BlinkCustomerModel blinkCustomerModel);
     MerchantAccountModel createMerchantAccountModel(MerchantAccountModel merchantAccountModel);
@@ -814,7 +818,9 @@ public interface CommonCommandManager {
     SwitchWrapper checkBalance(AppUserModel appUserModel, SmartMoneyAccountModel smaModel) throws FrameworkCheckedException;
 
     AdvanceSalaryLoanDAO getAdvanceSalaryLoanDAO();
-    JSLoansDAO getJSLoansDAO();
+    SmartMoneyAccountDAO getSmartMoneyAccountDAO();
+
+//    JSLoansDAO getJSLoansDAO();
 
     public DebitCardRequestsViewModel getDebitCardRequestsViewModelByAppUserId(Long appUserId, String mobileNo) throws CommandException;
     public DebitCardRequestsViewModel getDebitCardRequestsViewModelByDebitCardId(Long debitCardId) throws CommandException;

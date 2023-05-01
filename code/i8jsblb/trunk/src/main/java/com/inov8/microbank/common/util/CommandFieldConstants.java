@@ -48,6 +48,8 @@ public class CommandFieldConstants
     public static final String KEY_DISCOUNT_AMOUNT = "DAMT";
     public static final String KEY_FORMATED_DISCOUNT_AMOUNT = "DAMTF";
     public static final String KEY_FORMATED_TOTAL_AMOUNT = "TAMTF";
+    public static final String KEY_FORMATED_INCLUSIVE_CHARGES = "incrhge";
+    public static final String KEY_FORMATED_FIX_INCLUSIVE_CHARGES = "fixIncrhge";
     public static final String KEY_CONS_REF_NO = "CRNO";
     public static final String KEY_KENNEL_SMS_DATA = "SMS";
      

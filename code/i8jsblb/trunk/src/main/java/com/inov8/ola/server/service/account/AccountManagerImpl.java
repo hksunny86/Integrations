@@ -175,9 +175,14 @@ public class AccountManagerImpl implements AccountManager {
 
 
             if ((balance - olaVO.getBalance() < 0) && olaVO.getCustomerAccountTypeId().longValue() != CustomerAccountTypeConstants.SETTLEMENT) {
-                baseWrapper = this.updateAccount(baseWrapper); // update with the same data..dont want to have it locked forever
-                olaVO.setResponseCode("01");
-                return olaVO;
+                if(olaVO.getProductId().equals(ProductConstantsInterface.LOAN_XTRA_CASH_REPAYMENT)){
+
+                }
+                else {
+                    baseWrapper = this.updateAccount(baseWrapper); // update with the same data..dont want to have it locked forever
+                    olaVO.setResponseCode("01");
+                    return olaVO;
+                }
             }
 
             try {

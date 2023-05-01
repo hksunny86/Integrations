@@ -35,7 +35,7 @@ public class MerchantAccountModelHibernateDAO extends
     @Override
     public MerchantAccountModel loadMerchantModelByBlinkCustomerId(Long accType) {
         MerchantAccountModel blinkCustomerModel = null;
-        DetachedCriteria criteria = DetachedCriteria.forClass(BlinkCustomerModel.class);
+        DetachedCriteria criteria = DetachedCriteria.forClass(MerchantAccountModel.class);
         criteria.add( Restrictions.eq("merchanAccountId", accType));
         List<MerchantAccountModel> list = getHibernateTemplate().findByCriteria(criteria);
 

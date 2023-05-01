@@ -91,9 +91,9 @@
                 <html:select path="registrationStatus" id="selecter" tabindex="2" cssClass="textBox">
                     <html:option value="">---All---</html:option>
                     <html:option value="2">Request Received</html:option>
-                    <html:option value="3">Blink Approved</html:option>
-                    <html:option value="4">Blink Discrepent</html:option>
-                    <html:option value="6">Blink Rejected</html:option>
+                    <html:option value="3">Approved</html:option>
+                    <html:option value="4">Discrepent</html:option>
+                    <html:option value="6">Rejected</html:option>
                 </html:select>
             </td>
 
@@ -188,7 +188,7 @@
         <ec:column filterable="false" property="consumerName" title="Customer Name"/>
         <ec:column property="createdBy" filterable="false" title="Created By"/>
         <ec:column property="updatedBy" filterable="false" title="Updated By"/>
-=        <ec:column property="createdOn" filterable="false" cell="date" format="dd/MM/yyyy" alias="Created on"/>
+        <ec:column property="createdOn" filterable="false" cell="date" format="dd/MM/yyyy" alias="Created on"/>
         <ec:column property="updatedOn" filterable="false" cell="date" format="dd/MM/yyyy" alias="Updated on"/>
         <ec:column property="registrationStateName" filterable="false" title="Registration Status"/>
         <ec:column property="actionStatusIdActionStatusModel.name" filterable="false" title="Action Status"/>

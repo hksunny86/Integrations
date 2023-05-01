@@ -270,6 +270,8 @@
 					url = 'p-updatecustomerauthorizationdetail.html?actionAuthorizationId='+actionAuthorizationId+'&escalateRequest=true&resolveRequest=false';	
 				else if (usecaseId ==<%=PortalConstants.UPDATE_ACCOUNT_TO_BLINK_USECASE_ID%>)
 					url = 'p-updatecustomerauthorizationdetail.html?actionAuthorizationId='+actionAuthorizationId+'&escalateRequest=true&resolveRequest=false';
+				else if (usecaseId ==<%=PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID%>)
+					url = 'p-updatecustomerauthorizationdetail.html?actionAuthorizationId='+actionAuthorizationId+'&escalateRequest=true&resolveRequest=false';
 				else if (usecaseId ==<%=PortalConstants.USER_GROUP_CREATE_USECASE_ID%> || usecaseId ==<%=PortalConstants.USER_GROUP_UPDATE_USECASE_ID%>)
 					url = 'p-usergroupauthorizationdetail.html?actionAuthorizationId='+actionAuthorizationId+'&escalateRequest=true&resolveRequest=false';
 				else if (usecaseId ==<%=PortalConstants.MANUAL_ADJUSTMENT_USECASE_ID%>)

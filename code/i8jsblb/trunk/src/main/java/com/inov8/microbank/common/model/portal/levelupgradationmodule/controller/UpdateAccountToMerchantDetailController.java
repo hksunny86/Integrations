@@ -143,7 +143,7 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
             fops.flush();
             fops.close();
             mfsAccountModel.setCustomerPicExt(fileFormat);
-            in = new ByteArrayInputStream(actionAuthorizationFacade.getActionAuthPictureModelByTypeId(actionAuthorizationId, PictureTypeConstants.PROOF_OF_PROFESSION_SNAPSHOT).getPicture());
+            in = new ByteArrayInputStream(actionAuthorizationFacade.getActionAuthPictureModelByTypeId(actionAuthorizationId, PictureTypeConstants.CUSTOMER_PHOTO).getPicture());
             iis = ImageIO.createImageInputStream(in);
             imageReaders = ImageIO.getImageReaders(iis);
             fileFormat = "";
@@ -156,6 +156,24 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
             authfilePath = getServletContext().getRealPath("images") + "/upload_dir/authorization/cnicFrontPic_" + actionAuthorizationId + "." + fileFormat;
             fops = new FileOutputStream(authfilePath);
             fops.write(actionAuthorizationFacade.getActionAuthPictureModelByTypeId(actionAuthorizationId, PictureTypeConstants.ID_FRONT_SNAPSHOT).getPicture());
+            fops.flush();
+            fops.close();
+            mfsAccountModel.setCnicFrontPicExt(fileFormat);
+
+            in = new ByteArrayInputStream(actionAuthorizationFacade.getActionAuthPictureModelByTypeId(actionAuthorizationId, PictureTypeConstants.ID_FRONT_SNAPSHOT).getPicture());
+            iis = ImageIO.createImageInputStream(in);
+            imageReaders = ImageIO.getImageReaders(iis);
+            fileFormat = "";
+            while (imageReaders.hasNext()) {
+                ImageReader reader = (ImageReader) imageReaders.next();
+                System.out.printf("formatName: %s%n", reader.getFormatName());
+                fileFormat = reader.getFormatName();
+            }
+
+
+            authfilePath = getServletContext().getRealPath("images") + "/upload_dir/authorization/cnicBackPic_" + actionAuthorizationId + "." + fileFormat;
+            fops = new FileOutputStream(authfilePath);
+            fops.write(actionAuthorizationFacade.getActionAuthPictureModelByTypeId(actionAuthorizationId, PictureTypeConstants.ID_BACK_SNAPSHOT).getPicture());
             fops.flush();
             fops.close();
             mfsAccountModel.setCnicFrontPicExt(fileFormat);
@@ -210,6 +228,8 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
             mfsAccountModel.setAddress1(customerModelList.getBusinessAddress());
             mfsAccountModel.setAccountPurposeName(customerModelList.getTypeOfBusiness());
             mfsAccountModel.setExpectedMonthlyTurnOver(customerModelList.getExpectedMonthlySalary());
+            mfsAccountModel.setBusinessName(customerModelList.getBusinessName());
+
 
             mfsAccountModel.setSearchFirstName(ServletRequestUtils.getStringParameter(req, "searchFirstName"));
             mfsAccountModel.setSearchLastName(ServletRequestUtils.getStringParameter(req, "searchLastName"));
@@ -284,6 +304,33 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
                         mfsAccountModel.setCnicFrontPicExt(fileFormat);
                     }
                 }
+                customerPictureModel = this.mfsAccountManager.getMerchantCustomerPictureByTypeId(
+                        PictureTypeConstants.ID_BACK_SNAPSHOT, customerModelList.getCustomerId());
+                if (customerPictureModel != null && customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.ID_BACK_SNAPSHOT) {
+                    if (customerPictureModel.getPicture() != null && customerPictureModel.getPicture().length > 1) {
+                        //Converting File bytes from db to input stream
+                        InputStream in = new ByteArrayInputStream(customerPictureModel.getPicture());
+                        ImageInputStream iis = ImageIO.createImageInputStream(in);
+
+                        Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(iis);
+                        String fileFormat = "";
+                        while (imageReaders.hasNext()) {
+                            ImageReader reader = (ImageReader) imageReaders.next();
+                            System.out.printf("formatName: %s%n", reader.getFormatName());
+                            fileFormat = reader.getFormatName();
+                        }
+                        //generating path for bytes to write on
+                        String filePath = getServletContext().getRealPath("images") + "/upload_dir/cnicBackPic_" + mfsAccountModel.getAppUserId() + "." + fileFormat;
+
+                        //String filePath = getServletContext().getRealPath("images")+"/upload_dir/cnicFrontPic_"+mfsAccountModel.getAppUserId()+".png";
+                        FileOutputStream fos = new FileOutputStream(filePath);
+                        fos.write(customerPictureModel.getPicture());
+                        fos.flush();
+                        fos.close();
+                        logger.info("Picture Extracted : " + filePath);
+                        mfsAccountModel.setCnicBackPicExt(fileFormat);
+                    }
+                }
 
 
                 mfsAccountModel.setName(customerModelList.getConsumerName());
@@ -296,33 +343,12 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
                 mfsAccountModel.setCity(customerModelList.getCity());
                 // Populating Address Fields
                 Collection<CustomerAddressesModel> customerAddresses = customerModel.getCustomerIdCustomerAddressesModelList();
-//                if (customerAddresses != null && customerAddresses.size() > 0) {
-//                    for (CustomerAddressesModel custAdd : customerAddresses) {
-//                        AddressModel addressModel = custAdd.getAddressIdAddressModel();
-//                        if (custAdd.getAddressTypeId() == 1) {
-//                            if (addressModel.getFullAddress() != null && !addressModel.getFullAddress().isEmpty()) {
-//                                mfsAccountModel.setPresentAddress(addressModel.getFullAddress());
-//                                if (addressModel.getCityId() != null) {
-//                                    CityModel cityModel = new CityModel();
-//                                    cityModel = cityDAO.findAddressById(addressModel.getCityId());
-//                                    mfsAccountModel.setCity(cityModel.getName());
-//                                } else {
-//                                    mfsAccountModel.setCity(addressModel.getCityId() == null ? null : addressModel.getCityId().toString());
-//                                }
-//                            }
-//                        } else if (custAdd.getAddressTypeId() == 4) {
-//                            if (addressModel.getFullAddress() != null && !addressModel.getFullAddress().isEmpty()) {
-//                                mfsAccountModel.setNokMailingAdd(addressModel.getFullAddress());
-//                            }
-//                        }
-//                    }
-//                }
 
             }
 
             req.setAttribute("pageMfsId", (String) baseWrapper.getObject("userId"));
             mfsAccountModel.setActionId(PortalConstants.ACTION_UPDATE);
-            mfsAccountModel.setUsecaseId(new Long(PortalConstants.UPDATE_ACCOUNT_TO_BLINK_USECASE_ID));
+            mfsAccountModel.setUsecaseId(new Long(PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID));
 
 
             return mfsAccountModel;
@@ -330,7 +356,7 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
             MfsAccountModel mfsAccountModel = new MfsAccountModel();
             // for the logging process
             mfsAccountModel.setActionId(PortalConstants.ACTION_CREATE);
-            mfsAccountModel.setUsecaseId(new Long(PortalConstants.UPDATE_ACCOUNT_TO_BLINK_USECASE_ID));
+            mfsAccountModel.setUsecaseId(new Long(PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID));
 
             return mfsAccountModel;
         }
@@ -382,7 +408,7 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
             baseWrapper.putObject(MfsAccountModel.MFS_ACCOUNT_MODEL_KEY, mfsAccountModel);
             baseWrapper.putObject(PortalConstants.KEY_ACTION_ID, mfsAccountModel.getActionId());
             baseWrapper.putObject(PortalConstants.KEY_USECASE_ID, mfsAccountModel.getUsecaseId());
-            baseWrapper = this.mfsAccountManager.updateMfsAccount(baseWrapper);
+            baseWrapper = this.mfsAccountManager.updateMfsMerchantAccount(baseWrapper);
 
         } catch (FrameworkCheckedException exception) {
             req.setAttribute("exceptionOccured", "true");
@@ -474,7 +500,7 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
 
             mfsAccountModel.setAppUserId(appUserId);
             mfsAccountModel.setAccountClosedSettled(appUserModel.getAccountClosedSettled());
-            mfsAccountModel.setCustomerAccountTypeId(53l);
+            mfsAccountModel.setCustomerAccountTypeId(58l);
             mfsAccountModel.setAccountClosedUnsettled(appUserModel.getAccountClosedUnsettled());
 
             try {
@@ -516,7 +542,7 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
                         mfsAccountId = (String) baseWrapper.getObject(PortalConstants.KEY_MFS_ACCOUNT_ID);
                         appUserId = new Long(baseWrapper.getObject(PortalConstants.KEY_APP_USER_ID).toString());
                     } else {
-                        baseWrapper = this.mfsAccountManager.updateMfsAccount(baseWrapper);
+                        baseWrapper = this.mfsAccountManager.updateMfsMerchantAccount(baseWrapper);
                     }
 
 
@@ -591,7 +617,7 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
                 if (null == mfsAccountModel.getCnicFrontPic() || mfsAccountModel.getCnicFrontPic().getSize() < 1) {
                     if (!resubmitRequest) {
                         actionAuthPictureModel = new ActionAuthPictureModel();
-                        BlinkCustomerPictureModel customerPictureModel = this.mfsAccountManager.getBlinkCustomerPictureByTypeId(PictureTypeConstants.ID_FRONT_SNAPSHOT, customerModel.getCustomerId().longValue());
+                        MerchantAccountPictureModel customerPictureModel = this.mfsAccountManager.getMerchantCustomerPictureByTypeId(PictureTypeConstants.ID_FRONT_SNAPSHOT, customerModel.getCustomerId().longValue());
                         if (customerPictureModel != null && customerPictureModel.getPicture() != null) {
                             actionAuthPictureModel.setPicture(customerPictureModel.getPicture());
                             actionAuthPictureModel.setPictureTypeId(customerPictureModel.getPictureTypeId());
@@ -618,6 +644,38 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
                     actionAuthPictureModel.setUpdatedOn(new Date());
                     this.actionAuthorizationFacade.saveOrUpdate(actionAuthPictureModel);
                 }
+
+
+                if (null == mfsAccountModel.getCnicBackPic() || mfsAccountModel.getCnicBackPic().getSize() < 1) {
+                    if (!resubmitRequest) {
+                        actionAuthPictureModel = new ActionAuthPictureModel();
+                        MerchantAccountPictureModel customerPictureModel = this.mfsAccountManager.getMerchantCustomerPictureByTypeId(PictureTypeConstants.ID_BACK_SNAPSHOT, customerModel.getCustomerId().longValue());
+                        if (customerPictureModel != null && customerPictureModel.getPicture() != null) {
+                            actionAuthPictureModel.setPicture(customerPictureModel.getPicture());
+                            actionAuthPictureModel.setPictureTypeId(customerPictureModel.getPictureTypeId());
+                            actionAuthPictureModel.setActionAuthorizationId(actionAuthorizationId);
+                            actionAuthPictureModel.setCreatedBy(UserUtils.getCurrentUser().getAppUserId());
+                            actionAuthPictureModel.setCreatedOn(new Date());
+                            actionAuthPictureModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+                            actionAuthPictureModel.setUpdatedOn(new Date());
+                            this.actionAuthorizationFacade.saveOrUpdate(actionAuthPictureModel);
+                        }
+                    }
+                } else {
+                    if (resubmitRequest) {
+                        actionAuthPictureModel = this.actionAuthorizationFacade.getActionAuthPictureModelByTypeId(actionAuthorizationId, PictureTypeConstants.ID_BACK_SNAPSHOT);
+                    } else {
+                        actionAuthPictureModel = new ActionAuthPictureModel();
+                        actionAuthPictureModel.setCreatedBy(UserUtils.getCurrentUser().getAppUserId());
+                        actionAuthPictureModel.setCreatedOn(new Date());
+                    }
+                    actionAuthPictureModel.setPicture(mfsAccountModel.getCnicFrontPic().getBytes());
+                    actionAuthPictureModel.setPictureTypeId(PictureTypeConstants.ID_BACK_SNAPSHOT);
+                    actionAuthPictureModel.setActionAuthorizationId(actionAuthorizationId);
+                    actionAuthPictureModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+                    actionAuthPictureModel.setUpdatedOn(new Date());
+                    this.actionAuthorizationFacade.saveOrUpdate(actionAuthPictureModel);
+                }
             } catch (FrameworkCheckedException exception) {
                 String msg = exception.getMessage();
                 String[] args = {(String) baseWrapper.getObject(PortalConstants.KEY_APPUSER_USERNAME), (String) baseWrapper.getObject(PortalConstants.KEY_APPUSER_USERNAME), (String) baseWrapper.getObject(PortalConstants.KEY_MFS_ID)};
@@ -639,43 +697,16 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
                 return super.showForm(request, response, errors);
             }
 
-        return null;
-    }
-
-
-
-    public String findPath(MfsAccountModel mfsAccountModel, Long ptc, String namedPic) throws FrameworkCheckedException, IOException {
-        MerchantAccountModel customerModelList = merchantAccountModelDAO.findByPrimaryKey(Long.parseLong(accTypeId));
-        AppUserModel appUserModel = getCommonCommandManager().getAppUserManager().loadAppUserByMobileAndType(customerModelList.getMobileNo());
-        appUserId = appUserModel.getAppUserId();
-        MerchantAccountPictureModel customerPictureModel = this.mfsAccountManager.getMerchantCustomerPictureByTypeId(
-                ptc, customerModelList.getCustomerId());
-        String filePath = "";
-        if (customerPictureModel.getPicture() != null) {
-            InputStream in = new ByteArrayInputStream(customerPictureModel.getPicture());
-            ImageInputStream iis = ImageIO.createImageInputStream(in);
-
-            Iterator<ImageReader> imageReaders = ImageIO.getImageReaders(iis);
-            String fileFormat = "";
-            while (imageReaders.hasNext()) {
-                ImageReader reader = (ImageReader) imageReaders.next();
-                System.out.printf("formatName: %s%n", reader.getFormatName());
-                fileFormat = reader.getFormatName();
-            }
-            //generating path for bytes to write on
-            filePath = getServletContext().getRealPath("images") + "/upload_dir/" + namedPic + appUserId + "." + fileFormat;
-        }
-
-        return filePath;
-
+        return modelAndView;
     }
 
     @Override
     protected Map loadReferenceData(HttpServletRequest httpServletRequest) throws Exception {
         Map referenceDataMap = new HashMap();
-        Long[] regStateList = {BlinkCustomerRegistrationStateConstantsInterface.DISCREPANT, BlinkCustomerRegistrationStateConstantsInterface.APPROVED,
-                BlinkCustomerRegistrationStateConstantsInterface.REJECTED};
-        CustomList<BlinkCustomerRegistrationStateModel> regStates = commonCommandManager.getBlinkRegistrationStateByIds(regStateList);
+        Long[] regStateList = {RegistrationStateConstantsInterface.DECLINE, RegistrationStateConstants.DISCREPANT, RegistrationStateConstantsInterface.VERIFIED,
+                RegistrationStateConstantsInterface.REJECTED};
+        CustomList<RegistrationStateModel> regStates = commonCommandManager.getRegistrationStateByIds(regStateList);
+        referenceDataMap.put("regStateList", regStates.getResultsetList());
 
         referenceDataMap.put("regStateList", regStates.getResultsetList());
 
@@ -709,37 +740,34 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
             flag = false;
             msg = msg + "\n Mobile No: is Required";
         }
-        if (mfsAccountModel.getRiskLevel() == null) {
-            flag = false;
-            msg = msg + "\n Please Select Risk Level";
-        }
+
 //        if (mfsAccountModel.getCity() == null) {
 //            flag = false;
 //            msg = msg + "\n Please Select City";
 //        }
         /* *********************************************************/
-        if (mfsAccountModel.getPopRej() == true &&
-                mfsAccountModel.getCnicFrontRej() == true &&
-                mfsAccountModel.getCnicBackRej() == true &&
-                mfsAccountModel.getCustomerPicRej() == true &&
-                mfsAccountModel.getSignReg() == true &&
-                mfsAccountModel.getNameRej() == true
-        ) {
-            if (mfsAccountModel.getRegistrationStateId() != BlinkCustomerRegistrationStateConstantsInterface.REJECTED) {
-                flag = false;
-                msg = msg + "\n Please select correct registration state:REJECTED";
-            }
-        } else if (
-                mfsAccountModel.getCnicFrontRej() == true ||
-                        mfsAccountModel.getCnicBackRej() == true ||
-                        mfsAccountModel.getCustomerPicRej() == true ||
-                        mfsAccountModel.getNameRej() == true ||
-                        mfsAccountModel.getSignReg() == true) {
-            if (mfsAccountModel.getRegistrationStateId() != BlinkCustomerRegistrationStateConstantsInterface.DISCREPANT) {
-                flag = false;
-                msg = msg + "\n Please select correct registration state:DISCREPENT";
-            }
-        }
+//        if (mfsAccountModel.getPopRej() == true &&
+//                mfsAccountModel.getCnicFrontRej() == true &&
+//                mfsAccountModel.getCnicBackRej() == true &&
+//                mfsAccountModel.getCustomerPicRej() == true &&
+//                mfsAccountModel.getSignReg() == true &&
+//                mfsAccountModel.getNameRej() == true
+//        ) {
+//            if (mfsAccountModel.getRegistrationStateId() != BlinkCustomerRegistrationStateConstantsInterface.REJECTED) {
+//                flag = false;
+//                msg = msg + "\n Please select correct registration state:REJECTED";
+//            }
+//        } else if (
+//                mfsAccountModel.getCnicFrontRej() == true ||
+//                        mfsAccountModel.getCnicBackRej() == true ||
+//                        mfsAccountModel.getCustomerPicRej() == true ||
+//                        mfsAccountModel.getNameRej() == true ||
+//                        mfsAccountModel.getSignReg() == true) {
+//            if (mfsAccountModel.getRegistrationStateId() != BlinkCustomerRegistrationStateConstantsInterface.DISCREPANT) {
+//                flag = false;
+//                msg = msg + "\n Please select correct registration state:DISCREPENT";
+//            }
+//        }
 
         /* *********************************************************/
         if (mfsAccountModel.getName() == null) {
@@ -747,26 +775,7 @@ public class UpdateAccountToMerchantDetailController extends AdvanceAuthorizatio
             msg = msg + "\n Account Title: is Required";
         }
 
-//		if(mfsAccountModel.getCnicIssuanceDate()==null){
-//			this.saveMessage(req,"Cnic Issuance Date: is required.");
-//			flag=false;
-//		}
-        //Optional in case of L1
 
-        if (mfsAccountModel.getBirthPlace() == null) {
-            flag = false;
-            msg = msg + "\n Place of Birth: is Required";
-        }
-        //Optional in case of L1
-//		if(mfsAccountModel.getMotherMaidenName()==null){
-//			this.saveMessage(req, "Mother's Maiden Name: is required.");
-//			flag=false;
-//		}
-
-        if (mfsAccountModel.getPresentAddress() == null) {
-            flag = false;
-            msg = msg + "\n Mailing address: is Required";
-        }
 
         //Optional in case of L1
 

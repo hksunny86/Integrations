@@ -230,7 +230,7 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
     private DebitCardRequestsViewModelDAO debitCardRequestsViewModelDAO;
     private FetchCardTypeDAO fetchCardTypeDAO;
     private ESBAdapter esbAdapter;
-
+    private MerchantAccountModelDAO merchantAccountModelDAO;
     @Autowired
     private AppInfoDAO appInfoDAO;
 
@@ -1833,6 +1833,299 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
 
     }
 
+
+    @Override
+    public BaseWrapper updateMfsMerchantAccount(BaseWrapper baseWrapper) throws FrameworkCheckedException {
+        ActionLogModel actionLogModel = this.actionLogManager.createActionLogRequiresNewTransaction(baseWrapper);
+        ThreadLocalActionLog.setActionLogId(actionLogModel.getActionLogId());
+
+        MfsAccountModel mfsDebitCardModel = (MfsAccountModel) baseWrapper.getObject(MfsAccountModel.MFS_ACCOUNT_MODEL_KEY);
+        SmartMoneyAccountModel smartMoneyAccountModel = (SmartMoneyAccountModel) baseWrapper.getObject("smartMoneyAccountModel");
+
+        Date nowDate = new Date();
+        AppUserModel appUserModel = new AppUserModel();
+        appUserModel = this.appUserDAO.findByPrimaryKey(mfsDebitCardModel.getAppUserId());
+
+
+        if (smartMoneyAccountModel == null) {
+            SmartMoneyAccountModel sma = new SmartMoneyAccountModel();
+            sma.setCustomerId(appUserModel.getCustomerId());
+            sma.setPaymentModeId(PaymentModeConstantsInterface.BRANCHLESS_BANKING_ACCOUNT);
+            smartMoneyAccountModel = this.getSmartMoneyAccountByExample(sma);
+        }
+
+        boolean OLA_ACCOUNT_INFO_CHANGE_FLAG = false;
+
+        /**
+         * Checking if mobile Number is unique
+         */
+        boolean MOBILE_NUM_CHANGE_FLAG = false;
+        if (!appUserModel.getMobileNo().equals(mfsDebitCardModel.getMobileNo())) {
+            MOBILE_NUM_CHANGE_FLAG = true;
+        }
+
+        /**
+         * Checking if CNIC is unique
+         */
+        boolean NIC_CHANGE_FLAG = false;
+        String withoutDashesNIC = (mfsDebitCardModel.getNic() != null) ? mfsDebitCardModel.getNic().replace("-", "") : "";
+        if (!appUserModel.getNic().equals(withoutDashesNIC)) {
+            NIC_CHANGE_FLAG = true;
+        }
+
+        if (MOBILE_NUM_CHANGE_FLAG) {
+            if (!this.isMobileNumUnique(mfsDebitCardModel.getMobileNo(), mfsDebitCardModel.getAppUserId())) {
+                throw new FrameworkCheckedException("MobileNumUniqueException");
+            }
+        }
+
+        if (NIC_CHANGE_FLAG) {
+            if (!this.isNICUnique(mfsDebitCardModel.getNic(), mfsDebitCardModel.getAppUserId())) {
+                throw new FrameworkCheckedException("NICUniqueException");
+            }
+        }
+
+
+        /**
+         * Populating the First/Last Name
+         */
+        if (null != mfsDebitCardModel.getFirstName())
+            appUserModel.setFirstName(mfsDebitCardModel.getFirstName());
+
+        if (null != mfsDebitCardModel.getLastName())
+            appUserModel.setLastName(mfsDebitCardModel.getLastName());
+
+        CustomerModel customerModel = appUserModel.getCustomerIdCustomerModel();
+        try {
+            File file = arbitraryResourceLoader.loadImage("images/no_photo_icon.png");
+            /**
+             * ******************************************************************************************************
+             * Updated by Soofia Faruq
+             * Customer's Picture is migrated from CustomerModel to CustomerPictureModel
+             */
+            CustomerPictureModel customerPictureModel = this.getCustomerPictureByTypeId(
+                    PictureTypeConstants.CUSTOMER_PHOTO, customerModel.getCustomerId().longValue());
+
+            if (mfsDebitCardModel.getUsecaseId() == PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID) {
+                customerPictureModel = this.getCustomerPictureByTypeIdAndStatus(
+                        PictureTypeConstants.CUSTOMER_PHOTO, customerModel.getCustomerId().longValue());
+            }
+            if (null != customerPictureModel && customerPictureModel.getPictureTypeId() != null) {
+
+                if (customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.CUSTOMER_PHOTO) {
+
+                    if (null != mfsDebitCardModel.getCustomerPic() && mfsDebitCardModel.getCustomerPic().getSize() > 1) {
+                        customerPictureModel.setPicture(mfsDebitCardModel.getCustomerPic().getBytes());
+                    } else if (null != mfsDebitCardModel.getCustomerPicByte() && mfsDebitCardModel.getCustomerPicByte().length > 1) {
+                        customerPictureModel.setPicture(mfsDebitCardModel.getCustomerPicByte());
+                    }
+                    customerPictureModel.setDiscrepant(mfsDebitCardModel.getCustomerPicDiscrepant());
+                    customerPictureModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+                    customerPictureModel.setUpdatedOn(nowDate);
+                    customerPictureModel = (CustomerPictureModel) customerPictureDAO.saveOrUpdate(customerPictureModel);
+                }
+
+
+                //**************************************************************************************************
+                if (mfsDebitCardModel.getUsecaseId() == PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID) {
+                    customerPictureModel = this.getCustomerPictureByTypeIdAndStatus(
+                            PictureTypeConstants.ID_FRONT_SNAPSHOT, customerModel.getCustomerId().longValue());
+                } else {
+                    customerPictureModel = this.getCustomerPictureByTypeId(
+                            PictureTypeConstants.ID_FRONT_SNAPSHOT, customerModel.getCustomerId().longValue());
+                }
+                if (customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.ID_FRONT_SNAPSHOT) {
+                    if (null != mfsDebitCardModel.getCnicFrontPic() && mfsDebitCardModel.getCnicFrontPic().getSize() > 1) {
+                        customerPictureModel.setPicture(mfsDebitCardModel.getCnicFrontPic().getBytes());
+                    } else if (null != mfsDebitCardModel.getCnicFrontPicByte() && mfsDebitCardModel.getCnicFrontPicByte().length > 1) {
+                        customerPictureModel.setPicture(mfsDebitCardModel.getCnicFrontPicByte());
+                    }
+                    customerPictureModel.setDiscrepant(mfsDebitCardModel.getCnicFrontPicDiscrepant());
+                    customerPictureModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+                    customerPictureModel.setUpdatedOn(nowDate);
+                    customerPictureModel = (CustomerPictureModel) customerPictureDAO.saveOrUpdate(customerPictureModel);
+                }
+
+
+                //****************************************************************************
+
+                if (mfsDebitCardModel.getUsecaseId() == PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID) {
+                    customerPictureModel = this.getCustomerPictureByTypeIdAndStatus(
+                            PictureTypeConstants.ID_BACK_SNAPSHOT, customerModel.getCustomerId().longValue());
+                } else {
+                    customerPictureModel = this.getCustomerPictureByTypeId(
+                            PictureTypeConstants.ID_BACK_SNAPSHOT, customerModel.getCustomerId().longValue());
+                }
+                if (customerPictureModel != null && customerPictureModel.getPictureTypeId().longValue() == PictureTypeConstants.ID_BACK_SNAPSHOT) {
+                    if (null != mfsDebitCardModel.getCnicBackPic() && mfsDebitCardModel.getCnicBackPic().getSize() > 1) {
+                        customerPictureModel.setPicture(mfsDebitCardModel.getCnicBackPic().getBytes());
+                    } else if (null != mfsDebitCardModel.getCnicBackPicByte() && mfsDebitCardModel.getCnicBackPicByte().length > 1) {
+                        customerPictureModel.setPicture(mfsDebitCardModel.getCnicBackPicByte());
+                    }
+                    customerPictureModel.setDiscrepant(mfsDebitCardModel.getCnicBackPicDiscrepant());
+                    customerPictureModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+                    customerPictureModel.setUpdatedOn(nowDate);
+                    customerPictureModel = (CustomerPictureModel) customerPictureDAO.saveOrUpdate(customerPictureModel);
+                }
+
+
+            } else {
+                customerPictureModel = new CustomerPictureModel();
+                customerPictureModel.setCustomerId(customerModel.getCustomerId());
+                if (null != mfsDebitCardModel.getCustomerPic() && mfsDebitCardModel.getCustomerPic().getSize() > 1) {
+                    customerPictureModel.setPicture(mfsDebitCardModel.getCustomerPic().getBytes());
+                } else if (null != mfsDebitCardModel.getCustomerPicByte() && mfsDebitCardModel.getCustomerPicByte().length > 1) {
+                    customerPictureModel.setPicture(mfsDebitCardModel.getCustomerPicByte());
+                }
+
+                customerPictureModel.setPictureTypeId(PictureTypeConstants.CUSTOMER_PHOTO);
+                customerPictureModel.setCreatedBy(UserUtils.getCurrentUser().getAppUserId());
+                customerPictureModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+                customerPictureModel.setCreatedOn(nowDate);
+                customerPictureModel.setUpdatedOn(nowDate);
+                customerPictureModel.setDiscrepant(mfsDebitCardModel.getCustomerPicDiscrepant());
+                customerPictureDAO.saveOrUpdate(customerPictureModel);
+
+
+                customerPictureModel = new CustomerPictureModel();
+                customerPictureModel.setCustomerId(customerModel.getCustomerId());
+                if (null != mfsDebitCardModel.getCnicFrontPic() && mfsDebitCardModel.getCnicFrontPic().getSize() > 1)
+                    customerPictureModel.setPicture(mfsDebitCardModel.getCnicFrontPic().getBytes());
+                else if (null != mfsDebitCardModel.getCnicFrontPicByte() && mfsDebitCardModel.getCnicFrontPicByte().length > 1)
+                    customerPictureModel.setPicture(mfsDebitCardModel.getCnicFrontPicByte());
+                customerPictureModel.setPictureTypeId(PictureTypeConstants.ID_FRONT_SNAPSHOT);
+                customerPictureModel.setCreatedBy(UserUtils.getCurrentUser().getAppUserId());
+                customerPictureModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+                customerPictureModel.setCreatedOn(nowDate);
+                customerPictureModel.setUpdatedOn(nowDate);
+                customerPictureModel.setDiscrepant(mfsDebitCardModel.getCnicFrontPicDiscrepant());
+                customerPictureDAO.saveOrUpdate(customerPictureModel);
+
+                customerPictureModel = new CustomerPictureModel();
+                customerPictureModel.setCustomerId(customerModel.getCustomerId());
+                if (null != mfsDebitCardModel.getCnicBackPic() && mfsDebitCardModel.getCnicBackPic().getSize() > 1) {
+                    customerPictureModel.setPicture(mfsDebitCardModel.getCnicBackPic().getBytes());
+                } else if (null != mfsDebitCardModel.getCnicBackPicByte() && mfsDebitCardModel.getCnicBackPicByte().length > 1) {
+                    customerPictureModel.setPicture(mfsDebitCardModel.getCnicBackPicByte());
+                } else {
+                    customerPictureModel.setPicture(Files.readAllBytes(file.toPath()));
+                }
+
+                customerPictureModel.setPictureTypeId(PictureTypeConstants.ID_BACK_SNAPSHOT);
+                customerPictureModel.setCreatedBy(UserUtils.getCurrentUser().getAppUserId());
+                customerPictureModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
+                customerPictureModel.setCreatedOn(nowDate);
+                customerPictureModel.setUpdatedOn(nowDate);
+                customerPictureModel.setDiscrepant(mfsDebitCardModel.getCnicBackPicDiscrepant());
+                customerPictureDAO.saveOrUpdate(customerPictureModel);
+
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+        if (customerModel != null) {
+
+            customerModel.setUpdatedByAppUserModel(UserUtils.getCurrentUser());
+            customerModel.setUpdatedOn(new Date());
+            customerModel.setName(mfsDebitCardModel.getName());
+            customerModel.setMobileNo(mfsDebitCardModel.getMobileNo());
+            customerModel.setMonthlyTurnOver(mfsDebitCardModel.getExpectedMonthlyTurnOver());
+            customerModel.setLatitude(mfsDebitCardModel.getLatitude());
+            customerModel.setLongitude(mfsDebitCardModel.getLongitude());
+            customerModel.setCustomerAccountTypeId(mfsDebitCardModel.getCustomerAccountTypeId());
+
+
+            OLA_ACCOUNT_INFO_CHANGE_FLAG = true;
+
+
+            /**
+             * Saving the CustomerModel
+             */
+            baseWrapper = new BaseWrapperImpl();
+            baseWrapper.setBasePersistableModel(customerModel);
+            baseWrapper = this.custTransManager.saveOrUpdate(baseWrapper);
+        }
+
+        //*** Start - updating Customer Account type in OLA Account
+        if (OLA_ACCOUNT_INFO_CHANGE_FLAG) {
+            OLAVO olaVo = new OLAVO();
+            olaVo.setFirstName(appUserModel.getFirstName());
+            olaVo.setLastName(appUserModel.getLastName());
+            olaVo.setCnic(appUserModel.getNic());
+            olaVo.setMobileNumber(appUserModel.getMobileNo());
+
+            SwitchWrapper sWrapper = new SwitchWrapperImpl();
+            BankModel bankModel = getOlaBankMadal();
+            sWrapper.setOlavo(olaVo);
+            sWrapper.setBankId(bankModel.getBankId());
+
+            try {
+                sWrapper = olaVeriflyFinancialInstitution.changeAccountDetails(sWrapper);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new FrameworkCheckedException(WorkFlowErrorCodeConstants.PHOENIX_SERVICE_DOWN_MSG);
+            }
+
+            if ("07".equals(olaVo.getResponseCode())) {
+                throw new FrameworkCheckedException("CNIC already exisits in the OLA accounts");
+            }
+
+            AccountInfoModel accountInfoModel = new AccountInfoModel();
+            accountInfoModel.setCustomerId(customerModel.getCustomerId());
+            CustomList<AccountInfoModel> customList = accountInfoDao.findByExample(accountInfoModel);
+            if (customList != null && CollectionUtils.isNotEmpty(customList.getResultsetList())) {
+                accountInfoModel = customList.getResultsetList().get(0);
+                accountInfoModel.setFirstName(appUserModel.getFirstName());
+                accountInfoModel.setLastName(appUserModel.getLastName());
+                accountInfoDao.saveOrUpdate(accountInfoModel);
+            } else {
+                logger.info("No record found in AccountInfoModel to update firstName and lastName");
+            }
+        }
+
+        // Updating Address Fields
+        try {
+
+
+            appUserModel.setNic(mfsDebitCardModel.getNic());
+            appUserModel.setMobileNo(mfsDebitCardModel.getMobileNo());
+            appUserModel.setRegistrationStateId(mfsDebitCardModel.getRegistrationStateId());
+            appUserModel.setUpdatedByAppUserModel(UserUtils.getCurrentUser());
+            appUserModel.setUpdatedOn(nowDate);
+            smartMoneyAccountDAO.saveOrUpdate(smartMoneyAccountModel);
+            appUserModel = this.appUserDAO.saveOrUpdate(appUserModel);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new FrameworkCheckedException(e.getMessage(), e);
+        }
+
+        if (mfsDebitCardModel.getUsecaseId() == PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID) {
+            MerchantAccountModel blinkCustomerModel = new MerchantAccountModel();
+            blinkCustomerModel.setCustomerId(customerModel.getCustomerId());
+            blinkCustomerModel = getCommonCommandManager().loadMerchantCustomerByMobileAndAccUpdate(mfsDebitCardModel.getMobileNo(), 1L);
+            if (blinkCustomerModel.getAccUpdate() == 1) {
+                blinkCustomerModel.setAccUpdate(0L);
+                blinkCustomerModel.setUpdatedOn(new Date());
+                blinkCustomerModel.setRegistrationStatus(String.valueOf(mfsDebitCardModel.getRegistrationStateId()));
+                blinkCustomerModel.setActionStatusId(mfsDebitCardModel.getActionId());
+                merchantAccountModelDAO.saveOrUpdate(blinkCustomerModel);
+            }
+        }
+        /**
+         * Logging the information process ends
+         */
+        actionLogModel.setCustomField1(appUserModel.getAppUserId().toString());
+        actionLogModel.setCustomField11(appUserModel.getUsername());
+        this.actionLogManager.completeActionLog(actionLogModel);
+
+        baseWrapper = new BaseWrapperImpl();
+        baseWrapper.setBasePersistableModel(appUserModel);
+
+        return baseWrapper;
+    }
+
     /**
      * Method updates the MWallet Account
      */
@@ -2384,7 +2677,7 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
             customerModel.setUpdatedOn(new Date());
             customerModel.setName(mfsAccountModel.getName());
 
-            if (mfsAccountModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0)||mfsAccountModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_1)) {
+            if (mfsAccountModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_0) || mfsAccountModel.getCustomerAccountTypeId().equals(CustomerAccountTypeConstants.LEVEL_1)) {
                 if (oldAccountTypeId.equals(CustomerAccountTypeConstants.LEVEL_1)) {
                     customerModel.setCustomerAccountTypeId(oldAccountTypeId);
                 } else {
@@ -3239,10 +3532,10 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
                     AddressModel addressModel = custAdd.getAddressIdAddressModel();
                     if (custAdd.getAddressTypeId() == 1) {
                         if (mfsDebitCardModel.getCity() != null) {
-                            if (mfsDebitCardModel.getCity().equals("Islamabad")){
+                            if (mfsDebitCardModel.getCity().equals("Islamabad")) {
                                 addressModel.setCityId(271L);
 
-                            }else {
+                            } else {
                                 addressModel.setCityId(109L);
 
                             }
@@ -6424,7 +6717,8 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
     @Override
     public MerchantAccountPictureModel getMerchantCustomerPictureByTypeId(Long pictureTypeId, Long customerId) throws FrameworkCheckedException {
         MerchantAccountPictureModel customerPictureModel = merchantAccountPictureDAO.getMerchantAccountPictureByTypeId(pictureTypeId, customerId);
-        return customerPictureModel;    }
+        return customerPictureModel;
+    }
 
     @Override
     public List<CustomerPictureModel> getAllCustomerPictures(Long customerId)
@@ -8288,5 +8582,9 @@ public class MfsAccountManagerImpl implements MfsAccountManager {
 
     public void setMinorUserInfoListViewDAO(MinorUserListViewDAO minorUserInfoListViewDAO) {
         this.minorUserInfoListViewDAO = minorUserInfoListViewDAO;
+    }
+
+    public void setMerchantAccountModelDAO(MerchantAccountModelDAO merchantAccountModelDAO) {
+        this.merchantAccountModelDAO = merchantAccountModelDAO;
     }
 }

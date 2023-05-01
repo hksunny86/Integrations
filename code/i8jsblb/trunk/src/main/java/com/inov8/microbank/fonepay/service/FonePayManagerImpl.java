@@ -3919,7 +3919,7 @@ public class FonePayManagerImpl implements FonePayManager {
         try {
             //||model.getRequestType().equals(FonePayConstants.REQ_ACCOUNT_OPENING_L2)
             if (model.getRequestType().equals(FonePayConstants.REQ_ACCOUNT_OPENING_CONVENTIONAL) || model.getRequestType().equals(FonePayConstants.REQ_ACCOUNT_OPENING_L2)
-                    || model.getRequestType().equals(FonePayConstants.REQ_L2_UPGRADE) || model.getRequestType().equals(FonePayConstants.REQ_ACCOUNT_OPENING) || model.getRequestType().equals("Minor Account Opening") || model.getRequestType().equals("UpdateMinorAccount") || model.equals("Upgrade L1 Account Request")|| model.equals(FonePayConstants.REQ_MERCHANT_ACCOUNT_UPGRADE)) {
+                    || model.getRequestType().equals(FonePayConstants.REQ_L2_UPGRADE) || model.getRequestType().equals(FonePayConstants.REQ_ACCOUNT_OPENING) || model.getRequestType().equals("Minor Account Opening") || model.getRequestType().equals("UpdateMinorAccount") || model.getRequestType().equals("Upgrade L1 Account Request")|| model.getRequestType().equals(FonePayConstants.REQ_MERCHANT_ACCOUNT_UPGRADE)) {
                 WebServiceVO cloneVoObject = new WebServiceVO();
                 BeanUtils.copyProperties(webServiceVO, cloneVoObject, new String[]{"customerPhoto", "cnicFrontPhoto", "cnicBackPhoto",
                         "signaturePhoto", "termsPhoto", "sourceOfIncomePic", "reserved2", "reserved3", "reserved6", "reserved5", "parentCnicPic", "bFormPic", "snicPic", "minorCustomerPic", "sNicBackPic", "parentNicBackPic","fingerTemplate","fingerIndex"});

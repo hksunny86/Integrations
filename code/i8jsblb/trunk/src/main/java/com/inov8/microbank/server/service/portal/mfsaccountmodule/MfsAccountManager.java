@@ -41,6 +41,9 @@ public interface MfsAccountManager
 	BaseWrapper createLevel2Account(BaseWrapper baseWrapper) throws FrameworkCheckedException;
 	Boolean updateWalkinCustomerIfExists(String walkInCNIC, String walkInMobileNumber, String senderMobileNumber) throws FrameworkCheckedException;
 	BaseWrapper updateMfsAccount(BaseWrapper baseWrapper) throws FrameworkCheckedException;
+
+	BaseWrapper updateMfsMerchantAccount(BaseWrapper baseWrapper) throws FrameworkCheckedException;
+
 	void saveClsPendignAccount(BaseWrapper baseWrapper, I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO) throws FrameworkCheckedException;
 
 	BaseWrapper updateMfsDebitCard(BaseWrapper baseWrapper) throws FrameworkCheckedException;

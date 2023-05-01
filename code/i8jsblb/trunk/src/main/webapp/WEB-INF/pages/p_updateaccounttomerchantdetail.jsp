@@ -217,12 +217,12 @@
               })
           }*/
 
-        /* function pa(checkbox) {
+         function pa(checkbox) {
              var checkboxes = document.querySelectorAll(".paddressDes")
              checkboxes.forEach((item) => {
                  if (item !== checkbox) item.checked = false
              })
-         }*/
+         }
 
         setTimeout(function () {
             document.getElementById("successMessages").innerHTML = "";
@@ -266,7 +266,6 @@
 
 <html:form name="updateAccountMerchantForm"
            commandName="mfsAccountModel"
-           onsubmit="return checkFormSubmit(this)"
            enctype="multipart/form-data" method="POST"
            action="p_updateaccounttomerchantdetail.html">
     <c:if test="${not empty param.appUserId or not empty mfsAccountModel.appUserId}">
@@ -415,23 +414,24 @@
                 <c:choose>
                     <c:when test="${not empty param.appUserId or not empty mfsAccountModel.appUserId}">
                         <html:input path="nic" cssClass="textBox" style="background: #D3D3D3;" readonly="true"
-                                    tabindex="11" maxlength="13" onkeypress="return maskNumber(this,event)"/><%--<br>
-                        Approved<html:checkbox title="Approved" path="cnicApp" id="cnicapp" class="cnicDes"
-                                               onclick="cnic(this)"/>
-                        Rejected<html:checkbox title="Rejected" path="cnicRej" id="cnicrej" class="cnicDes"
-                                               onclick="cnic(this)"/>--%>
+                                    tabindex="11" maxlength="13" onkeypress="return maskNumber(this,event)"/>
                     </c:when>
                     <c:otherwise>
                         <html:input path="nic" cssClass="textBox" tabindex="11" maxlength="13"
-                                    onkeypress="return maskNumber(this,event)"/><%--<br>
-
-                        Approved<html:checkbox title="Approved" path="cnicApp" id="cnicsubmitapp" class="cnicDes"
-                                               onclick="cnic(this)"/>
-                        Rejected<html:checkbox title="Rejected" path="cnicRej" id="cnicsubmitrej" class="cnicDes"
-                                               onclick="cnic(this)"/>--%>
-
+                                    onkeypress="return maskNumber(this,event)"/>
                     </c:otherwise>
                 </c:choose>
+            </td>
+
+            <td height="16" align="right" bgcolor="F3F3F3" class="formText"
+                width="25%">
+                <span style="color: #FF0000">*</span>Business Name:
+            <td align="left" bgcolor="FBFBFB" width="25%">
+                <html:input path="businessName" id="businessName" cssClass="textBox" tabindex="21" maxlength="100" style="background: #D3D3D3;" readonly="true"/><br>
+            Approved<html:checkbox title="Approved" path="nameApp" id="nameapp" class="cnameDes"
+                                   onclick="cname(this)"/>
+            Rejected<html:checkbox title="Rejected" path="nameRej" id="namerej" class="cnameDes"
+                                   onclick="cname(this)"/>
             </td>
         </tr>
         
@@ -457,6 +457,10 @@
                 <span style="color: #FF0000">*</span>Business Address:
             <td align="left" bgcolor="FBFBFB" width="25%">
                 <html:input path="address1" id="address1" cssClass="textBox" tabindex="21" maxlength="100" style="background: #D3D3D3;" readonly="true"/><br>
+                   Approved<html:checkbox title="Approved" path="pAddressApp" id="permanentaddressapp" class="paddressDes"
+                                                 onclick="pa(this)"/>
+                          Rejected<html:checkbox title="Rejected" path="pAddressRej" id="permanentaddressrej" class="paddressDes"
+                                                 onclick="pa(this)"/>
             </td>
             <td align="right" class="formText" bgcolor="FBFBFB"><span style="color: #FF0000">*</span>Type Of Business:
             </td>
@@ -484,19 +488,9 @@
             <td height="16" align="right" bgcolor="F3F3F3" class="formText">
                 City:
             </td>
-                <%--            <td bgcolor="FBFBFB">--%>
-                <%--                <html:input path="city" maxlength="50" cssClass="textBox" tabindex="24"--%>
-                <%--                            readonly="true"/>--%>
-                <%--            </td>--%>
             <td align="left" bgcolor="FBFBFB">
                 <html:input path="city" cssClass="textBox" tabindex="15" maxlength="50" style="background: #D3D3D3;" readonly="true" />
 
-                    <%--                <html:input path="city"  cssClass="textBox" tabindex="27" readonly="true">--%>
-                    <%--                    <html:option value="">[Select]</html:option>--%>
-                    <%--                    <c:if test="${cityList != null}">--%>
-                    <%--                        <html:options items="${cityList}" itemLabel="name" itemValue="cityId"/>--%>
-                    <%--                    </c:if>--%>
-                    <%--                </html:input>--%>
             </td>
 
 
@@ -605,17 +599,6 @@
     $(function(){
 
     })
-    function checkFormPrint() {
-        $('#printCheck').val("1");
-        Dom.get("printCheck").set("value","1");
-        document.getElementById("printCheck").value='1';
-        document.updateAccountBlinkForm.submit();
-        return true;
-        document.getElementById("pdfButton").addEventListener("click", function() {
-            $('#printCheck').val("1");
-        }, false);
-
-    }
     function valueChanged()
     {
         if(document.getElementById("coupon_question").checked == false){
@@ -628,98 +611,6 @@
             document.getElementById("mainButton").hidden = true;
             document.getElementById("printCheck").value='1';
         }
-    }
-    function checkFormSubmit() {
-        if (document.getElementById("emailrej").checked == false && document.getElementById("emailapp").checked == false) {
-            alert("Please fill correct Email Address CheckBox :: Approved and rejected");
-            return false;
-        }
-        if (document.getElementById("mailingapp").checked == false && document.getElementById("mailingrej").checked == false) {
-            alert("Please fill correct Mailing Address CheckBox :: Approved and rejected");
-            return false;
-        }
-        if (document.getElementById("fhapp").checked == false && document.getElementById("fhrej").checked == false) {
-            alert("Please fill correct Father/Husband Name CheckBox :: Approved and rejected");
-            return false;
-        }
-        if (document.getElementById("cnicBackapp").checked == false && document.getElementById("cnicBackrej").checked == false) {
-            alert("Please fill correct CNIC Back Pic CheckBox :: Approved and rejected");
-            return false;
-        }
-        if (document.getElementById("placeofbirthapp").checked == false && document.getElementById("placeofbirthrej").checked == false) {
-            alert("Please fill correct place Of Birth CheckBox :: Approved and rejected");
-            return false;
-        }
-
-        if (document.getElementById("popapp").checked == false && document.getElementById("poprej").checked == false) {
-            alert("Please fill correct Proof Of Profession Pic CheckBox :: Approved and rejected");
-            return false;
-        }
-        if (document.getElementById("appmob").checked == false && document.getElementById("rejmob").checked == false) {
-            alert("Please fill correct Mobile No CheckBox :: Approved and rejected");
-            return false;
-        }
-        if (document.getElementById("nameapp").checked == false && document.getElementById("namerej").checked == false) {
-            alert("Please fill correct Account Title CheckBox :: Approved and rejected");
-            return false;
-        }
-
-        if (document.getElementById("sourceapp").checked == false && document.getElementById("sourcerej").checked == false) {
-            alert("Please fill correct source of Income CheckBox :: Approved and rejected");
-            return false;
-        }
-        if (document.getElementById("cnicfrontappo").checked == false && document.getElementById("cnicfrontreje").checked == false) {
-            alert("Please fill correct CNIC Front Pic CheckBox :: Approved and rejected");
-            return false;
-        }
-        if (document.getElementById("customerapp").checked == false && document.getElementById("customerrej").checked == false) {
-            alert("Please fill correct Customer Pic CheckBox :: Approved and rejected");
-            return false;
-        }
-        if (document.getElementById("incomeapp").checked == false && document.getElementById("incomerej").checked == false) {
-            alert("Please fill correct Source of Income CheckBox :: Approved and rejected");
-            return false;
-        }
-        if (document.getElementById("motherNameapp").checked == false && document.getElementById("motherNamerej").checked == false) {
-            alert("Please fill correct Mother Name CheckBox :: Approved and rejected");
-            return false;
-        }
-
-        if (document.getElementById("signapp").checked == false && document.getElementById("signrej").checked == false) {
-            alert("Please fill correct Signature Picture CheckBox :: Approved and rejected");
-            return false;
-        }
-
-        if (document.getElementById("email").value == "" || document.getElementById("email").value == null) {
-            alert("E-Mail is null");
-            return false;
-        }
-        if (document.getElementById("mAddress").value == null || document.getElementById("mAddress").value == "") {
-            alert("Mailling Address is Required");
-            return false;
-        }
-        if (document.getElementById("titlename").value == null || document.getElementById("titlename").value == "") {
-            alert("Title Name is Required");
-            return false;
-        }
-
-        if(document.getElementById("rlevel").value=="" || document.getElementById("rlevel").value==null){
-            alert("Please select an Risk Level which needs to be updated on selected records");
-            return false;
-        }
-        if(document.getElementById("registrationStateId").value=="" || document.getElementById("registrationStateId").value==null){
-            alert("Please select an Registration States which needs to be updated on selected records");
-            return false;
-        }
-        // if(document.getElementById("city").value=="" || document.getElementById("city").value==null){
-        //     alert("Please select an City which needs to be updated on selected records");
-        //     return false;
-        // }
-
-
-
-
-
     }
 
 

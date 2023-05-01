@@ -330,7 +330,16 @@ public class MfsAccountModel implements Serializable, Cloneable {
     private String pNicBackPicCheckerComments;
     private String deviceStatus;
     private String reasonOfBlock;
+    private String businessName;
 
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
 
     public String getReasonOfBlock() {
         return reasonOfBlock;

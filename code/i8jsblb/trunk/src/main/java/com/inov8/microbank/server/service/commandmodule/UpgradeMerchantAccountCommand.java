@@ -9,8 +9,10 @@ import com.inov8.microbank.common.model.CustomerModel;
 import com.inov8.microbank.common.model.MerchantAccountModel;
 import com.inov8.microbank.common.model.customermodule.MerchantAccountPictureModel;
 import com.inov8.microbank.common.util.*;
+import com.inov8.microbank.server.service.customermodule.CustTransManager;
 import com.inov8.microbank.server.service.financialintegrationmodule.switchmodule.ESBAdapter;
 import com.inov8.microbank.server.service.mfsmodule.CommonCommandManager;
+import com.inov8.ola.integration.vo.OLAVO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -44,6 +46,9 @@ public class UpgradeMerchantAccountCommand extends BaseCommand {
     private Long idN;
     private String channelId;
     private String terminalId;
+    String customerAccountyType;
+    private CustTransManager custTransManager;
+
 
 
     ////************************/////
@@ -73,6 +78,8 @@ public class UpgradeMerchantAccountCommand extends BaseCommand {
         this.tillId = Long.valueOf((getCommandParameter(baseWrapper, "TILL_ID")));
         this.idType = Long.valueOf((getCommandParameter(baseWrapper, "ID_TYPE")));
         this.idN = Long.valueOf((getCommandParameter(baseWrapper, "ID_N")));
+        this.customerAccountyType = getCommandParameter(baseWrapper, "CUST_ACC_TYPE");
+
 
         this.logger.info("End of UpgradeMerchantAccountCommand.prepare()");
 
@@ -128,7 +135,7 @@ public class UpgradeMerchantAccountCommand extends BaseCommand {
                     merchantAccountModel.setConsumerName(cName);
                     merchantAccountModel.setLatitude(latitude);
                     merchantAccountModel.setLongitude(longitude);
-                    merchantAccountModel.setRegistrationStatus(BlinkCustomerRegistrationStateConstantsInterface.RQST_RCVD.toString());
+                    merchantAccountModel.setRegistrationStatus(BlinkCustomerRegistrationStateConstantsInterface.APPROVED.toString());
                     merchantAccountModel.setCity(city);
                     merchantAccountModel.setTillNumber(tillId);
                     merchantAccountModel.setIdName(idN);
@@ -143,9 +150,33 @@ public class UpgradeMerchantAccountCommand extends BaseCommand {
                     merchantAccountModel.setUpdatedBy(UserUtils.getCurrentUser().getAppUserId());
                     merchantAccountModel.setUpdatedOn(new Date());
                     merchantAccountModel.setCreatedOn(new Date());
-
-
                     getCommonCommandManager().createMerchantAccountModel(merchantAccountModel);
+
+
+                    if (customerModel != null) {
+                        customerModel.setUpdatedByAppUserModel(UserUtils.getCurrentUser());
+                        customerModel.setUpdatedOn(new Date());
+                        customerModel.setName(cName);
+                        customerModel.setMobileNo(cMsisdn);
+                        customerModel.setMonthlyTurnOver(expectedMonthlyTurnover);
+                        customerModel.setLatitude(latitude);
+                        customerModel.setLongitude(longitude);
+                        customerModel.setCustomerAccountTypeId(Long.valueOf(customerAccountyType));
+                        /**
+                         * Saving the CustomerModel
+                         */
+                        baseWrapper = new BaseWrapperImpl();
+                        baseWrapper.putObject(CommandFieldConstants.KEY_CUSTOMER_MODEL, customerModel);
+                        OLAVO olaVo = new OLAVO();
+                        olaVo.setFirstName(appUserModel.getFirstName());
+                        olaVo.setCnic(appUserModel.getNic());
+                        olaVo.setCustomerAccountTypeId(customerModel.getCustomerAccountTypeId());
+                        olaVo.setLandlineNumber(appUserModel.getMobileNo());
+                        olaVo.setMobileNumber(appUserModel.getMobileNo());
+                        baseWrapper.putObject(CommandFieldConstants.KEY_ONLINE_ACCOUNT_MODEL, olaVo);
+                        baseWrapper.putObject(CommandFieldConstants.KEY_APP_USER_MODEL, appUserModel);
+                        baseWrapper = this.getCommonCommandManager().saveOrUpdateMerchantRequest(baseWrapper);
+                    }
 
                     if (this.customerPhoto != null && !this.customerPhoto.equals("")) {
                         addCustomerPicture(PictureTypeConstants.CUSTOMER_PHOTO, arrayCustomerPictures, nowDate, this.customerPhoto, appUserModel.getCustomerId());

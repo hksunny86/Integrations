@@ -74,6 +74,7 @@
           <property name="minorUserInfoListViewDAO">
               <ref local="minorUserInfoListViewDAO"/>
           </property>
+          <property name="merchantAccountModelDAO" ref="merchantAccountModelDAO"/>
         <property name="messageSource">
 	      <ref bean="messageSource"/>
 	    </property>

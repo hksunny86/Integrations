@@ -289,6 +289,8 @@ public class PortalConstants
 	public static final Long KEY_MFS_DEBIT_CARD_UPDATE_USECASE_ID = 1528L;
 
 	public static final long MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID = 1534L;
+	public static final long MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID = 1536L;
+
 
 	public static final String CONSTRAINT_VIOLATION_EXCEPTION = "ConstraintViolationException";
 	

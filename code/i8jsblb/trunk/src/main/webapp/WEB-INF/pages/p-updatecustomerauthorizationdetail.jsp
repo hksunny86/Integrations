@@ -410,6 +410,12 @@
 										   maxlength="250"/>
 						</div>
 				</c:if>
+
+					<c:if test="${mfsAccountModel.usecaseId==1536 or actionAuthorizationModel.usecaseId==1536}">
+						Approved<input type="checkbox" <c:if test="${mfsAccountModel.customerPicApp==true}"> checked</c:if> onclick="return false;"/>
+						Rejected<input type="checkbox" <c:if test="${mfsAccountModel.customerPicRej==true}"> checked</c:if> onclick="return false;"/>
+					</c:if>
+
 				</td>
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Account Title</td>
 				<td width="13%" height="16" align="left"  class="formText">${currentMfsAccountModel.name }
@@ -425,6 +431,12 @@
 				<td width="13%" height="16" align="left"  class="formText">
 					<img src="${contextPath}/images/upload_dir/authorization/cnicFrontPic_${actionAuthorizationModel.actionAuthorizationId}.gif" width="100" height="100" />
 					<c:if test="${mfsAccountModel.usecaseId==1526 or actionAuthorizationModel.usecaseId==1526}">
+						Approved<input type="checkbox" <c:if test="${mfsAccountModel.cnicFrontApp==true}"> checked</c:if> onclick="return false;"/>
+						Rejected<input type="checkbox" <c:if test="${mfsAccountModel.cnicFrontRej==true}"> checked</c:if> onclick="return false;"/>
+					</c:if>
+
+					<c:if test="${mfsAccountModel.usecaseId==1536 or actionAuthorizationModel.usecaseId==1536}">
+					</br>
 						Approved<input type="checkbox" <c:if test="${mfsAccountModel.cnicFrontApp==true}"> checked</c:if> onclick="return false;"/>
 						Rejected<input type="checkbox" <c:if test="${mfsAccountModel.cnicFrontRej==true}"> checked</c:if> onclick="return false;"/>
 					</c:if>
@@ -477,6 +489,13 @@
 					<td width="13%" height="16" align="left"  class="formText">
 						<img src="${contextPath}/images/upload_dir/authorization/cnicBackPic_${actionAuthorizationModel.actionAuthorizationId}.gif" width="100" height="100" />
 						<c:if test="${mfsAccountModel.usecaseId==1526 or actionAuthorizationModel.usecaseId==1526}">
+							<br/>
+							Approved<input type="checkbox" <c:if test="${mfsAccountModel.cnicBackApp==true}"> checked</c:if> onclick="return false;"/>
+							Rejected<input type="checkbox" <c:if test="${mfsAccountModel.cnicBackRej==true}"> checked</c:if> onclick="return false;"/>
+						</c:if>
+
+						<c:if test="${mfsAccountModel.usecaseId==1536 or actionAuthorizationModel.usecaseId==1536}">
+						</br>
 							Approved<input type="checkbox" <c:if test="${mfsAccountModel.cnicBackApp==true}"> checked</c:if> onclick="return false;"/>
 							Rejected<input type="checkbox" <c:if test="${mfsAccountModel.cnicBackRej==true}"> checked</c:if> onclick="return false;"/>
 						</c:if>
@@ -538,6 +557,12 @@
 							Approved<input type="checkbox" <c:if test="${mfsAccountModel.cnicBackPicDiscrepant==false}"> checked</c:if> onclick="return false;"/>
 							Rejected<input type="checkbox" <c:if test="${mfsAccountModel.cnicBackPicDiscrepant==true}"> checked</c:if> onclick="return false;"/>
 						</c:if>
+
+						<c:if test="${mfsAccountModel.usecaseId==1536 or actionAuthorizationModel.usecaseId==1536}">
+							<br/>
+							Approved<input type="checkbox" <c:if test="${mfsAccountModel.cnicBackPicDiscrepant==false}"> checked</c:if> onclick="return false;"/>
+							Rejected<input type="checkbox" <c:if test="${mfsAccountModel.cnicBackPicDiscrepant==true}"> checked</c:if> onclick="return false;"/>
+						</c:if>
 						<div align="left" bgcolor="FBFBFB" class="formText" style="font-weight: bold">
 							Maker Comments:
 							<textarea align="right" style ="background: #D3D3D3; height: 15px" readonly="true" class="formText">${mfsAccountModel.nicBackPicMakerComments}</textarea>
@@ -593,7 +618,7 @@
 				</td>
 			</c:if>
 
-			<c:if test="${mfsAccountModel.segmentId != 10319}">
+			<c:if test="${mfsAccountModel.segmentId != 10319  and (mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536)}">
 				<tr>
 					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Source Of Income</td>
 					<td width="13%" height="16" align="left"  class="formText">
@@ -625,7 +650,7 @@
 				</tr>
 			</c:if>
 
-			<c:if test="${mfsAccountModel.segmentId != 10319}">
+			<c:if test="${mfsAccountModel.segmentId != 10319 and (mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536)}">
 				<tr>
 					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Terms and Condition Picture</td>
 					<td width="13%" height="16" align="left"  class="formText">
@@ -673,20 +698,21 @@
 			<tr>
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">CNIC #</td>
 				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.nic}</td>
-
+				<c:if test="${mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536 }">
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Date of Birth</td>
 				<td width="13%" height="16" align="left"  class="formText"><fmt:formatDate  type="both"
 																							dateStyle="short" timeStyle="short" value="${mfsAccountModel.dob}" /></td>
-
+				</c:if>
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">CNIC #</td>
 				<td width="13%" height="16" align="left"  class="formText">${currentMfsAccountModel.nic}</td>
+				<c:if test="${mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536 }">
 
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Date of Birth</td>
 				<td width="13%" height="16" align="left"  class="formText"><fmt:formatDate  type="both"
 																							dateStyle="short" timeStyle="short" value="${currentMfsAccountModel.dob}" /></td>
+				</c:if>
 
-
-				<c:if test="${mfsAccountModel.usecaseId != 1526}">
+				<c:if test="${mfsAccountModel.usecaseId != 1526 and (mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536) }">
 					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">CNIC Expiry</td>
 					<td width="13%" height="16" align="left"  class="formText"><fmt:formatDate  type="both"
 																								dateStyle="short" timeStyle="short" value="${mfsAccountModel.nicExpiryDate}" /></td>
@@ -706,6 +732,7 @@
 					</td>
 				</c:if>
 			</tr>
+			<c:if test="${mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536 }">
 			<tr>
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Initial Deposit</td>
 				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.initialDeposit}</td>
@@ -716,7 +743,8 @@
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Initial Deposit</td>
 				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.initialDeposit}</td>
 			</tr>
-
+			</c:if>
+			<c:if test="${mfsAccountModel.usecaseId==1526 or actionAuthorizationModel.usecaseId==1526 or(mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536)}">
 			<tr>
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Place of Birth</td>
 				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.birthPlaceName }
@@ -757,7 +785,71 @@
 					</c:if>
 				</td>
 			</tr>
+			</c:if>
+			<c:if test="${mfsAccountModel.usecaseId==1536 or actionAuthorizationModel.usecaseId==1536 }">
 			<tr>
+				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Type Of Business</td>
+				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.accountPurposeName }
+				</td>
+
+				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Business Address</td>
+				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.address1 }
+				</td>
+
+				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Type Of Business</td>
+				<td width="13%" height="16" align="left"  class="formText">${currentMfsAccountModel.accountPurposeName }
+				</td>
+
+				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Business Address</td>
+				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.address1 }
+				</td>
+			</tr>
+			</c:if>
+
+			<c:if test="${mfsAccountModel.usecaseId==1536 or actionAuthorizationModel.usecaseId==1536 }">
+				<tr>
+					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Latitude</td>
+					<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.latitude }
+					</td>
+
+					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Longitude</td>
+					<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.longitude }
+					</td>
+
+					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Latitude</td>
+					<td width="13%" height="16" align="left"  class="formText">${currentMfsAccountModel.latitude }
+					</td>
+
+					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Longitude</td>
+					<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.longitude }
+					</td>
+				</tr>
+			</c:if>
+
+			<c:if test="${mfsAccountModel.usecaseId==1536 or actionAuthorizationModel.usecaseId==1536 }">
+				<tr>
+					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Business City</td>
+					<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.city }
+					</td>
+
+					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Expected Monthly Sales</td>
+					<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.expectedMonthlyTurnOver }
+					</td>
+
+					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Business City</td>
+					<td width="13%" height="16" align="left"  class="formText">${currentMfsAccountModel.city }
+					</td>
+
+					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Expected Monthly Sales</td>
+					<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.expectedMonthlyTurnOver }
+					</td>
+				</tr>
+			</c:if>
+
+
+			<c:if test="${mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536 }">
+			<tr>
+
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Father/Husband Name</td>
 				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.fatherHusbandName }
 					<c:if test="${mfsAccountModel.usecaseId==1526 or actionAuthorizationModel.usecaseId==1526}">
@@ -783,6 +875,9 @@
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Mother's Maiden Name</td>
 				<td width="13%" height="16" align="left"  class="formText">${currentMfsAccountModel.motherMaidenName }</td>
 			</tr>
+			</c:if>
+			<c:if test="${mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536 }">
+
 			<tr>
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Father Cnic</td>
 				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.fatherCnic }
@@ -792,6 +887,9 @@
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Father Cnic</td>
 				<td width="13%" height="16" align="left"  class="formText">${currentMfsAccountModel.fatherCnic }</td>
 			</tr>
+			</c:if>
+			<c:if test="${mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536 }">
+
 			<tr>
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Dual Nationality</td>
 				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.dualNationality }</td>
@@ -805,6 +903,9 @@
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Us Citizen</td>
 				<td width="13%" height="16" align="left"  class="formText">${currentMfsAccountModel.usCitizen }</td>
 			</tr>
+			</c:if>
+			<c:if test="${mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536 }">
+
 			<tr>
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Comments</td>
 				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.comments }</td>
@@ -850,6 +951,9 @@
 
 			</tr>
 
+			</c:if>
+			<c:if test="${mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536 }">
+
 			<tr>
 				<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Mailing Address</td>
 				<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.mailingAddress }
@@ -868,6 +972,7 @@
 				<td width="25%" height="16" align="left" bgcolor="F3F3F3" class="formText">City</td>
 				<td width="25%" height="16" align="left"  class="formText">${currentMfsAccountModel.city }</td>
 			</tr>
+			</c:if>
 			<c:if test="${mfsAccountModel.usecaseId == 1526 or actionAuthorizationModel.usecaseId==1526}">
 				<tr>
 					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Expected Turn Over</td>
@@ -924,7 +1029,7 @@
 					</td>
 				</tr>
 			</c:if>
-			<c:if test="${mfsAccountModel.usecaseId != 1526}">
+			<c:if test="${mfsAccountModel.usecaseId != 1526 and (mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536)} ">
 				<tr>
 					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Tax Regime</td>
 					<td width="13%" height="16" align="left"  class="formText">${mfsAccountModel.taxRegimeName }</td>
@@ -984,7 +1089,7 @@
 					<td width="13%" height="16" align="left"  class="formText">${currentMfsAccountModel.nokMobile }</td>
 				</tr>
 			</c:if>
-			<c:if test="${mfsAccountModel.usecaseId != 1526}">
+			<c:if test="${mfsAccountModel.usecaseId != 1526 and (mfsAccountModel.usecaseId!=1536 or actionAuthorizationModel.usecaseId!=1536)}">
 				<tr>
 					<td width="12%" height="16" align="left" bgcolor="F3F3F3" class="formText">Nadra Verification</td>
 					<td width="13%" height="16" align="left"  class="formText">

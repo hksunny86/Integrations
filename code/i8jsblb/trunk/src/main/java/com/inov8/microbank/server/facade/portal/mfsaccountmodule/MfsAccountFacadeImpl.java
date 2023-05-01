@@ -89,6 +89,17 @@ public class MfsAccountFacadeImpl implements MfsAccountFacade {
     }
 
     @Override
+    public BaseWrapper updateMfsMerchantAccount(BaseWrapper baseWrapper) throws FrameworkCheckedException {
+        try {
+            baseWrapper = mfsAccountManager.updateMfsMerchantAccount(baseWrapper);
+
+        } catch (Exception exp) {
+            throw this.frameworkExceptionTranslator.translate(exp,
+                    FrameworkExceptionTranslator.UPDATE_ACTION);
+        }
+        return baseWrapper;    }
+
+    @Override
     public void saveClsPendignAccount(BaseWrapper baseWrapper, I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO) throws FrameworkCheckedException {
         mfsAccountManager.saveClsPendignAccount(baseWrapper, i8SBSwitchControllerResponseVO);
     }

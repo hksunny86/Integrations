@@ -375,6 +375,29 @@
 
 
     <!-- advanceSalaryLoanDeductionScheduler -->
+
+
+    <!-- advanceSalaryLoanDeductionScheduler -->
+
+    <bean id="zongBalaneUpdateJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="zongBalaneUpdateScheduler"/>
+        <property name="targetMethod" value="init"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="zongBalaneUpdateTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="zongBalaneUpdateJob"/>
+        <property name="cronExpression" value="0 0/5 * 1/1 * ? *"/>
+    </bean>
+    <bean id="zongBalaneUpdateScheduler" class="com.inov8.microbank.schedulers.ZongBalaneUpdateScheduler">
+        <property name="zongBalanceUpdateManager" ref="zongBalanceUpdateManager"></property>
+        <property name="zongBalanceUpdateDAO" ref="zongBalanceUpdateDAO"></property>
+        <property name="esbAdapter" ref="esbAdapter"></property>
+
+    </bean>
+
+
+    <!-- advanceSalaryLoanDeductionScheduler -->
+
     <!--SalariedAccountProfitCreditDebitScheduler-->
     <bean id="salariedAccountsProfitCreditDebitJob"
           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">

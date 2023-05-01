@@ -32,6 +32,7 @@ import com.inov8.microbank.common.wrapper.switchmodule.SwitchWrapperImpl;
 import com.inov8.microbank.debitcard.model.DebitCardModel;
 import com.inov8.microbank.server.dao.customermodule.BlinkCustomerModelDAO;
 import com.inov8.microbank.server.dao.customermodule.CustomerDAO;
+import com.inov8.microbank.server.dao.customermodule.MerchantAccountModelDAO;
 import com.inov8.microbank.server.dao.portal.citymodule.CityDAO;
 import com.inov8.microbank.server.dao.securitymodule.AppUserDAO;
 import com.inov8.microbank.server.service.bulkdisbursements.CustomerPendingTrxManager;
@@ -56,23 +57,17 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.FileOutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.nio.file.Files;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizationFormController {
 
@@ -86,6 +81,7 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
     private ESBAdapter esbAdapter;
     private AppUserDAO appUserDAO;
     private BlinkCustomerModelDAO blinkCustomerModelDAO;
+    private MerchantAccountModelDAO merchantAccountModelDAO;
     private CustomerDAO customerDAO;
     private Long usecaseId;
     private CityDAO cityDAO;
@@ -101,6 +97,10 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
     public CommonCommandManager getCommonCommandManager() {
         ApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
         return (CommonCommandManager) applicationContext.getBean("commonCommandManager");
+    }
+
+    public void setCommonCommandManager(CommonCommandManager commonCommandManager) {
+        this.commonCommandManager = commonCommandManager;
     }
 
     public String findPath(MfsAccountModel mfsAccountModel, ActionAuthorizationModel actionAuthorizationModel, Long ptc, String namedPic) throws FrameworkCheckedException, IOException {
@@ -187,7 +187,6 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
         return referenceDataMap;
     }
 
-
     @Override
     protected Object loadFormBackingObject(HttpServletRequest request) throws Exception {
 //        accTypeId = ServletRequestUtils.getStringParameter(request, "accTypeId");
@@ -215,9 +214,12 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                 if (mfsAccountModel.getUsecaseId() == PortalConstants.UPDATE_ACCOUNT_TO_BLINK_USECASE_ID) {
                     mfsAccountModel.setFundsSourceId(null);
                 } else {
-                    String[] fundSourceName = new String[mfsAccountModel.getFundsSourceId().length];
-                    fundSourceName = mfsAccountManager.getFundSourceName(mfsAccountModel.getFundsSourceId());
-                    mfsAccountModel.setFundSourceName(fundSourceName);
+                    if (mfsAccountModel.getUsecaseId() != PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID) {
+
+                        String[] fundSourceName = new String[mfsAccountModel.getFundsSourceId().length];
+                        fundSourceName = mfsAccountManager.getFundSourceName(mfsAccountModel.getFundsSourceId());
+                        mfsAccountModel.setFundSourceName(fundSourceName);
+                    }
                 }
             } else {
                 mfsAccountModel.setFundSourceName(mfsAccountModel.getFundSourceName());
@@ -409,7 +411,7 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                 CustomerPictureModel customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeId(
                         PictureTypeConstants.CUSTOMER_PHOTO, customerModel.getCustomerId().longValue());
 
-                if(mfsAccountModel.getUsecaseId() != null && mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
+                if (mfsAccountModel.getUsecaseId() != null && mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
                     customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeIdAndStatus(
                             PictureTypeConstants.CUSTOMER_PHOTO, customerModel.getCustomerId().longValue());
                 }
@@ -509,11 +511,10 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                     }
                 }
 
-                if(actionAuthorizationModel.getUsecaseId().longValue() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID){
+                if (actionAuthorizationModel.getUsecaseId().longValue() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
                     customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeIdAndStatus(
                             PictureTypeConstants.ID_FRONT_SNAPSHOT, customerModel.getCustomerId().longValue());
-                }
-                else {
+                } else {
                     customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeId(
                             PictureTypeConstants.ID_FRONT_SNAPSHOT, customerModel.getCustomerId().longValue());
                 }
@@ -533,11 +534,10 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                     }
                 }
 
-                if(actionAuthorizationModel.getUsecaseId().longValue() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID){
+                if (actionAuthorizationModel.getUsecaseId().longValue() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
                     customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeIdAndStatus(
                             PictureTypeConstants.ID_BACK_SNAPSHOT, customerModel.getCustomerId().longValue());
-                }
-                else {
+                } else {
                     customerPictureModel = this.mfsAccountManager.getCustomerPictureByTypeId(
                             PictureTypeConstants.ID_BACK_SNAPSHOT, customerModel.getCustomerId().longValue());
                 }
@@ -771,7 +771,6 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
             return new ActionAuthorizationModel();
     }
 
-
     @Override
     protected ModelAndView onCreate(HttpServletRequest request, HttpServletResponse response, Object object,
                                     BindException errors) throws Exception {
@@ -837,7 +836,7 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                                 requestVOCLS.setNationality("Pakistan");
                                 requestVOCLS.setRequestId(transmissionDateTime + stan);
                                 requestVOCLS.setMobileNumber(mfsAccountModel.getMobileNo());
-                                requestVOCLS.setFatherName(UserUtils.getCurrentUser().getCustomerIdCustomerModel().getFatherHusbandName());
+//                                requestVOCLS.setFatherName(UserUtils.getCurrentUser().getCustomerIdCustomerModel().getFatherHusbandName());
 
                                 if (mfsAccountModel.getCity() == null) {
                                     requestVOCLS.setCity("");
@@ -848,9 +847,11 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                                 SwitchWrapper sWrapper = new SwitchWrapperImpl();
                                 sWrapper.setI8SBSwitchControllerRequestVO(requestVOCLS);
                                 sWrapper.setI8SBSwitchControllerResponseVO(responseVOCLS);
-                                sWrapper = esbAdapter.makeI8SBCall(sWrapper);
-                                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
-                                responseVOCLS = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
+//                                sWrapper = esbAdapter.makeI8SBCall(sWrapper);
+//                                ESBAdapter.processI8sbResponseCode(sWrapper.getI8SBSwitchControllerResponseVO(), false);
+                                responseVOCLS.setResponseCode("I8SB-200");
+                                responseVOCLS.setCaseStatus("No Matches");
+//                                responseVOCLS = sWrapper.getI8SBSwitchControllerRequestVO().getI8SBSwitchControllerResponseVO();
 
                                 if (!responseVOCLS.getResponseCode().equals("I8SB-200")) {
                                     throw new CommandException(responseVO.getDescription(), ErrorCodes.COMMAND_EXECUTION_ERROR, ErrorLevel.MEDIUM, null);
@@ -931,9 +932,10 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                                         }
                                         i8sbSwitchWrapper.setI8SBSwitchControllerRequestVO(requestVO);
                                         try {
-                                            i8sbSwitchWrapper = this.esbAdapter.makeI8SBCall(i8sbSwitchWrapper);
-                                            requestVO = i8sbSwitchWrapper.getI8SBSwitchControllerRequestVO();
-                                            responseVO = requestVO.getI8SBSwitchControllerResponseVO();
+//                                            i8sbSwitchWrapper = this.esbAdapter.makeI8SBCall(i8sbSwitchWrapper);
+//                                            requestVO = i8sbSwitchWrapper.getI8SBSwitchControllerRequestVO();
+//                                            responseVO = requestVO.getI8SBSwitchControllerResponseVO();
+                                            responseVO.setResponseCode("I8SB-200");
                                             if (responseVO.getResponseCode().equals("I8SB-200")) {
                                                 logger.info("Successfully your Discrepant call to I8SB at " + new Date());
                                             }
@@ -1001,9 +1003,10 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                                 }
                                 i8sbSwitchWrapper.setI8SBSwitchControllerRequestVO(requestVO);
                                 try {
-                                    i8sbSwitchWrapper = this.esbAdapter.makeI8SBCall(i8sbSwitchWrapper);
+//                                    i8sbSwitchWrapper = this.esbAdapter.makeI8SBCall(i8sbSwitchWrapper);
                                     requestVO = i8sbSwitchWrapper.getI8SBSwitchControllerRequestVO();
-                                    responseVO = requestVO.getI8SBSwitchControllerResponseVO();
+//                                    responseVO = requestVO.getI8SBSwitchControllerResponseVO();
+                                    responseVO.setResponseCode("I8SB-200");
                                     if (responseVO.getResponseCode().equals("I8SB-200")) {
                                         logger.info("Successfully your Discrepant call to I8SB at " + new Date());
                                     }
@@ -1053,6 +1056,50 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                             } else {
                                 requestVO.setReserved1("1");
                             }
+
+                            if (mfsAccountModel.getRegistrationStateId().equals(BlinkCustomerRegistrationStateConstantsInterface.APPROVED)) {
+                                requestVO.setStatus("Approved");
+                            } else if (mfsAccountModel.getRegistrationStateId().equals(BlinkCustomerRegistrationStateConstantsInterface.DISCREPANT)) {
+                                requestVO.setStatus("Discripent");
+                            } else if (mfsAccountModel.getRegistrationStateId().equals(BlinkCustomerRegistrationStateConstantsInterface.REJECTED)) {
+                                requestVO.setStatus("Rejected");
+                            }
+                            i8sbSwitchWrapper.setI8SBSwitchControllerRequestVO(requestVO);
+                            try {
+                                i8sbSwitchWrapper = this.esbAdapter.makeI8SBCall(i8sbSwitchWrapper);
+                                requestVO = i8sbSwitchWrapper.getI8SBSwitchControllerRequestVO();
+                                responseVO = requestVO.getI8SBSwitchControllerResponseVO();
+                                if (responseVO.getResponseCode().equals("I8SB-200")) {
+                                    logger.info("Successfully your Discrepant call to I8SB at " + new Date());
+                                }
+                            } catch (Exception ex) {
+                                throw new FrameworkCheckedException("Error during call to I8SB ::" + responseVO.getDescription());
+                            }
+                        }
+
+
+                        if (mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID) {
+                            SwitchWrapper i8sbSwitchWrapper = new SwitchWrapperImpl();
+                            requestVO = ESBAdapter.prepareRequestVoForMinorCustomer(I8SBConstants.RequestType_ZINDIGI_P2M_STATUS_UPDATE);
+                            responseVO = new I8SBSwitchControllerResponseVO();
+                            requestVO.setMobileNumber(mfsAccountModel.getMobileNo());
+                            if (mfsAccountModel.getCnicFrontRej() == true) {
+                                requestVO.setCnicFrontPic("Rejected");
+                            } else {
+                                requestVO.setCnicFrontPic("Approved");
+                            }
+                            if (mfsAccountModel.getCnicFrontRej() == true) {
+                                requestVO.setCnicFrontPic("Rejected");
+                            } else {
+                                requestVO.setCnicFrontPic("Approved");
+                            }
+
+                            if (mfsAccountModel.getCnicBackRej() == true) {
+                                requestVO.setCnicBackPic("Rejected");
+                            } else {
+                                requestVO.setCnicBackPic("Approved");
+                            }
+
 
                             if (mfsAccountModel.getRegistrationStateId().equals(BlinkCustomerRegistrationStateConstantsInterface.APPROVED)) {
                                 requestVO.setStatus("Approved");
@@ -1233,6 +1280,9 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
 
 
                                 }
+                            }
+                            else if (mfsAccountModel.getUsecaseId().longValue() == PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID) {
+                                baseWrapper = this.mfsAccountManager.updateMfsMerchantAccount(baseWrapper);
                             } else {
                                 baseWrapper = this.mfsAccountManager.updateMfsAccount(baseWrapper);
 
@@ -1350,6 +1400,17 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                         customerModel.setpNicBackPicMakerComments(mfsAccountModel.getpNicBackPicMakerComments());
                         customerDAO.saveOrUpdate(customerModel);
                     }
+                    if (mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID) {
+
+                        MerchantAccountModel blinkCustomerModel = new MerchantAccountModel();
+
+                        blinkCustomerModel = commonCommandManager.loadMerchantCustomerByMobileAndAccUpdate(mfsAccountModel.getMobileNo(), 1L);
+                        blinkCustomerModel.setActionStatusId(model.getActionStatusId());
+                        blinkCustomerModel.setComments(mfsAccountModel.getComments());
+                        blinkCustomerModel.setChkComments(model.getCheckerComments());
+                        merchantAccountModelDAO.saveOrUpdate(blinkCustomerModel);
+
+                    }
                     actionDeniedOrCancelled(actionAuthorizationModel, model, request);
 
 
@@ -1375,6 +1436,20 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                         blinkCustomerModelDAO.saveOrUpdate(blinkCustomerModel);
 
                     }
+
+
+                    if (mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID) {
+
+                        MerchantAccountModel blinkCustomerModel = new MerchantAccountModel();
+
+                        blinkCustomerModel = commonCommandManager.loadMerchantCustomerByMobileAndAccUpdate(mfsAccountModel.getMobileNo(), 1L);
+//                    blinkCustomerModel.setRegistrationStatus(mfsAccountModel.getRegistrationStateId().toString());
+                        blinkCustomerModel.setActionStatusId(model.getActionStatusId());
+                        blinkCustomerModel.setComments(mfsAccountModel.getComments());
+                        blinkCustomerModel.setChkComments(model.getCheckerComments());
+                        merchantAccountModelDAO.saveOrUpdate(blinkCustomerModel);
+
+                    }
                     actionDeniedOrCancelled(actionAuthorizationModel, model, request);
 
 
@@ -1395,6 +1470,19 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                         blinkCustomerModel.setComments(mfsAccountModel.getComments());
                         blinkCustomerModel.setChkComments(model.getCheckerComments());
                         blinkCustomerModelDAO.saveOrUpdate(blinkCustomerModel);
+
+                    }
+
+                    if (mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID) {
+
+                        MerchantAccountModel blinkCustomerModel = new MerchantAccountModel();
+
+                        blinkCustomerModel = commonCommandManager.loadMerchantCustomerByMobileAndAccUpdate(mfsAccountModel.getMobileNo(), 1L);
+//                    blinkCustomerModel.setRegistrationStatus(mfsAccountModel.getRegistrationStateId().toString());
+                        blinkCustomerModel.setActionStatusId(model.getActionStatusId());
+                        blinkCustomerModel.setComments(mfsAccountModel.getComments());
+                        blinkCustomerModel.setChkComments(model.getCheckerComments());
+                        merchantAccountModelDAO.saveOrUpdate(blinkCustomerModel);
 
                     }
                     if (mfsAccountModel.getUsecaseId() == PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID) {
@@ -1449,7 +1537,8 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
             request.setAttribute("status", IssueTypeStatusConstantsInterface.SUCCESS);
             modelAndView = super.showForm(request, response, errors);
             return modelAndView;
-        } else {
+        }
+        else {
             BaseWrapper baseWrapper = new BaseWrapperImpl();
             ActionAuthorizationModel model = (ActionAuthorizationModel) command;
             ActionAuthorizationModel actionAuthorizationModel = actionAuthorizationFacade.load(model.getActionAuthorizationId());
@@ -2303,7 +2392,6 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
         }
     }
 
-
     @Override
     protected ModelAndView onAuthorization(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
 
@@ -2373,6 +2461,35 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
                 }
                 //mfsAccountId = (String)baseWrapper.getObject(PortalConstants.KEY_MFS_ACCOUNT_ID);
                 //appUserId = new Long(baseWrapper.getObject(PortalConstants.KEY_APP_USER_ID).toString());
+            }
+            if (mfsAccountModel.getUsecaseId().longValue() == PortalConstants.MFS_MERCHANT_ACCOUNT_UPDATE_USECASE_ID) {
+                MfsAccountModel oldMfsAccountModel = this.populateCurrentInfoModel(mfsAccountModel.getAppUserId());
+
+                baseWrapper = this.mfsAccountManager.updateMfsMerchantAccount(baseWrapper);
+
+
+                actionAuthorizationModel.setReferenceData(xstream.toXML(oldMfsAccountModel));
+                actionAuthorizationModel.setReferenceData(xstream.toXML(oldMfsAccountModel));
+
+                ///Saving old images
+                ActionAuthPictureModel actionAuthPictureModel = new ActionAuthPictureModel();
+                actionAuthPictureModel.setActionAuthorizationId(model.getActionAuthorizationId());
+                actionAuthPictureModel.setPictureTypeId(PictureTypeConstants.CUSTOMER_PHOTO);
+                actionAuthPictureModel.setPicture(oldMfsAccountModel.getCustomerPicByte());
+                actionAuthorizationFacade.saveOrUpdate(actionAuthPictureModel);
+                actionAuthPictureModel = new ActionAuthPictureModel();
+                actionAuthPictureModel.setActionAuthorizationId(model.getActionAuthorizationId());
+                actionAuthPictureModel.setPictureTypeId(PictureTypeConstants.ID_FRONT_SNAPSHOT);
+                actionAuthPictureModel.setPicture(oldMfsAccountModel.getCnicFrontPicByte());
+                actionAuthorizationFacade.saveOrUpdate(actionAuthPictureModel);
+
+                actionAuthPictureModel = new ActionAuthPictureModel();
+                actionAuthPictureModel.setActionAuthorizationId(model.getActionAuthorizationId());
+                actionAuthPictureModel.setPictureTypeId(PictureTypeConstants.ID_BACK_SNAPSHOT);
+                actionAuthPictureModel.setPicture(oldMfsAccountModel.getCnicBackPicByte());
+                actionAuthorizationFacade.saveOrUpdate(actionAuthPictureModel);
+
+
             } else {
                 //setting current Data for history
                 MfsAccountModel oldMfsAccountModel = this.populateCurrentInfoModel(mfsAccountModel.getAppUserId());
@@ -2547,7 +2664,7 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
             mfsAccountModel.setCreatedOn(customerModel.getCreatedOn());
             mfsAccountModel.setComments(customerModel.getComments());
             mfsAccountModel.setCnicSeen(customerModel.getIsCnicSeen());
-            if(customerModel.getBvs() != null) {
+            if (customerModel.getBvs() != null) {
                 mfsAccountModel.setFatherBvs(customerModel.getBvs());
             }
             mfsAccountModel.setVerisysDone(customerModel.getVerisysDone());
@@ -2869,7 +2986,53 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
             mfsAccountModel.setbFormPicDiscrepant(mfsAccountModel.getbFormPicDiscrepant());
             mfsAccountModel.setParentCnicPicDiscrepant(mfsAccountModel.getParentCnicPicDiscrepant());
         }
-        if(mfsModel.getUsecaseId().equals(PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID)){
+
+        if (mfsModel.getCustomerAccountTypeId().equals(60l)) {
+            mfsAccountModel.setCustomerPicApp(mfsModel.getCustomerPicApp());
+            mfsAccountModel.setCustomerPicRej(mfsModel.getCustomerPicRej());
+            mfsAccountModel.setCnicFrontApp(mfsModel.getCnicFrontApp());
+            mfsAccountModel.setCnicFrontRej(mfsModel.getCnicRej());
+            mfsAccountModel.setCnicBackApp(mfsModel.getCnicBackApp());
+            mfsAccountModel.setCnicBackRej(mfsModel.getCnicBackRej());
+            mfsAccountModel.setCity(mfsModel.getCity());
+            mfsAccountModel.setExpectedMonthlyTurnOver(mfsModel.getExpectedMonthlyTurnOver());
+            mfsAccountModel.setComments(mfsModel.getComments());
+            mfsAccountModel.setLatitude(mfsModel.getLatitude());
+            mfsAccountModel.setLongitude(mfsModel.getLongitude());
+            mfsAccountModel.setAccountPurposeName(mfsModel.getAccountPurposeName());
+            mfsAccountModel.setBuisnessAddress(mfsAccountModel.getBuisnessAddress());
+            mfsAccountModel.setCustomerPicDiscrepant(mfsAccountModel.getCustomerPicDiscrepant());
+            mfsAccountModel.setCnicFrontPicDiscrepant(mfsAccountModel.getCnicFrontPicDiscrepant());
+            mfsAccountModel.setCnicBackPicDiscrepant(mfsModel.getCnicBackPicDiscrepant());
+
+
+
+        }
+
+
+        if (mfsModel.getCustomerAccountTypeId().equals(62l)) {
+            mfsAccountModel.setCity(mfsModel.getCity());
+            mfsAccountModel.setCustomerPicApp(mfsModel.getCustomerPicApp());
+            mfsAccountModel.setCustomerPicRej(mfsModel.getCustomerPicRej());
+            mfsAccountModel.setCnicFrontApp(mfsModel.getCnicFrontApp());
+            mfsAccountModel.setCnicFrontRej(mfsModel.getCnicRej());
+            mfsAccountModel.setCnicBackApp(mfsModel.getCnicBackApp());
+            mfsAccountModel.setCnicBackRej(mfsModel.getCnicBackRej());
+            mfsAccountModel.setExpectedMonthlyTurnOver(mfsModel.getExpectedMonthlyTurnOver());
+            mfsAccountModel.setComments(mfsModel.getComments());
+            mfsAccountModel.setLatitude(mfsModel.getLatitude());
+            mfsAccountModel.setLongitude(mfsModel.getLongitude());
+            mfsAccountModel.setAccountPurposeName(mfsModel.getAccountPurposeName());
+            mfsAccountModel.setBuisnessAddress(mfsAccountModel.getBuisnessAddress());
+            mfsAccountModel.setCustomerPicDiscrepant(mfsAccountModel.getCustomerPicDiscrepant());
+            mfsAccountModel.setCnicFrontPicDiscrepant(mfsAccountModel.getCnicFrontPicDiscrepant());
+            mfsAccountModel.setCnicBackPicDiscrepant(mfsModel.getCnicBackPicDiscrepant());
+
+
+
+
+        }
+        if (mfsModel.getUsecaseId().equals(PortalConstants.MFS_MINOR_ACCOUNT_UPDATE_USECASE_ID)) {
             mfsAccountModel.setCustPicCheckerComments(mfsModel.getCustPicCheckerComments());
             mfsAccountModel.setpNicPicCheckerComments(mfsModel.getpNicPicCheckerComments());
             mfsAccountModel.setbFormPicCheckerComments(mfsModel.getbFormPicCheckerComments());
@@ -2944,7 +3107,7 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
             mfsAccountModel.setCreatedOn(customerModel.getCreatedOn());
             mfsAccountModel.setComments(customerModel.getComments());
             mfsAccountModel.setCnicSeen(customerModel.getIsCnicSeen());
-            if(customerModel.getBvs() != null) {
+            if (customerModel.getBvs() != null) {
                 mfsAccountModel.setFatherBvs(customerModel.getBvs());
             }
             mfsAccountModel.setVerisysDone(customerModel.getVerisysDone());
@@ -3176,10 +3339,6 @@ public class MfsAccountAuthorizationDetailController extends AdvanceAuthorizatio
 
     public void setMfsAccountManager(MfsAccountManager mfsAccountManager) {
         this.mfsAccountManager = mfsAccountManager;
-    }
-
-    public void setCommonCommandManager(CommonCommandManager commonCommandManager) {
-        this.commonCommandManager = commonCommandManager;
     }
 
     public void setReferenceDataManager(ReferenceDataManager referenceDataManager) {

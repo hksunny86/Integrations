@@ -24,7 +24,6 @@ public class DebitResponse implements Serializable {
     private String transactionAmount;
     @XmlElement(name = "TotalTransactionAmount")
     private String totalTransactionAmount;
-    private String partialRecoveryAmount;
     @XmlElement(name = "HashData")
     private String hashData;
 
@@ -90,14 +89,6 @@ public class DebitResponse implements Serializable {
 
     public void setTotalTransactionAmount(String totalTransactionAmount) {
         this.totalTransactionAmount = totalTransactionAmount;
-    }
-
-    public String getPartialRecoveryAmount() {
-        return partialRecoveryAmount;
-    }
-
-    public void setPartialRecoveryAmount(String partialRecoveryAmount) {
-        this.partialRecoveryAmount = partialRecoveryAmount;
     }
 
     public String getHashData() {

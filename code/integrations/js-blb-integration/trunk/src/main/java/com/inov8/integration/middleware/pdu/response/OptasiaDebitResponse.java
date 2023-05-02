@@ -15,7 +15,6 @@ import java.io.Serializable;
         "commission",
         "amount",
         "totalAmount",
-        "partialRecoveryAmount",
         "HashData",
 })
 public class OptasiaDebitResponse implements Serializable {
@@ -36,8 +35,6 @@ public class OptasiaDebitResponse implements Serializable {
     private String transactionAmount;
     @JsonProperty("totalAmount")
     private String totalTransactionAmount;
-    @JsonProperty("partialRecoveryAmount")
-    private String partialRecoveryAmount;
     @JsonProperty("hashData")
     private String hashData;
 
@@ -103,14 +100,6 @@ public class OptasiaDebitResponse implements Serializable {
 
     public void setTotalTransactionAmount(String totalTransactionAmount) {
         this.totalTransactionAmount = totalTransactionAmount;
-    }
-
-    public String getPartialRecoveryAmount() {
-        return partialRecoveryAmount;
-    }
-
-    public void setPartialRecoveryAmount(String partialRecoveryAmount) {
-        this.partialRecoveryAmount = partialRecoveryAmount;
     }
 
     public String getHashData() {

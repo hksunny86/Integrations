@@ -312,99 +312,99 @@ public class HostIntegrationService {
         return response;
     }
 
-//    public ChequeBookResponse chequeBookResponse(ChequeBookRequest request) {
-//        WebServiceVO messageVO = new WebServiceVO();
-//        long startTime = new Date().getTime(); // start time
-//        String transactionKey = request.getDateTime() + request.getRrn();
-//        messageVO.setRetrievalReferenceNumber(request.getRrn());
-//        logger.info("[HOST] Starting Processing Checque Book Request RRN: " + messageVO.getRetrievalReferenceNumber());
-//        transactionKey = request.getChannelId() + request.getRrn();
-//        ChequeBookResponse response = new ChequeBookResponse();
-//        messageVO.setUserName(request.getUserName());
-//        messageVO.setCustomerPassword(request.getPassword());
-//        messageVO.setCnicNo(request.getCnic());
-//        messageVO.setDateTime(request.getDateTime());
-//        messageVO.setMobileNo(request.getMobileNumber());
-//        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-//        messageVO.setMicrobankTransactionCode(request.getOrignalTransactionRRN());
-//        messageVO.setChannelId(request.getChannelId());
-//        messageVO.setReserved1(request.getReserved1());
-//        messageVO.setReserved2(request.getReserved2());
-//        messageVO.setReserved3(request.getReserved3());
-//        messageVO.setReserved4(request.getReserved4());
-//        messageVO.setReserved5(request.getReserved5());
-//
-//
-//        TransactionLogModel logModel = new TransactionLogModel();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
-//        Date txDateTime = new Date();
-//        try {
-//            txDateTime = dateFormat.parse(request.getDateTime());
-//        } catch (java.text.ParseException e) {
-//            logger.error("Date Parsing Error ", e);
-//        }
-//
-//        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
-//        logModel.setTransactionDateTime(txDateTime);
-//        logModel.setChannelId(request.getChannelId());
-//        logModel.setTransactionCode("ChechqueBookStatus");
-//        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
-//        //preparing request XML
-//        String requestXml = XMLUtil.convertToXML(request);
-//        //Setting in logModel
-//        logModel.setPduRequestHEX(requestXml);
-//        saveTransaction(logModel);
-//        try {
-//            logger.info("[HOST] Sent Checque Book Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-//            messageVO = switchController.checqueBookStatus(messageVO);
-//        } catch (Exception e) {
-//            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
-//        }
-//        // Set Response from i8
-//        if (messageVO != null
-//                && StringUtils.isNotEmpty(messageVO.getResponseCode())
-//                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
-//            logger.info("[HOST] Checque Book Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-//            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-//            response.setResponseDescription(messageVO.getResponseCodeDescription());
-//            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-//        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
-//            logger.info("[HOST] Checque Book Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-//
-//            response.setResponseCode(messageVO.getResponseCode());
-//            response.setResponseDescription(messageVO.getResponseCodeDescription());
-//
-//            logModel.setResponseCode(messageVO.getResponseCode());
-//            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-//        } else {
-//            logger.info("[HOST] Checque Book Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-//
-//            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-//            response.setResponseDescription("Host Not In Reach");
-//            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
-//
-//        }
-//
-//        StringBuffer stringText = new StringBuffer(
-//                response.getResponseCode() + response.getResponseDescription());
-//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//        response.setHashData(sha256hex);
-//
-//        long endTime = new Date().getTime(); // end time
-//        long difference = endTime - startTime; // check different
-//        logger.debug("[HOST] **** Checque Book REQUEST PROCESSED IN ****: " + difference + " milliseconds");
-//
-//        //preparing request XML
-//        String responseXml = XMLUtil.convertToXML(response);
-//        //Setting in logModel
-//        logModel.setPduResponseHEX(responseXml);
-//        logModel.setProcessedTime(difference);
-//
-//
-//        updateTransactionInDB(logModel);
-//
-//        return response;
-//    }
+    public ChequeBookResponse chequeBookResponse(ChequeBookRequest request) {
+        WebServiceVO messageVO = new WebServiceVO();
+        long startTime = new Date().getTime(); // start time
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Starting Processing Checque Book Request RRN: " + messageVO.getRetrievalReferenceNumber());
+        transactionKey = request.getChannelId() + request.getRrn();
+        ChequeBookResponse response = new ChequeBookResponse();
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setCnicNo(request.getCnic());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setMicrobankTransactionCode(request.getOrignalTransactionRRN());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            logger.error("Date Parsing Error ", e);
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("ChechqueBookStatus");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = XMLUtil.convertToXML(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+        saveTransaction(logModel);
+        try {
+            logger.info("[HOST] Sent Checque Book Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.checqueBookStatus(messageVO);
+        } catch (Exception e) {
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+        }
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Checque Book Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Checque Book Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Checque Book Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+
+        }
+
+        StringBuffer stringText = new StringBuffer(
+                response.getResponseCode() + response.getResponseDescription());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Checque Book REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = XMLUtil.convertToXML(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+
+
+        updateTransactionInDB(logModel);
+
+        return response;
+    }
 
     public M0VerifyAccountResponse m0VerifyAccount(M0VerifyAccountRequest request) {
         WebServiceVO messageVO = new WebServiceVO();

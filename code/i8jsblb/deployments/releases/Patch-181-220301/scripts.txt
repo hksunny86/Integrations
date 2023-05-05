@@ -1,2 +1,0 @@
-ALTER TABLE update_customer_name 
-ADD NADRA_NAME VARCHAR2(50 BYTE) NULL;

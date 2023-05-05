@@ -1,2 +1,0 @@
-Alter table bulk_reversal
-add ERRORDESCRIPTION VARCHAR2(500 BYTE);

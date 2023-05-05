@@ -1,2 +1,0 @@
-Alter table blink_customer
-add chk_comments varchar2(250);

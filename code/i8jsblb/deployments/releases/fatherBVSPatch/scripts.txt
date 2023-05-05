@@ -1,1 +1,0 @@
-Alter Table Customer add BVS NUMBER(1,0) DEFAULT 0;

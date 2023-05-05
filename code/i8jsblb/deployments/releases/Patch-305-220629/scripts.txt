@@ -1,3 +1,0 @@
-
-Alter table bulk_reversal
-add is_processed number (1,0);

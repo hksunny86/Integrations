@@ -1,1 +1,0 @@
-alter table blink_customer add ACTION_STATUS_ID VARCHAR2(255);

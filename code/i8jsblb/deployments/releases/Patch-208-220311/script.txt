@@ -1,1 +1,0 @@
-update user_permission set short_name='Upd_Acc_To_Blink' where user_permission_id='460';

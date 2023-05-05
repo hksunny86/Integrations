@@ -1,7 +1,0 @@
-Alter table blink_customer
-add bvs_flag NUMBER(1,0);
-
-
-Alter table customer
-add blink_bvs NUMBER(1,0);
-

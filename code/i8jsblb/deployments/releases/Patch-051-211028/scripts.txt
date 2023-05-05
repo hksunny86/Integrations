@@ -1,4 +1,0 @@
-Insert into reason (REASON_ID,NAME,DESCRIPTION) values (100,'Loan Payment',null);
-Insert into transaction_type (TRANSACTION_TYPE_ID,NAME,DESCRIPTION,CREATED_BY,UPDATED_BY,UPDATED_ON,CREATED_ON,VERSION_NO,COMMENTS,MIN_LIMIT) values (99,'Advance Load Payment Transaction','Advance Load Payment Transaction',2,2,to_date('22-OCT-21','DD-MON-RR'),to_date('22-OCT-21','DD-MON-RR'),0,null,null);
-Insert into Command (COMMAND_ID,NAME,CLASS_NAME,DESCRIPTION,IS_ACTIVE) values (298,'Advance Load Payment','com.inov8.microbank.server.service.commandmodule.AdvanceLoanPaymentCommand','Advance Load Payment',1);
-commit;

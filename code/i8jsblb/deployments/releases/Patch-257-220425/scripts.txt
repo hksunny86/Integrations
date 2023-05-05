@@ -1,6 +1,0 @@
-Insert into command (COMMAND_ID,NAME,CLASS_NAME,DESCRIPTION,IS_ACTIVE) values (309,'Fee Payment Inquiry Command','com.inov8.microbank.server.service.commandmodule.FeePaymentInquiryCommand','Fee Payment Inquiry Command',1);
-Insert into command (COMMAND_ID,NAME,CLASS_NAME,DESCRIPTION,IS_ACTIVE) values (310,'Fee Payment Command','com.inov8.microbank.server.service.commandmodule.FeePaymentCommand','Fee Payment Command',1);
-
-Insert into transaction_type (TRANSACTION_TYPE_ID,NAME,DESCRIPTION,CREATED_BY,UPDATED_BY,UPDATED_ON,CREATED_ON,VERSION_NO,COMMENTS,MIN_LIMIT) values (100,'FEE_Payment Transaction','FEE_Payment Transaction',2,2,to_date('15-APR-22','DD-MON-RR'),to_date('15-APR-22','DD-MON-RR'),0,null,null);
-
-Insert into reason(REASON_ID,NAME,DESCRIPTION) values (102,'Fee Payment Api',null);

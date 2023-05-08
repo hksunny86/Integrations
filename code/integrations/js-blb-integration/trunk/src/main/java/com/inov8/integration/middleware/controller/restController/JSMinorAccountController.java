@@ -140,12 +140,13 @@ public class JSMinorAccountController {
 
                 try {
                     HostRequestValidator.validateM0VerifyAccount(request);
+                    response = integrationService.m0VerifyAccount(request);
+
 //                    //for Mock
 //                    response.setResponseCode("14");
 //                    response.setResponseDescription("No Customer Found Against Mobile number");
 //                    response.setHashData("ABCD0026156156565645656");
 
-                    response = integrationService.m0VerifyAccount(request);
 
                 } catch (ValidationException ve) {
                     response.setResponseCode("420");
@@ -181,81 +182,6 @@ public class JSMinorAccountController {
         return response;
     }
 
-
-    @RequestMapping(value = "api/chequeBookStatusUpdate", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    ChequeBookResponse chequeBookResponse(@Valid @RequestBody ChequeBookRequest request) {
-        logger.info("Start Processing Cheque Book Status Update Transaction Request with {}");
-        long start = System.currentTimeMillis();
-        ChequeBookResponse response = new ChequeBookResponse();
-        String requestXML = JSONUtil.getJSON(request);
-        logger.info("Start Processing Cheque Book Status Update  Transaction Request with {}", request);
-        StringBuffer stringText = new StringBuffer(
-                request.getUserName() +
-                        request.getPassword() +
-                        request.getCnic() +
-                        request.getDateTime() +
-                        request.getMobileNumber() +
-                        request.getRrn() +
-                        request.getOrignalTransactionRRN() +
-                        request.getChannelId() +
-                        request.getTerminalId()+
-                        request.getTransactionStatus()+
-                        request.getReserved1() +
-                        request.getReserved2() +
-                        request.getReserved3() +
-                        request.getReserved4() +
-                        request.getReserved5());
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (sha256hex.equalsIgnoreCase(request.getHashData())) {
-        if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-
-            try {
-                HostRequestValidator.validateChequeBook(request);
-//                    //for Mock
-                    response.setResponseCode("00");
-                    response.setResponseDescription("SuccessFull");
-                    response.setHashData("ABCD0026156156565645656");
-
-//                response = integrationService.m0VerifyAccount(request);
-
-            } catch (ValidationException ve) {
-                response.setResponseCode("420");
-                response.setResponseDescription(ve.getMessage());
-
-                logger.error("ERROR: Request Validation", ve);
-            } catch (Exception e) {
-                response.setResponseCode("220");
-                response.setResponseDescription(e.getMessage());
-                logger.error("ERROR: General Processing ", e);
-            }
-            logger.info("******* DEBUG LOGS FOR Cheque Book Status Update TRANSACTION *********");
-            logger.info("ResponseCode: " + response.getResponseCode());
-        } else {
-            logger.info("******* DEBUG LOGS FOR  Cheque Book Status Update TRANSACTION AUTHENTICATION *********");
-            response = new ChequeBookResponse();
-            response.setResponseCode("420");
-            response.setResponseDescription("Request is not authenticated");
-            logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-        }
-        } else {
-            logger.info("******* DEBUG LOGS FOR Cheque Book Status Update TRANSACTION *********");
-            response = new ChequeBookResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
-
-
-        long end = System.currentTimeMillis() - start;
-        logger.info("Cheque Book Status Update Transaction Request  Processed in : {} ms {}", end, response);
-
-        return response;
-    }
-
-
-
-
 //    @RequestMapping(value = "api/UpgradeMinorAccountInquiry", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 //    public @ResponseBody
 //    UpgradeMinorAccountInquiryResponse upgradeMinorAccountInquiryResponse
@@ -282,11 +208,11 @@ public class JSMinorAccountController {
 //            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
 //                try {
 //                    HostRequestValidator.validateMinorUpgradeAccountInquiry(request);
-////                    response = integrationService.upgradeMinorAccountInquiryResponse(request);
-//                    response.setResponseCode("00");
-//                    response.setResponseDescription("Successfull");
-//                    response.setRrn(request.getRrn());
-//                    response.setHashData("ABCD00021545882500");
+//                    response = integrationService.upgradeMinorAccountInquiryResponse(request);
+////                    response.setResponseCode("00");
+////                    response.setResponseDescription("Successfull");
+////                    response.setRrn(request.getRrn());
+////                    response.setHashData("ABCD00021545882500");
 //
 //                } catch (ValidationException ve) {
 //                    response.setResponseCode("420");
@@ -322,39 +248,39 @@ public class JSMinorAccountController {
 //        return response;
 //    }
 
-//    @RequestMapping(name = "api/UpgradeMinorAccount", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public @ResponseBody
-//    UpgradeMinorAccountResponse upgradeMinorAccountResponse(@Valid @RequestBody UpgradeMinorAccountRequest
-//                                                                    request) {
-//        long start = System.currentTimeMillis();
-//        UpgradeMinorAccountResponse response = new UpgradeMinorAccountResponse();
-//        String requestXML = JSONUtil.getJSON(request);
-//        logger.info("Start Processing Upgrade Account Transaction Request with {}", requestXML);
-//        StringBuilder stringText = new StringBuilder()
-//                .append(request.getUserName())
-//                .append(request.getPassword())
-//                .append(request.getMobileNumber())
-//                .append(request.getDateTime())
-//                .append(request.getRrn())
-//                .append(request.getChannelId())
-//                .append(request.getTerminalId())
-//                .append(request.getMpin())
-//                .append(request.getCnic())
-//                .append(request.getFingerIndex())
-//                .append(request.getFingerTemplate())
-//                .append(request.getTemplateType())
-//                .append(request.getReserved1())
-//                .append(request.getReserved2())
-//                .append(request.getReserved3())
-//                .append(request.getReserved4())
-//                .append(request.getReserved5());
-//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-//            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-//                try {
-//                    HostRequestValidator.validateM0UpgadeAccount(request);
-////                    response = integrationService.upgradeMinorAccountResponse(request);
-//
+    @RequestMapping(value = "api/UpgradeMinorAccount", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    UpgradeMinorAccountResponse upgradeMinorAccountResponse(@Valid @RequestBody UpgradeMinorAccountRequest
+                                                                    request) {
+        long start = System.currentTimeMillis();
+        UpgradeMinorAccountResponse response = new UpgradeMinorAccountResponse();
+        String requestXML = JSONUtil.getJSON(request);
+        logger.info("Start Processing Upgrade Account Transaction Request with {}", requestXML);
+        StringBuilder stringText = new StringBuilder()
+                .append(request.getUserName())
+                .append(request.getPassword())
+                .append(request.getDateTime())
+                .append(request.getRrn())
+                .append(request.getMobileNumber())
+                .append(request.getChannelId())
+                .append(request.getTerminalId())
+                .append(request.getReserved1())
+                .append(request.getReserved2())
+                .append(request.getReserved3())
+                .append(request.getReserved4())
+                .append(request.getReserved5())
+                .append(request.getReserved6())
+                .append(request.getReserved7())
+                .append(request.getReserved8())
+                .append(request.getReserved9())
+                .append(request.getReserved10());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    HostRequestValidator.validateM0UpgadeAccount(request);
+                    response = integrationService.upgradeMinorAccountResponse(request);
+
 //                    response.setResponseCode("00");
 //                    response.setResponseDescription("Successful");
 //                    response.setRrn(request.getRrn());

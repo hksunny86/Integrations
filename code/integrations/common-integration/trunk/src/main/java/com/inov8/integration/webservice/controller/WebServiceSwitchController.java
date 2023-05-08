@@ -137,6 +137,7 @@ public interface WebServiceSwitchController {
     WebServiceVO minorFatherBvsVerification(WebServiceVO webServiceVO);
     WebServiceVO checqueBookStatus(WebServiceVO webServiceVO);
     WebServiceVO MerchantAccountUpgrade(WebServiceVO webServiceVO);
+    WebServiceVO merchantPictureUpgrade(WebServiceVO webServiceVO);
     WebServiceVO cnicTo256(WebServiceVO webServiceVO);
     WebServiceVO transactionStatus(WebServiceVO webServiceVO);
     WebServiceVO profileStatus(WebServiceVO webServiceVO);

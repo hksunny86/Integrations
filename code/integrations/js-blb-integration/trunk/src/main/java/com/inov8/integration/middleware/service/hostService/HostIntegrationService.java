@@ -3819,102 +3819,102 @@ public class HostIntegrationService {
         return response;
     }
 
-//    public FatherBvsVerificationResponse minorFatherBvsVerification(FatherBvsVerification fatherBvsVerification) {
-//        long startTime = new Date().getTime(); // start time
-//        WebServiceVO webServiceVO = new WebServiceVO();
-//        String transactionKey = fatherBvsVerification.getDateTime() + fatherBvsVerification.getRrn();
-//        webServiceVO.setRetrievalReferenceNumber(fatherBvsVerification.getRrn());
-//        logger.info("[HOST] Starting Processing Minor Father BVS Request RRN: " + webServiceVO.getRetrievalReferenceNumber());
-//        transactionKey = fatherBvsVerification.getChannelId() + fatherBvsVerification.getRrn();
-//
-//        FatherBvsVerificationResponse response = new FatherBvsVerificationResponse();
-//
-//        webServiceVO.setUserName(fatherBvsVerification.getUserName());
-//        webServiceVO.setCustomerPassword(fatherBvsVerification.getPassword());
-//        webServiceVO.setMobileNo(fatherBvsVerification.getMobileNumber());
-//        webServiceVO.setDateTime(fatherBvsVerification.getDateTime());
-//        webServiceVO.setCnicNo(fatherBvsVerification.getsNic());
-//        webServiceVO.setFatherCnic(fatherBvsVerification.getFatherCnic());
-//        webServiceVO.setFatherMotherMobileNumber(fatherBvsVerification.getFatherMobileNumber());
-//        webServiceVO.setRetrievalReferenceNumber(webServiceVO.getRetrievalReferenceNumber());
-//        webServiceVO.setChannelId(fatherBvsVerification.getChannelId());
-//        webServiceVO.setTerminalId(fatherBvsVerification.getTerminalId());
-//        webServiceVO.setReserved3(fatherBvsVerification.getReserved3());
-//        webServiceVO.setReserved4(fatherBvsVerification.getReserved4());
-//        webServiceVO.setReserved5(fatherBvsVerification.getReserved5());
-//        TransactionLogModel logModel = new TransactionLogModel();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
-//        Date txDateTime = new Date();
-//        try {
-//            txDateTime = dateFormat.parse(fatherBvsVerification.getDateTime());
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        logModel.setRetrievalRefNo(webServiceVO.getRetrievalReferenceNumber());
-//        logModel.setTransactionDateTime(txDateTime);
-//        logModel.setChannelId(fatherBvsVerification.getChannelId());
-//        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
-//        //preparing request XML
-//        String requestXml = JSONUtil.getJSON(fatherBvsVerification);
-//        //Setting in logModel
-//        logModel.setPduRequestHEX(requestXml);
-//
-//        saveTransaction(logModel);
-//
-//        // Call i8
-//        try {
-//            logger.info("[HOST] Sent Minor Father BVS Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
-//
-//            webServiceVO = switchController.minorFatherBvsVerification(webServiceVO);
-//
-//        } catch (Exception e) {
-//
-//            logger.error("[HOST] Internal Error While Sending Request RRN: " + webServiceVO.getRetrievalReferenceNumber(), e);
-//
-//        }
-//
-//        if (webServiceVO != null && StringUtils.isNotEmpty(webServiceVO.getResponseCode()) && webServiceVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
-//            logger.info("[HOST] Minor Father BVS Request Successful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
-//            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-//            response.setResponseDescription(webServiceVO.getResponseCodeDescription());
-//            response.setRrn(webServiceVO.getRetrievalReferenceNumber());
-//        } else if (webServiceVO != null && StringUtils.isNotEmpty(webServiceVO.getResponseCode())) {
-//            logger.info("[HOST] Minor Father BVS Request Unsuccessful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
-//            response.setResponseCode(webServiceVO.getResponseCode());
-//            response.setResponseDescription(webServiceVO.getResponseCodeDescription());
-//            logModel.setResponseCode(webServiceVO.getResponseCode());
-//            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-//        } else {
-//            logger.info("[HOST] Minor Father BVS Request Unsuccessful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
-//
-//            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-//            response.setResponseDescription("Host Not In Reach");
-//            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-//
-//            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
-//        }
-//        StringBuilder stringText = new StringBuilder()
-//                .append(response.getResponseCode())
-//                .append(response.getResponseDescription())
-//                .append(response.getRrn());
-//        String sha256hex = DigestUtils.sha256Hex(stringText.toString());
-//        response.setHashData(sha256hex);
-//
-//        long endTime = new Date().getTime(); // end time
-//        long difference = endTime - startTime; // check different
-//        logger.debug("[HOST] ****Minor Father BVS REQUEST PROCESSED IN ****: " + difference + " milliseconds");
-//
-//        //preparing request XML
-//        String responseXml = JSONUtil.getJSON(response);
-//        //Setting in logModel
-//        logModel.setPduResponseHEX(responseXml);
-//        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
-//
-//
-//        return response;
-//    }
+    public FatherBvsVerificationResponse minorFatherBvsVerification(FatherBvsVerification fatherBvsVerification) {
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO webServiceVO = new WebServiceVO();
+        String transactionKey = fatherBvsVerification.getDateTime() + fatherBvsVerification.getRrn();
+        webServiceVO.setRetrievalReferenceNumber(fatherBvsVerification.getRrn());
+        logger.info("[HOST] Starting Processing Minor Father BVS Request RRN: " + webServiceVO.getRetrievalReferenceNumber());
+        transactionKey = fatherBvsVerification.getChannelId() + fatherBvsVerification.getRrn();
+
+        FatherBvsVerificationResponse response = new FatherBvsVerificationResponse();
+
+        webServiceVO.setUserName(fatherBvsVerification.getUserName());
+        webServiceVO.setCustomerPassword(fatherBvsVerification.getPassword());
+        webServiceVO.setMobileNo(fatherBvsVerification.getMobileNumber());
+        webServiceVO.setDateTime(fatherBvsVerification.getDateTime());
+        webServiceVO.setCnicNo(fatherBvsVerification.getsNic());
+        webServiceVO.setFatherCnic(fatherBvsVerification.getFatherCnic());
+        webServiceVO.setFatherMotherMobileNumber(fatherBvsVerification.getFatherMobileNumber());
+        webServiceVO.setRetrievalReferenceNumber(webServiceVO.getRetrievalReferenceNumber());
+        webServiceVO.setChannelId(fatherBvsVerification.getChannelId());
+        webServiceVO.setTerminalId(fatherBvsVerification.getTerminalId());
+        webServiceVO.setReserved3(fatherBvsVerification.getReserved3());
+        webServiceVO.setReserved4(fatherBvsVerification.getReserved4());
+        webServiceVO.setReserved5(fatherBvsVerification.getReserved5());
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(fatherBvsVerification.getDateTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(webServiceVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(fatherBvsVerification.getChannelId());
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = JSONUtil.getJSON(fatherBvsVerification);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Minor Father BVS Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+
+            webServiceVO = switchController.minorFatherBvsVerification(webServiceVO);
+
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + webServiceVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        if (webServiceVO != null && StringUtils.isNotEmpty(webServiceVO.getResponseCode()) && webServiceVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Minor Father BVS Request Successful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(webServiceVO.getResponseCodeDescription());
+            response.setRrn(webServiceVO.getRetrievalReferenceNumber());
+        } else if (webServiceVO != null && StringUtils.isNotEmpty(webServiceVO.getResponseCode())) {
+            logger.info("[HOST] Minor Father BVS Request Unsuccessful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            response.setResponseCode(webServiceVO.getResponseCode());
+            response.setResponseDescription(webServiceVO.getResponseCodeDescription());
+            logModel.setResponseCode(webServiceVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Minor Father BVS Request Unsuccessful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuilder stringText = new StringBuilder()
+                .append(response.getResponseCode())
+                .append(response.getResponseDescription())
+                .append(response.getRrn());
+        String sha256hex = DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****Minor Father BVS REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+
+
+        return response;
+    }
 
     public AccountStatusChangeResponse accountStatusChange(AccountStatusChangeRequest accountStatusChangeRequest) {
         long startTime = new Date().getTime(); // start time
@@ -14624,17 +14624,17 @@ public class HostIntegrationService {
 //        connection.close();
 //
 //    }
-//
-//    private Date getRequestTime(String date) {
-//        try {
-//            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddhhmmss");
-//            Date dt = formatter.parse(date);
-//            return dt;
-//        } catch (Exception e) {
-//            logger.error("Exception", e);
-//        }
-//        return null;
-//    }
+
+    private Date getRequestTime(String date) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddhhmmss");
+            Date dt = formatter.parse(date);
+            return dt;
+        } catch (Exception e) {
+            logger.error("Exception", e);
+        }
+        return null;
+    }
 
     public OptasiaCreditInquiryResponse optasiaCreditInquiryResponse(OptasiaCreditInquiryRequest request) {
         long startTime = new Date().getTime(); // start time
@@ -17568,4 +17568,132 @@ public class HostIntegrationService {
         }
         return response;
     }
+
+    public MerchantPictureUpgradeResponse merchantPictureUpgradeResponse(MerchantPictureUpgradeRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Merchant Picture Upgrade Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        MerchantPictureUpgradeResponse response = new MerchantPictureUpgradeResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getMobileNo());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setCnicNo(request.getCnicNumber());
+        messageVO.setBusinessName(request.getBusinessName());
+        messageVO.setBusinessAddress(request.getBusinessAddress());
+        messageVO.setCustomerPhoto(request.getProfilePic());
+        messageVO.setCnicFrontPhoto(request.getCNICFrontPic());
+        messageVO.setCnicBackPhoto(request.getCNICBackPic());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("MerchantAccountUpgrade");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+//            response = optasiaMock.outstandingLoanResponse();
+            String responseXml = JSONUtil.getJSON(response);
+            logger.info("[HOST] Mock Response of Merchant Picture Upgrade Request: " + responseXml);
+        } else {
+            // Call i8
+            try {
+                logger.info("[HOST] Sent Merchant Picture Upgrade Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                messageVO = switchController.merchantPictureUpgrade(messageVO);
+            } catch (Exception e) {
+
+                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+            }
+
+            // Set Response from i8
+            if (messageVO != null
+                    && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                    && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+                logger.info("[HOST] Merchant Picture Upgrade Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setRrn(messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                response.setResponseDateTime(messageVO.getDateTime());
+                response.setReserved1(messageVO.getReserved1());
+                response.setReserved2(messageVO.getReserved2());
+                response.setReserved3(messageVO.getReserved3());
+                response.setReserved4(messageVO.getReserved4());
+                response.setReserved5(messageVO.getReserved5());
+
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+                logger.info("[HOST] Merchant Picture Upgrade Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(messageVO.getResponseCode());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                logModel.setResponseCode(messageVO.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Merchant Picture Upgrade Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+            StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] **** Merchant Picture Upgrade Request PROCESSED IN ****: " + difference + " milliseconds");
+
+            //preparing request
+            String responseXml = JSONUtil.getJSON(response);
+            logger.info("[HOST] ****Merchant Picture Upgrade Response" + responseXml);
+            //Setting in logModel
+            logModel.setPduResponseHEX(responseXml);
+            logModel.setProcessedTime(difference);
+            updateTransactionInDB(logModel);
+        }
+        return response;
+    }
+
 }

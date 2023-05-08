@@ -221,5 +221,6 @@ public interface JsBLBIntegration {
 
 //    public CustomerNameUpdateResponse customerNameUpdate(@WebParam (name = "CustomerNameUpdateRequest") CustomerNameUpdateRequest request);
 
+    public ChequeBookResponse chequeBook(@WebParam(name = "chequeBookRequest") ChequeBookRequest request);
 
 }

@@ -43,6 +43,7 @@ public class OptasiaBo implements I8SBChannelInterface {
             String requestJSON = JSONUtil.getJSON(request);
             i8SBSwitchControllerRequestVO.setRequestXML(requestJSON);
             String requestType = i8SBSwitchControllerRequestVO.getRequestType();
+            optasiaService.setI8SBSwitchControllerRequestVO(i8SBSwitchControllerRequestVO);
 
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_OPTASIA_ECIB_DATA)) {
                 response = optasiaService.sendEcibDataResponse((ECIBDataRequest) request);

@@ -103,24 +103,26 @@ public class CustomAnalyticsResponse extends Response implements Serializable {
         i8SBSwitchControllerResponseVO.setStatusCode(this.getStatusCode());
         i8SBSwitchControllerResponseVO.setMessageCode(this.getMessageCode());
         i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
-        i8SBSwitchControllerResponseVO.setReportDate(this.data.getReportDate());
-        i8SBSwitchControllerResponseVO.setReportTime(this.data.getReportTime());
-        i8SBSwitchControllerResponseVO.setRefNo(this.data.getRefNo());
-        i8SBSwitchControllerResponseVO.setName(this.data.getName());
-        i8SBSwitchControllerResponseVO.setCNIC(this.data.getCnic());
-        i8SBSwitchControllerResponseVO.setCity(this.data.getCity());
-        i8SBSwitchControllerResponseVO.setDob(this.data.getDob());
-        i8SBSwitchControllerResponseVO.setNoOfActiveAccounts(String.valueOf(this.data.getNoOfActiveAccounts()));
-        i8SBSwitchControllerResponseVO.setTotalOutstandingBalance(this.data.getTotalOutstandingBalance());
-        i8SBSwitchControllerResponseVO.setPlus3024m(this.data.getPlus3024m());
-        i8SBSwitchControllerResponseVO.setPlus6024m(this.data.getPlus6024m());
-        i8SBSwitchControllerResponseVO.setPlus9024m(this.data.getPlus9024m());
-        i8SBSwitchControllerResponseVO.setPlus12024m(this.data.getPlus12024m());
-        i8SBSwitchControllerResponseVO.setPlus15024m(this.data.getPlus15024m());
-        i8SBSwitchControllerResponseVO.setPlus18024m(this.data.getPlus18024m());
-        i8SBSwitchControllerResponseVO.setWriteOff(this.data.getWriteOff());
-        i8SBSwitchControllerResponseVO.setDisclaimerText(this.data.getDisclaimerText());
-        i8SBSwitchControllerResponseVO.setRemarks(this.data.getRemarks());
+        if (this.data != null) {
+            i8SBSwitchControllerResponseVO.setReportDate(this.data.getReportDate());
+            i8SBSwitchControllerResponseVO.setReportTime(this.data.getReportTime());
+            i8SBSwitchControllerResponseVO.setRefNo(this.data.getRefNo());
+            i8SBSwitchControllerResponseVO.setName(this.data.getName());
+            i8SBSwitchControllerResponseVO.setCNIC(this.data.getCnic());
+            i8SBSwitchControllerResponseVO.setCity(this.data.getCity());
+            i8SBSwitchControllerResponseVO.setDob(this.data.getDob());
+            i8SBSwitchControllerResponseVO.setNoOfActiveAccounts(String.valueOf(this.data.getNoOfActiveAccounts()));
+            i8SBSwitchControllerResponseVO.setTotalOutstandingBalance(this.data.getTotalOutstandingBalance());
+            i8SBSwitchControllerResponseVO.setPlus3024m(this.data.getPlus3024m());
+            i8SBSwitchControllerResponseVO.setPlus6024m(this.data.getPlus6024m());
+            i8SBSwitchControllerResponseVO.setPlus9024m(this.data.getPlus9024m());
+            i8SBSwitchControllerResponseVO.setPlus12024m(this.data.getPlus12024m());
+            i8SBSwitchControllerResponseVO.setPlus15024m(this.data.getPlus15024m());
+            i8SBSwitchControllerResponseVO.setPlus18024m(this.data.getPlus18024m());
+            i8SBSwitchControllerResponseVO.setWriteOff(this.data.getWriteOff());
+            i8SBSwitchControllerResponseVO.setDisclaimerText(this.data.getDisclaimerText());
+            i8SBSwitchControllerResponseVO.setRemarks(this.data.getRemarks());
+        }
 
         return i8SBSwitchControllerResponseVO;
     }

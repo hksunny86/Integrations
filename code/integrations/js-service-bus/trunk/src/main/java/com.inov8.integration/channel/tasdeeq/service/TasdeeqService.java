@@ -43,7 +43,7 @@ public class TasdeeqService {
         AuthenticateUpdatedResponse authenticateUpdatedResponse = new AuthenticateUpdatedResponse();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock2")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             TasdeeqMock tasdeeqMock = new TasdeeqMock();
             String response = tasdeeqMock.authenticatedUpdated();
@@ -112,12 +112,14 @@ public class TasdeeqService {
         CustomAnalyticsResponse customAnalyticsResponse = new CustomAnalyticsResponse();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock2")) {
             logger.info("Preparing request for Request Type : " + this.i8SBSwitchControllerRequestVO.getRequestType());
             TasdeeqMock tasdeeqMock = new TasdeeqMock();
-            String response = tasdeeqMock.customAnalytics();
+            customAnalyticsResponse = tasdeeqMock.customAnalyticsMockResponse(i8SBSwitchControllerRequestVO);
+            String response = JSONUtil.getJSON(customAnalyticsResponse);
             logger.info("Access Token " + i8SBSwitchControllerRequestVO.getAccessToken());
             customAnalyticsResponse = (CustomAnalyticsResponse) JSONUtil.jsonToObject(response, CustomAnalyticsResponse.class);
+            customAnalyticsResponse.setStatusCode("115");
             logger.info("Mock Response Code for Custom Analytics Request: " + customAnalyticsResponse.getResponseCode());
         } else {
 

@@ -52,6 +52,7 @@ public class OptasiaService {
     private String username = PropertyReader.getProperty("optasia.username");
     private String password = PropertyReader.getProperty("optasia.password");
     private String optasiaAuthorization = PropertyReader.getProperty("optasia.authorization");
+    I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
     public ECIBDataResponse sendEcibDataResponse(ECIBDataRequest ecibDataRequest) {
 
@@ -208,16 +209,17 @@ public class OptasiaService {
 
     public LoanOfferResponse sendLoanOfferResponse(LoanOfferRequest loanOfferRequest) {
         LoanOfferResponse loanOfferResponse = new LoanOfferResponse();
-        I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
+//        I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock2")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             OptasiaMock optasiaMock = new OptasiaMock();
-            String response = optasiaMock.loanOffer();
+            LoanOfferResponse offerResponse = optasiaMock.sendLoanOfferMock(i8SBSwitchControllerRequestVO);
+            String response = JSONUtil.getJSON(offerResponse);
             loanOfferResponse = (LoanOfferResponse) JSONUtil.jsonToObject(response, LoanOfferResponse.class);
-            Objects.requireNonNull(loanOfferResponse).setResponseCode("200");
+            Objects.requireNonNull(loanOfferResponse).setResponseCode("400");
             logger.info("Response of Loan Offer Request : " + response);
             logger.info("Response Code for Loan Offer Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
@@ -804,4 +806,11 @@ public class OptasiaService {
         return restTemplate;
     }
 
+    public I8SBSwitchControllerRequestVO getI8SBSwitchControllerRequestVO() {
+        return i8SBSwitchControllerRequestVO;
+    }
+
+    public void setI8SBSwitchControllerRequestVO(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
+        this.i8SBSwitchControllerRequestVO = i8SBSwitchControllerRequestVO;
+    }
 }

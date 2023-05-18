@@ -4,6 +4,58 @@ import java.awt.*;
 
 public class OptasiaMock {
 
+    public LoanOfferResponse sendLoanOfferMock(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
+        LoanOfferResponse loanOfferResponse = new LoanOfferResponse();
+
+        if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("053a6b94e026b3c220776afeffa7e25a20288d977393814826947fb37e76e24b")) {
+            loanOfferResponse.setCode("1002");
+            loanOfferResponse.setMessage("Missing parameter");
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("b3c767c2af61884290d2dce2c369454a88ef3a2bf1b42b9cd42f6479e471c906")) {
+            loanOfferResponse.setCode("1003");
+            loanOfferResponse.setMessage("Invalid parameter name");
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("3cf37fd1bf92b11e5a53a31eb6067df7c12e3afbf263c917a380949358c3ffc1")) {
+            loanOfferResponse.setCode("1200");
+            loanOfferResponse.setMessage("Backend Fatal Error");
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("2b41c9108784303e0998b6ed19721d49a29082859842966ec93235c25657317c")) {
+            loanOfferResponse.setCode("1301");
+            loanOfferResponse.setMessage("The content of the request and its syntax is correct but the server was not\n" +
+                    "able to process the contained instructions. Reason: No offer available");
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("48a45cf7fb8834a187a51f6a0dbc288f395b40322bdc9e84cc74ad75936f885c")) {
+            loanOfferResponse.setCode("1302");
+            loanOfferResponse.setMessage("The content of the request and its syntax is correct but the server was not\n" +
+                    "able to process the contained instructions. Reason: Customer not eligible");
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("a164af70e3a5edb485de0577bd1ac082797d58f48bb37e078a3b9aa392d3511c")) {
+            loanOfferResponse.setCode("1303");
+            loanOfferResponse.setMessage("The content of the request and its syntax is correct but the server was not\n" +
+                    "able to process the contained instructions. Reason: Customer not found");
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("0ebb5ea13c7dfc187defe2fc69e7e37bca66ba58cc8652b93969caecb03b9917")) {
+            loanOfferResponse.setCode("1304");
+            loanOfferResponse.setMessage("The content of the request and its syntax is correct but the server was not\n" +
+                    "able to process the contained instructions. Reason: Backend operation\n" +
+                    "failure");
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("be2e898b056bd8e3547ec60b34105d112f87e7606632f999f569492f511d7488")) {
+            loanOfferResponse.setCode("1305");
+            loanOfferResponse.setMessage("The content of the request and its syntax is correct but the server was not\n" +
+                    "able to process the contained instructions. Reason: Loan not found");
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("feeb8bf187a939f288fb78a65e399b9451e6bd57de8db10eb16bcaf91ec6e8e5")) {
+            loanOfferResponse.setCode("2000");
+            loanOfferResponse.setMessage("Generic error");
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("3504a46ac18b5df02f67aabbf89f4f66914c1d0a818adccb4493a324039daa6d")) {
+            loanOfferResponse.setCode("2001");
+            loanOfferResponse.setMessage("Backend failure");
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("b9c894f7152b2d93e403a289bf3c20f7a875257773fb800f151c836e7e6b73c5")) {
+            loanOfferResponse.setCode("2002");
+            loanOfferResponse.setMessage("Operation timeout");
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("94b3a44d36dcd7b8af291e1af799ca70c5d1b5b5fb6460842bba8421817c9f53")) {
+            loanOfferResponse.setCode("2003");
+            loanOfferResponse.setMessage("Insufficient balance");
+        } else {
+            loanOfferResponse.setCode("500");
+            loanOfferResponse.setMessage("Customer Id doesn't matched");
+        }
+        return loanOfferResponse;
+    }
+
     public String ecibData() {
         String ecibdata = "{\n" +
                 "    \"responseCode\": \"00\",\n" +

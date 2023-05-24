@@ -7,6 +7,7 @@ import com.inov8.integration.webservice.optasiaVO.*;
 import com.inov8.integration.webservice.vo.WebServiceVO;
 
 import java.io.Serializable;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -113,7 +114,8 @@ public class LoanPlanResponse implements Serializable {
         DueDatePlan week8 = new DueDatePlan();
         List<LoanAmount> amountList = new ArrayList<>();
         List<DueDatePlan> dueDatePlanList = new ArrayList<>();
-        DecimalFormat df = new DecimalFormat("####0.00");
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.UP);
 
         week1.setTitle("Week1");
         week1.setWeek(String.valueOf(1));
@@ -174,5 +176,6 @@ public class LoanPlanResponse implements Serializable {
 
         return webServiceVO;
     }
+
 
 }

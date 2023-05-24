@@ -16,6 +16,7 @@ import java.io.Serializable;
         "FatherName",
         "RegistrationState",
         "AccountState",
+        "AccountType",
         "DailyCreditLimit",
         "DailyDebitLimit",
         "MonthlyCreditLimit",
@@ -44,6 +45,8 @@ public class AccountStatusResponse implements Serializable {
     private String registrationState;
     @JsonProperty("AccountState")
     private String accountState;
+    @JsonProperty("AccountType")
+    private String accountType;
     @JsonProperty("DailyCreditLimit")
     private String dailyCreditLimit;
     @JsonProperty("DailyDebitLimit")
@@ -137,6 +140,16 @@ public class AccountStatusResponse implements Serializable {
     @JsonProperty("AccountState")
     public void setAccountState(String accountState) {
         this.accountState = accountState;
+    }
+
+    @JsonProperty("AccountType")
+    public String getAccountType() {
+        return accountType;
+    }
+
+    @JsonProperty("AccountType")
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 
     @JsonProperty("DailyCreditLimit")

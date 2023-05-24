@@ -17781,6 +17781,7 @@ public class HostIntegrationService {
                 response.setFatherName(messageVO.getFatherHusbandName());
                 response.setRegistrationState(messageVO.getCustomerRegState());
                 response.setAccountState(messageVO.getAccountStatus());
+                response.setAccountType(messageVO.getAccountType());
                 response.setDailyCreditLimit(messageVO.getDailyCreditLimit());
                 response.setDailyDebitLimit(messageVO.getDailyDebitLimit());
                 response.setMonthlyCreditLimit(messageVO.getMonthlyCreditLimit());

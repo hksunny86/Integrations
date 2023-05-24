@@ -74,4 +74,11 @@ public class CommonUtils {
 			return StringUtils.rightPad(input, requiredLength, padCharacter);
 	}
 
+	public static Double decimalRoundTwoDecimals(Double value) {
+		Double roundedValue = new Double(0.0);
+		if (value != null) {
+			roundedValue = Double.valueOf(String.format("%.2f",value));
+		}
+		return roundedValue;
+	}
 }

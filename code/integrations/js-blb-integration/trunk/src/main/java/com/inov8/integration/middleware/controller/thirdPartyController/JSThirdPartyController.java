@@ -52,7 +52,6 @@ public class JSThirdPartyController {
                     .append(request.getChannelId())
                     .append(request.getTerminalId())
                     .append(request.getCnicNumber())
-                    .append(request.getTransactionType())
                     .append(request.getReserved1())
                     .append(request.getReserved2())
                     .append(request.getReserved3())

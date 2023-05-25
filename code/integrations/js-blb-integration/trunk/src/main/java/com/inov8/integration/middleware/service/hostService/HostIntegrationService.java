@@ -17717,7 +17717,6 @@ public class HostIntegrationService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setCnicNo(request.getCnicNumber());
-        messageVO.setTransactionType(request.getTransactionType());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());

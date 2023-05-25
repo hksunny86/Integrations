@@ -16,7 +16,6 @@ import java.io.Serializable;
         "ChannelId",
         "TerminalId",
         "CnicNumber",
-        "TransactionType",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -48,8 +47,6 @@ public class AccountStatusRequest implements Serializable {
     private String terminalId;
     @JsonProperty("CnicNumber")
     private String cnicNumber;
-    @JsonProperty("TransactionType")
-    private String transactionType;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -151,16 +148,6 @@ public class AccountStatusRequest implements Serializable {
     @JsonProperty("CnicNumber")
     public void setCnicNumber(String cnicNumber) {
         this.cnicNumber = cnicNumber;
-    }
-
-    @JsonProperty("TransactionType")
-    public String getTransactionType() {
-        return transactionType;
-    }
-
-    @JsonProperty("TransactionType")
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
     }
 
     @JsonProperty("Reserved1")

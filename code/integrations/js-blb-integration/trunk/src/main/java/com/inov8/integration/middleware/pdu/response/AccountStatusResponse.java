@@ -17,6 +17,7 @@ import java.io.Serializable;
         "RegistrationState",
         "AccountState",
         "AccountType",
+        "IBAN",
         "DailyCreditLimit",
         "DailyDebitLimit",
         "MonthlyCreditLimit",
@@ -47,6 +48,8 @@ public class AccountStatusResponse implements Serializable {
     private String accountState;
     @JsonProperty("AccountType")
     private String accountType;
+    @JsonProperty("IBAN")
+    private String iban;
     @JsonProperty("DailyCreditLimit")
     private String dailyCreditLimit;
     @JsonProperty("DailyDebitLimit")
@@ -147,9 +150,19 @@ public class AccountStatusResponse implements Serializable {
         return accountType;
     }
 
-    @JsonProperty("AccountType")
+    @JsonProperty("IBAN")
     public void setAccountType(String accountType) {
         this.accountType = accountType;
+    }
+
+    @JsonProperty("IBAN")
+    public String getIban() {
+        return iban;
+    }
+
+    @JsonProperty("AccountType")
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
     @JsonProperty("DailyCreditLimit")

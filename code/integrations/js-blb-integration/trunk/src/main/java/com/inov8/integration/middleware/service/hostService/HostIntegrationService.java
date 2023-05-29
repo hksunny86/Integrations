@@ -17781,6 +17781,7 @@ public class HostIntegrationService {
                 response.setRegistrationState(messageVO.getCustomerRegState());
                 response.setAccountState(messageVO.getAccountStatus());
                 response.setAccountType(messageVO.getAccountType());
+                response.setIban(messageVO.getBenificieryIban());
                 response.setDailyCreditLimit(messageVO.getDailyCreditLimit());
                 response.setDailyDebitLimit(messageVO.getDailyDebitLimit());
                 response.setMonthlyCreditLimit(messageVO.getMonthlyCreditLimit());

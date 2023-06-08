@@ -81,6 +81,7 @@ public class I8SBConstants {
     public static String I8SB_Channel_ID_EOCEAN_NEW = "EOCEANNEWAPI";
     public static String I8SB_Channel_ID_ZINDIGI_CUSTOMER_ACTIVITY = "ZINDIGICUSTOMERACTIVITY";
     public static String I8SB_Channel_ID_ZINDIGI_CUSTOMER = "ZINDIGICUSTOMER";
+    public static String I8SB_Channel_ID_BRANDVERSE = "BRANDVERSE";
 
 
     public static String I8SB_Channel_ID_ETPaymentCollection = "ETPaymentCollection";
@@ -355,6 +356,8 @@ public class I8SBConstants {
     public static String RequestType_OPTASIA_ECIB_DATA = "OptasiaEcibData";
     public static String RequestType_Tasdeeq_AuthenticateUpdated = "TasdeeqAuthenticateUpdated";
     public static String RequestType_Tasdeeq_CustomAnalytics = "TasdeeqCustomAnalytics";
+    public static String RequestType_Brandverse_AccessToken = "BrandverseToken";
+    public static String RequestType_Brandverse_Notify = "BrandverseNotify";
 
 
 

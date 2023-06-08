@@ -462,9 +462,18 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String eligibilityStatus;
     private String refNo;
     private String primaryLoanId;
+    private String notify;
     private List<Charge> chargeList;
     private List<Account> accountList;
     private List<ThirdPartyData> thirdPartyDataList;
+
+    public String getNotify() {
+        return notify;
+    }
+
+    public void setNotify(String notify) {
+        this.notify = notify;
+    }
 
     public List<Account> getAccountList() {
         return accountList;

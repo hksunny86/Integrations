@@ -98,7 +98,7 @@ public class CustomAnalyticsResponse extends Response implements Serializable {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
             this.setResponseCode(i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
-            i8SBSwitchControllerResponseVO.setResponseCode(this.getMessageCode());
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getStatusCode());
         }
         i8SBSwitchControllerResponseVO.setStatusCode(this.getStatusCode());
         i8SBSwitchControllerResponseVO.setMessageCode(this.getMessageCode());

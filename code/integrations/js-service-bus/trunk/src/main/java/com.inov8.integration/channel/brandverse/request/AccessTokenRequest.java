@@ -10,35 +10,35 @@ import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "username",
-        "password"
+        "UserName",
+        "Password"
 })
 public class AccessTokenRequest extends Request {
 
-    @JsonProperty("username")
+    @JsonProperty("UserName")
     private String userName;
-    @JsonProperty("password")
+    @JsonProperty("Password")
     private String password;
 
     private String userId = PropertyReader.getProperty("brandverse.username");
     private String pass = PropertyReader.getProperty("brandverse.password");
 
-    @JsonProperty("username")
+    @JsonProperty("UserName")
     public String getUserName() {
         return userName;
     }
 
-    @JsonProperty("username")
+    @JsonProperty("UserName")
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    @JsonProperty("password")
+    @JsonProperty("Password")
     public String getPassword() {
         return password;
     }
 
-    @JsonProperty("password")
+    @JsonProperty("Password")
     public void setPassword(String password) {
         this.password = password;
     }

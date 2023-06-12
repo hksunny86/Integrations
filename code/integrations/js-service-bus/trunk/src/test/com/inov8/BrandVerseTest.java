@@ -35,8 +35,8 @@ public class BrandVerseTest {
         requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_BRANDVERSE);
         requestVO.setRequestType(I8SBConstants.RequestType_Brandverse_Notify);
 
-        requestVO.setUserName("testUser");
-        requestVO.setPassword("12345");
+        requestVO.setUserName("cosmochikoo");
+        requestVO.setPassword("fPVxUA3yQ5zZPsFm");
         requestVO.setMerchantId("ABC123");
         requestVO.setTransactionId("542316987");
         requestVO.setAmount("100");

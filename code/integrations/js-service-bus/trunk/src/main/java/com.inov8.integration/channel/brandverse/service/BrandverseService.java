@@ -7,20 +7,31 @@ import com.inov8.integration.channel.brandverse.response.BrandverseNotifyRespons
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.util.JSONUtil;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.net.ssl.SSLContext;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Objects;
@@ -67,8 +78,10 @@ public class BrandverseService {
             String response;
             try {
                 logger.info("Requesting URL " + uri.toUriString());
-                logger.info("Sending Brandverse Access Token Request Sent to Client " + httpEntity.getBody().toString());
-                ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
+                logger.info("Sending Brandverse Access Token Request Sent to Client " + httpEntity.getBody().toString(), httpEntity.getHeaders());
+                ResponseEntity<String> res1 = getRestTemplate().postForEntity(uri.build().toUri(), httpEntity, String.class);
+
+                logger.info("Response Entity: " + res1);
                 logger.info("Response Code of Brandverse Access Token Request received from client " + res1.getStatusCode().toString());
                 logger.info("Response of Brandverse Access Token Request received from client " + res1.getBody());
                 accessTokenResponse = (AccessTokenResponse) JSONUtil.jsonToObject(res1.getBody(), AccessTokenResponse.class);
@@ -96,11 +109,19 @@ public class BrandverseService {
                         accessTokenResponse = (AccessTokenResponse) JSONUtil.jsonToObject(result, AccessTokenResponse.class);
                     }
                 }
+                if (e instanceof ResourceAccessException) {
+                    String result = e.getMessage();
+                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
+                    Objects.requireNonNull(accessTokenResponse).setResponseCode("500");
+//                    accessTokenResponse = (AccessTokenResponse) JSONUtil.jsonToObject(result, AccessTokenResponse.class);
+                }
+            } catch (Exception e) {
+                logger.error("Exception Occurred: " + e.getMessage());
             }
 
             long endTime = (new Date()).getTime();
             long difference = endTime - start;
-            logger.debug("Authenticate Updated Request processed in: " + difference + " millisecond");
+            logger.debug("Brandverse Access Token Request processed in: " + difference + " millisecond");
         }
         return accessTokenResponse;
     }
@@ -140,7 +161,8 @@ public class BrandverseService {
             try {
                 logger.info("Requesting URL " + uri.toUriString());
                 logger.info("Sending Brandverse Notify Request Sent to Client " + httpEntity.getBody().toString());
-                ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
+                ResponseEntity<String> res1 = getRestTemplate().postForEntity(uri.build().toUri(), httpEntity, String.class);
+                logger.info("Response Entity: " + res1);
                 logger.info("Response Code of Brandverse Notify Request received from client " + res1.getStatusCode().toString());
                 logger.info("Response of Brandverse Notify Request received from client " + res1.getBody());
                 brandverseNotifyResponse = (BrandverseNotifyResponse) JSONUtil.jsonToObject(res1.getBody(), BrandverseNotifyResponse.class);
@@ -168,6 +190,15 @@ public class BrandverseService {
                         brandverseNotifyResponse = (BrandverseNotifyResponse) JSONUtil.jsonToObject(result, BrandverseNotifyResponse.class);
                     }
                 }
+                if (e instanceof ResourceAccessException) {
+                    String result = e.getMessage();
+                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
+                    Objects.requireNonNull(brandverseNotifyResponse).setResponseCode("500");
+//                    brandverseNotifyResponse = (BrandverseNotifyResponse) JSONUtil.jsonToObject(result, BrandverseNotifyResponse.class);
+                }
+
+            } catch (Exception e) {
+                logger.error("Exception Occurred: " + e.getMessage());
             }
 
             long endTime = (new Date()).getTime();
@@ -184,5 +215,36 @@ public class BrandverseService {
 
     public void setI8SBSwitchControllerRequestVO(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
         this.i8SBSwitchControllerRequestVO = i8SBSwitchControllerRequestVO;
+    }
+
+    public RestTemplate getRestTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+
+        TrustStrategy acceptingTrustStrategy = new TrustStrategy() {
+            @Override
+            public boolean isTrusted(java.security.cert.X509Certificate[] x509Certificates, String s) {
+                return true;
+            }
+
+        };
+
+        SSLContext sslContext = null;
+        try {
+            sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy)
+                    .build();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
+        CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(csf).build();
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        requestFactory.setHttpClient(httpClient);
+
+        restTemplate.setRequestFactory(requestFactory);
+        return restTemplate;
     }
 }

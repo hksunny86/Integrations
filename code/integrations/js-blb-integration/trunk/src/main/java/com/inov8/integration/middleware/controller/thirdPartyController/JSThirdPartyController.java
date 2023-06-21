@@ -8,6 +8,7 @@ import com.inov8.integration.middleware.pdu.request.MerchantPictureUpgradeReques
 import com.inov8.integration.middleware.pdu.response.AccountStatusResponse;
 import com.inov8.integration.middleware.pdu.response.MerchantPictureUpgradeResponse;
 import com.inov8.integration.middleware.service.hostService.HostIntegrationService;
+import com.inov8.integration.middleware.util.ConfigReader;
 import com.inov8.integration.middleware.util.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +18,18 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 
 @RestController
 public class JSThirdPartyController {
 
     private static Logger logger = LoggerFactory.getLogger(JSThirdPartyController.class.getSimpleName());
+    private String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+    private String ip = ConfigReader.getInstance().getProperty("logger.ip", "");
+    private String guid = ConfigReader.getInstance().getProperty("logger.guid", "");
+
 
     @Autowired
     HostIntegrationService integrationService;
@@ -42,7 +50,11 @@ public class JSThirdPartyController {
             String requestXML = JSONUtil.getJSON(request);
             //        requestXML = XMLUtil.maskPassword(requestXML);
             logger.info("Start Processing Account Status Request with {}", requestXML);
-
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Lien Status Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -67,8 +79,8 @@ public class JSThirdPartyController {
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
-                    HostRequestValidator.validateAccountStatus(request);
-                    response = integrationService.accountStatusResponse(request);
+//                    HostRequestValidator.validateAccountStatus(request);
+//                    response = integrationService.accountStatusResponse(request);
 
                 } catch (ValidationException ve) {
                     response.setResponseCode("420");

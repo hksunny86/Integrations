@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.jws.WebService;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Formatter;
 import java.util.List;
 
@@ -27,7 +29,9 @@ public class JsIntegrationImpl implements JsIntegration {
 
     private static final Logger logger = LoggerFactory.getLogger(JsIntegrationImpl.class);
     private static String loginPinMatch = ConfigReader.getInstance().getProperty("loginPinMatch", "");
-
+    private String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+    private String ip = ConfigReader.getInstance().getProperty("logger.ip", "");
+    private String guid = ConfigReader.getInstance().getProperty("logger.guid", "");
     @Autowired
     HostIntegrationService integrationService;
 
@@ -43,7 +47,12 @@ public class JsIntegrationImpl implements JsIntegration {
         ChequeBookResponse response = new ChequeBookResponse();
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Cheque Book Status Update  Transaction Request with {}", requestXML);
+//        logger.info("Start Processing Cheque Book Status Update  Transaction Request with {}", requestXML);
+        String datetime = "";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime = DateFor.format(new Date());
+        logger.info("Start Processing Cheque Book Status Update  Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
         StringBuffer stringText = new StringBuffer(
                 request.getUserName() +
                         request.getPassword() +
@@ -67,7 +76,7 @@ public class JsIntegrationImpl implements JsIntegration {
                 try {
                     HostRequestValidator.validateChequeBook(request);
                     //for Mock
-                    response = integrationService.chequeBookResponse(request);
+//                    response = integrationService.chequeBookResponse(request);
 
                 } catch (ValidationException ve) {
                     response.setResponseCode("420");

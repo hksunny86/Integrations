@@ -5,6 +5,7 @@ import com.inov8.integration.middleware.controller.validator.ValidationException
 import com.inov8.integration.middleware.pdu.request.*;
 import com.inov8.integration.middleware.pdu.response.*;
 import com.inov8.integration.middleware.service.hostService.HostIntegrationService;
+import com.inov8.integration.middleware.util.ConfigReader;
 import com.inov8.integration.middleware.util.JSONUtil;
 import com.inov8.integration.middleware.util.XMLUtil;
 import io.swagger.annotations.Api;
@@ -16,13 +17,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
+
 @Api(value = "Restful APIs", description = "SwaggerUI is located under /documentation. This mapping redirects the necessary resources for the ui.", hidden = true)
 @RestController
 //@RequestMapping(value = "/documentation")
 public class JSController {
 
     private static Logger logger = LoggerFactory.getLogger(JSController.class.getSimpleName());
-
+    private String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+    private String ip = ConfigReader.getInstance().getProperty("logger.ip", "");
+    private String guid = ConfigReader.getInstance().getProperty("logger.guid", "");
     @Autowired
     HostIntegrationService integrationService;
 
@@ -36,8 +43,12 @@ public class JSController {
         logger.info("Customer Name Update Request Recieve at Controller at time: " + start);
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Customer Name Update Request with {}", requestXML);
-
+//        logger.info("Start Processing Customer Name Update Request with {}", requestXML);
+        String datetime = "";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime = DateFor.format(new Date());
+        logger.info("Start Processing Customer Name Update Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -108,8 +119,12 @@ public class JSController {
         logger.info("CLS Status Update Request Recieve at Controller at time: " + start);
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing CLS Status Update Request with {}", requestXML);
-
+//        logger.info("Start Processing CLS Status Update Request with {}", requestXML);
+        String datetime = "";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime = DateFor.format(new Date());
+        logger.info("tart Processing CLS Status Update Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -180,8 +195,12 @@ public class JSController {
         logger.info("Blink Account Verification Inquiry Request Recieve at Controller at time: " + start);
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Blink Account Verification Inquiry Request with {}", requestXML);
-
+//        logger.info("Start Processing Blink Account Verification Inquiry Request with {}", requestXML);
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        String datetime = "";
+        datetime = DateFor.format(new Date());
+        logger.info("Start Processing Blink Account Verification Inquiry Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -250,8 +269,12 @@ public class JSController {
         logger.info("Blink Account Verification Request Recieve at Controller at time: " + start);
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Blink Account Verification Request with {}", requestXML);
-
+//        logger.info("Start Processing Blink Account Verification Request with {}", requestXML);
+        String datetime = "";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime = DateFor.format(new Date());
+        logger.info("Start Processing Blink Account Verification Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -327,8 +350,12 @@ public class JSController {
         logger.info("Debit Card Status Verification Request Recieve at Controller at time: " + start);
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Debit Card Status Verification Request with {}", requestXML);
-
+//        logger.info("Start Processing Debit Card Status Verification Request with {}", requestXML);
+        String datetime = "";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime = DateFor.format(new Date());
+        logger.info("Start Processing Debit Card Status Verification Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -396,8 +423,12 @@ public class JSController {
         logger.info("Advance Loan Payment Settlement Request Recieve at Controller at time: " + start);
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Advance Loan Payment Settlement Request with {}", requestXML);
-
+//        logger.info("Start Processing Advance Loan Payment Settlement Request with {}", requestXML);
+        String datetime = "";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime = DateFor.format(new Date());
+        logger.info("Start Processing Advance Loan Payment Settlement Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -465,7 +496,11 @@ public class JSController {
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
         logger.info("Start Processing Fee Payment  Request with {}", requestXML);
-
+        String datetime = "";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime = DateFor.format(new Date());
+        logger.info("Start Processing Fee Payment  Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -534,8 +569,12 @@ public class JSController {
         logger.info("Fee Payment  Request Recieve at Controller at time: " + start);
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Fee Payment  Request with {}", requestXML);
-
+//        logger.info("Start Processing Fee Payment  Request with {}", requestXML);
+        String datetime = "";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime = DateFor.format(new Date());
+        logger.info("Start Processing Fee Payment  Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -609,7 +648,12 @@ public class JSController {
         long start = System.currentTimeMillis();
 
         try {
-            logger.info("Start Processing Optasia Debit Inquiry Transaction Request with {}", requestXML);
+//            logger.info("Start Processing Optasia Debit Inquiry Transaction Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Optasia Debit Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -700,7 +744,12 @@ public class JSController {
         try {
 
 
-            logger.info("Start Processing Optasia Debit Transaction Request with {}", requestXML);
+//            logger.info("Start Processing Optasia Debit Transaction Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Optasia Debit Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -725,39 +774,39 @@ public class JSController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-//                        HostRequestValidator.validateOptasiaDebit(request);
-                    response = integrationService.optasiaDebitResponse(request);
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
+                        HostRequestValidator.validateOptasiaDebit(request);
+                        response = integrationService.optasiaDebitResponse(request);
 
-                } catch (ValidationException ve) {
+                    } catch (ValidationException ve) {
+                        response.setResponseCode("420");
+                        response.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        response.setResponseCode("220");
+                        response.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR Optasia Debit PAYMENT TRANSACTION *********");
+                    logger.info("ResponseCode: " + response.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR Optasia Debit Payment TRANSACTION AUTHENTICATION *********");
+                    response = new OptasiaDebitResponse();
                     response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
+                    response.setResponseDescription("Request is not authenticated");
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
                 }
-
-                logger.info("******* DEBUG LOGS FOR Optasia Debit PAYMENT TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
             } else {
-                logger.info("******* DEBUG LOGS FOR Optasia Debit Payment TRANSACTION AUTHENTICATION *********");
+                logger.info("******* DEBUG LOGS FOR  Optasia Debit PAYMENT TRANSACTION *********");
                 response = new OptasiaDebitResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
             }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR  Optasia Debit PAYMENT TRANSACTION *********");
-//                response = new OptasiaDebitResponse();
-//                response.setResponseCode("111");
-//                response.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
         } catch (Exception e) {
 
             response = new OptasiaDebitResponse();
@@ -792,8 +841,12 @@ public class JSController {
             logger.info("Optasia Credit Inquiry Request Received at Controller at time: " + start);
             String requestXML = JSONUtil.getJSON(request);
 //        requestXML = XMLUtil.maskPassword(requestXML);
-            logger.info("Start Processing Optasia Credit Inquiry Request with {}", requestXML);
-
+//            logger.info("Start Processing Optasia Credit Inquiry Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Fee Payment  Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -885,7 +938,12 @@ public class JSController {
 
         try {
 
-            logger.info("Start Processing Optasia Credit Transaction Request with {}", requestXML);
+//            logger.info("Start Processing Optasia Credit Transaction Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Optasia Credit Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -910,39 +968,39 @@ public class JSController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-//                        HostRequestValidator.validateOptasiaCredit(request);
-                    response = integrationService.optasiaCreditResponse(request);
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
+                        HostRequestValidator.validateOptasiaCredit(request);
+                        response = integrationService.optasiaCreditResponse(request);
 
-                } catch (ValidationException ve) {
+                    } catch (ValidationException ve) {
+                        response.setResponseCode("420");
+                        response.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERRORa: Request Validation", ve);
+                    } catch (Exception e) {
+                        response.setResponseCode("220");
+                        response.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR Optasia Credit PAYMENT TRANSACTION *********");
+                    logger.info("ResponseCode: " + response.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR Optasia Credit Payment TRANSACTION AUTHENTICATION *********");
+                    response = new OptasiaCreditResponse();
                     response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
+                    response.setResponseDescription("Request is not authenticated");
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
                 }
-
-                logger.info("******* DEBUG LOGS FOR Optasia Credit PAYMENT TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
             } else {
-                logger.info("******* DEBUG LOGS FOR Optasia Credit Payment TRANSACTION AUTHENTICATION *********");
+                logger.info("******* DEBUG LOGS FOR Optasia Credit PAYMENT TRANSACTION *********");
                 response = new OptasiaCreditResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
             }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Optasia Credit PAYMENT TRANSACTION *********");
-//                response = new OptasiaCreditResponse();
-//                response.setResponseCode("111");
-//                response.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
         } catch (Exception e) {
 
             response = new OptasiaCreditResponse();
@@ -977,8 +1035,12 @@ public class JSController {
             logger.info("Transaction Status Request Received at Controller at time: " + start);
             String requestXML = JSONUtil.getJSON(request);
 //        requestXML = XMLUtil.maskPassword(requestXML);
-            logger.info("Start Processing Transaction Status Request with {}", requestXML);
-
+//            logger.info("Start Processing Transaction Status Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Transaction Status Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -989,42 +1051,42 @@ public class JSController {
                     .append(request.getTerminalId());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-//                        HostRequestValidator.validateTransactionStatus(request);
-                    transactionStatusResponse = integrationService.transactionStatusResponse(request);
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
+                        HostRequestValidator.validateTransactionStatus(request);
+                        transactionStatusResponse = integrationService.transactionStatusResponse(request);
 
-                } catch (ValidationException ve) {
+                    } catch (ValidationException ve) {
+                        transactionStatusResponse.setResponseCode("420");
+                        transactionStatusResponse.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        transactionStatusResponse.setResponseCode("220");
+                        transactionStatusResponse.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR  Transaction Status Request *********");
+                    logger.info("ResponseCode: " + transactionStatusResponse.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR  Transaction Status Request AUTHENTICATION *********");
+                    transactionStatusResponse = new TransactionStatusResponse();
                     transactionStatusResponse.setResponseCode("420");
-                    transactionStatusResponse.setResponseDescription(ve.getMessage());
+                    transactionStatusResponse.setResponseDescription("Request is not authenticated");
+                    transactionStatusResponse.setRrn(request.getRrn());
+                    transactionStatusResponse.setResponseDateTime(request.getDateTime());
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    transactionStatusResponse.setResponseCode("220");
-                    transactionStatusResponse.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
                 }
-
-                logger.info("******* DEBUG LOGS FOR  Transaction Status Request *********");
-                logger.info("ResponseCode: " + transactionStatusResponse.getResponseCode());
             } else {
-                logger.info("******* DEBUG LOGS FOR  Transaction Status Request AUTHENTICATION *********");
+                logger.info("******* DEBUG LOGS FOR Transaction Status Request *********");
                 transactionStatusResponse = new TransactionStatusResponse();
-                transactionStatusResponse.setResponseCode("420");
-                transactionStatusResponse.setResponseDescription("Request is not authenticated");
-                transactionStatusResponse.setRrn(request.getRrn());
-                transactionStatusResponse.setResponseDateTime(request.getDateTime());
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-
+                transactionStatusResponse.setResponseCode("111");
+                transactionStatusResponse.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
             }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Transaction Status Request *********");
-//                transactionStatusResponse = new TransactionStatusResponse();
-//                transactionStatusResponse.setResponseCode("111");
-//                transactionStatusResponse.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
         } catch (Exception e) {
 
             transactionStatusResponse = new TransactionStatusResponse();
@@ -1054,8 +1116,12 @@ public class JSController {
 
         try {
             String requestXML = JSONUtil.getJSON(request);
-            logger.info("Start Processing Profile Status Request with {}", requestXML);
-
+//            logger.info("Start Processing Profile Status Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Profile Status Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -1136,7 +1202,11 @@ public class JSController {
             String requestXML = JSONUtil.getJSON(request);
 //        requestXML = XMLUtil.maskPassword(requestXML);
             logger.info("Start Processing Lien Status Request with {}", requestXML);
-
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Lien Status Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -1214,7 +1284,12 @@ public class JSController {
 
         try {
 
-            logger.info("Start Processing Optasia Sms Generation Request with {}", requestXML);
+//            logger.info("Start Processing Optasia Sms Generation Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Optasia Sms Generation Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -1292,8 +1367,12 @@ public class JSController {
             logger.info("Initiate Loan Request Received at Controller at time: " + start);
             String requestXML = JSONUtil.getJSON(request);
 //        requestXML = XMLUtil.maskPassword(requestXML);
-            logger.info("Start Processing Initiate Loan Request with {}", requestXML);
-
+//            logger.info("Start Processing Initiate Loan Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Initiate Loan Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -1322,42 +1401,42 @@ public class JSController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-//                        HostRequestValidator.validateInitiateLoan(request);
-                    offerListForCommodityResponse = integrationService.initiateLoanResponse(request);
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
+                        HostRequestValidator.validateInitiateLoan(request);
+                        offerListForCommodityResponse = integrationService.initiateLoanResponse(request);
 
-                } catch (ValidationException ve) {
+                    } catch (ValidationException ve) {
+                        offerListForCommodityResponse.setResponseCode("420");
+                        offerListForCommodityResponse.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        offerListForCommodityResponse.setResponseCode("220");
+                        offerListForCommodityResponse.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR Initiate Loan Request *********");
+                    logger.info("ResponseCode: " + offerListForCommodityResponse.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR Initiate Loan Request AUTHENTICATION *********");
+                    offerListForCommodityResponse = new OfferListForCommodityResponse();
                     offerListForCommodityResponse.setResponseCode("420");
-                    offerListForCommodityResponse.setResponseDescription(ve.getMessage());
+                    offerListForCommodityResponse.setResponseDescription("Request is not authenticated");
+                    offerListForCommodityResponse.setRrn(request.getRrn());
+                    offerListForCommodityResponse.setResponseDateTime(request.getDateTime());
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    offerListForCommodityResponse.setResponseCode("220");
-                    offerListForCommodityResponse.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
                 }
-
-                logger.info("******* DEBUG LOGS FOR Initiate Loan Request *********");
-                logger.info("ResponseCode: " + offerListForCommodityResponse.getResponseCode());
             } else {
-                logger.info("******* DEBUG LOGS FOR Initiate Loan Request AUTHENTICATION *********");
+                logger.info("******* DEBUG LOGS FOR Initiate Loan Request *********");
                 offerListForCommodityResponse = new OfferListForCommodityResponse();
-                offerListForCommodityResponse.setResponseCode("420");
-                offerListForCommodityResponse.setResponseDescription("Request is not authenticated");
-                offerListForCommodityResponse.setRrn(request.getRrn());
-                offerListForCommodityResponse.setResponseDateTime(request.getDateTime());
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-
+                offerListForCommodityResponse.setResponseCode("111");
+                offerListForCommodityResponse.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
             }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Initiate Loan Request *********");
-//                offerListForCommodityResponse = new OfferListForCommodityResponse();
-//                offerListForCommodityResponse.setResponseCode("111");
-//                offerListForCommodityResponse.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
         } catch (Exception e) {
             offerListForCommodityResponse = new OfferListForCommodityResponse();
             offerListForCommodityResponse.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
@@ -1389,8 +1468,12 @@ public class JSController {
             logger.info("Select Loan Request Received at Controller at time: " + start);
             String requestXML = JSONUtil.getJSON(request);
 //        requestXML = XMLUtil.maskPassword(requestXML);
-            logger.info("Start Processing Select Loan Request with {}", requestXML);
-
+//            logger.info("Start Processing Select Loan Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Select Loan Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -1488,8 +1571,12 @@ public class JSController {
             logger.info("Loan Offer Request Received at Controller at time: " + start);
             String requestXML = JSONUtil.getJSON(request);
 //        requestXML = XMLUtil.maskPassword(requestXML);
-            logger.info("Start Processing Loan Offer Request with {}", requestXML);
-
+//            logger.info("Start Processing Loan Offer Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Loan Offer Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -1586,8 +1673,12 @@ public class JSController {
             logger.info("Loan Payment Request Received at Controller at time: " + start);
             String requestXML = JSONUtil.getJSON(request);
 //        requestXML = XMLUtil.maskPassword(requestXML);
-            logger.info("Start Processing Loan Payment Request with {}", requestXML);
-
+//            logger.info("Start Processing Loan Payment Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Loan Payment Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -1682,8 +1773,12 @@ public class JSController {
             logger.info("Outstanding Loan Request Received at Controller at time: " + start);
             String requestXML = JSONUtil.getJSON(request);
             //        requestXML = XMLUtil.maskPassword(requestXML);
-            logger.info("Start Processing Outstanding Loan Request with {}", requestXML);
-
+//            logger.info("Start Processing Outstanding Loan Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Outstanding Loan Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -1773,9 +1868,12 @@ public class JSController {
         long start = System.currentTimeMillis();
 
         try {
-
-
-            logger.info("Start Processing Loan History Request with {}", requestXML);
+//            logger.info("Start Processing Loan History Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Loan History Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -1864,7 +1962,12 @@ public class JSController {
         try {
             String requestXML = JSONUtil.getJSON(request);
 //        requestXML = XMLUtil.maskPassword(requestXML);
-            logger.info("Start Processing Loan Plan Request with {}", requestXML);
+//            logger.info("Start Processing Loan Plan Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Loan Plan Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -1954,7 +2057,12 @@ public class JSController {
 
         try {
 
-            logger.info("Start Processing Transaction Active Request with {}", requestXML);
+//            logger.info("Start Processing Transaction Active Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Transaction Active Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -2043,8 +2151,12 @@ public class JSController {
         String requestXML = JSONUtil.getJSON(request);
         try {
 
-            logger.info("Start Processing Loan Call Back Request with {}", requestXML);
-
+//            logger.info("Start Processing Loan Call Back Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Loan Call Back Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -2057,9 +2169,6 @@ public class JSController {
                     .append(request.getLoanEventStatus())
                     .append(request.getOrigSource())
                     .append(request.getInternalLoanId());
-//                    .append(request.getThirdPartyTransactionId())
-//                    .append(request.getReserved1())
-//                    .append(request.getReserved2());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
@@ -2130,7 +2239,12 @@ public class JSController {
         try {
             String requestXML = JSONUtil.getJSON(request);
 //        requestXML = XMLUtil.maskPassword(requestXML);
-            logger.info("Start Processing Simple Account Opening Request with {}", requestXML);
+//            logger.info("Start Processing Simple Account Opening Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Simple Account Opening Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -2219,8 +2333,12 @@ public class JSController {
             logger.info("Get Outstanding Loan Request Received at Controller at time: " + start);
             String requestXML = JSONUtil.getJSON(request);
             //        requestXML = XMLUtil.maskPassword(requestXML);
-            logger.info("Start Processing Get Outstanding Loan Request with {}", requestXML);
-
+//            logger.info("Start Processing Get Outstanding Loan Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Get Outstanding Loan Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -2309,8 +2427,12 @@ public class JSController {
             logger.info("Merchant Account Upgrade Request Received at Controller at time: " + start);
             String requestXML = JSONUtil.getJSON(request);
             //        requestXML = XMLUtil.maskPassword(requestXML);
-            logger.info("Start Processing Merchant Account Upgrade Request with {}", requestXML);
-
+//            logger.info("Start Processing Merchant Account Upgrade Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Merchant Account Upgrade Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
@@ -2413,8 +2535,12 @@ public class JSController {
             logger.info("Merchant Picture Upgrade Request Received at Controller at time: " + start);
             String requestXML = JSONUtil.getJSON(request);
             //        requestXML = XMLUtil.maskPassword(requestXML);
-            logger.info("Start Processing Merchant Picture Upgrade Request with {}", requestXML);
-
+//            logger.info("Start Processing Merchant Picture Upgrade Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Merchant Picture Upgrade Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())

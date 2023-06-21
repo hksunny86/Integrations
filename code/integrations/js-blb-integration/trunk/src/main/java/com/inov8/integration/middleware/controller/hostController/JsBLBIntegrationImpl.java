@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.jws.WebService;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Formatter;
 import java.util.List;
 
@@ -55,7 +57,15 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         VerifyAccountResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Account Verify Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Account Verify Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+//        logger.info("Start Processing Account Verify Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 request.getUserName() +
                         request.getPassword() +
@@ -120,7 +130,14 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         VerifyLoginAccountResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Account Verify Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Account Verify Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
         StringBuffer stringText = new StringBuffer(
                 request.getUserName() +
                         request.getPassword() +
@@ -187,7 +204,15 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         AccountOpeningResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Account Opening Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Account Opening Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+//        logger.info("Start Processing Account Opening Transaction Request with {}", requestXML);
 
         StringBuffer stringText = new StringBuffer(
                 request.getUserName() +
@@ -267,7 +292,15 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         ConventionalAccountOpeningResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Conventional Account Opening Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Conventional Account Opening  Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+//        logger.info("Start Processing Conventional Account Opening Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 request.getUserName() +
                         request.getPassword() +
@@ -335,7 +368,15 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         PaymentInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Payment Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Payment Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+//        logger.info("Start Processing Payment Inquiry Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 request.getUserName() +
                         request.getPassword() +
@@ -401,7 +442,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
         StringBuffer stringText = null;
-        logger.info("Start Processing Payment Request Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Payment Request Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Payment Request Transaction Request with {}", requestXML);
         if (request.getChannelId().equalsIgnoreCase("FONEPAY")) {
             stringText = new StringBuffer(
                     request.getUserName() +
@@ -515,7 +565,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         PaymentReversalResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Payment Reversal Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Payment Reversal Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Payment Reversal Transaction Request with {}", requestXML);
 
         StringBuffer stringText = new StringBuffer(
                 request.getUserName() +
@@ -575,7 +634,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         OtpVerificationResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing OTP Verification Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing OTP Verification Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing OTP Verification Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 request.getUserName() +
                         request.getPassword() +
@@ -635,7 +703,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         CardTaggingResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Card Tagging Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Card Tagging Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Card Tagging Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 request.getUserName() +
                         request.getPassword() +
@@ -699,7 +776,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         AccountLinkDeLinkResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Account Link De-Link Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Account Link De-Link Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Account Link De-Link Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 request.getUserName() +
                         request.getPassword() +
@@ -764,7 +850,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         SetCardStatusResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Set Card Status Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Set Card Status Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Set Card Status Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 request.getUserName() +
                         request.getPassword() +
@@ -822,7 +917,15 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         GenerateOtpResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Generate OTP Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Generate OTP Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+//        logger.info("Start Processing Generate OTP Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -879,7 +982,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         BalanceInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Balance Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Balance Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Balance Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -942,7 +1054,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         MiniStatementResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing  Mini Statement Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Mini Statement Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing  Mini Statement Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1004,7 +1125,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         BillPaymentInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing  Bill Payment Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Bill Payment Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing  Bill Payment Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1068,7 +1198,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         BillPaymentResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing  Bill Payment  Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Bill Payment Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing  Bill Payment  Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1136,7 +1275,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         CashInInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing  Cash In Inquiry  Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Cash-in Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing  Cash In Inquiry  Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1193,7 +1341,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         CashInResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing  Cash In  Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Cash-in Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing  Cash In  Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1258,7 +1415,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         TitleFetchResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing  Title Fetch Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Title Fetch Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing  Title Fetch Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1324,7 +1490,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         CashInAgentResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing  Title Fetch Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Cash-in agent Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing  Title Fetch Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1391,7 +1566,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         CashOutInquiryResponse response = new CashOutInquiryResponse();
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Customer Cash Out Inquiry Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Cash-out Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Customer Cash Out Inquiry Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1457,7 +1641,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         CashOutResponse response = new CashOutResponse();
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing  Customer Cash Out Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Cash-out Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing  Customer Cash Out Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1528,7 +1721,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Generate OTP Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Mini Registration Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Generate OTP Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1591,7 +1793,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         MpinChangeResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Generate OTP Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing MPIN Change Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Generate OTP Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1655,7 +1866,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         WalletToWalletPaymentInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Generate OTP Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Wallet to Wallet Payment Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Generate OTP Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1718,7 +1938,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         WalletToWalletPaymentResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Wallet To Wallet Payment Response Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Wallet to Wallet Payment Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Wallet To Wallet Payment Response Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1783,7 +2012,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         UpgradeAccountInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Upgrade Account inquiry Response Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Upgrade Account Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Upgrade Account inquiry Response Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1844,7 +2082,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         UpgradeAccountResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Upgrade Account Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Upgrade Account Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Upgrade Account Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1910,7 +2157,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         AccountStatusChangeResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Wallet To Wallet Payment Response Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Account Status Change Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Wallet To Wallet Payment Response Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -1974,7 +2230,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         IbftTitleFetchResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing IBFT Title Fetch Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing IBFT Title Fetch Response Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing IBFT Title Fetch Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2040,7 +2305,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         IbftAdviceResponse response = null;
         String requestXML = XMLUtil.convertRequest(ibftAdviceRequest);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing IBFT Title Fetch Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing IBFT Advice Response Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing IBFT Title Fetch Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(ibftAdviceRequest.getUserName())
                 .append(ibftAdviceRequest.getPassword())
@@ -2114,7 +2388,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         ChallanPaymentResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Challan Payment Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Challan Payment Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Challan Payment Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2181,7 +2464,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         ChallanPaymentInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing  Challan Payment Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Challan Payment Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing  Challan Payment Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2243,7 +2535,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         DebitCardIssuanceInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing  Debit Card Issuance Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Debit Card Issuance Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing  Debit Card Issuance Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2306,7 +2607,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         DebitCardIssuanceResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing  Debit Card Issuance Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Debit Card Issuance Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing  Debit Card Issuance Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2372,7 +2682,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         WalletToCnicResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Wallet To CNIC Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Wallet to CNIC Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Wallet To CNIC Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2436,7 +2755,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         WalletToCnicInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Wallet To CNIC Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Wallet to CNIC Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Wallet To CNIC Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2501,7 +2829,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         HRARegistrationInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing HRA Registration Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing HRA Registration Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing HRA Registration Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2562,7 +2899,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         HRARegistrationResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing HRA Registration Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing HRA Registration Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing HRA Registration Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2636,7 +2982,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         WalletToCoreInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Wallet To Core Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Wallet to Core Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Wallet To Core Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2699,7 +3054,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         WalletToCoreResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Wallet To Core Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Wallet to Core Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Wallet To Core Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2764,7 +3128,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         WalletToCoreInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Fund Wallet To Core Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Fund Wallet to Core Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Fund Wallet To Core Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2827,7 +3200,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         WalletToCoreResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Fund Wallet To Core Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Fund Wallet to Core Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Fund Wallet To Core Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2891,7 +3273,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         HRAToWalletInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing HRA TO Wallet Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing HRA to Wallet Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing HRA TO Wallet Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -2952,7 +3343,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         HRAToWalletResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing HRA TO Wallet Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing HRA to Wallet Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing HRA TO Wallet Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -3014,7 +3414,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         DebitInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Debit Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Debit Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Debit Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -3084,7 +3493,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         DebitResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Debit Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Debit Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Debit Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -3155,7 +3573,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         AgentBillPaymentInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing  Agent Bill Payment Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent Bill Payment Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing  Agent Bill Payment Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -3222,7 +3649,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         AgentBillPaymentResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Bill Payment Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent Bill Payment Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Bill Payment Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -3290,7 +3726,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         CreditInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Credit Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Credit Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Credit Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -3360,7 +3805,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         CreditResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Credit Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Credit Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Credit Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -3431,7 +3885,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         HRACashWithdrawalInquiryResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing HRA Cash Withdrawal Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing HRA Cash Withdrawal Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing HRA Cash Withdrawal Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -3502,7 +3965,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         HRACashWithdrawalResponse response = null;
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing HRA Cash Withdrawal Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing HRA Cash Withdrawal Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing HRA Cash Withdrawal Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -3574,7 +4046,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         LoginAuthenticationResponse response = null;
         String requestXML = XMLUtil.convertRequest(loginAuthenticationRequest);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Login Authentication Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Login Authentication Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Login Authentication Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 loginAuthenticationRequest.getUserName() +
                         loginAuthenticationRequest.getPassword() +
@@ -3635,7 +4116,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         ZindigiLoginAuthenticationResponse response = null;
         String requestXML = XMLUtil.convertRequest(zindigiLoginAuthenticationRequest);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Login Authentication Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Zindgi Login Authentication Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Login Authentication Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 zindigiLoginAuthenticationRequest.getUserName() +
                         zindigiLoginAuthenticationRequest.getPassword() +
@@ -3696,7 +4186,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         List<String> loginPin = Arrays.asList(loginPinMatch.split("\\s*,\\s*"));
         String requestXML = XMLUtil.convertRequest(loginPinRequest);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Login Pin Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Login PIN Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Login Pin Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 loginPinRequest.getUserName() +
                         loginPinRequest.getPassword() +
@@ -3765,7 +4264,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         List<String> loginPin = Arrays.asList(loginPinMatch.split("\\s*,\\s*"));
         String requestXML = XMLUtil.convertRequest(loginPinChangeRequest);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Login Pin Change Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Login PIN Change Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Login Pin Change Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 loginPinChangeRequest.getUserName() +
                         loginPinChangeRequest.getPassword() +
@@ -3836,7 +4344,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         List<String> loginPin = Arrays.asList(loginPinMatch.split("\\s*,\\s*"));
         String requestXML = XMLUtil.convertRequest(resetPinRequest);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Reset PIN Change Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Reset PIN Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Reset PIN Change Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 resetPinRequest.getUserName() +
                         resetPinRequest.getPassword() +
@@ -3908,7 +4425,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Advance Loan Salary Payment Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Advance Loan Salary Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Advance Loan Salary Payment Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -3975,7 +4501,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing SMS Generation Request Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing SMS Generation Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing SMS Generation Request Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -4034,7 +4569,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         AgentAccountLoginResponse response = null;
         String requestXML = XMLUtil.convertRequest(agentAccountLoginRequest);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Account Login Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent Account Login Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Account Login Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 agentAccountLoginRequest.getUserName() +
                         agentAccountLoginRequest.getPassword() +
@@ -4099,7 +4643,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         AgentLoginPinGenerationResponse response = null;
         String requestXML = XMLUtil.convertRequest(agentLoginPinGenerationRequest);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Login PIN Generation Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent Login PIN Generation Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Login PIN Generation Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 agentLoginPinGenerationRequest.getUserName() +
                         agentLoginPinGenerationRequest.getPassword() +
@@ -4164,7 +4717,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         AgentLoginPinResetResponse response = null;
         String requestXML = XMLUtil.convertRequest(agentLoginPinResetRequest);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Login PIN Reset Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent Login PIN Reset Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Login PIN Reset Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 agentLoginPinResetRequest.getUserName() +
                         agentLoginPinResetRequest.getPassword() +
@@ -4231,7 +4793,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         AgentMpinGenerationResponse response = null;
         String requestXML = XMLUtil.convertRequest(agentMpinGenerationRequest);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Mpin Generation Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent MPIN Generation Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Mpin Generation Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 agentMpinGenerationRequest.getUserName() +
                         agentMpinGenerationRequest.getPassword() +
@@ -4298,7 +4869,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         AgentMpinResetResponse response = null;
         String requestXML = XMLUtil.convertRequest(agentMpinResetRequest);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Mpin Reset Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent Mpin Reset Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Mpin Reset Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 agentMpinResetRequest.getUserName() +
                         agentMpinResetRequest.getPassword() +
@@ -4435,7 +5015,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Balance Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent Balance Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Balance Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -5461,7 +6050,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Ibft Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent IBFT Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Ibft Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -5531,7 +6129,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Ibft Payment Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent IBFT Payment Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Ibft Payment Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -6460,7 +7067,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Cash In Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent Cash Deposit Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Cash In Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -6527,7 +7143,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Cash In Payment Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent Cash Deposit Payment Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Cash In Payment Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -6602,7 +7227,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Cash Withdrawal Inquiry Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent Cash Withdrawal Inquiry Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Cash Withdrawal Inquiry Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -6672,7 +7306,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Agent Cash Withdrawal Payment Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Agent Cash Withdrawal Payment Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Agent Cash Withdrawal Payment Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -6750,7 +7393,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing MPIN Verification Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing MPIN Verification Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing MPIN Verification Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -6809,7 +7461,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Segment List Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Segment List Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Segment List Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -6871,7 +7532,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Catalog List Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Catalog List Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Catalog List Transaction Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -6934,7 +7604,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing L2 Account Opening Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing L2 Account Opening Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing L2 Account Opening Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -7018,7 +7697,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing L2 Account Upgrade Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing L2 Account Upgrade Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing L2 Account Upgrade Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -7116,7 +7804,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Account Details Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Account Detail Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Account Details Request with {}", requestXML);
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
@@ -7245,7 +7942,16 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         ChequeBookResponse response = new ChequeBookResponse();
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
-        logger.info("Start Processing Cheque Book Status Update  Transaction Request with {}", requestXML);
+        String datetime ="";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime= DateFor.format(new Date());
+        String uri = ConfigReader.getInstance().getProperty("logger.uri", "");
+        String ip = ConfigReader.getInstance().getProperty("logger.ip","");
+        String guid = ConfigReader.getInstance().getProperty("logger.guid","");
+        logger.info("Start Processing Cheque Book Status Update Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing Cheque Book Status Update  Transaction Request with {}", requestXML);
         StringBuffer stringText = new StringBuffer(
                 request.getUserName() +
                         request.getPassword() +

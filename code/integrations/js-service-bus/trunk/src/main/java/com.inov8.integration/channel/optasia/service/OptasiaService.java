@@ -21,6 +21,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -116,7 +117,16 @@ public class OptasiaService {
 //                        ecibDataResponse = (ECIBDataResponse) JSONUtil.jsonToObject(result, ECIBDataResponse.class);
                         Objects.requireNonNull(ecibDataResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     }
+
                 }
+                if (e instanceof ResourceAccessException) {
+                    String result = e.getMessage();
+                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
+                    Objects.requireNonNull(ecibDataResponse).setResponseCode("500");
+//                    validatePdmResponse = (validatePdmResponse) JSONUtil.jsonToObject(result, validatePdmResponse.class);
+                }
+            } catch (Exception e) {
+                logger.error("Exception Occurred: " + e.getMessage());
             }
         }
 
@@ -198,6 +208,15 @@ public class OptasiaService {
                         Objects.requireNonNull(offerListForCommodityResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     }
                 }
+
+                if (e instanceof ResourceAccessException) {
+                    String result = e.getMessage();
+                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
+                    Objects.requireNonNull(offerListForCommodityResponse).setResponseCode("500");
+//                    validatePdmResponse = (validatePdmResponse) JSONUtil.jsonToObject(result, validatePdmResponse.class);
+                }
+            } catch (Exception e) {
+                logger.error("Exception Occurred: " + e.getMessage());
             }
         }
 
@@ -273,6 +292,14 @@ public class OptasiaService {
                         Objects.requireNonNull(loanOfferResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     }
                 }
+                if (e instanceof ResourceAccessException) {
+                    String result = e.getMessage();
+                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
+                    Objects.requireNonNull(loanOfferResponse).setResponseCode("500");
+//                    validatePdmResponse = (validatePdmResponse) JSONUtil.jsonToObject(result, validatePdmResponse.class);
+                }
+            } catch (Exception e) {
+                logger.error("Exception Occurred: " + e.getMessage());
             }
         }
 
@@ -353,6 +380,14 @@ public class OptasiaService {
                         Objects.requireNonNull(initiateLoanResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     }
                 }
+                if (e instanceof ResourceAccessException) {
+                    String result = e.getMessage();
+                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
+                    Objects.requireNonNull(initiateLoanResponse).setResponseCode("500");
+//                    validatePdmResponse = (validatePdmResponse) JSONUtil.jsonToObject(result, validatePdmResponse.class);
+                }
+            } catch (Exception e) {
+                logger.error("Exception Occurred: " + e.getMessage());
             }
         }
 
@@ -428,6 +463,14 @@ public class OptasiaService {
                         Objects.requireNonNull(loansResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     }
                 }
+                if (e instanceof ResourceAccessException) {
+                    String result = e.getMessage();
+                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
+                    Objects.requireNonNull(loansResponse).setResponseCode("500");
+//                    validatePdmResponse = (validatePdmResponse) JSONUtil.jsonToObject(result, validatePdmResponse.class);
+                }
+            } catch (Exception e) {
+                logger.error("Exception Occurred: " + e.getMessage());
             }
 
         }
@@ -503,8 +546,15 @@ public class OptasiaService {
                         Objects.requireNonNull(outstandingResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     }
                 }
+                if (e instanceof ResourceAccessException) {
+                    String result = e.getMessage();
+                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
+                    Objects.requireNonNull(outstandingResponse).setResponseCode("500");
+//                    validatePdmResponse = (validatePdmResponse) JSONUtil.jsonToObject(result, validatePdmResponse.class);
+                }
+            } catch (Exception e) {
+                logger.error("Exception Occurred: " + e.getMessage());
             }
-
 
         }
 
@@ -590,6 +640,14 @@ public class OptasiaService {
                         Objects.requireNonNull(loanPaymentResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
                     }
                 }
+                if (e instanceof ResourceAccessException) {
+                    String result = e.getMessage();
+                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
+                    Objects.requireNonNull(loanPaymentResponse).setResponseCode("500");
+//                    validatePdmResponse = (validatePdmResponse) JSONUtil.jsonToObject(result, validatePdmResponse.class);
+                }
+            } catch (Exception e) {
+                logger.error("Exception Occurred: " + e.getMessage());
             }
         }
 
@@ -743,29 +801,68 @@ public class OptasiaService {
             OptasiaMock optasiaMock = new OptasiaMock();
             String response = optasiaMock.status();
             loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(response, LoanStatusResponse.class);
+            Objects.requireNonNull(loanStatusResponse).setResponseCode("200");
             logger.info("Response Code of Loans Status Request : " + response);
             logger.info("Response Code for Loan Status Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
         } else {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Username", username);
-            headers.add("Password", password);
-            headers.add("Authorization", "Basic " + optasiaAuthorization);
+            try {
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                headers.add("Username", username);
+                headers.add("Password", password);
+                headers.add("Authorization", "Basic " + optasiaAuthorization);
 
-            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaLoanStatus)
-                    .queryParam("identityType", loanStatusRequest.getIdentityType())
-                    .queryParam("origSource", loanStatusRequest.getOrigSource())
-                    .queryParam("identityValue", loanStatusRequest.getIdentityValue());
+                UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaLoanStatus)
+                        .queryParam("identityType", loanStatusRequest.getIdentityType())
+                        .queryParam("origSource", loanStatusRequest.getOrigSource())
+                        .queryParam("identityValue", loanStatusRequest.getIdentityValue());
 
 
-            String url = uri.toUriString();
-            logger.info("Requesting URL " + url);
-            HttpEntity httpEntity = new HttpEntity(headers);
-            logger.info("Sending Loan Status Request Sent to Client " + httpEntity);
-            ResponseEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
-            logger.info("Response code received from client " + res.getStatusCode().value());
-            logger.info("Response received from client " + res.getBody());
-            loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(res.getBody(), LoanStatusResponse.class);
+                String url = uri.toUriString();
+                logger.info("Requesting URL " + url);
+                HttpEntity httpEntity = new HttpEntity(headers);
+                logger.info("Sending Loan Status Request Sent to Client " + httpEntity);
+                ResponseEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
+//                ResponseEntity<String> res = new ResponseEntity<>(body, HttpStatus.OK);
+                logger.info("Response code of Loans Status Request received from client " + res.getStatusCode().value());
+                logger.info("Response of Loans Status Request received from client " + res.getBody());
+                String responseCode = String.valueOf(res.getStatusCode().value());
+                if (responseCode.equals("200")) {
+                    loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(res.getBody(), LoanStatusResponse.class);
+                    Objects.requireNonNull(loanStatusResponse).setResponseCode(responseCode);
+                }
+            } catch (RestClientException e) {
+                if (e instanceof HttpStatusCodeException) {
+                    String response = ((HttpStatusCodeException) e).getStatusCode().toString();
+                    String result;
+                    if (response.equals("400")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(result, LoanStatusResponse.class);
+                        Objects.requireNonNull(loanStatusResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    } else if (response.equals("422")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(result, LoanStatusResponse.class);
+                        Objects.requireNonNull(loanStatusResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    } else if (response.equals("500")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(result, LoanStatusResponse.class);
+                        Objects.requireNonNull(loanStatusResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    } else {
+                        result = ((Exception) e).getMessage();
+                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received " + ((HttpStatusCodeException) e).getStatusCode().toString());
+                        loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(result, LoanStatusResponse.class);
+                        Objects.requireNonNull(loanStatusResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                    }
+                }
+                if (e instanceof ResourceAccessException) {
+                    String result = e.getMessage();
+                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
+                    Objects.requireNonNull(loanStatusResponse).setResponseCode("500");
+//                    validatePdmResponse = (validatePdmResponse) JSONUtil.jsonToObject(result, validatePdmResponse.class);
+                }
+            } catch (Exception e) {
+                logger.error("Exception Occurred: " + e.getMessage());
+            }
         }
 
         long endTime = (new Date()).getTime();

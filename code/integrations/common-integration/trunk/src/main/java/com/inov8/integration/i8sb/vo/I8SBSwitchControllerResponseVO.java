@@ -5,6 +5,7 @@ import com.inov8.integration.i8sb.vo.CardDetailVO;
 import com.inov8.integration.vo.StatementVo;
 import com.inov8.integration.webservice.optasiaVO.Account;
 import com.inov8.integration.webservice.optasiaVO.Charge;
+import com.inov8.integration.webservice.optasiaVO.LoanInfo;
 import com.inov8.integration.webservice.optasiaVO.ThirdPartyData;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -466,6 +467,15 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private List<Charge> chargeList;
     private List<Account> accountList;
     private List<ThirdPartyData> thirdPartyDataList;
+    private LoanInfo loanInfoSummary;
+
+    public LoanInfo getLoanInfoSummary() {
+        return loanInfoSummary;
+    }
+
+    public void setLoanInfoSummary(LoanInfo loanInfoSummary) {
+        this.loanInfoSummary = loanInfoSummary;
+    }
 
     public String getNotify() {
         return notify;

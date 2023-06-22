@@ -7,8 +7,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
+import com.inov8.integration.webservice.optasiaVO.MaturityDetails;
+import com.inov8.integration.webservice.optasiaVO.OutstandingStatus;
+import com.inov8.integration.webservice.optasiaVO.Plan;
+import com.inov8.integration.webservice.optasiaVO.Repayment;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -22,6 +28,10 @@ public class LoanStatusResponse extends Response implements Serializable {
 
     private static final long serialVersionUID = 5824473488070382311L;
 
+    @JsonProperty("code")
+    private String code;
+    @JsonProperty("message")
+    private String message;
     @JsonProperty("identityValue")
     private String identityValue;
     @JsonProperty("identityType")
@@ -35,6 +45,22 @@ public class LoanStatusResponse extends Response implements Serializable {
 
     private String responseCode;
     private String responseDescription;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getResponseCode() {
         return responseCode;
@@ -107,46 +133,78 @@ public class LoanStatusResponse extends Response implements Serializable {
 
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
-        i8SBSwitchControllerResponseVO.setResponseCode("00");
+        if (this.getResponseCode().equals("200") || this.getResponseCode() != null) {
+            i8SBSwitchControllerResponseVO.setResponseCode("00");
+            i8SBSwitchControllerResponseVO.setDescription("Success");
+        } else {
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
+            i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
+        }
         i8SBSwitchControllerResponseVO.setIdentityValue(this.getIdentityValue());
         i8SBSwitchControllerResponseVO.setIdentityType(this.getIdentityType());
         i8SBSwitchControllerResponseVO.setOrigSource(this.getOrigSource());
         i8SBSwitchControllerResponseVO.setReceivedTimestamp(this.getReceivedTimestamp());
-        i8SBSwitchControllerResponseVO.setInternalLoanId(this.getLoanInfo().getLoan().getInternalLoanId());
-        i8SBSwitchControllerResponseVO.setExternalLoanId(this.getLoanInfo().getLoan().getExternalLoanId());
-        i8SBSwitchControllerResponseVO.setLoanState(this.getLoanInfo().getLoan().getLoanState());
-        i8SBSwitchControllerResponseVO.setLoanTimeStamp(this.getLoanInfo().getLoan().getLoanTimestamp());
-        i8SBSwitchControllerResponseVO.setLoanReason(this.getLoanInfo().getLoan().getLoanReason());
-        i8SBSwitchControllerResponseVO.setOfferName(this.getLoanInfo().getLoan().getLoanOffer().getOfferName());
-        i8SBSwitchControllerResponseVO.setCommodityType(this.getLoanInfo().getLoan().getLoanOffer().getCommodityType());
-        i8SBSwitchControllerResponseVO.setCurrencyCode(this.getLoanInfo().getLoan().getLoanOffer().getCurrencyCode());
-        i8SBSwitchControllerResponseVO.setPrincipalAmount(this.getLoanInfo().getLoan().getLoanOffer().getPrincipalAmount());
-        i8SBSwitchControllerResponseVO.setSetUpFees(this.getLoanInfo().getLoan().getLoanOffer().getSetupFees());
-        i8SBSwitchControllerResponseVO.setLoanPlanId(this.getLoanInfo().getLoan().getLoanOffer().getLoanPlanId());
-        i8SBSwitchControllerResponseVO.setLoanPlanName(this.getLoanInfo().getLoan().getLoanOffer().getLoanPlanName());
-        i8SBSwitchControllerResponseVO.setLoanProductGroup(this.getLoanInfo().getLoan().getLoanOffer().getLoanProductGroup());
-        i8SBSwitchControllerResponseVO.setMaturityDuration(this.getLoanInfo().getLoan().getLoanOffer().getMaturityDetails().getMaturityDuration());
-        i8SBSwitchControllerResponseVO.setRepaymentCounts(this.getLoanInfo().getReport().getRepayment().getRepaymentsCount().toString());
-        i8SBSwitchControllerResponseVO.setRepaymentCounts(this.getLoanInfo().getReport().getRepayment().getRepaymentsCount().toString());
-        i8SBSwitchControllerResponseVO.setGross(this.getLoanInfo().getReport().getRepayment().getGross());
-        i8SBSwitchControllerResponseVO.setPrincipal(this.getLoanInfo().getReport().getRepayment().getPrincipal());
-        i8SBSwitchControllerResponseVO.setSetUpFees(this.getLoanInfo().getReport().getRepayment().getSetupFees());
-        i8SBSwitchControllerResponseVO.setInterest(this.getLoanInfo().getReport().getRepayment().getInterest());
-        i8SBSwitchControllerResponseVO.setInterestVAT(this.getLoanInfo().getReport().getRepayment().getInterestVAT());
-        i8SBSwitchControllerResponseVO.setCharges(this.getLoanInfo().getReport().getRepayment().getCharges());
-        i8SBSwitchControllerResponseVO.setChargesVAT(this.getLoanInfo().getReport().getRepayment().getChargesVAT());
-        i8SBSwitchControllerResponseVO.setCurrencyCode(this.getLoanInfo().getReport().getOutstanding().getCurrencyCode());
-        i8SBSwitchControllerResponseVO.setTotalGross(this.getLoanInfo().getReport().getOutstanding().getTotalGross());
-        i8SBSwitchControllerResponseVO.setTotalPrincipal(this.getLoanInfo().getReport().getOutstanding().getTotalPrincipal());
-        i8SBSwitchControllerResponseVO.setTotalSetupFees(this.getLoanInfo().getReport().getOutstanding().getTotalSetupFees());
-        i8SBSwitchControllerResponseVO.setTotalInterest(this.getLoanInfo().getReport().getOutstanding().getTotalInterest());
-        i8SBSwitchControllerResponseVO.setTotalInterestVAT(this.getLoanInfo().getReport().getOutstanding().getTotalInterestVAT());
-        i8SBSwitchControllerResponseVO.setTotalCharges(this.getLoanInfo().getReport().getOutstanding().getTotalCharges());
-        i8SBSwitchControllerResponseVO.setTotalChargesVAT(this.getLoanInfo().getReport().getOutstanding().getTotalChargesVAT());
-        i8SBSwitchControllerResponseVO.setTotalPendingRecoveries(this.getLoanInfo().getReport().getOutstanding().getTotalPendingRecoveries());
-        i8SBSwitchControllerResponseVO.setCurrentPeriod(this.getLoanInfo().getReport().getPlan().getCurrentPeriod());
-        i8SBSwitchControllerResponseVO.setDaysLeftInPeriod(this.getLoanInfo().getReport().getPlan().getDaysLeftInPeriod());
-        i8SBSwitchControllerResponseVO.setNextPeriod(this.getLoanInfo().getReport().getPlan().getNextPeriod());
+        if (this.getLoanInfo() != null) {
+
+            com.inov8.integration.webservice.optasiaVO.LoanInfo loanInfo = new com.inov8.integration.webservice.optasiaVO.LoanInfo();
+            com.inov8.integration.webservice.optasiaVO.LoanSummary loanSummary = new com.inov8.integration.webservice.optasiaVO.LoanSummary();
+            com.inov8.integration.webservice.optasiaVO.LoanOffers loanOffers = new com.inov8.integration.webservice.optasiaVO.LoanOffers();
+            com.inov8.integration.webservice.optasiaVO.MaturityDetails maturityDetails = new MaturityDetails();
+            com.inov8.integration.webservice.optasiaVO.Reports reports = new com.inov8.integration.webservice.optasiaVO.Reports();
+            com.inov8.integration.webservice.optasiaVO.Repayment repayment = new com.inov8.integration.webservice.optasiaVO.Repayment();
+            com.inov8.integration.webservice.optasiaVO.OutstandingStatus outstandingStatus = new com.inov8.integration.webservice.optasiaVO.OutstandingStatus();
+            com.inov8.integration.webservice.optasiaVO.Plan plan = new com.inov8.integration.webservice.optasiaVO.Plan();
+
+
+            loanSummary.setInternalLoanId(this.getLoanInfo().getLoan().getInternalLoanId());
+            loanSummary.setLoanState(this.getLoanInfo().getLoan().getLoanState());
+            loanSummary.setLoanTimestamp(this.getLoanInfo().getLoan().getLoanTimestamp());
+            loanSummary.setLoanReason(this.getLoanInfo().getLoan().getLoanReason());
+            loanOffers.setOfferName(this.getLoanInfo().getLoan().getLoanOffer().getOfferName());
+            loanOffers.setCommodityType(this.getLoanInfo().getLoan().getLoanOffer().getCommodityType());
+            loanOffers.setCurrencyCode(this.getLoanInfo().getLoan().getLoanOffer().getCurrencyCode());
+            loanOffers.setPrincipalAmount(this.getLoanInfo().getLoan().getLoanOffer().getPrincipalAmount());
+            loanOffers.setSetupFees(this.getLoanInfo().getLoan().getLoanOffer().getSetupFees());
+            loanOffers.setLoanPlanId(this.getLoanInfo().getLoan().getLoanOffer().getLoanPlanId());
+            loanOffers.setLoanPlanName(this.getLoanInfo().getLoan().getLoanOffer().getLoanPlanName());
+            loanOffers.setLoanProductGroup(this.getLoanInfo().getLoan().getLoanOffer().getLoanProductGroup());
+            maturityDetails.setMaturityDuration(this.getLoanInfo().getLoan().getLoanOffer().getMaturityDetails().getMaturityDuration());
+            loanOffers.setMaturityDetailsList(Collections.singletonList(maturityDetails));
+            loanSummary.setLoanOffer(loanOffers);
+
+            if (this.getLoanInfo().getReport() != null) {
+                repayment.setRepaymentsCount(this.getLoanInfo().getReport().getRepayment().getRepaymentsCount().toString());
+                repayment.setGross(this.getLoanInfo().getReport().getRepayment().getGross());
+                repayment.setPrincipal(this.getLoanInfo().getReport().getRepayment().getPrincipal());
+                repayment.setSetupFees(this.getLoanInfo().getReport().getRepayment().getSetupFees());
+                repayment.setInterest(this.getLoanInfo().getReport().getRepayment().getInterest());
+                repayment.setInterestVAT(this.getLoanInfo().getReport().getRepayment().getInterestVAT());
+                repayment.setCharges(this.getLoanInfo().getReport().getRepayment().getCharges());
+                repayment.setChargesVAT(this.getLoanInfo().getReport().getRepayment().getChargesVAT());
+
+                outstandingStatus.setCurrencyCode(this.getLoanInfo().getReport().getOutstanding().getCurrencyCode());
+                outstandingStatus.setTotalGross(this.getLoanInfo().getReport().getOutstanding().getTotalGross());
+                outstandingStatus.setTotalPrincipal(this.getLoanInfo().getReport().getOutstanding().getTotalPrincipal());
+                outstandingStatus.setTotalSetupFees(this.getLoanInfo().getReport().getOutstanding().getTotalSetupFees());
+                outstandingStatus.setTotalInterest(this.getLoanInfo().getReport().getOutstanding().getTotalInterest());
+                outstandingStatus.setTotalInterestVAT(this.getLoanInfo().getReport().getOutstanding().getTotalInterestVAT());
+                outstandingStatus.setTotalCharges(this.getLoanInfo().getReport().getOutstanding().getTotalCharges());
+                outstandingStatus.setTotalChargesVAT(this.getLoanInfo().getReport().getOutstanding().getTotalChargesVAT());
+                outstandingStatus.setTotalPendingRecoveries(this.getLoanInfo().getReport().getOutstanding().getTotalPendingRecoveries());
+
+                plan.setCurrentPeriod(this.getLoanInfo().getReport().getPlan().getCurrentPeriod());
+                plan.setDaysLeftInPeriod(this.getLoanInfo().getReport().getPlan().getDaysLeftInPeriod());
+                plan.setNextPeriod(this.getLoanInfo().getReport().getPlan().getNextPeriod());
+            }
+
+            reports.setRepayment(repayment);
+            reports.setOutstanding(outstandingStatus);
+            reports.setPlan(plan);
+
+            loanInfo.setLoan(loanSummary);
+            loanInfo.setReport(reports);
+            i8SBSwitchControllerResponseVO.setLoanInfoSummary(loanInfo);
+        }
 
         return i8SBSwitchControllerResponseVO;
     }
@@ -161,8 +219,7 @@ public class LoanStatusResponse extends Response implements Serializable {
         "loanReason",
         "loanOffer"
 })
-@Generated("jsonschema2pojo")
- class LoanSummary implements Serializable {
+class LoanSummary implements Serializable {
 
     @JsonProperty("internalLoanId")
     private String internalLoanId;
@@ -244,7 +301,7 @@ public class LoanStatusResponse extends Response implements Serializable {
         "loan",
         "report"
 })
- class LoanInfo implements Serializable {
+class LoanInfo implements Serializable {
 
     @JsonProperty("loan")
     private LoanSummary loanSummary;
@@ -285,7 +342,7 @@ public class LoanStatusResponse extends Response implements Serializable {
         "loanProductGroup",
         "maturityDetails"
 })
- class LoanOffers implements Serializable {
+class LoanOffers implements Serializable {
 
     @JsonProperty("offerName")
     private String offerName;
@@ -402,7 +459,7 @@ public class LoanStatusResponse extends Response implements Serializable {
 @JsonPropertyOrder({
         "maturityDuration"
 })
- class MaturityDetail implements Serializable {
+class MaturityDetail implements Serializable {
 
     @JsonProperty("maturityDuration")
     private String maturityDuration;
@@ -431,7 +488,7 @@ public class LoanStatusResponse extends Response implements Serializable {
         "totalChargesVAT",
         "totalPendingRecoveries"
 })
- class Outstandings implements Serializable {
+class Outstandings implements Serializable {
 
     @JsonProperty("currencyCode")
     private String currencyCode;
@@ -551,7 +608,7 @@ public class LoanStatusResponse extends Response implements Serializable {
         "nextPeriod"
 })
 @Generated("jsonschema2pojo")
- class Plans implements Serializable {
+class Plans implements Serializable {
 
     @JsonProperty("currentPeriod")
     private String currentPeriod;
@@ -603,7 +660,7 @@ public class LoanStatusResponse extends Response implements Serializable {
         "charges",
         "chargesVAT"
 })
- class Repayments implements Serializable {
+class Repayments implements Serializable {
 
     @JsonProperty("repaymentsCount")
     private String repaymentsCount;
@@ -710,7 +767,7 @@ public class LoanStatusResponse extends Response implements Serializable {
         "outstanding",
         "plan"
 })
- class Reports implements Serializable {
+class Reports implements Serializable {
 
     @JsonProperty("repayment")
     private Repayments repayments;

@@ -1054,61 +1054,60 @@ public class OptasiaMock {
     public String status() {
 
         String status = "{\n" +
-                "  \"identityValue\": \"16505130514\",\n" +
-                "  \"identityType\": \"customerIdentity\",\n" +
-                "  \"origSource\": \"mobileApp\",\n" +
-                "  \"receivedTimestamp\": \"2021-07-20T13:10:38.738+03:00\",\n" +
-                "  \"loanInfo\": {\n" +
-                "    \"loan\": {\n" +
-                "      \"internalLoanId\": \"123444\",\n" +
-                "      \"externalLoanId\": \"REF23232323\",\n" +
-                "      \"loanState\": \"OPEN\",\n" +
-                "      \"loanTimestamp\": \"2021-07-20T10:10:10.348+03:00\",\n" +
-                "      \"loanReason\": \"USSD_INBOUND\",\n" +
-                "      \"loanOffer\": {\n" +
-                "        \"offerName\": \"CASH15\",\n" +
-                "        \"commodityType\": \"CASH\",\n" +
-                "        \"currencyCode\": \"USD\",\n" +
-                "        \"principalAmount\": 15,\n" +
-                "        \"setupFees\": 5,\n" +
-                "        \"loanPlanId\": 1,\n" +
-                "        \"loanPlanName\": \"Default\",\n" +
-                "        \"loanProductGroup\": \"Standard group\",\n" +
-                "        \"maturityDetails\": {\n" +
-                "          \"maturityDuration\": 360\n" +
+                "    \"identityValue\": \"16505130514\",\n" +
+                "    \"identityType\": \"customerIdentity\",\n" +
+                "    \"origSource\": \"mobileApp\",\n" +
+                "    \"receivedTimestamp\": \"2021-07-20T13:10:38.738+03:00\",\n" +
+                "    \"loanInfo\": {\n" +
+                "        \"loan\": {\n" +
+                "            \"internalLoanId\": \"123444\",\n" +
+                "            \"loanState\": \"OPEN\",\n" +
+                "            \"loanTimestamp\": \"2021-07-20T10:10:10.348+03:00\",\n" +
+                "            \"loanReason\": \"USSD_INBOUND\",\n" +
+                "            \"loanOffer\": {\n" +
+                "                \"offerName\": \"CASH15\",\n" +
+                "                \"commodityType\": \"CASH\",\n" +
+                "                \"currencyCode\": \"USD\",\n" +
+                "                \"principalAmount\": 15,\n" +
+                "                \"setupFees\": 5,\n" +
+                "                \"loanPlanId\": 1,\n" +
+                "                \"loanPlanName\": \"Default\",\n" +
+                "                \"loanProductGroup\": \"Standard group\",\n" +
+                "                \"maturityDetails\": {\n" +
+                "                    \"maturityDuration\": 360\n" +
+                "                }\n" +
+                "            }\n" +
+                "        },\n" +
+                "        \"report\": {\n" +
+                "            \"repayment\": {\n" +
+                "                \"repaymentsCount\": 1,\n" +
+                "                \"gross\": 10,\n" +
+                "                \"principal\": 5,\n" +
+                "                \"setupFees\": 0,\n" +
+                "                \"interest\": 0,\n" +
+                "                \"interestVAT\": 0,\n" +
+                "                \"charges\": 0,\n" +
+                "                \"chargesVAT\": 0\n" +
+                "            },\n" +
+                "            \"outstanding\": {\n" +
+                "                \"currencyCode\": \"USD\",\n" +
+                "                \"totalGross\": 15,\n" +
+                "                \"totalPrincipal\": 10,\n" +
+                "                \"totalSetupFees\": 5,\n" +
+                "                \"totalInterest\": 0,\n" +
+                "                \"totalInterestVAT\": 0,\n" +
+                "                \"totalCharges\": 0,\n" +
+                "                \"totalChargesVAT\": 0,\n" +
+                "                \"totalPendingRecoveries\": 0\n" +
+                "            },\n" +
+                "            \"plan\": {\n" +
+                "                \"currentPeriod\": \"MATURITY\",\n" +
+                "                \"daysLeftInPeriod\": 360,\n" +
+                "                \"nextPeriod\": \"DEFAULT\"\n" +
+                "            }\n" +
                 "        }\n" +
-                "      }\n" +
-                "    },\n" +
-                "    \"report\": {\n" +
-                "      \"repayment\": {\n" +
-                "        \"repaymentsCount\": 1,\n" +
-                "        \"gross\": 10,\n" +
-                "        \"principal\": 5,\n" +
-                "        \"setupFees\": 0,\n" +
-                "        \"interest\": 0,\n" +
-                "        \"interestVAT\": 0,\n" +
-                "        \"charges\": 0,\n" +
-                "        \"chargesVAT\": 0\n" +
-                "      },\n" +
-                "      \"outstanding\": {\n" +
-                "        \"currencyCode\": \"USD\",\n" +
-                "        \"totalGross\": 15,\n" +
-                "        \"totalPrincipal\": 10,\n" +
-                "        \"totalSetupFees\": 5,\n" +
-                "        \"totalInterest\": 0,\n" +
-                "        \"totalInterestVAT\": 0,\n" +
-                "        \"totalCharges\": 0,\n" +
-                "        \"totalChargesVAT\": 0,\n" +
-                "        \"totalPendingRecoveries\": 0\n" +
-                "      },\n" +
-                "      \"plan\": {\n" +
-                "        \"currentPeriod\": \"MATURITY\",\n" +
-                "        \"daysLeftInPeriod\": 360,\n" +
-                "        \"nextPeriod\": \"DEFAULT\"\n" +
-                "      }\n" +
                 "    }\n" +
-                "  }\n" +
-                "}\n";
+                "}";
 
         return status;
     }

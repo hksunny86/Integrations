@@ -80,7 +80,7 @@ public class JSThirdPartyController {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
 //                    HostRequestValidator.validateAccountStatus(request);
-//                    response = integrationService.accountStatusResponse(request);
+                    response = integrationService.accountStatusResponse(request);
 
                 } catch (ValidationException ve) {
                     response.setResponseCode("420");

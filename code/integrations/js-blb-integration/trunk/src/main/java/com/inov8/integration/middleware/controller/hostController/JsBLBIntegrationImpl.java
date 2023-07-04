@@ -3389,10 +3389,10 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 .append(request.getReserved10());
 
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
-                    HostRequestValidator.debit(request);
+//                    HostRequestValidator.debit(request);
                     response = integrationService.debitResponse(request);
 
                 } catch (ValidationException ve) {
@@ -3415,13 +3415,13 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 response.setResponseDescription("Request is not authenticated");
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
-        } else {
-            logger.info("******* DEBUG LOGS FOR  Debit PAYMENT TRANSACTION *********");
-            response = new DebitResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR  Debit PAYMENT TRANSACTION *********");
+//            response = new DebitResponse();
+//            response.setResponseCode("111");
+//            response.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
 
         long end = System.currentTimeMillis() - start;
         logger.info("Debit Payment Request  Processed in : {} ms {}", end, response);

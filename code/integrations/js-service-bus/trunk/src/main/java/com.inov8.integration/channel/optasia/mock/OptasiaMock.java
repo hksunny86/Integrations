@@ -1051,65 +1051,529 @@ public class OptasiaMock {
         return transactions;
     }
 
-    public String status() {
+    public String status(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        String status = "{\n" +
-                "    \"identityValue\": \"16505130514\",\n" +
-                "    \"identityType\": \"customerIdentity\",\n" +
-                "    \"origSource\": \"mobileApp\",\n" +
-                "    \"receivedTimestamp\": \"2021-07-20T13:10:38.738+03:00\",\n" +
-                "    \"loanInfo\": {\n" +
-                "        \"loan\": {\n" +
-                "            \"internalLoanId\": \"123444\",\n" +
-                "            \"loanState\": \"OPEN\",\n" +
-                "            \"loanTimestamp\": \"2021-07-20T10:10:10.348+03:00\",\n" +
-                "            \"loanReason\": \"USSD_INBOUND\",\n" +
-                "            \"loanOffer\": {\n" +
-                "                \"offerName\": \"CASH15\",\n" +
-                "                \"commodityType\": \"CASH\",\n" +
-                "                \"currencyCode\": \"USD\",\n" +
-                "                \"principalAmount\": 15,\n" +
-                "                \"setupFees\": 5,\n" +
-                "                \"loanPlanId\": 1,\n" +
-                "                \"loanPlanName\": \"Default\",\n" +
-                "                \"loanProductGroup\": \"Standard group\",\n" +
-                "                \"maturityDetails\": {\n" +
-                "                    \"maturityDuration\": 360\n" +
-                "                }\n" +
-                "            }\n" +
-                "        },\n" +
-                "        \"report\": {\n" +
-                "            \"repayment\": {\n" +
-                "                \"repaymentsCount\": 1,\n" +
-                "                \"gross\": 10,\n" +
-                "                \"principal\": 5,\n" +
-                "                \"setupFees\": 0,\n" +
-                "                \"interest\": 0,\n" +
-                "                \"interestVAT\": 0,\n" +
-                "                \"charges\": 0,\n" +
-                "                \"chargesVAT\": 0\n" +
-                "            },\n" +
-                "            \"outstanding\": {\n" +
-                "                \"currencyCode\": \"USD\",\n" +
-                "                \"totalGross\": 15,\n" +
-                "                \"totalPrincipal\": 10,\n" +
-                "                \"totalSetupFees\": 5,\n" +
-                "                \"totalInterest\": 0,\n" +
-                "                \"totalInterestVAT\": 0,\n" +
-                "                \"totalCharges\": 0,\n" +
-                "                \"totalChargesVAT\": 0,\n" +
-                "                \"totalPendingRecoveries\": 0\n" +
-                "            },\n" +
-                "            \"plan\": {\n" +
-                "                \"currentPeriod\": \"MATURITY\",\n" +
-                "                \"daysLeftInPeriod\": 360,\n" +
-                "                \"nextPeriod\": \"DEFAULT\"\n" +
-                "            }\n" +
-                "        }\n" +
-                "    }\n" +
-                "}";
+        LoanStatusResponse loanStatusResponse = new LoanStatusResponse();
+        String response = "";
+        if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("876f43461db21c3e1b2aaaf7dcbd66d8a9e60229e63262c652c1b0534cf54c9b")) {
+            loanStatusResponse.setResponseCode("00");
+            response = "{\n" +
+                    "    \"loanInfo\": {\n" +
+                    "        \"loan\": {\n" +
+                    "            \"loanId\": \"243\",\n" +
+                    "            \"internalLoanId\": \"168750801442313\",\n" +
+                    "            \"loanTimestamp\": \"2023-06-23T13:13:34.421+05:00\",\n" +
+                    "            \"loanState\": \"OPEN\",\n" +
+                    "            \"loanReason\": \"API_MOBILEAPP\",\n" +
+                    "            \"loanReasonDetails\": [\n" +
+                    "                {\n" +
+                    "                    \"userApp\": \"mobileApp\"\n" +
+                    "                }\n" +
+                    "            ],\n" +
+                    "            \"loanOffer\": {\n" +
+                    "                \"offerName\": \"XTRACASHFED7\",\n" +
+                    "                \"advanceOfferId\": \"7\",\n" +
+                    "                \"commodityType\": \"CASH\",\n" +
+                    "                \"currencyCode\": \"PKR\",\n" +
+                    "                \"principalAmount\": 450.0,\n" +
+                    "                \"setupFees\": 0.0,\n" +
+                    "                \"loanPlanId\": 7,\n" +
+                    "                \"loanPlanName\": \"XtraCash plan FED7\",\n" +
+                    "                \"loanProductGroup\": \"XTRACASH\",\n" +
+                    "                \"maturityDetails\": {\n" +
+                    "                    \"maturityDuration\": 28\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "        },\n" +
+                    "        \"report\": {\n" +
+                    "            \"repayment\": {\n" +
+                    "                \"lastRepaymentDate\": \"2023-06-23T13:13:41.098+05:00\",\n" +
+                    "                \"repaymentsCount\": 1,\n" +
+                    "                \"gross\": 9.0,\n" +
+                    "                \"principal\": 0.0,\n" +
+                    "                \"setupFees\": 0.0,\n" +
+                    "                \"interest\": 0.0,\n" +
+                    "                \"interestVAT\": 0.0,\n" +
+                    "                \"charges\": 9.0,\n" +
+                    "                \"chargesVAT\": 0.0\n" +
+                    "            },\n" +
+                    "            \"outstanding\": {\n" +
+                    "                \"currencyCode\": \"PKR\",\n" +
+                    "                \"totalGross\": 490.5,\n" +
+                    "                \"totalPrincipal\": 450.0,\n" +
+                    "                \"totalSetupFees\": 0.0,\n" +
+                    "                \"totalInterest\": 0.0,\n" +
+                    "                \"totalInterestVAT\": 0.0,\n" +
+                    "                \"totalCharges\": 40.5,\n" +
+                    "                \"totalChargesVAT\": 0.0,\n" +
+                    "                \"totalPendingRecoveries\": 0.0\n" +
+                    "            },\n" +
+                    "            \"plan\": {\n" +
+                    "                \"currentPeriod\": \"MATURITY\",\n" +
+                    "                \"daysLeftInPeriod\": 17,\n" +
+                    "                \"nextPeriod\": \"ROLLOVER\"\n" +
+                    "            }\n" +
+                    "        },\n" +
+                    "        \"events\": [\n" +
+                    "            {\n" +
+                    "                \"eventType\": \"CHARGE_CALCULATION\",\n" +
+                    "                \"eventTypeDetails\": {\n" +
+                    "                    \"charge.calculation.name\": \"Weekly_Fee_of_Maturity\"\n" +
+                    "                },\n" +
+                    "                \"eventTypeStatus\": \"COMPLETED\",\n" +
+                    "                \"eventReason\": \"SERVICE\",\n" +
+                    "                \"eventReasonDetails\": [],\n" +
+                    "                \"period\": \"MATURITY\",\n" +
+                    "                \"periodIndex\": 2,\n" +
+                    "                \"periodExpirationTimestamp\": \"2023-07-20T23:59:59.999+05:00\",\n" +
+                    "                \"principalAdjustment\": 0.0,\n" +
+                    "                \"principalBefore\": 450.0,\n" +
+                    "                \"principalAfter\": 450.0,\n" +
+                    "                \"setupFeesAdjustment\": 0.0,\n" +
+                    "                \"setupFeesBefore\": 0.0,\n" +
+                    "                \"setupFeesAfter\": 0.0,\n" +
+                    "                \"interestAdjustment\": 0.0,\n" +
+                    "                \"interestAdjustmentVAT\": 0.0,\n" +
+                    "                \"interestBefore\": 0.0,\n" +
+                    "                \"interestAfter\": 0.0,\n" +
+                    "                \"totalChargesAdjustment\": 20.25,\n" +
+                    "                \"totalChargesAdjustmentVAT\": 0.0,\n" +
+                    "                \"totalChargesBefore\": 20.25,\n" +
+                    "                \"totalChargesAfter\": 40.5,\n" +
+                    "                \"eventTimestamp\": \"2023-06-30T00:01:01.727+05:00\",\n" +
+                    "                \"receptionTimestamp\": \"2023-06-30T00:01:01.727+05:00\",\n" +
+                    "                \"processingTimestamp\": \"2023-06-30T00:01:01.736+05:00\",\n" +
+                    "                \"offerName\": \"XTRACASHFED7\",\n" +
+                    "                \"commodityType\": \"CASH\",\n" +
+                    "                \"currencyCode\": \"PKR\",\n" +
+                    "                \"principalAmount\": 450.0,\n" +
+                    "                \"setupFees\": 0.0,\n" +
+                    "                \"loanProductGroup\": \"XTRACASH\",\n" +
+                    "                \"loanPlanId\": 7,\n" +
+                    "                \"loanPlanName\": \"XtraCash plan FED7\",\n" +
+                    "                \"maturityDetails\": {\n" +
+                    "                    \"maturityDuration\": 28\n" +
+                    "                },\n" +
+                    "                \"projectSpecific\": {},\n" +
+                    "                \"loanId\": \"243\",\n" +
+                    "                \"internalLoanId\": \"168750801442313\",\n" +
+                    "                \"loanTimestamp\": \"2023-06-23T13:13:34.421+05:00\",\n" +
+                    "                \"loanState\": \"OPEN\",\n" +
+                    "                \"loanReason\": \"API_MOBILEAPP\",\n" +
+                    "                \"loanReasonDetails\": [\n" +
+                    "                    {\n" +
+                    "                        \"userApp\": \"mobileApp\"\n" +
+                    "                    }\n" +
+                    "                ]\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"eventType\": \"RECOVERY\",\n" +
+                    "                \"eventTypeDetails\": {\n" +
+                    "                    \"is.passive.recovery\": true,\n" +
+                    "                    \"recovery.passive.auto.recovered\": true\n" +
+                    "                },\n" +
+                    "                \"eventTypeStatus\": \"COMPLETED\",\n" +
+                    "                \"thirdPartyTransactionId\": \"14632815633190\",\n" +
+                    "                \"eventReason\": \"LOAN_PROVISION\",\n" +
+                    "                \"eventReasonDetails\": [],\n" +
+                    "                \"period\": \"MATURITY\",\n" +
+                    "                \"periodIndex\": 2,\n" +
+                    "                \"periodExpirationTimestamp\": \"2023-07-20T23:59:59.999+05:00\",\n" +
+                    "                \"principalAdjustment\": 0.0,\n" +
+                    "                \"principalBefore\": 450.0,\n" +
+                    "                \"principalAfter\": 450.0,\n" +
+                    "                \"setupFeesAdjustment\": 0.0,\n" +
+                    "                \"setupFeesBefore\": 0.0,\n" +
+                    "                \"setupFeesAfter\": 0.0,\n" +
+                    "                \"interestAdjustment\": 0.0,\n" +
+                    "                \"interestAdjustmentVAT\": 0.0,\n" +
+                    "                \"interestBefore\": 0.0,\n" +
+                    "                \"interestAfter\": 0.0,\n" +
+                    "                \"totalChargesAdjustment\": -9.0,\n" +
+                    "                \"totalChargesAdjustmentVAT\": 0.0,\n" +
+                    "                \"totalChargesBefore\": 29.25,\n" +
+                    "                \"totalChargesAfter\": 20.25,\n" +
+                    "                \"eventTimestamp\": \"2023-06-23T13:13:41.098+05:00\",\n" +
+                    "                \"receptionTimestamp\": \"2023-06-23T13:13:41.098+05:00\",\n" +
+                    "                \"processingTimestamp\": \"2023-06-23T13:13:41.115+05:00\",\n" +
+                    "                \"sourceRequestId\": \"14632815633190\",\n" +
+                    "                \"offerName\": \"XTRACASHFED7\",\n" +
+                    "                \"commodityType\": \"CASH\",\n" +
+                    "                \"currencyCode\": \"PKR\",\n" +
+                    "                \"principalAmount\": 450.0,\n" +
+                    "                \"setupFees\": 0.0,\n" +
+                    "                \"loanProductGroup\": \"XTRACASH\",\n" +
+                    "                \"loanPlanId\": 7,\n" +
+                    "                \"loanPlanName\": \"XtraCash plan FED7\",\n" +
+                    "                \"maturityDetails\": {\n" +
+                    "                    \"maturityDuration\": 28\n" +
+                    "                },\n" +
+                    "                \"projectSpecific\": {},\n" +
+                    "                \"loanId\": \"243\",\n" +
+                    "                \"internalLoanId\": \"168750801442313\",\n" +
+                    "                \"loanTimestamp\": \"2023-06-23T13:13:34.421+05:00\",\n" +
+                    "                \"loanState\": \"OPEN\",\n" +
+                    "                \"loanReason\": \"API_MOBILEAPP\",\n" +
+                    "                \"loanReasonDetails\": [\n" +
+                    "                    {\n" +
+                    "                        \"userApp\": \"mobileApp\"\n" +
+                    "                    }\n" +
+                    "                ]\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"eventType\": \"ADVANCE\",\n" +
+                    "                \"eventTypeDetails\": {\n" +
+                    "                    \"is.passive.advance\": false,\n" +
+                    "                    \"pending.operation.id\": 261\n" +
+                    "                },\n" +
+                    "                \"eventTypeStatus\": \"COMPLETED\",\n" +
+                    "                \"eventTransactionId\": \"168750801489\",\n" +
+                    "                \"thirdPartyTransactionId\": \"14632815633190\",\n" +
+                    "                \"eventReason\": \"API_MOBILEAPP\",\n" +
+                    "                \"eventReasonDetails\": [\n" +
+                    "                    {\n" +
+                    "                        \"userApp\": \"mobileApp\"\n" +
+                    "                    }\n" +
+                    "                ],\n" +
+                    "                \"period\": \"MATURITY\",\n" +
+                    "                \"periodIndex\": 2,\n" +
+                    "                \"periodExpirationTimestamp\": \"2023-07-20T23:59:59.999+05:00\",\n" +
+                    "                \"principalAdjustment\": 450.0,\n" +
+                    "                \"principalBefore\": 0.0,\n" +
+                    "                \"principalAfter\": 450.0,\n" +
+                    "                \"setupFeesAdjustment\": 0.0,\n" +
+                    "                \"setupFeesBefore\": 0.0,\n" +
+                    "                \"setupFeesAfter\": 0.0,\n" +
+                    "                \"interestAdjustment\": 0.0,\n" +
+                    "                \"interestAdjustmentVAT\": 0.0,\n" +
+                    "                \"interestBefore\": 0.0,\n" +
+                    "                \"interestAfter\": 0.0,\n" +
+                    "                \"totalChargesAdjustment\": 29.25,\n" +
+                    "                \"totalChargesAdjustmentVAT\": 0.0,\n" +
+                    "                \"totalChargesBefore\": 0.0,\n" +
+                    "                \"totalChargesAfter\": 29.25,\n" +
+                    "                \"eventTimestamp\": \"2023-06-23T13:13:34.892+05:00\",\n" +
+                    "                \"receptionTimestamp\": \"2023-06-23T13:13:34.790+05:00\",\n" +
+                    "                \"processingTimestamp\": \"2023-06-23T13:13:41.010+05:00\",\n" +
+                    "                \"remoteRequestId\": \"168750801489\",\n" +
+                    "                \"sourceRequestId\": \"14632815633190\",\n" +
+                    "                \"offerName\": \"XTRACASHFED7\",\n" +
+                    "                \"commodityType\": \"CASH\",\n" +
+                    "                \"currencyCode\": \"PKR\",\n" +
+                    "                \"principalAmount\": 450.0,\n" +
+                    "                \"setupFees\": 0.0,\n" +
+                    "                \"loanProductGroup\": \"XTRACASH\",\n" +
+                    "                \"loanPlanId\": 7,\n" +
+                    "                \"loanPlanName\": \"XtraCash plan FED7\",\n" +
+                    "                \"maturityDetails\": {\n" +
+                    "                    \"maturityDuration\": 28\n" +
+                    "                },\n" +
+                    "                \"projectSpecific\": {},\n" +
+                    "                \"loanId\": \"243\",\n" +
+                    "                \"internalLoanId\": \"168750801442313\",\n" +
+                    "                \"loanTimestamp\": \"2023-06-23T13:13:34.421+05:00\",\n" +
+                    "                \"loanState\": \"OPEN\",\n" +
+                    "                \"loanReason\": \"API_MOBILEAPP\",\n" +
+                    "                \"loanReasonDetails\": [\n" +
+                    "                    {\n" +
+                    "                        \"userApp\": \"mobileApp\"\n" +
+                    "                    }\n" +
+                    "                ]\n" +
+                    "            }\n" +
+                    "        ]\n" +
+                    "    }\n" +
+                    "}";
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("71c3296bddeea2c671c4319ee599b4c7f2eb4bbd43afc2555a9081057ed4f874")) {
+            loanStatusResponse.setResponseCode("00");
+            response = "{\n" +
+                    "    \"identityValue\": \"16505130514\",\n" +
+                    "    \"identityType\": \"customerIdentity\",\n" +
+                    "    \"origSource\": \"mobileApp\",\n" +
+                    "    \"receivedTimestamp\": \"2021-07-20T13:10:38.738+03:00\",\n" +
+                    "    \"loanInfo\": {\n" +
+                    "        \"loan\": {\n" +
+                    "            \"internalLoanId\": \"123444\",\n" +
+                    "            \"loanState\": \"PENDING_PROVISIONING\",\n" +
+                    "            \"loanTimestamp\": \"2021-07-20T10:10:10.348+03:00\",\n" +
+                    "            \"loanReason\": \"USSD_INBOUND\",\n" +
+                    "            \"loanOffer\": {\n" +
+                    "                \"offerName\": \"CASH15\",\n" +
+                    "                \"commodityType\": \"CASH\",\n" +
+                    "                \"currencyCode\": \"USD\",\n" +
+                    "                \"principalAmount\": 15,\n" +
+                    "                \"setupFees\": 5,\n" +
+                    "                \"loanPlanId\": 1,\n" +
+                    "                \"loanPlanName\": \"Default\",\n" +
+                    "                \"loanProductGroup\": \"Standard group\",\n" +
+                    "                \"maturityDetails\": {\n" +
+                    "                    \"maturityDuration\": 360\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "        },\n" +
+                    "        \"report\": {\n" +
+                    "            \"repayment\": {\n" +
+                    "                \"repaymentsCount\": 1,\n" +
+                    "                \"gross\": 10,\n" +
+                    "                \"principal\": 5,\n" +
+                    "                \"setupFees\": 0,\n" +
+                    "                \"interest\": 0,\n" +
+                    "                \"interestVAT\": 0,\n" +
+                    "                \"charges\": 0,\n" +
+                    "                \"chargesVAT\": 0\n" +
+                    "            },\n" +
+                    "            \"outstanding\": {\n" +
+                    "                \"currencyCode\": \"USD\",\n" +
+                    "                \"totalGross\": 15,\n" +
+                    "                \"totalPrincipal\": 10,\n" +
+                    "                \"totalSetupFees\": 5,\n" +
+                    "                \"totalInterest\": 0,\n" +
+                    "                \"totalInterestVAT\": 0,\n" +
+                    "                \"totalCharges\": 0,\n" +
+                    "                \"totalChargesVAT\": 0,\n" +
+                    "                \"totalPendingRecoveries\": 0\n" +
+                    "            },\n" +
+                    "            \"plan\": {\n" +
+                    "                \"currentPeriod\": \"MATURITY\",\n" +
+                    "                \"daysLeftInPeriod\": 360,\n" +
+                    "                \"nextPeriod\": \"DEFAULT\"\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "    }\n" +
+                    "}";
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("16a48a9f11f4995841c5f33fefec07798332883749a6cfba225393a28602bfd6")) {
+            loanStatusResponse.setResponseCode("00");
+            response = "{\n" +
+                    "    \"identityValue\": \"16505130514\",\n" +
+                    "    \"identityType\": \"customerIdentity\",\n" +
+                    "    \"origSource\": \"mobileApp\",\n" +
+                    "    \"receivedTimestamp\": \"2021-07-20T13:10:38.738+03:00\",\n" +
+                    "    \"loanInfo\": {\n" +
+                    "        \"loan\": {\n" +
+                    "            \"internalLoanId\": \"123444\",\n" +
+                    "            \"loanState\": \"OPEN\",\n" +
+                    "            \"loanTimestamp\": \"2021-07-20T10:10:10.348+03:00\",\n" +
+                    "            \"loanReason\": \"USSD_INBOUND\",\n" +
+                    "            \"loanOffer\": {\n" +
+                    "                \"offerName\": \"CASH15\",\n" +
+                    "                \"commodityType\": \"CASH\",\n" +
+                    "                \"currencyCode\": \"USD\",\n" +
+                    "                \"principalAmount\": 15,\n" +
+                    "                \"setupFees\": 5,\n" +
+                    "                \"loanPlanId\": 1,\n" +
+                    "                \"loanPlanName\": \"Default\",\n" +
+                    "                \"loanProductGroup\": \"Standard group\",\n" +
+                    "                \"maturityDetails\": {\n" +
+                    "                    \"maturityDuration\": 360\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "        },\n" +
+                    "        \"report\": {\n" +
+                    "            \"repayment\": {\n" +
+                    "                \"repaymentsCount\": 1,\n" +
+                    "                \"gross\": 10,\n" +
+                    "                \"principal\": 5,\n" +
+                    "                \"setupFees\": 0,\n" +
+                    "                \"interest\": 0,\n" +
+                    "                \"interestVAT\": 0,\n" +
+                    "                \"charges\": 0,\n" +
+                    "                \"chargesVAT\": 0\n" +
+                    "            },\n" +
+                    "            \"outstanding\": {\n" +
+                    "                \"currencyCode\": \"USD\",\n" +
+                    "                \"totalGross\": 15,\n" +
+                    "                \"totalPrincipal\": 10,\n" +
+                    "                \"totalSetupFees\": 5,\n" +
+                    "                \"totalInterest\": 0,\n" +
+                    "                \"totalInterestVAT\": 0,\n" +
+                    "                \"totalCharges\": 0,\n" +
+                    "                \"totalChargesVAT\": 0,\n" +
+                    "                \"totalPendingRecoveries\": 0\n" +
+                    "            },\n" +
+                    "            \"plan\": {\n" +
+                    "                \"currentPeriod\": \"MATURITY\",\n" +
+                    "                \"daysLeftInPeriod\": 360,\n" +
+                    "                \"nextPeriod\": \"DEFAULT\"\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "    }\n" +
+                    "}";
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("e9c48eff89bea0a7641fd82ad524596b3986a0567f56e8dde5a4ec0b96d9a3b1")) {
+            loanStatusResponse.setResponseCode("00");
+            response = "{\n" +
+                    "    \"identityValue\": \"16505130514\",\n" +
+                    "    \"identityType\": \"customerIdentity\",\n" +
+                    "    \"origSource\": \"mobileApp\",\n" +
+                    "    \"receivedTimestamp\": \"2021-07-20T13:10:38.738+03:00\",\n" +
+                    "    \"loanInfo\": {\n" +
+                    "        \"loan\": {\n" +
+                    "            \"internalLoanId\": \"123444\",\n" +
+                    "            \"loanState\": \"CLOSED\",\n" +
+                    "            \"loanTimestamp\": \"2021-07-20T10:10:10.348+03:00\",\n" +
+                    "            \"loanReason\": \"USSD_INBOUND\",\n" +
+                    "            \"loanOffer\": {\n" +
+                    "                \"offerName\": \"CASH15\",\n" +
+                    "                \"commodityType\": \"CASH\",\n" +
+                    "                \"currencyCode\": \"USD\",\n" +
+                    "                \"principalAmount\": 15,\n" +
+                    "                \"setupFees\": 5,\n" +
+                    "                \"loanPlanId\": 1,\n" +
+                    "                \"loanPlanName\": \"Default\",\n" +
+                    "                \"loanProductGroup\": \"Standard group\",\n" +
+                    "                \"maturityDetails\": {\n" +
+                    "                    \"maturityDuration\": 360\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "        },\n" +
+                    "        \"report\": {\n" +
+                    "            \"repayment\": {\n" +
+                    "                \"repaymentsCount\": 1,\n" +
+                    "                \"gross\": 10,\n" +
+                    "                \"principal\": 5,\n" +
+                    "                \"setupFees\": 0,\n" +
+                    "                \"interest\": 0,\n" +
+                    "                \"interestVAT\": 0,\n" +
+                    "                \"charges\": 0,\n" +
+                    "                \"chargesVAT\": 0\n" +
+                    "            },\n" +
+                    "            \"outstanding\": {\n" +
+                    "                \"currencyCode\": \"USD\",\n" +
+                    "                \"totalGross\": 15,\n" +
+                    "                \"totalPrincipal\": 10,\n" +
+                    "                \"totalSetupFees\": 5,\n" +
+                    "                \"totalInterest\": 0,\n" +
+                    "                \"totalInterestVAT\": 0,\n" +
+                    "                \"totalCharges\": 0,\n" +
+                    "                \"totalChargesVAT\": 0,\n" +
+                    "                \"totalPendingRecoveries\": 0\n" +
+                    "            },\n" +
+                    "            \"plan\": {\n" +
+                    "                \"currentPeriod\": \"MATURITY\",\n" +
+                    "                \"daysLeftInPeriod\": 360,\n" +
+                    "                \"nextPeriod\": \"DEFAULT\"\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "    }\n" +
+                    "}";
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("2674be6a234ae16630737116977931be2283ce7d8f07f7015eb756d278c23d2b")) {
+            loanStatusResponse.setCode("00");
+            response = "{\n" +
+                    "    \"identityValue\": \"16505130514\",\n" +
+                    "    \"identityType\": \"customerIdentity\",\n" +
+                    "    \"origSource\": \"mobileApp\",\n" +
+                    "    \"receivedTimestamp\": \"2021-07-20T13:10:38.738+03:00\",\n" +
+                    "    \"loanInfo\": {\n" +
+                    "        \"loan\": {\n" +
+                    "            \"internalLoanId\": \"123444\",\n" +
+                    "            \"loanState\": \"DEFAULTED\",\n" +
+                    "            \"loanTimestamp\": \"2021-07-20T10:10:10.348+03:00\",\n" +
+                    "            \"loanReason\": \"USSD_INBOUND\",\n" +
+                    "            \"loanOffer\": {\n" +
+                    "                \"offerName\": \"CASH15\",\n" +
+                    "                \"commodityType\": \"CASH\",\n" +
+                    "                \"currencyCode\": \"USD\",\n" +
+                    "                \"principalAmount\": 15,\n" +
+                    "                \"setupFees\": 5,\n" +
+                    "                \"loanPlanId\": 1,\n" +
+                    "                \"loanPlanName\": \"Default\",\n" +
+                    "                \"loanProductGroup\": \"Standard group\",\n" +
+                    "                \"maturityDetails\": {\n" +
+                    "                    \"maturityDuration\": 360\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "        },\n" +
+                    "        \"report\": {\n" +
+                    "            \"repayment\": {\n" +
+                    "                \"repaymentsCount\": 1,\n" +
+                    "                \"gross\": 10,\n" +
+                    "                \"principal\": 5,\n" +
+                    "                \"setupFees\": 0,\n" +
+                    "                \"interest\": 0,\n" +
+                    "                \"interestVAT\": 0,\n" +
+                    "                \"charges\": 0,\n" +
+                    "                \"chargesVAT\": 0\n" +
+                    "            },\n" +
+                    "            \"outstanding\": {\n" +
+                    "                \"currencyCode\": \"USD\",\n" +
+                    "                \"totalGross\": 15,\n" +
+                    "                \"totalPrincipal\": 10,\n" +
+                    "                \"totalSetupFees\": 5,\n" +
+                    "                \"totalInterest\": 0,\n" +
+                    "                \"totalInterestVAT\": 0,\n" +
+                    "                \"totalCharges\": 0,\n" +
+                    "                \"totalChargesVAT\": 0,\n" +
+                    "                \"totalPendingRecoveries\": 0\n" +
+                    "            },\n" +
+                    "            \"plan\": {\n" +
+                    "                \"currentPeriod\": \"MATURITY\",\n" +
+                    "                \"daysLeftInPeriod\": 360,\n" +
+                    "                \"nextPeriod\": \"DEFAULT\"\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "    }\n" +
+                    "}";
+        } else if (i8SBSwitchControllerRequestVO.getIdentityValue().equalsIgnoreCase("de248588815c241d66d1ca21641ae2900a1e84c3f0fc2cb5b412d32a388cd15c")) {
+            loanStatusResponse.setCode("00");
+            response = "{\n" +
+                    "    \"identityValue\": \"16505130514\",\n" +
+                    "    \"identityType\": \"customerIdentity\",\n" +
+                    "    \"origSource\": \"mobileApp\",\n" +
+                    "    \"receivedTimestamp\": \"2021-07-20T13:10:38.738+03:00\",\n" +
+                    "    \"loanInfo\": {\n" +
+                    "        \"loan\": {\n" +
+                    "            \"internalLoanId\": \"123444\",\n" +
+                    "            \"loanState\": \"FAILED\",\n" +
+                    "            \"loanTimestamp\": \"2021-07-20T10:10:10.348+03:00\",\n" +
+                    "            \"loanReason\": \"USSD_INBOUND\",\n" +
+                    "            \"loanOffer\": {\n" +
+                    "                \"offerName\": \"CASH15\",\n" +
+                    "                \"commodityType\": \"CASH\",\n" +
+                    "                \"currencyCode\": \"USD\",\n" +
+                    "                \"principalAmount\": 15,\n" +
+                    "                \"setupFees\": 5,\n" +
+                    "                \"loanPlanId\": 1,\n" +
+                    "                \"loanPlanName\": \"Default\",\n" +
+                    "                \"loanProductGroup\": \"Standard group\",\n" +
+                    "                \"maturityDetails\": {\n" +
+                    "                    \"maturityDuration\": 360\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "        },\n" +
+                    "        \"report\": {\n" +
+                    "            \"repayment\": {\n" +
+                    "                \"repaymentsCount\": 1,\n" +
+                    "                \"gross\": 10,\n" +
+                    "                \"principal\": 5,\n" +
+                    "                \"setupFees\": 0,\n" +
+                    "                \"interest\": 0,\n" +
+                    "                \"interestVAT\": 0,\n" +
+                    "                \"charges\": 0,\n" +
+                    "                \"chargesVAT\": 0\n" +
+                    "            },\n" +
+                    "            \"outstanding\": {\n" +
+                    "                \"currencyCode\": \"USD\",\n" +
+                    "                \"totalGross\": 15,\n" +
+                    "                \"totalPrincipal\": 10,\n" +
+                    "                \"totalSetupFees\": 5,\n" +
+                    "                \"totalInterest\": 0,\n" +
+                    "                \"totalInterestVAT\": 0,\n" +
+                    "                \"totalCharges\": 0,\n" +
+                    "                \"totalChargesVAT\": 0,\n" +
+                    "                \"totalPendingRecoveries\": 0\n" +
+                    "            },\n" +
+                    "            \"plan\": {\n" +
+                    "                \"currentPeriod\": \"MATURITY\",\n" +
+                    "                \"daysLeftInPeriod\": 360,\n" +
+                    "                \"nextPeriod\": \"DEFAULT\"\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "    }\n" +
+                    "}";
+        } else {
+            loanStatusResponse.setResponseCode("500");
+            loanStatusResponse.setResponseDescription("Customer Id doesn't matched");
+        }
 
-        return status;
+        return response;
     }
 
     public String payment() {

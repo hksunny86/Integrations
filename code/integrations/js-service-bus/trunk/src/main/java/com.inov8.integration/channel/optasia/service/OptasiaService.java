@@ -817,6 +817,7 @@ public class OptasiaService {
                         .queryParam("internalLoanId", loanStatusRequest.getInternalLoanId());
 
 
+
                 String url = uri.toUriString();
                 logger.info("Requesting URL " + url);
                 HttpEntity httpEntity = new HttpEntity(headers);

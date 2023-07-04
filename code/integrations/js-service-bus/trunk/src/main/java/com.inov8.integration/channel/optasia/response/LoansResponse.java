@@ -301,7 +301,7 @@ public class LoansResponse extends Response implements Serializable {
                 if (eventsList1 != null) {
                     events.setEventType(eventsList1.get(i).getEventType());
                     eventTypeDetails.setIsPassiveAdvance(eventsList1.get(i).getEventTypeDetails().getIsPassiveAdvance());
-                    eventTypeDetails.setPendingOperationId(eventsList1.get(i).getEventTypeDetails().getPendingOperationId());
+                    eventTypeDetails.setPendingOperationId(String.valueOf(eventsList1.get(i).getEventTypeDetails().getPendingOperationId()));
                     events.setEventTypeDetails(eventTypeDetails);
                     events.setEventTypeStatus(eventsList1.get(i).getEventTypeStatus());
                     events.setEventTransactionId(eventsList1.get(i).getEventTransactionId());

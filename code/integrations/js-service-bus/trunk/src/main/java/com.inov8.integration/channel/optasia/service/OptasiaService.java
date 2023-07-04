@@ -792,18 +792,16 @@ public class OptasiaService {
     public LoanStatusResponse sendLoanStatusResponse(LoanStatusRequest loanStatusRequest) {
         LoanStatusResponse loanStatusResponse = new LoanStatusResponse();
 
-        I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
-        I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock3")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             OptasiaMock optasiaMock = new OptasiaMock();
-            String response = optasiaMock.status();
+            String response = optasiaMock.status(i8SBSwitchControllerRequestVO);
             loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(response, LoanStatusResponse.class);
             Objects.requireNonNull(loanStatusResponse).setResponseCode("200");
-            logger.info("Response Code of Loans Status Request : " + response);
-            logger.info("Response Code for Loan Status Request : " + i8SBSwitchControllerResponseVO.getResponseCode());
+            logger.info("Response Code for Loan Status Request : " + loanStatusResponse.getResponseCode());
+            logger.info("Response of Loans Status Request : " + response);
         } else {
             try {
                 HttpHeaders headers = new HttpHeaders();
@@ -815,7 +813,8 @@ public class OptasiaService {
                 UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.optasiaLoanStatus)
                         .queryParam("identityType", loanStatusRequest.getIdentityType())
                         .queryParam("origSource", loanStatusRequest.getOrigSource())
-                        .queryParam("identityValue", loanStatusRequest.getIdentityValue());
+                        .queryParam("identityValue", loanStatusRequest.getIdentityValue())
+                        .queryParam("internalLoanId", loanStatusRequest.getInternalLoanId());
 
 
                 String url = uri.toUriString();
@@ -823,9 +822,9 @@ public class OptasiaService {
                 HttpEntity httpEntity = new HttpEntity(headers);
                 logger.info("Sending Loan Status Request Sent to Client " + httpEntity);
                 ResponseEntity<String> res = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
-//                ResponseEntity<String> res = new ResponseEntity<>(body, HttpStatus.OK);
-                logger.info("Response code of Loans Status Request received from client " + res.getStatusCode().value());
-                logger.info("Response of Loans Status Request received from client " + res.getBody());
+//                ResponseEntity<String> res = new ResponseEntity<>("", HttpStatus.OK);
+                logger.info("Response code of Loans Status Request received from client: " + res.getStatusCode().value());
+                logger.info("Response of Loans Status Request received from client: " + res.getBody());
                 String responseCode = String.valueOf(res.getStatusCode().value());
                 if (responseCode.equals("200")) {
                     loanStatusResponse = (LoanStatusResponse) JSONUtil.jsonToObject(res.getBody(), LoanStatusResponse.class);

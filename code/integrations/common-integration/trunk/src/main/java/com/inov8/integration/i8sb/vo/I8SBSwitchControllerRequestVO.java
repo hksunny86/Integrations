@@ -495,6 +495,60 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String dpd150;
     private String dpd180;
     private String writeOff;
+    private boolean businessName;
+    private boolean businessAddress;
+    private boolean cnicFront;
+    private boolean cnicBack;
+    private boolean selfie;
+    private String internalLoanId;
+
+    public String getInternalLoanId() {
+        return internalLoanId;
+    }
+
+    public void setInternalLoanId(String internalLoanId) {
+        this.internalLoanId = internalLoanId;
+    }
+
+    public boolean isBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(boolean businessName) {
+        this.businessName = businessName;
+    }
+
+    public boolean isBusinessAddress() {
+        return businessAddress;
+    }
+
+    public void setBusinessAddress(boolean businessAddress) {
+        this.businessAddress = businessAddress;
+    }
+
+    public boolean isCnicFront() {
+        return cnicFront;
+    }
+
+    public void setCnicFront(boolean cnicFront) {
+        this.cnicFront = cnicFront;
+    }
+
+    public boolean isCnicBack() {
+        return cnicBack;
+    }
+
+    public void setCnicBack(boolean cnicBack) {
+        this.cnicBack = cnicBack;
+    }
+
+    public boolean isSelfie() {
+        return selfie;
+    }
+
+    public void setSelfie(boolean selfie) {
+        this.selfie = selfie;
+    }
 
     public String getCustomerId() {
         return customerId;

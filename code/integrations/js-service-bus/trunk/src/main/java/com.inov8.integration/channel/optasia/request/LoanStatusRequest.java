@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
         "identityType",
         "origSource",
         "identityValue",
+        "internalLoanId",
 })
 public class LoanStatusRequest extends Request {
 
@@ -22,6 +23,8 @@ public class LoanStatusRequest extends Request {
     private String origSource;
     @JsonProperty("identityValue")
     private String identityValue;
+    @JsonProperty("internalLoanId")
+    private String internalLoanId;
 
     public String getIdentityType() {
         return identityType;
@@ -47,12 +50,21 @@ public class LoanStatusRequest extends Request {
         this.identityValue = identityValue;
     }
 
+    public String getInternalLoanId() {
+        return internalLoanId;
+    }
+
+    public void setInternalLoanId(String internalLoanId) {
+        this.internalLoanId = internalLoanId;
+    }
+
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
         this.setIdentityType(i8SBSwitchControllerRequestVO.getIdentityType());
         this.setIdentityValue(i8SBSwitchControllerRequestVO.getIdentityValue());
         this.setOrigSource(i8SBSwitchControllerRequestVO.getOrigSource());
+        this.setInternalLoanId(i8SBSwitchControllerRequestVO.getInternalLoanId());
     }
 
     @Override
@@ -67,6 +79,9 @@ public class LoanStatusRequest extends Request {
         }
         if (StringUtils.isEmpty(this.getOrigSource())) {
             throw new I8SBValidationException("[Failed] Message Orig Source:" + this.getOrigSource());
+        }
+        if (StringUtils.isEmpty(this.getInternalLoanId())) {
+            throw new I8SBValidationException("[Failed] Internal Loan Id:" + this.getInternalLoanId());
         }
 
         return true;

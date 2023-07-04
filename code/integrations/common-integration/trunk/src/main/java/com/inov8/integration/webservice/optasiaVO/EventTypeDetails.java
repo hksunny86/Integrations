@@ -8,8 +8,10 @@ import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "is.passive.advance",
+        "charge.calculation.name",
         "is.passive.recovery",
+        "recovery.passive.auto.recovered",
+        "is.passive.advance",
         "pending.operation.id",
         "advance.failed.failure.type"
 })
@@ -18,14 +20,28 @@ public class EventTypeDetails implements Serializable {
 
     private static final long serialVersionUID = 5824473488070382311L;
 
-    @JsonProperty("is.passive.advance")
-    private Boolean isPassiveAdvance;
+    @JsonProperty("charge.calculation.name")
+    private String chargeCalculationName;
     @JsonProperty("is.passive.recovery")
     private Boolean isPassiveRecovery;
+    @JsonProperty("recovery.passive.auto.recovered")
+    private Boolean recoveryPassiveAutoRecovered;
+    @JsonProperty("is.passive.advance")
+    private Boolean isPassiveAdvance;
     @JsonProperty("pending.operation.id")
-    private Integer pendingOperationId;
+    private String pendingOperationId;
     @JsonProperty("advance.failed.failure.type")
     private String advanceFailedFailureType;
+
+    @JsonProperty("charge.calculation.name")
+    public String getChargeCalculationName() {
+        return chargeCalculationName;
+    }
+
+    @JsonProperty("charge.calculation.name")
+    public void setChargeCalculationName(String chargeCalculationName) {
+        this.chargeCalculationName = chargeCalculationName;
+    }
 
     @JsonProperty("is.passive.advance")
     public Boolean getIsPassiveAdvance() {
@@ -37,14 +53,23 @@ public class EventTypeDetails implements Serializable {
         this.isPassiveAdvance = isPassiveAdvance;
     }
 
+    @JsonProperty("recovery.passive.auto.recovered")
+    public Boolean getRecoveryPassiveAutoRecovered() {
+        return recoveryPassiveAutoRecovered;
+    }
+
+    @JsonProperty("recovery.passive.auto.recovered")
+    public void setRecoveryPassiveAutoRecovered(Boolean recoveryPassiveAutoRecovered) {
+        this.recoveryPassiveAutoRecovered = recoveryPassiveAutoRecovered;
+    }
 
     @JsonProperty("pending.operation.id")
-    public Integer getPendingOperationId() {
+    public String getPendingOperationId() {
         return pendingOperationId;
     }
 
     @JsonProperty("pending.operation.id")
-    public void setPendingOperationId(Integer pendingOperationId) {
+    public void setPendingOperationId(String pendingOperationId) {
         this.pendingOperationId = pendingOperationId;
     }
 
@@ -58,4 +83,13 @@ public class EventTypeDetails implements Serializable {
         this.advanceFailedFailureType = advanceFailedFailureType;
     }
 
+    @JsonProperty("is.passive.recovery")
+    public Boolean getIsPassiveRecovery() {
+        return isPassiveRecovery;
+    }
+
+    @JsonProperty("is.passive.recovery")
+    public void setIsPassiveRecovery(Boolean isPassiveRecovery) {
+        this.isPassiveRecovery = isPassiveRecovery;
+    }
 }

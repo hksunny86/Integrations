@@ -3,10 +3,7 @@ package com.inov8.integration.i8sb.vo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.i8sb.vo.CardDetailVO;
 import com.inov8.integration.vo.StatementVo;
-import com.inov8.integration.webservice.optasiaVO.Account;
-import com.inov8.integration.webservice.optasiaVO.Charge;
-import com.inov8.integration.webservice.optasiaVO.LoanInfo;
-import com.inov8.integration.webservice.optasiaVO.ThirdPartyData;
+import com.inov8.integration.webservice.optasiaVO.*;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import javax.xml.bind.annotation.XmlTransient;
@@ -468,6 +465,15 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private List<Account> accountList;
     private List<ThirdPartyData> thirdPartyDataList;
     private LoanInfo loanInfoSummary;
+    private List<Event> eventList;
+
+    public List<Event> getEventList() {
+        return eventList;
+    }
+
+    public void setEventList(List<Event> eventList) {
+        this.eventList = eventList;
+    }
 
     public LoanInfo getLoanInfoSummary() {
         return loanInfoSummary;

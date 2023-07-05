@@ -152,7 +152,7 @@ public class HostIntegrationService {
         logModel.setPduRequestHEX(requestXml);
         saveTransaction(logModel);
         try {
-            logger.info("[HOST] Sent Account Verify Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Account Verify Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.verifyAccount(messageVO);
         } catch (Exception e) {
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
@@ -260,7 +260,7 @@ public class HostIntegrationService {
         logModel.setPduRequestHEX(requestXml);
         saveTransaction(logModel);
         try {
-            logger.info("[HOST] Sent Account Verify Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Account Verify Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.verifyLoginAccount(messageVO);
         } catch (Exception e) {
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
@@ -364,7 +364,7 @@ public class HostIntegrationService {
         logModel.setPduRequestHEX(requestXml);
         saveTransaction(logModel);
         try {
-            logger.info("[HOST] Sent Checque Book Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Checque Book Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.checqueBookStatus(messageVO);
         } catch (Exception e) {
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
@@ -458,7 +458,7 @@ public class HostIntegrationService {
         logModel.setPduRequestHEX(requestXml);
         saveTransaction(logModel);
         try {
-            logger.info("[HOST] Sent Account Verify Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Account Verify Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.verifyAccount(messageVO);
         } catch (Exception e) {
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
@@ -581,7 +581,7 @@ public class HostIntegrationService {
         saveTransaction(logModel);
         // Call i8
         try {
-            logger.info("[HOST] Sent Account Opening Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Account Opening Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.accountOpening(messageVO);
         } catch (Exception e) {
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
@@ -675,7 +675,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Conventional Account Opening Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Conventional Account Opening Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.conventionalAccountOpening(messageVO);
         } catch (Exception e) {
 
@@ -765,7 +765,7 @@ public class HostIntegrationService {
         saveTransaction(logModel);
         // Call i8
         try {
-            logger.info("[HOST] Sent Account Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Account Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.paymentInquiry(messageVO);
         } catch (Exception e) {
 
@@ -888,7 +888,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.paymentRequest(messageVO);
         } catch (Exception e) {
 
@@ -977,7 +977,7 @@ public class HostIntegrationService {
         saveTransaction(logModel);
         // Call i8
         try {
-            logger.info("[HOST] Sent Payment Reversal Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Payment Reversal Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.paymentReversal(messageVO);
         } catch (Exception e) {
 
@@ -1067,7 +1067,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent OTP Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent OTP Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.otpVerification(messageVO);
         } catch (Exception e) {
 
@@ -1162,7 +1162,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Card Tagging Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Card Tagging Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.cardTagging(messageVO);
         } catch (Exception e) {
 
@@ -1278,7 +1278,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Account Link De-Link Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Account Link De-Link Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.accountLinkDelink(messageVO);
         } catch (Exception e) {
 
@@ -1373,7 +1373,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Set Card Status Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Set Card Status Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.setCardStatus(messageVO);
         } catch (Exception e) {
 
@@ -1468,7 +1468,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Generate Otp Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Generate Otp Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.generateOTP(messageVO);
         } catch (Exception e) {
 
@@ -1587,7 +1587,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Balance Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Balance Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.balanceInquiry(messageVO);
         } catch (Exception e) {
 
@@ -1704,7 +1704,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Mini Statement Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Mini Statement Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.miniStatement(messageVO);
         } catch (Exception e) {
 
@@ -1810,7 +1810,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Bill Payment Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Bill Payment Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.billPaymentInquiry(messageVO);
         } catch (Exception e) {
 
@@ -1950,7 +1950,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Bill Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Bill Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.billPayment(messageVO);
         } catch (Exception e) {
 
@@ -2065,7 +2065,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Cash In Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Cash In Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.cashInInquiry(messageVO);
 //            messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
 //            messageVO.setResponseCodeDescription("Successful");
@@ -2188,7 +2188,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Cash In Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Cash In Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.cashIn(messageVO);
 
         } catch (Exception e) {
@@ -2307,7 +2307,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Title Fetch Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Title Fetch Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.TitleFetch(messageVO);
 
         } catch (Exception e) {
@@ -2430,7 +2430,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Cash In Agent Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Cash In Agent Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
             String input = "1";
 
             if (input.equals("1")) {
@@ -2567,7 +2567,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Customer Cash Out Inquiry Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Customer Cash Out Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
             String input = "1";
 
             if (input.equals("1")) {
@@ -2708,7 +2708,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Customer Cash Out  Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Customer Cash Out  Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
             String input = "1";
 
             if (input.equals("1")) {
@@ -2844,7 +2844,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Customer Mpin Restration Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Customer Mpin Restration Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
 //            String input = "1";
 
 //            if (input.equals("0")) {
@@ -2991,7 +2991,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Customer Mpin Change Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Customer Mpin Change Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
 //            String input = "1";
 
 //            if (input.equals("0")) {
@@ -3109,7 +3109,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Wallet To Wallet Payment Inquiry Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Wallet To Wallet Payment Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
 //            String input = "1";
 
 //            if (input.equals("0")) {
@@ -3261,7 +3261,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Wallet To Wallet Payment Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Wallet To Wallet Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
 //            String input = "1";
 
 //            if (input.equals("0")) {
@@ -3385,7 +3385,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Upgrade Account inquiry Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Upgrade Account inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
 //            String input = "1";
 
 //            if (input.equals("0")) {
@@ -3501,7 +3501,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Upgrade Account inquiry Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Upgrade Account inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
 //            String input = "1";
 
 //            if (input.equals("0")) {
@@ -3660,7 +3660,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Customer Upgrade Account Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Customer Upgrade Account Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
 //            String input = "1";
 
 //            if (input.equals("0")) {
@@ -3778,7 +3778,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Customer Upgrade Account Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Customer Upgrade Account Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
 
             webServiceVO = switchController.updateMinorAccount(webServiceVO);
 
@@ -3875,7 +3875,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Minor Father BVS Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Minor Father BVS Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
 
             webServiceVO = switchController.minorFatherBvsVerification(webServiceVO);
 
@@ -3987,7 +3987,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Account Status Change Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Account Status Change Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
 //            String input = "1";
 
 //            if (input.equals("0")) {
@@ -4108,7 +4108,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent IBFT Title Fetch Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent IBFT Title Fetch Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
 //            String input = "1";
 
 //            if (input.equals("0")) {
@@ -4265,7 +4265,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent IBFT Advice Request to Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent IBFT Advice Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
 //            String input = "1";
 
 //            if (input.equals("0")) {
@@ -4447,7 +4447,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Debit Card Issuance Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Debit Card Issuance Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.debitCardIssuanceInquiry(messageVO);
         } catch (Exception e) {
 
@@ -4591,7 +4591,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Debit Card Issuance Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Debit Card Issuance Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.debitCardIssuance(messageVO);
         } catch (Exception e) {
 
@@ -4736,7 +4736,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Challan Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Challan Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.challanPayment(messageVO);
         } catch (Exception e) {
 
@@ -4864,7 +4864,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Challan Payment Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Challan Payment Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.challanPaymentInquiry(messageVO);
         } catch (Exception e) {
 
@@ -5001,7 +5001,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent HRA Registration  Inquiry Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent HRA Registration  Inquiry Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.hraRegistrationInquiry(messageVO);
         } catch (Exception e) {
 
@@ -5157,7 +5157,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent HRA Registration  Inquiry Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent HRA Registration  Inquiry Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.hraRegistration(messageVO);
         } catch (Exception e) {
 
@@ -5274,7 +5274,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Wallet To Core Inquiry Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Wallet To Core Inquiry Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.walletToCoreInquiry(messageVO);
         } catch (Exception e) {
 
@@ -5397,7 +5397,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Fund Wallet To Core Inquiry Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Fund Wallet To Core Inquiry Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.fundWalletToCoreInquiry(messageVO);
         } catch (Exception e) {
 
@@ -5542,7 +5542,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Wallet To Core Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Wallet To Core Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.walletToCore(messageVO);
         } catch (Exception e) {
 
@@ -5687,7 +5687,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Wallet To Core Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Wallet To Core Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.fundWalletToCore(messageVO);
         } catch (Exception e) {
 
@@ -5833,7 +5833,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Wallet To Cnic Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Wallet To Cnic Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.walletToCnic(messageVO);
         } catch (Exception e) {
 
@@ -5963,7 +5963,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Wallet To CNIC Inquiry Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Wallet To CNIC Inquiry Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.walletToCnicInquiry(messageVO);
         } catch (Exception e) {
 
@@ -6090,7 +6090,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent HRA To Wallet Inquiry Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent HRA To Wallet Inquiry Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.hraToWalletInquiry(messageVO);
         } catch (Exception e) {
 
@@ -6230,7 +6230,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent HRA To Wallet Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent HRA To Wallet Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.hraToWallet(messageVO);
         } catch (Exception e) {
 
@@ -6360,7 +6360,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Debit Inquiry Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Debit Inquiry Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.debitInquiry(messageVO);
         } catch (Exception e) {
 
@@ -6677,7 +6677,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent Bill Payment Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent Bill Payment Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentBillPaymentInquiry(messageVO);
         } catch (Exception e) {
 
@@ -6811,7 +6811,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent Bill Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent Bill Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentBillPayment(messageVO);
         } catch (Exception e) {
 
@@ -6941,7 +6941,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Credit Inquiry Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Credit Inquiry Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.creditInquiry(messageVO);
         } catch (Exception e) {
 
@@ -7252,7 +7252,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent HRA Cash Withdrawal Inquiry Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent HRA Cash Withdrawal Inquiry Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.hraCashWithDrawlInquiry(messageVO);
         } catch (Exception e) {
 
@@ -7403,7 +7403,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent HRA Cash Withdrawal Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent HRA Cash Withdrawal Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.hraCashWithDrawl(messageVO);
         } catch (Exception e) {
 
@@ -7520,7 +7520,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Login Authentication Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Login Authentication Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.accountAuthentication(messageVO);
         } catch (Exception e) {
 
@@ -7636,7 +7636,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Login Authentication Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Login Authentication Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.accountAuthentication(messageVO);
         } catch (Exception e) {
 
@@ -7752,7 +7752,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Login PIN Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Login PIN Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.loginPin(messageVO);
         } catch (Exception e) {
 
@@ -7873,7 +7873,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Login PIN Change Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Login PIN Change Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.loginPinChange(messageVO);
         } catch (Exception e) {
 
@@ -7994,7 +7994,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Reset PIN Change Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Reset PIN Change Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.resetPin(messageVO);
         } catch (Exception e) {
 
@@ -8104,7 +8104,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Advance Loan Salary Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Advance Loan Salary Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.advanceLoanSalary(messageVO);
         } catch (Exception e) {
 
@@ -8320,7 +8320,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent Account Login Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent Account Login Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentAccountLogin(messageVO);
         } catch (Exception e) {
 
@@ -8431,7 +8431,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent Login PIN Generation Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent Login PIN Generation Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentLoginPinGeneration(messageVO);
         } catch (Exception e) {
 
@@ -8547,7 +8547,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent Login PIN Change Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent Login PIN Change Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentLoginPinReset(messageVO);
         } catch (Exception e) {
 
@@ -8658,7 +8658,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent MPIN Generation Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent MPIN Generation Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentMpinGeneration(messageVO);
         } catch (Exception e) {
 
@@ -8776,7 +8776,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent MPIN Reset Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent MPIN Reset Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentMpinReset(messageVO);
         } catch (Exception e) {
 
@@ -8996,7 +8996,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent Balance Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent Balance Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentBalanceInquiry(messageVO);
         } catch (Exception e) {
 
@@ -10666,7 +10666,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent Ibft Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent Ibft Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentIbftInquiry(messageVO);
         } catch (Exception e) {
 
@@ -10806,7 +10806,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent Ibft Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent Ibft Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentIbftPayment(messageVO);
         } catch (Exception e) {
 
@@ -12455,7 +12455,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent Cash Deposit Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent Cash Deposit Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentCashDepositInquiry(messageVO);
         } catch (Exception e) {
 
@@ -12584,7 +12584,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent Cash Deposit Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent Cash Deposit Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentCashDepositPayment(messageVO);
         } catch (Exception e) {
 
@@ -12705,7 +12705,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent Cash Withdrawal Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent Cash Withdrawal Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentCashWithdrawalInquiry(messageVO);
         } catch (Exception e) {
 
@@ -12856,7 +12856,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Agent Cash Withdrawal Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Agent Cash Withdrawal Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.agentCashWithdrawalPayment(messageVO);
         } catch (Exception e) {
 
@@ -12970,7 +12970,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent MPIN Verification Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent MPIN Verification Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.mpinVerification(messageVO);
         } catch (Exception e) {
 
@@ -13075,7 +13075,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Segment List Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Segment List Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.listSegments(messageVO);
         } catch (Exception e) {
 
@@ -13181,7 +13181,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Catalog List Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Catalog List Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.listCatalogs(messageVO);
         } catch (Exception e) {
 
@@ -13309,7 +13309,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent L2 Account Opening Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent L2 Account Opening Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.l2AccountOpening(messageVO);
         } catch (Exception e) {
 
@@ -13469,7 +13469,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent L2 Account Upgrade Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent L2 Account Upgrade Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.l2AccountUpgrade(messageVO);
         } catch (Exception e) {
 
@@ -13572,7 +13572,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent  Account Detail Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent  Account Detail Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.accountDetail(messageVO);
         } catch (Exception e) {
 
@@ -13673,7 +13673,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent  Customer Name Update Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent  Customer Name Update Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.customerNameUpdate(messageVO);
         } catch (Exception e) {
 
@@ -13779,7 +13779,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent CLS Status Update Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent CLS Status Update Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.clsStatusUpdate(messageVO);
         } catch (Exception e) {
 
@@ -13888,7 +13888,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Blink Account Verification Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Blink Account Verification Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.blinkAccountVerificationInquiry(messageVO);
         } catch (Exception e) {
 
@@ -14003,7 +14003,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Blink Account Verification Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Blink Account Verification Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.blinkAccountVerification(messageVO);
         } catch (Exception e) {
 
@@ -14107,7 +14107,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Debit Card Verification Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Debit Card Verification Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.debitCardStatusVerification(messageVO);
         } catch (Exception e) {
 
@@ -14212,7 +14212,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Advance Early Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Advance Early Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.advanceLoanPaymentSettlement(messageVO);
         } catch (Exception e) {
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
@@ -14313,7 +14313,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent  Fee Payment Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent  Fee Payment Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.feePaymentInquiry(messageVO);
         } catch (Exception e) {
 
@@ -14423,7 +14423,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent  Fee Payment Inquiry Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent  Fee Payment Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.feePayment(messageVO);
         } catch (Exception e) {
 
@@ -14552,7 +14552,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent  M0 Account Opening Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent  M0 Account Opening Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.accountOpening(messageVO);
         } catch (Exception e) {
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
@@ -14742,7 +14742,7 @@ public class HostIntegrationService {
         saveTransaction(logModel);
         // Call i8
         try {
-            logger.info("[HOST] Sent Optasia Credit Inquiry Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Optasia Credit Inquiry Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + OPTASIA_I8_SERVER + ":" + OPTASIA_I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = optasiaSwitchController.cnicTo256(messageVO);
         } catch (Exception e) {
 

@@ -295,7 +295,7 @@ public class JSMinorAccountController {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
                     HostRequestValidator.validateM0UpgadeAccount(request);
-//                    response = integrationService.upgradeMinorAccountResponse(request);
+                    response = integrationService.upgradeMinorAccountResponse(request);
 
 //                    response.setResponseCode("00");
 //                    response.setResponseDescription("Successful");
@@ -374,14 +374,13 @@ public class JSMinorAccountController {
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
         if (sha256hex.equalsIgnoreCase(request.getHashData())) {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-
                 try {
-//                    HostRequestValidator.validateMinorFatherBVSVerfication(request);
+                    HostRequestValidator.validateMinorFatherBVSVerfication(request);
 //                    //for Mock
 //                    response.setResponseCode("00");
 //                    response.setResponseDescription("SuccessFull");
 //                    response.setHashData("ABCD0026156156565645656");
-//                    response = integrationService.minorFatherBvsVerification(request);
+                    response = integrationService.minorFatherBvsVerification(request);
 
                 } catch (ValidationException ve) {
                     response.setResponseCode("420");

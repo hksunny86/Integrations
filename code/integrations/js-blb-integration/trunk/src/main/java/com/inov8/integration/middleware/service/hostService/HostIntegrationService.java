@@ -6505,7 +6505,7 @@ public class HostIntegrationService {
         // Call i8
         try {
 //            logger.info("[HOST] Sent Debit Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-            if (request.getReserved4().equalsIgnoreCase("NOVA-OPTASIA") || request.getChannelId().equalsIgnoreCase("optasia")) {
+            if (request.getReserved6().equalsIgnoreCase("NOVA-OPTASIA") || request.getChannelId().equalsIgnoreCase("optasia")) {
                 logger.info("[HOST] Sent Debit Payment Request to Micro Bank : " + I8_SCHEME + "://" + OPTASIA_I8_SERVER + ":" + OPTASIA_I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
                 messageVO = optasiaSwitchController.debit(messageVO);
             } else {
@@ -15458,9 +15458,9 @@ public class HostIntegrationService {
             debitRequest.setReserved1(request.getReserved1());
             debitRequest.setReserved2(request.getReserved2());
             debitRequest.setReserved3(request.getReserved3());
-            debitRequest.setReserved4("NOVA-OPTASIA");
+            debitRequest.setReserved4(request.getReserved4());
             debitRequest.setReserved5(request.getReserved5());
-            debitRequest.setReserved6(request.getReserved6());
+            debitRequest.setReserved6("NOVA-OPTASIA");
             debitRequest.setReserved7(request.getReserved7());
             debitRequest.setReserved8(request.getReserved8());
             debitRequest.setReserved9(request.getReserved9());

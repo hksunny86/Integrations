@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Controller("JsIntegrationController")
 public class JsIntegrationController implements WebServiceSwitchController {
@@ -2747,13 +2748,43 @@ public class JsIntegrationController implements WebServiceSwitchController {
         return null;
     }
 
+    @Override
+    public WebServiceVO loanCallBack(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO simpleAccountOpening(WebServiceVO webServiceVO) {
+        return null;
+    }
+//
 //    @Override
-//    public WebServiceVO loanCallBack(WebServiceVO webServiceVO) {
+//    public WebServiceVO getOutstandingLoan(WebServiceVO webServiceVO) {
 //        return null;
 //    }
 //
-//    @Override
-//    public WebServiceVO simpleAccountOpening(WebServiceVO webServiceVO) {
-//        return null;
-//    }
+    @Override
+    public WebServiceVO MerchantAccountUpgrade(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO merchantPictureUpgrade(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO accountStatus(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO getOutstandingLoan(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO customerTransactionVerification(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

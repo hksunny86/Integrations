@@ -4200,9 +4200,6 @@ public class HostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
         }
-        if (StringUtils.isEmpty(integrationVO.getCnicNumber())) {
-            throw new ValidationException("[FAILED] Validation Failed Cnic: " + integrationVO.getCnicNumber());
-        }
 
     }
 

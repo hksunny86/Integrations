@@ -3214,21 +3214,23 @@ public class HostIntegrationService {
         webServiceVO.setChannelId(walletToWalletPaymentRequest.getChannelId());
         webServiceVO.setTerminalId(walletToWalletPaymentRequest.getTerminalId());
 //        webServiceVO.setOtpPin(walletToWalletPaymentRequest.getOtp());
-        try {
-            if (walletToWalletPaymentRequest.getOtp() != null && !walletToWalletPaymentRequest.getOtp().equals("")) {
-                String text = walletToWalletPaymentRequest.getOtp();
-                String otp = text.replaceAll("\\r|\\n", "");
-                webServiceVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
-            } else if (walletToWalletPaymentRequest.getMpin() != null && !walletToWalletPaymentRequest.getMpin().equals("")) {
-                String text = walletToWalletPaymentRequest.getMpin();
-                String pin = text.replaceAll("\\r|\\n", "");
-                webServiceVO.setMobilePin(RSAEncryption.decrypt(pin, loginPrivateKey));
-            }
-
-
-        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            if (walletToWalletPaymentRequest.getOtp() != null && !walletToWalletPaymentRequest.getOtp().equals("")) {
+//                String text = walletToWalletPaymentRequest.getOtp();
+//                String otp = text.replaceAll("\\r|\\n", "");
+//                webServiceVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+//            } else if (walletToWalletPaymentRequest.getMpin() != null && !walletToWalletPaymentRequest.getMpin().equals("")) {
+//                String text = walletToWalletPaymentRequest.getMpin();
+//                String pin = text.replaceAll("\\r|\\n", "");
+////                webServiceVO.setMobilePin(RSAEncryption.decrypt(pin, loginPrivateKey));
+//                webServiceVO.setMobilePin("1234");
+//            }
+//
+//
+//        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+        webServiceVO.setMobilePin("1234");
         webServiceVO.setReceiverMobileNumber(walletToWalletPaymentRequest.getReceiverMobileNumber());
         webServiceVO.setTotalAmount(walletToWalletPaymentRequest.getAmount());
         webServiceVO.setReserved1(walletToWalletPaymentRequest.getReserved1());
@@ -17237,7 +17239,7 @@ public class HostIntegrationService {
 //        } else {
         // Call i8
         try {
-            logger.info("[HOST] Sent Simple Account Opening Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Simple Account Opening Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.simpleAccountOpening(messageVO);
         } catch (Exception e) {
 
@@ -17877,6 +17879,118 @@ public class HostIntegrationService {
             logModel.setProcessedTime(difference);
             updateTransactionInDB(logModel);
         }
+        return response;
+    }
+
+    public CustomerTransactionVerificationResponse customerTransactionVerificationResponse(CustomerTransactionVerificationRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Customer Transaction Verification Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        CustomerTransactionVerificationResponse response = new CustomerTransactionVerificationResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getMobileNo());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        messageVO.setReserved6(request.getReserved6());
+        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("CustomerTransactionVerification");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Customer Transaction Verification Request to Micro Bank " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.customerTransactionVerification(messageVO);
+        } catch (Exception e) {
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Customer Transaction Verification Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setProofOfProfession(messageVO.getProofOfProfession());
+            response.setSourceOfIncome(messageVO.getSourceOfIncome());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Customer Transaction Verification Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Customer Transaction Verification Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Customer Transaction Verification Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Customer Transaction Verification Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
         return response;
     }
 

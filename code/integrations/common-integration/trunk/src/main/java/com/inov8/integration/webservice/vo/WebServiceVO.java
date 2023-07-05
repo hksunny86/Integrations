@@ -425,6 +425,15 @@ public class WebServiceVO implements Serializable {
     private String idN;
     private String tillID;
     private String partialRecoveryAmount;
+    private String proofOfProfession;
+
+    public String getProofOfProfession() {
+        return proofOfProfession;
+    }
+
+    public void setProofOfProfession(String proofOfProfession) {
+        this.proofOfProfession = proofOfProfession;
+    }
 
     public String getPartialRecoveryAmount() {
         return partialRecoveryAmount;

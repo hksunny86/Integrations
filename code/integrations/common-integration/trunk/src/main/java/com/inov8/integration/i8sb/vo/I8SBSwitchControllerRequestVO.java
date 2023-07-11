@@ -501,6 +501,42 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private boolean cnicBack;
     private boolean selfie;
     private String internalLoanId;
+    private String aliasType;
+    private String aliasValue;
+    private String aliasId;
+    private String accountId;
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getAliasId() {
+        return aliasId;
+    }
+
+    public void setAliasId(String aliasId) {
+        this.aliasId = aliasId;
+    }
+
+    public String getAliasType() {
+        return aliasType;
+    }
+
+    public void setAliasType(String aliasType) {
+        this.aliasType = aliasType;
+    }
+
+    public String getAliasValue() {
+        return aliasValue;
+    }
+
+    public void setAliasValue(String aliasValue) {
+        this.aliasValue = aliasValue;
+    }
 
     public String getInternalLoanId() {
         return internalLoanId;

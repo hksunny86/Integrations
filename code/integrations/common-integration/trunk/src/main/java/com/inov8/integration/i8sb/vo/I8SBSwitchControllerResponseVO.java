@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.i8sb.vo.CardDetailVO;
 import com.inov8.integration.vo.StatementVo;
 import com.inov8.integration.webservice.optasiaVO.*;
+import com.inov8.integration.webservice.raastVO.IDs;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import javax.xml.bind.annotation.XmlTransient;
@@ -466,6 +467,114 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private List<ThirdPartyData> thirdPartyDataList;
     private LoanInfo loanInfoSummary;
     private List<Event> eventList;
+    private IDs iDs;
+    private String memberId;
+    private String surName;
+    private String nickName;
+    private Boolean isDefault;
+    private String documentType;
+    private String documentNumber;
+    private String value;
+    private String customerStatus;
+    private String aliasStatus;
+    private String aliasType;
+    private String aliasValue;
+
+    public String getAliasType() {
+        return aliasType;
+    }
+
+    public void setAliasType(String aliasType) {
+        this.aliasType = aliasType;
+    }
+
+    public String getAliasValue() {
+        return aliasValue;
+    }
+
+    public void setAliasValue(String aliasValue) {
+        this.aliasValue = aliasValue;
+    }
+
+    public String getCustomerStatus() {
+        return customerStatus;
+    }
+
+    public void setCustomerStatus(String customerStatus) {
+        this.customerStatus = customerStatus;
+    }
+
+    public String getAliasStatus() {
+        return aliasStatus;
+    }
+
+    public void setAliasStatus(String aliasStatus) {
+        this.aliasStatus = aliasStatus;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
+    }
+
+    public String getDocumentNumber() {
+        return documentNumber;
+    }
+
+    public void setDocumentNumber(String documentNumber) {
+        this.documentNumber = documentNumber;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getSurName() {
+        return surName;
+    }
+
+    public void setSurName(String surName) {
+        this.surName = surName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public Boolean getDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(Boolean aDefault) {
+        isDefault = aDefault;
+    }
+
+    public IDs getiDs() {
+        return iDs;
+    }
+
+    public void setiDs(IDs iDs) {
+        this.iDs = iDs;
+    }
 
     public List<Event> getEventList() {
         return eventList;

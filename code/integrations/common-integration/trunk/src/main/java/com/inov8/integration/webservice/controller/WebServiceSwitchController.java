@@ -159,6 +159,5 @@ public interface WebServiceSwitchController {
 //    WebServiceVO offerListForCommodity(WebServiceVO webServiceVO);
 //    WebServiceVO customerAnalytics(WebServiceVO webServiceVO);
     WebServiceVO accountStatus(WebServiceVO webServiceVO);
-    WebServiceVO customerTransactionVerification(WebServiceVO webServiceVO);
 
 }

@@ -229,9 +229,9 @@ public class LoanStatusResponse extends Response implements Serializable {
 
                     event.setEventType(loanStatusEvents.get(i).getEventType());
                     if (loanStatusEvents.get(i).getEventTypeDetails() != null) {
-                        eventTypeDetails.setChargeCalculationName(loanStatusEvents.get(i).getEventTypeDetails().getChargeCalculationName());
+//                        eventTypeDetails.setChargeCalculationName(loanStatusEvents.get(i).getEventTypeDetails().getChargeCalculationName());
                         eventTypeDetails.setIsPassiveRecovery(loanStatusEvents.get(i).getEventTypeDetails().getIsPassiveRecovery());
-                        eventTypeDetails.setRecoveryPassiveAutoRecovered(loanStatusEvents.get(i).getEventTypeDetails().getRecoveryPassiveAutoRecovered());
+//                        eventTypeDetails.setRecoveryPassiveAutoRecovered(loanStatusEvents.get(i).getEventTypeDetails().getRecoveryPassiveAutoRecovered());
                         eventTypeDetails.setIsPassiveAdvance(loanStatusEvents.get(i).getEventTypeDetails().getIsPassiveAdvance());
                         eventTypeDetails.setPendingOperationId(loanStatusEvents.get(i).getEventTypeDetails().getPendingOperationId());
 //                        eventTypeDetails.setAdvanceFailedFailureType(loanStatusEvents.get(i).getEventTypeDetails().getAdvanceFailedFailureType());

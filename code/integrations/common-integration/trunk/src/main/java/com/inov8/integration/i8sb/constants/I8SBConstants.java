@@ -83,6 +83,7 @@ public class I8SBConstants {
     public static String I8SB_Channel_ID_ZINDIGI_CUSTOMER = "ZINDIGICUSTOMER";
     public static String I8SB_Channel_ID_BRANDVERSE = "BRANDVERSE";
     public static String I8SB_Channel_ID_PDM = "PDM";
+    public static String I8SB_Channel_ID_RAAST = "RAAST";
 
 
     public static String I8SB_Channel_ID_ETPaymentCollection = "ETPaymentCollection";
@@ -360,6 +361,14 @@ public class I8SBConstants {
     public static String RequestType_Brandverse_AccessToken = "BrandverseToken";
     public static String RequestType_Brandverse_Notify = "BrandverseNotify";
     public static String RequestType_PDM_Validate = "PDMValidate";
+    public static String RequestType_RAAST_CustomerAliasAccountID = "CustomerAliasAccountID";
+    public static String RequestType_RAAST_GetDefaultAccountByAlias = "GetDefaultAccountByAlias";
+    public static String RequestType_RAAST_GetCustomerInformation = "GetCustomerInformation";
+    public static String RequestType_RAAST_GetCustomerAccounts = "GetCustomerAccounts";
+    public static String RequestType_RAAST_GetCustomerAliases = "GetCustomerAliases";
+    public static String RequestType_RAAST_DeleteAccount = "DeleteAccount";
+    public static String RequestType_RAAST_DeleteAlias = "DeleteAlias";
+    public static String RequestType_RAAST_DeleteCustomer = "DeleteCustomer";
 
 
 

@@ -30,6 +30,8 @@ import java.io.Serializable;
         "cnicFrontPic",
         "cnicBackPic",
         "Status",
+        "motherMaiden",
+        "birthPlace"
 })
 public class L2AccountUpgradeValidationRequest extends Request implements Serializable {
 
@@ -65,6 +67,10 @@ public class L2AccountUpgradeValidationRequest extends Request implements Serial
     private Boolean signature;
     @JsonProperty("Status")
     private String status;
+    @JsonProperty("motherMaiden")
+    private Boolean motherMaiden;
+    @JsonProperty("birthPlace")
+    private Boolean birthPlace;
 
 
     public void setEmailAddress(boolean emailAddress) {
@@ -195,6 +201,22 @@ public class L2AccountUpgradeValidationRequest extends Request implements Serial
         this.signature = signature;
     }
 
+    public Boolean getMotherMaiden() {
+        return motherMaiden;
+    }
+
+    public void setMotherMaiden(Boolean motherMaiden) {
+        this.motherMaiden = motherMaiden;
+    }
+
+    public Boolean getBirthPlace() {
+        return birthPlace;
+    }
+
+    public void setBirthPlace(Boolean birthPlace) {
+        this.birthPlace = birthPlace;
+    }
+
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
@@ -265,6 +287,16 @@ public class L2AccountUpgradeValidationRequest extends Request implements Serial
             this.setSourceOfIncome(true);
         } else {
             this.setSourceOfIncome(false);
+        }
+        if (i8SBSwitchControllerRequestVO.getMotherMaidenName().equalsIgnoreCase("Approved")) {
+            this.setMotherMaiden(true);
+        } else {
+            this.setMotherMaiden(false);
+        }
+        if (i8SBSwitchControllerRequestVO.getPlaceOfBirth().equalsIgnoreCase("Approved")) {
+            this.setBirthPlace(true);
+        } else {
+            this.setBirthPlace(false);
         }
     }
 

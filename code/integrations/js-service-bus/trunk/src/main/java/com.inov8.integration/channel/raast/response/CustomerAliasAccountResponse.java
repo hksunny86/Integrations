@@ -66,6 +66,7 @@ public class CustomerAliasAccountResponse extends Response implements Serializab
             iDs.setAliasID(this.getIDs().getAliasID());
             iDs.setCustomerID(this.getIDs().getCustomerID());
             i8SBSwitchControllerResponseVO.setiDs(iDs);
+            i8SBSwitchControllerResponseVO.setType(this.getIDs().getType());
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getResponseDescription());
@@ -80,7 +81,8 @@ public class CustomerAliasAccountResponse extends Response implements Serializab
 @JsonPropertyOrder({
         "CustomerID",
         "AliasID",
-        "AccountID"
+        "AccountID",
+        "Type",
 })
 class IDs {
 
@@ -90,6 +92,8 @@ class IDs {
     private String aliasID;
     @JsonProperty("AccountID")
     private String accountID;
+    @JsonProperty("Type")
+    private String type;
 
     @JsonProperty("CustomerID")
     public String getCustomerID() {
@@ -121,4 +125,13 @@ class IDs {
         this.accountID = accountID;
     }
 
+    @JsonProperty("Type")
+    public String getType() {
+        return type;
+    }
+
+    @JsonProperty("Type")
+    public void setType(String type) {
+        this.type = type;
+    }
 }

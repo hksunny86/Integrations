@@ -16,6 +16,8 @@ import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "type",
+        "value",
+        "status",
         "currency",
         "servicer",
         "openingDate",
@@ -30,6 +32,10 @@ class Datum {
 
     @JsonProperty("type")
     private Object type;
+    @JsonProperty("value")
+    private String value;
+    @JsonProperty("status")
+    private String status;
     @JsonProperty("currency")
     private Object currency;
     @JsonProperty("servicer")
@@ -57,6 +63,26 @@ class Datum {
     @JsonProperty("type")
     public void setType(Object type) {
         this.type = type;
+    }
+
+    @JsonProperty("value")
+    public String getValue() {
+        return value;
+    }
+
+    @JsonProperty("value")
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    @JsonProperty("status")
+    public String getStatus() {
+        return status;
+    }
+
+    @JsonProperty("status")
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @JsonProperty("currency")
@@ -188,8 +214,8 @@ public class GetCustomerAliasesResponse extends Response implements Serializable
             if (this.getResponseCode().equals("200")) {
                 i8SBSwitchControllerResponseVO.setResponseCode("00");
                 i8SBSwitchControllerResponseVO.setAliasType(String.valueOf(this.data.get(0).getType()));
-//                i8SBSwitchControllerResponseVO.setAliasValue(this.data.get(0).getValue());
-//                i8SBSwitchControllerResponseVO.setAliasStatus(this.data.get(0).getStatus());
+                i8SBSwitchControllerResponseVO.setAliasValue(this.data.get(0).getValue());
+                i8SBSwitchControllerResponseVO.setAliasStatus(this.data.get(0).getStatus());
             } else {
                 i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
                 if (this.getData().get(1).getResponseDescription() != null) {

@@ -1,11 +1,8 @@
 package com.inov8.integration.channel.raast.response;
 
-;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Generated;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -58,80 +58,6 @@ public class RaastService {
     private String accessToken = PropertyReader.getProperty("raast.Access_token");
     I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
-    public CustomerAliasAccountResponse customerAliasAccountResponse(CustomerAliasAccountRequest customerAliasAccountRequest) {
-
-        CustomerAliasAccountResponse customerAliasAccountResponse = new CustomerAliasAccountResponse();
-
-        long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock2")) {
-            logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
-            RaastMock raastMock = new RaastMock();
-            String response = raastMock.customerAliasAccountResponse();
-            customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(response, CustomerAliasAccountResponse.class);
-            Objects.requireNonNull(customerAliasAccountResponse).setResponseCode("200");
-            logger.info("Response Code for Customer Alias Account Id Request : " + Objects.requireNonNull(customerAliasAccountResponse).getResponseCode());
-        } else {
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Access_token", this.accessToken);
-            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.customerAliasAccountIDUrl);
-            logger.info("Requesting URL " + uri.toUriString());
-            String requestJSON = JSONUtil.getJSON(customerAliasAccountRequest);
-            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
-            logger.info("Prepared Customer Alias Account Id Request HttpEntity " + httpEntity);
-            String responseCode = "";
-            try {
-                logger.info("Sending Customer Alias Account Id Request to Client " + httpEntity.getBody().toString());
-                ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
-                logger.info("Response Code of Customer Alias Account Id Request received from client " + res1.getStatusCode().toString());
-                logger.info("Response of Customer Alias Account Id Request received from client " + res1.getBody());
-                responseCode = res1.getStatusCode().toString();
-                if (responseCode.equals("200")) {
-                    customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(res1.getBody(), CustomerAliasAccountResponse.class);
-                    Objects.requireNonNull(customerAliasAccountResponse).setResponseCode(responseCode);
-                } else {
-                    Objects.requireNonNull(customerAliasAccountResponse).setResponseCode(res1.getStatusCode().toString());
-                }
-            } catch (RestClientException e) {
-                if (e instanceof HttpStatusCodeException) {
-                    responseCode = ((HttpStatusCodeException) e).getStatusCode().toString();
-                    String result;
-                    if (responseCode.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(customerAliasAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
-                    } else if (responseCode.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(customerAliasAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
-                    } else if (responseCode.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-
-                        Objects.requireNonNull(customerAliasAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
-                    }
-                }
-                if (e instanceof ResourceAccessException) {
-                    String result = e.getMessage();
-                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
-                    Objects.requireNonNull(customerAliasAccountResponse).setResponseCode("500");
-                }
-            } catch (Exception e) {
-                logger.error(" [ Exception ]" + e.getLocalizedMessage());
-            }
-
-            long endTime = (new Date()).getTime();
-            long difference = endTime - start;
-            logger.debug("Customer Alias Account Id Request processed in: " + difference + " millisecond");
-        }
-        return customerAliasAccountResponse;
-    }
-
     public GetDefaultAccountByAliasResponse getDefaultAccountByAliasResponse(GetDefaultAccountByAliasRequest getDefaultAccountByAliasRequest) {
 
         GetDefaultAccountByAliasResponse getDefaultAccountByAliasResponse = new GetDefaultAccountByAliasResponse();
@@ -204,6 +130,80 @@ public class RaastService {
             logger.debug("Get Default Account By Alias Request processed in: " + difference + " millisecond");
         }
         return getDefaultAccountByAliasResponse;
+    }
+
+    public CustomerAliasAccountResponse customerAliasAccountResponse(CustomerAliasAccountRequest customerAliasAccountRequest) {
+
+        CustomerAliasAccountResponse customerAliasAccountResponse = new CustomerAliasAccountResponse();
+
+        long start = System.currentTimeMillis();
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock2")) {
+            logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
+            RaastMock raastMock = new RaastMock();
+            String response = raastMock.customerAliasAccountResponse();
+            customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(response, CustomerAliasAccountResponse.class);
+            Objects.requireNonNull(customerAliasAccountResponse).setStatusCode("200");
+            logger.info("Response Code for Customer Alias Account Id Request : " + Objects.requireNonNull(customerAliasAccountResponse).getResponseCode());
+        } else {
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("Access_token", this.accessToken);
+            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.customerAliasAccountIDUrl);
+            logger.info("Requesting URL " + uri.toUriString());
+            String requestJSON = JSONUtil.getJSON(customerAliasAccountRequest);
+            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+            logger.info("Prepared Customer Alias Account Id Request HttpEntity " + httpEntity);
+            String responseCode = "";
+            try {
+                logger.info("Sending Customer Alias Account Id Request to Client " + httpEntity.getBody().toString());
+                ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
+                logger.info("Response Code of Customer Alias Account Id Request received from client " + res1.getStatusCode().toString());
+                logger.info("Response of Customer Alias Account Id Request received from client " + res1.getBody());
+                responseCode = res1.getStatusCode().toString();
+                if (responseCode.equals("200")) {
+                    customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(res1.getBody(), CustomerAliasAccountResponse.class);
+                    Objects.requireNonNull(customerAliasAccountResponse).setStatusCode(responseCode);
+                } else {
+                    Objects.requireNonNull(customerAliasAccountResponse).setStatusCode(res1.getStatusCode().toString());
+                }
+            } catch (RestClientException e) {
+                if (e instanceof HttpStatusCodeException) {
+                    responseCode = ((HttpStatusCodeException) e).getStatusCode().toString();
+                    String result;
+                    if (responseCode.equals("400")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        Objects.requireNonNull(customerAliasAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
+                    } else if (responseCode.equals("422")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        Objects.requireNonNull(customerAliasAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
+                    } else if (responseCode.equals("500")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+
+                        Objects.requireNonNull(customerAliasAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
+                    } else {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                        customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
+                    }
+                }
+                if (e instanceof ResourceAccessException) {
+                    String result = e.getMessage();
+                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
+                    Objects.requireNonNull(customerAliasAccountResponse).setResponseCode("500");
+                }
+            } catch (Exception e) {
+                logger.error(" [ Exception ]" + e.getLocalizedMessage());
+            }
+
+            long endTime = (new Date()).getTime();
+            long difference = endTime - start;
+            logger.debug("Customer Alias Account Id Request processed in: " + difference + " millisecond");
+        }
+        return customerAliasAccountResponse;
     }
 
     public GetCustomerInformationResponse getCustomerInformationResponse(GetCustomerInformationRequest getCustomerInformationRequest) {

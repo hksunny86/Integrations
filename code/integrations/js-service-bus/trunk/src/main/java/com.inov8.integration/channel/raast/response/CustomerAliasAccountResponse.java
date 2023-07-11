@@ -23,6 +23,8 @@ public class CustomerAliasAccountResponse extends Response implements Serializab
     private String responseDescription;
     @JsonProperty("IDs")
     private IDs iDs;
+    private String statusCode;
+
 
     @JsonProperty("ResponseCode")
     public String getResponseCode() {
@@ -54,19 +56,30 @@ public class CustomerAliasAccountResponse extends Response implements Serializab
         this.iDs = iDs;
     }
 
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
-        if (Objects.requireNonNull(this.getResponseCode()).equals("200")) {
-            i8SBSwitchControllerResponseVO.setResponseCode("00");
+        if (Objects.requireNonNull(this.getStatusCode()).equals("200")) {
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getResponseDescription());
             com.inov8.integration.webservice.raastVO.IDs iDs = new com.inov8.integration.webservice.raastVO.IDs();
-            iDs.setAccountID(this.getIDs().getAccountID());
-            iDs.setAliasID(this.getIDs().getAliasID());
-            iDs.setCustomerID(this.getIDs().getCustomerID());
-            i8SBSwitchControllerResponseVO.setiDs(iDs);
-            i8SBSwitchControllerResponseVO.setType(this.getIDs().getType());
+            if (this.getIDs() != null) {
+                iDs.setAccountID(this.getIDs().getAccountID());
+                iDs.setAliasID(this.getIDs().getAliasID());
+                iDs.setCustomerID(this.getIDs().getCustomerID());
+                i8SBSwitchControllerResponseVO.setiDs(iDs);
+                i8SBSwitchControllerResponseVO.setType(this.getIDs().getType());
+            }
+
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getResponseDescription());

@@ -2784,7 +2784,8 @@ public class JsIntegrationController implements WebServiceSwitchController {
     }
 
     @Override
-    public WebServiceVO customerTransactionVerification(WebServiceVO webServiceVO) {
+    public WebServiceVO updateCnicExpiry(WebServiceVO webServiceVO) {
         return null;
     }
+
 }

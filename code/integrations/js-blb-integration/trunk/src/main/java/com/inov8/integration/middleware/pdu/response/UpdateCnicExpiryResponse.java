@@ -17,6 +17,7 @@ import java.io.Serializable;
 })
 public class UpdateCnicExpiryResponse implements Serializable {
 
+
     private final static long serialVersionUID = 1L;
 
     @JsonProperty("Rrn")

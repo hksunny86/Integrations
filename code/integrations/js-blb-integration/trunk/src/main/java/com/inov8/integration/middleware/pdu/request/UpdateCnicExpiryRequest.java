@@ -25,6 +25,7 @@ import java.io.Serializable;
         "HashData"
 })
 public class UpdateCnicExpiryRequest implements Serializable {
+
     private final static long serialVersionUID = 1L;
 
     @JsonProperty("UserName")

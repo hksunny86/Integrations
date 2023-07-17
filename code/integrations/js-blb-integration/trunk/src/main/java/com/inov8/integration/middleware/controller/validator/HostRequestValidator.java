@@ -4223,6 +4223,7 @@ public class HostRequestValidator {
 
     }
 
+
     public static boolean authenticate(String userName, String password, String channelID) {
         if (ConfigReader.getInstance().getProperty("channel.ids", "").contains(channelID))
             return ConfigReader.getInstance().getProperty("channel.usernames", "").contains(userName) && ConfigReader.getInstance().getProperty("channel.passwords", "").contains(password);

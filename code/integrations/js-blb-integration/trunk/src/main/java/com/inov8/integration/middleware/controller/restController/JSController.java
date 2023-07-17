@@ -968,7 +968,7 @@ public class JSController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
                     HostRequestValidator.validateOptasiaCredit(request);
@@ -994,13 +994,13 @@ public class JSController {
                 response.setResponseDescription("Request is not authenticated");
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Optasia Credit PAYMENT TRANSACTION *********");
-//                response = new OptasiaCreditResponse();
-//                response.setResponseCode("111");
-//                response.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Optasia Credit PAYMENT TRANSACTION *********");
+                response = new OptasiaCreditResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
         } catch (Exception e) {
 
             response = new OptasiaCreditResponse();
@@ -1808,27 +1808,27 @@ public class JSController {
                         HostRequestValidator.validateOutstanding(request);
                         loansResponse = integrationService.outstandingResponse(request);
 
-                    } catch (ValidationException ve) {
-                        loansResponse.setResponseCode("420");
-                        loansResponse.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        loansResponse.setResponseCode("220");
-                        loansResponse.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Outstanding Loan Request *********");
-                    logger.info("ResponseCode: " + loansResponse.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Outstanding Loan Request AUTHENTICATION *********");
-                    loansResponse = new LoansResponse();
+                } catch (ValidationException ve) {
                     loansResponse.setResponseCode("420");
-                    loansResponse.setResponseDescription("Request is not authenticated");
-                    loansResponse.setRrn(request.getRrn());
-                    loansResponse.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    loansResponse.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    loansResponse.setResponseCode("220");
+                    loansResponse.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+
+                logger.info("******* DEBUG LOGS FOR Outstanding Loan Request *********");
+                logger.info("ResponseCode: " + loansResponse.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Outstanding Loan Request AUTHENTICATION *********");
+                loansResponse = new LoansResponse();
+                loansResponse.setResponseCode("420");
+                loansResponse.setResponseDescription("Request is not authenticated");
+                loansResponse.setRrn(request.getRrn());
+                loansResponse.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
                 }
             } else {
@@ -2171,10 +2171,10 @@ public class JSController {
                     .append(request.getInternalLoanId());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
-//                        HostRequestValidator.validateLoanCallBack(request);
+                        HostRequestValidator.validateLoanCallBack(request);
                     loanCallBackResponse = integrationService.loanCallBackResponse(request);
 
                 } catch (ValidationException ve) {
@@ -2200,13 +2200,13 @@ public class JSController {
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
             }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Loan Call Back Request *********");
-//                loanCallBackResponse = new LoanCallBackResponse();
-//                loanCallBackResponse.setResponseCode("111");
-//                loanCallBackResponse.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Loan Call Back Request *********");
+                loanCallBackResponse = new LoanCallBackResponse();
+                loanCallBackResponse.setResponseCode("111");
+                loanCallBackResponse.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
         } catch (Exception e) {
 
             loanCallBackResponse = new LoanCallBackResponse();

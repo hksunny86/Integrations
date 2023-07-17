@@ -426,6 +426,24 @@ public class WebServiceVO implements Serializable {
     private String tillID;
     private String partialRecoveryAmount;
     private String proofOfProfession;
+    private String portalId;
+    private String portalPassword;
+
+    public String getPortalId() {
+        return portalId;
+    }
+
+    public void setPortalId(String portalId) {
+        this.portalId = portalId;
+    }
+
+    public String getPortalPassword() {
+        return portalPassword;
+    }
+
+    public void setPortalPassword(String portalPassword) {
+        this.portalPassword = portalPassword;
+    }
 
     public String getProofOfProfession() {
         return proofOfProfession;

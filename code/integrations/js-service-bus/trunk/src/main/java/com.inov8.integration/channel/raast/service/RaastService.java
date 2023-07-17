@@ -3,29 +3,12 @@ package com.inov8.integration.channel.raast.service;
 import com.inov8.integration.channel.raast.mock.RaastMock;
 import com.inov8.integration.channel.raast.request.*;
 import com.inov8.integration.channel.raast.response.*;
-import com.inov8.integration.channel.tasdeeq.mock.TasdeeqMock;
-import com.inov8.integration.channel.tasdeeq.request.AuthenticateUpdatedRequest;
-import com.inov8.integration.channel.tasdeeq.request.CustomAnalyticsRequest;
-import com.inov8.integration.channel.tasdeeq.response.AuthenticateUpdatedResponse;
-import com.inov8.integration.channel.tasdeeq.response.CustomAnalyticsResponse;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
-import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import com.inov8.integration.util.JSONUtil;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.ResourceAccessException;
@@ -33,12 +16,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.net.ssl.SSLContext;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Objects;
 
 @Service
@@ -78,9 +56,9 @@ public class RaastService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.getDefaultAccountByAliasUrl);
             logger.info("Requesting URL " + uri.toUriString());
             String requestJSON = JSONUtil.getJSON(getDefaultAccountByAliasRequest);
-            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+            HttpEntity<?> httpEntity = new HttpEntity<>(requestJSON, headers);
             logger.info("Prepared Get Default Account By Alias Request HttpEntity " + httpEntity);
-            String responseCode = "";
+            String responseCode;
             try {
                 logger.info("Sending Customer Get Default Account By Alias Request to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
@@ -97,23 +75,19 @@ public class RaastService {
                 if (e instanceof HttpStatusCodeException) {
                     responseCode = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (responseCode.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(getDefaultAccountByAliasResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        getDefaultAccountByAliasResponse = (GetDefaultAccountByAliasResponse) JSONUtil.jsonToObject(result, GetDefaultAccountByAliasResponse.class);
-                    } else if (responseCode.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(getDefaultAccountByAliasResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        getDefaultAccountByAliasResponse = (GetDefaultAccountByAliasResponse) JSONUtil.jsonToObject(result, GetDefaultAccountByAliasResponse.class);
-                    } else if (responseCode.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-
-                        Objects.requireNonNull(getDefaultAccountByAliasResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        getDefaultAccountByAliasResponse = (GetDefaultAccountByAliasResponse) JSONUtil.jsonToObject(result, GetDefaultAccountByAliasResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        getDefaultAccountByAliasResponse = (GetDefaultAccountByAliasResponse) JSONUtil.jsonToObject(result, GetDefaultAccountByAliasResponse.class);
+                    switch (responseCode) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(getDefaultAccountByAliasResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            getDefaultAccountByAliasResponse = (GetDefaultAccountByAliasResponse) JSONUtil.jsonToObject(result, GetDefaultAccountByAliasResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            getDefaultAccountByAliasResponse = (GetDefaultAccountByAliasResponse) JSONUtil.jsonToObject(result, GetDefaultAccountByAliasResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {
@@ -152,9 +126,9 @@ public class RaastService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.customerAliasAccountIDUrl);
             logger.info("Requesting URL " + uri.toUriString());
             String requestJSON = JSONUtil.getJSON(customerAliasAccountRequest);
-            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+            HttpEntity<?> httpEntity = new HttpEntity<>(requestJSON, headers);
             logger.info("Prepared Customer Alias Account Id Request HttpEntity " + httpEntity);
-            String responseCode = "";
+            String responseCode;
             try {
                 logger.info("Sending Customer Alias Account Id Request to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
@@ -171,23 +145,19 @@ public class RaastService {
                 if (e instanceof HttpStatusCodeException) {
                     responseCode = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (responseCode.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(customerAliasAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
-                    } else if (responseCode.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(customerAliasAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
-                    } else if (responseCode.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-
-                        Objects.requireNonNull(customerAliasAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
+                    switch (responseCode) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(customerAliasAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            customerAliasAccountResponse = (CustomerAliasAccountResponse) JSONUtil.jsonToObject(result, CustomerAliasAccountResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {
@@ -226,9 +196,9 @@ public class RaastService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.getCustomerInfoUrl);
             logger.info("Requesting URL " + uri.toUriString());
             String requestJSON = JSONUtil.getJSON(getCustomerInformationRequest);
-            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+            HttpEntity<?> httpEntity = new HttpEntity<>(requestJSON, headers);
             logger.info("Prepared Get Customer Information Request HttpEntity " + httpEntity);
-            String responseCode = "";
+            String responseCode;
             try {
                 logger.info("Sending Get Customer Information Request to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
@@ -245,23 +215,19 @@ public class RaastService {
                 if (e instanceof HttpStatusCodeException) {
                     responseCode = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (responseCode.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(getCustomerInformationResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        getCustomerInformationResponse = (GetCustomerInformationResponse) JSONUtil.jsonToObject(result, GetCustomerInformationResponse.class);
-                    } else if (responseCode.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(getCustomerInformationResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        getCustomerInformationResponse = (GetCustomerInformationResponse) JSONUtil.jsonToObject(result, GetCustomerInformationResponse.class);
-                    } else if (responseCode.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-
-                        Objects.requireNonNull(getCustomerInformationResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        getCustomerInformationResponse = (GetCustomerInformationResponse) JSONUtil.jsonToObject(result, GetCustomerInformationResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        getCustomerInformationResponse = (GetCustomerInformationResponse) JSONUtil.jsonToObject(result, GetCustomerInformationResponse.class);
+                    switch (responseCode) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(getCustomerInformationResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            getCustomerInformationResponse = (GetCustomerInformationResponse) JSONUtil.jsonToObject(result, GetCustomerInformationResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            getCustomerInformationResponse = (GetCustomerInformationResponse) JSONUtil.jsonToObject(result, GetCustomerInformationResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {
@@ -300,9 +266,9 @@ public class RaastService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.getCustomerAccountsUrl);
             logger.info("Requesting URL " + uri.toUriString());
             String requestJSON = JSONUtil.getJSON(getCustomerAccountsRequest);
-            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+            HttpEntity<?> httpEntity = new HttpEntity<>(requestJSON, headers);
             logger.info("Prepared Get Customer Accounts Request HttpEntity " + httpEntity);
-            String responseCode = "";
+            String responseCode;
             try {
                 logger.info("Sending Get Customer Accounts Request to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
@@ -319,23 +285,19 @@ public class RaastService {
                 if (e instanceof HttpStatusCodeException) {
                     responseCode = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (responseCode.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(getCustomerAccountsResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        getCustomerAccountsResponse = (GetCustomerAccountsResponse) JSONUtil.jsonToObject(result, GetCustomerAccountsResponse.class);
-                    } else if (responseCode.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(getCustomerAccountsResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        getCustomerAccountsResponse = (GetCustomerAccountsResponse) JSONUtil.jsonToObject(result, GetCustomerAccountsResponse.class);
-                    } else if (responseCode.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-
-                        Objects.requireNonNull(getCustomerAccountsResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        getCustomerAccountsResponse = (GetCustomerAccountsResponse) JSONUtil.jsonToObject(result, GetCustomerAccountsResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        getCustomerAccountsResponse = (GetCustomerAccountsResponse) JSONUtil.jsonToObject(result, GetCustomerAccountsResponse.class);
+                    switch (responseCode) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(getCustomerAccountsResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            getCustomerAccountsResponse = (GetCustomerAccountsResponse) JSONUtil.jsonToObject(result, GetCustomerAccountsResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            getCustomerAccountsResponse = (GetCustomerAccountsResponse) JSONUtil.jsonToObject(result, GetCustomerAccountsResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {
@@ -374,9 +336,9 @@ public class RaastService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.getCustomerAliasesUrl);
             logger.info("Requesting URL " + uri.toUriString());
             String requestJSON = JSONUtil.getJSON(getCustomerAliasesRequest);
-            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+            HttpEntity<?> httpEntity = new HttpEntity<>(requestJSON, headers);
             logger.info("Prepared Get Customer Aliases Request HttpEntity " + httpEntity);
-            String responseCode = "";
+            String responseCode;
             try {
                 logger.info("Sending Get Customer Aliases Request to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
@@ -393,23 +355,19 @@ public class RaastService {
                 if (e instanceof HttpStatusCodeException) {
                     responseCode = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (responseCode.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(getCustomerAliasesResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        getCustomerAliasesResponse = (GetCustomerAliasesResponse) JSONUtil.jsonToObject(result, GetCustomerAliasesResponse.class);
-                    } else if (responseCode.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(getCustomerAliasesResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        getCustomerAliasesResponse = (GetCustomerAliasesResponse) JSONUtil.jsonToObject(result, GetCustomerAliasesResponse.class);
-                    } else if (responseCode.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-
-                        Objects.requireNonNull(getCustomerAliasesResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        getCustomerAliasesResponse = (GetCustomerAliasesResponse) JSONUtil.jsonToObject(result, GetCustomerAliasesResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        getCustomerAliasesResponse = (GetCustomerAliasesResponse) JSONUtil.jsonToObject(result, GetCustomerAliasesResponse.class);
+                    switch (responseCode) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(getCustomerAliasesResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            getCustomerAliasesResponse = (GetCustomerAliasesResponse) JSONUtil.jsonToObject(result, GetCustomerAliasesResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            getCustomerAliasesResponse = (GetCustomerAliasesResponse) JSONUtil.jsonToObject(result, GetCustomerAliasesResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {
@@ -450,9 +408,9 @@ public class RaastService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.deleteAccountUrl);
             logger.info("Requesting URL " + uri.toUriString());
             String requestJSON = JSONUtil.getJSON(deleteAccountRequest);
-            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+            HttpEntity<?> httpEntity = new HttpEntity<>(requestJSON, headers);
             logger.info("Prepared Delete Account Information Request HttpEntity " + httpEntity);
-            String responseCode = "";
+            String responseCode;
             try {
                 logger.info("Sending Delete Account Information Request to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
@@ -469,23 +427,19 @@ public class RaastService {
                 if (e instanceof HttpStatusCodeException) {
                     responseCode = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (responseCode.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(deleteAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        deleteAccountResponse = (DeleteAccountResponse) JSONUtil.jsonToObject(result, DeleteAccountResponse.class);
-                    } else if (responseCode.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(deleteAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        deleteAccountResponse = (DeleteAccountResponse) JSONUtil.jsonToObject(result, DeleteAccountResponse.class);
-                    } else if (responseCode.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-
-                        Objects.requireNonNull(deleteAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        deleteAccountResponse = (DeleteAccountResponse) JSONUtil.jsonToObject(result, DeleteAccountResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        deleteAccountResponse = (DeleteAccountResponse) JSONUtil.jsonToObject(result, DeleteAccountResponse.class);
+                    switch (responseCode) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(deleteAccountResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            deleteAccountResponse = (DeleteAccountResponse) JSONUtil.jsonToObject(result, DeleteAccountResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            deleteAccountResponse = (DeleteAccountResponse) JSONUtil.jsonToObject(result, DeleteAccountResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {
@@ -524,9 +478,9 @@ public class RaastService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.deleteAliasUrl);
             logger.info("Requesting URL " + uri.toUriString());
             String requestJSON = JSONUtil.getJSON(deleteAliasRequest);
-            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+            HttpEntity<?> httpEntity = new HttpEntity<>(requestJSON, headers);
             logger.info("Prepared Delete Account Information Request HttpEntity " + httpEntity);
-            String responseCode = "";
+            String responseCode;
             try {
                 logger.info("Sending Delete Account Information Request to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
@@ -543,23 +497,19 @@ public class RaastService {
                 if (e instanceof HttpStatusCodeException) {
                     responseCode = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (responseCode.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(deleteAliasResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        deleteAliasResponse = (DeleteAliasResponse) JSONUtil.jsonToObject(result, DeleteAliasResponse.class);
-                    } else if (responseCode.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(deleteAliasResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        deleteAliasResponse = (DeleteAliasResponse) JSONUtil.jsonToObject(result, DeleteAliasResponse.class);
-                    } else if (responseCode.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-
-                        Objects.requireNonNull(deleteAliasResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        deleteAliasResponse = (DeleteAliasResponse) JSONUtil.jsonToObject(result, DeleteAliasResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        deleteAliasResponse = (DeleteAliasResponse) JSONUtil.jsonToObject(result, DeleteAliasResponse.class);
+                    switch (responseCode) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(deleteAliasResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            deleteAliasResponse = (DeleteAliasResponse) JSONUtil.jsonToObject(result, DeleteAliasResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            deleteAliasResponse = (DeleteAliasResponse) JSONUtil.jsonToObject(result, DeleteAliasResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {
@@ -598,9 +548,9 @@ public class RaastService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.deleteCustomerUrl);
             logger.info("Requesting URL " + uri.toUriString());
             String requestJSON = JSONUtil.getJSON(deleteCustomerRequest);
-            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+            HttpEntity<?> httpEntity = new HttpEntity<>(requestJSON, headers);
             logger.info("Prepared Delete Customer Request HttpEntity " + httpEntity);
-            String responseCode = "";
+            String responseCode;
             try {
                 logger.info("Sending Delete Customer Information Request to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
@@ -617,23 +567,19 @@ public class RaastService {
                 if (e instanceof HttpStatusCodeException) {
                     responseCode = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (responseCode.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(deleteCustomerResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        deleteCustomerResponse = (DeleteCustomerResponse) JSONUtil.jsonToObject(result, DeleteCustomerResponse.class);
-                    } else if (responseCode.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(deleteCustomerResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        deleteCustomerResponse = (DeleteCustomerResponse) JSONUtil.jsonToObject(result, DeleteCustomerResponse.class);
-                    } else if (responseCode.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-
-                        Objects.requireNonNull(deleteCustomerResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        deleteCustomerResponse = (DeleteCustomerResponse) JSONUtil.jsonToObject(result, DeleteCustomerResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        deleteCustomerResponse = (DeleteCustomerResponse) JSONUtil.jsonToObject(result, DeleteCustomerResponse.class);
+                    switch (responseCode) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(deleteCustomerResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            deleteCustomerResponse = (DeleteCustomerResponse) JSONUtil.jsonToObject(result, DeleteCustomerResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            deleteCustomerResponse = (DeleteCustomerResponse) JSONUtil.jsonToObject(result, DeleteCustomerResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {

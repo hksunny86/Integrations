@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.vo.CardType;
 import com.inov8.integration.vo.CatalogList;
 import com.inov8.integration.vo.SegmentList;
+import com.inov8.integration.webservice.corporateVO.AccountStatement;
+import com.inov8.integration.webservice.corporateVO.CustomerDeviceVerification;
 import com.inov8.integration.webservice.optasiaVO.*;
 
 import java.io.Serializable;
@@ -428,6 +430,51 @@ public class WebServiceVO implements Serializable {
     private String proofOfProfession;
     private String portalId;
     private String portalPassword;
+    private List <AccountStatement> accountStatementList;
+    private List <CustomerDeviceVerification> customerDeviceVerificationList;
+    private String id;
+    private String deviceName;
+    private String approvalStatus;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    public String getApprovalStatus() {
+        return approvalStatus;
+    }
+
+    public void setApprovalStatus(String approvalStatus) {
+        this.approvalStatus = approvalStatus;
+    }
+
+    public List<CustomerDeviceVerification> getCustomerDeviceVerificationList() {
+        return customerDeviceVerificationList;
+    }
+
+    public void setCustomerDeviceVerificationList(List<CustomerDeviceVerification> customerDeviceVerificationList) {
+        this.customerDeviceVerificationList = customerDeviceVerificationList;
+    }
+
+    public List<AccountStatement> getAccountStatementList() {
+        return accountStatementList;
+    }
+
+    public void setAccountStatementList(List<AccountStatement> accountStatementList) {
+        this.accountStatementList = accountStatementList;
+    }
 
     public String getPortalId() {
         return portalId;

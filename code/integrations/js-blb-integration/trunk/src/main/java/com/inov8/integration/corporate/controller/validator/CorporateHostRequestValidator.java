@@ -75,15 +75,6 @@ public class CorporateHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getMobileNo())) {
             throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNo());
         }
-        if (StringUtils.isEmpty(integrationVO.getOldMpin())) {
-            throw new ValidationException("[FAILED] Validation Failed Old Mpin: " + integrationVO.getOldMpin());
-        }
-        if (StringUtils.isEmpty(integrationVO.getNewMpin())) {
-            throw new ValidationException("[FAILED] Validation Failed New Mpin: " + integrationVO.getNewMpin());
-        }
-        if (StringUtils.isEmpty(integrationVO.getConfirmMpin())) {
-            throw new ValidationException("[FAILED] Validation Failed Confirm Mpin: " + integrationVO.getConfirmMpin());
-        }
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
         }
@@ -164,6 +155,12 @@ public class CorporateHostRequestValidator {
         }
         if (StringUtils.isEmpty(integrationVO.getOtp())) {
             throw new ValidationException("[FAILED] Validation Failed OTP: " + integrationVO.getOtp());
+        }
+        if (StringUtils.isEmpty(integrationVO.getFromDate())) {
+            throw new ValidationException("[FAILED] Validation Failed From Date: " + integrationVO.getFromDate());
+        }
+        if (StringUtils.isEmpty(integrationVO.getToDate())) {
+            throw new ValidationException("[FAILED] Validation Failed To Date: " + integrationVO.getToDate());
         }
     }
 

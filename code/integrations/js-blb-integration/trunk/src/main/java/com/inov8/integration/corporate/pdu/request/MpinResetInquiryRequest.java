@@ -15,9 +15,6 @@ import java.io.Serializable;
         "Rrn",
         "ChannelId",
         "TerminalId",
-        "OldMpin",
-        "NewMpin",
-        "ConfirmMpin",
         "PortalId",
         "PortalPassword",
         "Reserved1",
@@ -45,12 +42,6 @@ public class MpinResetInquiryRequest implements Serializable {
     private String channelId;
     @JsonProperty("TerminalId")
     private String terminalId;
-    @JsonProperty("OldMpin")
-    private String oldMpin;
-    @JsonProperty("NewMpin")
-    private String newMpin;
-    @JsonProperty("ConfirmMpin")
-    private String confirmMpin;
     @JsonProperty("PortalId")
     private String portalId;
     @JsonProperty("PortalPassword")
@@ -122,30 +113,6 @@ public class MpinResetInquiryRequest implements Serializable {
 
     public void setTerminalId(String terminalId) {
         this.terminalId = terminalId;
-    }
-
-    public String getOldMpin() {
-        return oldMpin;
-    }
-
-    public void setOldMpin(String oldMpin) {
-        this.oldMpin = oldMpin;
-    }
-
-    public String getNewMpin() {
-        return newMpin;
-    }
-
-    public void setNewMpin(String newMpin) {
-        this.newMpin = newMpin;
-    }
-
-    public String getConfirmMpin() {
-        return confirmMpin;
-    }
-
-    public void setConfirmMpin(String confirmMpin) {
-        this.confirmMpin = confirmMpin;
     }
 
     public String getPortalId() {

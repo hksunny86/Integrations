@@ -3,8 +3,10 @@ package com.inov8.integration.corporate.pdu.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.inov8.integration.webservice.corporateVO.CustomerDeviceVerification;
 
 import java.io.Serializable;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -12,6 +14,7 @@ import java.io.Serializable;
         "ResponseCode",
         "ResponseDescription",
         "ResponseDateTime",
+        "CustomerDeviceVerification",
         "HashData"
 })
 public class DeviceVerificationInquiryResponse implements Serializable {
@@ -26,6 +29,8 @@ public class DeviceVerificationInquiryResponse implements Serializable {
     private String responseDescription;
     @JsonProperty("ResponseDateTime")
     private String responseDateTime;
+    @JsonProperty("CustomerDeviceVerification")
+    private List<CustomerDeviceVerification> customerDeviceVerificationList;
     @JsonProperty("HashData")
     private String hashData;
 
@@ -59,6 +64,14 @@ public class DeviceVerificationInquiryResponse implements Serializable {
 
     public void setResponseDateTime(String responseDateTime) {
         this.responseDateTime = responseDateTime;
+    }
+
+    public List<CustomerDeviceVerification> getCustomerDeviceVerificationList() {
+        return customerDeviceVerificationList;
+    }
+
+    public void setCustomerDeviceVerificationList(List<CustomerDeviceVerification> customerDeviceVerificationList) {
+        this.customerDeviceVerificationList = customerDeviceVerificationList;
     }
 
     public String getHashData() {

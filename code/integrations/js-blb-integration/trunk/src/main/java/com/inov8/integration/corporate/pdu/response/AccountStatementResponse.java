@@ -3,8 +3,10 @@ package com.inov8.integration.corporate.pdu.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.inov8.integration.webservice.corporateVO.AccountStatement;
 
 import java.io.Serializable;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -12,6 +14,7 @@ import java.io.Serializable;
         "ResponseCode",
         "ResponseDescription",
         "ResponseDateTime",
+        "AccountStatement",
         "HashData"
 })
 public class AccountStatementResponse implements Serializable {
@@ -26,6 +29,8 @@ public class AccountStatementResponse implements Serializable {
     private String responseDescription;
     @JsonProperty("ResponseDateTime")
     private String responseDateTime;
+    @JsonProperty("AccountStatement")
+    private List<AccountStatement> accountStatementList;
     @JsonProperty("HashData")
     private String hashData;
 
@@ -59,6 +64,14 @@ public class AccountStatementResponse implements Serializable {
 
     public void setResponseDateTime(String responseDateTime) {
         this.responseDateTime = responseDateTime;
+    }
+
+    public List<AccountStatement> getAccountStatementList() {
+        return accountStatementList;
+    }
+
+    public void setAccountStatementList(List<AccountStatement> accountStatementList) {
+        this.accountStatementList = accountStatementList;
     }
 
     public String getHashData() {

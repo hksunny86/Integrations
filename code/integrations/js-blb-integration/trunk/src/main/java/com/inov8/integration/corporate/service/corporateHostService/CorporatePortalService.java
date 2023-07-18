@@ -1,5 +1,6 @@
 package com.inov8.integration.corporate.service.corporateHostService;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.corporate.pdu.request.*;
 import com.inov8.integration.corporate.pdu.response.*;
 import com.inov8.integration.middleware.dao.TransactionDAO;
@@ -482,42 +483,9 @@ public class CorporatePortalService {
         webServiceVO.setRetrievalReferenceNumber(webServiceVO.getRetrievalReferenceNumber());
         webServiceVO.setUserName(request.getUserName());
         webServiceVO.setCustomerPassword(request.getPassword());
+        webServiceVO.setMobileNo(request.getMobileNo());
         webServiceVO.setChannelId(request.getChannelId());
         webServiceVO.setTerminalId(request.getTerminalId());
-//        webServiceVO.setOldMpin(EncryptionUtil.encrypt(request.getOldMpin()));
-        try {
-            String text;
-            String oldMpin;
-            text = request.getOldMpin();
-            oldMpin = text.replaceAll("\\r|\\n", "");
-            String oldPin = (RSAEncryption.decrypt(oldMpin, loginPrivateKey));
-            webServiceVO.setOldMpin(EncryptionUtil.encrypt(oldPin));
-        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-//        webServiceVO.setMobilePin(EncryptionUtil.encrypt(request.getNewMpin()));
-        try {
-            String text;
-            String newPin;
-            text = request.getNewMpin();
-            newPin = text.replaceAll("\\r|\\n", "");
-            String newMpin = (RSAEncryption.decrypt(newPin, loginPrivateKey));
-            webServiceVO.setMobilePin(EncryptionUtil.encrypt(newMpin));
-        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-//        webServiceVO.setConfirmMpin(EncryptionUtil.encrypt(request.getConfirmMpin()));
-        try {
-            String text;
-            String confirmMPin;
-            text = request.getConfirmMpin();
-            confirmMPin = text.replaceAll("\\r|\\n", "");
-            String confirmPin = (RSAEncryption.decrypt(confirmMPin, loginPrivateKey));
-            webServiceVO.setConfirmMpin(EncryptionUtil.encrypt(confirmPin));
-        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        webServiceVO.setMobileNo(request.getMobileNo());
         webServiceVO.setReserved1(request.getReserved1());
         webServiceVO.setReserved2(request.getReserved2());
         webServiceVO.setReserved3(request.getReserved3());
@@ -538,7 +506,7 @@ public class CorporatePortalService {
         logModel.setTransactionCode("MpinResetInquiry");
         logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
         //preparing request XML
-        String requestXml = XMLUtil.convertToXML(request);
+        String requestXml = JSONUtil.getJSON(request);
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
@@ -587,7 +555,7 @@ public class CorporatePortalService {
         logger.debug("[HOST] ****MPIN RESET INQUIRY REQUEST PROCESSED IN ****: " + difference + " milliseconds");
 
         //preparing request XML
-        String responseXml = XMLUtil.convertToXML(response);
+        String responseXml = JSONUtil.getJSON(response);
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
@@ -610,39 +578,39 @@ public class CorporatePortalService {
         webServiceVO.setCustomerPassword(request.getPassword());
         webServiceVO.setChannelId(request.getChannelId());
         webServiceVO.setTerminalId(request.getTerminalId());
-//        webServiceVO.setOldMpin(EncryptionUtil.encrypt(request.getOldMpin()));
-        try {
-            String text;
-            String oldMpin;
-            text = request.getOldMpin();
-            oldMpin = text.replaceAll("\\r|\\n", "");
-            String oldPin = (RSAEncryption.decrypt(oldMpin, loginPrivateKey));
-            webServiceVO.setOldMpin(EncryptionUtil.encrypt(oldPin));
-        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-//        webServiceVO.setMobilePin(EncryptionUtil.encrypt(request.getNewMpin()));
-        try {
-            String text;
-            String newPin;
-            text = request.getNewMpin();
-            newPin = text.replaceAll("\\r|\\n", "");
-            String newMpin = (RSAEncryption.decrypt(newPin, loginPrivateKey));
-            webServiceVO.setMobilePin(EncryptionUtil.encrypt(newMpin));
-        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-//        webServiceVO.setConfirmMpin(EncryptionUtil.encrypt(request.getConfirmMpin()));
-        try {
-            String text;
-            String confirmMPin;
-            text = request.getConfirmMpin();
-            confirmMPin = text.replaceAll("\\r|\\n", "");
-            String confirmPin = (RSAEncryption.decrypt(confirmMPin, loginPrivateKey));
-            webServiceVO.setConfirmMpin(EncryptionUtil.encrypt(confirmPin));
-        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        webServiceVO.setOldMpin(EncryptionUtil.encrypt(request.getOldMpin()));
+//        try {
+//            String text;
+//            String oldMpin;
+//            text = request.getOldMpin();
+//            oldMpin = text.replaceAll("\\r|\\n", "");
+//            String oldPin = (RSAEncryption.decrypt(oldMpin, loginPrivateKey));
+//            webServiceVO.setOldMpin(EncryptionUtil.encrypt(oldPin));
+//        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+        webServiceVO.setMobilePin(EncryptionUtil.encrypt(request.getNewMpin()));
+//        try {
+//            String text;
+//            String newPin;
+//            text = request.getNewMpin();
+//            newPin = text.replaceAll("\\r|\\n", "");
+//            String newMpin = (RSAEncryption.decrypt(newPin, loginPrivateKey));
+//            webServiceVO.setMobilePin(EncryptionUtil.encrypt(newMpin));
+//        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+        webServiceVO.setConfirmMpin(EncryptionUtil.encrypt(request.getConfirmMpin()));
+//        try {
+//            String text;
+//            String confirmMPin;
+//            text = request.getConfirmMpin();
+//            confirmMPin = text.replaceAll("\\r|\\n", "");
+//            String confirmPin = (RSAEncryption.decrypt(confirmMPin, loginPrivateKey));
+//            webServiceVO.setConfirmMpin(EncryptionUtil.encrypt(confirmPin));
+//        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
         webServiceVO.setMobileNo(request.getMobileNo());
         webServiceVO.setOtpPin(request.getOtp());
         webServiceVO.setReserved1(request.getReserved1());
@@ -665,7 +633,7 @@ public class CorporatePortalService {
         logModel.setTransactionCode("MpinReset");
         logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
         //preparing request XML
-        String requestXml = XMLUtil.convertToXML(request);
+        String requestXml = JSONUtil.getJSON(request);
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
@@ -714,7 +682,7 @@ public class CorporatePortalService {
         logger.debug("[HOST] ****MPIN RESET REQUEST PROCESSED IN ****: " + difference + " milliseconds");
 
         //preparing request XML
-        String responseXml = XMLUtil.convertToXML(response);
+        String responseXml = JSONUtil.getJSON(response);
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
@@ -855,6 +823,8 @@ public class CorporatePortalService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setOtpPin(request.getOtp());
+        messageVO.setFromDate(request.getFromDate());
+        messageVO.setToDate(request.getToDate());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());
@@ -909,6 +879,7 @@ public class CorporatePortalService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
+            response.setAccountStatementList(messageVO.getAccountStatementList());
 
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
@@ -966,6 +937,8 @@ public class CorporatePortalService {
         messageVO.setRetrievalReferenceNumber(request.getRrn());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setPortalId(request.getPortalId());
+        messageVO.setPortalPassword(request.getPortalPassword());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());
@@ -1020,6 +993,7 @@ public class CorporatePortalService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
+            response.setCustomerDeviceVerificationList(messageVO.getCustomerDeviceVerificationList());
 
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
@@ -1077,7 +1051,12 @@ public class CorporatePortalService {
         messageVO.setRetrievalReferenceNumber(request.getRrn());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setPortalId(request.getPortalId());
+        messageVO.setPortalPassword(request.getPortalPassword());
         messageVO.setOtpPin(request.getOtp());
+        messageVO.setId(request.getId());
+        messageVO.setDeviceName(request.getDeviceName());
+        messageVO.setApprovalStatus(request.getApprovalStatus());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());

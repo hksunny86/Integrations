@@ -18,6 +18,9 @@ import java.io.Serializable;
         "PortalId",
         "PortalPassword",
         "OTP",
+        "Id",
+        "DeviceName",
+        "ApprovalStatus",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -53,6 +56,12 @@ public class DeviceVerificationRequest implements Serializable {
     private String portalPassword;
     @JsonProperty("OTP")
     private String otp;
+    @JsonProperty("Id")
+    public String id;
+    @JsonProperty("DeviceName")
+    public String deviceName;
+    @JsonProperty("ApprovalStatus")
+    public String approvalStatus;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -154,6 +163,30 @@ public class DeviceVerificationRequest implements Serializable {
 
     public void setOtp(String otp) {
         this.otp = otp;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    public String getApprovalStatus() {
+        return approvalStatus;
+    }
+
+    public void setApprovalStatus(String approvalStatus) {
+        this.approvalStatus = approvalStatus;
     }
 
     public String getReserved1() {

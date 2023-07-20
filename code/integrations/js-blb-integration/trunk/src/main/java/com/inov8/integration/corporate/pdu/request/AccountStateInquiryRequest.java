@@ -16,7 +16,6 @@ import java.io.Serializable;
         "ChannelId",
         "TerminalId",
         "CnicNumber",
-        "AccountStatus",
         "PortalId",
         "PortalPassword",
         "Reserved1",
@@ -50,8 +49,6 @@ public class AccountStateInquiryRequest implements Serializable {
     private String terminalId;
     @JsonProperty("CnicNumber")
     private String cnicNumber;
-    @JsonProperty("AccountStatus")
-    private String accountStatus;
     @JsonProperty("PortalId")
     private String portalId;
     @JsonProperty("PortalPassword")
@@ -141,14 +138,6 @@ public class AccountStateInquiryRequest implements Serializable {
 
     public void setCnicNumber(String cnicNumber) {
         this.cnicNumber = cnicNumber;
-    }
-
-    public String getAccountStatus() {
-        return accountStatus;
-    }
-
-    public void setAccountStatus(String accountStatus) {
-        this.accountStatus = accountStatus;
     }
 
     public String getPortalId() {

@@ -1,14 +1,11 @@
 package com.inov8.integration.corporate.service.corporateHostService;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.corporate.pdu.request.*;
 import com.inov8.integration.corporate.pdu.response.*;
 import com.inov8.integration.middleware.dao.TransactionDAO;
 import com.inov8.integration.middleware.dao.TransactionLogModel;
 import com.inov8.integration.middleware.enums.ResponseCodeEnum;
 import com.inov8.integration.middleware.enums.TransactionStatus;
-import com.inov8.integration.middleware.pdu.request.MpinChangeRequest;
-import com.inov8.integration.middleware.pdu.response.MpinChangeResponse;
 import com.inov8.integration.middleware.util.*;
 import com.inov8.integration.webservice.controller.CorporatePortalSwitchController;
 import com.inov8.integration.webservice.vo.WebServiceVO;
@@ -21,11 +18,7 @@ import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
 import org.springframework.remoting.httpinvoker.SimpleHttpInvokerRequestExecutor;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.net.ssl.*;
-import java.security.InvalidKeyException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
@@ -261,7 +254,6 @@ public class CorporatePortalService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setCnicNo(request.getCnicNumber());
-        messageVO.setAccountStatus(request.getAccountStatus());
         messageVO.setPortalId(request.getPortalId());
         messageVO.setPortalPassword(request.getPortalPassword());
         messageVO.setReserved1(request.getReserved1());

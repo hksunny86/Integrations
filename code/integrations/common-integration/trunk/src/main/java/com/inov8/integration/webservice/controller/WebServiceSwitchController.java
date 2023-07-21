@@ -160,5 +160,7 @@ public interface WebServiceSwitchController {
 //    WebServiceVO customerAnalytics(WebServiceVO webServiceVO);
     WebServiceVO accountStatus(WebServiceVO webServiceVO);
     WebServiceVO updateCnicExpiry(WebServiceVO webServiceVO);
+    WebServiceVO l2AccountUpgradeDiscrepant(WebServiceVO webServiceVO);
+    WebServiceVO getL2AccountUpgradeDiscrepant(WebServiceVO webServiceVO);
 
 }

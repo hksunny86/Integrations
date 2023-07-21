@@ -5,7 +5,7 @@ import com.inov8.integration.middleware.dao.TransactionDAO;
 import com.inov8.integration.middleware.dao.TransactionLogModel;
 import com.inov8.integration.middleware.enums.ResponseCodeEnum;
 import com.inov8.integration.middleware.enums.TransactionStatus;
-import com.inov8.integration.middleware.mock.OptasiaMock;
+//import com.inov8.integration.middleware.mock.OptasiaMock;
 import com.inov8.integration.middleware.pdu.request.*;
 import com.inov8.integration.middleware.pdu.response.*;
 import com.inov8.integration.middleware.util.*;
@@ -57,9 +57,9 @@ public class HostIntegrationService {
     private static String privateKey = ConfigReader.getInstance().getProperty("privateKey", "");
 
     private static String loginPrivateKey = ConfigReader.getInstance().getProperty("login.authentication.privateKey", "");
-    private String i8sb_target_environment = ConfigReader.getInstance().getProperty("i8sb.target.environment", "");
+    //    private String i8sb_target_environment = ConfigReader.getInstance().getProperty("i8sb.target.environment", "");
     private String optasiaProductId = ConfigReader.getInstance().getProperty("optasia.productId", "");
-    private OptasiaMock optasiaMock = new OptasiaMock();
+//    private OptasiaMock optasiaMock = new OptasiaMock();
 
     @Autowired
     TransactionDAO transactionDAO;
@@ -560,6 +560,8 @@ public class HostIntegrationService {
         messageVO.setReserved1(request.getReserved());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());
+//        messageVO.setReserved4(request.getReserved4());
+//        messageVO.setReserved5(request.getReserved5());
 
         TransactionLogModel logModel = new TransactionLogModel();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
@@ -3214,23 +3216,23 @@ public class HostIntegrationService {
         webServiceVO.setChannelId(walletToWalletPaymentRequest.getChannelId());
         webServiceVO.setTerminalId(walletToWalletPaymentRequest.getTerminalId());
 //        webServiceVO.setOtpPin(walletToWalletPaymentRequest.getOtp());
-//        try {
-//            if (walletToWalletPaymentRequest.getOtp() != null && !walletToWalletPaymentRequest.getOtp().equals("")) {
-//                String text = walletToWalletPaymentRequest.getOtp();
-//                String otp = text.replaceAll("\\r|\\n", "");
-//                webServiceVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
-//            } else if (walletToWalletPaymentRequest.getMpin() != null && !walletToWalletPaymentRequest.getMpin().equals("")) {
-//                String text = walletToWalletPaymentRequest.getMpin();
-//                String pin = text.replaceAll("\\r|\\n", "");
-////                webServiceVO.setMobilePin(RSAEncryption.decrypt(pin, loginPrivateKey));
+        try {
+            if (walletToWalletPaymentRequest.getOtp() != null && !walletToWalletPaymentRequest.getOtp().equals("")) {
+                String text = walletToWalletPaymentRequest.getOtp();
+                String otp = text.replaceAll("\\r|\\n", "");
+                webServiceVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+            } else if (walletToWalletPaymentRequest.getMpin() != null && !walletToWalletPaymentRequest.getMpin().equals("")) {
+                String text = walletToWalletPaymentRequest.getMpin();
+                String pin = text.replaceAll("\\r|\\n", "");
+                webServiceVO.setMobilePin(RSAEncryption.decrypt(pin, loginPrivateKey));
 //                webServiceVO.setMobilePin("1234");
-//            }
-//
-//
-//        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
-        webServiceVO.setMobilePin("1234");
+            }
+
+
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+//        webServiceVO.setMobilePin("1234");
         webServiceVO.setReceiverMobileNumber(walletToWalletPaymentRequest.getReceiverMobileNumber());
         webServiceVO.setTotalAmount(walletToWalletPaymentRequest.getAmount());
         webServiceVO.setReserved1(walletToWalletPaymentRequest.getReserved1());
@@ -6960,7 +6962,7 @@ public class HostIntegrationService {
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
             response.setComissionAmount(messageVO.getCommissionAmount());
-            response.setInclusiveExclusiveComissionAmount(messageVO.getReserved3());
+//            response.setInclusiveExclusiveComissionAmount(messageVO.getReserved3());
             response.setTotalAmount(messageVO.getTotalAmount());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -13380,30 +13382,30 @@ public class HostIntegrationService {
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        if (request.getReserved1().equals("02")) {
-//            messageVO.setOtpPin(request.getMpin());
-            try {
-                if (request.getMpin() != null) {
-                    String text = request.getMpin();
-                    String otp = text.replaceAll("\\r|\\n", "");
-                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
-
-                }
-            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-        } else {
-//            messageVO.setMobilePin(request.getMpin());
-            try {
-                if (request.getMpin() != null) {
-                    String text = request.getMpin();
-                    String otp = text.replaceAll("\\r|\\n", "");
-                    messageVO.setMobilePin(RSAEncryption.decrypt(otp, loginPrivateKey));
-                }
-            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (request.getReserved1().equals("02")) {
+            messageVO.setOtpPin(request.getMpin());
+//            try {
+//                if (request.getMpin() != null) {
+//                    String text = request.getMpin();
+//                    String otp = text.replaceAll("\\r|\\n", "");
+//                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+//
+//                }
+//            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+            messageVO.setMobilePin(request.getMpin());
+//            try {
+//                if (request.getMpin() != null) {
+//                    String text = request.getMpin();
+//                    String otp = text.replaceAll("\\r|\\n", "");
+//                    messageVO.setMobilePin(RSAEncryption.decrypt(otp, loginPrivateKey));
+//                }
+//            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+//                e.printStackTrace();
+//            }
+//        }
         messageVO.setCnicNo(request.getCnic());
         messageVO.setFingerIndex(request.getFingerIndex());
         messageVO.setFingerTemplate(request.getFingerTemplate());
@@ -15925,12 +15927,12 @@ public class HostIntegrationService {
 
         saveTransaction(logModel);
 
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
-            response = optasiaMock.offerListForCommodity();
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] Mock Response of Initiate Loan Request: " + responseXml);
-        } else {
-            // Call i8
+//        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+//            response = optasiaMock.offerListForCommodity();
+//            String responseXml = JSONUtil.getJSON(response);
+//            logger.info("[HOST] Mock Response of Initiate Loan Request: " + responseXml);
+//        } else {
+        // Call i8
 
         try {
             logger.info("[HOST] Sent Initiate Loan Request to Micro Bank " + I8_SCHEME + "://" + OPTASIA_I8_SERVER + ":" + OPTASIA_I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -15986,14 +15988,14 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Initiate Loan Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Initiate Loan Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Initiate Loan Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
         return response;
     }
 
@@ -16126,14 +16128,14 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Select Loan Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Select Loan Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Select Loan Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
 
         return response;
     }
@@ -16258,14 +16260,14 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Loan Offer Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Loan Offer Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Loan Offer Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
         return response;
     }
 
@@ -16394,14 +16396,14 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Loan Payment Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Loan Payment Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Loan Payment Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
         return response;
     }
 
@@ -16508,14 +16510,14 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Loan Call Back Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Loan Call Back Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Loan Call Back Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
         return response;
     }
 
@@ -16632,14 +16634,14 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Outstanding Loan Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Outstanding Loan  Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Outstanding Loan  Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
         return response;
     }
 
@@ -16760,14 +16762,14 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Loan History Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Loan History Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Loan History Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
         return response;
     }
 
@@ -16827,18 +16829,18 @@ public class HostIntegrationService {
 
         saveTransaction(logModel);
 
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
-            response = optasiaMock.loansPlanResponse();
-
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] Mock Response of Loan Plan Request: " + responseXml);
-        } else {
-            // Call i8
-            try {
-                logger.info("[HOST] Sent Loan Plan  Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-                messageVO = response.repaymentPlan(messageVO);
-                String repaymentPlan = JSONUtil.getJSON(messageVO);
-                logger.info("[HOST] Loan Plan Request Successful Response: " + repaymentPlan);
+//        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+//            response = optasiaMock.loansPlanResponse();
+//
+//            String responseXml = JSONUtil.getJSON(response);
+//            logger.info("[HOST] Mock Response of Loan Plan Request: " + responseXml);
+//        } else {
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Loan Plan  Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = response.repaymentPlan(messageVO);
+            String repaymentPlan = JSONUtil.getJSON(messageVO);
+            logger.info("[HOST] Loan Plan Request Successful Response: " + repaymentPlan);
 
         } catch (Exception e) {
 
@@ -16885,14 +16887,14 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Loan Plan Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Loan Plan Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Loan Plan Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
         return response;
     }
 
@@ -17007,14 +17009,14 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Transaction Active Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Transaction Active Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Transaction Active Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
         return response;
     }
 
@@ -17237,132 +17239,13 @@ public class HostIntegrationService {
 //            String responseXml = JSONUtil.getJSON(response);
 //            logger.info("[HOST] Mock Response of Simple Account Opening Request: " + responseXml);
 //        } else {
-        // Call i8
-        try {
-            logger.info("[HOST] Sent Simple Account Opening Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
-            messageVO = switchController.simpleAccountOpening(messageVO);
-        } catch (Exception e) {
-
-            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
-        }
-
-        // Set Response from i8
-        if (messageVO != null
-                && StringUtils.isNotEmpty(messageVO.getResponseCode())
-                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
-            logger.info("[HOST] Simple Account Opening Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-
-
-            AccountOpeningRequest accountOpeningRequest = new AccountOpeningRequest();
-
-            accountOpeningRequest.setUserName(request.getUserName());
-            accountOpeningRequest.setPassword(request.getPassword());
-            accountOpeningRequest.setCnic(request.getCnic());
-            accountOpeningRequest.setDateTime(request.getDateTime());
-            accountOpeningRequest.setRrn(messageVO.getRetrievalReferenceNumber());
-            accountOpeningRequest.setMobileNumber(request.getMobileNumber());
-            accountOpeningRequest.setConsumerName(StringUtils.trim(messageVO.getConsumerName()));
-            accountOpeningRequest.setAccountTitle(StringUtils.trim(messageVO.getAccountTitle()));
-            accountOpeningRequest.setBirthPlace(messageVO.getBirthPlace());
-            accountOpeningRequest.setPresentAddress(messageVO.getPresentAddress());
-            accountOpeningRequest.setCnicStatus(messageVO.getCnicStatus());
-            accountOpeningRequest.setCnicExpiry(messageVO.getCnicExpiry());
-            accountOpeningRequest.setDob(messageVO.getDateOfBirth());
-            accountOpeningRequest.setFatherHusbandName(messageVO.getFatherHusbandName());
-            accountOpeningRequest.setMotherMaiden(messageVO.getMotherMaiden());
-            accountOpeningRequest.setGender(messageVO.getGender());
-            accountOpeningRequest.setChannelId(messageVO.getChannelId());
-            accountOpeningRequest.setAccountType(messageVO.getAccountType());
-            accountOpeningRequest.setTrackingId(messageVO.getTrackingId());
-            accountOpeningRequest.setCnicIssuanceDate(messageVO.getCnicIssuanceDate());
-            accountOpeningRequest.setEmailAddress(messageVO.getEmailAddress());
-            accountOpeningRequest.setMobileNetwork(messageVO.getCustomerMobileNetwork());
-            accountOpeningRequest.setReserved(messageVO.getReserved1());
-            accountOpeningRequest.setReserved2(messageVO.getReserved2());
-            accountOpeningRequest.setReserved3(messageVO.getReserved3());
-
-            AccountOpeningResponse accountOpeningResponse = new AccountOpeningResponse();
-            logger.info("[HOST] Account Opening Request Sent to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-            accountOpeningResponse = this.accountOpening(accountOpeningRequest);
-
-
-            if (accountOpeningResponse != null
-                    && StringUtils.isNotEmpty(accountOpeningResponse.getResponseCode())
-                    && accountOpeningResponse.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
-
-                logger.info("[HOST] Account Opening Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-
-                response.setRrn(accountOpeningResponse.getRrn());
-                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-                response.setResponseDescription(accountOpeningResponse.getResponseDescription());
-                response.setResponseDateTime(messageVO.getDateTime());
-                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-
-            } else if (messageVO != null && StringUtils.isNotEmpty(accountOpeningResponse.getResponseCode())) {
-                logger.info("[HOST] Account Opening Request Unsuccessful from Micro Bank RRN: " + accountOpeningResponse.getRrn());
-                response.setResponseCode(accountOpeningResponse.getResponseCode());
-                response.setResponseDescription(accountOpeningResponse.getResponseDescription());
-                response.setRrn(accountOpeningResponse.getRrn());
-                logModel.setResponseCode(accountOpeningResponse.getResponseCode());
-                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-            } else {
-                logger.info("[HOST] Account Opening Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-
-                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-                response.setResponseDescription("Host Not In Reach");
-                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-
-                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
-            }
-
-            StringBuilder stringText = new StringBuilder()
-                    .append(response.getRrn())
-                    .append(response.getResponseCode())
-                    .append(response.getResponseDescription())
-                    .append(response.getResponseDateTime());
-
-            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            response.setHashData(sha256hex);
-
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] **** Account Opening Request **** " + responseXml);
-
-
-            long endTime = new Date().getTime(); // end time
-            long difference = endTime - startTime; // check different
-            logger.debug("[HOST] ****Account Opening PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
-            return response;
-
-        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
-            logger.info("[HOST] Simple Account Opening Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-            response.setResponseCode(messageVO.getResponseCode());
-            response.setResponseDescription(messageVO.getResponseCodeDescription());
-            logModel.setResponseCode(messageVO.getResponseCode());
-            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-        } else {
-            logger.info("[HOST] Simple Account Opening Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-
-            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-            response.setResponseDescription("Host Not In Reach");
-            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-
-            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
-        }
-        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        response.setHashData(sha256hex);
-
-        long endTime = new Date().getTime(); // end time
-        long difference = endTime - startTime; // check different
-        logger.debug("[HOST] **** Simple Account Opening Request PROCESSED IN ****: " + difference + " milliseconds");
-
-        //preparing request
-        String responseXml = JSONUtil.getJSON(response);
-        logger.info("[HOST] **** Simple Account Opening Request **** " + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
-        //Setting in logModel
-        logModel.setPduResponseHEX(responseXml);
-        logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//            logger.info("[HOST] Simple Account Opening Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+//
+//            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+//            response.setResponseDescription("Host Not In Reach");
+//            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+//
+//            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
 //        }
         return response;
     }
@@ -17420,16 +17303,16 @@ public class HostIntegrationService {
 
         saveTransaction(logModel);
 
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
-            response = optasiaMock.outstandingLoanResponse();
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] Mock Response of Get Outstanding Loan Request: " + responseXml);
-        } else {
-            // Call i8
-            try {
-                logger.info("[HOST] Sent Get Outstanding Loan Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-                messageVO = switchController.getOutstandingLoan(messageVO);
-            } catch (Exception e) {
+//        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+//            response = optasiaMock.outstandingLoanResponse();
+//            String responseXml = JSONUtil.getJSON(response);
+//            logger.info("[HOST] Mock Response of Get Outstanding Loan Request: " + responseXml);
+//        } else {
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Get Outstanding Loan Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.getOutstandingLoan(messageVO);
+        } catch (Exception e) {
 
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
 
@@ -17478,14 +17361,14 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Get Outstanding Loan Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Get Outstanding Loan  Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Get Outstanding Loan  Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
         return response;
     }
 
@@ -17557,16 +17440,16 @@ public class HostIntegrationService {
 
         saveTransaction(logModel);
 
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
-//            response = optasiaMock.outstandingLoanResponse();
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] Mock Response of Merchant Account Upgrade Request: " + responseXml);
-        } else {
-            // Call i8
-            try {
-                logger.info("[HOST] Sent Merchant Account Upgrade Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-                messageVO = switchController.MerchantAccountUpgrade(messageVO);
-            } catch (Exception e) {
+//        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+////            response = optasiaMock.outstandingLoanResponse();
+//            String responseXml = JSONUtil.getJSON(response);
+//            logger.info("[HOST] Mock Response of Merchant Account Upgrade Request: " + responseXml);
+//        } else {
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Merchant Account Upgrade Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.MerchantAccountUpgrade(messageVO);
+        } catch (Exception e) {
 
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
 
@@ -17614,14 +17497,14 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Merchant Account Upgrade Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Merchant Account Upgrade Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Merchant Account Upgrade Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
         return response;
     }
 
@@ -17684,16 +17567,16 @@ public class HostIntegrationService {
 
         saveTransaction(logModel);
 
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
-//            response = optasiaMock.outstandingLoanResponse();
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] Mock Response of Merchant Picture Upgrade Request: " + responseXml);
-        } else {
-            // Call i8
-            try {
-                logger.info("[HOST] Sent Merchant Picture Upgrade Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-                messageVO = switchController.merchantPictureUpgrade(messageVO);
-            } catch (Exception e) {
+//        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+////            response = optasiaMock.outstandingLoanResponse();
+//            String responseXml = JSONUtil.getJSON(response);
+//            logger.info("[HOST] Mock Response of Merchant Picture Upgrade Request: " + responseXml);
+//        } else {
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Merchant Picture Upgrade Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.merchantPictureUpgrade(messageVO);
+        } catch (Exception e) {
 
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
 
@@ -17741,14 +17624,14 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Merchant Picture Upgrade Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Merchant Picture Upgrade Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Merchant Picture Upgrade Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+//        }
         return response;
     }
 
@@ -17806,16 +17689,12 @@ public class HostIntegrationService {
 
         saveTransaction(logModel);
 
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
-//            response = optasiaMock.outstandingLoanResponse();
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] Mock Response of Account Status Request: " + responseXml);
-        } else {
-            // Call i8
-            try {
-                logger.info("[HOST] Sent Account Status Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-                messageVO = switchController.accountStatus(messageVO);
-            } catch (Exception e) {
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Account Status Request to Micro Bank " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            messageVO = switchController.accountStatus(messageVO);
+        } catch (Exception e) {
 
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
 
@@ -17871,121 +17750,9 @@ public class HostIntegrationService {
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Account Status Request PROCESSED IN ****: " + difference + " milliseconds");
 
-            //preparing request
-            String responseXml = JSONUtil.getJSON(response);
-            logger.info("[HOST] ****Account Status Upgrade Response" + responseXml);
-            //Setting in logModel
-            logModel.setPduResponseHEX(responseXml);
-            logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
-        }
-        return response;
-    }
-
-    public CustomerTransactionVerificationResponse customerTransactionVerificationResponse(CustomerTransactionVerificationRequest request) {
-
-
-        long startTime = new Date().getTime(); // start time
-        WebServiceVO messageVO = new WebServiceVO();
-        String transactionKey = request.getDateTime() + request.getRrn();
-        messageVO.setRetrievalReferenceNumber(request.getRrn());
-        logger.info("[HOST] Customer Transaction Verification Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
-
-        transactionKey = request.getChannelId() + request.getRrn();
-
-        CustomerTransactionVerificationResponse response = new CustomerTransactionVerificationResponse();
-
-        messageVO.setUserName(request.getUserName());
-        messageVO.setCustomerPassword(request.getPassword());
-        messageVO.setMobileNo(request.getMobileNo());
-        messageVO.setDateTime(request.getDateTime());
-        messageVO.setRetrievalReferenceNumber(request.getRrn());
-        messageVO.setChannelId(request.getChannelId());
-        messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setReserved1(request.getReserved1());
-        messageVO.setReserved2(request.getReserved2());
-        messageVO.setReserved3(request.getReserved3());
-        messageVO.setReserved4(request.getReserved4());
-        messageVO.setReserved5(request.getReserved5());
-        messageVO.setReserved6(request.getReserved6());
-        messageVO.setReserved7(request.getReserved7());
-        messageVO.setReserved8(request.getReserved8());
-        messageVO.setReserved9(request.getReserved9());
-        messageVO.setReserved10(request.getReserved10());
-
-
-        TransactionLogModel logModel = new TransactionLogModel();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
-        Date txDateTime = new Date();
-        try {
-            txDateTime = dateFormat.parse(request.getDateTime());
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        }
-
-        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
-        logModel.setTransactionDateTime(txDateTime);
-        logModel.setChannelId(request.getChannelId());
-        logModel.setTransactionCode("CustomerTransactionVerification");
-        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
-        //preparing request
-        String requestXml = JSONUtil.getJSON(request);
-        //Setting in logModel
-        logModel.setPduRequestHEX(requestXml);
-
-        saveTransaction(logModel);
-
-        // Call i8
-        try {
-            logger.info("[HOST] Sent Customer Transaction Verification Request to Micro Bank " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
-            messageVO = switchController.customerTransactionVerification(messageVO);
-        } catch (Exception e) {
-            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
-        }
-
-        // Set Response from i8
-        if (messageVO != null
-                && StringUtils.isNotEmpty(messageVO.getResponseCode())
-                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
-            logger.info("[HOST] Customer Transaction Verification Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-
-            response.setRrn(messageVO.getRetrievalReferenceNumber());
-            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-            response.setResponseDescription(messageVO.getResponseCodeDescription());
-            response.setResponseDateTime(messageVO.getDateTime());
-            response.setResponseDateTime(messageVO.getDateTime());
-            response.setProofOfProfession(messageVO.getProofOfProfession());
-            response.setSourceOfIncome(messageVO.getSourceOfIncome());
-
-            logModel.setResponseCode(messageVO.getResponseCode());
-            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-
-        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
-            logger.info("[HOST] Customer Transaction Verification Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-            response.setResponseCode(messageVO.getResponseCode());
-            response.setResponseDescription(messageVO.getResponseCodeDescription());
-            logModel.setResponseCode(messageVO.getResponseCode());
-            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-        } else {
-            logger.info("[HOST] Customer Transaction Verification Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-
-            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-            response.setResponseDescription("Host Not In Reach");
-            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-
-            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
-        }
-        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        response.setHashData(sha256hex);
-
-        long endTime = new Date().getTime(); // end time
-        long difference = endTime - startTime; // check different
-        logger.debug("[HOST] **** Customer Transaction Verification Request PROCESSED IN ****: " + difference + " milliseconds");
-
         //preparing request
         String responseXml = JSONUtil.getJSON(response);
-        logger.info("[HOST] ****Customer Transaction Verification Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        logger.info("[HOST] ****Account Status Upgrade Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
@@ -18103,5 +17870,250 @@ public class HostIntegrationService {
         return response;
     }
 
+    public L2AccountUpgradeDiscrepantResponse l2AccountUpgradeDiscrepantResponse(L2AccountUpgradeDiscrepantRequest request) {
 
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] L2 Account Upgrade Discrepant Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        L2AccountUpgradeDiscrepantResponse response = new L2AccountUpgradeDiscrepantResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setCnicNo(request.getCnic());
+        messageVO.setConsumerName(request.getConsumerName());
+        messageVO.setFatherHusbandName(request.getFatherHusbandName());
+        messageVO.setBirthPlace(request.getBirthPlace());
+        messageVO.setMotherMaiden(request.getMotherMaiden());
+        messageVO.setEmailAddress(request.getEmailAddress());
+        messageVO.setMailingAddress(request.getMailingAddress());
+        messageVO.setPermanentAddress(request.getPermanentAddress());
+        messageVO.setPurposeOfAccount(request.getPurposeOfAccount());
+        messageVO.setSourceOfIncome(request.getSourceOfIncome());
+        messageVO.setSourceOfIncomePic(request.getSourceOfIncomePic());
+        messageVO.setExpectedMonthlyTurnover(request.getExpectedMonthlyTurnover());
+        messageVO.setCnicFrontPhoto(request.getCnicFrontPic());
+        messageVO.setCnicBackPhoto(request.getCnicBackPic());
+        messageVO.setCustomerPhoto(request.getCustomerPic());
+        messageVO.setReserved1(request.getReserved1());
+        if (request.getReserved2().equals("")) {
+            messageVO.setReserved2("0");
+        } else {
+            messageVO.setReserved2(request.getReserved2());
+        }
+//        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        /*This is temporary solution to enable talotalk on behalf of Attique Butt.
+        Should be reverted once otp optional implemented
+        on APIGEE End*/
+        //messageVO.setReserved1("1");
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("L2AccountUpgradeDiscrepant");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent L2 Account Upgrade Discrepant Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.l2AccountUpgradeDiscrepant(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] L2 Account Upgrade Discrepant Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setTransactionCode(messageVO.getTransactionId());
+
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] L2 Account Upgrade Discrepant Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] L2 Account Upgrade Discrepant Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****L2 Account Upgrade Discrepant Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+        return response;
+    }
+
+    public GetL2AccountUpgradeDiscrepantResponse getL2AccountUpgradeDiscrepantResponse(GetL2AccountUpgradeDiscrepantRequest request) {
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Get L2 Account Upgrade Discrepant Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        GetL2AccountUpgradeDiscrepantResponse response = new GetL2AccountUpgradeDiscrepantResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getMobileNo());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setCnicNo(request.getCnic());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+
+        /*This is temporary solution to enable talotalk on behalf of Attique Butt.
+        Should be reverted once otp optional implemented
+        on APIGEE End*/
+        //messageVO.setReserved1("1");
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("GetL2AccountUpgradeDiscrepant");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Get L2 Account Upgrade Discrepant Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.getL2AccountUpgradeDiscrepant(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Get L2 Account Upgrade Discrepant Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setTransactionCode(messageVO.getTransactionId());
+            response.setConsumerName(messageVO.getConsumerName());
+            response.setFatherHusbandName(messageVO.getFatherHusbandName());
+            response.setBirthPlace(messageVO.getBirthPlace());
+            response.setMotherMaiden(messageVO.getMotherMaiden());
+            response.setEmailAddress(messageVO.getEmailAddress());
+            response.setMailingAddress(messageVO.getMailingAddress());
+            response.setPermanentAddress(messageVO.getPermanentAddress());
+            response.setPurposeOfAccount(messageVO.getPurposeOfAccount());
+            response.setSourceOfIncome(messageVO.getSourceOfIncome());
+            response.setSourceOfIncomePic(messageVO.getSourceOfIncomePic());
+            response.setExpectedMonthlyTurnover(messageVO.getExpectedMonthlyTurnover());
+            response.setCnicFrontPic(messageVO.getCnicFrontPhoto());
+            response.setCnicBackPic(messageVO.getCnicBackPhoto());
+            response.setCustomerPic(messageVO.getCustomerPhoto());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Get L2 Account Upgrade Discrepant Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Get L2 Account Upgrade Discrepant Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****Get L2 Account Upgrade Discrepant Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
+        return response;
+    }
 }

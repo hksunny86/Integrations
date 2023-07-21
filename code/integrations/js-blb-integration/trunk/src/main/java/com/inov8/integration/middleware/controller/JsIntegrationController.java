@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Controller("JsIntegrationController")
 public class JsIntegrationController implements WebServiceSwitchController {
@@ -2788,4 +2787,13 @@ public class JsIntegrationController implements WebServiceSwitchController {
         return null;
     }
 
+    @Override
+    public WebServiceVO l2AccountUpgradeDiscrepant(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO getL2AccountUpgradeDiscrepant(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

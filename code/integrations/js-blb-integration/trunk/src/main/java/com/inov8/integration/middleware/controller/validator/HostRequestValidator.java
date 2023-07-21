@@ -1,5 +1,6 @@
 package com.inov8.integration.middleware.controller.validator;
 
+import com.inov8.integration.corporate.pdu.request.AccountStateRequest;
 import com.inov8.integration.middleware.pdu.request.*;
 import com.inov8.integration.middleware.util.ConfigReader;
 import org.apache.commons.lang.StringUtils;
@@ -3833,6 +3834,7 @@ public class HostRequestValidator {
 
     }
 
+    //
     public static void validateMerchantAccountUpgrade(MerchantAccountUpgradeRequest integrationVO) throws ValidationException {
 
         if (StringUtils.isEmpty(integrationVO.getRrn())) {
@@ -3853,6 +3855,7 @@ public class HostRequestValidator {
 
     }
 
+
     public static void validateMerchantPictureUpgrade(MerchantPictureUpgradeRequest integrationVO) throws ValidationException {
 
         if (StringUtils.isEmpty(integrationVO.getRrn())) {
@@ -3867,28 +3870,28 @@ public class HostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
         }
-        if (StringUtils.isEmpty(integrationVO.getCnicNumber())) {
-            throw new ValidationException("[FAILED] Validation Failed Cnic: " + integrationVO.getCnicNumber());
-        }
-        if (StringUtils.isEmpty(integrationVO.getProfilePic())) {
-            throw new ValidationException("[FAILED] Validation Failed Customer Picture: " + integrationVO.getProfilePic());
-        }
-        if (StringUtils.isEmpty(integrationVO.getCNICFrontPic())) {
-            throw new ValidationException("[FAILED] Validation Failed Cnic Front Picture: " + integrationVO.getCNICFrontPic());
-        }
-        if (StringUtils.isEmpty(integrationVO.getCNICBackPic())) {
-            throw new ValidationException("[FAILED] Validation Failed Cnic Back Picture: " + integrationVO.getCNICBackPic());
-        }
-        if (StringUtils.isEmpty(integrationVO.getBusinessName())) {
-            throw new ValidationException("[FAILED] Validation Failed Business Name: " + integrationVO.getBusinessName());
-        }
-        if (StringUtils.isEmpty(integrationVO.getBusinessAddress())) {
-            throw new ValidationException("[FAILED] Validation Failed Business Address: " + integrationVO.getBusinessAddress());
-        }
+//        if (StringUtils.isEmpty(integrationVO.getCnicNumber())) {
+//            throw new ValidationException("[FAILED] Validation Failed Cnic: " + integrationVO.getCnicNumber());
+//        }
+//        if (StringUtils.isEmpty(integrationVO.getProfilePic())) {
+//            throw new ValidationException("[FAILED] Validation Failed Customer Picture: " + integrationVO.getProfilePic());
+//        }
+//        if (StringUtils.isEmpty(integrationVO.getCNICFrontPic())) {
+//            throw new ValidationException("[FAILED] Validation Failed Cnic Front Picture: " + integrationVO.getCNICFrontPic());
+//        }
+//        if (StringUtils.isEmpty(integrationVO.getCNICBackPic())) {
+//            throw new ValidationException("[FAILED] Validation Failed Cnic Back Picture: " + integrationVO.getCNICBackPic());
+//        }
+//        if (StringUtils.isEmpty(integrationVO.getBusinessName())) {
+//            throw new ValidationException("[FAILED] Validation Failed Business Name: " + integrationVO.getBusinessName());
+//        }
+//        if (StringUtils.isEmpty(integrationVO.getBusinessAddress())) {
+//            throw new ValidationException("[FAILED] Validation Failed Business Address: " + integrationVO.getBusinessAddress());
+//        }
 
     }
 
-    //    public static void validateCustomerOutstandingLoanStatus(OutstandingRequest integrationVO) throws ValidationException {
+//    public static void validateCustomerOutstandingLoanStatus(OutstandingRequest integrationVO) throws ValidationException {
 //
 //        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
 //            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
@@ -3908,6 +3911,7 @@ public class HostRequestValidator {
 //        }
 //
 //    }
+
     public static void validateLoanPayment(LoanPaymentRequest integrationVO) throws ValidationException {
 
         if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
@@ -4026,29 +4030,6 @@ public class HostRequestValidator {
 
     }
 
-    //    public static void validateCustomerAnalytics(CustomerAnalyticsRequest integrationVO) throws ValidationException {
-//
-//        if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
-//            throw new ValidationException("[FAILED] Validation Failed Customer Id: " + integrationVO.getCustomerId());
-//        }
-//        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
-//            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
-//        }
-//
-//        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
-//            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
-//        }
-//        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
-//            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
-//        }
-//        if (StringUtils.isEmpty(integrationVO.getRrn())) {
-//            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
-//        }
-//        if (StringUtils.isEmpty(integrationVO.getLoanAmount())) {
-//            throw new ValidationException("[FAILED] Validation Failed Loan Amount: " + integrationVO.getLoanAmount());
-//        }
-//
-//    }
     public static void validateLoanHistory(LoansHistoryRequest integrationVO) throws ValidationException {
 
         if (StringUtils.isEmpty(integrationVO.getCustomerId())) {
@@ -4200,6 +4181,9 @@ public class HostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
         }
+        if (StringUtils.isEmpty(integrationVO.getCnicNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Cnic: " + integrationVO.getCnicNumber());
+        }
 
     }
 
@@ -4223,6 +4207,96 @@ public class HostRequestValidator {
 
     }
 
+    public static void validateAccountState(AccountStateRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getMobileNo())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNo());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getCnicNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Cnic: " + integrationVO.getCnicNumber());
+        }
+
+    }
+
+    public static void validateL2AccountUpgradeDiscrepant(L2AccountUpgradeDiscrepantRequest integrationVO) {
+
+
+        if (StringUtils.isEmpty(integrationVO.getCnic())) {
+            throw new ValidationException("[FAILED] Validation Failed CNIC: " + integrationVO.getCnic());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getConsumerName())) {
+            throw new ValidationException("[FAILED] Validation Failed Consumer Name: " + integrationVO.getConsumerName());
+        }
+
+
+        if (StringUtils.isEmpty(integrationVO.getBirthPlace())) {
+            throw new ValidationException("[FAILED] Validation Failed Birth Place: " + integrationVO.getBirthPlace());
+        }
+        if (StringUtils.isEmpty(integrationVO.getPermanentAddress())) {
+            throw new ValidationException("[FAILED] Validation Failed Present Address: " + integrationVO.getPermanentAddress());
+        }
+
+
+//        if (StringUtils.isEmpty(integrationVO.getCnicExpiry())) {
+//            throw new ValidationException("[FAILED] Validation Failed Cnic Expiry: " + integrationVO.getCnicExpiry());
+//        }
+//        if (StringUtils.isEmpty(integrationVO.getDob())) {
+//            throw new ValidationException("[FAILED] Validation Failed Date Of Birth: " + integrationVO.getDob());
+//        }
+
+//        if (StringUtils.isEmpty(integrationVO.getFatherHusbandName())) {
+//            throw new ValidationException("[FAILED] Validation Failed Father Hasband Name: " + integrationVO.getFatherHusbandName());
+//        }
+//        if (StringUtils.isEmpty(integrationVO.getMotherMaiden())) {
+//            throw new ValidationException("[FAILED] Validation Failed Mother Maiden: " + integrationVO.getMotherMaiden());
+//        }
+//
+//        if (StringUtils.isEmpty(integrationVO.getGender())) {
+//            throw new ValidationException("[FAILED] Validation Failed Gender: " + integrationVO.getGender());
+//        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+
+    }
+
+    public static void validateGetL2AccountUpgradeDiscrepant(GetL2AccountUpgradeDiscrepantRequest integrationVO) {
+
+
+        if (StringUtils.isEmpty(integrationVO.getCnic())) {
+            throw new ValidationException("[FAILED] Validation Failed CNIC: " + integrationVO.getCnic());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNo())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNo());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+
+    }
 
     public static boolean authenticate(String userName, String password, String channelID) {
         if (ConfigReader.getInstance().getProperty("channel.ids", "").contains(channelID))

@@ -6,6 +6,8 @@ import com.inov8.integration.vo.CatalogList;
 import com.inov8.integration.vo.SegmentList;
 import com.inov8.integration.webservice.corporateVO.AccountStatement;
 import com.inov8.integration.webservice.corporateVO.CustomerDeviceVerification;
+import com.inov8.integration.webservice.l2Account.L2Account;
+import com.inov8.integration.webservice.l2Account.L2AccountFields;
 import com.inov8.integration.webservice.optasiaVO.*;
 
 import java.io.Serializable;
@@ -435,6 +437,24 @@ public class WebServiceVO implements Serializable {
     private String id;
     private String deviceName;
     private String approvalStatus;
+    private List<L2AccountFields> l2AccountFieldsList;
+    private List<L2Account> l2AccountList;
+
+    public List<L2AccountFields> getL2AccountFieldsList() {
+        return l2AccountFieldsList;
+    }
+
+    public void setL2AccountFieldsList(List<L2AccountFields> l2AccountFieldsList) {
+        this.l2AccountFieldsList = l2AccountFieldsList;
+    }
+
+    public List<L2Account> getL2AccountList() {
+        return l2AccountList;
+    }
+
+    public void setL2AccountList(List<L2Account> l2AccountList) {
+        this.l2AccountList = l2AccountList;
+    }
 
     public String getId() {
         return id;

@@ -10,7 +10,6 @@ import com.inov8.integration.middleware.enums.ResponseCodeEnum;
 import com.inov8.integration.middleware.enums.TransactionStatus;
 import com.inov8.integration.middleware.util.ConfigReader;
 import com.inov8.integration.middleware.util.JSONUtil;
-import com.inov8.integration.webservice.controller.CorporatePortalSwitchController;
 import com.inov8.integration.webservice.controller.L2AccountSwitchController;
 import com.inov8.integration.webservice.vo.WebServiceVO;
 import org.apache.commons.codec.digest.DigestUtils;

@@ -72,10 +72,10 @@ public class JSL2AccountController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
-//                        L2AccountHostRequestValidator.validateL2Account(request);
+                        L2AccountHostRequestValidator.validateL2Account(request);
                         response = l2AccountService.l2AccountResponse(request);
 
                     } catch (ValidationException ve) {
@@ -101,13 +101,13 @@ public class JSL2AccountController {
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
                 }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Level 2 Accounts Request *********");
-//                response = new L2AccountResponse();
-//                response.setResponseCode("111");
-//                response.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Level 2 Accounts Request *********");
+                response = new L2AccountResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
         } catch (Exception e) {
 
             response = new L2AccountResponse();
@@ -165,10 +165,10 @@ public class JSL2AccountController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
-//                        L2AccountHostRequestValidator.validateL2AccountFields(request);
+                        L2AccountHostRequestValidator.validateL2AccountFields(request);
                         response = l2AccountService.l2AccountFieldsResponse(request);
 
                     } catch (ValidationException ve) {
@@ -194,13 +194,13 @@ public class JSL2AccountController {
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
                 }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Level 2 Account Fields Request *********");
-//                response = new L2AccountFieldsResponse();
-//                response.setResponseCode("111");
-//                response.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Level 2 Account Fields Request *********");
+                response = new L2AccountFieldsResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
         } catch (Exception e) {
 
             response = new L2AccountFieldsResponse();

@@ -1,14 +1,18 @@
 package com.inov8.integration.webservice.l2Account;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class L2AccountFields implements Serializable {
     private static final long serialVersionUID = 5824473488070382311L;
 
     private String id;
-    private String kycField;
+    private String fieldId;
+    private String title;
     private String dataEntryMethod;
-    private String isVisible;
+    private boolean isVisible;
+    private boolean isOptional;
+    private boolean isReadonly;
     private String ultra;
     private String freelancer;
     private String ultraSignature;
@@ -16,10 +20,14 @@ public class L2AccountFields implements Serializable {
     private String dataType;
     private String minLength;
     private String maxLength;
-    private String createdOn;
-    private String createdBy;
-    private String updateOn;
-    private String updatedBy;
+    private String amount;
+    private List<DataList> dataList;
+//    private boolean emailOtp;
+//    private String cnicFront;
+//    private String cnicBack;
+//    private String nadraVerisysCharges;
+//    private String biometricCharges;
+//    private String pmdCharges;
 
     public String getId() {
         return id;
@@ -29,12 +37,20 @@ public class L2AccountFields implements Serializable {
         this.id = id;
     }
 
-    public String getKycField() {
-        return kycField;
+    public String getFieldId() {
+        return fieldId;
     }
 
-    public void setKycField(String kycField) {
-        this.kycField = kycField;
+    public void setFieldId(String fieldId) {
+        this.fieldId = fieldId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDataEntryMethod() {
@@ -45,12 +61,28 @@ public class L2AccountFields implements Serializable {
         this.dataEntryMethod = dataEntryMethod;
     }
 
-    public String getIsVisible() {
+    public boolean isVisible() {
         return isVisible;
     }
 
-    public void setIsVisible(String isVisible) {
-        this.isVisible = isVisible;
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
+
+    public boolean isOptional() {
+        return isOptional;
+    }
+
+    public void setOptional(boolean optional) {
+        isOptional = optional;
+    }
+
+    public boolean isReadonly() {
+        return isReadonly;
+    }
+
+    public void setReadonly(boolean readonly) {
+        isReadonly = readonly;
     }
 
     public String getUltra() {
@@ -109,35 +141,67 @@ public class L2AccountFields implements Serializable {
         this.maxLength = maxLength;
     }
 
-    public String getCreatedOn() {
-        return createdOn;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setCreatedOn(String createdOn) {
-        this.createdOn = createdOn;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
+    public List<DataList> getDataList() {
+        return dataList;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setDataList(List<DataList> dataList) {
+        this.dataList = dataList;
     }
 
-    public String getUpdateOn() {
-        return updateOn;
-    }
-
-    public void setUpdateOn(String updateOn) {
-        this.updateOn = updateOn;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
+//    public boolean isEmailOtp() {
+//        return emailOtp;
+//    }
+//
+//    public void setEmailOtp(boolean emailOtp) {
+//        this.emailOtp = emailOtp;
+//    }
+//
+//    public String getCnicFront() {
+//        return cnicFront;
+//    }
+//
+//    public void setCnicFront(String cnicFront) {
+//        this.cnicFront = cnicFront;
+//    }
+//
+//    public String getCnicBack() {
+//        return cnicBack;
+//    }
+//
+//    public void setCnicBack(String cnicBack) {
+//        this.cnicBack = cnicBack;
+//    }
+//
+//    public String getNadraVerisysCharges() {
+//        return nadraVerisysCharges;
+//    }
+//
+//    public void setNadraVerisysCharges(String nadraVerisysCharges) {
+//        this.nadraVerisysCharges = nadraVerisysCharges;
+//    }
+//
+//    public String getBiometricCharges() {
+//        return biometricCharges;
+//    }
+//
+//    public void setBiometricCharges(String biometricCharges) {
+//        this.biometricCharges = biometricCharges;
+//    }
+//
+//    public String getPmdCharges() {
+//        return pmdCharges;
+//    }
+//
+//    public void setPmdCharges(String pmdCharges) {
+//        this.pmdCharges = pmdCharges;
+//    }
 }

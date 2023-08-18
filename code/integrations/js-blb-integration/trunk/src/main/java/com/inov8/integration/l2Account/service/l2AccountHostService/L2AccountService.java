@@ -237,6 +237,7 @@ public class L2AccountService {
 
         messageVO.setUserName(request.getUserName());
         messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getMobileNumber());
         messageVO.setDateTime(request.getDateTime());
         messageVO.setRetrievalReferenceNumber(request.getRrn());
         messageVO.setChannelId(request.getChannelId());

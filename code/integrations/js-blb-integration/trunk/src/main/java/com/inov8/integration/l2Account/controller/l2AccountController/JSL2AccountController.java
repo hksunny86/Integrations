@@ -149,6 +149,7 @@ public class JSL2AccountController {
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
+                    .append(request.getMobileNumber())
                     .append(request.getDateTime())
                     .append(request.getRrn())
                     .append(request.getChannelId())

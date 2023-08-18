@@ -1,6 +1,7 @@
 package com.inov8.integration.webservice.l2Account;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class L2Account implements Serializable {
     private static final long serialVersionUID = 5824473488070382311L;
@@ -8,8 +9,8 @@ public class L2Account implements Serializable {
     private String id;
     private String accountId;
     private String accountName;
-    private String createdOn;
-    private String isActive;
+    private String description;
+    private List<Details> details;
 
     public String getId() {
         return id;
@@ -35,19 +36,19 @@ public class L2Account implements Serializable {
         this.accountName = accountName;
     }
 
-    public String getCreatedOn() {
-        return createdOn;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCreatedOn(String createdOn) {
-        this.createdOn = createdOn;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getIsActive() {
-        return isActive;
+    public List<Details> getDetails() {
+        return details;
     }
 
-    public void setIsActive(String isActive) {
-        this.isActive = isActive;
+    public void setDetails(List<Details> details) {
+        this.details = details;
     }
 }

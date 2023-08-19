@@ -11,7 +11,6 @@ import com.inov8.integration.middleware.enums.TransactionStatus;
 import com.inov8.integration.middleware.util.ConfigReader;
 import com.inov8.integration.middleware.util.JSONUtil;
 import com.inov8.integration.webservice.controller.DebitCardRevampSwitchController;
-import com.inov8.integration.webservice.controller.WebServiceSwitchController;
 import com.inov8.integration.webservice.vo.WebServiceVO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
@@ -37,7 +36,7 @@ public class DebitCardService {
     private static String I8_SCHEME = ConfigReader.getInstance().getProperty("i8-scheme", "http");
     private static String I8_SERVER = ConfigReader.getInstance().getProperty("i8-ip", "127.0.0.1");
     private static String I8_PORT = (ConfigReader.getInstance().getProperty("i8-port", ""));
-    private static String I8_PATH = (ConfigReader.getInstance().getProperty("i8-path", ""));
+    private static String I8_PATH = (ConfigReader.getInstance().getProperty("debitCardRevamp.i8-path", ""));
     private static int READ_TIME_OUT = Integer.parseInt(ConfigReader.getInstance().getProperty("i8-read-timeout", "55"));
     private static int CONNECTION_TIME_OUT = Integer.parseInt(ConfigReader.getInstance().getProperty("i8-connection-timeout", "10"));
 
@@ -244,10 +243,10 @@ public class DebitCardService {
         messageVO.setRetrievalReferenceNumber(request.getRrn());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setCity(request.getTerminalId());
-        messageVO.setArea(request.getTerminalId());
-        messageVO.setStreetNumber(request.getTerminalId());
-        messageVO.setHouseNumber(request.getTerminalId());
+        messageVO.setCity(request.getCity());
+        messageVO.setArea(request.getArea());
+        messageVO.setStreetNumber(request.getStreetNumber());
+        messageVO.setHouseNumber(request.getHouseNumber());
         messageVO.setEmailAddress(request.getEmail());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());

@@ -6,6 +6,7 @@ import com.inov8.integration.vo.CatalogList;
 import com.inov8.integration.vo.SegmentList;
 import com.inov8.integration.webservice.corporateVO.AccountStatement;
 import com.inov8.integration.webservice.corporateVO.CustomerDeviceVerification;
+import com.inov8.integration.webservice.debitCardVO.CardTypeFee;
 import com.inov8.integration.webservice.l2Account.L2Account;
 import com.inov8.integration.webservice.l2Account.L2AccountFields;
 import com.inov8.integration.webservice.optasiaVO.*;
@@ -439,6 +440,42 @@ public class WebServiceVO implements Serializable {
     private String approvalStatus;
     private List<L2AccountFields> l2AccountFieldsList;
     private List<L2Account> l2AccountList;
+    private List<CardTypeFee> cardTypeFeeList;
+    private String area;
+    private String streetNumber;
+    private String houseNumber;
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    public List<CardTypeFee> getCardTypeFeeList() {
+        return cardTypeFeeList;
+    }
+
+    public void setCardTypeFeeList(List<CardTypeFee> cardTypeFeeList) {
+        this.cardTypeFeeList = cardTypeFeeList;
+    }
 
     public List<L2AccountFields> getL2AccountFieldsList() {
         return l2AccountFieldsList;

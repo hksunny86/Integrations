@@ -29,7 +29,7 @@ public class DebitCardFeeResponse implements Serializable {
     private String responseDescription;
     @JsonProperty("ResponseDateTime")
     private String responseDateTime;
-    @JsonProperty("L2Accounts")
+    @JsonProperty("CardTypeFee")
     private List<CardTypeFee> cardTypeFeeList;
     @JsonProperty("HashData")
     private String hashData;

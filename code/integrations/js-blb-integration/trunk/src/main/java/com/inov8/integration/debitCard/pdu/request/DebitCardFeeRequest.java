@@ -15,6 +15,7 @@ import java.io.Serializable;
         "Rrn",
         "ChannelId",
         "TerminalId",
+        "TransactionType",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -44,6 +45,8 @@ public class DebitCardFeeRequest implements Serializable {
     private String channelId;
     @JsonProperty("TerminalId")
     private String terminalId;
+    @JsonProperty("TransactionType")
+    private String transactionType;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -121,6 +124,14 @@ public class DebitCardFeeRequest implements Serializable {
 
     public void setTerminalId(String terminalId) {
         this.terminalId = terminalId;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
     }
 
     public String getReserved1() {

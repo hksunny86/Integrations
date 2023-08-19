@@ -62,6 +62,7 @@ public class JSDebitCardController {
                     .append(request.getRrn())
                     .append(request.getChannelId())
                     .append(request.getTerminalId())
+                    .append(request.getTransactionType())
                     .append(request.getReserved1())
                     .append(request.getReserved2())
                     .append(request.getReserved3())

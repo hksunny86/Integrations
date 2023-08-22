@@ -8,6 +8,7 @@ public class L2AccountFields implements Serializable {
 
     private String id;
     private String fieldId;
+    private boolean isDiscrepant;
     private String title;
     private String dataEntryMethod;
     private boolean isVisible;
@@ -22,12 +23,6 @@ public class L2AccountFields implements Serializable {
     private String maxLength;
     private String amount;
     private List<DataList> dataList;
-//    private boolean emailOtp;
-//    private String cnicFront;
-//    private String cnicBack;
-//    private String nadraVerisysCharges;
-//    private String biometricCharges;
-//    private String pmdCharges;
 
     public String getId() {
         return id;
@@ -43,6 +38,14 @@ public class L2AccountFields implements Serializable {
 
     public void setFieldId(String fieldId) {
         this.fieldId = fieldId;
+    }
+
+    public boolean isDiscrepant() {
+        return isDiscrepant;
+    }
+
+    public void setDiscrepant(boolean discrepant) {
+        isDiscrepant = discrepant;
     }
 
     public String getTitle() {
@@ -156,52 +159,4 @@ public class L2AccountFields implements Serializable {
     public void setDataList(List<DataList> dataList) {
         this.dataList = dataList;
     }
-
-//    public boolean isEmailOtp() {
-//        return emailOtp;
-//    }
-//
-//    public void setEmailOtp(boolean emailOtp) {
-//        this.emailOtp = emailOtp;
-//    }
-//
-//    public String getCnicFront() {
-//        return cnicFront;
-//    }
-//
-//    public void setCnicFront(String cnicFront) {
-//        this.cnicFront = cnicFront;
-//    }
-//
-//    public String getCnicBack() {
-//        return cnicBack;
-//    }
-//
-//    public void setCnicBack(String cnicBack) {
-//        this.cnicBack = cnicBack;
-//    }
-//
-//    public String getNadraVerisysCharges() {
-//        return nadraVerisysCharges;
-//    }
-//
-//    public void setNadraVerisysCharges(String nadraVerisysCharges) {
-//        this.nadraVerisysCharges = nadraVerisysCharges;
-//    }
-//
-//    public String getBiometricCharges() {
-//        return biometricCharges;
-//    }
-//
-//    public void setBiometricCharges(String biometricCharges) {
-//        this.biometricCharges = biometricCharges;
-//    }
-//
-//    public String getPmdCharges() {
-//        return pmdCharges;
-//    }
-//
-//    public void setPmdCharges(String pmdCharges) {
-//        this.pmdCharges = pmdCharges;
-//    }
 }

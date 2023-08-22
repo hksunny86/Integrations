@@ -444,6 +444,24 @@ public class WebServiceVO implements Serializable {
     private String area;
     private String streetNumber;
     private String houseNumber;
+    private String segmentName;
+    private boolean isEmailOtp;
+
+    public String getSegmentName() {
+        return segmentName;
+    }
+
+    public void setSegmentName(String segmentName) {
+        this.segmentName = segmentName;
+    }
+
+    public boolean isEmailOtp() {
+        return isEmailOtp;
+    }
+
+    public void setEmailOtp(boolean emailOtp) {
+        isEmailOtp = emailOtp;
+    }
 
     public String getArea() {
         return area;

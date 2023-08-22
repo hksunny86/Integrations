@@ -296,6 +296,8 @@ public class L2AccountService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
+            response.setIsEmailOtp(String.valueOf(messageVO.isEmailOtp()));
+            response.setSegment(messageVO.getSegmentName());
             response.setL2AccountFieldsList(messageVO.getL2AccountFieldsList());
 
             logModel.setResponseCode(messageVO.getResponseCode());

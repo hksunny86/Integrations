@@ -14,6 +14,8 @@ import java.util.List;
         "ResponseCode",
         "ResponseDescription",
         "ResponseDateTime",
+        "isEmailOtp",
+        "Segment",
         "L2AccountFields",
         "HashData"
 })
@@ -29,6 +31,10 @@ public class L2AccountFieldsResponse implements Serializable {
     private String responseDescription;
     @JsonProperty("ResponseDateTime")
     private String responseDateTime;
+    @JsonProperty("isEmailOtp")
+    private String isEmailOtp;
+    @JsonProperty("Segment")
+    private String segment;
     @JsonProperty("L2AccountFields")
     private List<L2AccountFields> l2AccountFieldsList;
     @JsonProperty("HashData")
@@ -64,6 +70,22 @@ public class L2AccountFieldsResponse implements Serializable {
 
     public void setResponseDateTime(String responseDateTime) {
         this.responseDateTime = responseDateTime;
+    }
+
+    public String getIsEmailOtp() {
+        return isEmailOtp;
+    }
+
+    public void setIsEmailOtp(String isEmailOtp) {
+        this.isEmailOtp = isEmailOtp;
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+
+    public void setSegment(String segment) {
+        this.segment = segment;
     }
 
     public List<L2AccountFields> getL2AccountFieldsList() {

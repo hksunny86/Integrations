@@ -8,6 +8,7 @@ public class L2AccountFields implements Serializable {
 
     private String id;
     private String fieldId;
+    private String isDiscrepant;
     private String title;
     private String dataEntryMethod;
     private boolean isVisible;

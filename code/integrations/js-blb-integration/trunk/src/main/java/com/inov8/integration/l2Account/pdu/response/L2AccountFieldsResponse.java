@@ -32,7 +32,7 @@ public class L2AccountFieldsResponse implements Serializable {
     @JsonProperty("ResponseDateTime")
     private String responseDateTime;
     @JsonProperty("isEmailOtp")
-    private Boolean isEmailOtp;
+    private String emailOtp;
     @JsonProperty("Segment")
     private String segment;
     @JsonProperty("L2AccountFields")
@@ -72,12 +72,12 @@ public class L2AccountFieldsResponse implements Serializable {
         this.responseDateTime = responseDateTime;
     }
 
-    public Boolean getEmailOtp() {
-        return isEmailOtp;
+    public String getEmailOtp() {
+        return emailOtp;
     }
 
-    public void setEmailOtp(Boolean emailOtp) {
-        isEmailOtp = emailOtp;
+    public void setEmailOtp(String emailOtp) {
+        this.emailOtp = emailOtp;
     }
 
     public String getSegment() {

@@ -445,7 +445,7 @@ public class WebServiceVO implements Serializable {
     private String streetNumber;
     private String houseNumber;
     private String segmentName;
-    private boolean isEmailOtp;
+    private String emailOtp;
 
     public String getSegmentName() {
         return segmentName;
@@ -455,12 +455,12 @@ public class WebServiceVO implements Serializable {
         this.segmentName = segmentName;
     }
 
-    public boolean isEmailOtp() {
-        return isEmailOtp;
+    public String getEmailOtp() {
+        return emailOtp;
     }
 
-    public void setEmailOtp(boolean emailOtp) {
-        isEmailOtp = emailOtp;
+    public void setEmailOtp(String emailOtp) {
+        this.emailOtp = emailOtp;
     }
 
     public String getArea() {

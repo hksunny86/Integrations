@@ -11,15 +11,13 @@ import java.io.Serializable;
         "UserName",
         "Password",
         "MobileNumber",
+        "Name",
         "DateTime",
         "Rrn",
         "ChannelId",
         "TerminalId",
-        "City",
-        "Area",
         "StreetNumber",
         "HouseNumber",
-        "Email",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -41,6 +39,8 @@ public class DebitCardDiscrepantRequest implements Serializable {
     private String password;
     @JsonProperty("MobileNumber")
     private String mobileNumber;
+    @JsonProperty("Name")
+    private String name;
     @JsonProperty("DateTime")
     private String dateTime;
     @JsonProperty("Rrn")
@@ -49,16 +49,10 @@ public class DebitCardDiscrepantRequest implements Serializable {
     private String channelId;
     @JsonProperty("TerminalId")
     private String terminalId;
-    @JsonProperty("City")
-    private String City;
-    @JsonProperty("Area")
-    private String Area;
     @JsonProperty("StreetNumber")
     private String streetNumber;
     @JsonProperty("HouseNumber")
     private String houseNumber;
-    @JsonProperty("Email")
-    private String email;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -106,6 +100,14 @@ public class DebitCardDiscrepantRequest implements Serializable {
         this.mobileNumber = mobileNumber;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDateTime() {
         return dateTime;
     }
@@ -138,22 +140,6 @@ public class DebitCardDiscrepantRequest implements Serializable {
         this.terminalId = terminalId;
     }
 
-    public String getCity() {
-        return City;
-    }
-
-    public void setCity(String city) {
-        City = city;
-    }
-
-    public String getArea() {
-        return Area;
-    }
-
-    public void setArea(String area) {
-        Area = area;
-    }
-
     public String getStreetNumber() {
         return streetNumber;
     }
@@ -168,14 +154,6 @@ public class DebitCardDiscrepantRequest implements Serializable {
 
     public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getReserved1() {

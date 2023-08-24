@@ -240,15 +240,13 @@ public class DebitCardService {
         messageVO.setUserName(request.getUserName());
         messageVO.setCustomerPassword(request.getPassword());
         messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setName(request.getName());
         messageVO.setDateTime(request.getDateTime());
         messageVO.setRetrievalReferenceNumber(request.getRrn());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setCity(request.getCity());
-        messageVO.setArea(request.getArea());
         messageVO.setStreetNumber(request.getStreetNumber());
         messageVO.setHouseNumber(request.getHouseNumber());
-        messageVO.setEmailAddress(request.getEmail());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());

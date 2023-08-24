@@ -22,7 +22,7 @@ public class L2AccountFields implements Serializable {
     private String minLength;
     private String maxLength;
     private String amount;
-    private List<DataList> dataList;
+    private List<String> dataList;
 
     public String getId() {
         return id;
@@ -152,11 +152,11 @@ public class L2AccountFields implements Serializable {
         this.amount = amount;
     }
 
-    public List<DataList> getDataList() {
+    public List<String> getDataList() {
         return dataList;
     }
 
-    public void setDataList(List<DataList> dataList) {
+    public void setDataList(List<String> dataList) {
         this.dataList = dataList;
     }
 }

@@ -215,7 +215,7 @@ public interface JsBLBIntegration {
 
     public L2AccountOpeningResponse l2AccountOpening(@WebParam (name = "L2AccountOpeningRequest") L2AccountOpeningRequest request);
 
-    public L2AccountUpgradeResponse l2AccountUpgrade(@WebParam (name = "L2AccountUpgradeRequest") L2AccountUpgradeRequest request);
+//    public L2AccountUpgradeResponse l2AccountUpgrade(@WebParam (name = "L2AccountUpgradeRequest") L2AccountUpgradeRequest request);
 
     public AccountDetailResponse accountDetail(@WebParam (name = "AccountDetail") AccountDetails request);
 

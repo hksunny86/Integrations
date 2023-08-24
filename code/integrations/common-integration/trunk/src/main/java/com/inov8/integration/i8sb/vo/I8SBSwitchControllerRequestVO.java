@@ -505,6 +505,42 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String aliasValue;
     private String aliasId;
     private String accountId;
+    private String nameApproved;
+    private String streetNoApproved;
+    private String houseNoApproved;
+    private String deleted;
+
+    public String getNameApproved() {
+        return nameApproved;
+    }
+
+    public void setNameApproved(String nameApproved) {
+        this.nameApproved = nameApproved;
+    }
+
+    public String getStreetNoApproved() {
+        return streetNoApproved;
+    }
+
+    public void setStreetNoApproved(String streetNoApproved) {
+        this.streetNoApproved = streetNoApproved;
+    }
+
+    public String getHouseNoApproved() {
+        return houseNoApproved;
+    }
+
+    public void setHouseNoApproved(String houseNoApproved) {
+        this.houseNoApproved = houseNoApproved;
+    }
+
+    public String getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(String deleted) {
+        this.deleted = deleted;
+    }
 
     public String getAccountId() {
         return accountId;

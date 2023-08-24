@@ -13382,30 +13382,30 @@ public class HostIntegrationService {
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-//        if (request.getReserved1().equals("02")) {
-            messageVO.setOtpPin(request.getMpin());
-//            try {
-//                if (request.getMpin() != null) {
-//                    String text = request.getMpin();
-//                    String otp = text.replaceAll("\\r|\\n", "");
-//                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
-//
-//                }
-//            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-//                e.printStackTrace();
-//            }
-//        } else {
-            messageVO.setMobilePin(request.getMpin());
-//            try {
-//                if (request.getMpin() != null) {
-//                    String text = request.getMpin();
-//                    String otp = text.replaceAll("\\r|\\n", "");
-//                    messageVO.setMobilePin(RSAEncryption.decrypt(otp, loginPrivateKey));
-//                }
-//            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        if (request.getReserved1().equals("02")) {
+//            messageVO.setOtpPin(request.getMpin());
+            try {
+                if (request.getMpin() != null) {
+                    String text = request.getMpin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        } else {
+//            messageVO.setMobilePin(request.getMpin());
+            try {
+                if (request.getMpin() != null) {
+                    String text = request.getMpin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        }
         messageVO.setCnicNo(request.getCnic());
         messageVO.setFingerIndex(request.getFingerIndex());
         messageVO.setFingerTemplate(request.getFingerTemplate());
@@ -13463,7 +13463,7 @@ public class HostIntegrationService {
         logModel.setTransactionCode("L2AccountUpgrade");
         logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
         //preparing request XML
-        String requestXml = XMLUtil.convertToXML(request);
+        String requestXml = JSONUtil.getJSON(request);
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
@@ -13517,7 +13517,7 @@ public class HostIntegrationService {
         logger.debug("[HOST] ****L2 Account Upgrade Request PROCESSED IN ****: " + difference + " milliseconds");
 
         //preparing request XML
-        String responseXml = XMLUtil.convertToXML(response);
+        String responseXml = JSONUtil.getJSON(response);
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
@@ -17407,6 +17407,7 @@ public class HostIntegrationService {
         messageVO.setiDType(request.getIDType());
         messageVO.setIdN(request.getIdN());
         messageVO.setTillID(request.getTillID());
+        messageVO.setQrCode(request.getQrCode());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());

@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.jws.WebService;
 import java.text.SimpleDateFormat;
@@ -3415,13 +3414,13 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 response.setResponseDescription("Request is not authenticated");
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
-//        } else {
-//            logger.info("******* DEBUG LOGS FOR  Debit PAYMENT TRANSACTION *********");
-//            response = new DebitResponse();
-//            response.setResponseCode("111");
-//            response.setResponseDescription("Request is not recognized");
-//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//        }
+        } else {
+            logger.info("******* DEBUG LOGS FOR  Debit PAYMENT TRANSACTION *********");
+            response = new DebitResponse();
+            response.setResponseCode("111");
+            response.setResponseDescription("Request is not recognized");
+            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+        }
 
         long end = System.currentTimeMillis() - start;
         logger.info("Debit Payment Request  Processed in : {} ms {}", end, response);

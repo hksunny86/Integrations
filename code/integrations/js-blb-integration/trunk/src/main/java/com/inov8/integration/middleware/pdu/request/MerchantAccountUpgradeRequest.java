@@ -1,7 +1,5 @@
 package com.inov8.integration.middleware.pdu.request;
 
-import javax.annotation.Generated;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -32,6 +30,7 @@ import java.io.Serializable;
         "IDType",
         "ID-N",
         "TillID",
+        "QrCode",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -91,6 +90,8 @@ public class MerchantAccountUpgradeRequest implements Serializable {
     private String idN;
     @JsonProperty("TillID")
     private String tillID;
+    @JsonProperty("QrCode")
+    private String qrCode;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -332,6 +333,16 @@ public class MerchantAccountUpgradeRequest implements Serializable {
     @JsonProperty("TillID")
     public void setTillID(String tillID) {
         this.tillID = tillID;
+    }
+
+    @JsonProperty("QrCode")
+    public String getQrCode() {
+        return qrCode;
+    }
+
+    @JsonProperty("QrCode")
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
     }
 
     @JsonProperty("Reserved1")

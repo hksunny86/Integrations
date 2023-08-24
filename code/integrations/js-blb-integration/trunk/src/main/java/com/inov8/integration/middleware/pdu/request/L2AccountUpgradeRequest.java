@@ -1,108 +1,161 @@
 package com.inov8.integration.middleware.pdu.request;
 
-import javax.xml.bind.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
 
-@XmlType(name = "")
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "L2AccountUpgradeRequest")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+        "UserName",
+        "Password",
+        "MobileNumber",
+        "DateTime",
+        "Rrn",
+        "ChannelId",
+        "TerminalId",
+        "PIN",
+        "Cnic",
+        "FingerIndex",
+        "FingerTemplate",
+        "TemplateType",
+        "ConsumerName",
+        "FatherHusbandName",
+        "Gender",
+        "CnicIssuanceDate",
+        "DOB",
+        "BirthPlace",
+        "MotherMaiden",
+        "EmailAddress",
+        "MailingAddress",
+        "PermanentAddress",
+        "PurposeOfAccount",
+        "SourceOfIncome",
+        "SourceOfIncomePic",
+        "ExpectedMonthlyTurnover",
+        "NextOfKin",
+        "CnicFrontPic",
+        "CnicBackPic",
+        "CustomerPic",
+        "Latitude",
+        "Longitude",
+        "Reserved1",
+        "Reserved2",
+        "Reserved3",
+        "Reserved4",
+        "Reserved5",
+        "Reserved6",
+        "Reserved7",
+        "Reserved8",
+        "Reserved9",
+        "Reserved10",
+        "Reserved11",
+        "Reserved12",
+        "Reserved13",
+        "Reserved14",
+        "Reserved15",
+        "HashData"
+})
 public class L2AccountUpgradeRequest implements Serializable {
+    private final static long serialVersionUID = 1L;
 
-    @XmlElement(name = "UserName")
+
+    @JsonProperty("UserName")
     private String userName;
-    @XmlElement(name = "Password")
+    @JsonProperty("Password")
     private String password;
-    @XmlElement(name = "MobileNumber")
+    @JsonProperty("MobileNumber")
     private String mobileNumber;
-    @XmlElement(name = "DateTime")
+    @JsonProperty("DateTime")
     private String dateTime;
-    @XmlElement(name = "Rrn")
+    @JsonProperty("Rrn")
     private String rrn;
-    @XmlElement(name = "ChannelId")
+    @JsonProperty("ChannelId")
     private String channelId;
-    @XmlElement(name = "TerminalId")
+    @JsonProperty("TerminalId")
     private String terminalId;
-    @XmlElement(name="PIN")
+    @JsonProperty("PIN")
     private String mpin;
-    @XmlElement(name = "Cnic")
+    @JsonProperty("Cnic")
     private String cnic;
-    @XmlElement(name = "FingerIndex")
+    @JsonProperty("FingerIndex")
     private String fingerIndex;
-    @XmlElement(name = "FingerTemplate")
+    @JsonProperty("FingerTemplate")
     private String fingerTemplate;
-    @XmlElement(name = "TemplateType")
+    @JsonProperty("TemplateType")
     private String templateType;
-    @XmlElement(name = "ConsumerName")
+    @JsonProperty("ConsumerName")
     private String consumerName;
-    @XmlElement(name = "FatherHusbandName")
+    @JsonProperty("FatherHusbandName")
     private String fatherHusbandName;
-    @XmlElement(name = "Gender")
+    @JsonProperty("Gender")
     private String gender;
-    @XmlElement(name = "CnicIssuanceDate")
+    @JsonProperty("CnicIssuanceDate")
     private String cnicIssuanceDate;
-    @XmlElement(name = "DOB")
+    @JsonProperty("DOB")
     private String dob;
-    @XmlElement(name = "BirthPlace")
+    @JsonProperty("BirthPlace")
     private String birthPlace;
-    @XmlElement(name = "MotherMaiden")
+    @JsonProperty("MotherMaiden")
     private String motherMaiden;
-    @XmlElement(name = "EmailAddress")
+    @JsonProperty("EmailAddress")
     private String emailAddress;
-    @XmlElement(name = "MailingAddress")
+    @JsonProperty("MailingAddress")
     private String mailingAddress;
-    @XmlElement(name = "PermanentAddress")
+    @JsonProperty("PermanentAddress")
     private String permanentAddress;
-    @XmlElement(name = "PurposeOfAccount")
+    @JsonProperty("PurposeOfAccount")
     private String purposeOfAccount;
-    @XmlElement(name = "SourceOfIncome")
+    @JsonProperty("SourceOfIncome")
     private String sourceOfIncome;
-    @XmlElement(name = "SourceOfIncomePic")
+    @JsonProperty("SourceOfIncomePic")
     private String sourceOfIncomePic;
-    @XmlElement(name = "ExpectedMonthlyTurnover")
+    @JsonProperty("ExpectedMonthlyTurnover")
     private String expectedMonthlyTurnover;
-    @XmlElement(name = "NextOfKin")
+    @JsonProperty("NextOfKin")
     private String nextOfKin;
-    @XmlElement(name = "CnicFrontPic")
+    @JsonProperty("CnicFrontPic")
     private String cnicFrontPic;
-    @XmlElement(name="CnicBackPic")
+    @JsonProperty("CnicBackPic")
     private String cnicBackPic;
-    @XmlElement(name="CustomerPic")
+    @JsonProperty("CustomerPic")
     private String customerPic;
-    @XmlElement(name="Latitude")
+    @JsonProperty("Latitude")
     private String latitude;
-    @XmlElement(name="Longitude")
+    @JsonProperty("Longitude")
     private String longitude;
-    @XmlElement(name = "Reserved1")
+    @JsonProperty("Reserved1")
     private String reserved1;
-    @XmlElement(name = "Reserved2")
+    @JsonProperty("Reserved2")
     private String reserved2;
-    @XmlElement(name = "Reserved3")
+    @JsonProperty("Reserved3")
     private String reserved3;
-    @XmlElement(name = "Reserved4")
+    @JsonProperty("Reserved4")
     private String reserved4;
-    @XmlElement(name = "Reserved5")
+    @JsonProperty("Reserved5")
     private String reserved5;
-    @XmlElement(name = "Reserved6")
+    @JsonProperty("Reserved6")
     private String reserved6;
-    @XmlElement(name = "Reserved7")
+    @JsonProperty("Reserved7")
     private String reserved7;
-    @XmlElement(name = "Reserved8")
+    @JsonProperty("Reserved8")
     private String reserved8;
-    @XmlElement(name = "Reserved9")
+    @JsonProperty("Reserved9")
     private String reserved9;
-    @XmlElement(name = "Reserved10")
+    @JsonProperty("Reserved10")
     private String reserved10;
-    @XmlElement(name = "Reserved11")
+    @JsonProperty("Reserved11")
     private String reserved11;
-    @XmlElement(name = "Reserved12")
+    @JsonProperty("Reserved12")
     private String reserved12;
-    @XmlElement(name = "Reserved13")
+    @JsonProperty("Reserved13")
     private String reserved13;
-    @XmlElement(name = "Reserved14")
+    @JsonProperty("Reserved14")
     private String reserved14;
-    @XmlElement(name = "Reserved15")
+    @JsonProperty("Reserved15")
     private String reserved15;
-    @XmlElement(name = "HashData")
+    @JsonProperty("HashData")
     private String hashData;
 
     public String getUserName() {

@@ -369,6 +369,7 @@ public class I8SBConstants {
     public static String RequestType_RAAST_DeleteAccount = "DeleteAccount";
     public static String RequestType_RAAST_DeleteAlias = "DeleteAlias";
     public static String RequestType_RAAST_DeleteCustomer = "DeleteCustomer";
+    public static String RequestType_DEBIT_CARD_DiscrepancyStatus = "DebitCardDiscrepancyStatus";
 
 
 

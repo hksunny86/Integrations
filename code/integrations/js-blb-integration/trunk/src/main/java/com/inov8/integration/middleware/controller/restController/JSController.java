@@ -8,9 +8,6 @@ import com.inov8.integration.middleware.service.hostService.HostIntegrationServi
 import com.inov8.integration.middleware.util.ConfigReader;
 import com.inov8.integration.middleware.util.JSONUtil;
 import com.inov8.integration.middleware.util.XMLUtil;
-import io.swagger.annotations.Api;
-import org.apache.commons.lang.StringUtils;
-import org.apache.cxf.annotations.GZIP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -2460,6 +2456,7 @@ public class JSController {
                     .append(request.getIDType())
                     .append(request.getIdN())
                     .append(request.getTillID())
+                    .append(request.getQrCode())
                     .append(request.getReserved1())
                     .append(request.getReserved2())
                     .append(request.getReserved3())
@@ -2766,10 +2763,10 @@ public class JSController {
                     .append(request.getReserved5());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
-//                        HostRequestValidator.validateL2AccountUpgradeDiscrepant(request);
+                        HostRequestValidator.validateL2AccountUpgradeDiscrepant(request);
                         l2AccountUpgradeDiscrepantResponse = integrationService.l2AccountUpgradeDiscrepantResponse(request);
 
                     } catch (ValidationException ve) {
@@ -2795,13 +2792,13 @@ public class JSController {
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
                 }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR L2 Account Upgrade Discrepant Request *********");
-//                l2AccountUpgradeDiscrepantResponse = new L2AccountUpgradeDiscrepantResponse();
-//                l2AccountUpgradeDiscrepantResponse.setResponseCode("111");
-//                l2AccountUpgradeDiscrepantResponse.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR L2 Account Upgrade Discrepant Request *********");
+                l2AccountUpgradeDiscrepantResponse = new L2AccountUpgradeDiscrepantResponse();
+                l2AccountUpgradeDiscrepantResponse.setResponseCode("111");
+                l2AccountUpgradeDiscrepantResponse.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
         } catch (Exception e) {
 
             l2AccountUpgradeDiscrepantResponse = new L2AccountUpgradeDiscrepantResponse();
@@ -2856,10 +2853,10 @@ public class JSController {
                     .append(request.getReserved5());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
-//                        HostRequestValidator.validateGetL2AccountUpgradeDiscrepant(request);
+                        HostRequestValidator.validateGetL2AccountUpgradeDiscrepant(request);
                         getL2AccountUpgradeDiscrepantResponse = integrationService.getL2AccountUpgradeDiscrepantResponse(request);
 
                     } catch (ValidationException ve) {
@@ -2885,13 +2882,13 @@ public class JSController {
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
                 }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Get L2 Account Upgrade Discrepant Request *********");
-//                getL2AccountUpgradeDiscrepantResponse = new GetL2AccountUpgradeDiscrepantResponse();
-//                getL2AccountUpgradeDiscrepantResponse.setResponseCode("111");
-//                getL2AccountUpgradeDiscrepantResponse.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Get L2 Account Upgrade Discrepant Request *********");
+                getL2AccountUpgradeDiscrepantResponse = new GetL2AccountUpgradeDiscrepantResponse();
+                getL2AccountUpgradeDiscrepantResponse.setResponseCode("111");
+                getL2AccountUpgradeDiscrepantResponse.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
         } catch (Exception e) {
 
             getL2AccountUpgradeDiscrepantResponse = new GetL2AccountUpgradeDiscrepantResponse();
@@ -2907,5 +2904,126 @@ public class JSController {
         logger.info("Get L2 Account Upgrade Discrepant Request Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
 
         return getL2AccountUpgradeDiscrepantResponse;
+    }
+
+    @RequestMapping(value = "api/l2AccountUpgrade", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    L2AccountUpgradeResponse l2AccountUpgrade(@RequestBody L2AccountUpgradeRequest request) throws Exception {
+        L2AccountUpgradeResponse response = new L2AccountUpgradeResponse();
+
+        String className = this.getClass().getSimpleName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+        long start = System.currentTimeMillis();
+
+        try {
+            String requestXML = JSONUtil.getJSON(request);
+//            requestXML = XMLUtil.maskPassword(requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+
+            logger.info("Start Processing L2 Account Upgrade Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
+
+//        logger.info("Start Processing L2 Account Upgrade Request with {}", requestXML);
+            StringBuilder stringText = new StringBuilder()
+                    .append(request.getUserName())
+                    .append(request.getPassword())
+                    .append(request.getMobileNumber())
+                    .append(request.getDateTime())
+                    .append(request.getRrn())
+                    .append(request.getChannelId())
+                    .append(request.getTerminalId())
+                    .append(request.getMpin())
+                    .append(request.getCnic())
+                    .append(request.getFingerIndex())
+                    .append(request.getFingerTemplate())
+                    .append(request.getTemplateType())
+                    .append(request.getConsumerName())
+                    .append(request.getFatherHusbandName())
+                    .append(request.getGender())
+                    .append(request.getCnicIssuanceDate())
+                    .append(request.getDob())
+                    .append(request.getBirthPlace())
+                    .append(request.getMotherMaiden())
+                    .append(request.getEmailAddress())
+                    .append(request.getMailingAddress())
+                    .append(request.getPermanentAddress())
+                    .append(request.getPurposeOfAccount())
+                    .append(request.getSourceOfIncome())
+                    .append(request.getSourceOfIncomePic())
+                    .append(request.getExpectedMonthlyTurnover())
+                    .append(request.getNextOfKin())
+                    .append(request.getCnicFrontPic())
+                    .append(request.getCnicBackPic())
+                    .append(request.getCustomerPic())
+                    .append(request.getLatitude())
+                    .append(request.getLongitude())
+                    .append(request.getReserved1())
+                    .append(request.getReserved2())
+                    .append(request.getReserved3())
+                    .append(request.getReserved4())
+                    .append(request.getReserved5())
+                    .append(request.getReserved6())
+                    .append(request.getReserved7())
+                    .append(request.getReserved8())
+                    .append(request.getReserved9())
+                    .append(request.getReserved10())
+                    .append(request.getReserved11())
+                    .append(request.getReserved12())
+                    .append(request.getReserved13())
+                    .append(request.getReserved14())
+                    .append(request.getReserved15());
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    HostRequestValidator.validateL2AccountUpgrade(request);
+                    response = integrationService.l2AccountUpgrade(request);
+
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+
+                logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR  L2 Account Upgrade TRANSACTION AUTHENTICATION *********");
+                response = new L2AccountUpgradeResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
+                response = new L2AccountUpgradeResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
+        } catch (Exception e) {
+            response = new L2AccountUpgradeResponse();
+            response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            response.setResponseDescription(e.getLocalizedMessage());
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
+            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
+            logger.info("Critical Error ::" + e.getLocalizedMessage());
+        }
+
+        long end = System.currentTimeMillis() - start;
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("L2 Account Upgrade  Request  Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
+
+
+        return response;
     }
 }

@@ -1,24 +1,34 @@
 package com.inov8.integration.middleware.pdu.response;
 
-import javax.xml.bind.annotation.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
 
-@XmlType(name = "")
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "L2AccountUpgradeResponse")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+        "Rrn",
+        "ResponseCode",
+        "ResponseDescription",
+        "ResponseDateTime",
+        "TransactionCode",
+        "HashData"
+})
 public class L2AccountUpgradeResponse implements Serializable {
+    private final static long serialVersionUID = 1L;
 
-    @XmlElement(name = "Rrn")
+    @JsonProperty("Rrn")
     private String rrn;
-    @XmlElement(name = "ResponseCode")
+    @JsonProperty("ResponseCode")
     private String responseCode;
-    @XmlElement(name = "ResponseDescription")
+    @JsonProperty("ResponseDescription")
     private String responseDescription;
-    @XmlElement(name = "ResponseDateTime")
+    @JsonProperty("ResponseDateTime")
     private String responseDateTime;
-    @XmlElement(name = "TransactionCode")
+    @JsonProperty("TransactionCode")
     private String transactionCode;
-    @XmlElement(name = "HashData")
+    @JsonProperty("HashData")
     private String hashData;
 
     public String getResponseDateTime() {

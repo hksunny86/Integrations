@@ -3033,39 +3033,39 @@ public class ClientIntegrationService {
 
     public WebServiceVO l2AccountUpgrade(WebServiceVO webServiceVO) throws RuntimeException {
 
-        L2AccountUpgradeRequest request = new L2AccountUpgradeRequest();
-        request.setUserName(USER_NAME);
-        request.setPassword(PASSWORD);
-//        request.setMobileNumber(webServiceVO.getMobileNo());
-        request.setDateTime(webServiceVO.getDateTime());
-
-        Random ran = new Random();
-        String stan = Integer.toString(100000 + ran.nextInt(899999));
-        request.setRrn(FieldUtil.buildRRN(stan));
-
-        if (StringUtils.isNotEmpty(webServiceVO.getRetrievalReferenceNumber()))
-            request.setRrn(webServiceVO.getRetrievalReferenceNumber());
-
-        webServiceVO.setRetrievalReferenceNumber(request.getRrn());
-
-        request.setChannelId(webServiceVO.getChannelId());
-        StringBuffer stringText = new StringBuffer(USER_NAME + PASSWORD + request.getDateTime() + request.getRrn() + request.getChannelId());
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        request.setHashData(sha256hex);
-        L2AccountUpgradeResponse response = null;
-        try {
-            response = fonePayIntegration.l2AccountUpgrade(request);
-        } catch (Exception e) {
-            logger.error("ERROR: WebService Exception ", e);
-        }
-        if (response != null) {
-            webServiceVO.setResponseCode(response.getResponseCode());
-            webServiceVO.setResponseCodeDescription(response.getResponseDescription());
-            webServiceVO.setRetrievalReferenceNumber(response.getRrn());
-        } else {
-            webServiceVO.setResponseCode("911");
-            webServiceVO.setResponseCodeDescription("Web Server Exception");
-        }
+//        L2AccountUpgradeRequest request = new L2AccountUpgradeRequest();
+//        request.setUserName(USER_NAME);
+//        request.setPassword(PASSWORD);
+////        request.setMobileNumber(webServiceVO.getMobileNo());
+//        request.setDateTime(webServiceVO.getDateTime());
+//
+//        Random ran = new Random();
+//        String stan = Integer.toString(100000 + ran.nextInt(899999));
+//        request.setRrn(FieldUtil.buildRRN(stan));
+//
+//        if (StringUtils.isNotEmpty(webServiceVO.getRetrievalReferenceNumber()))
+//            request.setRrn(webServiceVO.getRetrievalReferenceNumber());
+//
+//        webServiceVO.setRetrievalReferenceNumber(request.getRrn());
+//
+//        request.setChannelId(webServiceVO.getChannelId());
+//        StringBuffer stringText = new StringBuffer(USER_NAME + PASSWORD + request.getDateTime() + request.getRrn() + request.getChannelId());
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//        request.setHashData(sha256hex);
+//        L2AccountUpgradeResponse response = null;
+//        try {
+//            response = fonePayIntegration.l2AccountUpgrade(request);
+//        } catch (Exception e) {
+//            logger.error("ERROR: WebService Exception ", e);
+//        }
+//        if (response != null) {
+//            webServiceVO.setResponseCode(response.getResponseCode());
+//            webServiceVO.setResponseCodeDescription(response.getResponseDescription());
+//            webServiceVO.setRetrievalReferenceNumber(response.getRrn());
+//        } else {
+//            webServiceVO.setResponseCode("911");
+//            webServiceVO.setResponseCodeDescription("Web Server Exception");
+//        }
 
         return webServiceVO;
     }

@@ -3,17 +3,13 @@ package com.inov8.integration.channel.debitCard.service;
 import com.inov8.integration.channel.debitCard.mock.DebitCardDiscrepancyStatusMock;
 import com.inov8.integration.channel.debitCard.pdu.request.DebitCardDiscrepancyStatusRequest;
 import com.inov8.integration.channel.debitCard.pdu.response.DebitCardDiscrepancyStatusResponse;
-import com.inov8.integration.channel.tasdeeq.mock.TasdeeqMock;
 import com.inov8.integration.channel.tasdeeq.response.AuthenticateUpdatedResponse;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.util.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.ResourceAccessException;
@@ -50,7 +46,7 @@ public class DebitCardService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.discrepancyStatusUrl);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("AccessToken ", accessToken);
+            headers.add("Access_token ", accessToken);
             String requestJSON = JSONUtil.getJSON(debitCardDiscrepancyStatusRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
             logger.info("Prepared Request HttpEntity " + httpEntity);
@@ -59,6 +55,10 @@ public class DebitCardService {
                 logger.info("Requesting URL " + uri.toUriString());
                 logger.info("Sending Debit Card  Discrepancy Status Request Sent to Client " + httpEntity.getBody().toString());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
+//                ResponseEntity<String> res1 = new ResponseEntity("{\n" +
+//                        "    \"ResponseCode\": \"00\",\n" +
+//                        "    \"ResponseMessage\": \"Success\"\n" +
+//                        "}\n", HttpStatus.OK);
                 logger.info("Response Code of Debit Card  Discrepancy Status received from client " + res1.getStatusCode().toString());
                 logger.info("Response of Debit Card  Discrepancy Status received from client " + res1.getBody());
                 String responseCode = String.valueOf(res1.getStatusCode().value());

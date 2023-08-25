@@ -84,6 +84,7 @@ public class I8SBConstants {
     public static String I8SB_Channel_ID_BRANDVERSE = "BRANDVERSE";
     public static String I8SB_Channel_ID_PDM = "PDM";
     public static String I8SB_Channel_ID_RAAST = "RAAST";
+    public static String I8SB_Channel_ID_DEBITCARD = "DEBITCARD";
 
 
     public static String I8SB_Channel_ID_ETPaymentCollection = "ETPaymentCollection";

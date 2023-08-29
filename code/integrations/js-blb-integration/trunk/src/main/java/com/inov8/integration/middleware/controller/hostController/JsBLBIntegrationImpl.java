@@ -152,7 +152,7 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
 
                 try {
                     HostRequestValidator.validateVerifyLoginAccount(request);
-                response = integrationService.verifyLoginAccountResponse(request);
+                    response = integrationService.verifyLoginAccountResponse(request);
 
                 } catch (ValidationException ve) {
                     response.setResponseCode("420");
@@ -1890,10 +1890,10 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 .append(request.getReserved4())
                 .append(request.getReserved5());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
-                    HostRequestValidator.validateWalletToWalletPayment(request);
+//                    HostRequestValidator.validateWalletToWalletPayment(request);
                     response = integrationService.walletToWalletPaymentResponse(request);
 
                 } catch (ValidationException ve) {
@@ -1916,13 +1916,13 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 response.setResponseDescription("Request is not authenticated");
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
-        } else {
-            logger.info("******* DEBUG LOGS FOR  Wallet to wallet Payment *********");
-            response = new WalletToWalletPaymentResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR  Wallet to wallet Payment *********");
+//            response = new WalletToWalletPaymentResponse();
+//            response.setResponseCode("111");
+//            response.setResponseDescription("Request is not recognized");
+//            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//        }
 
         long end = System.currentTimeMillis() - start;
         logger.info("Wallet to wallet Payment Processed in : {} ms {}", end, response);
@@ -3388,10 +3388,10 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
                 .append(request.getReserved10());
 
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
-//                    HostRequestValidator.debit(request);
+                    HostRequestValidator.debit(request);
                     response = integrationService.debitResponse(request);
 
                 } catch (ValidationException ve) {
@@ -7473,110 +7473,110 @@ public class JsBLBIntegrationImpl implements JsBLBIntegration {
         return response;
     }
 
-    @Override
-    public L2AccountUpgradeResponse l2AccountUpgrade(L2AccountUpgradeRequest request) {
-        long start = System.currentTimeMillis();
-
-        L2AccountUpgradeResponse response = null;
-
-        String requestXML = XMLUtil.convertRequest(request);
-        requestXML = XMLUtil.maskPassword(requestXML);
-        String datetime = "";
-        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
-        datetime = DateFor.format(new Date());
-
-        logger.info("Start Processing L2 Account Upgrade Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
-                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
-
-//        logger.info("Start Processing L2 Account Upgrade Request with {}", requestXML);
-        StringBuilder stringText = new StringBuilder()
-                .append(request.getUserName())
-                .append(request.getPassword())
-                .append(request.getMobileNumber())
-                .append(request.getDateTime())
-                .append(request.getRrn())
-                .append(request.getChannelId())
-                .append(request.getTerminalId())
-                .append(request.getMpin())
-                .append(request.getCnic())
-                .append(request.getFingerIndex())
-                .append(request.getFingerTemplate())
-                .append(request.getTemplateType())
-                .append(request.getConsumerName())
-                .append(request.getFatherHusbandName())
-                .append(request.getGender())
-                .append(request.getCnicIssuanceDate())
-                .append(request.getDob())
-                .append(request.getBirthPlace())
-                .append(request.getMotherMaiden())
-                .append(request.getEmailAddress())
-                .append(request.getMailingAddress())
-                .append(request.getPermanentAddress())
-                .append(request.getPurposeOfAccount())
-                .append(request.getSourceOfIncome())
-                .append(request.getSourceOfIncomePic())
-                .append(request.getExpectedMonthlyTurnover())
-                .append(request.getNextOfKin())
-                .append(request.getCnicFrontPic())
-                .append(request.getCnicBackPic())
-                .append(request.getCustomerPic())
-                .append(request.getLatitude())
-                .append(request.getLongitude())
-                .append(request.getReserved1())
-                .append(request.getReserved2())
-                .append(request.getReserved3())
-                .append(request.getReserved4())
-                .append(request.getReserved5())
-                .append(request.getReserved6())
-                .append(request.getReserved7())
-                .append(request.getReserved8())
-                .append(request.getReserved9())
-                .append(request.getReserved10())
-                .append(request.getReserved11())
-                .append(request.getReserved12())
-                .append(request.getReserved13())
-                .append(request.getReserved14())
-                .append(request.getReserved15());
-        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-        if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-            try {
-                    HostRequestValidator.validateL2AccountUpgrade(request);
-                response = integrationService.l2AccountUpgrade(request);
-
-            } catch (ValidationException ve) {
-                response.setResponseCode("420");
-                response.setResponseDescription(ve.getMessage());
-
-                logger.error("ERROR: Request Validation", ve);
-            } catch (Exception e) {
-                response.setResponseCode("220");
-                response.setResponseDescription(e.getMessage());
-                logger.error("ERROR: General Processing ", e);
-            }
-
-            logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
-            logger.info("ResponseCode: " + response.getResponseCode());
-        } else {
-            logger.info("******* DEBUG LOGS FOR  L2 Account Upgrade TRANSACTION AUTHENTICATION *********");
-            response = new L2AccountUpgradeResponse();
-            response.setResponseCode("420");
-            response.setResponseDescription("Request is not authenticated");
-            logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-        }
-        } else {
-            logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
-            response = new L2AccountUpgradeResponse();
-            response.setResponseCode("111");
-            response.setResponseDescription("Request is not recognized");
-            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-        }
-
-        long end = System.currentTimeMillis() - start;
-        logger.info("L2 Account Upgrade  Request  Processed in : {} ms {}", end, response);
-
-        return response;
-    }
+//    @Override
+//    public L2AccountUpgradeResponse l2AccountUpgrade(L2AccountUpgradeRequest request) {
+//        long start = System.currentTimeMillis();
+//
+//        L2AccountUpgradeResponse response = null;
+//
+//        String requestXML = XMLUtil.convertRequest(request);
+//        requestXML = XMLUtil.maskPassword(requestXML);
+//        String datetime = "";
+//        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+//        datetime = DateFor.format(new Date());
+//
+//        logger.info("Start Processing L2 Account Upgrade Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+//                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+//
+////        logger.info("Start Processing L2 Account Upgrade Request with {}", requestXML);
+//        StringBuilder stringText = new StringBuilder()
+//                .append(request.getUserName())
+//                .append(request.getPassword())
+//                .append(request.getMobileNumber())
+//                .append(request.getDateTime())
+//                .append(request.getRrn())
+//                .append(request.getChannelId())
+//                .append(request.getTerminalId())
+//                .append(request.getMpin())
+//                .append(request.getCnic())
+//                .append(request.getFingerIndex())
+//                .append(request.getFingerTemplate())
+//                .append(request.getTemplateType())
+//                .append(request.getConsumerName())
+//                .append(request.getFatherHusbandName())
+//                .append(request.getGender())
+//                .append(request.getCnicIssuanceDate())
+//                .append(request.getDob())
+//                .append(request.getBirthPlace())
+//                .append(request.getMotherMaiden())
+//                .append(request.getEmailAddress())
+//                .append(request.getMailingAddress())
+//                .append(request.getPermanentAddress())
+//                .append(request.getPurposeOfAccount())
+//                .append(request.getSourceOfIncome())
+//                .append(request.getSourceOfIncomePic())
+//                .append(request.getExpectedMonthlyTurnover())
+//                .append(request.getNextOfKin())
+//                .append(request.getCnicFrontPic())
+//                .append(request.getCnicBackPic())
+//                .append(request.getCustomerPic())
+//                .append(request.getLatitude())
+//                .append(request.getLongitude())
+//                .append(request.getReserved1())
+//                .append(request.getReserved2())
+//                .append(request.getReserved3())
+//                .append(request.getReserved4())
+//                .append(request.getReserved5())
+//                .append(request.getReserved6())
+//                .append(request.getReserved7())
+//                .append(request.getReserved8())
+//                .append(request.getReserved9())
+//                .append(request.getReserved10())
+//                .append(request.getReserved11())
+//                .append(request.getReserved12())
+//                .append(request.getReserved13())
+//                .append(request.getReserved14())
+//                .append(request.getReserved15());
+//        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+////        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//        if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+//            try {
+////                    HostRequestValidator.validateL2AccountUpgrade(request);
+//                response = integrationService.l2AccountUpgrade(request);
+//
+//            } catch (ValidationException ve) {
+//                response.setResponseCode("420");
+//                response.setResponseDescription(ve.getMessage());
+//
+//                logger.error("ERROR: Request Validation", ve);
+//            } catch (Exception e) {
+//                response.setResponseCode("220");
+//                response.setResponseDescription(e.getMessage());
+//                logger.error("ERROR: General Processing ", e);
+//            }
+//
+//            logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
+//            logger.info("ResponseCode: " + response.getResponseCode());
+//        } else {
+//            logger.info("******* DEBUG LOGS FOR  L2 Account Upgrade TRANSACTION AUTHENTICATION *********");
+//            response = new L2AccountUpgradeResponse();
+//            response.setResponseCode("420");
+//            response.setResponseDescription("Request is not authenticated");
+//            logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+//        }
+////        } else {
+////            logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
+////            response = new L2AccountUpgradeResponse();
+////            response.setResponseCode("111");
+////            response.setResponseDescription("Request is not recognized");
+////            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+////        }
+//
+//        long end = System.currentTimeMillis() - start;
+//        logger.info("L2 Account Upgrade  Request  Processed in : {} ms {}", end, response);
+//
+//        return response;
+//    }
 
     @Override
     public AccountDetailResponse accountDetail(AccountDetails request) {

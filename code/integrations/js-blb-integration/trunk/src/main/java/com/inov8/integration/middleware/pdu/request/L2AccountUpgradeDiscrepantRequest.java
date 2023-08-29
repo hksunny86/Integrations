@@ -31,6 +31,21 @@ import java.io.Serializable;
         "EmailAddress",
         "MailingAddress",
         "PermanentAddress",
+        "SignaturePic",
+        "CurrencyCode",
+        "UsCitizenship",
+        "UsMobileNumber",
+        "SignatoryAuthority",
+        "USLinks",
+        "FederalTaxClassification",
+        "DualCitizenAddress",
+        "TaxIdNumber",
+        "ForeignTaxIdNumber",
+        "UsAccountNumber",
+        "UtilityBillPicture",
+        "City",
+        "Area",
+        "HouseNumber",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -86,6 +101,36 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
     private String mailingAddress;
     @JsonProperty("PermanentAddress")
     private String permanentAddress;
+    @JsonProperty("SignaturePic")
+    private String signaturePic;
+    @JsonProperty("CurrencyCode")
+    private String currencyCode;
+    @JsonProperty("UsCitizenship")
+    private String usCitizenship;
+    @JsonProperty("UsMobileNumber")
+    private String usMobileNumber;
+    @JsonProperty("SignatoryAuthority")
+    private String signatoryAuthority;
+    @JsonProperty("USLinks")
+    private String usLinks;
+    @JsonProperty("FederalTaxClassification")
+    private String federalTaxClassification;
+    @JsonProperty("DualCitizenAddress")
+    private String dualCitizenAddress;
+    @JsonProperty("TaxIdNumber")
+    private String taxIdNumber;
+    @JsonProperty("ForeignTaxIdNumber")
+    private String foreignTaxIdNumber;
+    @JsonProperty("UsAccountNumber")
+    private String usAccountNumber;
+    @JsonProperty("UtilityBillPicture")
+    private String utilityBillPicture;
+    @JsonProperty("City")
+    private String city;
+    @JsonProperty("Area")
+    private String area;
+    @JsonProperty("HouseNumber")
+    private String houseNumber;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -273,6 +318,126 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
 
     public void setPermanentAddress(String permanentAddress) {
         this.permanentAddress = permanentAddress;
+    }
+
+    public String getSignaturePic() {
+        return signaturePic;
+    }
+
+    public void setSignaturePic(String signaturePic) {
+        this.signaturePic = signaturePic;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
+
+    public String getUsCitizenship() {
+        return usCitizenship;
+    }
+
+    public void setUsCitizenship(String usCitizenship) {
+        this.usCitizenship = usCitizenship;
+    }
+
+    public String getUsMobileNumber() {
+        return usMobileNumber;
+    }
+
+    public void setUsMobileNumber(String usMobileNumber) {
+        this.usMobileNumber = usMobileNumber;
+    }
+
+    public String getSignatoryAuthority() {
+        return signatoryAuthority;
+    }
+
+    public void setSignatoryAuthority(String signatoryAuthority) {
+        this.signatoryAuthority = signatoryAuthority;
+    }
+
+    public String getUsLinks() {
+        return usLinks;
+    }
+
+    public void setUsLinks(String usLinks) {
+        this.usLinks = usLinks;
+    }
+
+    public String getFederalTaxClassification() {
+        return federalTaxClassification;
+    }
+
+    public void setFederalTaxClassification(String federalTaxClassification) {
+        this.federalTaxClassification = federalTaxClassification;
+    }
+
+    public String getDualCitizenAddress() {
+        return dualCitizenAddress;
+    }
+
+    public void setDualCitizenAddress(String dualCitizenAddress) {
+        this.dualCitizenAddress = dualCitizenAddress;
+    }
+
+    public String getTaxIdNumber() {
+        return taxIdNumber;
+    }
+
+    public void setTaxIdNumber(String taxIdNumber) {
+        this.taxIdNumber = taxIdNumber;
+    }
+
+    public String getForeignTaxIdNumber() {
+        return foreignTaxIdNumber;
+    }
+
+    public void setForeignTaxIdNumber(String foreignTaxIdNumber) {
+        this.foreignTaxIdNumber = foreignTaxIdNumber;
+    }
+
+    public String getUsAccountNumber() {
+        return usAccountNumber;
+    }
+
+    public void setUsAccountNumber(String usAccountNumber) {
+        this.usAccountNumber = usAccountNumber;
+    }
+
+    public String getUtilityBillPicture() {
+        return utilityBillPicture;
+    }
+
+    public void setUtilityBillPicture(String utilityBillPicture) {
+        this.utilityBillPicture = utilityBillPicture;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
     }
 
     public String getReserved1() {

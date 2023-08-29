@@ -1,6 +1,7 @@
 package com.inov8.integration.webservice.l2Account;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 public class L2AccountFields implements Serializable {
@@ -23,6 +24,15 @@ public class L2AccountFields implements Serializable {
     private String maxLength;
     private String amount;
     private List<String> dataList;
+    private String discrepantData;
+
+    public String getDiscrepantData() {
+        return discrepantData;
+    }
+
+    public void setDiscrepantData(String discrepantData) {
+        this.discrepantData = discrepantData;
+    }
 
     public String getId() {
         return id;

@@ -447,6 +447,96 @@ public class WebServiceVO implements Serializable {
     private String segmentName;
     private String emailOtp;
     private String qrCode;
+    private String usCitizenship;
+    private String usMobileNumber;
+    private String signatoryAuthority;
+    private String usLinks;
+    private String federalTaxClassification;
+    private String dualCitizenAddress;
+    private String taxIdNumber;
+    private String foreignTaxIdNumber;
+    private String usaAccountNumber;
+    private String billPicture;
+
+    public String getUsCitizenship() {
+        return usCitizenship;
+    }
+
+    public void setUsCitizenship(String usCitizenship) {
+        this.usCitizenship = usCitizenship;
+    }
+
+    public String getUsMobileNumber() {
+        return usMobileNumber;
+    }
+
+    public void setUsMobileNumber(String usMobileNumber) {
+        this.usMobileNumber = usMobileNumber;
+    }
+
+    public String getSignatoryAuthority() {
+        return signatoryAuthority;
+    }
+
+    public void setSignatoryAuthority(String signatoryAuthority) {
+        this.signatoryAuthority = signatoryAuthority;
+    }
+
+    public String getUsLinks() {
+        return usLinks;
+    }
+
+    public void setUsLinks(String usLinks) {
+        this.usLinks = usLinks;
+    }
+
+    public String getFederalTaxClassification() {
+        return federalTaxClassification;
+    }
+
+    public void setFederalTaxClassification(String federalTaxClassification) {
+        this.federalTaxClassification = federalTaxClassification;
+    }
+
+    public String getDualCitizenAddress() {
+        return dualCitizenAddress;
+    }
+
+    public void setDualCitizenAddress(String dualCitizenAddress) {
+        this.dualCitizenAddress = dualCitizenAddress;
+    }
+
+    public String getTaxIdNumber() {
+        return taxIdNumber;
+    }
+
+    public void setTaxIdNumber(String taxIdNumber) {
+        this.taxIdNumber = taxIdNumber;
+    }
+
+    public String getForeignTaxIdNumber() {
+        return foreignTaxIdNumber;
+    }
+
+    public void setForeignTaxIdNumber(String foreignTaxIdNumber) {
+        this.foreignTaxIdNumber = foreignTaxIdNumber;
+    }
+
+    public String getUsaAccountNumber() {
+        return usaAccountNumber;
+    }
+
+    public void setUsaAccountNumber(String usaAccountNumber) {
+        this.usaAccountNumber = usaAccountNumber;
+    }
+
+    public String getBillPicture() {
+        return billPicture;
+    }
+
+    public void setBillPicture(String billPicture) {
+        this.billPicture = billPicture;
+    }
 
     public String getQrCode() {
         return qrCode;

@@ -13430,6 +13430,20 @@ public class HostIntegrationService {
         messageVO.setCustomerPhoto(request.getCustomerPic());
         messageVO.setLatitude(request.getLatitude());
         messageVO.setLongitude(request.getLongitude());
+        messageVO.setCurrencyCode(request.getCurrencyCode());
+        messageVO.setUsCitizenship(request.getUsCitizenship());
+        messageVO.setUsMobileNumber(request.getUsMobileNumber());
+        messageVO.setSignatoryAuthority(request.getSignatoryAuthority());
+        messageVO.setUsLinks(request.getUsLinks());
+        messageVO.setFederalTaxClassification(request.getFederalTaxClassification());
+        messageVO.setDualCitizenAddress(request.getDualCitizenAddress());
+        messageVO.setTaxIdNumber(request.getTaxIdNumber());
+        messageVO.setForeignTaxIdNumber(request.getForeignTaxIdNumber());
+        messageVO.setUsaAccountNumber(request.getUsAccountNumber());
+        messageVO.setBillPicture(request.getUtilityBillPicture());
+        messageVO.setCity(request.getCity());
+        messageVO.setArea(request.getArea());
+        messageVO.setHouseNumber(request.getHouseNumber());
         messageVO.setReserved1(request.getReserved1());
         if (request.getReserved2().equals("")) {
             messageVO.setReserved2("0");
@@ -15621,8 +15635,9 @@ public class HostIntegrationService {
             response.setResponseDateTime(messageVO.getDateTime());
             response.setTransactionId(messageVO.getTransactionId());
             response.setTransactionAmount(messageVO.getTransactionAmount());
-            response.setTotalAmount(messageVO.getTotalAmount());
             response.setCharges(messageVO.getCharges());
+            response.setTotalAmount(messageVO.getTotalAmount());
+            response.setTransactionStatus(messageVO.getStatus());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -17233,20 +17248,56 @@ public class HostIntegrationService {
 
         saveTransaction(logModel);
 
-//        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
-//            response = optasiaMock.simpleAccountOpeningResponse();
-//
-//            String responseXml = JSONUtil.getJSON(response);
-//            logger.info("[HOST] Mock Response of Simple Account Opening Request: " + responseXml);
-//        } else {
-//            logger.info("[HOST] Simple Account Opening Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-//
-//            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-//            response.setResponseDescription("Host Not In Reach");
-//            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-//
-//            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
-//        }
+        try {
+            logger.info("[HOST] Sent Simple Account Opening Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.simpleAccountOpening(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Simple Account Opening Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Simple Account Opening Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Simple Account Opening Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****Simple Account Opening Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -17905,6 +17956,21 @@ public class HostIntegrationService {
         messageVO.setCnicFrontPhoto(request.getCnicFrontPic());
         messageVO.setCnicBackPhoto(request.getCnicBackPic());
         messageVO.setCustomerPhoto(request.getCustomerPic());
+        messageVO.setSignaturePhoto(request.getSignaturePic());
+        messageVO.setCurrencyCode(request.getCurrencyCode());
+        messageVO.setUsCitizenship(request.getUsCitizenship());
+        messageVO.setUsMobileNumber(request.getUsMobileNumber());
+        messageVO.setSignatoryAuthority(request.getSignatoryAuthority());
+        messageVO.setUsLinks(request.getUsLinks());
+        messageVO.setFederalTaxClassification(request.getFederalTaxClassification());
+        messageVO.setDualCitizenAddress(request.getDualCitizenAddress());
+        messageVO.setTaxIdNumber(request.getTaxIdNumber());
+        messageVO.setForeignTaxIdNumber(request.getForeignTaxIdNumber());
+        messageVO.setUsaAccountNumber(request.getUsAccountNumber());
+        messageVO.setBillPicture(request.getUtilityBillPicture());
+        messageVO.setCity(request.getCity());
+        messageVO.setArea(request.getArea());
+        messageVO.setHouseNumber(request.getHouseNumber());
         messageVO.setReserved1(request.getReserved1());
         if (request.getReserved2().equals("")) {
             messageVO.setReserved2("0");
@@ -18068,21 +18134,8 @@ public class HostIntegrationService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
-            response.setTransactionCode(messageVO.getTransactionId());
-            response.setConsumerName(messageVO.getConsumerName());
-            response.setFatherHusbandName(messageVO.getFatherHusbandName());
-            response.setBirthPlace(messageVO.getBirthPlace());
-            response.setMotherMaiden(messageVO.getMotherMaiden());
-            response.setEmailAddress(messageVO.getEmailAddress());
-            response.setMailingAddress(messageVO.getMailingAddress());
-            response.setPermanentAddress(messageVO.getPermanentAddress());
-            response.setPurposeOfAccount(messageVO.getPurposeOfAccount());
-            response.setSourceOfIncome(messageVO.getSourceOfIncome());
-            response.setSourceOfIncomePic(messageVO.getSourceOfIncomePic());
-            response.setExpectedMonthlyTurnover(messageVO.getExpectedMonthlyTurnover());
-            response.setCnicFrontPic(messageVO.getCnicFrontPhoto());
-            response.setCnicBackPic(messageVO.getCnicBackPhoto());
-            response.setCustomerPic(messageVO.getCustomerPhoto());
+            response.setStatus(messageVO.getStatus());
+            response.setL2AccountFieldsList(messageVO.getL2AccountFieldsList());
 
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());

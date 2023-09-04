@@ -10,29 +10,29 @@ import java.io.Serializable;
 @JsonPropertyOrder({
         "UserName",
         "Password",
+        "MobileNumber",
         "DateTime",
         "Rrn",
         "ChannelId",
         "TerminalId",
+        "AccountID",
+        "PMD",
         "Reserved1",
         "Reserved2",
         "Reserved3",
         "Reserved4",
         "Reserved5",
-        "Reserved6",
-        "Reserved7",
-        "Reserved8",
-        "Reserved9",
-        "Reserved10",
         "HashData"
 })
-public class L2AccountRequest implements Serializable {
+public class UpdatePmdRequest implements Serializable {
     private final static long serialVersionUID = 1L;
 
     @JsonProperty("UserName")
     private String userName;
     @JsonProperty("Password")
     private String password;
+    @JsonProperty("MobileNumber")
+    private String mobileNumber;
     @JsonProperty("DateTime")
     private String dateTime;
     @JsonProperty("Rrn")
@@ -41,6 +41,10 @@ public class L2AccountRequest implements Serializable {
     private String channelId;
     @JsonProperty("TerminalId")
     private String terminalId;
+    @JsonProperty("AccountID")
+    private String accountID;
+    @JsonProperty("PMD")
+    private String pmd;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -51,16 +55,6 @@ public class L2AccountRequest implements Serializable {
     private String reserved4;
     @JsonProperty("Reserved5")
     private String reserved5;
-    @JsonProperty("Reserved6")
-    private String reserved6;
-    @JsonProperty("Reserved7")
-    private String reserved7;
-    @JsonProperty("Reserved8")
-    private String reserved8;
-    @JsonProperty("Reserved9")
-    private String reserved9;
-    @JsonProperty("Reserved10")
-    private String reserved10;
     @JsonProperty("HashData")
     private String hashData;
 
@@ -78,6 +72,14 @@ public class L2AccountRequest implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String getDateTime() {
@@ -110,6 +112,22 @@ public class L2AccountRequest implements Serializable {
 
     public void setTerminalId(String terminalId) {
         this.terminalId = terminalId;
+    }
+
+    public String getAccountID() {
+        return accountID;
+    }
+
+    public void setAccountID(String accountID) {
+        this.accountID = accountID;
+    }
+
+    public String getPmd() {
+        return pmd;
+    }
+
+    public void setPmd(String pmd) {
+        this.pmd = pmd;
     }
 
     public String getReserved1() {
@@ -150,46 +168,6 @@ public class L2AccountRequest implements Serializable {
 
     public void setReserved5(String reserved5) {
         this.reserved5 = reserved5;
-    }
-
-    public String getReserved6() {
-        return reserved6;
-    }
-
-    public void setReserved6(String reserved6) {
-        this.reserved6 = reserved6;
-    }
-
-    public String getReserved7() {
-        return reserved7;
-    }
-
-    public void setReserved7(String reserved7) {
-        this.reserved7 = reserved7;
-    }
-
-    public String getReserved8() {
-        return reserved8;
-    }
-
-    public void setReserved8(String reserved8) {
-        this.reserved8 = reserved8;
-    }
-
-    public String getReserved9() {
-        return reserved9;
-    }
-
-    public void setReserved9(String reserved9) {
-        this.reserved9 = reserved9;
-    }
-
-    public String getReserved10() {
-        return reserved10;
-    }
-
-    public void setReserved10(String reserved10) {
-        this.reserved10 = reserved10;
     }
 
     public String getHashData() {

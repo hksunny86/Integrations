@@ -13382,7 +13382,7 @@ public class HostIntegrationService {
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        if (request.getReserved1().equals("02")) {
+        if (request.getPinValidation().equals("02")) {
 //            messageVO.setOtpPin(request.getMpin());
             try {
                 if (request.getMpin() != null) {
@@ -13444,18 +13444,19 @@ public class HostIntegrationService {
         messageVO.setCity(request.getCity());
         messageVO.setArea(request.getArea());
         messageVO.setHouseNumber(request.getHouseNumber());
-        messageVO.setReserved1(request.getReserved1());
-        if (request.getReserved2().equals("")) {
+        messageVO.setPmd(request.getPmd());
+        messageVO.setReserved1(request.getPinValidation());
+        if (request.getForNadra().equals("")) {
             messageVO.setReserved2("0");
         } else {
-            messageVO.setReserved2(request.getReserved2());
+            messageVO.setReserved2(request.getForNadra());
         }
 //        messageVO.setReserved2(request.getReserved2());
-        messageVO.setReserved3(request.getReserved3());
-        messageVO.setReserved4(request.getReserved4());
-        messageVO.setReserved5(request.getReserved5());
-        messageVO.setReserved6(request.getReserved6());
-        messageVO.setReserved7(request.getReserved7());
+        messageVO.setReserved3(request.getProofOfBusiness());
+        messageVO.setReserved4(request.getDualNationality());
+        messageVO.setReserved5(request.getUsCitizenship());
+        messageVO.setReserved6(request.getChequeBook());
+        messageVO.setReserved7(request.getRequestType());
 
         /*This is temporary solution to enable talotalk on behalf of Attique Butt.
         Should be reverted once otp optional implemented
@@ -18135,6 +18136,7 @@ public class HostIntegrationService {
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
             response.setStatus(messageVO.getStatus());
+            response.setAccountId(messageVO.getAccountId());
             response.setL2AccountFieldsList(messageVO.getL2AccountFieldsList());
 
             logModel.setResponseCode(messageVO.getResponseCode());

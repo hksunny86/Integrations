@@ -15,6 +15,7 @@ import java.util.List;
         "ResponseDescription",
         "ResponseDateTime",
         "Status",
+        "AccountId",
         "L2AccountFields",
         "HashData"
 })
@@ -32,6 +33,8 @@ public class GetL2AccountUpgradeDiscrepantResponse implements Serializable {
     private String responseDateTime;
     @JsonProperty("Status")
     private String status;
+    @JsonProperty("AccountId")
+    private String accountId;
     @JsonProperty("L2AccountFields")
     private List<L2AccountFields> l2AccountFieldsList;
     @JsonProperty("HashData")
@@ -75,6 +78,14 @@ public class GetL2AccountUpgradeDiscrepantResponse implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
     public List<L2AccountFields> getL2AccountFieldsList() {

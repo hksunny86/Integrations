@@ -41,7 +41,6 @@ import java.io.Serializable;
         "Latitude",
         "Longitude",
         "CurrencyCode",
-        "UsCitizenship",
         "UsMobileNumber",
         "SignatoryAuthority",
         "USLinks",
@@ -54,13 +53,14 @@ import java.io.Serializable;
         "City",
         "Area",
         "HouseNumber",
-        "Reserved1",
-        "Reserved2",
-        "Reserved3",
-        "Reserved4",
-        "Reserved5",
-        "Reserved6",
-        "Reserved7",
+        "Pmd",
+        "PinValidation",
+        "ForNadra",
+        "ProofOfBusiness",
+        "DualNationality",
+        "UsCitizenship",
+        "ChequeBook",
+        "RequestType",
         "Reserved8",
         "Reserved9",
         "Reserved10",
@@ -141,8 +141,6 @@ public class L2AccountUpgradeRequest implements Serializable {
     private String longitude;
     @JsonProperty("CurrencyCode")
     private String currencyCode;
-    @JsonProperty("UsCitizenship")
-    private String usCitizenship;
     @JsonProperty("UsMobileNumber")
     private String usMobileNumber;
     @JsonProperty("SignatoryAuthority")
@@ -167,20 +165,22 @@ public class L2AccountUpgradeRequest implements Serializable {
     private String area;
     @JsonProperty("HouseNumber")
     private String houseNumber;
-    @JsonProperty("Reserved1")
-    private String reserved1;
-    @JsonProperty("Reserved2")
-    private String reserved2;
-    @JsonProperty("Reserved3")
-    private String reserved3;
-    @JsonProperty("Reserved4")
-    private String reserved4;
-    @JsonProperty("Reserved5")
-    private String reserved5;
-    @JsonProperty("Reserved6")
-    private String reserved6;
-    @JsonProperty("Reserved7")
-    private String reserved7;
+    @JsonProperty("Pmd")
+    private String pmd;
+    @JsonProperty("PinValidation")
+    private String pinValidation;
+    @JsonProperty("ForNadra")
+    private String forNadra;
+    @JsonProperty("ProofOfBusiness")
+    private String proofOfBusiness;
+    @JsonProperty("DualNationality")
+    private String dualNationality;
+    @JsonProperty("UsCitizenship")
+    private String usCitizenship;
+    @JsonProperty("ChequeBook")
+    private String chequeBook;
+    @JsonProperty("RequestType")
+    private String requestType;
     @JsonProperty("Reserved8")
     private String reserved8;
     @JsonProperty("Reserved9")
@@ -464,14 +464,6 @@ public class L2AccountUpgradeRequest implements Serializable {
         this.currencyCode = currencyCode;
     }
 
-    public String getUsCitizenship() {
-        return usCitizenship;
-    }
-
-    public void setUsCitizenship(String usCitizenship) {
-        this.usCitizenship = usCitizenship;
-    }
-
     public String getUsMobileNumber() {
         return usMobileNumber;
     }
@@ -568,60 +560,68 @@ public class L2AccountUpgradeRequest implements Serializable {
         this.houseNumber = houseNumber;
     }
 
-    public String getReserved1() {
-        return reserved1;
+    public String getPmd() {
+        return pmd;
     }
 
-    public void setReserved1(String reserved1) {
-        this.reserved1 = reserved1;
+    public void setPmd(String pmd) {
+        this.pmd = pmd;
     }
 
-    public String getReserved2() {
-        return reserved2;
+    public String getPinValidation() {
+        return pinValidation;
     }
 
-    public void setReserved2(String reserved2) {
-        this.reserved2 = reserved2;
+    public void setPinValidation(String pinValidation) {
+        this.pinValidation = pinValidation;
     }
 
-    public String getReserved3() {
-        return reserved3;
+    public String getForNadra() {
+        return forNadra;
     }
 
-    public void setReserved3(String reserved3) {
-        this.reserved3 = reserved3;
+    public void setForNadra(String forNadra) {
+        this.forNadra = forNadra;
     }
 
-    public String getReserved4() {
-        return reserved4;
+    public String getProofOfBusiness() {
+        return proofOfBusiness;
     }
 
-    public void setReserved4(String reserved4) {
-        this.reserved4 = reserved4;
+    public void setProofOfBusiness(String proofOfBusiness) {
+        this.proofOfBusiness = proofOfBusiness;
     }
 
-    public String getReserved5() {
-        return reserved5;
+    public String getDualNationality() {
+        return dualNationality;
     }
 
-    public void setReserved5(String reserved5) {
-        this.reserved5 = reserved5;
+    public void setDualNationality(String dualNationality) {
+        this.dualNationality = dualNationality;
     }
 
-    public String getReserved6() {
-        return reserved6;
+    public String getUsCitizenship() {
+        return usCitizenship;
     }
 
-    public void setReserved6(String reserved6) {
-        this.reserved6 = reserved6;
+    public void setUsCitizenship(String usCitizenship) {
+        this.usCitizenship = usCitizenship;
     }
 
-    public String getReserved7() {
-        return reserved7;
+    public String getChequeBook() {
+        return chequeBook;
     }
 
-    public void setReserved7(String reserved7) {
-        this.reserved7 = reserved7;
+    public void setChequeBook(String chequeBook) {
+        this.chequeBook = chequeBook;
+    }
+
+    public String getRequestType() {
+        return requestType;
+    }
+
+    public void setRequestType(String requestType) {
+        this.requestType = requestType;
     }
 
     public String getReserved8() {

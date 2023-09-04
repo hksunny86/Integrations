@@ -14,10 +14,9 @@ import java.util.List;
         "ResponseCode",
         "ResponseDescription",
         "ResponseDateTime",
-        "L2Accounts",
         "HashData"
 })
-public class L2AccountResponse implements Serializable {
+public class UpdatePmdResponse implements Serializable {
 
     private final static long serialVersionUID = 1L;
 
@@ -29,8 +28,6 @@ public class L2AccountResponse implements Serializable {
     private String responseDescription;
     @JsonProperty("ResponseDateTime")
     private String responseDateTime;
-    @JsonProperty("L2Accounts")
-    private List<L2Account> l2AccountList;
     @JsonProperty("HashData")
     private String hashData;
 
@@ -64,14 +61,6 @@ public class L2AccountResponse implements Serializable {
 
     public void setResponseDateTime(String responseDateTime) {
         this.responseDateTime = responseDateTime;
-    }
-
-    public List<L2Account> getL2AccountList() {
-        return l2AccountList;
-    }
-
-    public void setL2AccountList(List<L2Account> l2AccountList) {
-        this.l2AccountList = l2AccountList;
     }
 
     public String getHashData() {

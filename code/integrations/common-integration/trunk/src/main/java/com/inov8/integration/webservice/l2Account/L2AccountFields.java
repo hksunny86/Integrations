@@ -25,6 +25,33 @@ public class L2AccountFields implements Serializable {
     private String amount;
     private List<String> dataList;
     private String discrepantData;
+    private String ultraToSignature;
+    private String ultraToFreelancePKR;
+    private String ultraToFreelanceUSD;
+
+    public String getUltraToSignature() {
+        return ultraToSignature;
+    }
+
+    public void setUltraToSignature(String ultraToSignature) {
+        this.ultraToSignature = ultraToSignature;
+    }
+
+    public String getUltraToFreelancePKR() {
+        return ultraToFreelancePKR;
+    }
+
+    public void setUltraToFreelancePKR(String ultraToFreelancePKR) {
+        this.ultraToFreelancePKR = ultraToFreelancePKR;
+    }
+
+    public String getUltraToFreelanceUSD() {
+        return ultraToFreelanceUSD;
+    }
+
+    public void setUltraToFreelanceUSD(String ultraToFreelanceUSD) {
+        this.ultraToFreelanceUSD = ultraToFreelanceUSD;
+    }
 
     public String getDiscrepantData() {
         return discrepantData;

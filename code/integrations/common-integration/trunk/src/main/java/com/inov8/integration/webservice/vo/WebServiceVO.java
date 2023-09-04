@@ -457,6 +457,24 @@ public class WebServiceVO implements Serializable {
     private String foreignTaxIdNumber;
     private String usaAccountNumber;
     private String billPicture;
+    private String pmd;
+    private String accountId;
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getPmd() {
+        return pmd;
+    }
+
+    public void setPmd(String pmd) {
+        this.pmd = pmd;
+    }
 
     public String getUsCitizenship() {
         return usCitizenship;

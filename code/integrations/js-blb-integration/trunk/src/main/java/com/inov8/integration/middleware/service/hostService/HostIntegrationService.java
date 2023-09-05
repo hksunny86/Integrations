@@ -14141,8 +14141,9 @@ public class HostIntegrationService {
             response.setRrn(messageVO.getRetrievalReferenceNumber());
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
-            response.setCardStatus(messageVO.getCardDescription());
             response.setResponseDateTime(messageVO.getDateTime());
+            response.setCardStatus(messageVO.getCardDescription());
+            response.setDebitCardRegistrationStatus(messageVO.getDebitCardRegistrationStatus());
 
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());

@@ -1,4 +1,4 @@
-package com.inov8.integration.customerActivation.pdu.request;
+package com.inov8.integration.l2Account.pdu.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,6 +15,7 @@ import java.io.Serializable;
         "Rrn",
         "ChannelId",
         "TerminalId",
+        "CurrencyId",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -22,7 +23,7 @@ import java.io.Serializable;
         "Reserved5",
         "HashData"
 })
-public class CustomerActiveRequest implements Serializable {
+public class RateConversionRequest implements Serializable {
     private final static long serialVersionUID = 1L;
 
     @JsonProperty("UserName")
@@ -39,6 +40,8 @@ public class CustomerActiveRequest implements Serializable {
     private String channelId;
     @JsonProperty("TerminalId")
     private String terminalId;
+    @JsonProperty("CurrencyId")
+    private String currencyId;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -106,6 +109,14 @@ public class CustomerActiveRequest implements Serializable {
 
     public void setTerminalId(String terminalId) {
         this.terminalId = terminalId;
+    }
+
+    public String getCurrencyId() {
+        return currencyId;
+    }
+
+    public void setCurrencyId(String currencyId) {
+        this.currencyId = currencyId;
     }
 
     public String getReserved1() {

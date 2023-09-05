@@ -1,12 +1,10 @@
-package com.inov8.integration.customerActivation.pdu.response;
+package com.inov8.integration.l2Account.pdu.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inov8.integration.webservice.l2Account.L2Account;
 
 import java.io.Serializable;
-import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -14,9 +12,10 @@ import java.util.List;
         "ResponseCode",
         "ResponseDescription",
         "ResponseDateTime",
+        "CurrencyValue",
         "HashData"
 })
-public class CustomerActiveResponse implements Serializable {
+public class RateConversionResponse implements Serializable {
 
     private final static long serialVersionUID = 1L;
 
@@ -28,6 +27,8 @@ public class CustomerActiveResponse implements Serializable {
     private String responseDescription;
     @JsonProperty("ResponseDateTime")
     private String responseDateTime;
+    @JsonProperty("CurrencyValue")
+    private String currencyValue;
     @JsonProperty("HashData")
     private String hashData;
 
@@ -61,6 +62,14 @@ public class CustomerActiveResponse implements Serializable {
 
     public void setResponseDateTime(String responseDateTime) {
         this.responseDateTime = responseDateTime;
+    }
+
+    public String getCurrencyValue() {
+        return currencyValue;
+    }
+
+    public void setCurrencyValue(String currencyValue) {
+        this.currencyValue = currencyValue;
     }
 
     public String getHashData() {

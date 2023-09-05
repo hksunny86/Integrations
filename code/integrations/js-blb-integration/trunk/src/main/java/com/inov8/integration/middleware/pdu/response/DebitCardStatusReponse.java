@@ -17,6 +17,8 @@ public class DebitCardStatusReponse {
     private String responseDateTime;
     @XmlElement(name = "CardStatus")
     private String cardStatus;
+    @XmlElement(name = "DebitCardRegistrationStatus")
+    private String debitCardRegistrationStatus;
     @XmlElement(name = "Reserved1")
     private String reserved1;
     @XmlElement(name = "Reserved2")
@@ -62,6 +64,14 @@ public class DebitCardStatusReponse {
 
     public void setCardStatus(String cardStatus) {
         this.cardStatus = cardStatus;
+    }
+
+    public String getDebitCardRegistrationStatus() {
+        return debitCardRegistrationStatus;
+    }
+
+    public void setDebitCardRegistrationStatus(String debitCardRegistrationStatus) {
+        this.debitCardRegistrationStatus = debitCardRegistrationStatus;
     }
 
     public String getReserved1() {

@@ -459,6 +459,33 @@ public class WebServiceVO implements Serializable {
     private String billPicture;
     private String pmd;
     private String accountId;
+    private String currencyId;
+    private String currencyValue;
+    private String debitCardRegistrationStatus;
+
+    public String getDebitCardRegistrationStatus() {
+        return debitCardRegistrationStatus;
+    }
+
+    public void setDebitCardRegistrationStatus(String debitCardRegistrationStatus) {
+        this.debitCardRegistrationStatus = debitCardRegistrationStatus;
+    }
+
+    public String getCurrencyId() {
+        return currencyId;
+    }
+
+    public void setCurrencyId(String currencyId) {
+        this.currencyId = currencyId;
+    }
+
+    public String getCurrencyValue() {
+        return currencyValue;
+    }
+
+    public void setCurrencyValue(String currencyValue) {
+        this.currencyValue = currencyValue;
+    }
 
     public String getAccountId() {
         return accountId;

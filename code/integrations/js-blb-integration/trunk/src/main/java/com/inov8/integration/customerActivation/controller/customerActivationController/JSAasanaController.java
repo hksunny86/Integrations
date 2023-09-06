@@ -39,7 +39,6 @@ public class JSAasanaController {
     public @ResponseBody
     CustomerActiveResponse customerActiveResponse(@RequestHeader("Access_Token") String accessToken, @Valid @RequestBody CustomerActiveRequest request) throws Exception {
         CustomerActiveResponse response = new CustomerActiveResponse();
-        String decryptedToke = Objects.requireNonNull(RSAEncryption.decrypt(accessToken, ACCESS_TOKEN_PRIVATE_KEY));
 
         String className = this.getClass().getSimpleName();
         String methodName = new Object() {
@@ -47,6 +46,7 @@ public class JSAasanaController {
         long start = System.currentTimeMillis();
 
         try {
+            String decryptedToke = Objects.requireNonNull(RSAEncryption.decrypt(accessToken, ACCESS_TOKEN_PRIVATE_KEY));
             if (decryptedToke.equalsIgnoreCase(ACCESS_TOKEN)) {
                 logger.info("Asana Customer Active Request Received at Controller at time: " + start);
                 String requestXML = JSONUtil.getJSON(request);

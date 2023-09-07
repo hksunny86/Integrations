@@ -150,7 +150,7 @@ public class HostIntegrationService {
         String requestXml = XMLUtil.convertToXML(request);
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
         try {
             logger.info("[HOST] Sent Account Verify Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.verifyAccount(messageVO);
@@ -213,7 +213,7 @@ public class HostIntegrationService {
         logModel.setProcessedTime(difference);
 
 
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
         return response;
     }
@@ -258,7 +258,7 @@ public class HostIntegrationService {
         String requestXml = XMLUtil.convertToXML(request);
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
         try {
             logger.info("[HOST] Sent Account Verify Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.verifyLoginAccount(messageVO);
@@ -316,7 +316,7 @@ public class HostIntegrationService {
         logModel.setProcessedTime(difference);
 
 
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
         return response;
     }
@@ -362,7 +362,7 @@ public class HostIntegrationService {
         String requestXml = XMLUtil.convertToXML(request);
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
         try {
             logger.info("[HOST] Sent Checque Book Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.checqueBookStatus(messageVO);
@@ -410,7 +410,7 @@ public class HostIntegrationService {
         logModel.setProcessedTime(difference);
 
 
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
         return response;
     }
@@ -456,7 +456,7 @@ public class HostIntegrationService {
         String requestXml = JSONUtil.getJSON(request);
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
         try {
             logger.info("[HOST] Sent Account Verify Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = switchController.verifyAccount(messageVO);
@@ -517,7 +517,7 @@ public class HostIntegrationService {
         logModel.setProcessedTime(difference);
 
 
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
         return response;
     }
@@ -580,7 +580,7 @@ public class HostIntegrationService {
         String requestXml = XMLUtil.convertToXML(request);
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
         // Call i8
         try {
             logger.info("[HOST] Sent Account Opening Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -625,7 +625,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -673,7 +673,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -719,7 +719,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -764,7 +764,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
         // Call i8
         try {
             logger.info("[HOST] Sent Account Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -813,7 +813,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -886,7 +886,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -938,7 +938,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -976,7 +976,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
         // Call i8
         try {
             logger.info("[HOST] Sent Payment Reversal Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -1024,7 +1024,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -1065,7 +1065,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -1114,7 +1114,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -1159,7 +1159,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 
         // Call i8
@@ -1210,7 +1210,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -1276,7 +1276,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -1328,7 +1328,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -1371,7 +1371,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -1420,7 +1420,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -1466,7 +1466,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -1515,7 +1515,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -1585,7 +1585,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -1634,7 +1634,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -1702,7 +1702,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -1752,7 +1752,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -1808,7 +1808,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -1875,7 +1875,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -1948,7 +1948,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -2019,7 +2019,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -2063,7 +2063,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -2135,7 +2135,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -2186,7 +2186,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -2258,7 +2258,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -2305,7 +2305,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -2379,7 +2379,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
         return response;
     }
@@ -2428,7 +2428,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -2519,7 +2519,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -2565,7 +2565,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -2640,7 +2640,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -2706,7 +2706,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -2774,7 +2774,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -2842,7 +2842,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -2910,7 +2910,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -2989,7 +2989,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -3058,7 +3058,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -3107,7 +3107,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -3191,7 +3191,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -3259,7 +3259,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -3336,7 +3336,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -3383,7 +3383,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -3452,7 +3452,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -3499,7 +3499,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -3568,7 +3568,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -3658,7 +3658,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -3725,7 +3725,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -3776,7 +3776,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -3826,7 +3826,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -3873,7 +3873,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -3923,7 +3923,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -3985,7 +3985,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -4054,7 +4054,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
 
 
         return response;
@@ -4106,7 +4106,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -4194,7 +4194,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -4263,7 +4263,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -4333,7 +4333,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -4445,7 +4445,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -4510,7 +4510,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -4589,7 +4589,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -4653,7 +4653,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -4734,7 +4734,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -4808,7 +4808,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -4862,7 +4862,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -4946,7 +4946,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -4999,7 +4999,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -5067,7 +5067,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -5155,7 +5155,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -5217,7 +5217,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -5272,7 +5272,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -5340,7 +5340,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -5395,7 +5395,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -5463,7 +5463,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -5540,7 +5540,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -5608,7 +5608,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -5685,7 +5685,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -5752,7 +5752,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -5831,7 +5831,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -5905,7 +5905,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -5961,7 +5961,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -6035,7 +6035,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -6088,7 +6088,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -6151,7 +6151,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -6228,7 +6228,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -6295,7 +6295,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -6358,7 +6358,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -6418,7 +6418,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -6504,7 +6504,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -6617,7 +6617,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -6675,7 +6675,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -6744,7 +6744,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -6809,7 +6809,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -6876,7 +6876,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -6939,7 +6939,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -7000,7 +7000,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -7085,7 +7085,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
         try {
 //            logger.info("[HOST] Sent Credit Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             if (request.getReserved3().equalsIgnoreCase("NOVA-OPTASIA") || request.getChannelId().equalsIgnoreCase("optasia")) {
@@ -7186,7 +7186,7 @@ public class HostIntegrationService {
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
 
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -7250,7 +7250,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -7315,7 +7315,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -7401,7 +7401,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -7466,7 +7466,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -7518,7 +7518,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -7582,7 +7582,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -7634,7 +7634,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -7698,7 +7698,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -7750,7 +7750,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -7802,7 +7802,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -7871,7 +7871,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -7923,7 +7923,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+//        updateTransactionInDB(logModel);
         return response;
     }
 
@@ -7992,7 +7992,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -8044,7 +8044,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -8102,7 +8102,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -8154,7 +8154,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -8206,7 +8206,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -8265,7 +8265,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -8318,7 +8318,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -8377,7 +8377,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -8429,7 +8429,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -8481,7 +8481,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -8545,7 +8545,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -8597,7 +8597,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -8656,7 +8656,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -8708,7 +8708,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -8774,7 +8774,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -8826,7 +8826,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 //
@@ -8994,7 +8994,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -9045,7 +9045,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -10664,7 +10664,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -10726,7 +10726,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -10804,7 +10804,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -10868,7 +10868,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -10979,7 +10979,7 @@ public class HostIntegrationService {
 //        //Setting in logModel
 //        logModel.setPduResponseHEX(responseXml);
 //        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
+//        //updateTransactionInDB(logModel);
 //        return response;
 //    }
 //
@@ -11095,7 +11095,7 @@ public class HostIntegrationService {
 //        //Setting in logModel
 //        logModel.setPduResponseHEX(responseXml);
 //        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
+//        //updateTransactionInDB(logModel);
 //        return response;
 //    }
 //
@@ -11209,7 +11209,7 @@ public class HostIntegrationService {
 //        //Setting in logModel
 //        logModel.setPduResponseHEX(responseXml);
 //        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
+//        //updateTransactionInDB(logModel);
 //        return response;
 //    }
 //
@@ -11327,7 +11327,7 @@ public class HostIntegrationService {
 //        //Setting in logModel
 //        logModel.setPduResponseHEX(responseXml);
 //        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
+//        //updateTransactionInDB(logModel);
 //        return response;
 //    }
 //
@@ -11448,7 +11448,7 @@ public class HostIntegrationService {
 //        //Setting in logModel
 //        logModel.setPduResponseHEX(responseXml);
 //        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
+//        //updateTransactionInDB(logModel);
 //        return response;
 //    }
 //
@@ -11570,7 +11570,7 @@ public class HostIntegrationService {
 //        //Setting in logModel
 //        logModel.setPduResponseHEX(responseXml);
 //        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
+//        //updateTransactionInDB(logModel);
 //        return response;
 //    }
 
@@ -11692,7 +11692,7 @@ public class HostIntegrationService {
 //        //Setting in logModel
 //        logModel.setPduResponseHEX(responseXml);
 //        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
+//        //updateTransactionInDB(logModel);
 //        return response;
 //    }
 //
@@ -11836,7 +11836,7 @@ public class HostIntegrationService {
 //        //Setting in logModel
 //        logModel.setPduResponseHEX(responseXml);
 //        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
+//        //updateTransactionInDB(logModel);
 //        return response;
 //    }
 
@@ -11963,7 +11963,7 @@ public class HostIntegrationService {
 //        //Setting in logModel
 //        logModel.setPduResponseHEX(responseXml);
 //        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
+//        //updateTransactionInDB(logModel);
 //        return response;
 //    }
 //
@@ -12126,7 +12126,7 @@ public class HostIntegrationService {
 //        //Setting in logModel
 //        logModel.setPduResponseHEX(responseXml);
 //        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
+//        //updateTransactionInDB(logModel);
 //        return response;
 //    }
 //
@@ -12247,7 +12247,7 @@ public class HostIntegrationService {
 //        //Setting in logModel
 //        logModel.setPduResponseHEX(responseXml);
 //        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
+//        //updateTransactionInDB(logModel);
 //        return response;
 //    }
 
@@ -12394,7 +12394,7 @@ public class HostIntegrationService {
 //        //Setting in logModel
 //        logModel.setPduResponseHEX(responseXml);
 //        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
+//        //updateTransactionInDB(logModel);
 //        return response;
 //    }
 
@@ -12453,7 +12453,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -12511,7 +12511,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -12582,7 +12582,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -12641,7 +12641,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -12703,7 +12703,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -12763,7 +12763,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -12854,7 +12854,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -12914,7 +12914,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -12968,7 +12968,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -13021,7 +13021,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -13073,7 +13073,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -13127,7 +13127,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -13179,7 +13179,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -13233,7 +13233,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -13307,7 +13307,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -13359,7 +13359,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -13445,6 +13445,7 @@ public class HostIntegrationService {
         messageVO.setArea(request.getArea());
         messageVO.setHouseNumber(request.getHouseNumber());
         messageVO.setPmd(request.getPmd());
+//        messageVO.setKyc(request.getKyc());
         messageVO.setReserved1(request.getPinValidation());
         if (request.getForNadra().equals("")) {
             messageVO.setReserved2("0");
@@ -13482,7 +13483,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -13536,7 +13537,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -13585,7 +13586,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -13636,7 +13637,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -13686,7 +13687,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -13740,7 +13741,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -13792,7 +13793,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -13849,7 +13850,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -13901,7 +13902,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -13957,7 +13958,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -14016,7 +14017,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -14070,7 +14071,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -14120,7 +14121,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -14176,7 +14177,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -14226,7 +14227,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -14276,7 +14277,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -14327,7 +14328,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -14379,7 +14380,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -14437,7 +14438,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -14491,7 +14492,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -14566,7 +14567,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -14617,7 +14618,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -14757,7 +14758,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
         // Call i8
         try {
             logger.info("[HOST] Sent Optasia Credit Inquiry Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + OPTASIA_I8_SERVER + ":" + OPTASIA_I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -14882,7 +14883,7 @@ public class HostIntegrationService {
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
 
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -14967,7 +14968,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
         try {
             logger.info("[HOST] Sent Optasia Credit Payment Request to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             messageVO = optasiaSwitchController.cnicTo256(messageVO);
@@ -15125,7 +15126,7 @@ public class HostIntegrationService {
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
 
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -15189,7 +15190,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -15312,7 +15313,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -15398,7 +15399,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -15568,7 +15569,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -15612,7 +15613,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -15672,7 +15673,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -15716,7 +15717,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -15777,7 +15778,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -15822,7 +15823,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -15878,7 +15879,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -15942,7 +15943,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 //        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
 //            response = optasiaMock.offerListForCommodity();
@@ -16011,7 +16012,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -16074,7 +16075,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 //        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
 //            response = optasiaMock.loanOffer();
@@ -16151,7 +16152,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
 
         return response;
@@ -16213,7 +16214,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 //        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
 //            response = optasiaMock.projection();
@@ -16283,7 +16284,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -16345,7 +16346,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 //        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
 //            response = optasiaMock.payment();
@@ -16419,7 +16420,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -16471,7 +16472,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 //        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
 //            response = optasiaMock.callBack();
@@ -16533,7 +16534,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -16591,7 +16592,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 //        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
 //            response = optasiaMock.loans();
@@ -16657,7 +16658,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -16722,7 +16723,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 //        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
 //            response = optasiaMock.loansHistoryResponse();
@@ -16785,7 +16786,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -16844,7 +16845,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 //        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
 //            response = optasiaMock.loansPlanResponse();
@@ -16910,7 +16911,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -16968,7 +16969,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 //        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
 //            response = optasiaMock.transactionActiveResponse();
@@ -17032,7 +17033,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -17085,7 +17086,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -17159,7 +17160,7 @@ public class HostIntegrationService {
             //Setting in logModel
             logModel.setPduResponseHEX(responseXml);
             logModel.setProcessedTime(difference);
-            updateTransactionInDB(logModel);
+            //updateTransactionInDB(logModel);
             return response;
 
         } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
@@ -17191,7 +17192,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -17248,7 +17249,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         try {
             logger.info("[HOST] Sent Simple Account Opening Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -17264,13 +17265,85 @@ public class HostIntegrationService {
                 && StringUtils.isNotEmpty(messageVO.getResponseCode())
                 && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
             logger.info("[HOST] Simple Account Opening Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-            response.setRrn(messageVO.getRetrievalReferenceNumber());
-            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-            response.setResponseDescription(messageVO.getResponseCodeDescription());
-            response.setResponseDateTime(messageVO.getDateTime());
 
-            logModel.setResponseCode(messageVO.getResponseCode());
-            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            AccountOpeningRequest accountOpeningRequest = new AccountOpeningRequest();
+
+            accountOpeningRequest.setUserName(request.getUserName());
+            accountOpeningRequest.setPassword(request.getPassword());
+            accountOpeningRequest.setCnic(request.getCnic());
+            accountOpeningRequest.setDateTime(request.getDateTime());
+            accountOpeningRequest.setRrn(messageVO.getRetrievalReferenceNumber());
+            accountOpeningRequest.setMobileNumber(request.getMobileNumber());
+            accountOpeningRequest.setConsumerName(StringUtils.trim(messageVO.getConsumerName()));
+            accountOpeningRequest.setAccountTitle(StringUtils.trim(messageVO.getAccountTitle()));
+            accountOpeningRequest.setBirthPlace(messageVO.getBirthPlace());
+            accountOpeningRequest.setPresentAddress(messageVO.getPresentAddress());
+            accountOpeningRequest.setCnicStatus(messageVO.getCnicStatus());
+            accountOpeningRequest.setCnicExpiry(messageVO.getCnicExpiry());
+            accountOpeningRequest.setDob(messageVO.getDateOfBirth());
+            accountOpeningRequest.setFatherHusbandName(messageVO.getFatherHusbandName());
+            accountOpeningRequest.setMotherMaiden(messageVO.getMotherMaiden());
+            accountOpeningRequest.setGender(messageVO.getGender());
+            accountOpeningRequest.setChannelId(messageVO.getChannelId());
+            accountOpeningRequest.setAccountType(messageVO.getAccountType());
+            accountOpeningRequest.setTrackingId(messageVO.getTrackingId());
+            accountOpeningRequest.setCnicIssuanceDate(messageVO.getCnicIssuanceDate());
+            accountOpeningRequest.setEmailAddress(messageVO.getEmailAddress());
+            accountOpeningRequest.setMobileNetwork(messageVO.getCustomerMobileNetwork());
+            accountOpeningRequest.setReserved(messageVO.getReserved1());
+            accountOpeningRequest.setReserved2(messageVO.getReserved2());
+            accountOpeningRequest.setReserved3(messageVO.getReserved3());
+
+            AccountOpeningResponse accountOpeningResponse = new AccountOpeningResponse();
+            logger.info("[HOST] Account Opening Request Sent to Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            accountOpeningResponse = this.accountOpening(accountOpeningRequest);
+
+            if (accountOpeningResponse != null
+                    && StringUtils.isNotEmpty(accountOpeningResponse.getResponseCode())
+                    && accountOpeningResponse.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+
+                logger.info("[HOST] Account Opening Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setRrn(accountOpeningResponse.getRrn());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(accountOpeningResponse.getResponseDescription());
+
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+            } else if (messageVO != null && StringUtils.isNotEmpty(accountOpeningResponse.getResponseCode())) {
+                logger.info("[HOST] Account Opening Request Unsuccessful from Micro Bank RRN: " + accountOpeningResponse.getRrn());
+                response.setResponseCode(accountOpeningResponse.getResponseCode());
+                response.setResponseDescription(accountOpeningResponse.getResponseDescription());
+                response.setRrn(accountOpeningResponse.getRrn());
+                logModel.setResponseCode(accountOpeningResponse.getResponseCode());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            } else {
+                logger.info("[HOST] Account Opening Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+                response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+                response.setResponseDescription("Host Not In Reach");
+                logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+                logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+            }
+
+            StringBuilder stringText = new StringBuilder()
+                    .append(response.getRrn())
+                    .append(response.getResponseCode())
+                    .append(response.getResponseDescription())
+                    .append(response.getResponseDateTime());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            response.setHashData(sha256hex);
+
+            String responseXml = JSONUtil.getJSON(response);
+            logger.info("[HOST] **** Account Opening Request **** " + responseXml);
+
+
+            long endTime = new Date().getTime(); // end time
+            long difference = endTime - startTime; // check different
+            logger.debug("[HOST] ****Account Opening PAYMENT REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+            return response;
 
         } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
             logger.info("[HOST] Simple Account Opening Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -17284,6 +17357,7 @@ public class HostIntegrationService {
             response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
             response.setResponseDescription("Host Not In Reach");
             logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
             logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
         }
         StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
@@ -17292,14 +17366,16 @@ public class HostIntegrationService {
 
         long endTime = new Date().getTime(); // end time
         long difference = endTime - startTime; // check different
-        logger.debug("[HOST] ****Simple Account Opening Request PROCESSED IN ****: " + difference + " milliseconds");
+        logger.debug("[HOST] **** Simple Account Opening Request PROCESSED IN ****: " + difference + " milliseconds");
 
-        //preparing request XML
+        //preparing request
         String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] **** Simple Account Opening Request **** " + responseXml);
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
+//        }
         return response;
     }
 
@@ -17354,7 +17430,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 //        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
 //            response = optasiaMock.outstandingLoanResponse();
@@ -17420,7 +17496,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -17492,7 +17568,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 //        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
 ////            response = optasiaMock.outstandingLoanResponse();
@@ -17557,7 +17633,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -17619,7 +17695,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
 //        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
 ////            response = optasiaMock.outstandingLoanResponse();
@@ -17684,7 +17760,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -17741,7 +17817,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -17810,7 +17886,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -17862,7 +17938,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -17919,7 +17995,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -18007,7 +18083,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+//        saveTransaction(logModel);
 
         // Call i8
         try {
@@ -18061,7 +18137,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 
@@ -18115,7 +18191,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+        //saveTransaction(logModel);
 
         // Call i8
         try {
@@ -18138,6 +18214,7 @@ public class HostIntegrationService {
             response.setResponseDateTime(messageVO.getDateTime());
             response.setStatus(messageVO.getStatus());
             response.setAccountId(messageVO.getAccountId());
+//            response.setMessage(messageVO.getMessage());
             response.setL2AccountFieldsList(messageVO.getL2AccountFieldsList());
 
             logModel.setResponseCode(messageVO.getResponseCode());
@@ -18170,7 +18247,7 @@ public class HostIntegrationService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
         return response;
     }
 }

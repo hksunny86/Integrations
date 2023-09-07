@@ -173,7 +173,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+        //saveTransaction(logModel);
 
         // Call i8
         try {
@@ -228,7 +228,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -287,7 +287,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+        //saveTransaction(logModel);
 
         // Call i8
         try {
@@ -342,7 +342,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -403,7 +403,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+        //saveTransaction(logModel);
 
         // Call i8
         try {
@@ -458,7 +458,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -504,7 +504,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+        //saveTransaction(logModel);
 
         // Call i8
         try {
@@ -553,7 +553,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -633,7 +633,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+        //saveTransaction(logModel);
 
         // Call i8
         try {
@@ -682,7 +682,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 
         return response;
     }
@@ -740,7 +740,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+        //saveTransaction(logModel);
 
         // Call i8
         try {
@@ -795,7 +795,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -856,7 +856,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+        //saveTransaction(logModel);
 
         // Call i8
         try {
@@ -912,7 +912,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -970,7 +970,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+        //saveTransaction(logModel);
 
         // Call i8
         try {
@@ -1026,7 +1026,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }
@@ -1088,7 +1088,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
-        saveTransaction(logModel);
+        //saveTransaction(logModel);
 
         // Call i8
         try {
@@ -1143,7 +1143,7 @@ public class CorporatePortalService {
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
-        updateTransactionInDB(logModel);
+        //updateTransactionInDB(logModel);
 //        }
         return response;
     }

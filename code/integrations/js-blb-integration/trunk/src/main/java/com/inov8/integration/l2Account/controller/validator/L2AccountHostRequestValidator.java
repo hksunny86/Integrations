@@ -1,9 +1,6 @@
 package com.inov8.integration.l2Account.controller.validator;
 
-import com.inov8.integration.l2Account.pdu.request.L2AccountFieldsRequest;
-import com.inov8.integration.l2Account.pdu.request.L2AccountRequest;
-import com.inov8.integration.l2Account.pdu.request.RateConversionRequest;
-import com.inov8.integration.l2Account.pdu.request.UpdatePmdRequest;
+import com.inov8.integration.l2Account.pdu.request.*;
 import com.inov8.integration.middleware.controller.validator.ValidationException;
 import com.inov8.integration.middleware.util.ConfigReader;
 import org.apache.commons.lang.StringUtils;
@@ -78,6 +75,52 @@ public class L2AccountHostRequestValidator {
         }
         if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
             throw new ValidationException("[FAILED] Validation Failed Terminal Id: " + integrationVO.getTerminalId());
+        }
+
+    }
+
+    public static void validateFreelanceToWalletInquiry(FreelanceToWalletInquiryRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal Id: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getAmount())) {
+            throw new ValidationException("[FAILED] Validation Failed Amount: " + integrationVO.getAmount());
+        }
+
+    }
+
+    public static void validateFreelanceToWallet(FreelanceToWalletRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal Id: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getAmount())) {
+            throw new ValidationException("[FAILED] Validation Failed Amount: " + integrationVO.getAmount());
         }
 
     }

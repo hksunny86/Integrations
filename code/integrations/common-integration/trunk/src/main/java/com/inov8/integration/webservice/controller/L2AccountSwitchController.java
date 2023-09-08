@@ -8,4 +8,6 @@ public interface L2AccountSwitchController {
     WebServiceVO l2AccountFields(WebServiceVO webServiceVO);
     WebServiceVO updatePmd(WebServiceVO webServiceVO);
     WebServiceVO rateConversion(WebServiceVO webServiceVO);
+    WebServiceVO freelanceToWalletInquiry(WebServiceVO webServiceVO);
+    WebServiceVO freelanceToWallet(WebServiceVO webServiceVO);
 }

@@ -63,10 +63,6 @@ public class L2AccountHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
             throw new ValidationException("[FAILED] Validation Failed Mobile No: " + integrationVO.getMobileNumber());
         }
-        if (StringUtils.isEmpty(integrationVO.getPmd())) {
-            throw new ValidationException("[FAILED] Validation Failed PMD Status: " + integrationVO.getPmd());
-        }
-
     }
 
     public static void validateRateConversion(RateConversionRequest integrationVO) throws ValidationException {

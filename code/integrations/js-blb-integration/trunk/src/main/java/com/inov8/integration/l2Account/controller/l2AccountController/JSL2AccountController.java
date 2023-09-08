@@ -224,7 +224,7 @@ public class JSL2AccountController {
         return response;
     }
 
-    @RequestMapping(value = "api/l2Account/updatePMD", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/l2Account/updatePMDAndKYC", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     UpdatePmdResponse updatePmdResponse(@Valid @RequestBody UpdatePmdRequest request) throws Exception {
         UpdatePmdResponse response = new UpdatePmdResponse();
@@ -254,6 +254,9 @@ public class JSL2AccountController {
                     .append(request.getTerminalId())
                     .append(request.getAccountID())
                     .append(request.getPmd())
+                    .append(request.getKyc())
+                    .append(request.getMotherName())
+                    .append(request.getPlaceOfBirth())
                     .append(request.getReserved1())
                     .append(request.getReserved2())
                     .append(request.getReserved3())
@@ -315,93 +318,93 @@ public class JSL2AccountController {
         return response;
     }
 
-    @RequestMapping(value = "api/l2Account/rateConversion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    RateConversionResponse rateConversionResponse(@Valid @RequestBody RateConversionRequest request) throws Exception {
-        RateConversionResponse response = new RateConversionResponse();
-
-        String className = this.getClass().getSimpleName();
-        String methodName = new Object() {
-        }.getClass().getEnclosingMethod().getName();
-        long start = System.currentTimeMillis();
-
-        try {
-
-            logger.info("Rate Conversion Request Received at Controller at time: " + start);
-            String requestXML = JSONUtil.getJSON(request);
-            //        requestXML = XMLUtil.maskPassword(requestXML);
-            String datetime = "";
-            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
-            datetime = DateFor.format(new Date());
-            logger.info("Start Processing Rate Conversion Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
-                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
-            StringBuilder stringText = new StringBuilder()
-                    .append(request.getUserName())
-                    .append(request.getPassword())
-                    .append(request.getMobileNumber())
-                    .append(request.getDateTime())
-                    .append(request.getRrn())
-                    .append(request.getChannelId())
-                    .append(request.getTerminalId())
-                    .append(request.getCurrencyId())
-                    .append(request.getReserved1())
-                    .append(request.getReserved2())
-                    .append(request.getReserved3())
-                    .append(request.getReserved4())
-                    .append(request.getReserved5());
-
-            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        L2AccountHostRequestValidator.validateRateConversion(request);
-                        response = l2AccountService.rateConversionResponse(request);
-
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Rate Conversion Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Rate Conversion Request AUTHENTICATION *********");
-                    response = new RateConversionResponse();
-                    response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-
-                }
-            } else {
-                logger.info("******* DEBUG LOGS FOR Rate Conversion Request *********");
-                response = new RateConversionResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-            }
-        } catch (Exception e) {
-
-            response = new RateConversionResponse();
-            response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
-            response.setResponseDescription(e.getLocalizedMessage());
-            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
-            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
-            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
-            logger.info("Critical Error ::" + e.getLocalizedMessage());
-        }
-        long end = System.currentTimeMillis() - start;
-        String responseXML = JSONUtil.getJSON(response);
-        logger.info("Rate Conversion Request Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
-
-
-        return response;
-    }
+//    @RequestMapping(value = "api/l2Account/rateConversion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public @ResponseBody
+//    RateConversionResponse rateConversionResponse(@Valid @RequestBody RateConversionRequest request) throws Exception {
+//        RateConversionResponse response = new RateConversionResponse();
+//
+//        String className = this.getClass().getSimpleName();
+//        String methodName = new Object() {
+//        }.getClass().getEnclosingMethod().getName();
+//        long start = System.currentTimeMillis();
+//
+//        try {
+//
+//            logger.info("Rate Conversion Request Received at Controller at time: " + start);
+//            String requestXML = JSONUtil.getJSON(request);
+//            //        requestXML = XMLUtil.maskPassword(requestXML);
+//            String datetime = "";
+//            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+//            datetime = DateFor.format(new Date());
+//            logger.info("Start Processing Rate Conversion Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+//                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
+//            StringBuilder stringText = new StringBuilder()
+//                    .append(request.getUserName())
+//                    .append(request.getPassword())
+//                    .append(request.getMobileNumber())
+//                    .append(request.getDateTime())
+//                    .append(request.getRrn())
+//                    .append(request.getChannelId())
+//                    .append(request.getTerminalId())
+//                    .append(request.getCurrencyId())
+//                    .append(request.getReserved1())
+//                    .append(request.getReserved2())
+//                    .append(request.getReserved3())
+//                    .append(request.getReserved4())
+//                    .append(request.getReserved5());
+//
+//            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//                if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+//                    try {
+////                        L2AccountHostRequestValidator.validateRateConversion(request);
+//                        response = l2AccountService.rateConversionResponse(request);
+//
+//                    } catch (ValidationException ve) {
+//                        response.setResponseCode("420");
+//                        response.setResponseDescription(ve.getMessage());
+//
+//                        logger.error("ERROR: Request Validation", ve);
+//                    } catch (Exception e) {
+//                        response.setResponseCode("220");
+//                        response.setResponseDescription(e.getMessage());
+//                        logger.error("ERROR: General Processing ", e);
+//                    }
+//
+//                    logger.info("******* DEBUG LOGS FOR Rate Conversion Request *********");
+//                    logger.info("ResponseCode: " + response.getResponseCode());
+//                } else {
+//                    logger.info("******* DEBUG LOGS FOR Rate Conversion Request AUTHENTICATION *********");
+//                    response = new RateConversionResponse();
+//                    response.setResponseCode("420");
+//                    response.setResponseDescription("Request is not authenticated");
+//                    response.setRrn(request.getRrn());
+//                    response.setResponseDateTime(request.getDateTime());
+//                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+//
+//                }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Rate Conversion Request *********");
+//                response = new RateConversionResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
+//        } catch (Exception e) {
+//
+//            response = new RateConversionResponse();
+//            response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+//            response.setResponseDescription(e.getLocalizedMessage());
+//            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
+//            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
+//            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
+//            logger.info("Critical Error ::" + e.getLocalizedMessage());
+//        }
+//        long end = System.currentTimeMillis() - start;
+//        String responseXML = JSONUtil.getJSON(response);
+//        logger.info("Rate Conversion Request Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
+//
+//
+//        return response;
+//    }
 }

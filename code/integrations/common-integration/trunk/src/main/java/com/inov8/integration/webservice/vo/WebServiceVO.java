@@ -462,6 +462,15 @@ public class WebServiceVO implements Serializable {
     private String currencyId;
     private String currencyValue;
     private String debitCardRegistrationStatus;
+    private String kyc;
+
+    public String getKyc() {
+        return kyc;
+    }
+
+    public void setKyc(String kyc) {
+        this.kyc = kyc;
+    }
 
     public String getDebitCardRegistrationStatus() {
         return debitCardRegistrationStatus;

@@ -54,6 +54,7 @@ import java.io.Serializable;
         "Area",
         "HouseNumber",
         "Pmd",
+        "Kyc",
         "PinValidation",
         "ForNadra",
         "ProofOfBusiness",
@@ -167,6 +168,8 @@ public class L2AccountUpgradeRequest implements Serializable {
     private String houseNumber;
     @JsonProperty("Pmd")
     private String pmd;
+    @JsonProperty("Kyc")
+    private String kyc;
     @JsonProperty("PinValidation")
     private String pinValidation;
     @JsonProperty("ForNadra")
@@ -566,6 +569,14 @@ public class L2AccountUpgradeRequest implements Serializable {
 
     public void setPmd(String pmd) {
         this.pmd = pmd;
+    }
+
+    public String getKyc() {
+        return kyc;
+    }
+
+    public void setKyc(String kyc) {
+        this.kyc = kyc;
     }
 
     public String getPinValidation() {

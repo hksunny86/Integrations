@@ -13445,7 +13445,7 @@ public class HostIntegrationService {
         messageVO.setArea(request.getArea());
         messageVO.setHouseNumber(request.getHouseNumber());
         messageVO.setPmd(request.getPmd());
-//        messageVO.setKyc(request.getKyc());
+        messageVO.setKyc(request.getKyc());
         messageVO.setReserved1(request.getPinValidation());
         if (request.getForNadra().equals("")) {
             messageVO.setReserved2("0");
@@ -18214,7 +18214,7 @@ public class HostIntegrationService {
             response.setResponseDateTime(messageVO.getDateTime());
             response.setStatus(messageVO.getStatus());
             response.setAccountId(messageVO.getAccountId());
-//            response.setMessage(messageVO.getMessage());
+            response.setMessage(messageVO.getMessage());
             response.setL2AccountFieldsList(messageVO.getL2AccountFieldsList());
 
             logModel.setResponseCode(messageVO.getResponseCode());

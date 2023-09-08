@@ -17,6 +17,9 @@ import java.io.Serializable;
         "TerminalId",
         "AccountID",
         "PMD",
+        "KYC",
+        "MotherName",
+        "PlaceOfBirth",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -45,6 +48,12 @@ public class UpdatePmdRequest implements Serializable {
     private String accountID;
     @JsonProperty("PMD")
     private String pmd;
+    @JsonProperty("KYC")
+    private String kyc;
+    @JsonProperty("MotherName")
+    private String motherName;
+    @JsonProperty("PlaceOfBirth")
+    private String placeOfBirth;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -128,6 +137,30 @@ public class UpdatePmdRequest implements Serializable {
 
     public void setPmd(String pmd) {
         this.pmd = pmd;
+    }
+
+    public String getKyc() {
+        return kyc;
+    }
+
+    public void setKyc(String kyc) {
+        this.kyc = kyc;
+    }
+
+    public String getMotherName() {
+        return motherName;
+    }
+
+    public void setMotherName(String motherName) {
+        this.motherName = motherName;
+    }
+
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
+    }
+
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
     }
 
     public String getReserved1() {

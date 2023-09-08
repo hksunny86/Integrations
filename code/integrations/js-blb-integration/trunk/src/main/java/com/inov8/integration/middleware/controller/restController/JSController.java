@@ -2267,39 +2267,39 @@ public class JSController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        HostRequestValidator.validateSimpleAccountOpening(request);
-                        response = integrationService.simpleAccountOpeningResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+//                        HostRequestValidator.validateSimpleAccountOpening(request);
+                    response = integrationService.simpleAccountOpeningResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION AUTHENTICATION *********");
-                    response = new SimpleAccountOpeningResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION AUTHENTICATION *********");
                 response = new SimpleAccountOpeningResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION *********");
+//                response = new SimpleAccountOpeningResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new SimpleAccountOpeningResponse();
@@ -2779,34 +2779,34 @@ public class JSController {
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
                         HostRequestValidator.validateL2AccountUpgradeDiscrepant(request);
-                    l2AccountUpgradeDiscrepantResponse = integrationService.l2AccountUpgradeDiscrepantResponse(request);
+                        l2AccountUpgradeDiscrepantResponse = integrationService.l2AccountUpgradeDiscrepantResponse(request);
 
-                } catch (ValidationException ve) {
+                    } catch (ValidationException ve) {
+                        l2AccountUpgradeDiscrepantResponse.setResponseCode("420");
+                        l2AccountUpgradeDiscrepantResponse.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        l2AccountUpgradeDiscrepantResponse.setResponseCode("220");
+                        l2AccountUpgradeDiscrepantResponse.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR L2 Account Upgrade Discrepant Request *********");
+                    logger.info("ResponseCode: " + l2AccountUpgradeDiscrepantResponse.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR L2 Account Upgrade Discrepant Request AUTHENTICATION *********");
+                    l2AccountUpgradeDiscrepantResponse = new L2AccountUpgradeDiscrepantResponse();
                     l2AccountUpgradeDiscrepantResponse.setResponseCode("420");
-                    l2AccountUpgradeDiscrepantResponse.setResponseDescription(ve.getMessage());
+                    l2AccountUpgradeDiscrepantResponse.setResponseDescription("Request is not authenticated");
+                    l2AccountUpgradeDiscrepantResponse.setRrn(request.getRrn());
+                    l2AccountUpgradeDiscrepantResponse.setResponseDateTime(request.getDateTime());
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    l2AccountUpgradeDiscrepantResponse.setResponseCode("220");
-                    l2AccountUpgradeDiscrepantResponse.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
                 }
-
-                logger.info("******* DEBUG LOGS FOR L2 Account Upgrade Discrepant Request *********");
-                logger.info("ResponseCode: " + l2AccountUpgradeDiscrepantResponse.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR L2 Account Upgrade Discrepant Request AUTHENTICATION *********");
-                l2AccountUpgradeDiscrepantResponse = new L2AccountUpgradeDiscrepantResponse();
-                l2AccountUpgradeDiscrepantResponse.setResponseCode("420");
-                l2AccountUpgradeDiscrepantResponse.setResponseDescription("Request is not authenticated");
-                l2AccountUpgradeDiscrepantResponse.setRrn(request.getRrn());
-                l2AccountUpgradeDiscrepantResponse.setResponseDateTime(request.getDateTime());
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-
-            }
             } else {
                 logger.info("******* DEBUG LOGS FOR L2 Account Upgrade Discrepant Request *********");
                 l2AccountUpgradeDiscrepantResponse = new L2AccountUpgradeDiscrepantResponse();
@@ -2869,34 +2869,34 @@ public class JSController {
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
                         HostRequestValidator.validateGetL2AccountUpgradeDiscrepant(request);
-                    getL2AccountUpgradeDiscrepantResponse = integrationService.getL2AccountUpgradeDiscrepantResponse(request);
+                        getL2AccountUpgradeDiscrepantResponse = integrationService.getL2AccountUpgradeDiscrepantResponse(request);
 
-                } catch (ValidationException ve) {
+                    } catch (ValidationException ve) {
+                        getL2AccountUpgradeDiscrepantResponse.setResponseCode("420");
+                        getL2AccountUpgradeDiscrepantResponse.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        getL2AccountUpgradeDiscrepantResponse.setResponseCode("220");
+                        getL2AccountUpgradeDiscrepantResponse.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR Get L2 Account Upgrade Discrepant Request *********");
+                    logger.info("ResponseCode: " + getL2AccountUpgradeDiscrepantResponse.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR Get L2 Account Upgrade Discrepant Request AUTHENTICATION *********");
+                    getL2AccountUpgradeDiscrepantResponse = new GetL2AccountUpgradeDiscrepantResponse();
                     getL2AccountUpgradeDiscrepantResponse.setResponseCode("420");
-                    getL2AccountUpgradeDiscrepantResponse.setResponseDescription(ve.getMessage());
+                    getL2AccountUpgradeDiscrepantResponse.setResponseDescription("Request is not authenticated");
+                    getL2AccountUpgradeDiscrepantResponse.setRrn(request.getRrn());
+                    getL2AccountUpgradeDiscrepantResponse.setResponseDateTime(request.getDateTime());
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    getL2AccountUpgradeDiscrepantResponse.setResponseCode("220");
-                    getL2AccountUpgradeDiscrepantResponse.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
                 }
-
-                logger.info("******* DEBUG LOGS FOR Get L2 Account Upgrade Discrepant Request *********");
-                logger.info("ResponseCode: " + getL2AccountUpgradeDiscrepantResponse.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR Get L2 Account Upgrade Discrepant Request AUTHENTICATION *********");
-                getL2AccountUpgradeDiscrepantResponse = new GetL2AccountUpgradeDiscrepantResponse();
-                getL2AccountUpgradeDiscrepantResponse.setResponseCode("420");
-                getL2AccountUpgradeDiscrepantResponse.setResponseDescription("Request is not authenticated");
-                getL2AccountUpgradeDiscrepantResponse.setRrn(request.getRrn());
-                getL2AccountUpgradeDiscrepantResponse.setResponseDateTime(request.getDateTime());
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-
-            }
             } else {
                 logger.info("******* DEBUG LOGS FOR Get L2 Account Upgrade Discrepant Request *********");
                 getL2AccountUpgradeDiscrepantResponse = new GetL2AccountUpgradeDiscrepantResponse();
@@ -2990,6 +2990,7 @@ public class JSController {
                     .append(request.getArea())
                     .append(request.getHouseNumber())
                     .append(request.getPmd())
+                    .append(request.getKyc())
                     .append(request.getPinValidation())
                     .append(request.getForNadra())
                     .append(request.getProofOfBusiness())
@@ -3007,31 +3008,31 @@ public class JSController {
                     .append(request.getReserved15());
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
                         HostRequestValidator.validateL2AccountUpgrade(request);
-                    response = integrationService.l2AccountUpgrade(request);
+                        response = integrationService.l2AccountUpgrade(request);
 
-                } catch (ValidationException ve) {
+                    } catch (ValidationException ve) {
+                        response.setResponseCode("420");
+                        response.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        response.setResponseCode("220");
+                        response.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
+                    logger.info("ResponseCode: " + response.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR  L2 Account Upgrade TRANSACTION AUTHENTICATION *********");
+                    response = new L2AccountUpgradeResponse();
                     response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
+                    response.setResponseDescription("Request is not authenticated");
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
                 }
-
-                logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR  L2 Account Upgrade TRANSACTION AUTHENTICATION *********");
-                response = new L2AccountUpgradeResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-            }
             } else {
                 logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
                 response = new L2AccountUpgradeResponse();

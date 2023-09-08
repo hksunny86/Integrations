@@ -358,7 +358,9 @@ public class L2AccountService {
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setAccountId(request.getAccountID());
         messageVO.setPmd(request.getPmd());
-//        messageVO.setKyc(request.getKyc());
+        messageVO.setKyc(request.getKyc());
+        messageVO.setMotherMaiden(request.getMotherName());
+        messageVO.setBirthPlace(request.getPlaceOfBirth());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());

@@ -79,9 +79,6 @@ public class L2AccountHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
             throw new ValidationException("[FAILED] Validation Failed Terminal Id: " + integrationVO.getTerminalId());
         }
-        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
-            throw new ValidationException("[FAILED] Validation Failed Mobile No: " + integrationVO.getMobileNumber());
-        }
 
     }
 

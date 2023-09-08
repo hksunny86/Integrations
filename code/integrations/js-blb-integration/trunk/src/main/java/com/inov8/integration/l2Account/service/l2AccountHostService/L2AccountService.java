@@ -446,107 +446,108 @@ public class L2AccountService {
         return response;
     }
 
-//    public RateConversionResponse rateConversionResponse(RateConversionRequest request) {
-//
-//
-//        long startTime = new Date().getTime(); // start time
-//        WebServiceVO messageVO = new WebServiceVO();
-//        messageVO.setRetrievalReferenceNumber(request.getRrn());
-//        logger.info("[HOST] Rate Conversion Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
-//
-//        RateConversionResponse response = new RateConversionResponse();
-//
-//        messageVO.setUserName(request.getUserName());
-//        messageVO.setCustomerPassword(request.getPassword());
-//        messageVO.setMobileNo(request.getMobileNumber());
-//        messageVO.setDateTime(request.getDateTime());
-//        messageVO.setRetrievalReferenceNumber(request.getRrn());
-//        messageVO.setChannelId(request.getChannelId());
-//        messageVO.setTerminalId(request.getTerminalId());
-//        messageVO.setCurrencyId(request.getCurrencyId());
-//        messageVO.setReserved1(request.getReserved1());
-//        messageVO.setReserved2(request.getReserved2());
-//        messageVO.setReserved3(request.getReserved3());
-//        messageVO.setReserved4(request.getReserved4());
-//        messageVO.setReserved5(request.getReserved5());
-//
-//
-//        TransactionLogModel logModel = new TransactionLogModel();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
-//        Date txDateTime = new Date();
-//        try {
-//            txDateTime = dateFormat.parse(request.getDateTime());
-//        } catch (ParseException e) {
-//            e.printStackTrace();
+    public RateConversionResponse rateConversionResponse(RateConversionRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Rate Conversion Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        RateConversionResponse response = new RateConversionResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setCurrencyId(request.getCurrencyId());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("RateConversion");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+//        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Rate Conversion Request to Micro Bank " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            messageVO = l2AccountSwitchController.rateConversion(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Rate Conversion Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setCurrencyValue(messageVO.getCurrencyValue());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Rate Conversion Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Rate Conversion Request Unsuccessful from Micro Bank RRN: " + Objects.requireNonNull(messageVO).getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        String sha256hex = DigestUtils.sha256Hex(response.getResponseCode() + response.getResponseDescription());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Rate Conversion Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+//        updateTransactionInDB(logModel);
 //        }
-//
-//        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
-//        logModel.setTransactionDateTime(txDateTime);
-//        logModel.setChannelId(request.getChannelId());
-//        logModel.setTransactionCode("RateConversion");
-//        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
-//        //preparing request
-//        String requestXml = JSONUtil.getJSON(request);
-//        //Setting in logModel
-//        logModel.setPduRequestHEX(requestXml);
-//
-////        saveTransaction(logModel);
-//
-//        // Call i8
-//        try {
-//            logger.info("[HOST] Sent Rate Conversion Request to Micro Bank " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
-//
-//            messageVO = l2AccountSwitchController.rateConversion(messageVO);
-//        } catch (Exception e) {
-//
-//            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
-//
-//        }
-//
-//        // Set Response from i8
-//        if (messageVO != null
-//                && StringUtils.isNotEmpty(messageVO.getResponseCode())
-//                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
-//            logger.info("[HOST] Rate Conversion Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-//
-//            response.setRrn(messageVO.getRetrievalReferenceNumber());
-//            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-//            response.setResponseDescription(messageVO.getResponseCodeDescription());
-//            response.setResponseDateTime(messageVO.getDateTime());
-//
-//            logModel.setResponseCode(messageVO.getResponseCode());
-//            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-//
-//        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
-//            logger.info("[HOST] Rate Conversion Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-//            response.setResponseCode(messageVO.getResponseCode());
-//            response.setResponseDescription(messageVO.getResponseCodeDescription());
-//            logModel.setResponseCode(messageVO.getResponseCode());
-//            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-//        } else {
-//            logger.info("[HOST] Rate Conversion Request Unsuccessful from Micro Bank RRN: " + Objects.requireNonNull(messageVO).getRetrievalReferenceNumber());
-//
-//            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-//            response.setResponseDescription("Host Not In Reach");
-//            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-//
-//            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
-//        }
-//        String sha256hex = DigestUtils.sha256Hex(response.getResponseCode() + response.getResponseDescription());
-//        response.setHashData(sha256hex);
-//
-//        long endTime = new Date().getTime(); // end time
-//        long difference = endTime - startTime; // check different
-//        logger.debug("[HOST] **** Rate Conversion Request PROCESSED IN ****: " + difference + " milliseconds");
-//
-//        //preparing request
-//        String responseXml = JSONUtil.getJSON(response);
-//        //Setting in logModel
-//        logModel.setPduResponseHEX(responseXml);
-//        logModel.setProcessedTime(difference);
-////        updateTransactionInDB(logModel);
-////        }
-//        return response;
-//    }
+        return response;
+    }
 
 }

@@ -72,42 +72,42 @@ public class JSCorporatePortalController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        CorporateHostRequestValidator.validateLogin(request);
-                        response = corporatePortalService.loginResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    CorporateHostRequestValidator.validateLogin(request);
+                    response = corporatePortalService.loginResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Corporate Portal Login Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Corporate Portal Login Request AUTHENTICATION *********");
-                    response = new LoginResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR Corporate Portal Login Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Corporate Portal Login Request AUTHENTICATION *********");
                 response = new LoginResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Corporate Portal Login Request *********");
+//                response = new LoginResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new LoginResponse();
@@ -169,42 +169,42 @@ public class JSCorporatePortalController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        CorporateHostRequestValidator.validateAccountStateInquiry(request);
-                        response = corporatePortalService.accountStateInquiryResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    CorporateHostRequestValidator.validateAccountStateInquiry(request);
+                    response = corporatePortalService.accountStateInquiryResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Account State Inquiry *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Account State Inquiry AUTHENTICATION *********");
-                    response = new AccountStateInquiryResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR Account State Inquiry *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Account State Inquiry AUTHENTICATION *********");
                 response = new AccountStateInquiryResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Account State Inquiry *********");
+//                response = new AccountStateInquiryResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new AccountStateInquiryResponse();
@@ -268,42 +268,42 @@ public class JSCorporatePortalController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        CorporateHostRequestValidator.validateAccountState(request);
-                        response = corporatePortalService.accountStateResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    CorporateHostRequestValidator.validateAccountState(request);
+                    response = corporatePortalService.accountStateResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Account State Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Account State Request AUTHENTICATION *********");
-                    response = new AccountStateResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR Account State Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Account State Request AUTHENTICATION *********");
                 response = new AccountStateResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Account State Request *********");
+//                response = new AccountStateResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new AccountStateResponse();
@@ -359,42 +359,42 @@ public class JSCorporatePortalController {
                     .append(request.getReserved5());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        CorporateHostRequestValidator.validateMpinResetInquiry(request);
-                        response = corporatePortalService.mpinResetInquiryResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    CorporateHostRequestValidator.validateMpinResetInquiry(request);
+                    response = corporatePortalService.mpinResetInquiryResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR MPIN Reset Inquiry Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR MPIN Reset Inquiry Request AUTHENTICATION *********");
-                    response = new MpinResetInquiryResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR MPIN Reset Inquiry Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR MPIN Reset Inquiry Request AUTHENTICATION *********");
                 response = new MpinResetInquiryResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR MPIN Reset Inquiry Request *********");
+//                response = new MpinResetInquiryResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new MpinResetInquiryResponse();
@@ -454,42 +454,42 @@ public class JSCorporatePortalController {
                     .append(request.getReserved5());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        CorporateHostRequestValidator.validateMpinReset(request);
-                        response = corporatePortalService.mpinResetResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    CorporateHostRequestValidator.validateMpinReset(request);
+                    response = corporatePortalService.mpinResetResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR MPIN Reset Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR MPIN Reset Request AUTHENTICATION *********");
-                    response = new MpinResetResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR MPIN Reset Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR MPIN Reset Request AUTHENTICATION *********");
                 response = new MpinResetResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR MPIN Reset Request *********");
+//                response = new MpinResetResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new MpinResetResponse();
@@ -550,42 +550,42 @@ public class JSCorporatePortalController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        CorporateHostRequestValidator.validateAccountStatementInquiry(request);
-                        response = corporatePortalService.accountStatementInquiryResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    CorporateHostRequestValidator.validateAccountStatementInquiry(request);
+                    response = corporatePortalService.accountStatementInquiryResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Account Statement Inquiry Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Account Statement Inquiry Request AUTHENTICATION *********");
-                    response = new AccountStatementInquiryResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR Account Statement Inquiry Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Account Statement Inquiry Request AUTHENTICATION *********");
                 response = new AccountStatementInquiryResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Account Statement Inquiry Request *********");
+//                response = new AccountStatementInquiryResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new AccountStatementInquiryResponse();
@@ -649,42 +649,42 @@ public class JSCorporatePortalController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        CorporateHostRequestValidator.validateAccountStatement(request);
-                        response = corporatePortalService.accountStatementResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    CorporateHostRequestValidator.validateAccountStatement(request);
+                    response = corporatePortalService.accountStatementResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Account Statement Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Account Statement Request AUTHENTICATION *********");
-                    response = new AccountStatementResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR Account Statement Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Account Statement Request AUTHENTICATION *********");
                 response = new AccountStatementResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Account Statement Request *********");
+//                response = new AccountStatementResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new AccountStatementResponse();
@@ -745,42 +745,42 @@ public class JSCorporatePortalController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        CorporateHostRequestValidator.validateDeviceVerificationInquiry(request);
-                        response = corporatePortalService.deviceVerificationInquiryResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    CorporateHostRequestValidator.validateDeviceVerificationInquiry(request);
+                    response = corporatePortalService.deviceVerificationInquiryResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Device Verification Inquiry Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Device Verification Inquiry Request AUTHENTICATION *********");
-                    response = new DeviceVerificationInquiryResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR Device Verification Inquiry Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Device Verification Inquiry Request AUTHENTICATION *********");
                 response = new DeviceVerificationInquiryResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Device Verification Inquiry Request *********");
+//                response = new DeviceVerificationInquiryResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new DeviceVerificationInquiryResponse();
@@ -845,42 +845,42 @@ public class JSCorporatePortalController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        CorporateHostRequestValidator.validateDeviceVerification(request);
-                        response = corporatePortalService.deviceVerificationResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    CorporateHostRequestValidator.validateDeviceVerification(request);
+                    response = corporatePortalService.deviceVerificationResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Device Verification Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Device Verification Request AUTHENTICATION *********");
-                    response = new DeviceVerificationResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR Device Verification Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Device Verification Request AUTHENTICATION *********");
                 response = new DeviceVerificationResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Device Verification Request *********");
+//                response = new DeviceVerificationResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new DeviceVerificationResponse();
@@ -899,4 +899,94 @@ public class JSCorporatePortalController {
         return response;
     }
 
+    @RequestMapping(value = "api/corporate/titleFetch", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    CorporateTitleFetchResponse corporateTitleFetchResponse(@Valid @RequestBody CorporateTitleFetchRequest request) throws Exception {
+        CorporateTitleFetchResponse response = new CorporateTitleFetchResponse();
+
+        String className = this.getClass().getSimpleName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+        long start = System.currentTimeMillis();
+
+        try {
+
+            logger.info("Title Fetch Request Received at Controller at time: " + start);
+            String requestXML = JSONUtil.getJSON(request);
+            //        requestXML = XMLUtil.maskPassword(requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Title Fetch Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
+            StringBuilder stringText = new StringBuilder()
+                    .append(request.getUserName())
+                    .append(request.getPassword())
+                    .append(request.getMobileNo())
+                    .append(request.getDateTime())
+                    .append(request.getRrn())
+                    .append(request.getChannelId())
+                    .append(request.getTerminalId())
+                    .append(request.getPaymentMode())
+                    .append(request.getSegmentCode())
+                    .append(request.getReserved1())
+                    .append(request.getReserved2())
+                    .append(request.getReserved3())
+                    .append(request.getReserved4())
+                    .append(request.getReserved5());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    CorporateHostRequestValidator.validateTitleFetch(request);
+                    response = corporatePortalService.corporateTitleFetchResponse(request);
+
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+
+                logger.info("******* DEBUG LOGS FOR Title Fetch Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Title Fetch Request AUTHENTICATION *********");
+                response = new CorporateTitleFetchResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
+            }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Title Fetch Request *********");
+//                response = new CorporateTitleFetchResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
+        } catch (Exception e) {
+
+            response = new CorporateTitleFetchResponse();
+            response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            response.setResponseDescription(e.getLocalizedMessage());
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
+            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
+            logger.info("Critical Error ::" + e.getLocalizedMessage());
+        }
+        long end = System.currentTimeMillis() - start;
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Title Fetch  Request Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
+
+
+        return response;
+    }
 }

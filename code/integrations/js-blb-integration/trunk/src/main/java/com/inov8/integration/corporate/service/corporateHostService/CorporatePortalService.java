@@ -2,12 +2,16 @@ package com.inov8.integration.corporate.service.corporateHostService;
 
 import com.inov8.integration.corporate.pdu.request.*;
 import com.inov8.integration.corporate.pdu.response.*;
+import com.inov8.integration.middleware.constants.CashInResponseEnum;
 import com.inov8.integration.middleware.dao.TransactionDAO;
 import com.inov8.integration.middleware.dao.TransactionLogModel;
 import com.inov8.integration.middleware.enums.ResponseCodeEnum;
 import com.inov8.integration.middleware.enums.TransactionStatus;
+import com.inov8.integration.middleware.pdu.request.TitleFetchRequest;
+import com.inov8.integration.middleware.pdu.response.TitleFetchResponse;
 import com.inov8.integration.middleware.util.*;
 import com.inov8.integration.webservice.controller.CorporatePortalSwitchController;
+import com.inov8.integration.webservice.controller.WebServiceSwitchController;
 import com.inov8.integration.webservice.vo.WebServiceVO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
@@ -33,6 +37,7 @@ public class CorporatePortalService {
     private static String I8_SERVER = ConfigReader.getInstance().getProperty("i8-ip", "127.0.0.1");
     private static String I8_PORT = (ConfigReader.getInstance().getProperty("i8-port", ""));
     private static String I8_PATH = (ConfigReader.getInstance().getProperty("corporate.i8-path", ""));
+    private static String CORPORATE_I8_PATH = (ConfigReader.getInstance().getProperty("i8-path", ""));
     private static int READ_TIME_OUT = Integer.parseInt(ConfigReader.getInstance().getProperty("i8-read-timeout", "55"));
     private static int CONNECTION_TIME_OUT = Integer.parseInt(ConfigReader.getInstance().getProperty("i8-connection-timeout", "10"));
 
@@ -41,6 +46,7 @@ public class CorporatePortalService {
     @Autowired
     TransactionDAO transactionDAO;
     private CorporatePortalSwitchController corporatePortalSwitchController = null;
+    private WebServiceSwitchController switchController = null;
 
 
     public CorporatePortalService() {
@@ -109,6 +115,20 @@ public class CorporatePortalService {
                 httpInvokerProxyFactoryBean.afterPropertiesSet();
                 httpInvokerProxyFactoryBean.setHttpInvokerRequestExecutor(executor);
                 corporatePortalSwitchController = (CorporatePortalSwitchController) httpInvokerProxyFactoryBean.getObject();
+            }
+            if (switchController == null) {
+
+                SimpleHttpInvokerRequestExecutor executor = new SimpleHttpInvokerRequestExecutor();
+
+                executor.setConnectTimeout(CONNECTION_TIME_OUT * 1000);
+                executor.setReadTimeout(READ_TIME_OUT * 1000);
+
+                HttpInvokerProxyFactoryBean httpInvokerProxyFactoryBean = new HttpInvokerProxyFactoryBean();
+                httpInvokerProxyFactoryBean.setServiceInterface(WebServiceSwitchController.class);
+                httpInvokerProxyFactoryBean.setServiceUrl(I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + CORPORATE_I8_PATH);
+                httpInvokerProxyFactoryBean.afterPropertiesSet();
+                httpInvokerProxyFactoryBean.setHttpInvokerRequestExecutor(executor);
+                switchController = (WebServiceSwitchController) httpInvokerProxyFactoryBean.getObject();
             }
         } catch (Exception e) {
             logger.error("ERROR Building I8 Switch Controller", e);
@@ -1148,4 +1168,126 @@ public class CorporatePortalService {
         return response;
     }
 
+    public CorporateTitleFetchResponse corporateTitleFetchResponse(CorporateTitleFetchRequest request) {
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Starting Processing Title Fetch Request RRN: " + messageVO.getRetrievalReferenceNumber());
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        CorporateTitleFetchResponse response = new CorporateTitleFetchResponse();
+
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getMobileNo());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setPaymentMode(request.getPaymentMode());
+        messageVO.setSegmentCode(request.getSegmentCode());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("Titlefetch");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+//        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Title Fetch Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.TitleFetch(messageVO);
+
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Title Fetch Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setBalance(messageVO.getBalance());
+            response.setRemainingCreditLimit(messageVO.getRemainingCreditLimit());
+            response.setRemainingDebitLimit(messageVO.getRemainingDebitLimit());
+            response.setConsumedVelocity(messageVO.getConsumedVelocity());
+            response.setCustomerMobile(messageVO.getMobileNo());
+            response.setCnic(messageVO.getCnicNo());
+            response.setCustomerName(messageVO.getConsumerName());
+            response.setAccountTitle(messageVO.getAccountTitle());
+            response.setAccountLevel(messageVO.getAccountLevel());
+//            if (StringUtils.isNotEmpty(messageVO.getResponseContentXML()))
+//                XMLUtil.populateFromResponse(response, messageVO.getResponseContentXML(), CashInResponseEnum.values());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Title Fetch Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Title Fetch Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuilder stringText = new StringBuilder()
+                .append(response.getResponseCode())
+                .append(response.getResponseDescription())
+                .append(response.getRrn())
+                .append(response.getCustomerMobile())
+                .append(response.getResponseDateTime())
+                .append(response.getCnic())
+                .append(response.getCustomerName())
+                .append(response.getAccountTitle())
+                .append(response.getBalance())
+                .append(response.getRemainingCreditLimit())
+                .append(response.getRemainingDebitLimit())
+                .append(response.getConsumedVelocity());
+        String sha256hex = DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****Title Fetch REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+//        updateTransactionInDB(logModel);
+
+        return response;
+    }
 }

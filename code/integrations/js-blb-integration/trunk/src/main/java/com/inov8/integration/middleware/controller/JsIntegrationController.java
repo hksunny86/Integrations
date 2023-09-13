@@ -2796,4 +2796,14 @@ public class JsIntegrationController implements WebServiceSwitchController {
     public WebServiceVO getL2AccountUpgradeDiscrepant(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO thirdPartyCreditInquiry(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO thirdPartyCredit(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

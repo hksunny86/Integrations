@@ -162,5 +162,7 @@ public interface WebServiceSwitchController {
     WebServiceVO updateCnicExpiry(WebServiceVO webServiceVO);
     WebServiceVO l2AccountUpgradeDiscrepant(WebServiceVO webServiceVO);
     WebServiceVO getL2AccountUpgradeDiscrepant(WebServiceVO webServiceVO);
+    WebServiceVO thirdPartyCreditInquiry(WebServiceVO webServiceVO);
+    WebServiceVO thirdPartyCredit(WebServiceVO webServiceVO);
 
 }

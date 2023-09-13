@@ -76,7 +76,7 @@ public class ThirdPartyCreditRequest implements Serializable {
     private String reserved9;
     @JsonProperty("reserved10")
     private String reserved10;
-    @JsonProperty("HashData")
+    @JsonProperty("hashData")
     private String hashData;
 
     public String getUserName() {

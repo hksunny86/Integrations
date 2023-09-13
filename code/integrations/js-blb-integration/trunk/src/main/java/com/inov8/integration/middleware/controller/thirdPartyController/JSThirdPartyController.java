@@ -174,44 +174,44 @@ public class JSThirdPartyController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        HostRequestValidator.validateThirdPartyCreditInquiry(request);
-                        response = integrationService.thirdPartyCreditInquiryResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    HostRequestValidator.validateThirdPartyCreditInquiry(request);
+                    response = integrationService.thirdPartyCreditInquiryResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setMessages(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setMessages(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Third Party Credit Inquiry Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Third Party Credit Inquiry Request AUTHENTICATION *********");
-                    response = new ThirdPartyCreditInquiryResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setMessages("Request is not authenticated");
-                    Data data = new Data();
-                    data.setRrn(request.getRrn());
-                    data.setResponseDateTime(request.getDateTime());
-                    response.setData(data);
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setMessages(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setMessages(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR Third Party Credit Inquiry Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Third Party Credit Inquiry Request AUTHENTICATION *********");
                 response = new ThirdPartyCreditInquiryResponse();
-                response.setResponseCode("111");
-                response.setMessages("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                response.setResponseCode("420");
+                response.setMessages("Request is not authenticated");
+                Data data = new Data();
+                data.setRrn(request.getRrn());
+                data.setResponseDateTime(request.getDateTime());
+                response.setData(data);
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Third Party Credit Inquiry Request *********");
+//                response = new ThirdPartyCreditInquiryResponse();
+//                response.setResponseCode("111");
+//                response.setMessages("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new ThirdPartyCreditInquiryResponse();
@@ -260,6 +260,7 @@ public class JSThirdPartyController {
                     .append(request.getProductId())
                     .append(request.getPin())
                     .append(request.getPinType())
+                    .append(request.getTransactionAmount())
                     .append(request.getReserved1())
                     .append(request.getReserved2())
                     .append(request.getReserved3())
@@ -276,8 +277,9 @@ public class JSThirdPartyController {
                 if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
                         HostRequestValidator.validateThirdPartyCredit(request);
+                        logger.info("Authentication successful");
                         response = integrationService.thirdPartyCreditResponse(request);
-
+                        logger.info("Service Response successful");
                     } catch (ValidationException ve) {
                         response.setResponseCode("420");
                         response.setMessages(ve.getMessage());
@@ -288,7 +290,6 @@ public class JSThirdPartyController {
                         response.setMessages(e.getMessage());
                         logger.error("ERROR: General Processing ", e);
                     }
-
                     logger.info("******* DEBUG LOGS FOR Third Party Credit Request *********");
                     logger.info("ResponseCode: " + response.getResponseCode());
                 } else {
@@ -301,7 +302,6 @@ public class JSThirdPartyController {
                     data.setResponseDateTime(request.getDateTime());
                     response.setData(data);
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-
                 }
             } else {
                 logger.info("******* DEBUG LOGS FOR Third Party Credit Request *********");
@@ -311,7 +311,7 @@ public class JSThirdPartyController {
                 logger.info("******* REQUEST IS NOT RECOGNIZED *********");
             }
         } catch (Exception e) {
-
+            logger.error("Exception while processing request" + e.getMessage());
             response = new ThirdPartyCreditResponse();
             response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
             response.setMessages(e.getLocalizedMessage());

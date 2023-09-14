@@ -18,6 +18,8 @@ import java.io.Serializable;
         "CnicNumber",
         "PortalId",
         "PortalPassword",
+        "SegmentId",
+        "Comments",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -53,6 +55,10 @@ public class AccountStateInquiryRequest implements Serializable {
     private String portalId;
     @JsonProperty("PortalPassword")
     private String portalPassword;
+    @JsonProperty("SegmentId")
+    private String segmentId;
+    @JsonProperty("Comments")
+    private String comments;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -154,6 +160,22 @@ public class AccountStateInquiryRequest implements Serializable {
 
     public void setPortalPassword(String portalPassword) {
         this.portalPassword = portalPassword;
+    }
+
+    public String getSegmentId() {
+        return segmentId;
+    }
+
+    public void setSegmentId(String segmentId) {
+        this.segmentId = segmentId;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public String getReserved1() {

@@ -17,6 +17,7 @@ import java.io.Serializable;
         "TerminalId",
         "PortalId",
         "PortalPassword",
+        "SegmentId",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -50,6 +51,8 @@ public class DeviceVerificationInquiryRequest implements Serializable {
     private String portalId;
     @JsonProperty("PortalPassword")
     private String portalPassword;
+    @JsonProperty("SegmentId")
+    private String segmentId;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -143,6 +146,14 @@ public class DeviceVerificationInquiryRequest implements Serializable {
 
     public void setPortalPassword(String portalPassword) {
         this.portalPassword = portalPassword;
+    }
+
+    public String getSegmentId() {
+        return segmentId;
+    }
+
+    public void setSegmentId(String segmentId) {
+        this.segmentId = segmentId;
     }
 
     public String getReserved1() {

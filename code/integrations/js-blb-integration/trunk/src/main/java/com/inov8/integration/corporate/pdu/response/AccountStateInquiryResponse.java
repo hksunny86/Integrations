@@ -12,6 +12,12 @@ import java.io.Serializable;
         "ResponseCode",
         "ResponseDescription",
         "ResponseDateTime",
+        "Cnic",
+        "CustomerName",
+        "AccountTitle",
+        "AccountLevel",
+        "MobileNumber",
+        "AccountStatus",
         "HashData"
 })
 public class AccountStateInquiryResponse implements Serializable {
@@ -26,6 +32,18 @@ public class AccountStateInquiryResponse implements Serializable {
     private String responseDescription;
     @JsonProperty("ResponseDateTime")
     private String responseDateTime;
+    @JsonProperty("Cnic")
+    private String cnic;
+    @JsonProperty("CustomerName")
+    private String customerName;
+    @JsonProperty("AccountTitle")
+    private String accountTitle;
+    @JsonProperty("AccountLevel")
+    private String accountLevel;
+    @JsonProperty("MobileNumber")
+    private String customerMobile;
+    @JsonProperty("AccountStatus")
+    private String accountStatus;
     @JsonProperty("HashData")
     private String hashData;
 
@@ -59,6 +77,54 @@ public class AccountStateInquiryResponse implements Serializable {
 
     public void setResponseDateTime(String responseDateTime) {
         this.responseDateTime = responseDateTime;
+    }
+
+    public String getCnic() {
+        return cnic;
+    }
+
+    public void setCnic(String cnic) {
+        this.cnic = cnic;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getAccountTitle() {
+        return accountTitle;
+    }
+
+    public void setAccountTitle(String accountTitle) {
+        this.accountTitle = accountTitle;
+    }
+
+    public String getAccountLevel() {
+        return accountLevel;
+    }
+
+    public void setAccountLevel(String accountLevel) {
+        this.accountLevel = accountLevel;
+    }
+
+    public String getCustomerMobile() {
+        return customerMobile;
+    }
+
+    public void setCustomerMobile(String customerMobile) {
+        this.customerMobile = customerMobile;
+    }
+
+    public String getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(String accountStatus) {
+        this.accountStatus = accountStatus;
     }
 
     public String getHashData() {

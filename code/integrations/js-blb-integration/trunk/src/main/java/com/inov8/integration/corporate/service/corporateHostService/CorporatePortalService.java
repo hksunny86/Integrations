@@ -276,6 +276,8 @@ public class CorporatePortalService {
         messageVO.setCnicNo(request.getCnicNumber());
         messageVO.setPortalId(request.getPortalId());
         messageVO.setPortalPassword(request.getPortalPassword());
+        messageVO.setSegmentCode(request.getSegmentId());
+        messageVO.setMessage(request.getComments());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());
@@ -330,6 +332,12 @@ public class CorporatePortalService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
+            response.setCnic(messageVO.getCnicNo());
+            response.setCustomerName(messageVO.getConsumerName());
+            response.setAccountLevel(messageVO.getAccountLevel());
+            response.setAccountTitle(messageVO.getAccountTitle());
+            response.setAccountStatus(messageVO.getAccountStatus());
+            response.setCustomerMobile(messageVO.getMobileNo());
 
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
@@ -498,6 +506,7 @@ public class CorporatePortalService {
         webServiceVO.setMobileNo(request.getMobileNo());
         webServiceVO.setPortalId(request.getPortalId());
         webServiceVO.setPortalPassword(request.getPassword());
+        webServiceVO.setSegmentCode(request.getSegmentId());
         webServiceVO.setChannelId(request.getChannelId());
         webServiceVO.setTerminalId(request.getTerminalId());
         webServiceVO.setReserved1(request.getReserved1());
@@ -541,6 +550,12 @@ public class CorporatePortalService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(webServiceVO.getResponseCodeDescription());
             response.setRrn(webServiceVO.getRetrievalReferenceNumber());
+            response.setResponseDateTime(webServiceVO.getDateTime());
+            response.setCnic(webServiceVO.getCnicNo());
+            response.setCustomerName(webServiceVO.getConsumerName());
+            response.setAccountLevel(webServiceVO.getAccountLevel());
+            response.setAccountTitle(webServiceVO.getAccountTitle());
+            response.setCustomerMobile(webServiceVO.getMobileNo());
 
         } else if (webServiceVO != null && StringUtils.isNotEmpty(webServiceVO.getResponseCode())) {
             logger.info("[HOST] MPIN Reset Inquiry Request Unsuccessful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
@@ -729,6 +744,7 @@ public class CorporatePortalService {
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setPortalId(request.getPortalId());
         messageVO.setPortalPassword(request.getPortalPassword());
+        messageVO.setSegmentCode(request.getSegmentId());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());
@@ -783,7 +799,11 @@ public class CorporatePortalService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
-
+            response.setCnic(messageVO.getCnicNo());
+            response.setCustomerName(messageVO.getConsumerName());
+            response.setAccountLevel(messageVO.getAccountLevel());
+            response.setAccountTitle(messageVO.getAccountTitle());
+            response.setCustomerMobile(messageVO.getMobileNo());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -959,6 +979,7 @@ public class CorporatePortalService {
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setPortalId(request.getPortalId());
         messageVO.setPortalPassword(request.getPortalPassword());
+        messageVO.setSegmentCode(request.getSegmentId());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());
@@ -1013,6 +1034,11 @@ public class CorporatePortalService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
+            response.setCnic(messageVO.getCnicNo());
+            response.setCustomerName(messageVO.getConsumerName());
+            response.setAccountLevel(messageVO.getAccountLevel());
+            response.setAccountTitle(messageVO.getAccountTitle());
+            response.setCustomerMobile(messageVO.getMobileNo());
             response.setCustomerDeviceVerificationList(messageVO.getCustomerDeviceVerificationList());
 
             logModel.setResponseCode(messageVO.getResponseCode());

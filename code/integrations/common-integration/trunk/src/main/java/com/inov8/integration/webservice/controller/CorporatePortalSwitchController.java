@@ -13,5 +13,6 @@ public interface CorporatePortalSwitchController {
     WebServiceVO customerAccountStatement(WebServiceVO webServiceVO);
     WebServiceVO deviceVerificationInquiry(WebServiceVO webServiceVO);
     WebServiceVO deviceVerification(WebServiceVO webServiceVO);
+    WebServiceVO coreToGl(WebServiceVO webServiceVO);
 
 }

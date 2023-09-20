@@ -216,6 +216,28 @@ public class CorporateHostRequestValidator {
         }
     }
 
+    public static void validateCoreToGl(CoreToGlAccountRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getCoreAccountNo())) {
+            throw new ValidationException("[FAILED] Validation Failed Core Account No: " + integrationVO.getCoreAccountNo());
+        }
+        if (StringUtils.isEmpty(integrationVO.getGlAccountNo())) {
+            throw new ValidationException("[FAILED] Validation Failed GL Account No: " + integrationVO.getGlAccountNo());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTransactionAmount())) {
+            throw new ValidationException("[FAILED] Validation Failed Transaction Amount: " + integrationVO.getTransactionAmount());
+        }
+    }
+
     public static boolean authenticate(String userName, String password, String channelID) {
         if (ConfigReader.getInstance().getProperty("channel.ids", "").contains(channelID))
             return ConfigReader.getInstance().getProperty("channel.usernames", "").contains(userName) && ConfigReader.getInstance().getProperty("channel.passwords", "").contains(password);

@@ -54,4 +54,9 @@ public class JsCorporateIntegrationController implements CorporatePortalSwitchCo
     public WebServiceVO deviceVerification(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO coreToGl(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

@@ -1337,6 +1337,7 @@ public class CorporatePortalService {
         messageVO.setCoreAccountId(request.getCoreAccountNo());
         messageVO.setGLAccountNo1(request.getGlAccountNo());
         messageVO.setProductID(request.getProductId());
+        messageVO.setTransactionAmount(request.getTransactionAmount());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());

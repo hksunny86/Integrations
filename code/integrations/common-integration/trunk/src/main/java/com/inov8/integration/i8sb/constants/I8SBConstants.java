@@ -85,6 +85,7 @@ public class I8SBConstants {
     public static String I8SB_Channel_ID_PDM = "PDM";
     public static String I8SB_Channel_ID_RAAST = "RAAST";
     public static String I8SB_Channel_ID_DEBITCARD = "DEBITCARD";
+    public static String I8SB_Channel_ID_ESB = "ESB";
 
 
     public static String I8SB_Channel_ID_ETPaymentCollection = "ETPaymentCollection";
@@ -371,6 +372,8 @@ public class I8SBConstants {
     public static String RequestType_RAAST_DeleteAlias = "DeleteAlias";
     public static String RequestType_RAAST_DeleteCustomer = "DeleteCustomer";
     public static String RequestType_DEBIT_CARD_DiscrepancyStatus = "DebitCardDiscrepancyStatus";
+    public static String RequestType_ESB_BILL_INQUIRRY = "EsbBillInquiry";
+    public static String RequestType_ESB_BILL_PAYMENT = "EsbBillPayment";
 
 
 

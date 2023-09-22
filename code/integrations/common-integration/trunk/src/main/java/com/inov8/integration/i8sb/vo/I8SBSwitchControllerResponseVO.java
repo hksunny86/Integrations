@@ -479,6 +479,15 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String aliasStatus;
     private String aliasType;
     private String aliasValue;
+    private String identificationParameter;
+
+    public String getIdentificationParameter() {
+        return identificationParameter;
+    }
+
+    public void setIdentificationParameter(String identificationParameter) {
+        this.identificationParameter = identificationParameter;
+    }
 
     public String getAliasType() {
         return aliasType;

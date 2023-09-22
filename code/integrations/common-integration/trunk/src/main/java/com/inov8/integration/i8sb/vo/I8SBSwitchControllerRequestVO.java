@@ -509,6 +509,51 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String streetNoApproved;
     private String houseNoApproved;
     private String deleted;
+    private String pointOfEntry;
+    private String networkIdentifier;
+    private String cardAcceptorTerminalId;
+    private String cardAcceptorIdentificationCode;
+    private String cardAcceptorNameAndLocation;
+
+    public String getPointOfEntry() {
+        return pointOfEntry;
+    }
+
+    public void setPointOfEntry(String pointOfEntry) {
+        this.pointOfEntry = pointOfEntry;
+    }
+
+    public String getNetworkIdentifier() {
+        return networkIdentifier;
+    }
+
+    public void setNetworkIdentifier(String networkIdentifier) {
+        this.networkIdentifier = networkIdentifier;
+    }
+
+    public String getCardAcceptorTerminalId() {
+        return cardAcceptorTerminalId;
+    }
+
+    public void setCardAcceptorTerminalId(String cardAcceptorTerminalId) {
+        this.cardAcceptorTerminalId = cardAcceptorTerminalId;
+    }
+
+    public String getCardAcceptorIdentificationCode() {
+        return cardAcceptorIdentificationCode;
+    }
+
+    public void setCardAcceptorIdentificationCode(String cardAcceptorIdentificationCode) {
+        this.cardAcceptorIdentificationCode = cardAcceptorIdentificationCode;
+    }
+
+    public String getCardAcceptorNameAndLocation() {
+        return cardAcceptorNameAndLocation;
+    }
+
+    public void setCardAcceptorNameAndLocation(String cardAcceptorNameAndLocation) {
+        this.cardAcceptorNameAndLocation = cardAcceptorNameAndLocation;
+    }
 
     public String getNameApproved() {
         return nameApproved;

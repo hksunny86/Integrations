@@ -86,6 +86,7 @@ public class I8SBConstants {
     public static String I8SB_Channel_ID_RAAST = "RAAST";
     public static String I8SB_Channel_ID_DEBITCARD = "DEBITCARD";
     public static String I8SB_Channel_ID_ESB = "ESB";
+    public static String I8SB_Channel_ID_ONE_LINK = "OneLink";
 
 
     public static String I8SB_Channel_ID_ETPaymentCollection = "ETPaymentCollection";
@@ -374,6 +375,7 @@ public class I8SBConstants {
     public static String RequestType_DEBIT_CARD_DiscrepancyStatus = "DebitCardDiscrepancyStatus";
     public static String RequestType_ESB_BILL_INQUIRRY = "EsbBillInquiry";
     public static String RequestType_ESB_BILL_PAYMENT = "EsbBillPayment";
+    public static String RequestType_ONE_LINK_IBFT_TITLE_FETCH = "OnelinkIbftTitleFetch";
 
 
 

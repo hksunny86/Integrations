@@ -480,6 +480,78 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String aliasType;
     private String aliasValue;
     private String identificationParameter;
+    private String cardAcceptorTerminalId;
+    private String cardAcceptorNameAndLocation;
+    private String pointOfEntry;
+    private String networkIdentifier;
+    private String identifier;
+    private String purposeOfPayment;
+    private String beneficiaryIban;
+    private String beneficiaryId;
+
+    public String getBeneficiaryIban() {
+        return beneficiaryIban;
+    }
+
+    public void setBeneficiaryIban(String beneficiaryIban) {
+        this.beneficiaryIban = beneficiaryIban;
+    }
+
+    public String getBeneficiaryId() {
+        return beneficiaryId;
+    }
+
+    public void setBeneficiaryId(String beneficiaryId) {
+        this.beneficiaryId = beneficiaryId;
+    }
+
+    public String getPurposeOfPayment() {
+        return purposeOfPayment;
+    }
+
+    public void setPurposeOfPayment(String purposeOfPayment) {
+        this.purposeOfPayment = purposeOfPayment;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public String getCardAcceptorTerminalId() {
+        return cardAcceptorTerminalId;
+    }
+
+    public void setCardAcceptorTerminalId(String cardAcceptorTerminalId) {
+        this.cardAcceptorTerminalId = cardAcceptorTerminalId;
+    }
+
+    public String getCardAcceptorNameAndLocation() {
+        return cardAcceptorNameAndLocation;
+    }
+
+    public void setCardAcceptorNameAndLocation(String cardAcceptorNameAndLocation) {
+        this.cardAcceptorNameAndLocation = cardAcceptorNameAndLocation;
+    }
+
+    public String getPointOfEntry() {
+        return pointOfEntry;
+    }
+
+    public void setPointOfEntry(String pointOfEntry) {
+        this.pointOfEntry = pointOfEntry;
+    }
+
+    public String getNetworkIdentifier() {
+        return networkIdentifier;
+    }
+
+    public void setNetworkIdentifier(String networkIdentifier) {
+        this.networkIdentifier = networkIdentifier;
+    }
 
     public String getIdentificationParameter() {
         return identificationParameter;

@@ -180,10 +180,10 @@ public class OnelinkService {
                     "    \"toBankImd\": \"\",\n" +
                     "    \"cardAcceptorNameAndLocation\": \"JSBL Branchless Banking Channel Pakistan\",\n" +
                     "    \"authIdResp\": \"\",\n" +
-                    "    \"networkIdentifer\": \"\",\n" +
+                    "    \"networkIdentifier\": \"\",\n" +
                     "    \"merchantType\": \"0088\",\n" +
                     "    \"senderId\": \"\",\n" +
-                    "    \"recieverId\": \"\",\n" +
+                    "    \"receiverId\": \"\",\n" +
                     "    \"pan\": \"\",\n" +
                     "    \"message\": \"Success\",\n" +
                     "    \"dateLocalTransaction\": \"20230915201527\",\n" +

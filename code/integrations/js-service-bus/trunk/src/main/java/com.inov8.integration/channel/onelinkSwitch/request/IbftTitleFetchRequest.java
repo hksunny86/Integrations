@@ -194,8 +194,8 @@ public class IbftTitleFetchRequest extends Request {
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        this.setPan("");
-        this.setTransactionAmount("");
+        this.setPan(i8SBSwitchControllerRequestVO.getCNIC() + i8SBSwitchControllerRequestVO.getSTAN());
+        this.setTransactionAmount(i8SBSwitchControllerRequestVO.getTransactionAmount());
         this.setTransactionDateTime(String.valueOf(new Date()));
         this.setMerchantType("");
         this.setPointOfEntry("");
@@ -203,11 +203,11 @@ public class IbftTitleFetchRequest extends Request {
         this.setCardAcceptorTerminalId("00000000");
         this.setCardAcceptorIdentificationCode("000000");
         this.setCardAcceptorNameAndLocation("JSBL Branchless Banking Channel Pakistan");
-        this.setPurposeOfPayment("");
+        this.setPurposeOfPayment(i8SBSwitchControllerRequestVO.getTransferPurpose());
         this.setCurrencyCode("586");
         this.setAccountNo1(i8SBSwitchControllerRequestVO.getAccountId1());
         this.setAccountNo2(i8SBSwitchControllerRequestVO.getAccountId2());
-        this.setToBankImd("");
+        this.setToBankImd(i8SBSwitchControllerRequestVO.getToBankIMD());
         this.setStan(i8SBSwitchControllerRequestVO.getSTAN());
         this.setRrn(i8SBSwitchControllerRequestVO.getRRN());
     }

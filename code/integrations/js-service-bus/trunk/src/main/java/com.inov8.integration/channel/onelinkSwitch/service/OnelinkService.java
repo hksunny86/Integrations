@@ -60,7 +60,7 @@ public class OnelinkService {
             String response = "{\n" +
                     "    \"pan\": \"\",\n" +
                     "    \"cardAcceptorNameAndLocation\": \"\",\n" +
-                    "    \"cardAcceptorTermianlId\": \"\",\n" +
+                    "    \"cardAcceptorTerminalId\": \"\",\n" +
                     "    \"identifier\": \"\",\n" +
                     "    \"transactionAmount\": \"100\",\n" +
                     "    \"requestTime\": \"20230915201527\",\n" +
@@ -75,14 +75,14 @@ public class OnelinkService {
                     "    \"purposeOfPayment\": \"\",\n" +
                     "    \"toBankImd\": \"\",\n" +
                     "    \"merchantType\": \"0088\",\n" +
-                    "    \"networdIdentifier\": \"\",\n" +
+                    "    \"networkIdentifier\": \"\",\n" +
                     "    \"message\": \"Success\",\n" +
                     "    \"dateLocalTransaction\": \"20230915201527\",\n" +
                     "    \"timeLocalTransaction\": \"20230915201527\",\n" +
                     "    \"accountBranchName\": \"DHA Branch\",\n" +
                     "    \"accountBankName\": \"UBL\",\n" +
-                    "    \"benificieryIban\": \"PK07UBL0021009960214440\",\n" +
-                    "    \"beneficaryId\": \"PK07UBL\"\n" +
+                    "    \"beneficiaryIban\": \"PK07UBL0021009960214440\",\n" +
+                    "    \"beneficiaryId\": \"PK07UBL\"\n" +
                     "}";
             ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(response, IbftTitleFetchResponse.class);
             Objects.requireNonNull(ibftTitleFetchResponse).setResponseCode("00");

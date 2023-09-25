@@ -20,6 +20,7 @@ import java.io.Serializable;
         "ExternalLoanId",
         "InternalLoanId",
         "AdvanceOfferId",
+        "PrimaryLoanId",
         "OfferName",
         "Amount",
         "ProcessingFee",
@@ -59,6 +60,8 @@ public class LoanOfferResponse implements Serializable {
     private String internalLoanId;
     @JsonProperty("AdvanceOfferId")
     private String advanceOfferId;
+    @JsonProperty("PrimaryLoanId")
+    private String primaryLoanId;
     @JsonProperty("OfferName")
     private String offerName;
     @JsonProperty("Amount")
@@ -182,6 +185,14 @@ public class LoanOfferResponse implements Serializable {
 
     public void setAdvanceOfferId(String advanceOfferId) {
         this.advanceOfferId = advanceOfferId;
+    }
+
+    public String getPrimaryLoanId() {
+        return primaryLoanId;
+    }
+
+    public void setPrimaryLoanId(String primaryLoanId) {
+        this.primaryLoanId = primaryLoanId;
     }
 
     public String getOfferName() {

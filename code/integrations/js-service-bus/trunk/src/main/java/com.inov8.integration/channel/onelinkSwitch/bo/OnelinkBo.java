@@ -5,7 +5,9 @@ import com.inov8.integration.channel.esb.request.EsbBillPaymentRequest;
 import com.inov8.integration.channel.esb.response.EsbBillInquiryResponse;
 import com.inov8.integration.channel.esb.response.EsbBillPaymentResponse;
 import com.inov8.integration.channel.esb.service.EsbService;
+import com.inov8.integration.channel.onelinkSwitch.request.IbftAdviceRequest;
 import com.inov8.integration.channel.onelinkSwitch.request.IbftTitleFetchRequest;
+import com.inov8.integration.channel.onelinkSwitch.response.IbftAdviceResponse;
 import com.inov8.integration.channel.onelinkSwitch.response.IbftTitleFetchResponse;
 import com.inov8.integration.channel.onelinkSwitch.service.OnelinkService;
 import com.inov8.integration.channel.tasdeeq.request.Request;
@@ -56,6 +58,9 @@ public class OnelinkBo implements I8SBChannelInterface {
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ONE_LINK_IBFT_TITLE_FETCH)) {
                 response = onelinkService.oneLinkIbftTitleFetchResponse((IbftTitleFetchRequest) request);
             }
+            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ONE_LINK_IBFT_ADVICE)) {
+                response = onelinkService.oneLinkIbftAdviceResponse((IbftAdviceRequest) request);
+            }
             if (Objects.requireNonNull(response).populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
             String responseXML = JSONUtil.getJSON(i8SBSwitchControllerResponseVO);
@@ -105,6 +110,10 @@ public class OnelinkBo implements I8SBChannelInterface {
         if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ONE_LINK_IBFT_TITLE_FETCH)) {
             request = new IbftTitleFetchRequest();
             response = new IbftTitleFetchResponse();
+
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ONE_LINK_IBFT_ADVICE)) {
+            request = new IbftAdviceRequest();
+            response = new IbftAdviceResponse();
 
         } else {
             logger.info("[FAILED] Request type not supported");

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 @JsonPropertyOrder({
         "pan",
         "cardAcceptorNameAndLocation",
-        "cardAcceptorTermianlId",
+        "cardAcceptorTerminalId",
         "identifier",
         "transactionAmount",
         "requestTime",
@@ -30,14 +30,14 @@ import org.slf4j.LoggerFactory;
         "purposeOfPayment",
         "toBankImd",
         "merchantType",
-        "networdIdentifier",
+        "networkIdentifier",
         "message",
         "dateLocalTransaction",
         "timeLocalTransaction",
         "accountBranchName",
         "accountBankName",
-        "benificieryIban",
-        "beneficaryId"
+        "beneficiaryIban",
+        "beneficiaryId"
 })
 
 public class IbftTitleFetchResponse extends Response {
@@ -48,8 +48,8 @@ public class IbftTitleFetchResponse extends Response {
     private String pan;
     @JsonProperty("cardAcceptorNameAndLocation")
     private String cardAcceptorNameAndLocation;
-    @JsonProperty("cardAcceptorTermianlId")
-    private String cardAcceptorTermianlId;
+    @JsonProperty("cardAcceptorTerminalId")
+    private String cardAcceptorTerminalId;
     @JsonProperty("identifier")
     private String identifier;
     @JsonProperty("transactionAmount")
@@ -78,8 +78,8 @@ public class IbftTitleFetchResponse extends Response {
     private String toBankImd;
     @JsonProperty("merchantType")
     private String merchantType;
-    @JsonProperty("networdIdentifier")
-    private String networdIdentifier;
+    @JsonProperty("networkIdentifier")
+    private String networkIdentifier;
     @JsonProperty("message")
     private String message;
     @JsonProperty("dateLocalTransaction")
@@ -90,10 +90,10 @@ public class IbftTitleFetchResponse extends Response {
     private String accountBranchName;
     @JsonProperty("accountBankName")
     private String accountBankName;
-    @JsonProperty("benificieryIban")
-    private String benificieryIban;
-    @JsonProperty("beneficaryId")
-    private String beneficaryId;
+    @JsonProperty("beneficiaryIban")
+    private String beneficiaryIban;
+    @JsonProperty("beneficiaryId")
+    private String beneficiaryId;
 
     public String getPan() {
         return pan;
@@ -111,12 +111,12 @@ public class IbftTitleFetchResponse extends Response {
         this.cardAcceptorNameAndLocation = cardAcceptorNameAndLocation;
     }
 
-    public String getCardAcceptorTermianlId() {
-        return cardAcceptorTermianlId;
+    public String getCardAcceptorTerminalId() {
+        return cardAcceptorTerminalId;
     }
 
-    public void setCardAcceptorTermianlId(String cardAcceptorTermianlId) {
-        this.cardAcceptorTermianlId = cardAcceptorTermianlId;
+    public void setCardAcceptorTerminalId(String cardAcceptorTerminalId) {
+        this.cardAcceptorTerminalId = cardAcceptorTerminalId;
     }
 
     public String getIdentifier() {
@@ -231,12 +231,12 @@ public class IbftTitleFetchResponse extends Response {
         this.merchantType = merchantType;
     }
 
-    public String getNetwordIdentifier() {
-        return networdIdentifier;
+    public String getNetworkIdentifier() {
+        return networkIdentifier;
     }
 
-    public void setNetwordIdentifier(String networdIdentifier) {
-        this.networdIdentifier = networdIdentifier;
+    public void setNetworkIdentifier(String networkIdentifier) {
+        this.networkIdentifier = networkIdentifier;
     }
 
     public String getMessage() {
@@ -279,20 +279,20 @@ public class IbftTitleFetchResponse extends Response {
         this.accountBankName = accountBankName;
     }
 
-    public String getBenificieryIban() {
-        return benificieryIban;
+    public String getBeneficiaryIban() {
+        return beneficiaryIban;
     }
 
-    public void setBenificieryIban(String benificieryIban) {
-        this.benificieryIban = benificieryIban;
+    public void setBeneficiaryIban(String beneficiaryIban) {
+        this.beneficiaryIban = beneficiaryIban;
     }
 
-    public String getBeneficaryId() {
-        return beneficaryId;
+    public String getBeneficiaryId() {
+        return beneficiaryId;
     }
 
-    public void setBeneficaryId(String beneficaryId) {
-        this.beneficaryId = beneficaryId;
+    public void setBeneficiaryId(String beneficiaryId) {
+        this.beneficiaryId = beneficiaryId;
     }
 
     @Override
@@ -306,7 +306,7 @@ public class IbftTitleFetchResponse extends Response {
         }
         i8SBSwitchControllerResponseVO.setPAN(this.getPan());
         i8SBSwitchControllerResponseVO.setCardAcceptorNameAndLocation(this.getCardAcceptorNameAndLocation());
-        i8SBSwitchControllerResponseVO.setCardAcceptorTerminalId(this.getCardAcceptorTermianlId());
+        i8SBSwitchControllerResponseVO.setCardAcceptorTerminalId(this.getCardAcceptorTerminalId());
         i8SBSwitchControllerResponseVO.setIdentifier(this.getIdentifier());
         i8SBSwitchControllerResponseVO.setAmount(this.getTransactionAmount());
         i8SBSwitchControllerResponseVO.setDateTime(this.getRequestTime());
@@ -320,14 +320,14 @@ public class IbftTitleFetchResponse extends Response {
         i8SBSwitchControllerResponseVO.setPurposeOfPayment(this.getPurposeOfPayment());
         i8SBSwitchControllerResponseVO.setToBankImd(this.getToBankImd());
         i8SBSwitchControllerResponseVO.setMerchantType(this.getMerchantType());
-        i8SBSwitchControllerResponseVO.setNetworkIdentifier(this.getNetwordIdentifier());
+        i8SBSwitchControllerResponseVO.setNetworkIdentifier(this.getNetworkIdentifier());
         i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
         i8SBSwitchControllerResponseVO.setDateLocalTransaction(this.getDateLocalTransaction());
         i8SBSwitchControllerResponseVO.setTimeLocalTransaction(this.getTimeLocalTransaction());
         i8SBSwitchControllerResponseVO.setBranchName(this.getAccountBranchName());
         i8SBSwitchControllerResponseVO.setBankName(this.getAccountBankName());
-        i8SBSwitchControllerResponseVO.setBeneficiaryIban(this.getBenificieryIban());
-        i8SBSwitchControllerResponseVO.setBeneficiaryId(this.getBeneficaryId());
+        i8SBSwitchControllerResponseVO.setBeneficiaryIban(this.getBeneficiaryIban());
+        i8SBSwitchControllerResponseVO.setBeneficiaryId(this.getBeneficiaryId());
 
         return i8SBSwitchControllerResponseVO;
     }

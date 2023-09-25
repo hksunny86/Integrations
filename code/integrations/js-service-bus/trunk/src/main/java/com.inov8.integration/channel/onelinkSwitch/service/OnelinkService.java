@@ -4,7 +4,9 @@ import com.inov8.integration.channel.esb.request.EsbBillInquiryRequest;
 import com.inov8.integration.channel.esb.request.EsbBillPaymentRequest;
 import com.inov8.integration.channel.esb.response.EsbBillInquiryResponse;
 import com.inov8.integration.channel.esb.response.EsbBillPaymentResponse;
+import com.inov8.integration.channel.onelinkSwitch.request.IbftAdviceRequest;
 import com.inov8.integration.channel.onelinkSwitch.request.IbftTitleFetchRequest;
+import com.inov8.integration.channel.onelinkSwitch.response.IbftAdviceResponse;
 import com.inov8.integration.channel.onelinkSwitch.response.IbftTitleFetchResponse;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
@@ -84,7 +86,7 @@ public class OnelinkService {
                     "}";
             ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(response, IbftTitleFetchResponse.class);
             Objects.requireNonNull(ibftTitleFetchResponse).setResponseCode("00");
-            logger.info("Response Code for One Link Title Fetch Request: " + ibftTitleFetchResponse.getResponseCode());
+            logger.info("Response Code for One Link IBFT Title Fetch Request: " + ibftTitleFetchResponse.getResponseCode());
         } else {
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.oneLinkIbftTitleFetchUrl);
@@ -105,11 +107,11 @@ public class OnelinkService {
             String response;
             try {
                 logger.info("Requesting URL " + uri.toUriString());
-                logger.info("One Link Title Fetch Request Sent to Client " + httpEntity.getBody().toString(), httpEntity.getHeaders());
+                logger.info("One Link IBFT Title Fetch Request Sent to Client " + httpEntity.getBody().toString(), httpEntity.getHeaders());
                 ResponseEntity<String> res1 = getRestTemplate().postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Entity: " + res1);
-                logger.info("Response Code of One Link Title Fetch Request received from client " + res1.getStatusCode().toString());
-                logger.info("Response of One Link Title Fetch Request received from client " + res1.getBody());
+                logger.info("Response Code of One Link IBFT Title Fetch Request received from client " + res1.getStatusCode().toString());
+                logger.info("Response of One Link IBFT Title Fetch Request received from client " + res1.getBody());
                 ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(res1.getBody(), IbftTitleFetchResponse.class);
                 Objects.requireNonNull(ibftTitleFetchResponse).setResponseCode(res1.getStatusCode().toString());
             } catch (RestClientException e) {
@@ -147,9 +149,115 @@ public class OnelinkService {
 
             long endTime = (new Date()).getTime();
             long difference = endTime - start;
-            logger.debug("One Link Title Fetch Request processed in: " + difference + " millisecond");
+            logger.debug("One Link IBFT Title Fetch Request processed in: " + difference + " millisecond");
         }
         return ibftTitleFetchResponse;
+    }
+
+    public IbftAdviceResponse oneLinkIbftAdviceResponse(IbftAdviceRequest ibftTitleFetchRequest) {
+
+        IbftAdviceResponse ibftAdviceResponse = new IbftAdviceResponse();
+
+        long start = System.currentTimeMillis();
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+            logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
+            String response = "{\n" +
+                    "    \"rrn\": \"20230915201527\",\n" +
+                    "    \"transmissionTime\": \"20230915201527\",\n" +
+                    "    \"transDateTime\": \"20230915201527\",\n" +
+                    "    \"responseCode\": \"00\",\n" +
+                    "    \"stan\": \"20230915201527\",\n" +
+                    "    \"transactionAmount\": \"100\",\n" +
+                    "    \"accountTitle\": \"AHSAN RAZA\",\n" +
+                    "    \"accountNo1\": \"\",\n" +
+                    "    \"accountNo2\": \"\",\n" +
+                    "    \"cardAcceptorIdentificationCode\": \"000000\",\n" +
+                    "    \"cardAcceptorTerminalId\": \"00000000\",\n" +
+                    "    \"purposeOfPayment\": \"BILL\",\n" +
+                    "    \"senderName\": \"\",\n" +
+                    "    \"accountBankName\": \"UBL\",\n" +
+                    "    \"accountBranchName\": \"DHA Branch\",\n" +
+                    "    \"toBankImd\": \"\",\n" +
+                    "    \"cardAcceptorNameAndLocation\": \"JSBL Branchless Banking Channel Pakistan\",\n" +
+                    "    \"authIdResp\": \"\",\n" +
+                    "    \"networkIdentifer\": \"\",\n" +
+                    "    \"merchantType\": \"0088\",\n" +
+                    "    \"senderId\": \"\",\n" +
+                    "    \"recieverId\": \"\",\n" +
+                    "    \"pan\": \"\",\n" +
+                    "    \"message\": \"Success\",\n" +
+                    "    \"dateLocalTransaction\": \"20230915201527\",\n" +
+                    "    \"timeLocalTransaction\": \"20230915201527\",\n" +
+                    "    \"identifier\": \"RDV\"\n" +
+                    "}";
+            ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(response, IbftAdviceResponse.class);
+            Objects.requireNonNull(ibftAdviceResponse).setResponseCode("00");
+            logger.info("Response Code for One Link IBFT Advice Request: " + ibftAdviceResponse.getResponseCode());
+        } else {
+
+            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.oneLinkIbftTitleFetchUrl);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("Access_token", oneLinkAccessToken);
+            String requestJSON = JSONUtil.getJSON(ibftTitleFetchRequest);
+            HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
+            logger.info("Prepared Request HttpEntity " + httpEntity);
+            Iterator res = this.restTemplate.getMessageConverters().iterator();
+
+            while (res.hasNext()) {
+                HttpMessageConverter endTime = (HttpMessageConverter) res.next();
+                if (endTime instanceof StringHttpMessageConverter) {
+                    ((StringHttpMessageConverter) endTime).setWriteAcceptCharset(false);
+                }
+            }
+            String response;
+            try {
+                logger.info("Requesting URL " + uri.toUriString());
+                logger.info("One Link IBFT Advice Request Sent to Client " + httpEntity.getBody().toString(), httpEntity.getHeaders());
+                ResponseEntity<String> res1 = getRestTemplate().postForEntity(uri.build().toUri(), httpEntity, String.class);
+                logger.info("Response Entity: " + res1);
+                logger.info("Response Code of One Link IBFT Advice Request received from client " + res1.getStatusCode().toString());
+                logger.info("Response of One Link IBFT Advice Request received from client " + res1.getBody());
+                ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(res1.getBody(), IbftAdviceResponse.class);
+                Objects.requireNonNull(ibftAdviceResponse).setResponseCode(res1.getStatusCode().toString());
+            } catch (RestClientException e) {
+                if (e instanceof HttpStatusCodeException) {
+                    response = ((HttpStatusCodeException) e).getStatusCode().toString();
+                    String result;
+                    if (response.equals("400")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        Objects.requireNonNull(ibftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(result, IbftAdviceResponse.class);
+                    } else if (response.equals("422")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        Objects.requireNonNull(ibftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(result, IbftAdviceResponse.class);
+                    } else if (response.equals("500")) {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        Objects.requireNonNull(ibftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(result, IbftAdviceResponse.class);
+                    } else {
+                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                        Objects.requireNonNull(ibftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                        ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(result, IbftAdviceResponse.class);
+                    }
+                }
+                if (e instanceof ResourceAccessException) {
+                    String result = e.getMessage();
+                    logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
+                    Objects.requireNonNull(ibftAdviceResponse).setResponseCode("500");
+//                    validatePdmResponse = (validatePdmResponse) JSONUtil.jsonToObject(result, validatePdmResponse.class);
+                }
+            } catch (Exception e) {
+                logger.error("Exception Occurred: " + e.getMessage());
+            }
+
+            long endTime = (new Date()).getTime();
+            long difference = endTime - start;
+            logger.debug("One Link IBFT Advice Request processed in: " + difference + " millisecond");
+        }
+        return ibftAdviceResponse;
     }
 
     public I8SBSwitchControllerRequestVO getI8SBSwitchControllerRequestVO() {

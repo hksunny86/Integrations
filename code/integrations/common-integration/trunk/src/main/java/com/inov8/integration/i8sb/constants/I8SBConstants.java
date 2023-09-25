@@ -375,7 +375,8 @@ public class I8SBConstants {
     public static String RequestType_DEBIT_CARD_DiscrepancyStatus = "DebitCardDiscrepancyStatus";
     public static String RequestType_ESB_BILL_INQUIRRY = "EsbBillInquiry";
     public static String RequestType_ESB_BILL_PAYMENT = "EsbBillPayment";
-    public static String RequestType_ONE_LINK_IBFT_TITLE_FETCH = "OnelinkIbftTitleFetch";
+    public static String RequestType_ONE_LINK_IBFT_TITLE_FETCH = "OneLinkIbftTitleFetch";
+    public static String RequestType_ONE_LINK_IBFT_ADVICE = "OneLinkIbftAdvice";
 
 
 

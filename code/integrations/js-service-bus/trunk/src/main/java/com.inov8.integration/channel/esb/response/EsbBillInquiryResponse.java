@@ -97,14 +97,14 @@ public class EsbBillInquiryResponse extends Response {
         i8SBSwitchControllerResponseVO.setMerchantType(this.getMerchantType());
         i8SBSwitchControllerResponseVO.setTraceNo(this.getTraceNo());
         i8SBSwitchControllerResponseVO.setDateTime(this.getDateTime());
-        i8SBSwitchControllerResponseVO.setConsumerDetail(this.billInquiry.getConsumerDetail());
+        i8SBSwitchControllerResponseVO.setCustomerName(this.billInquiry.getConsumerDetail());
         i8SBSwitchControllerResponseVO.setBillStatus(this.billInquiry.getBillStatus());
         i8SBSwitchControllerResponseVO.setDueDate(this.billInquiry.getDueDate());
         i8SBSwitchControllerResponseVO.setAmountWithinDueDate(this.billInquiry.getAmountWithinDueDate());
-        i8SBSwitchControllerResponseVO.setAmountAfterDueDate(this.billInquiry.getAmountAfterDueDate());
+        i8SBSwitchControllerResponseVO.setBillAmountAfterDueDate(this.billInquiry.getAmountAfterDueDate());
         i8SBSwitchControllerResponseVO.setBillingMonth(this.billInquiry.getBillingMonth());
         i8SBSwitchControllerResponseVO.setDatePaid(this.billInquiry.getDatePaid());
-        i8SBSwitchControllerResponseVO.setAmountPaid(this.billInquiry.getAmountPaid());
+        i8SBSwitchControllerResponseVO.setBillAmount(this.billInquiry.getAmountPaid());
         i8SBSwitchControllerResponseVO.setTransactionId(this.billInquiry.getTranAuthId());
         i8SBSwitchControllerResponseVO.setReserved(this.billInquiry.getReserved());
 

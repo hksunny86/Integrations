@@ -69,7 +69,7 @@ public class EsbService {
                     "        \"Amount_After_DueDate\": \"+0000000500000\",\n" +
                     "        \"Billing_Month\": \"2010\",\n" +
                     "        \"Date_Paid\": \"      \",\n" +
-                    "        \"Amount_Paid\": \"      \",\n" +
+                    "        \"Amount_Paid\": \" 5000\",\n" +
                     "        \"Tran_Auth_Id\": \"      \",\n" +
                     "        \"Reserved\": \"\"\n" +
                     "    }\n" +
@@ -158,7 +158,7 @@ public class EsbService {
                     "    \"dateTime\": \"20230915201527\",\n" +
                     "    \"responseCode\": \"00\",\n" +
                     "    \"response\": {\n" +
-                    "        \"Response_code\": \"02\",\n" +
+                    "        \"Response_code\": \"00\",\n" +
                     "        \"Identification_Parameter\": \"\",\n" +
                     "        \"Reserved\": \"\"\n" +
                     "    }\n" +

@@ -7,6 +7,8 @@ import com.inov8.integration.channel.tasdeeq.request.Request;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 
+import java.util.Date;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "pan",
@@ -192,20 +194,20 @@ public class IbftTitleFetchRequest extends Request {
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        this.setPan(i8SBSwitchControllerRequestVO.getPAN());
-        this.setTransactionAmount(i8SBSwitchControllerRequestVO.getTransactionAmount());
-        this.setTransactionDateTime(i8SBSwitchControllerRequestVO.getTransactionDateTime());
-        this.setMerchantType(i8SBSwitchControllerRequestVO.getMerchantType());
-        this.setPointOfEntry(i8SBSwitchControllerRequestVO.getPointOfEntry());
-        this.setNetworkIdentifier(i8SBSwitchControllerRequestVO.getNetworkIdentifier());
-        this.setCardAcceptorTerminalId(i8SBSwitchControllerRequestVO.getCardAcceptorTerminalId());
-        this.setCardAcceptorIdentificationCode(i8SBSwitchControllerRequestVO.getCardAcceptorIdentificationCode());
-        this.setCardAcceptorNameAndLocation(i8SBSwitchControllerRequestVO.getCardAcceptorNameAndLocation());
-        this.setPurposeOfPayment(i8SBSwitchControllerRequestVO.getTransferPurpose());
-        this.setCurrencyCode(i8SBSwitchControllerRequestVO.getCurrencyCode());
+        this.setPan("");
+        this.setTransactionAmount("");
+        this.setTransactionDateTime(String.valueOf(new Date()));
+        this.setMerchantType("");
+        this.setPointOfEntry("");
+        this.setNetworkIdentifier("RDV");
+        this.setCardAcceptorTerminalId("00000000");
+        this.setCardAcceptorIdentificationCode("000000");
+        this.setCardAcceptorNameAndLocation("JSBL Branchless Banking Channel Pakistan");
+        this.setPurposeOfPayment("");
+        this.setCurrencyCode("586");
         this.setAccountNo1(i8SBSwitchControllerRequestVO.getAccountId1());
         this.setAccountNo2(i8SBSwitchControllerRequestVO.getAccountId2());
-        this.setToBankImd(i8SBSwitchControllerRequestVO.getToBankIMD());
+        this.setToBankImd("");
         this.setStan(i8SBSwitchControllerRequestVO.getSTAN());
         this.setRrn(i8SBSwitchControllerRequestVO.getRRN());
     }

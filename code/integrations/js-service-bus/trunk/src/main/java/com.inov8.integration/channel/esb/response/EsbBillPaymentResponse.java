@@ -9,6 +9,8 @@ import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
         "traceNo",
         "dateTime",
         "responseCode",
+        "responseDetails",
         "response"
 })
 public class EsbBillPaymentResponse extends Response {
@@ -33,6 +36,8 @@ public class EsbBillPaymentResponse extends Response {
     private String dateTime;
     @JsonProperty("responseCode")
     private String responseCode;
+    @JsonProperty("responseDetails")
+    private List<String> responseDetails;
     @JsonProperty("response")
     private BillPayment billPayment;
 
@@ -76,6 +81,14 @@ public class EsbBillPaymentResponse extends Response {
         this.responseCode = responseCode;
     }
 
+    public List<String> getResponseDetails() {
+        return responseDetails;
+    }
+
+    public void setResponseDetails(List<String> responseDetails) {
+        this.responseDetails = responseDetails;
+    }
+
     public BillPayment getBillPayment() {
         return billPayment;
     }
@@ -92,14 +105,17 @@ public class EsbBillPaymentResponse extends Response {
             i8SBSwitchControllerResponseVO.setDescription("Success");
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
+            i8SBSwitchControllerResponseVO.setDescription(this.getResponseDetails().get(0));
         }
         i8SBSwitchControllerResponseVO.setProcessingCode(this.getProcessingCode());
         i8SBSwitchControllerResponseVO.setMerchantType(this.getMerchantType());
         i8SBSwitchControllerResponseVO.setTraceNo(this.getTraceNo());
         i8SBSwitchControllerResponseVO.setDateTime(this.getDateTime());
-        i8SBSwitchControllerResponseVO.setResponseCode(this.billPayment.getResponseCode());
-        i8SBSwitchControllerResponseVO.setIdentificationParameter(this.billPayment.getIdentificationParameter());
-        i8SBSwitchControllerResponseVO.setReserved(this.billPayment.getReserved());
+        if (this.getBillPayment() != null) {
+            i8SBSwitchControllerResponseVO.setResponseCode(this.billPayment.getResponseCode());
+            i8SBSwitchControllerResponseVO.setIdentificationParameter(this.billPayment.getIdentificationParameter());
+            i8SBSwitchControllerResponseVO.setReserved(this.billPayment.getReserved());
+        }
 
         return i8SBSwitchControllerResponseVO;
     }

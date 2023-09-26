@@ -9,6 +9,8 @@ import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.Date;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "processingCode",
@@ -118,13 +120,13 @@ public class EsbBillInquiryRequest extends Request {
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
         this.setProcessingCode("RCDPbillInquiry");
-        this.setDateTime(i8SBSwitchControllerRequestVO.getDateTime());
-        this.setTraceNo(i8SBSwitchControllerRequestVO.getTraceNo());
-        this.setMerchantType(i8SBSwitchControllerRequestVO.getMerchantType());
+        this.setDateTime(this.getDateTime());
+        this.setTraceNo(i8SBSwitchControllerRequestVO.getSTAN());
+        this.setMerchantType(PropertyReader.getProperty("esb.merchant.Type"));
         this.setUserName(PropertyReader.getProperty("esb.username"));
         this.setPassword(PropertyReader.getProperty("esb.password"));
         this.setConsumerNumber(i8SBSwitchControllerRequestVO.getConsumerNumber());
-        this.setBankMnemonic(i8SBSwitchControllerRequestVO.getBankMnemonic());
+        this.setBankMnemonic(PropertyReader.getProperty("esb.bankMnemonic"));
         this.setReserved(i8SBSwitchControllerRequestVO.getReserved1());
     }
 

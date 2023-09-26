@@ -9,6 +9,8 @@ import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
         "traceNo",
         "dateTime",
         "responseCode",
+        "responseDetails",
         "response"
 })
 public class EsbBillInquiryResponse extends Response {
@@ -33,6 +36,8 @@ public class EsbBillInquiryResponse extends Response {
     private String dateTime;
     @JsonProperty("responseCode")
     private String responseCode;
+    @JsonProperty("responseDetails")
+    private List<String> responseDetails;
     @JsonProperty("response")
     private BillInquiry billInquiry;
 
@@ -76,6 +81,14 @@ public class EsbBillInquiryResponse extends Response {
         this.responseCode = responseCode;
     }
 
+    public List<String> getResponseDetails() {
+        return responseDetails;
+    }
+
+    public void setResponseDetails(List<String> responseDetails) {
+        this.responseDetails = responseDetails;
+    }
+
     public BillInquiry getBillInquiry() {
         return billInquiry;
     }
@@ -92,21 +105,24 @@ public class EsbBillInquiryResponse extends Response {
             i8SBSwitchControllerResponseVO.setDescription("Success");
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
+            i8SBSwitchControllerResponseVO.setDescription(this.getResponseDetails().get(0));
         }
         i8SBSwitchControllerResponseVO.setProcessingCode(this.getProcessingCode());
         i8SBSwitchControllerResponseVO.setMerchantType(this.getMerchantType());
         i8SBSwitchControllerResponseVO.setTraceNo(this.getTraceNo());
         i8SBSwitchControllerResponseVO.setDateTime(this.getDateTime());
-        i8SBSwitchControllerResponseVO.setCustomerName(this.billInquiry.getConsumerDetail());
-        i8SBSwitchControllerResponseVO.setBillStatus(this.billInquiry.getBillStatus());
-        i8SBSwitchControllerResponseVO.setDueDate(this.billInquiry.getDueDate());
-        i8SBSwitchControllerResponseVO.setAmountWithinDueDate(this.billInquiry.getAmountWithinDueDate());
-        i8SBSwitchControllerResponseVO.setBillAmountAfterDueDate(this.billInquiry.getAmountAfterDueDate());
-        i8SBSwitchControllerResponseVO.setBillingMonth(this.billInquiry.getBillingMonth());
-        i8SBSwitchControllerResponseVO.setDatePaid(this.billInquiry.getDatePaid());
-        i8SBSwitchControllerResponseVO.setBillAmount(this.billInquiry.getAmountPaid());
-        i8SBSwitchControllerResponseVO.setTransactionId(this.billInquiry.getTranAuthId());
-        i8SBSwitchControllerResponseVO.setReserved(this.billInquiry.getReserved());
+        if (this.getBillInquiry() != null) {
+            i8SBSwitchControllerResponseVO.setCustomerName(this.billInquiry.getConsumerDetail());
+            i8SBSwitchControllerResponseVO.setBillStatus(this.billInquiry.getBillStatus());
+            i8SBSwitchControllerResponseVO.setDueDate(this.billInquiry.getDueDate());
+            i8SBSwitchControllerResponseVO.setAmountWithinDueDate(this.billInquiry.getAmountWithinDueDate());
+            i8SBSwitchControllerResponseVO.setBillAmountAfterDueDate(this.billInquiry.getAmountAfterDueDate());
+            i8SBSwitchControllerResponseVO.setBillingMonth(this.billInquiry.getBillingMonth());
+            i8SBSwitchControllerResponseVO.setDatePaid(this.billInquiry.getDatePaid());
+            i8SBSwitchControllerResponseVO.setBillAmount(this.billInquiry.getAmountPaid());
+            i8SBSwitchControllerResponseVO.setTransactionId(this.billInquiry.getTranAuthId());
+            i8SBSwitchControllerResponseVO.setReserved(this.billInquiry.getReserved());
+        }
 
         return i8SBSwitchControllerResponseVO;
     }

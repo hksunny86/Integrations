@@ -2806,4 +2806,9 @@ public class JsIntegrationController implements WebServiceSwitchController {
     public WebServiceVO thirdPartyCredit(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO customerCliStatus(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

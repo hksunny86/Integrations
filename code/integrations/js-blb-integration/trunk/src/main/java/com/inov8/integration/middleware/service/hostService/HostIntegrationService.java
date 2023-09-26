@@ -18501,4 +18501,110 @@ public class HostIntegrationService {
 //        }
         return response;
     }
+
+    public CustomerCliStatusResponse customerCliStatusResponse(CustomerCliStatusRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Customer Cli Status Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        CustomerCliStatusResponse response = new CustomerCliStatusResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getMobileNumber());
+//        messageVO.setStan(request.getStan());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("CustomerCliStatus");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+//        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Customer Cli Status Request to Micro Bank " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            messageVO = switchController.customerCliStatus(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Customer Cli Status Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setAccountTitle(messageVO.getAccountTitle());
+            response.setCnic(messageVO.getCnicNo());
+            response.setAccountType(messageVO.getAccountType());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Customer Cli Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Customer Cli Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Customer Cli Status Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Customer Cli Status Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        //updateTransactionInDB(logModel);
+//        }
+        return response;
+    }
 }

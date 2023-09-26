@@ -3,9 +3,11 @@ package com.inov8.integration.middleware.controller.thirdPartyController;
 import com.inov8.integration.middleware.controller.validator.HostRequestValidator;
 import com.inov8.integration.middleware.controller.validator.ValidationException;
 import com.inov8.integration.middleware.pdu.request.AccountStatusRequest;
+import com.inov8.integration.middleware.pdu.request.CustomerCliStatusRequest;
 import com.inov8.integration.middleware.pdu.request.ThirdPartyCreditInquiryRequest;
 import com.inov8.integration.middleware.pdu.request.ThirdPartyCreditRequest;
 import com.inov8.integration.middleware.pdu.response.AccountStatusResponse;
+import com.inov8.integration.middleware.pdu.response.CustomerCliStatusResponse;
 import com.inov8.integration.middleware.pdu.response.ThirdPartyCreditInquiryResponse;
 import com.inov8.integration.middleware.pdu.response.ThirdPartyCreditResponse;
 import com.inov8.integration.middleware.service.hostService.HostIntegrationService;
@@ -273,43 +275,43 @@ public class JSThirdPartyController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        HostRequestValidator.validateThirdPartyCredit(request);
-                        logger.info("Authentication successful");
-                        response = integrationService.thirdPartyCreditResponse(request);
-                        logger.info("Service Response successful");
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setMessages(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setMessages(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-                    logger.info("******* DEBUG LOGS FOR Third Party Credit Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Third Party Credit Request AUTHENTICATION *********");
-                    response = new ThirdPartyCreditResponse();
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    HostRequestValidator.validateThirdPartyCredit(request);
+                    logger.info("Authentication successful");
+                    response = integrationService.thirdPartyCreditResponse(request);
+                    logger.info("Service Response successful");
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setMessages("Request is not authenticated");
-                    Data data = new Data();
-                    data.setRrn(request.getRrn());
-                    data.setResponseDateTime(request.getDateTime());
-                    response.setData(data);
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setMessages(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setMessages(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
                 logger.info("******* DEBUG LOGS FOR Third Party Credit Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Third Party Credit Request AUTHENTICATION *********");
                 response = new ThirdPartyCreditResponse();
-                response.setResponseCode("111");
-                response.setMessages("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                response.setResponseCode("420");
+                response.setMessages("Request is not authenticated");
+                Data data = new Data();
+                data.setRrn(request.getRrn());
+                data.setResponseDateTime(request.getDateTime());
+                response.setData(data);
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Third Party Credit Request *********");
+//                response = new ThirdPartyCreditResponse();
+//                response.setResponseCode("111");
+//                response.setMessages("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
             logger.error("Exception while processing request" + e.getMessage());
             response = new ThirdPartyCreditResponse();
@@ -322,6 +324,85 @@ public class JSThirdPartyController {
         }
         long end = System.currentTimeMillis() - start;
         logger.info("Third Party Credit Request Processed in : {} ms {}", end, "");
+
+        return response;
+    }
+
+    @RequestMapping(value = "api/CustomerCliStatus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    CustomerCliStatusResponse customerCliStatusResponse(@Valid @RequestBody CustomerCliStatusRequest request) throws Exception {
+        CustomerCliStatusResponse response = new CustomerCliStatusResponse();
+
+        String className = this.getClass().getSimpleName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+        long start = System.currentTimeMillis();
+
+        try {
+
+            logger.info("Customer Cli Status Request Received at Controller at time: " + start);
+            String requestXML = JSONUtil.getJSON(request);
+            //        requestXML = XMLUtil.maskPassword(requestXML);
+//            logger.info("Start Processing Third Party Credit Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Customer Cli Status Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
+            StringBuilder stringText = new StringBuilder()
+                    .append(request.getUserName())
+                    .append(request.getPassword())
+                    .append(request.getMobileNumber())
+                    .append(request.getStan())
+                    .append(request.getDateTime())
+                    .append(request.getRrn())
+                    .append(request.getChannelId())
+                    .append(request.getTerminalId());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    HostRequestValidator.validateCustomerCliStatus(request);
+                    response = integrationService.customerCliStatusResponse(request);
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+                logger.info("******* DEBUG LOGS FOR Customer Cli Status Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Customer Cli Status Request AUTHENTICATION *********");
+                response = new CustomerCliStatusResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+            }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Customer Cli Status Request *********");
+//                response = new CustomerCliStatusResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
+        } catch (Exception e) {
+            logger.error("Exception while processing request" + e.getMessage());
+            response = new CustomerCliStatusResponse();
+            response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            response.setResponseDescription(e.getLocalizedMessage());
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
+            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
+            logger.info("Critical Error ::" + e.getLocalizedMessage());
+        }
+        long end = System.currentTimeMillis() - start;
+        logger.info("Customer Cli Status Request Processed in : {} ms {}", end, "");
 
         return response;
     }

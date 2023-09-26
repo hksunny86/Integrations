@@ -164,5 +164,6 @@ public interface WebServiceSwitchController {
     WebServiceVO getL2AccountUpgradeDiscrepant(WebServiceVO webServiceVO);
     WebServiceVO thirdPartyCreditInquiry(WebServiceVO webServiceVO);
     WebServiceVO thirdPartyCredit(WebServiceVO webServiceVO);
+    WebServiceVO customerCliStatus(WebServiceVO webServiceVO);
 
 }

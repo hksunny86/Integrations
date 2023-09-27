@@ -5,6 +5,7 @@ import com.inov8.integration.i8sb.vo.CardDetailVO;
 import com.inov8.integration.vo.StatementVo;
 import com.inov8.integration.webservice.optasiaVO.*;
 import com.inov8.integration.webservice.raastVO.IDs;
+import com.inov8.integration.webservice.safVO.Data;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import javax.xml.bind.annotation.XmlTransient;
@@ -491,6 +492,16 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String senderName;
     private String senderId;
     private String receiverId;
+    private Data retryIbftAdvice;
+
+
+    public Data getRetryIbftAdvice() {
+        return retryIbftAdvice;
+    }
+
+    public void setRetryIbftAdvice(Data retryIbftAdvice) {
+        this.retryIbftAdvice = retryIbftAdvice;
+    }
 
     public String getSenderName() {
         return senderName;

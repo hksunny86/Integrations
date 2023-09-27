@@ -514,6 +514,15 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String cardAcceptorTerminalId;
     private String cardAcceptorIdentificationCode;
     private String cardAcceptorNameAndLocation;
+    private String saf1linkIntegrationId;
+
+    public String getSaf1linkIntegrationId() {
+        return saf1linkIntegrationId;
+    }
+
+    public void setSaf1linkIntegrationId(String saf1linkIntegrationId) {
+        this.saf1linkIntegrationId = saf1linkIntegrationId;
+    }
 
     public String getPointOfEntry() {
         return pointOfEntry;

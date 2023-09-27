@@ -102,8 +102,11 @@ public class EsbService {
                 logger.info("Response Entity: " + res1);
                 logger.info("Response Code of ESB Bill Inquiry Request received from client " + res1.getStatusCode().toString());
                 logger.info("Response of ESB Bill Inquiry Request received from client " + res1.getBody());
-                esbBillInquiryResponse = (EsbBillInquiryResponse) JSONUtil.jsonToObject(res1.getBody(), EsbBillInquiryResponse.class);
-                Objects.requireNonNull(esbBillInquiryResponse).setResponseCode(res1.getStatusCode().toString());
+                String responseCode = res1.getStatusCode().toString();
+                if (responseCode.equalsIgnoreCase("200")) {
+                    esbBillInquiryResponse = (EsbBillInquiryResponse) JSONUtil.jsonToObject(res1.getBody(), EsbBillInquiryResponse.class);
+                }
+//                Objects.requireNonNull(esbBillInquiryResponse).setResponseCode(res1.getStatusCode().toString());
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();
@@ -191,8 +194,11 @@ public class EsbService {
                 logger.info("Response Entity: " + res1);
                 logger.info("Response Code of ESB Bill Payment Request received from client " + res1.getStatusCode().toString());
                 logger.info("Response of ESB Bill Payment Request received from client " + res1.getBody());
-                esbBillPaymentResponse = (EsbBillPaymentResponse) JSONUtil.jsonToObject(res1.getBody(), EsbBillPaymentResponse.class);
-                Objects.requireNonNull(esbBillPaymentResponse).setResponseCode(res1.getStatusCode().toString());
+                String responseCode = res1.getStatusCode().toString();
+                if (responseCode.equalsIgnoreCase("200")) {
+                    esbBillPaymentResponse = (EsbBillPaymentResponse) JSONUtil.jsonToObject(res1.getBody(), EsbBillPaymentResponse.class);
+                }
+//                Objects.requireNonNull(esbBillPaymentResponse).setResponseCode(res1.getStatusCode().toString());
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();

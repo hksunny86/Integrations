@@ -9,7 +9,10 @@ import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DecimalFormat;
+import java.util.Formatter;
 import java.util.List;
+import java.util.Objects;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -105,7 +108,9 @@ public class EsbBillInquiryResponse extends Response {
             i8SBSwitchControllerResponseVO.setDescription("Success");
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
-            i8SBSwitchControllerResponseVO.setDescription(this.getResponseDetails().get(0));
+            if (this.getResponseDetails() != null) {
+                i8SBSwitchControllerResponseVO.setDescription(this.getResponseDetails().get(0));
+            }
         }
         i8SBSwitchControllerResponseVO.setProcessingCode(this.getProcessingCode());
         i8SBSwitchControllerResponseVO.setMerchantType(this.getMerchantType());
@@ -115,11 +120,11 @@ public class EsbBillInquiryResponse extends Response {
             i8SBSwitchControllerResponseVO.setCustomerName(this.billInquiry.getConsumerDetail());
             i8SBSwitchControllerResponseVO.setBillStatus(this.billInquiry.getBillStatus());
             i8SBSwitchControllerResponseVO.setDueDate(this.billInquiry.getDueDate());
-            i8SBSwitchControllerResponseVO.setAmountWithinDueDate(this.billInquiry.getAmountWithinDueDate());
+            i8SBSwitchControllerResponseVO.setBillAmount(this.billInquiry.getAmountWithinDueDate());
             i8SBSwitchControllerResponseVO.setBillAmountAfterDueDate(this.billInquiry.getAmountAfterDueDate());
             i8SBSwitchControllerResponseVO.setBillingMonth(this.billInquiry.getBillingMonth());
             i8SBSwitchControllerResponseVO.setDatePaid(this.billInquiry.getDatePaid());
-            i8SBSwitchControllerResponseVO.setBillAmount(this.billInquiry.getAmountPaid());
+            i8SBSwitchControllerResponseVO.setAmountPaid(this.billInquiry.getAmountPaid());
             i8SBSwitchControllerResponseVO.setTransactionId(this.billInquiry.getTranAuthId());
             i8SBSwitchControllerResponseVO.setReserved(this.billInquiry.getReserved());
         }

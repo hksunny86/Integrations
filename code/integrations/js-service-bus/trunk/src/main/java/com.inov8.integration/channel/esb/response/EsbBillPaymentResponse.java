@@ -105,7 +105,9 @@ public class EsbBillPaymentResponse extends Response {
             i8SBSwitchControllerResponseVO.setDescription("Success");
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
-            i8SBSwitchControllerResponseVO.setDescription(this.getResponseDetails().get(0));
+            if (this.getResponseDetails() != null) {
+                i8SBSwitchControllerResponseVO.setDescription(this.getResponseDetails().get(0));
+            }
         }
         i8SBSwitchControllerResponseVO.setProcessingCode(this.getProcessingCode());
         i8SBSwitchControllerResponseVO.setMerchantType(this.getMerchantType());

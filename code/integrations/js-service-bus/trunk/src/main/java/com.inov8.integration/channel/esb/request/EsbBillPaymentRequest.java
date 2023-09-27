@@ -164,7 +164,7 @@ public class EsbBillPaymentRequest extends Request {
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
         this.setProcessingCode("RCDPbillInquiry");
-        this.setDateTime(this.getDateTime());
+        this.setDateTime(i8SBSwitchControllerRequestVO.getTransmissionDateAndTime());
         this.setTraceNo(i8SBSwitchControllerRequestVO.getSTAN());
         this.setMerchantType(PropertyReader.getProperty("esb.merchant.Type"));
         this.setUserName(PropertyReader.getProperty("esb.username"));
@@ -172,8 +172,8 @@ public class EsbBillPaymentRequest extends Request {
         this.setConsumerNumber(i8SBSwitchControllerRequestVO.getConsumerNumber());
         this.setTranAuthId(i8SBSwitchControllerRequestVO.getTransactionId());
         this.setTransactionAmount(i8SBSwitchControllerRequestVO.getTransactionAmount());
-        this.setTranDate(this.getTranDate());
-        this.setTranTime(this.getTranTime());
+        this.setTranDate(i8SBSwitchControllerRequestVO.getTransactionDate());
+        this.setTranTime(i8SBSwitchControllerRequestVO.getTransactionDateTime());
         this.setBankMnemonic(PropertyReader.getProperty("esb.bankMnemonic"));
         this.setReserved(i8SBSwitchControllerRequestVO.getReserved1());
     }

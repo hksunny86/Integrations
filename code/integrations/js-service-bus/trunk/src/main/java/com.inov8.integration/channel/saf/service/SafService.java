@@ -51,23 +51,43 @@ public class SafService {
         if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String response = "{\n" +
-                    "    \"processingCode\": \"RCDPbillInquiry\",\n" +
-                    "    \"merchantType\": \"0088\",\n" +
-                    "    \"traceNo\": \"500202\",\n" +
-                    "    \"dateTime\": \"20230915201527\",\n" +
-                    "    \"responseCode\": \"00\",\n" +
-                    "    \"response\": {\n" +
-                    "        \"Response_code\": \"00\",\n" +
-                    "        \"Consumer_Detail\": \"Shasita Parveen \",\n" +
-                    "        \"Bill_Status\": \"U\",\n" +
-                    "        \"Due_Date\": \"20201018\",\n" +
-                    "        \"Amount_Within_DueDate\": \"+0000000500000\",\n" +
-                    "        \"Amount_After_DueDate\": \"+0000000500000\",\n" +
-                    "        \"Billing_Month\": \"2010\",\n" +
-                    "        \"Date_Paid\": \"      \",\n" +
-                    "        \"Amount_Paid\": \" 5000\",\n" +
-                    "        \"Tran_Auth_Id\": \"      \",\n" +
-                    "        \"Reserved\": \"\"\n" +
+                    "    \"responseCode\":\"1\",\n" +
+                    "    \"messages\": \"Transaction Successful\",\n" +
+                    "    \"data\": {\n" +
+                    "        \"saf1linkIntegrationId\": null,\n" +
+                    "        \"accountbankname\": \"UBL\",\n" +
+                    "        \"accountbranchname\": \"DHA Phase 2\",\n" +
+                    "        \"accountno1\": \"03004568987\",\n" +
+                    "        \"accountno2\": \"03054512368\",\n" +
+                    "        \"accounttitle\": \"YAMEEN BUTT\",\n" +
+                    "        \"authidresp\": null,\n" +
+                    "        \"beneficiaryid\": \"PK14UBL0003004568987\",\n" +
+                    "        \"cardacceptoridentificationcode\": null,\n" +
+                    "        \"cardacceptornameandlocation\": null,\n" +
+                    "        \"cardacceptorterminalid\": null,\n" +
+                    "        \"createdate\": null,\n" +
+                    "        \"createuser\": null,\n" +
+                    "        \"currencycode\": \"PKR\",\n" +
+                    "        \"lastupdatedate\": null,\n" +
+                    "        \"lastupdateuser\": null,\n" +
+                    "        \"merchanttype\": \"0088\",\n" +
+                    "        \"networkidentifier\": null,\n" +
+                    "        \"noOfRetries\": null,\n" +
+                    "        \"pan\": \"03004568987\",\n" +
+                    "        \"pointofentry\": null,\n" +
+                    "        \"purposeofpayment\": null,\n" +
+                    "        \"requestMessage\": null,\n" +
+                    "        \"rrn\": \"202309271228\",\n" +
+                    "        \"senderid\": null,\n" +
+                    "        \"sendername\": null,\n" +
+                    "        \"stan\": \"456123\",\n" +
+                    "        \"status\": \"COMPLETED\",\n" +
+                    "        \"statusdescr\": \"COMPLETED\",\n" +
+                    "        \"tobankimd\": null,\n" +
+                    "        \"transType\": \"\",\n" +
+                    "        \"transactionamount\": \"100\",\n" +
+                    "        \"transactiondatetime\": \"202309271228\",\n" +
+                    "        \"updateindex\": null\n" +
                     "    }\n" +
                     "}";
             retryIbftAdviceResponse = (RetryIbftAdviceResponse) JSONUtil.jsonToObject(response, RetryIbftAdviceResponse.class);
@@ -97,8 +117,11 @@ public class SafService {
                 logger.info("Response Entity: " + res1);
                 logger.info("Response Code of SAF Retry IBFT Advice Request received from client " + res1.getStatusCode().toString());
                 logger.info("Response of SAF Retry IBFT Advice Request received from client " + res1.getBody());
-                retryIbftAdviceResponse = (RetryIbftAdviceResponse) JSONUtil.jsonToObject(res1.getBody(), RetryIbftAdviceResponse.class);
-                Objects.requireNonNull(retryIbftAdviceResponse).setResponseCode(res1.getStatusCode().toString());
+                String responseCode = res1.getStatusCode().toString();
+                if (responseCode.equalsIgnoreCase("200")) {
+                    retryIbftAdviceResponse = (RetryIbftAdviceResponse) JSONUtil.jsonToObject(res1.getBody(), RetryIbftAdviceResponse.class);
+                }
+//                Objects.requireNonNull(retryIbftAdviceResponse).setResponseCode(res1.getStatusCode().toString());
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();
@@ -162,11 +185,7 @@ public class SafService {
         try {
             sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy)
                     .build();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException e) {
             e.printStackTrace();
         }
         SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());

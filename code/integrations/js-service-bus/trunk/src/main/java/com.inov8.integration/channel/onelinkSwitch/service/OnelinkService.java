@@ -47,7 +47,6 @@ public class OnelinkService {
     private RestTemplate restTemplate = new RestTemplate();
     private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
     private String oneLinkIbftTitleFetchUrl = PropertyReader.getProperty("oneLink.ibft.title.fetch");
-    private String oneLinkAccessToken = PropertyReader.getProperty("oneLink.access.token");
     I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
     public IbftTitleFetchResponse oneLinkIbftTitleFetchResponse(IbftTitleFetchRequest ibftTitleFetchRequest) {
@@ -92,7 +91,6 @@ public class OnelinkService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.oneLinkIbftTitleFetchUrl);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Access_token", oneLinkAccessToken);
             String requestJSON = JSONUtil.getJSON(ibftTitleFetchRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
             logger.info("Prepared Request HttpEntity " + httpEntity);
@@ -112,8 +110,11 @@ public class OnelinkService {
                 logger.info("Response Entity: " + res1);
                 logger.info("Response Code of One Link IBFT Title Fetch Request received from client " + res1.getStatusCode().toString());
                 logger.info("Response of One Link IBFT Title Fetch Request received from client " + res1.getBody());
-                ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(res1.getBody(), IbftTitleFetchResponse.class);
-                Objects.requireNonNull(ibftTitleFetchResponse).setResponseCode(res1.getStatusCode().toString());
+                String responseCode = res1.getStatusCode().toString();
+                if (responseCode.equalsIgnoreCase("200")) {
+                    ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(res1.getBody(), IbftTitleFetchResponse.class);
+                }
+//                Objects.requireNonNull(ibftTitleFetchResponse).setResponseCode(res1.getStatusCode().toString());
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();
@@ -198,7 +199,6 @@ public class OnelinkService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.oneLinkIbftTitleFetchUrl);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Access_token", oneLinkAccessToken);
             String requestJSON = JSONUtil.getJSON(ibftTitleFetchRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
             logger.info("Prepared Request HttpEntity " + httpEntity);
@@ -218,8 +218,11 @@ public class OnelinkService {
                 logger.info("Response Entity: " + res1);
                 logger.info("Response Code of One Link IBFT Advice Request received from client " + res1.getStatusCode().toString());
                 logger.info("Response of One Link IBFT Advice Request received from client " + res1.getBody());
-                ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(res1.getBody(), IbftAdviceResponse.class);
-                Objects.requireNonNull(ibftAdviceResponse).setResponseCode(res1.getStatusCode().toString());
+                String responseCode = res1.getStatusCode().toString();
+                if (responseCode.equalsIgnoreCase("200")) {
+                    ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(res1.getBody(), IbftAdviceResponse.class);
+                }
+//                Objects.requireNonNull(ibftAdviceResponse).setResponseCode(res1.getStatusCode().toString());
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();

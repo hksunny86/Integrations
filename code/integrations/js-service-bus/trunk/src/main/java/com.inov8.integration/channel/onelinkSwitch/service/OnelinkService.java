@@ -119,23 +119,20 @@ public class OnelinkService {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (response.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(ibftTitleFetchResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(result, IbftTitleFetchResponse.class);
-                    } else if (response.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(ibftTitleFetchResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(result, IbftTitleFetchResponse.class);
-                    } else if (response.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(ibftTitleFetchResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(result, IbftTitleFetchResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        Objects.requireNonNull(ibftTitleFetchResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(result, IbftTitleFetchResponse.class);
+                    switch (response) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(ibftTitleFetchResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(result, IbftTitleFetchResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            Objects.requireNonNull(ibftTitleFetchResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(result, IbftTitleFetchResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {
@@ -227,23 +224,20 @@ public class OnelinkService {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (response.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(ibftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(result, IbftAdviceResponse.class);
-                    } else if (response.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(ibftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(result, IbftAdviceResponse.class);
-                    } else if (response.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(ibftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(result, IbftAdviceResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        Objects.requireNonNull(ibftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(result, IbftAdviceResponse.class);
+                    switch (response) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(ibftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(result, IbftAdviceResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            Objects.requireNonNull(ibftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            ibftAdviceResponse = (IbftAdviceResponse) JSONUtil.jsonToObject(result, IbftAdviceResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {

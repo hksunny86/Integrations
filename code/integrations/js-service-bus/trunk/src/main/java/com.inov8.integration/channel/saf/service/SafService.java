@@ -126,23 +126,20 @@ public class SafService {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (response.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(retryIbftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        retryIbftAdviceResponse = (RetryIbftAdviceResponse) JSONUtil.jsonToObject(result, RetryIbftAdviceResponse.class);
-                    } else if (response.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(retryIbftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        retryIbftAdviceResponse = (RetryIbftAdviceResponse) JSONUtil.jsonToObject(result, RetryIbftAdviceResponse.class);
-                    } else if (response.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(retryIbftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        retryIbftAdviceResponse = (RetryIbftAdviceResponse) JSONUtil.jsonToObject(result, RetryIbftAdviceResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        Objects.requireNonNull(retryIbftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        retryIbftAdviceResponse = (RetryIbftAdviceResponse) JSONUtil.jsonToObject(result, RetryIbftAdviceResponse.class);
+                    switch (response) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(retryIbftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            retryIbftAdviceResponse = (RetryIbftAdviceResponse) JSONUtil.jsonToObject(result, RetryIbftAdviceResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            Objects.requireNonNull(retryIbftAdviceResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            retryIbftAdviceResponse = (RetryIbftAdviceResponse) JSONUtil.jsonToObject(result, RetryIbftAdviceResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {

@@ -119,7 +119,7 @@ public class EsbBillInquiryRequest extends Request {
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        this.setProcessingCode("RCDPbillInquiry");
+        this.setProcessingCode(PropertyReader.getProperty("esb.RCDPbillInuqiry"));
         this.setDateTime(i8SBSwitchControllerRequestVO.getTransmissionDateAndTime());
         this.setTraceNo(i8SBSwitchControllerRequestVO.getSTAN());
         this.setMerchantType(PropertyReader.getProperty("esb.merchant.Type"));

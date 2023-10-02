@@ -47,6 +47,7 @@ public class OnelinkService {
     private RestTemplate restTemplate = new RestTemplate();
     private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
     private String oneLinkIbftTitleFetchUrl = PropertyReader.getProperty("oneLink.ibft.title.fetch");
+    private String oneLinkIbftAdvice = PropertyReader.getProperty("oneLink.ibft.advice");
     I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
     public IbftTitleFetchResponse oneLinkIbftTitleFetchResponse(IbftTitleFetchRequest ibftTitleFetchRequest) {
@@ -193,7 +194,7 @@ public class OnelinkService {
             logger.info("Response Code for One Link IBFT Advice Request: " + ibftAdviceResponse.getResponseCode());
         } else {
 
-            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.oneLinkIbftTitleFetchUrl);
+            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.oneLinkIbftAdvice);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             String requestJSON = JSONUtil.getJSON(ibftTitleFetchRequest);

@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 import static com.inov8.integration.enums.DateFormatEnum.TRANSACTION_DATE;
 
 @Component
@@ -42,7 +44,7 @@ public class ZindigiCustomerSyncBO implements I8SBChannelInterface {
         }
 
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = null;
-        request.populateRequest(i8SBSwitchControllerRequestVO);
+        Objects.requireNonNull(request).populateRequest(i8SBSwitchControllerRequestVO);
         logger.info("Validating request for RRN: " + i8SBSwitchControllerRequestVO.getRRN());
 
         if (request.validateRequest()) {
@@ -69,10 +71,10 @@ public class ZindigiCustomerSyncBO implements I8SBChannelInterface {
 
             }
 
-            if (response.populateI8SBSwitchControllerResponseVO() != null)
+            if (Objects.requireNonNull(response).populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
             String responseJSON = JSONUtil.getJSON(response);
-            i8SBSwitchControllerResponseVO.setResponseXML(responseJSON);
+            Objects.requireNonNull(i8SBSwitchControllerResponseVO).setResponseXML(responseJSON);
         }
         else {
             logger.info("[FAILED] Request validation failed for RRN: " + i8SBSwitchControllerRequestVO.getRRN());

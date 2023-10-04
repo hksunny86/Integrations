@@ -64,9 +64,9 @@ public class CorporateHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getCnicNumber())) {
             throw new ValidationException("[FAILED] Validation Failed Cnic: " + integrationVO.getCnicNumber());
         }
-        if (StringUtils.isEmpty(integrationVO.getOtp())) {
-            throw new ValidationException("[FAILED] Validation Failed OTP: " + integrationVO.getOtp());
-        }
+//        if (StringUtils.isEmpty(integrationVO.getOtp())) {
+//            throw new ValidationException("[FAILED] Validation Failed OTP: " + integrationVO.getOtp());
+//        }
 
     }
 
@@ -117,9 +117,9 @@ public class CorporateHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getRrn())) {
             throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
         }
-        if (StringUtils.isEmpty(integrationVO.getOtp())) {
-            throw new ValidationException("[FAILED] Validation Failed OTP: " + integrationVO.getOtp());
-        }
+//        if (StringUtils.isEmpty(integrationVO.getOtp())) {
+//            throw new ValidationException("[FAILED] Validation Failed OTP: " + integrationVO.getOtp());
+//        }
     }
 
     public static void validateAccountStatementInquiry(AccountStatementInquiryRequest integrationVO) throws ValidationException {
@@ -153,9 +153,9 @@ public class CorporateHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
         }
-        if (StringUtils.isEmpty(integrationVO.getOtp())) {
-            throw new ValidationException("[FAILED] Validation Failed OTP: " + integrationVO.getOtp());
-        }
+//        if (StringUtils.isEmpty(integrationVO.getOtp())) {
+//            throw new ValidationException("[FAILED] Validation Failed OTP: " + integrationVO.getOtp());
+//        }
         if (StringUtils.isEmpty(integrationVO.getFromDate())) {
             throw new ValidationException("[FAILED] Validation Failed From Date: " + integrationVO.getFromDate());
         }
@@ -195,9 +195,9 @@ public class CorporateHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
         }
-        if (StringUtils.isEmpty(integrationVO.getOtp())) {
-            throw new ValidationException("[FAILED] Validation Failed OTP: " + integrationVO.getOtp());
-        }
+//        if (StringUtils.isEmpty(integrationVO.getOtp())) {
+//            throw new ValidationException("[FAILED] Validation Failed OTP: " + integrationVO.getOtp());
+//        }
     }
 
     public static void validateTitleFetch(CorporateTitleFetchRequest integrationVO) throws ValidationException {

@@ -277,7 +277,6 @@ public class CorporatePortalService {
         messageVO.setPortalId(request.getPortalId());
         messageVO.setPortalPassword(request.getPortalPassword());
         messageVO.setSegmentCode(request.getSegmentId());
-        messageVO.setMessage(request.getComments());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());
@@ -400,6 +399,7 @@ public class CorporatePortalService {
         messageVO.setPortalId(request.getPortalId());
         messageVO.setPortalPassword(request.getPortalPassword());
         messageVO.setOtpPin(request.getOtp());
+        messageVO.setMessage(request.getComments());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());

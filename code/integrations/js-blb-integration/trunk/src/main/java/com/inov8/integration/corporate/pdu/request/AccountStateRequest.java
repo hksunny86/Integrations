@@ -20,6 +20,7 @@ import java.io.Serializable;
         "PortalId",
         "PortalPassword",
         "OTP",
+        "Comments",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -59,6 +60,8 @@ public class AccountStateRequest implements Serializable {
     private String portalPassword;
     @JsonProperty("OTP")
     private String otp;
+    @JsonProperty("Comments")
+    private String comments;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -176,6 +179,14 @@ public class AccountStateRequest implements Serializable {
 
     public void setOtp(String otp) {
         this.otp = otp;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public String getReserved1() {

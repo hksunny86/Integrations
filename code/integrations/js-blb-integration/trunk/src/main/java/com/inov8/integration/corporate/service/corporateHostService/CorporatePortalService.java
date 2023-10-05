@@ -1486,7 +1486,7 @@ public class CorporatePortalService {
         try {
             logger.info("[HOST] Sent Regenerate Login Pin Request to Micro Bank " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
 
-            messageVO = corporatePortalSwitchController.deviceVerification(messageVO);
+            messageVO = corporatePortalSwitchController.regenerateLoginPin(messageVO);
         } catch (Exception e) {
 
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
@@ -1600,7 +1600,7 @@ public class CorporatePortalService {
         try {
             logger.info("[HOST] Sent Change Financial Pin Request to Micro Bank " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
 
-            messageVO = corporatePortalSwitchController.deviceVerification(messageVO);
+            messageVO = corporatePortalSwitchController.changePin(messageVO);
         } catch (Exception e) {
 
             logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);

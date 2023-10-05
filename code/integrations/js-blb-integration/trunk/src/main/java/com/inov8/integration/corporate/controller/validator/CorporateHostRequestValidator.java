@@ -238,6 +238,45 @@ public class CorporateHostRequestValidator {
         }
     }
 
+    public static void validateRegenerateLoginPin(RegenerateLoginPinRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getMobileNo())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNo());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+//        if (StringUtils.isEmpty(integrationVO.getOtp())) {
+//            throw new ValidationException("[FAILED] Validation Failed OTP: " + integrationVO.getOtp());
+//        }
+    }
+
+    public static void validateChangePin(ChangePinRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getMobileNo())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNo());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+//        if (StringUtils.isEmpty(integrationVO.getOtp())) {
+//            throw new ValidationException("[FAILED] Validation Failed OTP: " + integrationVO.getOtp());
+//        }
+    }
+
+
     public static boolean authenticate(String userName, String password, String channelID) {
         if (ConfigReader.getInstance().getProperty("channel.ids", "").contains(channelID))
             return ConfigReader.getInstance().getProperty("channel.usernames", "").contains(userName) && ConfigReader.getInstance().getProperty("channel.passwords", "").contains(password);

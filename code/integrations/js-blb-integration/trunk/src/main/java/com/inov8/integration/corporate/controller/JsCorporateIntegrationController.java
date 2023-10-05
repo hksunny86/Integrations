@@ -59,4 +59,14 @@ public class JsCorporateIntegrationController implements CorporatePortalSwitchCo
     public WebServiceVO coreToGl(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO regenerateLoginPin(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO changePin(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

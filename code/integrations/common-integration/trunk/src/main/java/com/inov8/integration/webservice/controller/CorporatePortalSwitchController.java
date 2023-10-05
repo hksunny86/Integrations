@@ -14,5 +14,7 @@ public interface CorporatePortalSwitchController {
     WebServiceVO deviceVerificationInquiry(WebServiceVO webServiceVO);
     WebServiceVO deviceVerification(WebServiceVO webServiceVO);
     WebServiceVO coreToGl(WebServiceVO webServiceVO);
+    WebServiceVO regenerateLoginPin(WebServiceVO webServiceVO);
+    WebServiceVO changePin(WebServiceVO webServiceVO);
 
 }

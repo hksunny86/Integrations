@@ -1088,7 +1088,7 @@ public class JSCorporatePortalController {
         return response;
     }
 
-    @RequestMapping(value = "api/corporate/regenerateLoginChange", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/corporate/regenerateLoginPin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     RegenerateLoginPinResponse regenerateLoginPinResponse(@Valid @RequestBody RegenerateLoginPinRequest request) throws Exception {
         RegenerateLoginPinResponse response = new RegenerateLoginPinResponse();
@@ -1185,7 +1185,7 @@ public class JSCorporatePortalController {
         return response;
     }
 
-    @RequestMapping(value = "api/corporate/changeFinancialPin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/corporate/changePin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ChangePinResponse changePinResponse(@Valid @RequestBody ChangePinRequest request) throws Exception {
         ChangePinResponse response = new ChangePinResponse();
@@ -1245,7 +1245,7 @@ public class JSCorporatePortalController {
                     logger.error("ERROR: General Processing ", e);
                 }
 
-                logger.info("******* DEBUG LOGS FOR Change Pin Request *********");
+                logger.info("******* DEBUG LOGS FOR Change Financial Pin Request *********");
                 logger.info("ResponseCode: " + response.getResponseCode());
             } else {
                 logger.info("******* DEBUG LOGS FOR Change Financial Pin Request AUTHENTICATION *********");

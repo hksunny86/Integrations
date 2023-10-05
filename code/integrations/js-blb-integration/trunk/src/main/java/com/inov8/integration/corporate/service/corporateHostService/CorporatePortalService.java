@@ -29,6 +29,7 @@ import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 @Component
 public class CorporatePortalService {
@@ -1513,7 +1514,7 @@ public class CorporatePortalService {
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
         } else {
-            logger.info("[HOST] Regenerate Login Pin Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Regenerate Login Pin Request Unsuccessful from Micro Bank RRN: " + Objects.requireNonNull(messageVO).getRetrievalReferenceNumber());
 
             response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
             response.setResponseDescription("Host Not In Reach");
@@ -1627,7 +1628,7 @@ public class CorporatePortalService {
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
         } else {
-            logger.info("[HOST] Change Financial Pin Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Change Financial Pin Request Unsuccessful from Micro Bank RRN: " + Objects.requireNonNull(messageVO).getRetrievalReferenceNumber());
 
             response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
             response.setResponseDescription("Host Not In Reach");

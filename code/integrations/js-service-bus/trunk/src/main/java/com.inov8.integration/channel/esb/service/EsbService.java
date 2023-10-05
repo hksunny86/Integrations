@@ -111,23 +111,20 @@ public class EsbService {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (response.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(esbBillInquiryResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        esbBillInquiryResponse = (EsbBillInquiryResponse) JSONUtil.jsonToObject(result, EsbBillInquiryResponse.class);
-                    } else if (response.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(esbBillInquiryResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        esbBillInquiryResponse = (EsbBillInquiryResponse) JSONUtil.jsonToObject(result, EsbBillInquiryResponse.class);
-                    } else if (response.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(esbBillInquiryResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        esbBillInquiryResponse = (EsbBillInquiryResponse) JSONUtil.jsonToObject(result, EsbBillInquiryResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        Objects.requireNonNull(esbBillInquiryResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        esbBillInquiryResponse = (EsbBillInquiryResponse) JSONUtil.jsonToObject(result, EsbBillInquiryResponse.class);
+                    switch (response) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(esbBillInquiryResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            esbBillInquiryResponse = (EsbBillInquiryResponse) JSONUtil.jsonToObject(result, EsbBillInquiryResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            Objects.requireNonNull(esbBillInquiryResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            esbBillInquiryResponse = (EsbBillInquiryResponse) JSONUtil.jsonToObject(result, EsbBillInquiryResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {
@@ -203,23 +200,20 @@ public class EsbService {
                 if (e instanceof HttpStatusCodeException) {
                     response = ((HttpStatusCodeException) e).getStatusCode().toString();
                     String result;
-                    if (response.equals("400")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(esbBillPaymentResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        esbBillPaymentResponse = (EsbBillPaymentResponse) JSONUtil.jsonToObject(result, EsbBillPaymentResponse.class);
-                    } else if (response.equals("422")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(esbBillPaymentResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        esbBillPaymentResponse = (EsbBillPaymentResponse) JSONUtil.jsonToObject(result, EsbBillPaymentResponse.class);
-                    } else if (response.equals("500")) {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        Objects.requireNonNull(esbBillPaymentResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        esbBillPaymentResponse = (EsbBillPaymentResponse) JSONUtil.jsonToObject(result, EsbBillPaymentResponse.class);
-                    } else {
-                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-                        Objects.requireNonNull(esbBillPaymentResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                        esbBillPaymentResponse = (EsbBillPaymentResponse) JSONUtil.jsonToObject(result, EsbBillPaymentResponse.class);
+                    switch (response) {
+                        case "400":
+                        case "422":
+                        case "500":
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            Objects.requireNonNull(esbBillPaymentResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            esbBillPaymentResponse = (EsbBillPaymentResponse) JSONUtil.jsonToObject(result, EsbBillPaymentResponse.class);
+                            break;
+                        default:
+                            result = ((HttpStatusCodeException) e).getResponseBodyAsString();
+                            logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
+                            Objects.requireNonNull(esbBillPaymentResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
+                            esbBillPaymentResponse = (EsbBillPaymentResponse) JSONUtil.jsonToObject(result, EsbBillPaymentResponse.class);
+                            break;
                     }
                 }
                 if (e instanceof ResourceAccessException) {
@@ -262,11 +256,7 @@ public class EsbService {
         try {
             sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy)
                     .build();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException e) {
             e.printStackTrace();
         }
         SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());

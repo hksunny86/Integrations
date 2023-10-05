@@ -18,6 +18,7 @@ import java.io.Serializable;
         "PortalId",
         "PortalPassword",
         "SegmentId",
+        "OTP",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -53,6 +54,8 @@ public class RegenerateLoginPinRequest implements Serializable {
     private String portalPassword;
     @JsonProperty("SegmentId")
     private String segmentId;
+    @JsonProperty("OTP")
+    private String otp;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -154,6 +157,14 @@ public class RegenerateLoginPinRequest implements Serializable {
 
     public void setSegmentId(String segmentId) {
         this.segmentId = segmentId;
+    }
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
     }
 
     public String getReserved1() {

@@ -1,7 +1,11 @@
 package com.inov8.integration.debitCard.service;
 
+import com.inov8.integration.debitCard.pdu.request.AppRebrandDebitCardIssuanceInquiryRequest;
+import com.inov8.integration.debitCard.pdu.request.AppRebrandDebitCardIssuanceRequest;
 import com.inov8.integration.debitCard.pdu.request.DebitCardDiscrepantRequest;
 import com.inov8.integration.debitCard.pdu.request.DebitCardFeeRequest;
+import com.inov8.integration.debitCard.pdu.response.AppRebrandDebitCardIssuanceInquiryResponse;
+import com.inov8.integration.debitCard.pdu.response.AppRebrandDebitCardIssuanceResponse;
 import com.inov8.integration.debitCard.pdu.response.DebitCardDiscrepantResponse;
 import com.inov8.integration.debitCard.pdu.response.DebitCardFeeResponse;
 import com.inov8.integration.middleware.dao.TransactionDAO;
@@ -10,6 +14,7 @@ import com.inov8.integration.middleware.enums.ResponseCodeEnum;
 import com.inov8.integration.middleware.enums.TransactionStatus;
 import com.inov8.integration.middleware.util.ConfigReader;
 import com.inov8.integration.middleware.util.JSONUtil;
+import com.inov8.integration.middleware.util.RSAEncryption;
 import com.inov8.integration.webservice.controller.DebitCardRevampSwitchController;
 import com.inov8.integration.webservice.vo.WebServiceVO;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -21,7 +26,11 @@ import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
 import org.springframework.remoting.httpinvoker.SimpleHttpInvokerRequestExecutor;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.net.ssl.*;
+import java.security.InvalidKeyException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
@@ -39,6 +48,7 @@ public class DebitCardService {
     private static String I8_PATH = (ConfigReader.getInstance().getProperty("debitCardRevamp.i8-path", ""));
     private static int READ_TIME_OUT = Integer.parseInt(ConfigReader.getInstance().getProperty("i8-read-timeout", "55"));
     private static int CONNECTION_TIME_OUT = Integer.parseInt(ConfigReader.getInstance().getProperty("i8-connection-timeout", "10"));
+    private static String loginPrivateKey = ConfigReader.getInstance().getProperty("login.authentication.privateKey", "");
 
     @Autowired
     TransactionDAO transactionDAO;
@@ -326,6 +336,247 @@ public class DebitCardService {
         long endTime = new Date().getTime(); // end time
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Debit Card Discrepant Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+//        updateTransactionInDB(logModel);
+//        }
+        return response;
+    }
+
+    public AppRebrandDebitCardIssuanceInquiryResponse appRebrandDebitCardIssuanceInquiryResponse(AppRebrandDebitCardIssuanceInquiryRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Debit Card Issuance Inquiry Request Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        AppRebrandDebitCardIssuanceInquiryResponse response = new AppRebrandDebitCardIssuanceInquiryResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setPinType(request.getPinType());
+        messageVO.setCnicNo(request.getCnic());
+        messageVO.setTransactionType(request.getTransactionType());
+        messageVO.setCardTypeId(request.getCardType());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("DebitCardIssuanceInquiry");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+//        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Debit Card Issuance Inquiry Request to Micro Bank " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            messageVO = switchController.appRebrandDebitCardIssuanceInquiry(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Debit Card Issuance Inquiry Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setMobileNumber(messageVO.getMobileNo());
+            response.setCnic(messageVO.getCnicNo());
+            response.setCharges(messageVO.getCharges());
+            response.setCardTypes(messageVO.getCardTypes());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Debit Card Issuance Inquiry Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Debit Card Issuance Inquiry Request Unsuccessful from Micro Bank RRN: " + Objects.requireNonNull(messageVO).getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        String sha256hex = DigestUtils.sha256Hex(response.getResponseCode() + response.getResponseDescription());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Debit Card Issuance Inquiry Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+//        updateTransactionInDB(logModel);
+//        }
+        return response;
+    }
+
+    public AppRebrandDebitCardIssuanceResponse appRebrandDebitCardIssuanceResponse(AppRebrandDebitCardIssuanceRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Debit Card Issuance Request Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        AppRebrandDebitCardIssuanceResponse response = new AppRebrandDebitCardIssuanceResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setCardTypeId(request.getCardType());
+        if (request.getPinType().equals("02")) {
+//            messageVO.setOtpPin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        } else {
+//            messageVO.setMobilePin(request.getPin());
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        }
+        messageVO.setReserved1(request.getPinType());
+        messageVO.setTransactionType(request.getTransactionType());
+        messageVO.setCnicNo(request.getCnic());
+        messageVO.setCardDescription(request.getCardDescription());
+        messageVO.setMailingAddress(request.getMailingAddress());
+        messageVO.setCity(request.getCity());
+        messageVO.setArea(request.getArea());
+        messageVO.setStreetNumber(request.getStreetNumber());
+        messageVO.setHouseNumber(request.getHouseNumber());
+
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("DebitCardIssuance");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+//        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Debit Card Issuance  Request to Micro Bank " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            messageVO = switchController.appRebrandDebitCardIssuance(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Debit Card Issuance  Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setMobileNumber(messageVO.getMobileNo());
+            response.setCnic(messageVO.getCnicNo());
+            response.setCharges(messageVO.getCharges());
+            response.setCardTypes(messageVO.getCardTypes());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Debit Card Issuance Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Debit Card Issuance Request Unsuccessful from Micro Bank RRN: " + Objects.requireNonNull(messageVO).getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        String sha256hex = DigestUtils.sha256Hex(response.getResponseCode() + response.getResponseDescription());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Debit Card Issuance Request PROCESSED IN ****: " + difference + " milliseconds");
 
         //preparing request
         String responseXml = JSONUtil.getJSON(response);

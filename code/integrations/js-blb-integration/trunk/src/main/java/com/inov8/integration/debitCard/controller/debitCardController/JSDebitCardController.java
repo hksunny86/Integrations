@@ -1,8 +1,12 @@
 package com.inov8.integration.debitCard.controller.debitCardController;
 
 import com.inov8.integration.debitCard.controller.validator.DebitCardHostRequestValidator;
+import com.inov8.integration.debitCard.pdu.request.AppRebrandDebitCardIssuanceInquiryRequest;
+import com.inov8.integration.debitCard.pdu.request.AppRebrandDebitCardIssuanceRequest;
 import com.inov8.integration.debitCard.pdu.request.DebitCardDiscrepantRequest;
 import com.inov8.integration.debitCard.pdu.request.DebitCardFeeRequest;
+import com.inov8.integration.debitCard.pdu.response.AppRebrandDebitCardIssuanceInquiryResponse;
+import com.inov8.integration.debitCard.pdu.response.AppRebrandDebitCardIssuanceResponse;
 import com.inov8.integration.debitCard.pdu.response.DebitCardDiscrepantResponse;
 import com.inov8.integration.debitCard.pdu.response.DebitCardFeeResponse;
 import com.inov8.integration.debitCard.service.DebitCardService;
@@ -221,6 +225,193 @@ public class JSDebitCardController {
         long end = System.currentTimeMillis() - start;
         String responseXML = JSONUtil.getJSON(response);
         logger.info("Debit Card Discrepant Request Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
+
+
+        return response;
+    }
+
+    @RequestMapping(value = "api/debitCardRevamp/appRebrandDebitCardIssuanceInquiry", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    AppRebrandDebitCardIssuanceInquiryResponse appRebrandDebitCardIssuanceInquiryResponse(@Valid @RequestBody AppRebrandDebitCardIssuanceInquiryRequest request) throws Exception {
+        AppRebrandDebitCardIssuanceInquiryResponse response = new AppRebrandDebitCardIssuanceInquiryResponse();
+
+        String className = this.getClass().getSimpleName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+        long start = System.currentTimeMillis();
+
+        try {
+
+            logger.info("Debit Card Issuance Inquiry Request Received at Controller at time: " + start);
+            String requestXML = JSONUtil.getJSON(request);
+            //        requestXML = XMLUtil.maskPassword(requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Debit Card Issuance Inquiry Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
+            StringBuilder stringText = new StringBuilder()
+                    .append(request.getUserName())
+                    .append(request.getPassword())
+                    .append(request.getMobileNumber())
+                    .append(request.getDateTime())
+                    .append(request.getRrn())
+                    .append(request.getChannelId())
+                    .append(request.getTerminalId())
+                    .append(request.getPinType())
+                    .append(request.getTransactionType())
+                    .append(request.getCnic())
+                    .append(request.getCardType())
+                    .append(request.getReserved1())
+                    .append(request.getReserved2());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+                if (DebitCardHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
+                        DebitCardHostRequestValidator.validateAppRebrandDebitCardIssuanceInquiry(request);
+                        response = debitCardService.appRebrandDebitCardIssuanceInquiryResponse(request);
+
+                    } catch (ValidationException ve) {
+                        response.setResponseCode("420");
+                        response.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        response.setResponseCode("220");
+                        response.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR Debit Card Issuance Inquiry Request *********");
+                    logger.info("ResponseCode: " + response.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR Debit Card Issuance Inquiry Request AUTHENTICATION *********");
+                    response = new AppRebrandDebitCardIssuanceInquiryResponse();
+                    response.setResponseCode("420");
+                    response.setResponseDescription("Request is not authenticated");
+                    response.setRrn(request.getRrn());
+                    response.setResponseDateTime(request.getDateTime());
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
+                }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Debit Card Issuance Inquiry Request *********");
+                response = new AppRebrandDebitCardIssuanceInquiryResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
+        } catch (Exception e) {
+
+            response = new AppRebrandDebitCardIssuanceInquiryResponse();
+            response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            response.setResponseDescription(e.getLocalizedMessage());
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
+            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
+            logger.info("Critical Error ::" + e.getLocalizedMessage());
+        }
+        long end = System.currentTimeMillis() - start;
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Debit Card Issuance Inquiry Request Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
+
+
+        return response;
+    }
+
+    @RequestMapping(value = "api/debitCardRevamp/appRebrandDebitCardIssuance", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    AppRebrandDebitCardIssuanceResponse appRebrandDebitCardIssuanceInquiryResponse(@Valid @RequestBody AppRebrandDebitCardIssuanceRequest request) throws Exception {
+        AppRebrandDebitCardIssuanceResponse response = new AppRebrandDebitCardIssuanceResponse();
+
+        String className = this.getClass().getSimpleName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+        long start = System.currentTimeMillis();
+
+        try {
+
+            logger.info("Debit Card Issuance  Request Received at Controller at time: " + start);
+            String requestXML = JSONUtil.getJSON(request);
+            //        requestXML = XMLUtil.maskPassword(requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Debit Card Issuance  Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
+            StringBuilder stringText = new StringBuilder()
+                    .append(request.getUserName())
+                    .append(request.getPassword())
+                    .append(request.getMobileNumber())
+                    .append(request.getDateTime())
+                    .append(request.getRrn())
+                    .append(request.getChannelId())
+                    .append(request.getTerminalId())
+                    .append(request.getPin())
+                    .append(request.getPinType())
+                    .append(request.getTransactionType())
+                    .append(request.getCardType())
+                    .append(request.getCnic())
+                    .append(request.getCardDescription())
+                    .append(request.getMailingAddress())
+                    .append(request.getCity())
+                    .append(request.getArea())
+                    .append(request.getStreetNumber())
+                    .append(request.getHouseNumber())
+                    .append(request.getReserved1())
+                    .append(request.getReserved2());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+                if (DebitCardHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
+                        DebitCardHostRequestValidator.validateAppRebrandDebitCardIssuance(request);
+                        response = debitCardService.appRebrandDebitCardIssuanceResponse(request);
+
+                    } catch (ValidationException ve) {
+                        response.setResponseCode("420");
+                        response.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        response.setResponseCode("220");
+                        response.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR Debit Card Issuance  Request *********");
+                    logger.info("ResponseCode: " + response.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR Debit Card Issuance  Request AUTHENTICATION *********");
+                    response = new AppRebrandDebitCardIssuanceResponse();
+                    response.setResponseCode("420");
+                    response.setResponseDescription("Request is not authenticated");
+                    response.setRrn(request.getRrn());
+                    response.setResponseDateTime(request.getDateTime());
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
+                }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Debit Card Issuance  Request *********");
+                response = new AppRebrandDebitCardIssuanceResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
+        } catch (Exception e) {
+
+            response = new AppRebrandDebitCardIssuanceResponse();
+            response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            response.setResponseDescription(e.getLocalizedMessage());
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
+            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
+            logger.info("Critical Error ::" + e.getLocalizedMessage());
+        }
+        long end = System.currentTimeMillis() - start;
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Debit Card Issuance  Request Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
 
 
         return response;

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -56,7 +55,7 @@ public class AppRebrandDebitCardIssuanceRequest implements Serializable {
     private String transactionType;
     @JsonProperty("CardProductTypeId")
     private String cardType;
-    @JsonProperty("CNIC")
+    @JsonProperty("Cnic")
     private String cnic;
     @JsonProperty("CardDescription")
     private String cardDescription;

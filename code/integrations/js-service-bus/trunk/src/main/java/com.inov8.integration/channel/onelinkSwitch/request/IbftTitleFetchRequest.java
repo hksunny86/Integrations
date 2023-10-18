@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.channel.tasdeeq.request.Request;
+import com.inov8.integration.enums.DateFormatEnum;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
+import com.inov8.integration.middleware.util.DateTools;
 
 import java.util.Date;
 
@@ -196,12 +198,12 @@ public class IbftTitleFetchRequest extends Request {
 
         this.setPan(i8SBSwitchControllerRequestVO.getCNIC() + i8SBSwitchControllerRequestVO.getSTAN());
         this.setTransactionAmount(i8SBSwitchControllerRequestVO.getTransactionAmount());
-        this.setTransactionDateTime(String.valueOf(new Date()));
+        this.setTransactionDateTime(DateTools.dateToString(new Date(), DateFormatEnum.ONE_LINK_TRANSACTION_DATE_TIME.getValue()));
         this.setMerchantType("");
         this.setPointOfEntry("");
         this.setNetworkIdentifier("RDV");
         this.setCardAcceptorTerminalId("00000000");
-        this.setCardAcceptorIdentificationCode("000000");
+        this.setCardAcceptorIdentificationCode("000000000000000");
         this.setCardAcceptorNameAndLocation("JSBL Branchless Banking Channel Pakistan");
         this.setPurposeOfPayment(i8SBSwitchControllerRequestVO.getTransferPurpose());
         this.setCurrencyCode("586");
@@ -209,7 +211,7 @@ public class IbftTitleFetchRequest extends Request {
         this.setAccountNo2(i8SBSwitchControllerRequestVO.getAccountId2());
         this.setToBankImd(i8SBSwitchControllerRequestVO.getToBankIMD());
         this.setStan(i8SBSwitchControllerRequestVO.getSTAN());
-        this.setRrn(i8SBSwitchControllerRequestVO.getRRN());
+        this.setRrn(i8SBSwitchControllerRequestVO.getSTAN()+i8SBSwitchControllerRequestVO.getSTAN());
     }
 
     @Override
@@ -217,3 +219,5 @@ public class IbftTitleFetchRequest extends Request {
         return true;
     }
 }
+
+

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.channel.tasdeeq.request.Request;
+import com.inov8.integration.enums.DateFormatEnum;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
+import com.inov8.integration.middleware.util.DateTools;
 
 import java.util.Date;
 
@@ -272,25 +274,25 @@ public class IbftAdviceRequest extends Request {
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        this.setPan("");
-        this.setTransactionAmount("");
+        this.setPan(i8SBSwitchControllerRequestVO.getCNIC() + i8SBSwitchControllerRequestVO.getSTAN());
+        this.setTransactionAmount(i8SBSwitchControllerRequestVO.getTransactionAmount());
         this.setMerchantType("");
         this.setPointOfEntry("");
         this.setAuthIdResp("");
         this.setCardAcceptorTerminalId("00000000");
-        this.setCardAcceptorIdentificationCode("000000");
+        this.setCardAcceptorIdentificationCode("000000000000000");
         this.setCardAcceptorNameAndLocation("JSBL Branchless Banking Channel Pakistan");
-        this.setPurposeOfPayment("");
+        this.setPurposeOfPayment(i8SBSwitchControllerRequestVO.getTransferPurpose());
         this.setCurrencyCode("586");
         this.setAccountNo1(i8SBSwitchControllerRequestVO.getAccountId1());
         this.setAccountNo2(i8SBSwitchControllerRequestVO.getAccountId2());
         this.setAccountTitle(i8SBSwitchControllerRequestVO.getAccountTitle());
         this.setSenderName("");
-        this.setToBankImd("");
+        this.setToBankImd(i8SBSwitchControllerRequestVO.getToBankIMD());
         this.setStan(i8SBSwitchControllerRequestVO.getSTAN());
-        this.setRrn(i8SBSwitchControllerRequestVO.getRRN());
+        this.setRrn(i8SBSwitchControllerRequestVO.getSTAN()+i8SBSwitchControllerRequestVO.getSTAN());
         this.setBeneficiaryId("");
-        this.setTransactionDateTime(String.valueOf(new Date()));
+        this.setTransactionDateTime(DateTools.dateToString(new Date(), DateFormatEnum.ONE_LINK_TRANSACTION_DATE_TIME.getValue()));
         this.setAccountBankName(i8SBSwitchControllerRequestVO.getBankName());
         this.setAccountBranchName(i8SBSwitchControllerRequestVO.getBranchName());
         this.setSenderId("");

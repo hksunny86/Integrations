@@ -92,7 +92,7 @@ public class OnelinkBo implements I8SBChannelInterface {
         }
 
         if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getRRN())) {
-            i8SBSwitchControllerRequestVO.setRRN(i8SBSwitchControllerRequestVO.getSTAN() + i8SBSwitchControllerRequestVO.getTransmissionDateAndTime());
+            i8SBSwitchControllerRequestVO.setRRN(i8SBSwitchControllerRequestVO.getSTAN() + i8SBSwitchControllerRequestVO.getSTAN());
         }
 
         if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getTransactionId())) {

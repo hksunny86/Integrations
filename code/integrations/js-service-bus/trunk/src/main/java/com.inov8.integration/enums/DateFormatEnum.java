@@ -12,7 +12,8 @@ public enum DateFormatEnum {
 	EXPIRY_DATE("yyyy-MM-dd HH:mm:ss"),
 	CNIC_FORMAT("E MMM dd HH:mm:ss z yyyy"),
 	DATE_TIME("MM/dd/yyyy"),
-	MERCHANT_CAMPING_DATE_FORMAT("yyyy-MM-dd");
+	MERCHANT_CAMPING_DATE_FORMAT("yyyy-MM-dd"),
+	ONE_LINK_TRANSACTION_DATE_TIME("ddMMyyyyHHmmss");
 	// @formatter:on
 	private DateFormatEnum(String value) {
 		this.value = value;

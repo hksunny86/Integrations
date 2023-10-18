@@ -1,5 +1,6 @@
 package com.inov8.integration.gateway.aspect;
 
+import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -67,14 +68,19 @@ public class RequestCryptoAspect {
             if (StringUtils.isNotEmpty(messageVO.getPAN())) {
                 messageVO.setPAN(encrypt(messageVO.getPAN()));
             }
+            if (StringUtils.isNotEmpty(String.valueOf(messageVO.getRequestType().equalsIgnoreCase(I8SBConstants.RequestType_ONE_LINK_IBFT_TITLE_FETCH)))) {
+                messageVO.setAccountId1(messageVO.getAccountId1());
+                messageVO.setAccountId2(messageVO.getAccountId2());
+            } else {
+                if (StringUtils.isNotEmpty(messageVO.getAccountId1())) {
+                    messageVO.setAccountId1(encrypt(messageVO.getAccountId1()));
+                }
+                //log.debug("After Returning AccountId1=============================================="+messageVO.getAccountId1());
+                if (StringUtils.isNotEmpty(messageVO.getAccountId2())) {
+                    messageVO.setAccountId2(encrypt(messageVO.getAccountId2()));
+                }
+            }
             //log.debug("Before Returning AccountId1=============================================="+messageVO.getAccountId1());
-            if (StringUtils.isNotEmpty(messageVO.getAccountId1())) {
-                messageVO.setAccountId1(encrypt(messageVO.getAccountId1()));
-            }
-            //log.debug("After Returning AccountId1=============================================="+messageVO.getAccountId1());
-            if (StringUtils.isNotEmpty(messageVO.getAccountId2())) {
-                messageVO.setAccountId2(encrypt(messageVO.getAccountId2()));
-            }
             if (StringUtils.isNotEmpty(messageVO.getAccountNumber())) {
                 messageVO.setAccountNumber(encrypt(messageVO.getAccountNumber()));
             }
@@ -110,18 +116,24 @@ public class RequestCryptoAspect {
                 if (StringUtils.isNotEmpty(messageVO.getPAN())) {
                     messageVO.setPAN(decrypt(messageVO.getPAN()));
                 }
-                if (StringUtils.isNotEmpty(messageVO.getAccountId1())) {
-                    messageVO.setAccountId1(decrypt(messageVO.getAccountId1()));
-                }
-                if (StringUtils.isNotEmpty(messageVO.getAccountId2())) {
-                    messageVO.setAccountId2(decrypt(messageVO.getAccountId2()));
+                if (StringUtils.isNotEmpty(String.valueOf(messageVO.getRequestType().equalsIgnoreCase(I8SBConstants.RequestType_ONE_LINK_IBFT_TITLE_FETCH)))) {
+                    messageVO.setAccountId1(messageVO.getAccountId1());
+                    messageVO.setAccountId2(messageVO.getAccountId2());
+                } else {
+                    if (StringUtils.isNotEmpty(messageVO.getAccountId1())) {
+                        messageVO.setAccountId1(encrypt(messageVO.getAccountId1()));
+                    }
+                    //log.debug("After Returning AccountId1=============================================="+messageVO.getAccountId1());
+                    if (StringUtils.isNotEmpty(messageVO.getAccountId2())) {
+                        messageVO.setAccountId2(encrypt(messageVO.getAccountId2()));
+                    }
                 }
                 if (StringUtils.isNotEmpty(messageVO.getAccountNumber())) {
                     messageVO.setAccountNumber(decrypt(messageVO.getAccountNumber()));
                 }
-//                if (StringUtils.isNotEmpty(messageVO.getPassword())) {
-//                    messageVO.setPassword(decrypt(messageVO.getPassword()));
-//                }
+                if (StringUtils.isNotEmpty(messageVO.getPassword())) {
+                    messageVO.setPassword(decrypt(messageVO.getPassword()));
+                }
                 if (StringUtils.isNotEmpty(messageVO.getNewPassword())) {
                     messageVO.setNewPassword(decrypt(messageVO.getNewPassword()));
                 }

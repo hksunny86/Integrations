@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.channel.tasdeeq.request.Request;
+import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.enums.DateFormatEnum;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
@@ -276,27 +277,27 @@ public class IbftAdviceRequest extends Request {
 
         this.setPan(i8SBSwitchControllerRequestVO.getCNIC() + i8SBSwitchControllerRequestVO.getSTAN());
         this.setTransactionAmount(i8SBSwitchControllerRequestVO.getTransactionAmount());
-        this.setMerchantType("");
-        this.setPointOfEntry("");
-        this.setAuthIdResp("");
-        this.setCardAcceptorTerminalId("00000000");
-        this.setCardAcceptorIdentificationCode("000000000000000");
-        this.setCardAcceptorNameAndLocation("JSBL Branchless Banking Channel Pakistan");
+        this.setMerchantType(PropertyReader.getProperty("oneLink.merchantType"));
+        this.setPointOfEntry(PropertyReader.getProperty("oneLink.pointOfEntry"));
+        this.setAuthIdResp(PropertyReader.getProperty("oneLink.AuthId"));
+        this.setCardAcceptorTerminalId(PropertyReader.getProperty("oneLink.cardAcceptorTerminalId"));
+        this.setCardAcceptorIdentificationCode(PropertyReader.getProperty("oneLink.cardAcceptorIdentificationCode"));
+        this.setCardAcceptorNameAndLocation(PropertyReader.getProperty("oneLink.cardAcceptorNameAndLocation"));
         this.setPurposeOfPayment(i8SBSwitchControllerRequestVO.getTransferPurpose());
-        this.setCurrencyCode("586");
+        this.setCurrencyCode(PropertyReader.getProperty("oneLink.currencyCode"));
         this.setAccountNo1(i8SBSwitchControllerRequestVO.getAccountId1());
         this.setAccountNo2(i8SBSwitchControllerRequestVO.getAccountId2());
         this.setAccountTitle(i8SBSwitchControllerRequestVO.getAccountTitle());
-        this.setSenderName("");
-        this.setToBankImd(i8SBSwitchControllerRequestVO.getToBankIMD());
+        this.setSenderName(i8SBSwitchControllerRequestVO.getFromAccountTitle());
+        this.setToBankImd("221166");
         this.setStan(i8SBSwitchControllerRequestVO.getSTAN());
-        this.setRrn(i8SBSwitchControllerRequestVO.getSTAN()+i8SBSwitchControllerRequestVO.getSTAN());
-        this.setBeneficiaryId("");
+        this.setRrn(i8SBSwitchControllerRequestVO.getSTAN() + i8SBSwitchControllerRequestVO.getSTAN());
+        this.setBeneficiaryId(i8SBSwitchControllerRequestVO.getIban());
         this.setTransactionDateTime(DateTools.dateToString(new Date(), DateFormatEnum.ONE_LINK_TRANSACTION_DATE_TIME.getValue()));
         this.setAccountBankName(i8SBSwitchControllerRequestVO.getBankName());
         this.setAccountBranchName(i8SBSwitchControllerRequestVO.getBranchName());
-        this.setSenderId("");
-        this.setNetworkIdentifier("RDV");
+        this.setSenderId(i8SBSwitchControllerRequestVO.getCNIC());
+        this.setNetworkIdentifier(PropertyReader.getProperty("oneLink.networkIdentifier"));
     }
 
     @Override

@@ -14,11 +14,11 @@ import java.util.List;
         "ResponseCode",
         "ResponseDescription",
         "ResponseDateTime",
-        "MobileNumber",
         "Cnic",
-        "Charges",
-        "TransactionType",
-        "CardTypes",
+        "City",
+        "Area",
+        "StreetNumber",
+        "HouseNumber",
         "Reserved1",
         "Reserved2",
         "HashData"
@@ -37,35 +37,20 @@ public class AppRebrandDebitCardIssuanceResponse implements Serializable {
     private String mobileNumber;
     @JsonProperty("Cnic")
     private String cnic;
-    @JsonProperty("Charges")
-    private String charges;
-    @JsonProperty("TransactionType")
-    private String transactionType;
-    @JsonProperty("CardTypes")
-    private List<CardType> cardTypes;
+    @JsonProperty("City")
+    private String city;
+    @JsonProperty("Area")
+    private String area;
+    @JsonProperty("StreetNumber")
+    private String streetNumber;
+    @JsonProperty("HouseNumber")
+    private String houseNumber;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
     private String reserved2;
     @JsonProperty("HashData")
     private String hashData;
-
-
-    public List<CardType> getCardTypes() {
-        return cardTypes;
-    }
-
-    public void setCardTypes(List<CardType> cardTypes) {
-        this.cardTypes = cardTypes;
-    }
-
-    public String getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
-    }
 
     public String getRrn() {
         return rrn;
@@ -115,12 +100,36 @@ public class AppRebrandDebitCardIssuanceResponse implements Serializable {
         this.cnic = cnic;
     }
 
-    public String getCharges() {
-        return charges;
+    public String getCity() {
+        return city;
     }
 
-    public void setCharges(String charges) {
-        this.charges = charges;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
     }
 
     public String getReserved1() {

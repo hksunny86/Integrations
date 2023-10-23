@@ -230,7 +230,7 @@ public class JSDebitCardController {
         return response;
     }
 
-    @RequestMapping(value = "api/debitCardRevamp/appRebrandDebitCardIssuanceInquiry", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/debitCardRevamp/v2DebitCardIssuanceInquiry", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     AppRebrandDebitCardIssuanceInquiryResponse appRebrandDebitCardIssuanceInquiryResponse(@Valid @RequestBody AppRebrandDebitCardIssuanceInquiryRequest request) throws Exception {
         AppRebrandDebitCardIssuanceInquiryResponse response = new AppRebrandDebitCardIssuanceInquiryResponse();
@@ -320,7 +320,7 @@ public class JSDebitCardController {
         return response;
     }
 
-    @RequestMapping(value = "api/debitCardRevamp/appRebrandDebitCardIssuance", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/debitCardRevamp/v2DebitCardIssuance", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     AppRebrandDebitCardIssuanceResponse appRebrandDebitCardIssuanceInquiryResponse(@Valid @RequestBody AppRebrandDebitCardIssuanceRequest request) throws Exception {
         AppRebrandDebitCardIssuanceResponse response = new AppRebrandDebitCardIssuanceResponse();

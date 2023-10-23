@@ -257,6 +257,8 @@ public class DebitCardService {
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setStreetNumber(request.getStreetNumber());
         messageVO.setHouseNumber(request.getHouseNumber());
+        messageVO.setHouseNumber(request.getCity());
+        messageVO.setHouseNumber(request.getArea());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
         messageVO.setReserved3(request.getReserved3());

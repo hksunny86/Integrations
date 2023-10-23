@@ -164,6 +164,8 @@ public class JSDebitCardController {
                     .append(request.getTerminalId())
                     .append(request.getStreetNumber())
                     .append(request.getHouseNumber())
+                    .append(request.getCity())
+                    .append(request.getArea())
                     .append(request.getReserved1())
                     .append(request.getReserved2())
                     .append(request.getReserved3())

@@ -18,6 +18,8 @@ import java.io.Serializable;
         "TerminalId",
         "StreetNumber",
         "HouseNumber",
+        "City",
+        "Area",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -53,6 +55,10 @@ public class DebitCardDiscrepantRequest implements Serializable {
     private String streetNumber;
     @JsonProperty("HouseNumber")
     private String houseNumber;
+    @JsonProperty("City")
+    private String city;
+    @JsonProperty("Area")
+    private String area;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -154,6 +160,22 @@ public class DebitCardDiscrepantRequest implements Serializable {
 
     public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public String getReserved1() {

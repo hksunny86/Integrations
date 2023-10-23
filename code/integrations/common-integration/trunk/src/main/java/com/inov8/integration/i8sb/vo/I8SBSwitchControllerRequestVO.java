@@ -508,6 +508,8 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String nameApproved;
     private String streetNoApproved;
     private String houseNoApproved;
+    private String cityApproved;
+    private String areaApproved;
     private String deleted;
     private String pointOfEntry;
     private String networkIdentifier;
@@ -515,6 +517,22 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String cardAcceptorIdentificationCode;
     private String cardAcceptorNameAndLocation;
     private String saf1linkIntegrationId;
+
+    public String getCityApproved() {
+        return cityApproved;
+    }
+
+    public void setCityApproved(String cityApproved) {
+        this.cityApproved = cityApproved;
+    }
+
+    public String getAreaApproved() {
+        return areaApproved;
+    }
+
+    public void setAreaApproved(String areaApproved) {
+        this.areaApproved = areaApproved;
+    }
 
     public String getSaf1linkIntegrationId() {
         return saf1linkIntegrationId;

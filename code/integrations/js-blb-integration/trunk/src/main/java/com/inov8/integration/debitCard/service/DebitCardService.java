@@ -550,10 +550,6 @@ public class DebitCardService {
             response.setResponseDateTime(messageVO.getDateTime());
             response.setMobileNumber(messageVO.getMobileNo());
             response.setCnic(messageVO.getCnicNo());
-            response.setCity(messageVO.getCity());
-            response.setArea(messageVO.getArea());
-            response.setStreetNumber(messageVO.getStreetNumber());
-            response.setHouseNumber(messageVO.getHouseNumber());
 
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());

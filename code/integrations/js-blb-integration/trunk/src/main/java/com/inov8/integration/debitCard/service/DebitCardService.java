@@ -1,13 +1,7 @@
 package com.inov8.integration.debitCard.service;
 
-import com.inov8.integration.debitCard.pdu.request.AppRebrandDebitCardIssuanceInquiryRequest;
-import com.inov8.integration.debitCard.pdu.request.AppRebrandDebitCardIssuanceRequest;
-import com.inov8.integration.debitCard.pdu.request.DebitCardDiscrepantRequest;
-import com.inov8.integration.debitCard.pdu.request.DebitCardFeeRequest;
-import com.inov8.integration.debitCard.pdu.response.AppRebrandDebitCardIssuanceInquiryResponse;
-import com.inov8.integration.debitCard.pdu.response.AppRebrandDebitCardIssuanceResponse;
-import com.inov8.integration.debitCard.pdu.response.DebitCardDiscrepantResponse;
-import com.inov8.integration.debitCard.pdu.response.DebitCardFeeResponse;
+import com.inov8.integration.debitCard.pdu.request.*;
+import com.inov8.integration.debitCard.pdu.response.*;
 import com.inov8.integration.middleware.dao.TransactionDAO;
 import com.inov8.integration.middleware.dao.TransactionLogModel;
 import com.inov8.integration.middleware.enums.ResponseCodeEnum;
@@ -588,5 +582,111 @@ public class DebitCardService {
         return response;
     }
 
+    public GetDebitCardDiscrepantResponse getDebitCardDiscrepantResponse(GetDebitCardDiscrepantRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Get Debit Card Discrepant Request Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        GetDebitCardDiscrepantResponse response = new GetDebitCardDiscrepantResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setName(request.getName());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("GetDebitCardDiscrepant");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+//        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Get Debit Card Discrepant Request to Micro Bank " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            messageVO = switchController.getDebitCardDiscrepant(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Get Debit Card Discrepant Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setHouseNumber(messageVO.getHouseNumber());
+            response.setStreetNumber(messageVO.getStreetNumber());
+            response.setArea(messageVO.getArea());
+            response.setCity(messageVO.getCity());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Get Debit Card Discrepant Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Get Debit Card Discrepant Request Unsuccessful from Micro Bank RRN: " + Objects.requireNonNull(messageVO).getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        String sha256hex = DigestUtils.sha256Hex(response.getResponseCode() + response.getResponseDescription());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Get Debit Card Discrepant Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+//        updateTransactionInDB(logModel);
+//        }
+        return response;
+    }
 
 }

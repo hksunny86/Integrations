@@ -8,4 +8,5 @@ public interface DebitCardRevampSwitchController {
     WebServiceVO debitCardDiscrepant(WebServiceVO webServiceVO);
     WebServiceVO appRebrandDebitCardIssuanceInquiry(WebServiceVO webServiceVO);
     WebServiceVO appRebrandDebitCardIssuance(WebServiceVO webServiceVO);
+    WebServiceVO getDebitCardDiscrepant(WebServiceVO webServiceVO);
 }

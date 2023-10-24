@@ -21,6 +21,11 @@ public class JsDebitCardIntegrationController implements DebitCardRevampSwitchCo
     }
 
     @Override
+    public WebServiceVO getDebitCardDiscrepant(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
     public WebServiceVO appRebrandDebitCardIssuanceInquiry(WebServiceVO webServiceVO) {
         return null;
     }

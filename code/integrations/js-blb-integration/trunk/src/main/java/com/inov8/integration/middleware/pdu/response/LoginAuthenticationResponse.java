@@ -38,6 +38,8 @@ public class LoginAuthenticationResponse {
     private String bvs;
     @XmlElement(name = "BlinkBvs")
     private String BlinlBvs;
+    @XmlElement(name = "FreelanceAccountBalance")
+    private String freelanceAccountBalance;
     @XmlElement(name = "HashData")
     private String hashData;
 
@@ -168,6 +170,14 @@ public class LoginAuthenticationResponse {
 
     public void setSegment(String segment) {
         this.segment = segment;
+    }
+
+    public String getFreelanceAccountBalance() {
+        return freelanceAccountBalance;
+    }
+
+    public void setFreelanceAccountBalance(String freelanceAccountBalance) {
+        this.freelanceAccountBalance = freelanceAccountBalance;
     }
 
     public String getHashData() {

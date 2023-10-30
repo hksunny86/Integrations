@@ -465,6 +465,15 @@ public class WebServiceVO implements Serializable {
     private String kyc;
     private Data data;
     private String accountLevel;
+    private String freelanceAccountBalance;
+
+    public String getFreelanceAccountBalance() {
+        return freelanceAccountBalance;
+    }
+
+    public void setFreelanceAccountBalance(String freelanceAccountBalance) {
+        this.freelanceAccountBalance = freelanceAccountBalance;
+    }
 
     public String getAccountLevel() {
         return accountLevel;

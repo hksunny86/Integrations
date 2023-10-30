@@ -1976,7 +1976,7 @@ public class HostIntegrationService {
             response.setLateBillAmount(messageVO.getLateBillAmount());
             response.setProductName(messageVO.getProductName());
             response.setTotalAmount(messageVO.getTotalAmount());
-//            response.setTransactionId(messageVO.getTransactionId());
+            response.setTransactionId(messageVO.getTransactionId());
             response.setTransactionAmount(messageVO.getTransactionAmount());
             response.setRemainingBalance(messageVO.getRemainingBalance());
 
@@ -7552,6 +7552,7 @@ public class HostIntegrationService {
             response.setMonthlyDebitLimit(messageVO.getMonthlyDebitLimit());
             response.setYearlyCreditLimit(messageVO.getYearlyCreditLimit());
             response.setYearlyDebitLimit(messageVO.getYearlyDebitLimit());
+            response.setFreelanceAccountBalance(messageVO.getFreelanceAccountBalance());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 

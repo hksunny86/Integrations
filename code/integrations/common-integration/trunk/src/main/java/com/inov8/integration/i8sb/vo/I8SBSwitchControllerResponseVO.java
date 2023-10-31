@@ -493,7 +493,24 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String senderId;
     private String receiverId;
     private Data retryIbftAdvice;
+    private String messageId;
+    private String currencyValue;
 
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
+    }
+
+    public String getCurrencyValue() {
+        return currencyValue;
+    }
+
+    public void setCurrencyValue(String currencyValue) {
+        this.currencyValue = currencyValue;
+    }
 
     public Data getRetryIbftAdvice() {
         return retryIbftAdvice;

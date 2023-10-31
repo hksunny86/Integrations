@@ -88,6 +88,7 @@ public class I8SBConstants {
     public static String I8SB_Channel_ID_ESB = "ESB";
     public static String I8SB_Channel_ID_ONE_LINK = "ONELINK";
     public static String I8SB_Channel_ID_SAF = "SAF";
+    public static String I8SB_Channel_ID_FCY = "FCY";
 
 
     public static String I8SB_Channel_ID_ETPaymentCollection = "ETPaymentCollection";
@@ -379,6 +380,7 @@ public class I8SBConstants {
     public static String RequestType_ONE_LINK_IBFT_TITLE_FETCH = "OneLinkIbftTitleFetch";
     public static String RequestType_ONE_LINK_IBFT_ADVICE = "OneLinkIbftAdvice";
     public static String RequestType_SAF_RETRY_IBFT_ADVICE = "SafRetryIbftAdvice";
+    public static String RequestType_FCY_CONVERSION = "FcyCpnversion";
 
 
 

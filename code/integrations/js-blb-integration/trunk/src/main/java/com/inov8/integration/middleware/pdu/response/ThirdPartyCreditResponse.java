@@ -12,7 +12,6 @@ import java.io.Serializable;
         "responseCode",
         "data",
         "messages",
-        "hashData"
 })
 public class ThirdPartyCreditResponse implements Serializable {
 
@@ -24,8 +23,6 @@ public class ThirdPartyCreditResponse implements Serializable {
     private Data data;
     @JsonProperty("messages")
     private String messages;
-    @JsonProperty("hashData")
-    private String hashData;
 
     public String getResponseCode() {
         return responseCode;
@@ -51,11 +48,4 @@ public class ThirdPartyCreditResponse implements Serializable {
         this.messages = messages;
     }
 
-    public String getHashData() {
-        return hashData;
-    }
-
-    public void setHashData(String hashData) {
-        this.hashData = hashData;
-    }
 }

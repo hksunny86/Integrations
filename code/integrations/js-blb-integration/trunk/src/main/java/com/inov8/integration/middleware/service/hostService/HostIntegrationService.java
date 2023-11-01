@@ -7495,7 +7495,7 @@ public class HostIntegrationService {
         }
 
         messageVO.setMobileNo(request.getMobileNumber());
-//        messageVO.setCnicNo(request.getCnic());
+        messageVO.setCnicNo(request.getCnic());
         messageVO.setDateTime(request.getDateTime());
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
@@ -7552,7 +7552,7 @@ public class HostIntegrationService {
             response.setMonthlyDebitLimit(messageVO.getMonthlyDebitLimit());
             response.setYearlyCreditLimit(messageVO.getYearlyCreditLimit());
             response.setYearlyDebitLimit(messageVO.getYearlyDebitLimit());
-            response.setFreelanceAccountBalance(messageVO.getFreelanceAccountBalance());
+//            response.setFreelanceAccountBalance(messageVO.getFreelanceAccountBalance());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -18326,7 +18326,7 @@ public class HostIntegrationService {
                 && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
             logger.info("[HOST] Third Party Credit Inquiry Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
 
-            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseCode("1");
             response.setData(messageVO.getData());
             response.setMessages(messageVO.getMessage());
 
@@ -18350,7 +18350,8 @@ public class HostIntegrationService {
         }
         StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getMessages());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        response.setHashData(sha256hex);
+        Data data = new Data();
+        data.setHashData(sha256hex);
 
         long endTime = new Date().getTime(); // end time
         long difference = endTime - startTime; // check different
@@ -18462,7 +18463,7 @@ public class HostIntegrationService {
                 && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
             logger.info("[HOST] Third Party Credit Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
 
-            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseCode("1");
             response.setData(messageVO.getData());
             response.setMessages(messageVO.getMessage());
 
@@ -18486,7 +18487,8 @@ public class HostIntegrationService {
         }
         StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getMessages());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        response.setHashData(sha256hex);
+        Data data = new Data();
+        data.setHashData(sha256hex);
 
         long endTime = new Date().getTime(); // end time
         long difference = endTime - startTime; // check different

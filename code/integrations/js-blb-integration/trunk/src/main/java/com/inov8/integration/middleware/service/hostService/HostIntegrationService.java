@@ -18350,7 +18350,7 @@ public class HostIntegrationService {
         }
         StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getMessages());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        Data data = new Data();
+        Data data = messageVO.getData();
         data.setHashData(sha256hex);
 
         long endTime = new Date().getTime(); // end time
@@ -18487,7 +18487,7 @@ public class HostIntegrationService {
         }
         StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getMessages());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-        Data data = new Data();
+        Data data = messageVO.getData();
         data.setHashData(sha256hex);
 
         long endTime = new Date().getTime(); // end time

@@ -74,7 +74,7 @@ public class FcyConversionResponse extends Response {
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
-        if (this.getResponseCode().equals("00")) {
+        if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
             i8SBSwitchControllerResponseVO.setDescription("Success");
         } else {

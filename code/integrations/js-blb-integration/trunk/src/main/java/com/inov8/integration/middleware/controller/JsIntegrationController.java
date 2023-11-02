@@ -17,7 +17,6 @@ public class JsIntegrationController implements WebServiceSwitchController {
     @Autowired
     ClientIntegrationService integrationService;
 
-
     @Override
     public WebServiceVO verifyAccount(WebServiceVO webServiceVO) throws RuntimeException {
         long start = System.currentTimeMillis();
@@ -2756,7 +2755,8 @@ public class JsIntegrationController implements WebServiceSwitchController {
     public WebServiceVO simpleAccountOpening(WebServiceVO webServiceVO) {
         return null;
     }
-//
+
+    //
 //    @Override
 //    public WebServiceVO getOutstandingLoan(WebServiceVO webServiceVO) {
 //        return null;
@@ -2809,6 +2809,11 @@ public class JsIntegrationController implements WebServiceSwitchController {
 
     @Override
     public WebServiceVO customerCliStatus(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO customerValidation(WebServiceVO webServiceVO) {
         return null;
     }
 }

@@ -165,5 +165,6 @@ public interface WebServiceSwitchController {
     WebServiceVO thirdPartyCreditInquiry(WebServiceVO webServiceVO);
     WebServiceVO thirdPartyCredit(WebServiceVO webServiceVO);
     WebServiceVO customerCliStatus(WebServiceVO webServiceVO);
+    WebServiceVO customerValidation(WebServiceVO webServiceVO);
 
 }

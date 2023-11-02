@@ -4349,6 +4349,23 @@ public class HostRequestValidator {
 
     }
 
+    public static void validateCustomerValidation(CustomerValidationRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getStan())) {
+            throw new ValidationException("[FAILED] Validation Failed STAN: " + integrationVO.getStan());
+        }
+        if (StringUtils.isEmpty(integrationVO.getCustomerIdentification())) {
+            throw new ValidationException("[FAILED] Validation Failed Customer Identification Number: " + integrationVO.getCustomerIdentification());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+
+    }
+
     public static boolean authenticate(String userName, String password, String channelID) {
         if (ConfigReader.getInstance().getProperty("channel.ids", "").contains(channelID))
             return ConfigReader.getInstance().getProperty("channel.usernames", "").contains(userName) && ConfigReader.getInstance().getProperty("channel.passwords", "").contains(password);

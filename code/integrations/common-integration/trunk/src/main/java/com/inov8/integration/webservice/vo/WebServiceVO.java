@@ -466,6 +466,24 @@ public class WebServiceVO implements Serializable {
     private Data data;
     private String accountLevel;
     private String freelanceAccountBalance;
+    private String valueField;
+    private CustomerValidationVO response;
+
+    public CustomerValidationVO getResponse() {
+        return response;
+    }
+
+    public void setResponse(CustomerValidationVO response) {
+        this.response = response;
+    }
+
+    public String getValueField() {
+        return valueField;
+    }
+
+    public void setValueField(String valueField) {
+        this.valueField = valueField;
+    }
 
     public String getFreelanceAccountBalance() {
         return freelanceAccountBalance;

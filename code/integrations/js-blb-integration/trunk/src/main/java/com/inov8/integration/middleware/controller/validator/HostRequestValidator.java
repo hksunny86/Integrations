@@ -4300,6 +4300,12 @@ public class HostRequestValidator {
 
     public static void validateThirdPartyCreditInquiry(ThirdPartyCreditInquiryRequest integrationVO) throws ValidationException {
 
+        if (StringUtils.isEmpty(integrationVO.getUserName())) {
+            throw new ValidationException("[FAILED] Validation Failed Username: " + integrationVO.getUserName());
+        }
+        if (StringUtils.isEmpty(integrationVO.getPassword())) {
+            throw new ValidationException("[FAILED] Validation Failed Password: " + integrationVO.getPassword());
+        }
         if (StringUtils.isEmpty(integrationVO.getRrn())) {
             throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
         }
@@ -4317,6 +4323,12 @@ public class HostRequestValidator {
 
     public static void validateThirdPartyCredit(ThirdPartyCreditRequest integrationVO) throws ValidationException {
 
+        if (StringUtils.isEmpty(integrationVO.getUserName())) {
+            throw new ValidationException("[FAILED] Validation Failed Username: " + integrationVO.getUserName());
+        }
+        if (StringUtils.isEmpty(integrationVO.getPassword())) {
+            throw new ValidationException("[FAILED] Validation Failed Password: " + integrationVO.getPassword());
+        }
         if (StringUtils.isEmpty(integrationVO.getRrn())) {
             throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
         }

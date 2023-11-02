@@ -18,7 +18,7 @@ public class Data implements Serializable {
     private String dailyCreditRemainingLimit;
     private String monthlyCreditRemainingLimit;
     private String accountTitle;
-    private String hashData;
+//    private String hashData;
 
     public String getRrn() {
         return rrn;
@@ -108,11 +108,11 @@ public class Data implements Serializable {
         this.accountTitle = accountTitle;
     }
 
-    public String getHashData() {
-        return hashData;
-    }
-
-    public void setHashData(String hashData) {
-        this.hashData = hashData;
-    }
+//    public String getHashData() {
+//        return hashData;
+//    }
+//
+//    public void setHashData(String hashData) {
+//        this.hashData = hashData;
+//    }
 }

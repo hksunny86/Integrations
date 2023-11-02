@@ -28,7 +28,6 @@ import java.io.Serializable;
         "reserved8",
         "reserved9",
         "reserved10",
-        "hashData"
 })
 public class ThirdPartyCreditInquiryRequest implements Serializable {
     private final static long serialVersionUID = 1L;
@@ -73,8 +72,6 @@ public class ThirdPartyCreditInquiryRequest implements Serializable {
     private String reserved9;
     @JsonProperty("reserved10")
     private String reserved10;
-    @JsonProperty("hashData")
-    private String hashData;
 
     public String getUserName() {
         return userName;
@@ -234,13 +231,5 @@ public class ThirdPartyCreditInquiryRequest implements Serializable {
 
     public void setReserved10(String reserved10) {
         this.reserved10 = reserved10;
-    }
-
-    public String getHashData() {
-        return hashData;
-    }
-
-    public void setHashData(String hashData) {
-        this.hashData = hashData;
     }
 }

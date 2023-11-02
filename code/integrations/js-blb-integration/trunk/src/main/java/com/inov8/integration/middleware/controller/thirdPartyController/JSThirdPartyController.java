@@ -200,10 +200,10 @@ public class JSThirdPartyController {
                 response = new ThirdPartyCreditInquiryResponse();
                 response.setResponseCode("420");
                 response.setMessages("Request is not authenticated");
-                Data data = new Data();
-                data.setRrn(request.getRrn());
-                data.setResponseDateTime(request.getDateTime());
-                response.setData(data);
+//                Data data = new Data();
+//                data.setRrn(request.getRrn());
+//                data.setResponseDateTime(request.getDateTime());
+//                response.setData(data);
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
             }
@@ -299,10 +299,10 @@ public class JSThirdPartyController {
                 response = new ThirdPartyCreditResponse();
                 response.setResponseCode("420");
                 response.setMessages("Request is not authenticated");
-                Data data = new Data();
-                data.setRrn(request.getRrn());
-                data.setResponseDateTime(request.getDateTime());
-                response.setData(data);
+//                Data data = new Data();
+//                data.setRrn(request.getRrn());
+//                data.setResponseDateTime(request.getDateTime());
+//                response.setData(data);
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
             }
 //            } else {
@@ -361,29 +361,29 @@ public class JSThirdPartyController {
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateCustomerCliStatus(request);
-                    response = integrationService.customerCliStatusResponse(request);
-                } catch (ValidationException ve) {
-                    response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
+                        HostRequestValidator.validateCustomerCliStatus(request);
+                        response = integrationService.customerCliStatusResponse(request);
+                    } catch (ValidationException ve) {
+                        response.setResponseCode("420");
+                        response.setResponseDescription(ve.getMessage());
 
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        response.setResponseCode("220");
+                        response.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+                    logger.info("******* DEBUG LOGS FOR Customer Cli Status Request *********");
+                    logger.info("ResponseCode: " + response.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR Customer Cli Status Request AUTHENTICATION *********");
+                    response = new CustomerCliStatusResponse();
+                    response.setResponseCode("420");
+                    response.setResponseDescription("Request is not authenticated");
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
                 }
-                logger.info("******* DEBUG LOGS FOR Customer Cli Status Request *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR Customer Cli Status Request AUTHENTICATION *********");
-                response = new CustomerCliStatusResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-            }
             } else {
                 logger.info("******* DEBUG LOGS FOR Customer Cli Status Request *********");
                 response = new CustomerCliStatusResponse();

@@ -10,4 +10,5 @@ public interface L2AccountSwitchController {
     WebServiceVO rateConversion(WebServiceVO webServiceVO);
     WebServiceVO freelanceToWalletInquiry(WebServiceVO webServiceVO);
     WebServiceVO freelanceToWallet(WebServiceVO webServiceVO);
+    WebServiceVO freelancerFCYFunds(WebServiceVO webServiceVO);
 }

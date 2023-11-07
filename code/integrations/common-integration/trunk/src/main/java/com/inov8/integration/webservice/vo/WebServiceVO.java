@@ -468,6 +468,15 @@ public class WebServiceVO implements Serializable {
     private String freelanceAccountBalance;
     private String valueField;
     private CustomerValidationVO response;
+    private List<MicrobankProwideVO> microbankProwideVOList;
+
+    public List<MicrobankProwideVO> getMicrobankProwideVOList() {
+        return microbankProwideVOList;
+    }
+
+    public void setMicrobankProwideVOList(List<MicrobankProwideVO> microbankProwideVOList) {
+        this.microbankProwideVOList = microbankProwideVOList;
+    }
 
     public CustomerValidationVO getResponse() {
         return response;

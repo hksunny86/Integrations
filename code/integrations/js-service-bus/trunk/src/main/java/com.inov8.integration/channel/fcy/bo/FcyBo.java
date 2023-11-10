@@ -1,10 +1,10 @@
 package com.inov8.integration.channel.fcy.bo;
 
 import com.inov8.integration.channel.fcy.request.FcyConversionRequest;
+import com.inov8.integration.channel.fcy.request.Request;
 import com.inov8.integration.channel.fcy.response.FcyConversionResponse;
+import com.inov8.integration.channel.fcy.response.Response;
 import com.inov8.integration.channel.fcy.service.FcyService;
-import com.inov8.integration.channel.tasdeeq.request.Request;
-import com.inov8.integration.channel.tasdeeq.response.Response;
 import com.inov8.integration.controller.I8SBChannelInterface;
 import com.inov8.integration.enums.DateFormatEnum;
 import com.inov8.integration.exception.I8SBValidationException;

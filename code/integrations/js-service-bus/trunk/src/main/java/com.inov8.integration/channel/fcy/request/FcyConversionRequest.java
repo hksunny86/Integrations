@@ -3,7 +3,6 @@ package com.inov8.integration.channel.fcy.request;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inov8.integration.channel.tasdeeq.request.Request;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.enums.DateFormatEnum;
 import com.inov8.integration.exception.I8SBValidationException;

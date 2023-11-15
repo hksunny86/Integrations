@@ -49,12 +49,17 @@ public class FcyService {
         FcyConversionResponse fcyConversionResponse = new FcyConversionResponse();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock5")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String response = "{\n" +
-                    "    \"msgId\": \"RDCR20210306124930123748\",\n" +
+                    "    \"msgId\": \"RDCR20210306124930123888\",\n" +
+                    "    \"channelId\": \"0098\",\n" +
+                    "    \"requestDate\": \"20231115\",\n" +
+                    "    \"currencyId\": \"USD\",\n" +
+                    "    \"ResponseCode\": \"00\",\n" +
+                    "    \"ResponseDescription\": \"Success\",\n" +
                     "    \"statusFlag\": \"1\",\n" +
-                    "    \"currencyValue\": \"163.4837\"\n" +
+                    "    \"currencyValue\": \"300.000\"\n" +
                     "}";
             fcyConversionResponse = (FcyConversionResponse) JSONUtil.jsonToObject(response, FcyConversionResponse.class);
             Objects.requireNonNull(fcyConversionResponse).setResponseCode("00");
@@ -87,7 +92,6 @@ public class FcyService {
                 String responseCode = res1.getStatusCode().toString();
                 if (responseCode.equalsIgnoreCase("200")) {
                     fcyConversionResponse = (FcyConversionResponse) JSONUtil.jsonToObject(res1.getBody(), FcyConversionResponse.class);
-                    Objects.requireNonNull(fcyConversionResponse).setResponseCode(responseCode);
                 }
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {

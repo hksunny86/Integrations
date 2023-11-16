@@ -99,6 +99,11 @@ public class WebServiceVO implements Serializable {
     private String reserved8;
     private String reserved9;
     private String reserved10;
+    private String reserved11;
+    private String reserved12;
+    private String reserved13;
+    private String reserved14;
+    private String reserved15;
     private String remainingDebitLimit;
     private String remainingCreditLimit;
     private String consumedVelocity;
@@ -469,6 +474,132 @@ public class WebServiceVO implements Serializable {
     private String valueField;
     private CustomerValidationVO response;
     private List<MicrobankProwideVO> microbankProwideVOList;
+    private String accountCurrency;
+    private String spendingAmount;
+    private String addressArea;
+    private String zindigiUltraPurpose;
+    private String countryOfBirth;
+    private String countryTaxResidence;
+    private String bornInUS;
+    private String declaration;
+    private String selectCountry;
+    private String birthCountry;
+    private String residenceAddress;
+    private String taxResidence;
+    private String referenceNumber;
+    private String usBornCity;
+
+    public String getAccountCurrency() {
+        return accountCurrency;
+    }
+
+    public void setAccountCurrency(String accountCurrency) {
+        this.accountCurrency = accountCurrency;
+    }
+
+    public String getSpendingAmount() {
+        return spendingAmount;
+    }
+
+    public void setSpendingAmount(String spendingAmount) {
+        this.spendingAmount = spendingAmount;
+    }
+
+    public String getAddressArea() {
+        return addressArea;
+    }
+
+    public void setAddressArea(String addressArea) {
+        this.addressArea = addressArea;
+    }
+
+    public String getZindigiUltraPurpose() {
+        return zindigiUltraPurpose;
+    }
+
+    public void setZindigiUltraPurpose(String zindigiUltraPurpose) {
+        this.zindigiUltraPurpose = zindigiUltraPurpose;
+    }
+
+    public String getCountryOfBirth() {
+        return countryOfBirth;
+    }
+
+    public void setCountryOfBirth(String countryOfBirth) {
+        this.countryOfBirth = countryOfBirth;
+    }
+
+    public String getCountryTaxResidence() {
+        return countryTaxResidence;
+    }
+
+    public void setCountryTaxResidence(String countryTaxResidence) {
+        this.countryTaxResidence = countryTaxResidence;
+    }
+
+    public String getBornInUS() {
+        return bornInUS;
+    }
+
+    public void setBornInUS(String bornInUS) {
+        this.bornInUS = bornInUS;
+    }
+
+    public String getDeclaration() {
+        return declaration;
+    }
+
+    public void setDeclaration(String declaration) {
+        this.declaration = declaration;
+    }
+
+    public String getSelectCountry() {
+        return selectCountry;
+    }
+
+    public void setSelectCountry(String selectCountry) {
+        this.selectCountry = selectCountry;
+    }
+
+    public String getBirthCountry() {
+        return birthCountry;
+    }
+
+    public void setBirthCountry(String birthCountry) {
+        this.birthCountry = birthCountry;
+    }
+
+    public String getResidenceAddress() {
+        return residenceAddress;
+    }
+
+    public void setResidenceAddress(String residenceAddress) {
+        this.residenceAddress = residenceAddress;
+    }
+
+    public String getTaxResidence() {
+        return taxResidence;
+    }
+
+    public void setTaxResidence(String taxResidence) {
+        this.taxResidence = taxResidence;
+    }
+
+    public String getReferenceNumber() {
+        return referenceNumber;
+    }
+
+    public void setReferenceNumber(String referenceNumber) {
+        this.referenceNumber = referenceNumber;
+    }
+
+    public String getUsBornCity() {
+        return usBornCity;
+    }
+
+    public void setUsBornCity(String usBornCity) {
+        this.usBornCity = usBornCity;
+    }
 
     public List<MicrobankProwideVO> getMicrobankProwideVOList() {
         return microbankProwideVOList;
@@ -3276,6 +3407,46 @@ public class WebServiceVO implements Serializable {
 
     public void setReserved10(String reserved10) {
         this.reserved10 = reserved10;
+    }
+
+    public String getReserved11() {
+        return reserved11;
+    }
+
+    public void setReserved11(String reserved11) {
+        this.reserved11 = reserved11;
+    }
+
+    public String getReserved12() {
+        return reserved12;
+    }
+
+    public void setReserved12(String reserved12) {
+        this.reserved12 = reserved12;
+    }
+
+    public String getReserved13() {
+        return reserved13;
+    }
+
+    public void setReserved13(String reserved13) {
+        this.reserved13 = reserved13;
+    }
+
+    public String getReserved14() {
+        return reserved14;
+    }
+
+    public void setReserved14(String reserved14) {
+        this.reserved14 = reserved14;
+    }
+
+    public String getReserved15() {
+        return reserved15;
+    }
+
+    public void setReserved15(String reserved15) {
+        this.reserved15 = reserved15;
     }
 
     public String getPaymentMode() {

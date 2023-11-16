@@ -2267,39 +2267,39 @@ public class JSController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-//                        HostRequestValidator.validateSimpleAccountOpening(request);
-                    response = integrationService.simpleAccountOpeningResponse(request);
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
+                        HostRequestValidator.validateSimpleAccountOpening(request);
+                        response = integrationService.simpleAccountOpeningResponse(request);
 
-                } catch (ValidationException ve) {
+                    } catch (ValidationException ve) {
+                        response.setResponseCode("420");
+                        response.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        response.setResponseCode("220");
+                        response.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION *********");
+                    logger.info("ResponseCode: " + response.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION AUTHENTICATION *********");
+                    response = new SimpleAccountOpeningResponse();
                     response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
+                    response.setResponseDescription("Request is not authenticated");
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
                 }
-
-                logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
             } else {
-                logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION AUTHENTICATION *********");
+                logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION *********");
                 response = new SimpleAccountOpeningResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
             }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Processing Simple Account Opening Request TRANSACTION *********");
-//                response = new SimpleAccountOpeningResponse();
-//                response.setResponseCode("111");
-//                response.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
         } catch (Exception e) {
 
             response = new SimpleAccountOpeningResponse();
@@ -2976,7 +2976,6 @@ public class JSController {
                     .append(request.getLatitude())
                     .append(request.getLongitude())
                     .append(request.getCurrencyCode())
-                    .append(request.getUsCitizenship())
                     .append(request.getUsMobileNumber())
                     .append(request.getSignatoryAuthority())
                     .append(request.getUsLinks())
@@ -2998,6 +2997,21 @@ public class JSController {
                     .append(request.getUsCitizenship())
                     .append(request.getChequeBook())
                     .append(request.getRequestType())
+                    .append(request.getAccountCurrency())
+                    .append(request.getSpendingAmount())
+                    .append(request.getStreetNumber())
+                    .append(request.getAddressArea())
+                    .append(request.getZindigiUltraPurpose())
+                    .append(request.getCountryOfBirth())
+                    .append(request.getCountryTaxResidence())
+                    .append(request.getBornInUS())
+                    .append(request.getDeclaration())
+                    .append(request.getSelectCountry())
+                    .append(request.getBirthCountry())
+                    .append(request.getResidenceAddress())
+                    .append(request.getTaxResidence())
+                    .append(request.getReferenceNumber())
+                    .append(request.getUsBornCity())
                     .append(request.getReserved8())
                     .append(request.getReserved9())
                     .append(request.getReserved10())

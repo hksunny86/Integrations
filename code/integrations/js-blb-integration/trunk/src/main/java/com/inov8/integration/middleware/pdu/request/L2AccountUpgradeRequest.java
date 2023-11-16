@@ -62,6 +62,21 @@ import java.io.Serializable;
         "UsCitizenship",
         "ChequeBook",
         "RequestType",
+        "AccountCurrency",
+        "SpendingAmount",
+        "StreetNumber",
+        "AddressArea",
+        "ZindigiUltraPurpose",
+        "CountryOfBirth",
+        "CountryTaxResidence",
+        "BornInUS",
+        "Declaration",
+        "SelectCountry",
+        "BirthCountry",
+        "ResidenceAddress",
+        "TaxResidence",
+        "ReferenceNumber",
+        "USBornCity",
         "Reserved8",
         "Reserved9",
         "Reserved10",
@@ -184,6 +199,36 @@ public class L2AccountUpgradeRequest implements Serializable {
     private String chequeBook;
     @JsonProperty("RequestType")
     private String requestType;
+    @JsonProperty("AccountCurrency")
+    private String accountCurrency;
+    @JsonProperty("SpendingAmount")
+    private String spendingAmount;
+    @JsonProperty("StreetNumber")
+    private String streetNumber;
+    @JsonProperty("AddressArea")
+    private String addressArea;
+    @JsonProperty("ZindigiUltraPurpose")
+    private String zindigiUltraPurpose;
+    @JsonProperty("CountryOfBirth")
+    private String countryOfBirth;
+    @JsonProperty("CountryTaxResidence")
+    private String countryTaxResidence;
+    @JsonProperty("BornInUS")
+    private String bornInUS;
+    @JsonProperty("Declaration")
+    private String declaration;
+    @JsonProperty("SelectCountry")
+    private String selectCountry;
+    @JsonProperty("BirthCountry")
+    private String birthCountry;
+    @JsonProperty("ResidenceAddress")
+    private String residenceAddress;
+    @JsonProperty("TaxResidence")
+    private String taxResidence;
+    @JsonProperty("ReferenceNumber")
+    private String referenceNumber;
+    @JsonProperty("USBornCity")
+    private String usBornCity;
     @JsonProperty("Reserved8")
     private String reserved8;
     @JsonProperty("Reserved9")
@@ -633,6 +678,126 @@ public class L2AccountUpgradeRequest implements Serializable {
 
     public void setRequestType(String requestType) {
         this.requestType = requestType;
+    }
+
+    public String getAccountCurrency() {
+        return accountCurrency;
+    }
+
+    public void setAccountCurrency(String accountCurrency) {
+        this.accountCurrency = accountCurrency;
+    }
+
+    public String getSpendingAmount() {
+        return spendingAmount;
+    }
+
+    public void setSpendingAmount(String spendingAmount) {
+        this.spendingAmount = spendingAmount;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public String getAddressArea() {
+        return addressArea;
+    }
+
+    public void setAddressArea(String addressArea) {
+        this.addressArea = addressArea;
+    }
+
+    public String getZindigiUltraPurpose() {
+        return zindigiUltraPurpose;
+    }
+
+    public void setZindigiUltraPurpose(String zindigiUltraPurpose) {
+        this.zindigiUltraPurpose = zindigiUltraPurpose;
+    }
+
+    public String getCountryOfBirth() {
+        return countryOfBirth;
+    }
+
+    public void setCountryOfBirth(String countryOfBirth) {
+        this.countryOfBirth = countryOfBirth;
+    }
+
+    public String getCountryTaxResidence() {
+        return countryTaxResidence;
+    }
+
+    public void setCountryTaxResidence(String countryTaxResidence) {
+        this.countryTaxResidence = countryTaxResidence;
+    }
+
+    public String getBornInUS() {
+        return bornInUS;
+    }
+
+    public void setBornInUS(String bornInUS) {
+        this.bornInUS = bornInUS;
+    }
+
+    public String getDeclaration() {
+        return declaration;
+    }
+
+    public void setDeclaration(String declaration) {
+        this.declaration = declaration;
+    }
+
+    public String getSelectCountry() {
+        return selectCountry;
+    }
+
+    public void setSelectCountry(String selectCountry) {
+        this.selectCountry = selectCountry;
+    }
+
+    public String getBirthCountry() {
+        return birthCountry;
+    }
+
+    public void setBirthCountry(String birthCountry) {
+        this.birthCountry = birthCountry;
+    }
+
+    public String getResidenceAddress() {
+        return residenceAddress;
+    }
+
+    public void setResidenceAddress(String residenceAddress) {
+        this.residenceAddress = residenceAddress;
+    }
+
+    public String getTaxResidence() {
+        return taxResidence;
+    }
+
+    public void setTaxResidence(String taxResidence) {
+        this.taxResidence = taxResidence;
+    }
+
+    public String getReferenceNumber() {
+        return referenceNumber;
+    }
+
+    public void setReferenceNumber(String referenceNumber) {
+        this.referenceNumber = referenceNumber;
+    }
+
+    public String getUsBornCity() {
+        return usBornCity;
+    }
+
+    public void setUsBornCity(String usBornCity) {
+        this.usBornCity = usBornCity;
     }
 
     public String getReserved8() {

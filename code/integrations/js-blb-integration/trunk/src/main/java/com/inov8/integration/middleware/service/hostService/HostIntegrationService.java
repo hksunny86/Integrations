@@ -13460,6 +13460,29 @@ public class HostIntegrationService {
         messageVO.setReserved5(request.getUsCitizenship());
         messageVO.setReserved6(request.getChequeBook());
         messageVO.setReserved7(request.getRequestType());
+        messageVO.setAccountCurrency(request.getAccountCurrency());
+        messageVO.setSpendingAmount(request.getSpendingAmount());
+        messageVO.setStreetNumber(request.getStreetNumber());
+        messageVO.setAddressArea(request.getAddressArea());
+        messageVO.setZindigiUltraPurpose(request.getZindigiUltraPurpose());
+        messageVO.setCountryOfBirth(request.getCountryOfBirth());
+        messageVO.setCountryTaxResidence(request.getCountryTaxResidence());
+        messageVO.setBornInUS(request.getBornInUS());
+        messageVO.setDeclaration(request.getDeclaration());
+        messageVO.setSelectCountry(request.getSelectCountry());
+        messageVO.setBirthCountry(request.getBirthCountry());
+        messageVO.setResidenceAddress(request.getResidenceAddress());
+        messageVO.setTaxResidence(request.getTaxResidence());
+        messageVO.setReferenceNumber(request.getReferenceNumber());
+        messageVO.setUsBornCity(request.getUsBornCity());
+        messageVO.setReserved8(request.getReserved8());
+        messageVO.setReserved9(request.getReserved9());
+        messageVO.setReserved10(request.getReserved10());
+        messageVO.setReserved11(request.getReserved11());
+        messageVO.setReserved12(request.getReserved12());
+        messageVO.setReserved13(request.getReserved13());
+        messageVO.setReserved14(request.getReserved14());
+        messageVO.setReserved15(request.getReserved15());
 
         /*This is temporary solution to enable talotalk on behalf of Attique Butt.
         Should be reverted once otp optional implemented

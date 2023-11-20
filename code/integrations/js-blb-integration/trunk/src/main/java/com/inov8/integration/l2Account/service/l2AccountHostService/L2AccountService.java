@@ -570,7 +570,7 @@ public class L2AccountService {
         messageVO.setRetrievalReferenceNumber(request.getRrn());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setAmount(request.getAmount());
+        messageVO.setTransactionAmount(request.getAmount());
         messageVO.setPinType(request.getPinType());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());

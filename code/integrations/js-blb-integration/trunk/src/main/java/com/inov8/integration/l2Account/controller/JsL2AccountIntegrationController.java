@@ -40,4 +40,14 @@ public class JsL2AccountIntegrationController implements L2AccountSwitchControll
     public WebServiceVO freelanceToWallet(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO freelancerFCYFunds(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO freelancerBalanceInquiry(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

@@ -71,34 +71,34 @@ public class JSL2AccountController {
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        L2AccountHostRequestValidator.validateL2Account(request);
-                        response = l2AccountService.l2AccountResponse(request);
+            if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    L2AccountHostRequestValidator.validateL2Account(request);
+                    response = l2AccountService.l2AccountResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Level 2 Accounts Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Level 2 Accounts Request AUTHENTICATION *********");
-                    response = new L2AccountResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
+
+                logger.info("******* DEBUG LOGS FOR Level 2 Accounts Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Level 2 Accounts Request AUTHENTICATION *********");
+                response = new L2AccountResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
+            }
             } else {
                 logger.info("******* DEBUG LOGS FOR Level 2 Accounts Request *********");
                 response = new L2AccountResponse();
@@ -165,34 +165,34 @@ public class JSL2AccountController {
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        L2AccountHostRequestValidator.validateL2AccountFields(request);
-                        response = l2AccountService.l2AccountFieldsResponse(request);
+            if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    L2AccountHostRequestValidator.validateL2AccountFields(request);
+                    response = l2AccountService.l2AccountFieldsResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Level 2 Account Fields Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Level 2 Account Fields Request AUTHENTICATION *********");
-                    response = new L2AccountFieldsResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
+
+                logger.info("******* DEBUG LOGS FOR Level 2 Account Fields Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Level 2 Account Fields Request AUTHENTICATION *********");
+                response = new L2AccountFieldsResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
+            }
             } else {
                 logger.info("******* DEBUG LOGS FOR Level 2 Account Fields Request *********");
                 response = new L2AccountFieldsResponse();
@@ -259,34 +259,34 @@ public class JSL2AccountController {
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        L2AccountHostRequestValidator.validateUpdatePmd(request);
-                        response = l2AccountService.updatePmdResponse(request);
+            if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    L2AccountHostRequestValidator.validateUpdatePmd(request);
+                    response = l2AccountService.updatePmdResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Update PMD Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Update PMD Request AUTHENTICATION *********");
-                    response = new UpdatePmdResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
+
+                logger.info("******* DEBUG LOGS FOR Update PMD Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Update PMD Request AUTHENTICATION *********");
+                response = new UpdatePmdResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
+            }
             } else {
                 logger.info("******* DEBUG LOGS FOR Update PMD Request *********");
                 response = new UpdatePmdResponse();
@@ -532,34 +532,34 @@ public class JSL2AccountController {
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        L2AccountHostRequestValidator.validateFreelanceToWallet(request);
-                        response = l2AccountService.freelanceToWalletResponse(request);
+            if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    L2AccountHostRequestValidator.validateFreelanceToWallet(request);
+                    response = l2AccountService.freelanceToWalletResponse(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Freelance To Wallet Request *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Freelance To Wallet Request AUTHENTICATION *********");
-                    response = new FreelanceToWalletResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    response.setRrn(request.getRrn());
-                    response.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
+
+                logger.info("******* DEBUG LOGS FOR Freelance To Wallet Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Freelance To Wallet Request AUTHENTICATION *********");
+                response = new FreelanceToWalletResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
+            }
             } else {
                 logger.info("******* DEBUG LOGS FOR Freelance To Wallet Request *********");
                 response = new FreelanceToWalletResponse();
@@ -580,6 +580,97 @@ public class JSL2AccountController {
         long end = System.currentTimeMillis() - start;
         String responseXML = JSONUtil.getJSON(response);
         logger.info("Freelance To Wallet Request Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
+
+
+        return response;
+    }
+
+    @RequestMapping(value = "api/l2Account/freelanceBalanceInquiry", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    FreelanceBalanceInquiryResponse freelanceBalanceInquiryResponse(@Valid @RequestBody FreelanceBalanceInquiryRequest request) throws Exception {
+        FreelanceBalanceInquiryResponse response = new FreelanceBalanceInquiryResponse();
+
+        String className = this.getClass().getSimpleName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+        long start = System.currentTimeMillis();
+
+        try {
+
+            logger.info("Freelance Balance Inquiry Request Received at Controller at time: " + start);
+            String requestXML = JSONUtil.getJSON(request);
+            //        requestXML = XMLUtil.maskPassword(requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Freelance Balance Inquiry Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
+            StringBuilder stringText = new StringBuilder()
+                    .append(request.getUserName())
+                    .append(request.getPassword())
+                    .append(request.getMobileNumber())
+                    .append(request.getDateTime())
+                    .append(request.getRrn())
+                    .append(request.getChannelId())
+                    .append(request.getTerminalId())
+                    .append(request.getMpin())
+                    .append(request.getOtpPin())
+                    .append(request.getReserved1())
+                    .append(request.getReserved2())
+                    .append(request.getReserved3())
+                    .append(request.getReserved4())
+                    .append(request.getReserved5());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    L2AccountHostRequestValidator.validateFreelanceBalanceInquiry(request);
+                    response = l2AccountService.freelanceBalanceInquiryResponse(request);
+
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+
+                logger.info("******* DEBUG LOGS FOR Freelance Balance Inquiry Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Freelance Balance Inquiry Request AUTHENTICATION *********");
+                response = new FreelanceBalanceInquiryResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
+            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Freelance To Wallet Request *********");
+                response = new FreelanceBalanceInquiryResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
+        } catch (Exception e) {
+
+            response = new FreelanceBalanceInquiryResponse();
+            response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            response.setResponseDescription(e.getLocalizedMessage());
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
+            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
+            logger.info("Critical Error ::" + e.getLocalizedMessage());
+        }
+        long end = System.currentTimeMillis() - start;
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Freelance Balance Inquiry Request Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
 
 
         return response;

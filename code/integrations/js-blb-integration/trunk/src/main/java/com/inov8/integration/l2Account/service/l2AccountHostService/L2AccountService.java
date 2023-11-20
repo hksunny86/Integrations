@@ -6,9 +6,12 @@ import com.inov8.integration.middleware.dao.TransactionDAO;
 import com.inov8.integration.middleware.dao.TransactionLogModel;
 import com.inov8.integration.middleware.enums.ResponseCodeEnum;
 import com.inov8.integration.middleware.enums.TransactionStatus;
+import com.inov8.integration.middleware.pdu.request.BalanceInquiryRequest;
+import com.inov8.integration.middleware.pdu.response.BalanceInquiryResponse;
 import com.inov8.integration.middleware.util.ConfigReader;
 import com.inov8.integration.middleware.util.JSONUtil;
 import com.inov8.integration.middleware.util.RSAEncryption;
+import com.inov8.integration.middleware.util.XMLUtil;
 import com.inov8.integration.webservice.controller.L2AccountSwitchController;
 import com.inov8.integration.webservice.vo.WebServiceVO;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -675,29 +678,29 @@ public class L2AccountService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setTransactionAmount(request.getAmount());
-        if (request.getPinType().equals("02")) {
-//            messageVO.setOtpPin(request.getPin());
-            try {
-                if (request.getPin() != null && !request.getPin().equals("")) {
-                    String text = request.getPin();
-                    String otp = text.replaceAll("\\r|\\n", "");
-                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
-                }
-            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-        } else {
-//            messageVO.setMobilePin(request.getPin());
-            try {
-                if (request.getPin() != null && !request.getPin().equals("")) {
-                    String text = request.getPin();
-                    String mpin = text.replaceAll("\\r|\\n", "");
-                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
-                }
-            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (request.getPinType().equals("02")) {
+        messageVO.setOtpPin(request.getPin());
+//            try {
+//                if (request.getPin() != null && !request.getPin().equals("")) {
+//                    String text = request.getPin();
+//                    String otp = text.replaceAll("\\r|\\n", "");
+//                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+//                }
+//            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+        messageVO.setMobilePin(request.getPin());
+//            try {
+//                if (request.getPin() != null && !request.getPin().equals("")) {
+//                    String text = request.getPin();
+//                    String mpin = text.replaceAll("\\r|\\n", "");
+//                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+//                }
+//            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+//                e.printStackTrace();
+//            }
+//        }
         messageVO.setPinType(request.getPinType());
         messageVO.setReserved1(request.getPinType());
         messageVO.setReserved2(request.getReserved2());
@@ -788,4 +791,124 @@ public class L2AccountService {
         return response;
     }
 
+    public FreelanceBalanceInquiryResponse freelanceBalanceInquiryResponse(FreelanceBalanceInquiryRequest request) {
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Starting Processing Freelance Balance Inquiry Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        FreelanceBalanceInquiryResponse response = new FreelanceBalanceInquiryResponse();
+
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+//        messageVO.setMobilePin(request.getMpin());
+//        messageVO.setOtpPin(request.getOtpPin());
+        try {
+            if (request.getOtpPin() != null && !request.getOtpPin().equals("")) {
+                String text = request.getOtpPin();
+                String otp = text.replaceAll("\\r|\\n", "");
+                messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+            } else if (request.getMpin() != null && !request.getMpin().equals("")) {
+                String text = request.getMpin();
+                String mpin = text.replaceAll("\\r|\\n", "");
+                messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+            }
+
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+
+
+        /*This is temporary solution to enable talotalk on behalf of Attique Butt.
+        Should be reverted once otp optional implemented
+        on APIGEE End*/
+        //messageVO.setReserved1("1");
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("FreelanceBalanceInquiry");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+//        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Freelance Balance Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = l2AccountSwitchController.freelancerBalanceInquiry(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Freelance Balance Inquiry Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setBalance(messageVO.getBalance());
+            response.setCurrency(messageVO.getAccountCurrency());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Freelance Balance Inquiry Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Freelance Balance Inquiry Request Unsuccessful from Micro Bank RRN: " + Objects.requireNonNull(messageVO).getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        String sha256hex = DigestUtils.sha256Hex(response.getResponseCode() + response.getResponseDescription() + response.getBalance());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****Freelance BALANCE INQUIRY REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+//        updateTransactionInDB(logModel);
+        return response;
+    }
 }

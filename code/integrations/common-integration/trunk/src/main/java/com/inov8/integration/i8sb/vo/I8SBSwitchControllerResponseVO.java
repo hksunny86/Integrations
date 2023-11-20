@@ -495,6 +495,42 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private Data retryIbftAdvice;
     private String messageId;
     private String currencyValue;
+    private String qr;
+    private String uuid;
+    private String uetr;
+    private String channelId;
+
+    public String getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
+    }
+
+    public String getQr() {
+        return qr;
+    }
+
+    public void setQr(String qr) {
+        this.qr = qr;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getUetr() {
+        return uetr;
+    }
+
+    public void setUetr(String uetr) {
+        this.uetr = uetr;
+    }
 
     public String getMessageId() {
         return messageId;

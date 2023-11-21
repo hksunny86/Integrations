@@ -41,6 +41,7 @@ public class MerchantService {
     private RestTemplate restTemplate = new RestTemplate();
     private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
     private String staticQrUrl = PropertyReader.getProperty("merchant.qr.staticQR");
+    private String accessToken = PropertyReader.getProperty("merchant.qr.staticQR.access.token");
     I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
     public StaticQrResponse staticQrResponse(StaticQrRequest staticQrRequest) {
@@ -70,6 +71,7 @@ public class MerchantService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.staticQrUrl);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("Access_token", this.accessToken);
             String requestJSON = JSONUtil.getJSON(staticQrRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
             logger.info("Prepared Request HttpEntity " + httpEntity);

@@ -3,6 +3,7 @@ package com.inov8.integration.i8sb.vo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.i8sb.vo.CardDetailVO;
 import com.inov8.integration.vo.StatementVo;
+import com.inov8.integration.webservice.merchant.StaticQr;
 import com.inov8.integration.webservice.optasiaVO.*;
 import com.inov8.integration.webservice.raastVO.IDs;
 import com.inov8.integration.webservice.safVO.Data;
@@ -499,6 +500,15 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String uuid;
     private String uetr;
     private String channelId;
+    private List<StaticQr> staticQrList;
+
+    public List<StaticQr> getStaticQrList() {
+        return staticQrList;
+    }
+
+    public void setStaticQrList(List<StaticQr> staticQrList) {
+        this.staticQrList = staticQrList;
+    }
 
     public String getChannelId() {
         return channelId;

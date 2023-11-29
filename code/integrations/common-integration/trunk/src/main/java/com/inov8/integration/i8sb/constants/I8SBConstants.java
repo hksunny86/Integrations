@@ -90,6 +90,7 @@ public class I8SBConstants {
     public static String I8SB_Channel_ID_SAF = "SAF";
     public static String I8SB_Channel_ID_FCY = "FCY";
     public static String I8SB_Channel_ID_MERCHANT = "MERCHANT";
+    public static String I8SB_Channel_ID_WASA = "WASA";
 
 
     public static String I8SB_Channel_ID_ETPaymentCollection = "ETPaymentCollection";
@@ -383,6 +384,12 @@ public class I8SBConstants {
     public static String RequestType_SAF_RETRY_IBFT_ADVICE = "SafRetryIbftAdvice";
     public static String RequestType_FCY_CONVERSION = "FcyCpnversion";
     public static String RequestType_MERCHANT_STATIC_QR = "StaticQr";
+    public static String RequestType_WASA_LOGIN = "Login";
+    public static String RequestType_WASA_GET_BILL = "GetBill";
+    public static String RequestType_WASA_POST_BILL = "PostBill";
+    public static String RequestType_WASA_REVERSAL_BILL = "ReversalBill";
+    public static String RequestType_WASA_CLEARANCE_BILL = "ClearanceBill";
+    public static String RequestType_WASA_LOGOUT = "Logout";
 
 
 

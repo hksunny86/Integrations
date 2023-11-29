@@ -518,6 +518,42 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String cardAcceptorNameAndLocation;
     private String saf1linkIntegrationId;
     private String messageId;
+    private String consumerCell;
+    private String reversalId;
+    private String reversalStatus;
+    private String payMode;
+
+    public String getPayMode() {
+        return payMode;
+    }
+
+    public void setPayMode(String payMode) {
+        this.payMode = payMode;
+    }
+
+    public String getReversalId() {
+        return reversalId;
+    }
+
+    public void setReversalId(String reversalId) {
+        this.reversalId = reversalId;
+    }
+
+    public String getReversalStatus() {
+        return reversalStatus;
+    }
+
+    public void setReversalStatus(String reversalStatus) {
+        this.reversalStatus = reversalStatus;
+    }
+
+    public String getConsumerCell() {
+        return consumerCell;
+    }
+
+    public void setConsumerCell(String consumerCell) {
+        this.consumerCell = consumerCell;
+    }
 
     public String getMessageId() {
         return messageId;

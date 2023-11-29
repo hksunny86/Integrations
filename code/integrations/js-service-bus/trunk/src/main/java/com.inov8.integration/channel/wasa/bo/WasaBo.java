@@ -1,10 +1,8 @@
-package com.inov8.integration.channel.saf.bo;
+package com.inov8.integration.channel.wasa.bo;
 
-import com.inov8.integration.channel.saf.request.RetryIbftAdviceRequest;
-import com.inov8.integration.channel.saf.response.RetryIbftAdviceResponse;
-import com.inov8.integration.channel.saf.service.SafService;
-import com.inov8.integration.channel.tasdeeq.request.Request;
-import com.inov8.integration.channel.tasdeeq.response.Response;
+import com.inov8.integration.channel.wasa.request.*;
+import com.inov8.integration.channel.wasa.response.*;
+import com.inov8.integration.channel.wasa.service.WasaService;
 import com.inov8.integration.controller.I8SBChannelInterface;
 import com.inov8.integration.enums.DateFormatEnum;
 import com.inov8.integration.exception.I8SBValidationException;
@@ -22,11 +20,11 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 @Component
-public class SafBo implements I8SBChannelInterface {
+public class WasaBo implements I8SBChannelInterface {
 
     @Autowired
-    SafService safService;
-    private static Logger logger = LoggerFactory.getLogger(SafBo.class.getSimpleName());
+    WasaService wasaService;
+    private static Logger logger = LoggerFactory.getLogger(WasaBo.class.getSimpleName());
 
     @Override
     public I8SBSwitchControllerResponseVO execute(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) throws Exception {
@@ -47,10 +45,22 @@ public class SafBo implements I8SBChannelInterface {
             String requestJSON = JSONUtil.getJSON(request);
             i8SBSwitchControllerRequestVO.setRequestXML(requestJSON);
             String requestType = i8SBSwitchControllerRequestVO.getRequestType();
-            safService.setI8SBSwitchControllerRequestVO(i8SBSwitchControllerRequestVO);
-            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_SAF_RETRY_IBFT_ADVICE)) {
-                response = safService.retryIbftAdviceResponse((RetryIbftAdviceRequest) request);
+            wasaService.setI8SBSwitchControllerRequestVO(i8SBSwitchControllerRequestVO);
+            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WASA_LOGIN)) {
+                response = wasaService.wasaLoginResponse((WasaLoginRequest) request);
+            } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WASA_GET_BILL)) {
+                response = wasaService.wasaGetBillResponse((WasaGetBillRequest) request);
+            } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WASA_POST_BILL)) {
+                response = wasaService.wasaPostBillResponse((WasaPostBillRequest) request);
+            } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WASA_REVERSAL_BILL)) {
+                response = wasaService.wasaBillReversalResponse((WasaBillReversalRequest) request);
+            } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WASA_CLEARANCE_BILL)) {
+                response = wasaService.wasaBillClearanceResponse((WasaBillClearanceRequest) request);
+            } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WASA_LOGOUT)) {
+                response = wasaService.wasaLogoutResponse((WasaLogoutRequest) request);
             }
+
+
             if (Objects.requireNonNull(response).populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
             String responseXML = JSONUtil.getJSON(i8SBSwitchControllerResponseVO);
@@ -82,7 +92,7 @@ public class SafBo implements I8SBChannelInterface {
         }
 
         if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getRRN())) {
-            i8SBSwitchControllerRequestVO.setRRN(i8SBSwitchControllerRequestVO.getSTAN() + i8SBSwitchControllerRequestVO.getTransmissionDateAndTime());
+            i8SBSwitchControllerRequestVO.setRRN(i8SBSwitchControllerRequestVO.getSTAN() + i8SBSwitchControllerRequestVO.getSTAN());
         }
 
         if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getTransactionId())) {
@@ -97,10 +107,28 @@ public class SafBo implements I8SBChannelInterface {
         Request request = null;
         Response response = null;
         logger.info("Request type: " + requestType);
-        if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_SAF_RETRY_IBFT_ADVICE)) {
-            request = new RetryIbftAdviceRequest();
-            response = new RetryIbftAdviceResponse();
+        if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WASA_LOGIN)) {
+            request = new WasaLoginRequest();
+            response = new WasaLoginResponse();
 
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WASA_GET_BILL)) {
+            request = new WasaGetBillRequest();
+            response = new WasaGetBillResponse();
+
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WASA_POST_BILL)) {
+            request = new WasaPostBillRequest();
+            response = new WasaPostBillResponse();
+
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WASA_REVERSAL_BILL)) {
+            request = new WasaBillReversalRequest();
+            response = new WasaBillReversalResponse();
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WASA_CLEARANCE_BILL)) {
+            request = new WasaBillClearanceRequest();
+            response = new WasaBillClearanceResponse();
+
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WASA_LOGOUT)) {
+            request = new WasaLogoutRequest();
+            response = new WasaLogoutResponse();
         } else {
             logger.info("[FAILED] Request type not supported");
             throw new I8SBValidationException("Request type not supported");

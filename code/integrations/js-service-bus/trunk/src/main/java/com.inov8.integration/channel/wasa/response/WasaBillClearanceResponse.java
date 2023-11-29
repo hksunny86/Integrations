@@ -61,12 +61,20 @@ public class WasaBillClearanceResponse extends Response {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
         if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
-            i8SBSwitchControllerResponseVO.setDescription("Success");
+            if (this.getStatus().equalsIgnoreCase("0")) {
+                i8SBSwitchControllerResponseVO.setDescription("SUCCESSFUL");
+            } else if (this.getStatus().equalsIgnoreCase("1")) {
+                i8SBSwitchControllerResponseVO.setDescription("TRANSACTION ID NOT FOUND/TRANSACTION EXPIRED");
+            } else if (this.getStatus().equalsIgnoreCase("2")) {
+                i8SBSwitchControllerResponseVO.setDescription("TRANSACTION PAYMODE IS NOT CHEQUE");
+            }  else if (this.getStatus().equalsIgnoreCase("6")) {
+                i8SBSwitchControllerResponseVO.setDescription("INVALID CONSUMER NUMBER");
+            }
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getDescription());
         }
-        i8SBSwitchControllerResponseVO.setnTransaction(this.getTransaction());
+        i8SBSwitchControllerResponseVO.setTransactionDecs(this.getTransaction());
         i8SBSwitchControllerResponseVO.setStatus(this.getStatus());
         return i8SBSwitchControllerResponseVO;
     }

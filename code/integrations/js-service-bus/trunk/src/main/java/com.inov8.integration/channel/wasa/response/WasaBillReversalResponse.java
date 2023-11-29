@@ -61,12 +61,30 @@ public class WasaBillReversalResponse extends Response {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
         if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
-            i8SBSwitchControllerResponseVO.setDescription("Success");
+            if (this.getStatus().equalsIgnoreCase("0")) {
+                i8SBSwitchControllerResponseVO.setDescription("REVERSAL SUCCESSFUL");
+            } else if (this.getStatus().equalsIgnoreCase("1")) {
+                i8SBSwitchControllerResponseVO.setDescription("TRANSACTION ID NOT FOUND/TRANSACTION EXPIRED");
+            } else if (this.getStatus().equalsIgnoreCase("2")) {
+                i8SBSwitchControllerResponseVO.setDescription("REVERSAL FAILED! MISMATCH OF OLD TRANSACTION ID");
+            } else if (this.getStatus().equalsIgnoreCase("3")) {
+                i8SBSwitchControllerResponseVO.setDescription("SAME OLD AND NEW TRANSACTION ID");
+            } else if (this.getStatus().equalsIgnoreCase("4")) {
+                i8SBSwitchControllerResponseVO.setDescription("DUPLICATE TRANSACTION ID");
+            } else if (this.getStatus().equalsIgnoreCase("5")) {
+                i8SBSwitchControllerResponseVO.setDescription("REVERSAL ALREADY MARKED");
+            } else if (this.getStatus().equalsIgnoreCase("6")) {
+                i8SBSwitchControllerResponseVO.setDescription("INVALID CONSUMER ID");
+            } else if (this.getStatus().equalsIgnoreCase("7")) {
+                i8SBSwitchControllerResponseVO.setDescription("REVERSAL NOT ALLOWED");
+            } else if (this.getStatus().equalsIgnoreCase("8")) {
+                i8SBSwitchControllerResponseVO.setDescription("VALUES OVERFLOW FOR A COLUMN CONTACT ADMINISTRATOR FOR HELP");
+            }
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getDescription());
         }
-        i8SBSwitchControllerResponseVO.setnTransaction(this.getTransaction());
+        i8SBSwitchControllerResponseVO.setTransactionDecs(this.getTransaction());
         i8SBSwitchControllerResponseVO.setStatus(this.getStatus());
         return i8SBSwitchControllerResponseVO;
     }

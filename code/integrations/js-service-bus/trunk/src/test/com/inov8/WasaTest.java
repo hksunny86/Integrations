@@ -30,9 +30,10 @@ public class WasaTest {
         requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
         requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
         requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_WASA);
-        requestVO.setRequestType(I8SBConstants.RequestType_WASA_GET_BILL);
+        requestVO.setRequestType(I8SBConstants.RequestType_WASA_POST_BILL);
 
         requestVO.setConsumerNumber("03018518108");
+        requestVO.setTransactionId("03018518108");
 
 
         requestVO = (I8SBSwitchControllerRequestVO) switchController.invoke(requestVO);

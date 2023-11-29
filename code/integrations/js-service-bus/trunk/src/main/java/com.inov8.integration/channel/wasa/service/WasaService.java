@@ -59,7 +59,7 @@ public class WasaService {
                     "}";
             wasaLoginResponse = (WasaLoginResponse) JSONUtil.jsonToObject(response, WasaLoginResponse.class);
             Objects.requireNonNull(wasaLoginResponse).setResponseCode("200");
-            logger.info("Response Code for Wasa Login: " + wasaLoginResponse.getResponseCode());
+            logger.info("Mock Response Code for Wasa Login: " + wasaLoginResponse.getResponseCode());
         } else {
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.wasaLoginUrl);
@@ -149,11 +149,11 @@ public class WasaService {
                     "        \"Period\":\"202302\",\n" +
                     "        \"ConsumerNumber\":\"60003153\",\n" +
                     "        \"ConsumerName\":\"ABDUL RASHID\",\n" +
-                    "        \"status\":\"1\"\n" +
+                    "        \"status\":\"4\"\n" +
                     "}";
             wasaGetBillResponse = (WasaGetBillResponse) JSONUtil.jsonToObject(response, WasaGetBillResponse.class);
             Objects.requireNonNull(wasaGetBillResponse).setResponseCode("200");
-            logger.info("Response Code for Wasa Get Bill Request: " + wasaGetBillResponse.getResponseCode());
+            logger.info("Mock Response Code for Wasa Get Bill Request: " + wasaGetBillResponse.getResponseCode());
         } else {
 
             String accessToken = i8SBSwitchControllerRequestVO.getAccessToken();
@@ -234,11 +234,11 @@ public class WasaService {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String response = "{\n" +
                     "        \"Transaction\":false,\n" +
-                    "        \"status\":\"2\"\n" +
+                    "        \"status\":\"1\"\n" +
                     "}";
             wasaPostBillResponse = (WasaPostBillResponse) JSONUtil.jsonToObject(response, WasaPostBillResponse.class);
             Objects.requireNonNull(wasaPostBillResponse).setResponseCode("200");
-            logger.info("Response Code for Wasa Post Bill Request: " + wasaPostBillResponse.getResponseCode());
+            logger.info("Mock Response Code for Wasa Post Bill Request: " + wasaPostBillResponse.getResponseCode());
         } else {
 
             String accessToken = i8SBSwitchControllerRequestVO.getAccessToken();
@@ -319,11 +319,11 @@ public class WasaService {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String response = "{\n" +
                     "        \"Transaction\":false,\n" +
-                    "        \"status\":\"2\"\n" +
+                    "        \"status\":\"0\"\n" +
                     "}";
             wasaBillReversalResponse = (WasaBillReversalResponse) JSONUtil.jsonToObject(response, WasaBillReversalResponse.class);
             Objects.requireNonNull(wasaBillReversalResponse).setResponseCode("200");
-            logger.info("Response Code for Wasa Bill Reversal: " + wasaBillReversalResponse.getResponseCode());
+            logger.info("Mock Response Code for Wasa Bill Reversal: " + wasaBillReversalResponse.getResponseCode());
         } else {
 
             String accessToken = i8SBSwitchControllerRequestVO.getAccessToken();
@@ -404,11 +404,11 @@ public class WasaService {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String response = "{\n" +
                     "        \"Transaction\":false,\n" +
-                    "        \"status\":\"2\"\n" +
+                    "        \"status\":\"0\"\n" +
                     "}";
             wasaBillClearanceResponse = (WasaBillClearanceResponse) JSONUtil.jsonToObject(response, WasaBillClearanceResponse.class);
             Objects.requireNonNull(wasaBillClearanceResponse).setResponseCode("200");
-            logger.info("Response Code for Wasa Bill Clearance: " + wasaBillClearanceResponse.getResponseCode());
+            logger.info("Mock Response Code for Wasa Bill Clearance: " + wasaBillClearanceResponse.getResponseCode());
         } else {
 
             String accessToken = i8SBSwitchControllerRequestVO.getAccessToken();
@@ -493,7 +493,7 @@ public class WasaService {
                     "}";
             wasaLogoutResponse = (WasaLogoutResponse) JSONUtil.jsonToObject(response, WasaLogoutResponse.class);
             Objects.requireNonNull(wasaLogoutResponse).setResponseCode("200");
-            logger.info("Response Code for Wasa Bill Logout: " + wasaLogoutResponse.getResponseCode());
+            logger.info("Mock Response Code for Wasa Bill Logout: " + wasaLogoutResponse.getResponseCode());
         } else {
 
             String accessToken = i8SBSwitchControllerRequestVO.getAccessToken();

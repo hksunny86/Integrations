@@ -138,12 +138,18 @@ public class WasaGetBillResponse extends Response {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
         if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
-            i8SBSwitchControllerResponseVO.setDescription("Success");
+            if (this.getStatus().equalsIgnoreCase("0")) {
+                i8SBSwitchControllerResponseVO.setDescription("ZERO RECORDS FOUND AGAINST BILL");
+            } else if (this.getStatus().equalsIgnoreCase("2")) {
+                i8SBSwitchControllerResponseVO.setDescription("BILL IS ALREADY PAID");
+            } else if (this.getStatus().equalsIgnoreCase("4")) {
+                i8SBSwitchControllerResponseVO.setDescription("BILL NOT PAID");
+            }
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getDescription());
         }
-        i8SBSwitchControllerResponseVO.setnTransaction(this.getTransaction());
+        i8SBSwitchControllerResponseVO.setTransactionDecs(this.getTransaction());
         i8SBSwitchControllerResponseVO.setBillAmount(this.getBillAmount());
         i8SBSwitchControllerResponseVO.setBillAmountAfterDueDate(this.getBillAmountAfterDueDate());
         i8SBSwitchControllerResponseVO.setDueDate(this.getDueDate());

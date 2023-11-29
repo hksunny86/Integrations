@@ -138,12 +138,19 @@ public class WasaGetBillResponse extends Response {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
         if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
-            if (this.getStatus().equalsIgnoreCase("0")) {
+            if (this.getStatus() != null && this.getStatus().equalsIgnoreCase("4")) {
+                i8SBSwitchControllerResponseVO.setBillStatus("U");
+            } else {
+                i8SBSwitchControllerResponseVO.setBillStatus("P");
+            }
+            if (this.getStatus() != null && this.getStatus().equalsIgnoreCase("0")) {
+                i8SBSwitchControllerResponseVO.setResponseCode(this.getStatus());
+                i8SBSwitchControllerResponseVO.setBillStatus("ZERO RECORDS FOUND AGAINST BILL");
                 i8SBSwitchControllerResponseVO.setDescription("ZERO RECORDS FOUND AGAINST BILL");
-            } else if (this.getStatus().equalsIgnoreCase("2")) {
+            } else if (this.getStatus() != null && this.getStatus().equalsIgnoreCase("2")) {
+                i8SBSwitchControllerResponseVO.setResponseCode(this.getStatus());
+                i8SBSwitchControllerResponseVO.setBillStatus("BILL IS ALREADY PAID");
                 i8SBSwitchControllerResponseVO.setDescription("BILL IS ALREADY PAID");
-            } else if (this.getStatus().equalsIgnoreCase("4")) {
-                i8SBSwitchControllerResponseVO.setDescription("BILL NOT PAID");
             }
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
@@ -156,7 +163,7 @@ public class WasaGetBillResponse extends Response {
         i8SBSwitchControllerResponseVO.setAmount(this.getReceivedAmount());
         i8SBSwitchControllerResponseVO.setPeriod(this.getPeriod());
         i8SBSwitchControllerResponseVO.setConsumerNumber(this.getConsumerNumber());
-        i8SBSwitchControllerResponseVO.setConsumerTitle(this.getConsumerName());
+        i8SBSwitchControllerResponseVO.setCustomerName(this.getConsumerName());
         i8SBSwitchControllerResponseVO.setStatus(this.getStatus());
         return i8SBSwitchControllerResponseVO;
     }

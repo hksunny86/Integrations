@@ -61,16 +61,28 @@ public class WasaPostBillResponse extends Response {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
         if (this.getResponseCode().equals("200")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
-            if (this.getStatus().equalsIgnoreCase("0")) {
-                i8SBSwitchControllerResponseVO.setDescription("BILL INFO NOT FOUND");
-            } else if (this.getStatus().equalsIgnoreCase("1")) {
-                i8SBSwitchControllerResponseVO.setDescription("BILL PAID SUCCESSFULLY");
-            } else if (this.getStatus().equalsIgnoreCase("2")) {
+            if (this.getStatus() != null && this.getStatus().equalsIgnoreCase("1")) {
+                i8SBSwitchControllerResponseVO.setBillStatus("P");
+            } else {
+                i8SBSwitchControllerResponseVO.setBillStatus("U");
+            }
+            if (this.getStatus() != null && this.getStatus().equalsIgnoreCase("2")) {
+                i8SBSwitchControllerResponseVO.setResponseCode(this.getStatus());
+                i8SBSwitchControllerResponseVO.setBillStatus("INVALID AMOUNT ENTERED PLEASE TRY AGAIN");
                 i8SBSwitchControllerResponseVO.setDescription("INVALID AMOUNT ENTERED PLEASE TRY AGAIN");
-            } else if (this.getStatus().equalsIgnoreCase("3")) {
+            } else if (this.getStatus() != null && this.getStatus().equalsIgnoreCase("3")) {
+                i8SBSwitchControllerResponseVO.setResponseCode(this.getStatus());
+                i8SBSwitchControllerResponseVO.setBillStatus("BILL IS ALREADY PAID");
                 i8SBSwitchControllerResponseVO.setDescription("BILL IS ALREADY PAID");
-            } else if (this.getStatus().equalsIgnoreCase("4")) {
+            } else if (this.getStatus() != null && this.getStatus().equalsIgnoreCase("4")) {
+                i8SBSwitchControllerResponseVO.setResponseCode(this.getStatus());
+                i8SBSwitchControllerResponseVO.setBillStatus("DUPLICATE TRANSACTION ID");
                 i8SBSwitchControllerResponseVO.setDescription("DUPLICATE TRANSACTION ID");
+            } else if (this.getStatus() != null && this.getStatus().equalsIgnoreCase("0")) {
+                i8SBSwitchControllerResponseVO.setResponseCode(this.getStatus());
+                i8SBSwitchControllerResponseVO.setBillStatus("BILL INFO NOT FOUND");
+                i8SBSwitchControllerResponseVO.setDescription("BILL INFO NOT FOUND");
+
             }
         } else {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());

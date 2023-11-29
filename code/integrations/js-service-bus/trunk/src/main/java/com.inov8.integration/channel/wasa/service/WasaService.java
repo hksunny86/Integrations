@@ -149,7 +149,7 @@ public class WasaService {
                     "        \"Period\":\"202302\",\n" +
                     "        \"ConsumerNumber\":\"60003153\",\n" +
                     "        \"ConsumerName\":\"ABDUL RASHID\",\n" +
-                    "        \"status\":\"4\"\n" +
+                    "        \"status\":\"0\"\n" +
                     "}";
             wasaGetBillResponse = (WasaGetBillResponse) JSONUtil.jsonToObject(response, WasaGetBillResponse.class);
             Objects.requireNonNull(wasaGetBillResponse).setResponseCode("200");

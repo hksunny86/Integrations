@@ -228,12 +228,11 @@ public class I8SBBO implements ApplicationContextAware {
         transactionLog.setParentRequestRRN(i8SBSwitchControllerRequestVO.getParentRequestRRN());
         //saving Request params
 //        transactionLog.setI8sbRequest(i8SBSwitchControllerRequestVO.getRequestXML());
-        String i8sbRequestXml=i8SBSwitchControllerRequestVO.getRequestXML();
+        String i8sbRequestXml = i8SBSwitchControllerRequestVO.getRequestXML();
 
         if (StringUtils.isNotEmpty(gateway_transactionlog) && gateway_transactionlog.equals("enable")) {
             transactionLog.setI8sbRequest(i8sbRequestXml);
-        }
-        else {
+        } else {
             transactionLog.setI8sbRequest(null);
         }
 
@@ -262,29 +261,29 @@ public class I8SBBO implements ApplicationContextAware {
         transactionLog.setRRN(i8SBSwitchControllerRequestVO.getRRN());
         JSONObject json = new JSONObject(i8SBSwitchControllerRequestVO.getRequestXML());
 
-        json.put("fingerTemplete","****");
+        json.put("fingerTemplete", "****");
         JSONObject json1 = new JSONObject(i8SBSwitchControllerRequestVO.getRequestXML());
-        json1.put("fingerTemplete","****");
+        json1.put("fingerTemplete", "****");
         if (StringUtils.isNotEmpty(channel_transactionlog) && channel_transactionlog.equals("enable")) {
             transactionLog.setChannelRequest(json.toString());
             transactionLog.setChannelResponse(json1.toString());
-        }else {
-        transactionLog.setChannelRequest(null);
-        transactionLog.setChannelResponse(null);
+        } else {
+            transactionLog.setChannelRequest(null);
+            transactionLog.setChannelResponse(null);
         }
         //We don't have to set this xml in I8SB resposne Vo
         i8SBSwitchControllerResponseVO.setResponseXML(null);
         String i8sbResponseXml = JSONUtil.getJSON(i8SBSwitchControllerResponseVO);
         JSONObject json2 = new JSONObject(i8sbResponseXml);
 
-        json.put("fingerTemplete","****");
+        json.put("fingerTemplete", "****");
 
         if (StringUtils.isNotEmpty(gateway_transactionlog) && gateway_transactionlog.equals("enable")) {
             transactionLog.setI8sbResponse(json2.toString());
-        }else {
+        } else {
             transactionLog.setI8sbResponse(null);
         }
-        logger.info("Response Send to MicroBank"+i8sbResponseXml);
+        logger.info("Response Send to MicroBank" + i8sbResponseXml);
         transactionLog.setResponseCode(i8SBSwitchControllerResponseVO.getResponseCode());
         transactionLog.setStatus(i8SBSwitchControllerResponseVO.getStatus());
         transactionLog.setError(i8SBSwitchControllerResponseVO.getError());
@@ -412,7 +411,30 @@ public class I8SBBO implements ApplicationContextAware {
             if (accumulatedI8SBResponseVO.getAuthToken() == null && i8SBResponseVO.getAuthToken() != null) {
                 accumulatedI8SBResponseVO.setAuthToken(i8SBResponseVO.getAuthToken());
             }
-
+            if (accumulatedI8SBResponseVO.getBillAmount() == null && i8SBResponseVO.getBillAmount() != null) {
+                accumulatedI8SBResponseVO.setBillAmount(i8SBResponseVO.getBillAmount());
+            }
+            if (accumulatedI8SBResponseVO.getBillAmountAfterDueDate() == null && i8SBResponseVO.getBillAmountAfterDueDate() != null) {
+                accumulatedI8SBResponseVO.setBillAmountAfterDueDate(i8SBResponseVO.getBillAmountAfterDueDate());
+            }
+            if (accumulatedI8SBResponseVO.getDueDate() == null && i8SBResponseVO.getDueDate() != null) {
+                accumulatedI8SBResponseVO.setDueDate(i8SBResponseVO.getDueDate());
+            }
+            if (accumulatedI8SBResponseVO.getAmount() == null && i8SBResponseVO.getAmount() != null) {
+                accumulatedI8SBResponseVO.setAmount(i8SBResponseVO.getAmount());
+            }
+            if (accumulatedI8SBResponseVO.getPeriod() == null && i8SBResponseVO.getPeriod() != null) {
+                accumulatedI8SBResponseVO.setPeriod(i8SBResponseVO.getPeriod());
+            }
+            if (accumulatedI8SBResponseVO.getConsumerNumber() == null && i8SBResponseVO.getConsumerNumber() != null) {
+                accumulatedI8SBResponseVO.setConsumerNumber(i8SBResponseVO.getConsumerNumber());
+            }
+            if (accumulatedI8SBResponseVO.getCustomerName() == null && i8SBResponseVO.getCustomerName() != null) {
+                accumulatedI8SBResponseVO.setCustomerName(i8SBResponseVO.getCustomerName());
+            }
+            if (accumulatedI8SBResponseVO.getBillStatus() == null && i8SBResponseVO.getBillStatus() != null) {
+                accumulatedI8SBResponseVO.setBillStatus(i8SBResponseVO.getBillStatus());
+            }
 
         }
         return accumulatedI8SBResponseVO;

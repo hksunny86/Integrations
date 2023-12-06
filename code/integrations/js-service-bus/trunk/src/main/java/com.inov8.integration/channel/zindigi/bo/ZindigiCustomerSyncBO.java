@@ -1,6 +1,5 @@
 package com.inov8.integration.channel.zindigi.bo;
 
-import com.inov8.integration.channel.JSBookMe.request.JSBookMeRequest;
 import com.inov8.integration.channel.zindigi.request.*;
 import com.inov8.integration.channel.zindigi.response.*;
 import com.inov8.integration.channel.zindigi.service.ZindigiCustomerSyncService;
@@ -68,15 +67,15 @@ public class ZindigiCustomerSyncBO implements I8SBChannelInterface {
             }
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ZINDIGI_P2M_STATUS_UPDATE)) {
                 response = zindigiCustomerSyncService.sendP2MStatusUpdateResponse((P2MStatusUpdateRequest) request);
-
             }
-
+            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ZINDIGI_TRANSACTION_CAPTURE)) {
+                response = zindigiCustomerSyncService.transactionCaptureResponse((TransactionCaptureRequest) request);
+            }
             if (Objects.requireNonNull(response).populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
             String responseJSON = JSONUtil.getJSON(response);
             Objects.requireNonNull(i8SBSwitchControllerResponseVO).setResponseXML(responseJSON);
-        }
-        else {
+        } else {
             logger.info("[FAILED] Request validation failed for RRN: " + i8SBSwitchControllerRequestVO.getRRN());
         }
         return i8SBSwitchControllerResponseVO;
@@ -119,20 +118,19 @@ public class ZindigiCustomerSyncBO implements I8SBChannelInterface {
         if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ZINDIGI_CUSTOMER_SYNC)) {
             request = new ZindigiCustomerSyncRequest();
             response = new ZindigiCustomerSyncResponse();
-        }
-        else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_L2_ACCOUNT_UPGRADE_VALIDATION)) {
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_L2_ACCOUNT_UPGRADE_VALIDATION)) {
             request = new L2AccountUpgradeValidationRequest();
             response = new L2AccountUpgradeValidationResponse();
-        }
-        else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_MinorAccountSync)) {
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_MinorAccountSync)) {
             request = new MinorAccountSyncRequest();
             response = new MinorAccountSyncResponse();
-        }
-        else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ZINDIGI_P2M_STATUS_UPDATE)) {
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ZINDIGI_P2M_STATUS_UPDATE)) {
             request = new P2MStatusUpdateRequest();
             response = new P2MStatusUpdateResponse();
-        }
-        else {
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ZINDIGI_TRANSACTION_CAPTURE)) {
+            request = new TransactionCaptureRequest();
+            response = new TransactionCaptureResponse();
+        } else {
             logger.info("[FAILED] Request type not supported");
             throw new I8SBValidationException("Request type not supported");
         }

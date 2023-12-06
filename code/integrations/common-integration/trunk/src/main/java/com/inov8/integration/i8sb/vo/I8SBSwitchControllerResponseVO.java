@@ -501,6 +501,24 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String uetr;
     private String channelId;
     private List<StaticQr> staticQrList;
+    private String pointEarns;
+    private String isTierUpdated;
+
+    public String getPointEarns() {
+        return pointEarns;
+    }
+
+    public void setPointEarns(String pointEarns) {
+        this.pointEarns = pointEarns;
+    }
+
+    public String getIsTierUpdated() {
+        return isTierUpdated;
+    }
+
+    public void setIsTierUpdated(String isTierUpdated) {
+        this.isTierUpdated = isTierUpdated;
+    }
 
     public List<StaticQr> getStaticQrList() {
         return staticQrList;

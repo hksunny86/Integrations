@@ -4,6 +4,7 @@ import com.inov8.integration.i8sb.constants.I8SBConstants;
 import com.inov8.integration.i8sb.controller.I8SBSwitchController;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
+import com.inov8.integration.util.EncryptionUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

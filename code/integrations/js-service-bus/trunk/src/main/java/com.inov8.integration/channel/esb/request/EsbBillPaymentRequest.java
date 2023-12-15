@@ -170,7 +170,7 @@ public class EsbBillPaymentRequest extends Request {
         this.setUserName(PropertyReader.getProperty("esb.username"));
         this.setPassword(PropertyReader.getProperty("esb.password"));
         this.setConsumerNumber(i8SBSwitchControllerRequestVO.getConsumerNumber());
-        this.setTranAuthId(i8SBSwitchControllerRequestVO.getTransactionId());
+        this.setTranAuthId(i8SBSwitchControllerRequestVO.getTransactionCode());
         this.setTransactionAmount(i8SBSwitchControllerRequestVO.getTransactionAmount());
         this.setTranDate(i8SBSwitchControllerRequestVO.getTransactionDate());
         this.setTranTime(i8SBSwitchControllerRequestVO.getTransactionDateTime());

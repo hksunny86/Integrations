@@ -64,11 +64,11 @@ public class WasaService {
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.wasaLoginUrl);
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("username", wasaLoginRequest.getUsername());
-            headers.add("password", wasaLoginRequest.getPassword());
-            headers.add("ipaddress", wasaLoginRequest.getIpaddress());
-            headers.add("grant_type", wasaLoginRequest.getGrantType());
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+//            headers.add("username", wasaLoginRequest.getUsername());
+//            headers.add("password", wasaLoginRequest.getPassword());
+//            headers.add("ipaddress", wasaLoginRequest.getIpaddress());
+//            headers.add("grant_type", wasaLoginRequest.getGrantType());
             String requestJSON = JSONUtil.getJSON(wasaLoginRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
             String url = uri.toUriString();
@@ -85,7 +85,7 @@ public class WasaService {
             try {
                 logger.info("Requesting URL " + url);
                 logger.info("Wasa Login Request Sent to Client " + httpEntity.getBody().toString(), httpEntity.getHeaders());
-                ResponseEntity<String> res1 = getRestTemplate().exchange(url, HttpMethod.GET, httpEntity, String.class);
+                ResponseEntity<String> res1 = getRestTemplate().postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Entity: " + res1);
                 logger.info("Response Code of Wasa Login Request received from client " + res1.getStatusCode().toString());
                 logger.info("Response of Wasa Login Request received from client " + res1.getBody());
@@ -159,7 +159,7 @@ public class WasaService {
             String accessToken = i8SBSwitchControllerRequestVO.getAccessToken();
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.wasaGetBillUrl);
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             headers.add("Authorization", "Bearer " + accessToken);
             String requestJSON = JSONUtil.getJSON(wasaGetBillRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
@@ -244,7 +244,7 @@ public class WasaService {
             String accessToken = i8SBSwitchControllerRequestVO.getAccessToken();
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.wasaPostBillUrl);
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             headers.add("Authorization", "Bearer " + accessToken);
             String requestJSON = JSONUtil.getJSON(wasaPostBillRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
@@ -329,7 +329,7 @@ public class WasaService {
             String accessToken = i8SBSwitchControllerRequestVO.getAccessToken();
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.wasaReversalUrl);
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             headers.add("Authorization", "Bearer " + accessToken);
             String requestJSON = JSONUtil.getJSON(wasaBillReversalRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
@@ -414,7 +414,7 @@ public class WasaService {
             String accessToken = i8SBSwitchControllerRequestVO.getAccessToken();
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.wasaClearanceUrl);
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             headers.add("Authorization", "Bearer " + accessToken);
             String requestJSON = JSONUtil.getJSON(wasaBillClearanceRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
@@ -499,7 +499,7 @@ public class WasaService {
             String accessToken = i8SBSwitchControllerRequestVO.getAccessToken();
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.wasaLogoutUrl);
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             headers.add("Authorization", "Bearer " + accessToken);
             String requestJSON = JSONUtil.getJSON(wasaLogoutRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);

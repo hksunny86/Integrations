@@ -150,7 +150,7 @@ public class WasaGetBillResponse extends Response {
                 i8SBSwitchControllerResponseVO.setBillStatus("ZERO RECORDS FOUND AGAINST BILL");
                 i8SBSwitchControllerResponseVO.setDescription("ZERO RECORDS FOUND AGAINST BILL");
             } else if (this.getStatus() != null && this.getStatus().equalsIgnoreCase("2")) {
-                i8SBSwitchControllerResponseVO.setResponseCode(this.getStatus());
+                i8SBSwitchControllerResponseVO.setResponseCode("5");
                 i8SBSwitchControllerResponseVO.setBillStatus("BILL IS ALREADY PAID");
                 i8SBSwitchControllerResponseVO.setDescription("BILL IS ALREADY PAID");
             }

@@ -81,7 +81,7 @@ public class WasaPostBillResponse extends Response {
                 i8SBSwitchControllerResponseVO.setBillStatus("DUPLICATE TRANSACTION ID");
                 i8SBSwitchControllerResponseVO.setDescription("DUPLICATE TRANSACTION ID");
             } else if (this.getStatus() != null && this.getStatus().equalsIgnoreCase("0")) {
-                i8SBSwitchControllerResponseVO.setResponseCode(this.getStatus());
+                i8SBSwitchControllerResponseVO.setResponseCode("1");
                 i8SBSwitchControllerResponseVO.setBillStatus("BILL INFO NOT FOUND");
                 i8SBSwitchControllerResponseVO.setDescription("BILL INFO NOT FOUND");
 

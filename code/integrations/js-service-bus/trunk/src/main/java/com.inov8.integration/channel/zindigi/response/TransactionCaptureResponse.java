@@ -54,7 +54,7 @@ public class TransactionCaptureResponse extends Response implements Serializable
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
-        if (this.getResponseCode().equalsIgnoreCase("200")) {
+        if (this.getResponseCode().equalsIgnoreCase("01")) {
             i8SBSwitchControllerResponseVO.setResponseCode(I8SBResponseCodeEnum.PROCESSED_00.getValue());
             if (this.getData() != null) {
                 i8SBSwitchControllerResponseVO.setPointEarns(this.data.getPointEarns());

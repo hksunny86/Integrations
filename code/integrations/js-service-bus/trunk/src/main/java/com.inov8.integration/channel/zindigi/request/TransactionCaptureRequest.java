@@ -7,23 +7,30 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
+import com.inov8.integration.util.DateUtil;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static com.inov8.integration.enums.DateFormatEnum.MERCHANT_CAMPING_DATE_FORMAT;
 
 @XmlRootElement
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "username",
-        "password",
+        "rnr",
         "mobileNo",
-        "date",
-        "rrn",
         "transactionType",
         "amount",
+        "date",
         "segment",
+        "username",
+        "password",
         "hashData"
 }
 )
@@ -36,13 +43,14 @@ public class TransactionCaptureRequest extends Request implements Serializable {
     @JsonProperty("mobileNo")
     private String mobileNo;
     @JsonProperty("date")
-    private String date;
-    @JsonProperty("rrn")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date;
+    @JsonProperty("rnr")
     private String rrn;
     @JsonProperty("transactionType")
     private String transactionType;
     @JsonProperty("amount")
-    private String amount;
+    private Double amount;
     @JsonProperty("segment")
     private String segment;
     @JsonProperty("hashData")
@@ -72,12 +80,20 @@ public class TransactionCaptureRequest extends Request implements Serializable {
         this.mobileNo = mobileNo;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public String getRrn() {
@@ -96,13 +112,7 @@ public class TransactionCaptureRequest extends Request implements Serializable {
         this.transactionType = transactionType;
     }
 
-    public String getAmount() {
-        return amount;
-    }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
 
     public String getSegment() {
         return segment;
@@ -128,9 +138,17 @@ public class TransactionCaptureRequest extends Request implements Serializable {
         this.setMobileNo(i8SBSwitchControllerRequestVO.getMobileNumber());
         this.setRrn(i8SBSwitchControllerRequestVO.getRRN());
         this.setTransactionType(i8SBSwitchControllerRequestVO.getTransactionType());
-        this.setAmount(i8SBSwitchControllerRequestVO.getAmount());
-        this.setSegment(i8SBSwitchControllerRequestVO.getSegmentCode());
-        String hashData = org.apache.commons.codec.digest.DigestUtils.sha256Hex(this.getUsername() + this.getPassword() + this.getMobileNo() + this.getRrn() + this.getTransactionType() + this.getAmount() + this.getSegment());
+        Double am= Double.valueOf(i8SBSwitchControllerRequestVO.getAmount());
+        String amo= ((Long)am.longValue()).toString();
+        this.setAmount(Double.valueOf(i8SBSwitchControllerRequestVO.getAmount()));
+        this.setSegment(i8SBSwitchControllerRequestVO.getSegmentId());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String newDate=null;
+        String finalDate=null;
+            newDate = sdf.format(new Date());
+            this.setDate(new Date());
+
+        String hashData = org.apache.commons.codec.digest.DigestUtils.sha256Hex(this.getRrn() + this.getMobileNo() + this.getTransactionType() + amo +newDate+ this.getSegment() + this.getUsername() + this.getPassword());
         this.setHashData(hashData);
     }
 
@@ -140,9 +158,7 @@ public class TransactionCaptureRequest extends Request implements Serializable {
         if (StringUtils.isEmpty(this.getMobileNo())) {
             throw new I8SBValidationException("[Failed] Mobile Number :" + this.getMobileNo());
         }
-        if (StringUtils.isEmpty(this.getAmount())) {
-            throw new I8SBValidationException("[Failed] Amount :" + this.getAmount());
-        }
+
         return true;
     }
 }

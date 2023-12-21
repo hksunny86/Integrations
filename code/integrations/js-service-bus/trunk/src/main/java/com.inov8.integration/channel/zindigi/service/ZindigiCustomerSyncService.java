@@ -330,7 +330,7 @@ public class ZindigiCustomerSyncService {
                 String responseCode = res1.getStatusCode().toString();
                 if (responseCode.equalsIgnoreCase("200")) {
                     transactionCaptureResponse = (TransactionCaptureResponse) JSONUtil.jsonToObject(res1.getBody(), TransactionCaptureResponse.class);
-                    Objects.requireNonNull(transactionCaptureResponse).setResponseCode(responseCode);
+                    Objects.requireNonNull(transactionCaptureResponse).setResponseCode(transactionCaptureResponse.getResponseCode());
                 }
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {

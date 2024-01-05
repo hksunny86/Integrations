@@ -2816,4 +2816,9 @@ public class JsIntegrationController implements WebServiceSwitchController {
     public WebServiceVO customerValidation(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO digiWalletStatement(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

@@ -166,5 +166,6 @@ public interface WebServiceSwitchController {
     WebServiceVO thirdPartyCredit(WebServiceVO webServiceVO);
     WebServiceVO customerCliStatus(WebServiceVO webServiceVO);
     WebServiceVO customerValidation(WebServiceVO webServiceVO);
+    WebServiceVO digiWalletStatement(WebServiceVO webServiceVO);
 
 }

@@ -4378,6 +4378,29 @@ public class HostRequestValidator {
 
     }
 
+    public static void validateDigiWalletStatement(DigiWalletStatementRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getStan())) {
+            throw new ValidationException("[FAILED] Validation Failed STAN: " + integrationVO.getStan());
+        }
+        if (StringUtils.isEmpty(integrationVO.getAccountNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Account Number: " + integrationVO.getAccountNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTransmissionDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getTransmissionDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getFromDate())) {
+            throw new ValidationException("[FAILED] Validation Failed From Date: " + integrationVO.getFromDate());
+        }
+        if (StringUtils.isEmpty(integrationVO.getToDate())) {
+            throw new ValidationException("[FAILED] Validation Failed To Date: " + integrationVO.getToDate());
+        }
+
+    }
+
     public static boolean authenticate(String userName, String password, String channelID) {
         if (ConfigReader.getInstance().getProperty("channel.ids", "").contains(channelID))
             return ConfigReader.getInstance().getProperty("channel.usernames", "").contains(userName) && ConfigReader.getInstance().getProperty("channel.passwords", "").contains(password);

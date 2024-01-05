@@ -3592,32 +3592,35 @@ public class HostIntegrationService {
         webServiceVO.setRetrievalReferenceNumber(webServiceVO.getRetrievalReferenceNumber());
         webServiceVO.setChannelId(upgradeAccountRequest.getChannelId());
         webServiceVO.setTerminalId(upgradeAccountRequest.getTerminalId());
-        if (upgradeAccountRequest.getReserved1().equals("02")) {
-//            webServiceVO.setOtpPin(upgradeAccountRequest.getMpin());
-            try {
-                String text;
-                String pin;
-                if (upgradeAccountRequest.getMpin() != null) {
-                    text = upgradeAccountRequest.getMpin();
-                    pin = text.replaceAll("\\r|\\n", "");
-                    webServiceVO.setOtpPin(RSAEncryption.decrypt(pin, loginPrivateKey));
-                }
-            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                String text;
-                String pin;
-                if (upgradeAccountRequest.getMpin() != null) {
-                    text = upgradeAccountRequest.getMpin();
-                    pin = text.replaceAll("\\r|\\n", "");
-                    webServiceVO.setMobilePin(RSAEncryption.decrypt(pin, loginPrivateKey));
-                }
-            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-        }
+        webServiceVO.setOtpPin(upgradeAccountRequest.getMpin());
+        webServiceVO.setMobilePin(upgradeAccountRequest.getMpin());
+
+        //        if (upgradeAccountRequest.getReserved1().equals("02")) {
+////            webServiceVO.setOtpPin(upgradeAccountRequest.getMpin());
+//            try {
+//                String text;
+//                String pin;
+//                if (upgradeAccountRequest.getMpin() != null) {
+//                    text = upgradeAccountRequest.getMpin();
+//                    pin = text.replaceAll("\\r|\\n", "");
+//                    webServiceVO.setOtpPin(RSAEncryption.decrypt(pin, loginPrivateKey));
+//                }
+//            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            try {
+//                String text;
+//                String pin;
+//                if (upgradeAccountRequest.getMpin() != null) {
+//                    text = upgradeAccountRequest.getMpin();
+//                    pin = text.replaceAll("\\r|\\n", "");
+//                    webServiceVO.setMobilePin(RSAEncryption.decrypt(pin, loginPrivateKey));
+//                }
+//            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+//                e.printStackTrace();
+//            }
+//        }
         webServiceVO.setCnicNo(upgradeAccountRequest.getCnic());
         webServiceVO.setFingerIndex(upgradeAccountRequest.getFingerIndex());
         webServiceVO.setFingerTemplate(upgradeAccountRequest.getFingerTemplate());
@@ -18731,6 +18734,116 @@ public class HostIntegrationService {
         //preparing request
         String responseXml = JSONUtil.getJSON(response);
         logger.info("[HOST] ****Customer Validation Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+        //updateTransactionInDB(logModel);
+//        }
+        return response;
+    }
+
+    public DigiWalletStatementResponse digiWalletStatementResponse(DigiWalletStatementRequest request) {
+
+
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getTransmissionDateTime() + request.getStan();
+        messageVO.setRetrievalReferenceNumber(request.getStan());
+        logger.info("[HOST] Digi Wallet Statement Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getStan();
+
+        DigiWalletStatementResponse response = new DigiWalletStatementResponse();
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+        messageVO.setMti(request.getMti());
+        messageVO.setProcessingCode(request.getProcessingCode());
+        messageVO.setDateTime(request.getTransmissionDateTime());
+        messageVO.setRetrievalReferenceNumber(request.getStan());
+        messageVO.setTransactionLocalTime((request.getTimeLocalTransaction()));
+        messageVO.setTransactionLocalDate(request.getDateLocalTransaction());
+        messageVO.setMerchantId(request.getMerchantType());
+        messageVO.setMobileNo(request.getAccountNumber());
+        messageVO.setFromDate(request.getFromDate());
+        messageVO.setToDate(request.getToDate());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getTransmissionDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("DigiWalletStatement");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+//        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Digi Wallet Statement Request to Micro Bank " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            messageVO = switchController.digiWalletStatement(messageVO);
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Digi Wallet Statement Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setDigiWalletStatementVoList(messageVO.getDigiWalletStatementVoList());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Digi Wallet Statement Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Digi Wallet Statement Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Digi Wallet Statement Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request
+        String responseXml = JSONUtil.getJSON(response);
+        logger.info("[HOST] ****Digi Wallet Statement Response" + Objects.requireNonNull(responseXml).replaceAll(System.getProperty("line.separator"), " "));
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);

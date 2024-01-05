@@ -7,6 +7,7 @@ import com.inov8.integration.vo.SegmentList;
 import com.inov8.integration.webservice.corporateVO.AccountStatement;
 import com.inov8.integration.webservice.corporateVO.CustomerDeviceVerification;
 import com.inov8.integration.webservice.debitCardVO.CardTypeFee;
+import com.inov8.integration.webservice.digiStatmentVO.DigiWalletStatementVo;
 import com.inov8.integration.webservice.l2Account.L2Account;
 import com.inov8.integration.webservice.l2Account.L2AccountFields;
 import com.inov8.integration.webservice.optasiaVO.*;
@@ -488,6 +489,33 @@ public class WebServiceVO implements Serializable {
     private String taxResidence;
     private String referenceNumber;
     private String usBornCity;
+    public List<DigiWalletStatementVo> digiWalletStatementVoList;
+    private String mti;
+    private String processingCode;
+
+    public String getMti() {
+        return mti;
+    }
+
+    public void setMti(String mti) {
+        this.mti = mti;
+    }
+
+    public String getProcessingCode() {
+        return processingCode;
+    }
+
+    public void setProcessingCode(String processingCode) {
+        this.processingCode = processingCode;
+    }
+
+    public List<DigiWalletStatementVo> getDigiWalletStatementVoList() {
+        return digiWalletStatementVoList;
+    }
+
+    public void setDigiWalletStatementVoList(List<DigiWalletStatementVo> digiWalletStatementVoList) {
+        this.digiWalletStatementVoList = digiWalletStatementVoList;
+    }
 
     public String getAccountCurrency() {
         return accountCurrency;

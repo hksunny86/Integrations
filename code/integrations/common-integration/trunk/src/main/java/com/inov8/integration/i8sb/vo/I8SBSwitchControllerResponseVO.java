@@ -503,6 +503,15 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private List<StaticQr> staticQrList;
     private String pointEarns;
     private String isTierUpdated;
+    private String rid;
+
+    public String getRid() {
+        return rid;
+    }
+
+    public void setRid(String rid) {
+        this.rid = rid;
+    }
 
     public String getPointEarns() {
         return pointEarns;

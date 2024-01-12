@@ -57,10 +57,10 @@ public class ZindigiCustomerSyncBO implements I8SBChannelInterface {
                 response = zindigiCustomerSyncService.zindigiCustomerSyncRequest((ZindigiCustomerSyncRequest) request);
 
             }
-            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_L2_ACCOUNT_UPGRADE_VALIDATION)) {
-                response = zindigiCustomerSyncService.sendL2AccountUpgradeValidationResponse((L2AccountUpgradeValidationRequest) request);
-
-            }
+//            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_L2_ACCOUNT_UPGRADE_VALIDATION)) {
+//                response = zindigiCustomerSyncService.sendL2AccountUpgradeValidationResponse((L2AccountUpgradeValidationRequest) request);
+//
+//            }
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_MinorAccountSync)) {
                 response = zindigiCustomerSyncService.sendMinorAccount((MinorAccountSyncRequest) request);
 
@@ -70,6 +70,9 @@ public class ZindigiCustomerSyncBO implements I8SBChannelInterface {
             }
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ZINDIGI_TRANSACTION_CAPTURE)) {
                 response = zindigiCustomerSyncService.transactionCaptureResponse((TransactionCaptureRequest) request);
+            }
+            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_L2_ACCOUNT_UPGRADE_VALIDATION)) {
+                response = zindigiCustomerSyncService.updateAccountStatusResponse((UpdateAccountStatusRequest) request);
             }
             if (Objects.requireNonNull(response).populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
@@ -118,10 +121,12 @@ public class ZindigiCustomerSyncBO implements I8SBChannelInterface {
         if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ZINDIGI_CUSTOMER_SYNC)) {
             request = new ZindigiCustomerSyncRequest();
             response = new ZindigiCustomerSyncResponse();
-        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_L2_ACCOUNT_UPGRADE_VALIDATION)) {
-            request = new L2AccountUpgradeValidationRequest();
-            response = new L2AccountUpgradeValidationResponse();
-        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_MinorAccountSync)) {
+        }
+//        else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_L2_ACCOUNT_UPGRADE_VALIDATION)) {
+//            request = new L2AccountUpgradeValidationRequest();
+//            response = new L2AccountUpgradeValidationResponse();
+//        }
+        else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_MinorAccountSync)) {
             request = new MinorAccountSyncRequest();
             response = new MinorAccountSyncResponse();
         } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ZINDIGI_P2M_STATUS_UPDATE)) {
@@ -130,6 +135,9 @@ public class ZindigiCustomerSyncBO implements I8SBChannelInterface {
         } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ZINDIGI_TRANSACTION_CAPTURE)) {
             request = new TransactionCaptureRequest();
             response = new TransactionCaptureResponse();
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_L2_ACCOUNT_UPGRADE_VALIDATION)) {
+            request = new UpdateAccountStatusRequest();
+            response = new UpdateAccountStatusResponse();
         } else {
             logger.info("[FAILED] Request type not supported");
             throw new I8SBValidationException("Request type not supported");

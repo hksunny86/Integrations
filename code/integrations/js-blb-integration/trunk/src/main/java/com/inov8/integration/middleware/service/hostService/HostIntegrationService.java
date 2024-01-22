@@ -47,6 +47,8 @@ public class HostIntegrationService {
     private static String I8_PATH = (ConfigReader.getInstance().getProperty("i8-path", ""));
     private static String OPTASIA_I8_SERVER = ConfigReader.getInstance().getProperty("optasia-i8-ip", "127.0.0.1");
     private static String OPTASIA_I8_PORT = (ConfigReader.getInstance().getProperty("optasia-i8-port", ""));
+//    private static String MERCHNAT_I8_SERVER = ConfigReader.getInstance().getProperty("merchant-i8-ip", "127.0.0.1");
+//    private static String MERCHNAT_I8_PORT = (ConfigReader.getInstance().getProperty("merchant-i8-port", ""));
 
     //    private static String I8_QUEUE_SERVER = ConfigReader.getInstance().getProperty("i8-queue-ip", "127.0.0.1");
 //    private static String I8_QUEUE_PORT = (ConfigReader.getInstance().getProperty("i8-queue-port", ""));
@@ -66,6 +68,7 @@ public class HostIntegrationService {
     TransactionDAO transactionDAO;
     private WebServiceSwitchController switchController = null;
     private WebServiceSwitchController optasiaSwitchController = null;
+//    private WebServiceSwitchController merchantSwitchController = null;
 
 
     public HostIntegrationService() {
@@ -4391,6 +4394,20 @@ public class HostIntegrationService {
                 httpInvokerProxyFactoryBean.setHttpInvokerRequestExecutor(executor);
                 optasiaSwitchController = (WebServiceSwitchController) httpInvokerProxyFactoryBean.getObject();
             }
+//            if (merchantSwitchController == null) {
+//
+//                SimpleHttpInvokerRequestExecutor executor = new SimpleHttpInvokerRequestExecutor();
+//
+//                executor.setConnectTimeout(CONNECTION_TIME_OUT * 1000);
+//                executor.setReadTimeout(READ_TIME_OUT * 1000);
+//
+//                HttpInvokerProxyFactoryBean httpInvokerProxyFactoryBean = new HttpInvokerProxyFactoryBean();
+//                httpInvokerProxyFactoryBean.setServiceInterface(WebServiceSwitchController.class);
+//                httpInvokerProxyFactoryBean.setServiceUrl(I8_SCHEME + "://" + MERCHNAT_I8_SERVER + ":" + MERCHNAT_I8_PORT + I8_PATH);
+//                httpInvokerProxyFactoryBean.afterPropertiesSet();
+//                httpInvokerProxyFactoryBean.setHttpInvokerRequestExecutor(executor);
+//                merchantSwitchController = (WebServiceSwitchController) httpInvokerProxyFactoryBean.getObject();
+//            }
         } catch (Exception e) {
             logger.error("ERROR Building I8 Switch Controller", e);
 
@@ -18547,7 +18564,7 @@ public class HostIntegrationService {
         messageVO.setUserName(request.getUserName());
         messageVO.setCustomerPassword(request.getPassword());
         messageVO.setMobileNo(request.getMobileNumber());
-//        messageVO.setStan(request.getStan());
+//        messageVO.setRetrievalReferenceNumber(request.getStan());
         messageVO.setDateTime(request.getDateTime());
         messageVO.setRetrievalReferenceNumber(request.getRrn());
         messageVO.setChannelId(request.getChannelId());
@@ -18814,6 +18831,7 @@ public class HostIntegrationService {
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
             response.setDigiWalletStatementVoList(messageVO.getDigiWalletStatementVoList());
+            response.setEndDayStatementVoList(messageVO.getEndDayStatementVoList());
 
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());

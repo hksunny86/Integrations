@@ -490,8 +490,17 @@ public class WebServiceVO implements Serializable {
     private String referenceNumber;
     private String usBornCity;
     public List<DigiWalletStatementVo> digiWalletStatementVoList;
+    public List<EndDayStatementVo> endDayStatementVoList;
     private String mti;
     private String processingCode;
+
+    public List<EndDayStatementVo> getEndDayStatementVoList() {
+        return endDayStatementVoList;
+    }
+
+    public void setEndDayStatementVoList(List<EndDayStatementVo> endDayStatementVoList) {
+        this.endDayStatementVoList = endDayStatementVoList;
+    }
 
     public String getMti() {
         return mti;

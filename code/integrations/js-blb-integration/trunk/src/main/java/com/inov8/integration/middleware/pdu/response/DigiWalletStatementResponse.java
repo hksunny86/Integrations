@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.webservice.digiStatmentVO.DigiWalletStatementVo;
 import com.inov8.integration.webservice.vo.CustomerValidationVO;
+import com.inov8.integration.webservice.vo.EndDayStatementVo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
         "ResponseDescription",
         "ResponseDateTime",
         "DigiWalletStatement",
+        "ClosingBalanceStatement",
         "HashData",
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -34,6 +36,8 @@ public class DigiWalletStatementResponse implements Serializable {
     private String responseDateTime;
     @JsonProperty("DigiWalletStatement")
     private List<DigiWalletStatementVo> digiWalletStatementVoList ;
+    @JsonProperty("ClosingBalanceStatement")
+    private List<EndDayStatementVo> endDayStatementVoList ;
     @JsonProperty("HashData")
     private String hashData;
 
@@ -75,6 +79,14 @@ public class DigiWalletStatementResponse implements Serializable {
 
     public void setDigiWalletStatementVoList(List<DigiWalletStatementVo> digiWalletStatementVoList) {
         this.digiWalletStatementVoList = digiWalletStatementVoList;
+    }
+
+    public List<EndDayStatementVo> getEndDayStatementVoList() {
+        return endDayStatementVoList;
+    }
+
+    public void setEndDayStatementVoList(List<EndDayStatementVo> endDayStatementVoList) {
+        this.endDayStatementVoList = endDayStatementVoList;
     }
 
     public String getHashData() {

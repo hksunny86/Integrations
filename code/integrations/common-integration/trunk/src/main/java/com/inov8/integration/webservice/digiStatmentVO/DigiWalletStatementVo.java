@@ -18,17 +18,17 @@ public class DigiWalletStatementVo implements Serializable {
 //    private String toTitle;
     private String fromEntity;
     private String toEntity;
-    private String transactionAmount;
+    private Double transactionAmount;
     private String transactionType;
-    private String debitAmount;
-    private String creditAmount;
-    private String wht;
-    private String fed;
-    private String tax;
-    private String feeInclusive;
-    private String feeExclusive;
-    private String totalAmount;
-    private String balanceAfterTransaction;
+    private Double debitAmount;
+    private Double creditAmount;
+    private Double wht;
+    private Double fed;
+    private Double tax;
+    private Double feeInclusive;
+    private Double feeExclusive;
+    private Double totalAmount;
+    private Double balanceAfterTransaction;
     private String isReversal;
 
     public String getMobileNumber() {
@@ -175,11 +175,11 @@ public class DigiWalletStatementVo implements Serializable {
         this.toEntity = toEntity;
     }
 
-    public String getTransactionAmount() {
+    public Double getTransactionAmount() {
         return transactionAmount;
     }
 
-    public void setTransactionAmount(String transactionAmount) {
+    public void setTransactionAmount(Double transactionAmount) {
         this.transactionAmount = transactionAmount;
     }
 
@@ -191,75 +191,75 @@ public class DigiWalletStatementVo implements Serializable {
         this.transactionType = transactionType;
     }
 
-    public String getDebitAmount() {
+    public Double getDebitAmount() {
         return debitAmount;
     }
 
-    public void setDebitAmount(String debitAmount) {
+    public void setDebitAmount(Double debitAmount) {
         this.debitAmount = debitAmount;
     }
 
-    public String getCreditAmount() {
+    public Double getCreditAmount() {
         return creditAmount;
     }
 
-    public void setCreditAmount(String creditAmount) {
+    public void setCreditAmount(Double creditAmount) {
         this.creditAmount = creditAmount;
     }
 
-    public String getWht() {
+    public Double getWht() {
         return wht;
     }
 
-    public void setWht(String wht) {
+    public void setWht(Double wht) {
         this.wht = wht;
     }
 
-    public String getFed() {
+    public Double getFed() {
         return fed;
     }
 
-    public void setFed(String fed) {
+    public void setFed(Double fed) {
         this.fed = fed;
     }
 
-    public String getTax() {
+    public Double getTax() {
         return tax;
     }
 
-    public void setTax(String tax) {
+    public void setTax(Double tax) {
         this.tax = tax;
     }
 
-    public String getFeeInclusive() {
+    public Double getFeeInclusive() {
         return feeInclusive;
     }
 
-    public void setFeeInclusive(String feeInclusive) {
+    public void setFeeInclusive(Double feeInclusive) {
         this.feeInclusive = feeInclusive;
     }
 
-    public String getFeeExclusive() {
+    public Double getFeeExclusive() {
         return feeExclusive;
     }
 
-    public void setFeeExclusive(String feeExclusive) {
+    public void setFeeExclusive(Double feeExclusive) {
         this.feeExclusive = feeExclusive;
     }
 
-    public String getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(String totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public String getBalanceAfterTransaction() {
+    public Double getBalanceAfterTransaction() {
         return balanceAfterTransaction;
     }
 
-    public void setBalanceAfterTransaction(String balanceAfterTransaction) {
+    public void setBalanceAfterTransaction(Double balanceAfterTransaction) {
         this.balanceAfterTransaction = balanceAfterTransaction;
     }
 

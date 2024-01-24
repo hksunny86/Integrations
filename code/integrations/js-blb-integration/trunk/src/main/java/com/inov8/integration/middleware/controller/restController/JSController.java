@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -375,27 +376,27 @@ public class JSController {
                     HostRequestValidator.validateDebitCardStatusVerification(request);
                     debitCardStatusResponse = integrationService.debitCardStatusReponse(request);
 
-                } catch (ValidationException ve) {
-                    debitCardStatusResponse.setResponseCode("420");
-                    debitCardStatusResponse.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    debitCardStatusResponse.setResponseCode("220");
-                    debitCardStatusResponse.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
-                }
-
-                logger.info("******* DEBUG LOGS FOR  Debit Card Status Verification TRANSACTION *********");
-                logger.info("ResponseCode: " + debitCardStatusResponse.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR  Debit Card Status Verification TRANSACTION AUTHENTICATION *********");
-                debitCardStatusResponse = new DebitCardStatusReponse();
+            } catch (ValidationException ve) {
                 debitCardStatusResponse.setResponseCode("420");
-                debitCardStatusResponse.setResponseDescription("Request is not authenticated");
-                debitCardStatusResponse.setRrn(request.getRrn());
-                debitCardStatusResponse.setResponseDateTime(request.getDateTime());
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                debitCardStatusResponse.setResponseDescription(ve.getMessage());
+
+                logger.error("ERROR: Request Validation", ve);
+            } catch (Exception e) {
+                debitCardStatusResponse.setResponseCode("220");
+                debitCardStatusResponse.setResponseDescription(e.getMessage());
+                logger.error("ERROR: General Processing ", e);
+            }
+
+            logger.info("******* DEBUG LOGS FOR  Debit Card Status Verification TRANSACTION *********");
+            logger.info("ResponseCode: " + debitCardStatusResponse.getResponseCode());
+        } else {
+            logger.info("******* DEBUG LOGS FOR  Debit Card Status Verification TRANSACTION AUTHENTICATION *********");
+            debitCardStatusResponse = new DebitCardStatusReponse();
+            debitCardStatusResponse.setResponseCode("420");
+            debitCardStatusResponse.setResponseDescription("Request is not authenticated");
+            debitCardStatusResponse.setRrn(request.getRrn());
+            debitCardStatusResponse.setResponseDateTime(request.getDateTime());
+            logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
             }
         } else {
@@ -3027,26 +3028,26 @@ public class JSController {
                         HostRequestValidator.validateL2AccountUpgrade(request);
                         response = integrationService.l2AccountUpgrade(request);
 
-                    } catch (ValidationException ve) {
-                        response.setResponseCode("420");
-                        response.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        response.setResponseCode("220");
-                        response.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
-                    logger.info("ResponseCode: " + response.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR  L2 Account Upgrade TRANSACTION AUTHENTICATION *********");
-                    response = new L2AccountUpgradeResponse();
+                } catch (ValidationException ve) {
                     response.setResponseCode("420");
-                    response.setResponseDescription("Request is not authenticated");
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
+
+                logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR  L2 Account Upgrade TRANSACTION AUTHENTICATION *********");
+                response = new L2AccountUpgradeResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+            }
             } else {
                 logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
                 response = new L2AccountUpgradeResponse();
@@ -3068,6 +3069,90 @@ public class JSController {
         String responseXML = JSONUtil.getJSON(response);
         logger.info("L2 Account Upgrade  Request  Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
 
+
+        return response;
+    }
+
+    @RequestMapping(value = "api/digiWalletStatement", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    DigiWalletStatementResponse digiWalletStatementResponse(@Valid @RequestBody DigiWalletStatementRequest request) throws Exception {
+        DigiWalletStatementResponse response = new DigiWalletStatementResponse();
+
+        String className = this.getClass().getSimpleName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+        long start = System.currentTimeMillis();
+
+        try {
+
+            logger.info("Digi Wallet Statement Request Received at Controller at time: " + start);
+            String requestXML = JSONUtil.getJSON(request);
+            //        requestXML = XMLUtil.maskPassword(requestXML);
+//            logger.info("Start Processing Third Party Credit Request with {}", requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Digi Wallet Statement Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
+            StringBuilder stringText = new StringBuilder()
+                    .append(request.getUserName())
+                    .append(request.getPassword())
+                    .append(request.getMti())
+                    .append(request.getProcessingCode())
+                    .append(request.getTransmissionDateTime())
+                    .append(request.getStan())
+                    .append(request.getTimeLocalTransaction())
+                    .append(request.getDateLocalTransaction())
+                    .append(request.getMerchantType())
+                    .append(request.getAccountNumber())
+                    .append(request.getFromDate())
+                    .append(request.getToDate())
+                    .append(request.getChannelId())
+                    .append(request.getTerminalId());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    HostRequestValidator.validateDigiWalletStatement(request);
+                    response = integrationService.digiWalletStatementResponse(request);
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+                logger.info("******* DEBUG LOGS FOR Digi Wallet Statement Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Digi Wallet Statement Request AUTHENTICATION *********");
+                response = new DigiWalletStatementResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Digi Wallet Statement Request *********");
+                response = new DigiWalletStatementResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
+        } catch (Exception e) {
+            logger.error("Exception while processing request" + e.getMessage());
+            response = new DigiWalletStatementResponse();
+            response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            response.setResponseDescription(e.getLocalizedMessage());
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
+            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
+            logger.info("Critical Error ::" + e.getLocalizedMessage());
+        }
+        long end = System.currentTimeMillis() - start;
+        logger.info("Digi Wallet Statement Request Processed in : {} ms {}", end, "");
 
         return response;
     }

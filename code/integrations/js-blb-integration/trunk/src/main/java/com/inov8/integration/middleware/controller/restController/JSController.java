@@ -376,27 +376,27 @@ public class JSController {
                     HostRequestValidator.validateDebitCardStatusVerification(request);
                     debitCardStatusResponse = integrationService.debitCardStatusReponse(request);
 
-            } catch (ValidationException ve) {
+                } catch (ValidationException ve) {
+                    debitCardStatusResponse.setResponseCode("420");
+                    debitCardStatusResponse.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    debitCardStatusResponse.setResponseCode("220");
+                    debitCardStatusResponse.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+
+                logger.info("******* DEBUG LOGS FOR  Debit Card Status Verification TRANSACTION *********");
+                logger.info("ResponseCode: " + debitCardStatusResponse.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR  Debit Card Status Verification TRANSACTION AUTHENTICATION *********");
+                debitCardStatusResponse = new DebitCardStatusReponse();
                 debitCardStatusResponse.setResponseCode("420");
-                debitCardStatusResponse.setResponseDescription(ve.getMessage());
-
-                logger.error("ERROR: Request Validation", ve);
-            } catch (Exception e) {
-                debitCardStatusResponse.setResponseCode("220");
-                debitCardStatusResponse.setResponseDescription(e.getMessage());
-                logger.error("ERROR: General Processing ", e);
-            }
-
-            logger.info("******* DEBUG LOGS FOR  Debit Card Status Verification TRANSACTION *********");
-            logger.info("ResponseCode: " + debitCardStatusResponse.getResponseCode());
-        } else {
-            logger.info("******* DEBUG LOGS FOR  Debit Card Status Verification TRANSACTION AUTHENTICATION *********");
-            debitCardStatusResponse = new DebitCardStatusReponse();
-            debitCardStatusResponse.setResponseCode("420");
-            debitCardStatusResponse.setResponseDescription("Request is not authenticated");
-            debitCardStatusResponse.setRrn(request.getRrn());
-            debitCardStatusResponse.setResponseDateTime(request.getDateTime());
-            logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                debitCardStatusResponse.setResponseDescription("Request is not authenticated");
+                debitCardStatusResponse.setRrn(request.getRrn());
+                debitCardStatusResponse.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
             }
         } else {
@@ -3028,26 +3028,26 @@ public class JSController {
                         HostRequestValidator.validateL2AccountUpgrade(request);
                         response = integrationService.l2AccountUpgrade(request);
 
-                } catch (ValidationException ve) {
+                    } catch (ValidationException ve) {
+                        response.setResponseCode("420");
+                        response.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        response.setResponseCode("220");
+                        response.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
+                    logger.info("ResponseCode: " + response.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR  L2 Account Upgrade TRANSACTION AUTHENTICATION *********");
+                    response = new L2AccountUpgradeResponse();
                     response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
+                    response.setResponseDescription("Request is not authenticated");
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
                 }
-
-                logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR  L2 Account Upgrade TRANSACTION AUTHENTICATION *********");
-                response = new L2AccountUpgradeResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-            }
             } else {
                 logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
                 response = new L2AccountUpgradeResponse();
@@ -3112,28 +3112,28 @@ public class JSController {
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateDigiWalletStatement(request);
-                    response = integrationService.digiWalletStatementResponse(request);
-                } catch (ValidationException ve) {
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
+                        HostRequestValidator.validateDigiWalletStatement(request);
+                        response = integrationService.digiWalletStatementResponse(request);
+                    } catch (ValidationException ve) {
+                        response.setResponseCode("420");
+                        response.setResponseDescription(ve.getMessage());
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        response.setResponseCode("220");
+                        response.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+                    logger.info("******* DEBUG LOGS FOR Digi Wallet Statement Request *********");
+                    logger.info("ResponseCode: " + response.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR Digi Wallet Statement Request AUTHENTICATION *********");
+                    response = new DigiWalletStatementResponse();
                     response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
+                    response.setResponseDescription("Request is not authenticated");
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
                 }
-                logger.info("******* DEBUG LOGS FOR Digi Wallet Statement Request *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
-            } else {
-                logger.info("******* DEBUG LOGS FOR Digi Wallet Statement Request AUTHENTICATION *********");
-                response = new DigiWalletStatementResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
-            }
             } else {
                 logger.info("******* DEBUG LOGS FOR Digi Wallet Statement Request *********");
                 response = new DigiWalletStatementResponse();

@@ -44,14 +44,16 @@ public class ZindigiCustomerSyncService {
     I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
     private RestTemplate restTemplate = new RestTemplate();
 
-    private String i8sb_target_environment = "mock5";
+    private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
 
-    @Value("${zindigi.customer.sync.url}")
+    @Value("-${zindigi.customer.sync.url}")
     private String zindigiCustomerSyncUrl;
     @Value("${zindigi.customer.sync.access_token}")
     private String accessToken;
     @Value("${l2.account.upgrade.validation.url}")
     private String l2AccountUpgradeValidationUrl;
+    @Value("${l2.merchant.account.upgrade.validation.url}")
+    private String l2MerchantAccountUpgradeValidationUrl;
     @Value("${l2.account.upgrade.validation.access_token}")
     private String l2AccountUpgradeValidationAccessToken;
     @Value("${p2m.status.update.access_token}")
@@ -149,8 +151,12 @@ public class ZindigiCustomerSyncService {
             l2AccountUpgradeValidationResponse = (L2AccountUpgradeValidationResponse) JSONUtil.jsonToObject(response, L2AccountUpgradeValidationResponse.class);
             logger.info("Status for L2 Account Upgrade Validation Request : " + l2AccountUpgradeValidationResponse.getResponseDescription());
         } else {
-
-            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(l2AccountUpgradeValidationUrl);
+            UriComponentsBuilder uri;
+            if (i8SBSwitchControllerRequestVO.getReserved1() != null && i8SBSwitchControllerRequestVO.getReserved1().equalsIgnoreCase("M")) {
+                uri = UriComponentsBuilder.fromUriString(l2MerchantAccountUpgradeValidationUrl);
+            } else {
+                uri = UriComponentsBuilder.fromUriString(l2AccountUpgradeValidationUrl);
+            }
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -382,7 +388,7 @@ public class ZindigiCustomerSyncService {
         I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
         long start = System.currentTimeMillis();
 
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock5")) {
             // Mock response for testing
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String response = "{\n" +
@@ -460,8 +466,8 @@ public class ZindigiCustomerSyncService {
             // Create request entity
             HttpEntity<?> requestEntity = new HttpEntity<>(postParam, headers);
 
-            System.out.println("Sending POST request to " + url);
-            System.out.println("Request Entity: " + requestEntity);
+            logger.info("Sending POST request to " + url);
+            logger.info("Request Entity: " + requestEntity);
 
             // Create RestTemplate
             RestTemplate restTemplate = new RestTemplate();
@@ -470,25 +476,25 @@ public class ZindigiCustomerSyncService {
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
             // Log response details
-            System.out.println("Response: " + response);
+            logger.info("Response: " + response);
 
             // Check if the status code is 200 (OK)
             if (response.getStatusCode() == HttpStatus.OK) {
                 String entityResponse = response.getBody();
-                System.out.println("Successful response: " + entityResponse);
+                logger.info("Successful response: " + entityResponse);
                 return !entityResponse.isEmpty() ? entityResponse : null;
             } else {
-                System.out.println("Unsuccessful response. HTTP Status Code: " + response.getStatusCodeValue());
+                logger.info("Unsuccessful response. HTTP Status Code: " + response.getStatusCodeValue());
                 return response.getBody();
             }
         } catch (HttpStatusCodeException e) {
-            System.err.println("HTTP Status Code Exception: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+            logger.info("HTTP Status Code Exception: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
             throw new Exception(e.getMessage());
         } catch (RestClientException e) {
-            System.err.println("RestClientException: " + e.getMessage());
+            logger.info("RestClientException: " + e.getMessage());
             throw new Exception(e.getMessage());
         } catch (Exception e) {
-            System.err.println("Exception occurred: " + e.getMessage());
+            logger.info("Exception occurred: " + e.getMessage());
             throw new Exception(e.getMessage());
         }
     }
@@ -524,125 +530,4 @@ public class ZindigiCustomerSyncService {
         this.i8SBSwitchControllerRequestVO = i8SBSwitchControllerRequestVO;
     }
 
-
-//    public static void main(String[] args) throws Exception {
-//        RestTemplate restTemplate = new RestTemplate();
-////        ZindigiCustomerSyncService zindigiCustomerSyncService = new ZindigiCustomerSyncService();
-//        I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
-//        UpdateAccountStatusRequest request = new UpdateAccountStatusRequest();
-//        UpdateAccountStatusResponse updateAccountStatusResponse = new UpdateAccountStatusResponse();
-//        request.setMobile("03438568610");
-//        request.setStatus("Approved");
-//        String accessToken = i8SBSwitchControllerRequestVO.getAccessToken();
-//        UriComponentsBuilder uri = UriComponentsBuilder.fromUriString("https://zindigi-rebrand.appinsnap.com/api/Ultra/UpdateStatus");
-//        //HttpHeaders headers = new HttpHeaders();
-//        // headers.setContentType(MediaType.APPLICATION_JSON);
-//        List<Charset> charsetList = Collections.singletonList(StandardCharsets.UTF_8);
-//        //headers.setAcceptCharset(charsetList);
-//        //headers.add("AccessToken", "429#CzACF-0@482-41!4b-213213-asdsad");
-//        String requestJSON = JSONUtil.getJSON(request);
-//        // HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
-//        String url = "https://zindigi-rebrand.appinsnap.com/api/Ultra/UpdateStatus";
-////        logger.info("Prepared Request HttpEntity " + httpEntity);
-//
-//        logger.info("Requesting URL " + url);
-//
-//        Map<String, String> headers = new HashMap<String, String>();
-//        headers.put("content-type", "application/json");
-//        headers.put("AccessToken", "429#CzACF-0@482-41!4b-213213-asdsad");
-//        Map<String, Object> postParam = new HashMap<String, Object>();
-//        postParam.put("Mobile", "03132653416");
-//        postParam.put("Status", "A");
-//        String res1 = getResponseFromPostAPI(headers, postParam, url);
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        updateAccountStatusResponse = objectMapper.readValue(res1, UpdateAccountStatusResponse.class);
-//        logger.info("Response Entity: " + res1);
-//
-////        Iterator res = restTemplate.getMessageConverters().iterator();
-////
-////        while (res.hasNext()) {
-////            HttpMessageConverter endTime = (HttpMessageConverter) res.next();
-////            if (endTime instanceof StringHttpMessageConverter) {
-////                ((StringHttpMessageConverter) endTime).setWriteAcceptCharset(false);
-////            }
-////        }
-////        String response;
-////
-//////        try {
-//////            requestJSON = JSONUtil.getJSON(request);
-//////            httpEntity = new HttpEntity<>(requestJSON, headers);
-////
-////            url = uri.toUriString();
-//////            logger.info("Prepared Request HttpEntity " + httpEntity);
-//
-////            logger.info("Update Account Status Request Sent to Client " + httpEntity.getBody());
-//
-////            ResponseEntity<String> res1 = restTemplate.exchange("https://zindigi-rebrand.appinsnap.com/api/Ultra/UpdateStatus", HttpMethod.POST, httpEntity, String.class);
-//
-//
-////            String responseCode = res1.getStatusCode().toString();
-////
-////            logger.info("Response Code of Update Account Status Request received from client " + responseCode);
-////            logger.info("Response of Update Account Status Request received from client " + res1.getBody());
-////
-////            if (responseCode.equalsIgnoreCase("200")) {
-////                ObjectMapper objectMapper = new ObjectMapper();
-////                updateAccountStatusResponse = (UpdateAccountStatusResponse) JSONUtil.jsonToObject(res1.getBody(), UpdateAccountStatusResponse.class);
-////            }
-////            if (responseCode.equalsIgnoreCase("200")) {
-////                updateAccountStatusResponse = (UpdateAccountStatusResponse) JSONUtil.jsonToObject(res1.getBody(), UpdateAccountStatusResponse.class);
-////                Objects.requireNonNull(updateAccountStatusResponse).setResponseCode(updateAccountStatusResponse.getResponseCode());
-//
-//        I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
-//        if (updateAccountStatusResponse.getResponseCode().equalsIgnoreCase("00")) {
-//            i8SBSwitchControllerResponseVO.setResponseCode(updateAccountStatusResponse.getResponseCode());
-//            i8SBSwitchControllerResponseVO.setDescription(updateAccountStatusResponse.getResponseMessage());
-//            i8SBSwitchControllerResponseVO.setRid(updateAccountStatusResponse.getRid());
-//            if (updateAccountStatusResponse.getBody() != null) {
-//                i8SBSwitchControllerResponseVO.setDescription(updateAccountStatusResponse.getBody().get(0));
-//            }
-//        } else {
-//            i8SBSwitchControllerResponseVO.setResponseCode(updateAccountStatusResponse.getResponseCode());
-//            i8SBSwitchControllerResponseVO.setDescription(updateAccountStatusResponse.getResponseMessage());
-//        }
-//
-////        String response1 = JSONUtil.getJSON(i8SBSwitchControllerResponseVO);
-////        logger.info("Response of Update Account Status Request received from client " + response1);
-//
-////            }
-////        } catch (RestClientException e) {
-////            if (e instanceof HttpStatusCodeException) {
-////                response = ((HttpStatusCodeException) e).getStatusCode().toString();
-////                String result;
-////                switch (response) {
-////                    case "203":
-////                    case "400":
-////                    case "401":
-////                    case "422":
-////                    case "500":
-////                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-////                        Objects.requireNonNull(updateAccountStatusResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-////                        Objects.requireNonNull(updateAccountStatusResponse).setResponseMessage((((HttpStatusCodeException) e).getResponseBodyAsString()));
-////                        updateAccountStatusResponse = (UpdateAccountStatusResponse) JSONUtil.jsonToObject(result, UpdateAccountStatusResponse.class);
-////                        break;
-////                    default:
-////                        result = ((HttpStatusCodeException) e).getResponseBodyAsString();
-////                        logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
-////                        Objects.requireNonNull(updateAccountStatusResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-////                        Objects.requireNonNull(updateAccountStatusResponse).setResponseMessage((((HttpStatusCodeException) e).getResponseBodyAsString()));
-////                        updateAccountStatusResponse = (UpdateAccountStatusResponse) JSONUtil.jsonToObject(result, UpdateAccountStatusResponse.class);
-////                        break;
-////                }
-////            }
-////            if (e instanceof ResourceAccessException) {
-////                String result = e.getMessage();
-////                logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
-////                Objects.requireNonNull(updateAccountStatusResponse).setResponseCode("500");
-////                Objects.requireNonNull(updateAccountStatusResponse).setResponseMessage(result);
-////            }
-////        } catch (Exception e) {
-////            logger.error("Exception Occurred: " + e.getMessage());
-////        }
-//
-//    }
 }

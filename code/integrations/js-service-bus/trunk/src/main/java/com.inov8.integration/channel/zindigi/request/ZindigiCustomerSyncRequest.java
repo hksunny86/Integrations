@@ -29,7 +29,8 @@ import static com.inov8.integration.enums.DateFormatEnum.EXPIRY_DATE;
         "Email",
         "FatherName",
         "MotherName",
-        "MobileNetwork"
+        "MobileNetwork",
+        "PlaceOfBirth"
 })
 public class ZindigiCustomerSyncRequest extends Request {
 
@@ -57,6 +58,8 @@ public class ZindigiCustomerSyncRequest extends Request {
     private String motherName;
     @JsonProperty("MobileNetwork")
     private String mobileNetwork;
+    @JsonProperty("PlaceOfBirth")
+    private String placeOfBirth;
 
     public String getFullName() {
         return fullName;
@@ -154,6 +157,14 @@ public class ZindigiCustomerSyncRequest extends Request {
         this.mobileNetwork = mobileNetwork;
     }
 
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
+    }
+
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
+    }
+
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
@@ -226,6 +237,12 @@ public class ZindigiCustomerSyncRequest extends Request {
             this.setMobileNetwork(i8SBSwitchControllerRequestVO.getMobileNetwork());
         }
 
+        if (i8SBSwitchControllerRequestVO.getPlaceOfBirth().isEmpty() || i8SBSwitchControllerRequestVO.getPlaceOfBirth().equals("null")) {
+            this.setMobileNetwork("");
+        } else {
+
+            this.setPlaceOfBirth(i8SBSwitchControllerRequestVO.getPlaceOfBirth());
+        }
 
     }
 

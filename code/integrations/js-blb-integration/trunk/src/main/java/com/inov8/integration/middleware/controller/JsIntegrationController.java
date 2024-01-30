@@ -2821,4 +2821,9 @@ public class JsIntegrationController implements WebServiceSwitchController {
     public WebServiceVO digiWalletStatement(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO accountInfo(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

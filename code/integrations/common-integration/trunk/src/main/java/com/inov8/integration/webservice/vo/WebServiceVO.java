@@ -493,6 +493,321 @@ public class WebServiceVO implements Serializable {
     public List<EndDayStatementVo> endDayStatementVoList;
     private String mti;
     private String processingCode;
+    private String beneficialOwnership;
+    private String sellerCode;
+    private String terminalName;
+    private String terminalPoiCnic;
+    private String terminalPoiMobileNumber;
+    private String terminalAddress;
+    private String terminalCity;
+    private String businessOwnerName;
+    private String cnicOfOwner;
+    private String ntn;
+    private String fatherName;
+    private String dateOfCorporation;
+    private String primaryPhoneNo;
+    private String secondaryPhoneNo;
+    private String businessType;
+    private String businessMode;
+    private String merchantCategory;
+    private String establishSince;
+    private String accountPurpose;
+    private String currentIncome;
+    private String dailyTransactions;
+    private String detailOfOtherSourceOfIncome;
+    private String monthlyTransaction;
+    private String otherDetails;
+    private String expectedNoOfTransPerMonth;
+    private String expectedSalesVolumePerMonth;
+    private String mcnic;
+    private String storeName;
+    private String storeAddress;
+    private String storeCity;
+    private String registrationTypeCode;
+    private String accountLevelCode;
+    private String accountStatusCode;
+    private String accountTypeCode;
+    private String accountNatureCode;
+
+    public String getRegistrationTypeCode() {
+        return registrationTypeCode;
+    }
+
+    public void setRegistrationTypeCode(String registrationTypeCode) {
+        this.registrationTypeCode = registrationTypeCode;
+    }
+
+    public String getAccountLevelCode() {
+        return accountLevelCode;
+    }
+
+    public void setAccountLevelCode(String accountLevelCode) {
+        this.accountLevelCode = accountLevelCode;
+    }
+
+    public String getAccountStatusCode() {
+        return accountStatusCode;
+    }
+
+    public void setAccountStatusCode(String accountStatusCode) {
+        this.accountStatusCode = accountStatusCode;
+    }
+
+    public String getAccountTypeCode() {
+        return accountTypeCode;
+    }
+
+    public void setAccountTypeCode(String accountTypeCode) {
+        this.accountTypeCode = accountTypeCode;
+    }
+
+    public String getAccountNatureCode() {
+        return accountNatureCode;
+    }
+
+    public void setAccountNatureCode(String accountNatureCode) {
+        this.accountNatureCode = accountNatureCode;
+    }
+
+    public String getMcnic() {
+        return mcnic;
+    }
+
+    public void setMcnic(String mcnic) {
+        this.mcnic = mcnic;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getStoreAddress() {
+        return storeAddress;
+    }
+
+    public void setStoreAddress(String storeAddress) {
+        this.storeAddress = storeAddress;
+    }
+
+    public String getStoreCity() {
+        return storeCity;
+    }
+
+    public void setStoreCity(String storeCity) {
+        this.storeCity = storeCity;
+    }
+
+    public String getBeneficialOwnership() {
+        return beneficialOwnership;
+    }
+
+    public void setBeneficialOwnership(String beneficialOwnership) {
+        this.beneficialOwnership = beneficialOwnership;
+    }
+
+    public String getBusinessOwnerName() {
+        return businessOwnerName;
+    }
+
+    public void setBusinessOwnerName(String businessOwnerName) {
+        this.businessOwnerName = businessOwnerName;
+    }
+
+    public String getCnicOfOwner() {
+        return cnicOfOwner;
+    }
+
+    public void setCnicOfOwner(String cnicOfOwner) {
+        this.cnicOfOwner = cnicOfOwner;
+    }
+
+    public String getNtn() {
+        return ntn;
+    }
+
+    public void setNtn(String ntn) {
+        this.ntn = ntn;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
+
+    public String getDateOfCorporation() {
+        return dateOfCorporation;
+    }
+
+    public void setDateOfCorporation(String dateOfCorporation) {
+        this.dateOfCorporation = dateOfCorporation;
+    }
+
+    public String getPrimaryPhoneNo() {
+        return primaryPhoneNo;
+    }
+
+    public void setPrimaryPhoneNo(String primaryPhoneNo) {
+        this.primaryPhoneNo = primaryPhoneNo;
+    }
+
+    public String getSecondaryPhoneNo() {
+        return secondaryPhoneNo;
+    }
+
+    public void setSecondaryPhoneNo(String secondaryPhoneNo) {
+        this.secondaryPhoneNo = secondaryPhoneNo;
+    }
+
+    public String getBusinessType() {
+        return businessType;
+    }
+
+    public void setBusinessType(String businessType) {
+        this.businessType = businessType;
+    }
+
+    public String getBusinessMode() {
+        return businessMode;
+    }
+
+    public void setBusinessMode(String businessMode) {
+        this.businessMode = businessMode;
+    }
+
+    public String getMerchantCategory() {
+        return merchantCategory;
+    }
+
+    public void setMerchantCategory(String merchantCategory) {
+        this.merchantCategory = merchantCategory;
+    }
+
+    public String getEstablishSince() {
+        return establishSince;
+    }
+
+    public void setEstablishSince(String establishSince) {
+        this.establishSince = establishSince;
+    }
+
+    public String getAccountPurpose() {
+        return accountPurpose;
+    }
+
+    public void setAccountPurpose(String accountPurpose) {
+        this.accountPurpose = accountPurpose;
+    }
+
+    public String getCurrentIncome() {
+        return currentIncome;
+    }
+
+    public void setCurrentIncome(String currentIncome) {
+        this.currentIncome = currentIncome;
+    }
+
+    public String getDailyTransactions() {
+        return dailyTransactions;
+    }
+
+    public void setDailyTransactions(String dailyTransactions) {
+        this.dailyTransactions = dailyTransactions;
+    }
+
+    public String getDetailOfOtherSourceOfIncome() {
+        return detailOfOtherSourceOfIncome;
+    }
+
+    public void setDetailOfOtherSourceOfIncome(String detailOfOtherSourceOfIncome) {
+        this.detailOfOtherSourceOfIncome = detailOfOtherSourceOfIncome;
+    }
+
+    public String getMonthlyTransaction() {
+        return monthlyTransaction;
+    }
+
+    public void setMonthlyTransaction(String monthlyTransaction) {
+        this.monthlyTransaction = monthlyTransaction;
+    }
+
+    public String getOtherDetails() {
+        return otherDetails;
+    }
+
+    public void setOtherDetails(String otherDetails) {
+        this.otherDetails = otherDetails;
+    }
+
+    public String getExpectedNoOfTransPerMonth() {
+        return expectedNoOfTransPerMonth;
+    }
+
+    public void setExpectedNoOfTransPerMonth(String expectedNoOfTransPerMonth) {
+        this.expectedNoOfTransPerMonth = expectedNoOfTransPerMonth;
+    }
+
+    public String getExpectedSalesVolumePerMonth() {
+        return expectedSalesVolumePerMonth;
+    }
+
+    public void setExpectedSalesVolumePerMonth(String expectedSalesVolumePerMonth) {
+        this.expectedSalesVolumePerMonth = expectedSalesVolumePerMonth;
+    }
+
+    public String getSellerCode() {
+        return sellerCode;
+    }
+
+    public void setSellerCode(String sellerCode) {
+        this.sellerCode = sellerCode;
+    }
+
+    public String getTerminalName() {
+        return terminalName;
+    }
+
+    public void setTerminalName(String terminalName) {
+        this.terminalName = terminalName;
+    }
+
+    public String getTerminalPoiCnic() {
+        return terminalPoiCnic;
+    }
+
+    public void setTerminalPoiCnic(String terminalPoiCnic) {
+        this.terminalPoiCnic = terminalPoiCnic;
+    }
+
+    public String getTerminalPoiMobileNumber() {
+        return terminalPoiMobileNumber;
+    }
+
+    public void setTerminalPoiMobileNumber(String terminalPoiMobileNumber) {
+        this.terminalPoiMobileNumber = terminalPoiMobileNumber;
+    }
+
+    public String getTerminalAddress() {
+        return terminalAddress;
+    }
+
+    public void setTerminalAddress(String terminalAddress) {
+        this.terminalAddress = terminalAddress;
+    }
+
+    public String getTerminalCity() {
+        return terminalCity;
+    }
+
+    public void setTerminalCity(String terminalCity) {
+        this.terminalCity = terminalCity;
+    }
 
     public List<EndDayStatementVo> getEndDayStatementVoList() {
         return endDayStatementVoList;

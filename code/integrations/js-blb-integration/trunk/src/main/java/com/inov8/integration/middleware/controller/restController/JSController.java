@@ -3185,9 +3185,7 @@ public class JSController {
                     .append(request.getDateTime())
                     .append(request.getRrn())
                     .append(request.getChannelId())
-                    .append(request.getTerminalId())
-                    .append(request.getCnic())
-                    .append(request.getName());
+                    .append(request.getTerminalId());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {

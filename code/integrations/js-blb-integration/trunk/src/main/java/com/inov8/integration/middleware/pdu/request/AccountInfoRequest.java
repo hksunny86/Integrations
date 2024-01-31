@@ -16,8 +16,6 @@ import java.io.Serializable;
         "Rrn",
         "ChannelId",
         "TerminalId",
-        "Cnic",
-        "Name",
         "HashData"
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -38,10 +36,6 @@ public class AccountInfoRequest implements Serializable {
     private String channelId;
     @JsonProperty("TerminalId")
     private String terminalId;
-    @JsonProperty("Cnic")
-    private String cnic;
-    @JsonProperty("Name")
-    private String name;
     @JsonProperty("HashData")
     private String hashData;
 
@@ -99,22 +93,6 @@ public class AccountInfoRequest implements Serializable {
 
     public void setTerminalId(String terminalId) {
         this.terminalId = terminalId;
-    }
-
-    public String getCnic() {
-        return cnic;
-    }
-
-    public void setCnic(String cnic) {
-        this.cnic = cnic;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getHashData() {

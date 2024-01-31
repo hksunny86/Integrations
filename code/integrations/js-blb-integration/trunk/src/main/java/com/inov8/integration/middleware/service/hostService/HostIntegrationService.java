@@ -18890,8 +18890,6 @@ public class HostIntegrationService {
         messageVO.setRetrievalReferenceNumber(request.getRrn());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setCnicNo(request.getCnic());
-        messageVO.setName(request.getName());
 
         TransactionLogModel logModel = new TransactionLogModel();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");

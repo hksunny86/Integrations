@@ -23,6 +23,12 @@ import java.util.List;
         "AccountTypeCode",
         "AccountNatureCode",
         "CurrencyCode",
+        "Cnic",
+        "Name",
+        "Segment",
+        "Email",
+        "Channel",
+        "GlCodeCombination",
         "HashData",
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -52,7 +58,18 @@ public class AccountInfoResponse implements Serializable {
     private String accountNatureCode;
     @JsonProperty("CurrencyCode")
     private String currencyCode;
-
+    @JsonProperty("Cnic")
+    private String cnic;
+    @JsonProperty("Name")
+    private String name;
+    @JsonProperty("Segment")
+    private String segment;
+    @JsonProperty("Email")
+    private String email;
+    @JsonProperty("Channel")
+    private String channel;
+    @JsonProperty("GlCodeCombination")
+    private String glCodeCombination;
     @JsonProperty("HashData")
     private String hashData;
 
@@ -142,6 +159,54 @@ public class AccountInfoResponse implements Serializable {
 
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
+    }
+
+    public String getCnic() {
+        return cnic;
+    }
+
+    public void setCnic(String cnic) {
+        this.cnic = cnic;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+
+    public void setSegment(String segment) {
+        this.segment = segment;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public String getGlCodeCombination() {
+        return glCodeCombination;
+    }
+
+    public void setGlCodeCombination(String glCodeCombination) {
+        this.glCodeCombination = glCodeCombination;
     }
 
     public String getHashData() {

@@ -18940,6 +18940,12 @@ public class HostIntegrationService {
             response.setAccountTypeCode(messageVO.getAccountTypeCode());
             response.setAccountNatureCode(messageVO.getAccountNatureCode());
             response.setCurrencyCode(messageVO.getCurrencyCode());
+            response.setCnic(messageVO.getCnicNo());
+            response.setName(messageVO.getName());
+            response.setSegment(messageVO.getSegmentName());
+            response.setEmail(messageVO.getEmailAddress());
+            response.setChannel(messageVO.getChannelId());
+            response.setGlCodeCombination("");
 
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());

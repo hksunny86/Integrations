@@ -14,6 +14,7 @@ import com.inov8.integration.webservice.optasiaVO.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -520,6 +521,7 @@ public class WebServiceVO implements Serializable {
     private String expectedNoOfTransPerMonth;
     private String expectedSalesVolumePerMonth;
     private String mcnic;
+    private String storeSellerCode;
     private String storeName;
     private String storeAddress;
     private String storeCity;
@@ -528,6 +530,104 @@ public class WebServiceVO implements Serializable {
     private String accountStatusCode;
     private String accountTypeCode;
     private String accountNatureCode;
+    private Boolean amountRadio;
+    private Boolean durationRadio;
+    private String merchantName;
+    private String merchantSellerCode;
+    private String merchantCnic;
+    private String merchantMobileNo;
+    private String storeMobileNo;
+    private Date createdDate;
+    private Date fDate;
+    private Date tDate;
+
+    public String getStoreMobileNo() {
+        return storeMobileNo;
+    }
+
+    public void setStoreMobileNo(String storeMobileNo) {
+        this.storeMobileNo = storeMobileNo;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getfDate() {
+        return fDate;
+    }
+
+    public void setfDate(Date fDate) {
+        this.fDate = fDate;
+    }
+
+    public Date gettDate() {
+        return tDate;
+    }
+
+    public void settDate(Date tDate) {
+        this.tDate = tDate;
+    }
+
+    public String getMerchantName() {
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
+    }
+
+    public String getStoreSellerCode() {
+        return storeSellerCode;
+    }
+
+    public void setStoreSellerCode(String storeSellerCode) {
+        this.storeSellerCode = storeSellerCode;
+    }
+
+    public String getMerchantSellerCode() {
+        return merchantSellerCode;
+    }
+
+    public void setMerchantSellerCode(String merchantSellerCode) {
+        this.merchantSellerCode = merchantSellerCode;
+    }
+
+    public String getMerchantCnic() {
+        return merchantCnic;
+    }
+
+    public void setMerchantCnic(String merchantCnic) {
+        this.merchantCnic = merchantCnic;
+    }
+
+    public String getMerchantMobileNo() {
+        return merchantMobileNo;
+    }
+
+    public void setMerchantMobileNo(String merchantMobileNo) {
+        this.merchantMobileNo = merchantMobileNo;
+    }
+
+    public Boolean getAmountRadio() {
+        return amountRadio;
+    }
+
+    public void setAmountRadio(Boolean amountRadio) {
+        this.amountRadio = amountRadio;
+    }
+
+    public Boolean getDurationRadio() {
+        return durationRadio;
+    }
+
+    public void setDurationRadio(Boolean durationRadio) {
+        this.durationRadio = durationRadio;
+    }
 
     public String getRegistrationTypeCode() {
         return registrationTypeCode;

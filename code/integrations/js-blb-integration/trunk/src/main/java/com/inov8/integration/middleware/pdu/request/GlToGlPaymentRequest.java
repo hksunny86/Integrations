@@ -1,58 +1,68 @@
-package com.inov8.integration.debitCard.pdu.request;
+package com.inov8.integration.middleware.pdu.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "UserName",
-        "Password",
-        "MobileNumber",
-        "Name",
-        "DateTime",
-        "Rrn",
-        "ChannelId",
-        "TerminalId",
-        "Reserved1",
-        "Reserved2",
-        "Reserved3",
-        "Reserved4",
-        "Reserved5",
-        "HashData"
+        "userName",
+        "password",
+        "dateTime",
+        "rrn",
+        "channelId",
+        "terminalId",
+        "senderGlAccountNo",
+        "receiverGlAccountNo",
+        "amount",
+        "productId",
+        "reserved1",
+        "reserved2",
+        "reserved3",
+        "reserved4",
+        "reserved5",
+        "hashData"
 })
-public class GetDebitCardDiscrepantRequest implements Serializable {
-    private final static long serialVersionUID = 1L;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class GlToGlPaymentRequest implements Serializable {
 
-    @JsonProperty("UserName")
+    private static final long serialVersionUID = 6848934910669383177L;
+
+    @JsonProperty("userName")
     private String userName;
-    @JsonProperty("Password")
+    @JsonProperty("password")
     private String password;
-    @JsonProperty("MobileNumber")
-    private String mobileNumber;
-    @JsonProperty("Name")
-    private String name;
-    @JsonProperty("DateTime")
+    @JsonProperty("senderGlAccountNo")
+    private String senderGlAccountNo;
+    @JsonProperty("dateTime")
     private String dateTime;
-    @JsonProperty("Rrn")
+    @JsonProperty("rrn")
     private String rrn;
-    @JsonProperty("ChannelId")
+    @JsonProperty("channelId")
     private String channelId;
-    @JsonProperty("TerminalId")
+    @JsonProperty("terminalId")
     private String terminalId;
-    @JsonProperty("Reserved1")
+    @JsonProperty("receiverGlAccountNo")
+    private String receiverGlAccountNo;
+    @JsonProperty("amount")
+    private String amount;
+    @JsonProperty("productId")
+    private String productId;
+    @JsonProperty("reserved1")
     private String reserved1;
-    @JsonProperty("Reserved2")
+    @JsonProperty("reserved2")
     private String reserved2;
-    @JsonProperty("Reserved3")
+    @JsonProperty("reserved3")
     private String reserved3;
-    @JsonProperty("Reserved4")
+    @JsonProperty("reserved4")
     private String reserved4;
-    @JsonProperty("Reserved5")
+    @JsonProperty("reserved5")
     private String reserved5;
-    @JsonProperty("HashData")
+    @JsonProperty("hashData")
     private String hashData;
 
     public String getUserName() {
@@ -69,22 +79,6 @@ public class GetDebitCardDiscrepantRequest implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDateTime() {
@@ -111,12 +105,28 @@ public class GetDebitCardDiscrepantRequest implements Serializable {
         this.channelId = channelId;
     }
 
+    public String getHashData() {
+        return hashData;
+    }
+
+    public void setHashData(String hashData) {
+        this.hashData = hashData;
+    }
+
     public String getTerminalId() {
         return terminalId;
     }
 
     public void setTerminalId(String terminalId) {
         this.terminalId = terminalId;
+    }
+
+    public String getSenderGlAccountNo() {
+        return senderGlAccountNo;
+    }
+
+    public void setSenderGlAccountNo(String senderGlAccountNo) {
+        this.senderGlAccountNo = senderGlAccountNo;
     }
 
     public String getReserved1() {
@@ -159,11 +169,27 @@ public class GetDebitCardDiscrepantRequest implements Serializable {
         this.reserved5 = reserved5;
     }
 
-    public String getHashData() {
-        return hashData;
+    public String getReceiverGlAccountNo() {
+        return receiverGlAccountNo;
     }
 
-    public void setHashData(String hashData) {
-        this.hashData = hashData;
+    public void setReceiverGlAccountNo(String receiverGlAccountNo) {
+        this.receiverGlAccountNo = receiverGlAccountNo;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 }

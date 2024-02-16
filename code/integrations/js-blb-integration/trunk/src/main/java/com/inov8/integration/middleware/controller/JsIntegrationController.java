@@ -2826,4 +2826,9 @@ public class JsIntegrationController implements WebServiceSwitchController {
     public WebServiceVO accountInfo(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO glToGl(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

@@ -18941,7 +18941,7 @@ public class HostIntegrationService {
             response.setAccountNatureCode(messageVO.getAccountNatureCode());
             response.setCurrencyCode(messageVO.getCurrencyCode());
             response.setCnic(messageVO.getCnicNo());
-            response.setName(messageVO.getName());
+            response.setName(messageVO.getAccountTitle());
             response.setSegment(messageVO.getSegmentName());
             response.setEmail(messageVO.getEmailAddress());
             response.setChannel(messageVO.getChannelId());
@@ -18981,6 +18981,114 @@ public class HostIntegrationService {
         logModel.setProcessedTime(difference);
         //updateTransactionInDB(logModel);
 //        }
+        return response;
+    }
+
+    public GlToGlPaymentResponse glToGlPaymentResponse(GlToGlPaymentRequest request) {
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO webServiceVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        webServiceVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Starting Processing GL To GL Payment Request RRN: " + webServiceVO.getRetrievalReferenceNumber());
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        GlToGlPaymentResponse response = new GlToGlPaymentResponse();
+
+        webServiceVO.setRetrievalReferenceNumber(webServiceVO.getRetrievalReferenceNumber());
+        webServiceVO.setUserName(request.getUserName());
+        webServiceVO.setCustomerPassword(request.getPassword());
+        webServiceVO.setGLAccountNo1(request.getSenderGlAccountNo());
+        webServiceVO.setDateTime(request.getDateTime());
+        webServiceVO.setChannelId(request.getChannelId());
+        webServiceVO.setTerminalId(request.getTerminalId());
+        webServiceVO.setGLAccountNo2(request.getReceiverGlAccountNo());
+        webServiceVO.setTotalAmount(request.getAmount());
+        webServiceVO.setProductID(request.getProductId());
+        webServiceVO.setReserved1(request.getReserved1());
+        webServiceVO.setReserved2(request.getReserved2());
+        webServiceVO.setReserved3(request.getReserved3());
+        webServiceVO.setReserved4(request.getReserved4());
+        webServiceVO.setReserved5(request.getReserved5());
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(webServiceVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+//        logModel.setTransactionCode("CashOut");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+//        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent GL To GL Payment Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            webServiceVO = switchController.glToGl(webServiceVO);
+
+        } catch (Exception e) {
+
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + webServiceVO.getRetrievalReferenceNumber(), e);
+        }
+
+        if (webServiceVO != null && StringUtils.isNotEmpty(webServiceVO.getResponseCode()) && webServiceVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] GL To GL Payment Request Successful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(webServiceVO.getResponseCodeDescription());
+            response.setRrn(webServiceVO.getRetrievalReferenceNumber());
+            response.setGlAccountNo(webServiceVO.getGLAccountNo1());
+            response.setTransactionDateTime(webServiceVO.getTransactionDateTime());
+            response.setTransactionProcessingAmount(webServiceVO.getTransactionProcessingAmount());
+            response.setCommissionAmount(webServiceVO.getCommissionAmount());
+            response.setTotalAmount(webServiceVO.getTotalAmount());
+            response.setTransactionId(webServiceVO.getTransactionId());
+            response.setTransactionAmount(webServiceVO.getTransactionAmount());
+            response.setReceiverGlAccountNo(webServiceVO.getGLAccountNo2());
+
+        } else if (webServiceVO != null && StringUtils.isNotEmpty(webServiceVO.getResponseCode())) {
+            logger.info("[HOST] GL To GL Payment Request Unsuccessful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            response.setResponseCode(webServiceVO.getResponseCode());
+            response.setResponseDescription(webServiceVO.getResponseCodeDescription());
+            logModel.setResponseCode(webServiceVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] GL To GL Payment Request Unsuccessful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuilder stringText = new StringBuilder()
+                .append(response.getRrn())
+                .append(response.getResponseCode())
+                .append(response.getResponseDescription())
+                .append(response.getGlAccountNo())
+                .append(response.getTransactionDateTime());
+        String sha256hex = DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****GL To GL Payment REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+//        updateTransactionInDB(logModel);
+
         return response;
     }
 }

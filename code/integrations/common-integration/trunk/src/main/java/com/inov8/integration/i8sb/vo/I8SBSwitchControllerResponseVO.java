@@ -504,6 +504,51 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String pointEarns;
     private String isTierUpdated;
     private String rid;
+    private String totalOutstanding;
+    private String principalOutstanding;
+    private String markupOutstanding;
+    private String lpChargesOutstanding;
+    private String epChargesOutstanding;
+
+    public String getTotalOutstanding() {
+        return totalOutstanding;
+    }
+
+    public void setTotalOutstanding(String totalOutstanding) {
+        this.totalOutstanding = totalOutstanding;
+    }
+
+    public String getPrincipalOutstanding() {
+        return principalOutstanding;
+    }
+
+    public void setPrincipalOutstanding(String principalOutstanding) {
+        this.principalOutstanding = principalOutstanding;
+    }
+
+    public String getMarkupOutstanding() {
+        return markupOutstanding;
+    }
+
+    public void setMarkupOutstanding(String markupOutstanding) {
+        this.markupOutstanding = markupOutstanding;
+    }
+
+    public String getLpChargesOutstanding() {
+        return lpChargesOutstanding;
+    }
+
+    public void setLpChargesOutstanding(String lpChargesOutstanding) {
+        this.lpChargesOutstanding = lpChargesOutstanding;
+    }
+
+    public String getEpChargesOutstanding() {
+        return epChargesOutstanding;
+    }
+
+    public void setEpChargesOutstanding(String epChargesOutstanding) {
+        this.epChargesOutstanding = epChargesOutstanding;
+    }
 
     public String getRid() {
         return rid;

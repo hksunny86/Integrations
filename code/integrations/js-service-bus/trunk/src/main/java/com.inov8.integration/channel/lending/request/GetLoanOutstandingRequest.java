@@ -33,8 +33,6 @@ public class GetLoanOutstandingRequest extends Request {
 
         Payload payload = new Payload();
         payload.setMobileNumber(i8SBSwitchControllerRequestVO.getMobileNumber());
-        payload.setMobileNumber(i8SBSwitchControllerRequestVO.getTransactionId());
-        payload.setMobileNumber(i8SBSwitchControllerRequestVO.getAmount());
         LendingData lendingData = new LendingData();
         lendingData.setPayLoad(payload);
         this.setData(lendingData);

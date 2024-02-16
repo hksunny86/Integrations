@@ -34,8 +34,8 @@ public class LoanRepaymentRequest extends Request {
 
         Payload payload = new Payload();
         payload.setMobileNumber(i8SBSwitchControllerRequestVO.getMobileNumber());
-        payload.setMobileNumber(i8SBSwitchControllerRequestVO.getTransactionId());
-        payload.setMobileNumber(i8SBSwitchControllerRequestVO.getAmount());
+        payload.setTransactionId(i8SBSwitchControllerRequestVO.getTransactionId());
+        payload.setAmount(i8SBSwitchControllerRequestVO.getAmount());
         LendingData lendingData = new LendingData();
         lendingData.setPayLoad(payload);
         this.setData(lendingData);

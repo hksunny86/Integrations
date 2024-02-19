@@ -1,22 +1,28 @@
 package com.inov8.integration.middleware.service.hostService;
 
 import com.inov8.integration.middleware.constants.CashInResponseEnum;
+import com.inov8.integration.middleware.dao.CrediRetryAdviceModel;
+import com.inov8.integration.middleware.dao.FonePayLogModel;
 import com.inov8.integration.middleware.dao.TransactionDAO;
 import com.inov8.integration.middleware.dao.TransactionLogModel;
 import com.inov8.integration.middleware.enums.ResponseCodeEnum;
 import com.inov8.integration.middleware.enums.TransactionStatus;
-//import com.inov8.integration.middleware.mock.OptasiaMock;
 import com.inov8.integration.middleware.pdu.request.*;
 import com.inov8.integration.middleware.pdu.response.*;
 import com.inov8.integration.middleware.util.*;
+import com.inov8.integration.vo.MiddlewareMessageVO;
 import com.inov8.integration.webservice.controller.WebServiceSwitchController;
-import com.inov8.integration.webservice.vo.Data;
 import com.inov8.integration.webservice.vo.WebServiceVO;
+import com.inov8.microbank.server.service.integration.vo.MiddlewareAdviceVO;
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.remoting.RemoteAccessException;
+import org.springframework.remoting.RemoteConnectFailureException;
 import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
 import org.springframework.remoting.httpinvoker.SimpleHttpInvokerRequestExecutor;
 import org.springframework.stereotype.Component;
@@ -24,16 +30,24 @@ import org.springframework.stereotype.Component;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.jms.*;
 import javax.net.ssl.*;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.security.InvalidKeyException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+
+//import com.inov8.integration.middleware.mock.OptasiaMock;
+
+//import com.inov8.integration.middleware.mock.OptasiaMock;
 
 
 @Component
@@ -50,8 +64,8 @@ public class HostIntegrationService {
 //    private static String MERCHNAT_I8_SERVER = ConfigReader.getInstance().getProperty("merchant-i8-ip", "127.0.0.1");
 //    private static String MERCHNAT_I8_PORT = (ConfigReader.getInstance().getProperty("merchant-i8-port", ""));
 
-    //    private static String I8_QUEUE_SERVER = ConfigReader.getInstance().getProperty("i8-queue-ip", "127.0.0.1");
-//    private static String I8_QUEUE_PORT = (ConfigReader.getInstance().getProperty("i8-queue-port", ""));
+    private static String I8_QUEUE_SERVER = ConfigReader.getInstance().getProperty("i8-queue-ip", "127.0.0.1");
+    private static String I8_QUEUE_PORT = (ConfigReader.getInstance().getProperty("i8-queue-port", ""));
     private static String OPTASIA_I8_PATH = (ConfigReader.getInstance().getProperty("i8-path", ""));
     private static int READ_TIME_OUT = Integer.parseInt(ConfigReader.getInstance().getProperty("i8-read-timeout", "55"));
     private static int CONNECTION_TIME_OUT = Integer.parseInt(ConfigReader.getInstance().getProperty("i8-connection-timeout", "10"));
@@ -60,12 +74,11 @@ public class HostIntegrationService {
     private static String privateKey = ConfigReader.getInstance().getProperty("privateKey", "");
 
     private static String loginPrivateKey = ConfigReader.getInstance().getProperty("login.authentication.privateKey", "");
-    //    private String i8sb_target_environment = ConfigReader.getInstance().getProperty("i8sb.target.environment", "");
-    private String optasiaProductId = ConfigReader.getInstance().getProperty("optasia.productId", "");
-//    private OptasiaMock optasiaMock = new OptasiaMock();
-
     @Autowired
     TransactionDAO transactionDAO;
+//    private OptasiaMock optasiaMock = new OptasiaMock();
+    //    private String i8sb_target_environment = ConfigReader.getInstance().getProperty("i8sb.target.environment", "");
+    private String optasiaProductId = ConfigReader.getInstance().getProperty("optasia.productId", "");
     private WebServiceSwitchController switchController = null;
     private WebServiceSwitchController optasiaSwitchController = null;
 //    private WebServiceSwitchController merchantSwitchController = null;
@@ -7034,6 +7047,7 @@ public class HostIntegrationService {
         transactionKey = request.getChannelId() + request.getRrn();
 
         CreditResponse response = new CreditResponse();
+        FonePayLogModel fonePayLogModel = null;
 
 
         messageVO.setUserName(request.getUserName());
@@ -7090,9 +7104,13 @@ public class HostIntegrationService {
         TransactionLogModel logModel = new TransactionLogModel();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
         Date txDateTime = new Date();
+        Date dt = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddhhmmss");
 
         try {
             txDateTime = dateFormat.parse(request.getDateTime());
+            dt = formatter.parse(messageVO.getDateTime());
+
         } catch (java.text.ParseException e) {
             e.printStackTrace();
         }
@@ -7117,40 +7135,84 @@ public class HostIntegrationService {
                 messageVO = switchController.credit(messageVO);
             }
         } catch (Exception e) {
-            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+//            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
 
 //below code comment disscuss with zulfiqar sir
-//            if (e instanceof RemoteAccessException) {
-//                if (!(e instanceof RemoteConnectFailureException)) {
-//                    messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-//                }
-//            }
-//            StringWriter sw = new StringWriter();
-//            PrintWriter pw = new PrintWriter(sw);
+            if (e instanceof RemoteAccessException) {
+                if (!(e instanceof RemoteConnectFailureException)) {
+                    messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                }
+            }
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
 //            e.printStackTrace(pw);
-//            String stackTrace = sw.toString();
-//            if (stackTrace.contains("status code = 503")) {
-//                MiddlewareMessageVO middlewareMessageVO = new MiddlewareMessageVO();
-//                middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
-//                middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
-//                middlewareMessageVO.setStan(messageVO.getReserved2());
-//                middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-//                middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
-//                middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
-//                middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
-//
-//                try {
+            String stackTrace = sw.toString();
+            if (stackTrace.contains("status code = 503")) {
+                MiddlewareMessageVO middlewareMessageVO = new MiddlewareMessageVO();
+                middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
+                middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
+                middlewareMessageVO.setStan(messageVO.getReserved2());
+                middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+                middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
+                middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
+                middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+
+                try {
+//                    this.validateRRN(messageVO);
 //                    this.sentWalletRequest(middlewareMessageVO);
-//                } catch (Exception ex) {
+                } catch (Exception ex) {
 //                    ex.printStackTrace();
-//                    messageVO.setResponseCode("550");
-//                    messageVO.setResponseCodeDescription("Host Not In Reach");
-//                }
-//            } else {
-//                messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-//                messageVO.setResponseCodeDescription("Successful");
-//
-//            }
+                    messageVO.setResponseCode("550");
+                    messageVO.setResponseCodeDescription("Host Not In Reach");
+                }
+            } else {
+                MiddlewareAdviceVO middlewareMessageVO = new MiddlewareAdviceVO();
+
+                middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
+                middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
+                middlewareMessageVO.setStan(messageVO.getReserved2());
+                middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+                middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
+                middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
+                middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+                this.validateRRN(messageVO);
+                if (!messageVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
+                    logger.info("[HOST] Credit  Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                    response.setResponseCode(messageVO.getResponseCode());
+                    response.setResponseDescription(messageVO.getResponseCodeDescription());
+                    response.setRrn(messageVO.getRetrievalReferenceNumber());
+                    logModel.setResponseCode(messageVO.getResponseCode());
+                    logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+                    return response;
+
+                } else {
+                    try {
+                        fonePayLogModel = transactionDAO.saveFonePayIntegrationLogModel(messageVO, "Credit Payment");
+                        messageVO = this.validateCreditInquiryRRN(messageVO);
+                        if (!messageVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
+
+                        } else {
+
+                            boolean isAlreadyExists = this.checkAlreadyExists(messageVO.getRetrievalReferenceNumber(), dt);
+                            boolean existsInIbftTable = transactionDAO.CheckIBFTStatus(messageVO.getRetrievalReferenceNumber(), String.valueOf(dt));
+                            if (!isAlreadyExists && !existsInIbftTable) {
+                                transactionDAO.saveNewCreditRecord(middlewareMessageVO);
+                                transactionDAO.AddToProcessing(messageVO.getRetrievalReferenceNumber(), messageVO.getDateTime().toString());
+
+                            }
+                            if (!existsInIbftTable)
+                                this.sentWalletRequest(middlewareMessageVO);
+                        }
+
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
+                    messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                    messageVO.setResponseCodeDescription("Successful");
+                }
+            }
 
         }
 
@@ -14668,38 +14730,35 @@ public class HostIntegrationService {
         return response;
     }
 
-//    public void sentWalletRequest(MiddlewareMessageVO middlewareMessageVO) throws Exception {
-//        logger.info("Core To Wallet Push To SAF against RRN: " + middlewareMessageVO.getRetrievalReferenceNumber());
-//        MiddlewareAdviceVO middlewareAdviceVO = new MiddlewareAdviceVO();
-//        middlewareAdviceVO.setAccountNo1(middlewareMessageVO.getAccountNo1());
-//        middlewareAdviceVO.setAccountNo2(middlewareMessageVO.getAccountNo2());
-//        middlewareAdviceVO.setTransactionAmount(middlewareMessageVO.getTransactionAmount());
-//        middlewareAdviceVO.setRequestTime(middlewareMessageVO.getRequestTime());
-//        middlewareAdviceVO.setStan(middlewareMessageVO.getStan());
-//        middlewareAdviceVO.setRetrievalReferenceNumber(middlewareMessageVO.getRetrievalReferenceNumber());
-//        middlewareAdviceVO.setAdviceType("creditPayment"); // Used in DLQ
-//        middlewareAdviceVO.setBankIMD(middlewareMessageVO.getBankIMD());
-//        middlewareAdviceVO.setProductId(middlewareMessageVO.getProductId());
-//
-////        boolean isAlreadyExists = transactionDAO.getIbftDuplicateRequest(middlewareAdviceVO.getStan(),middlewareAdviceVO.getRequestTime());
-//
-//        // Create a ConnectionFactory
-//        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://" + I8_QUEUE_SERVER + ":" + I8_QUEUE_PORT);
-//
-//        // Create a Connection
-//        Connection connection = connectionFactory.createConnection();
-//        connection.start();
-//        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-//        Destination destination = session.createQueue("queue/creditPaymentQueue");
-//
-//        MessageProducer producer = session.createProducer(destination);
-//
-//        ObjectMessage message = session.createObjectMessage(middlewareAdviceVO);
-//
-//        producer.send(message);
-//        connection.close();
-//
-//    }
+    public void sentWalletRequest(MiddlewareAdviceVO middlewareMessageVO) throws Exception {
+        logger.info("Core To Wallet Push To SAF against RRN: " + middlewareMessageVO.getRetrievalReferenceNumber());
+        MiddlewareAdviceVO middlewareAdviceVO = new MiddlewareAdviceVO();
+        middlewareAdviceVO.setAccountNo1(middlewareMessageVO.getAccountNo1());
+        middlewareAdviceVO.setAccountNo2(middlewareMessageVO.getAccountNo2());
+        middlewareAdviceVO.setTransactionAmount(middlewareMessageVO.getTransactionAmount());
+        middlewareAdviceVO.setRequestTime(middlewareMessageVO.getRequestTime());
+        middlewareAdviceVO.setStan(middlewareMessageVO.getStan());
+        middlewareAdviceVO.setRetrievalReferenceNumber(middlewareMessageVO.getRetrievalReferenceNumber());
+        middlewareAdviceVO.setAdviceType("creditPayment"); // Used in DLQ
+        middlewareAdviceVO.setBankIMD(middlewareMessageVO.getBankIMD());
+        middlewareAdviceVO.setProductId(middlewareMessageVO.getProductId());
+        // Create a ConnectionFactory
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://" + I8_QUEUE_SERVER + ":" + I8_QUEUE_PORT);
+
+        // Create a Connection
+        Connection connection = connectionFactory.createConnection();
+        connection.start();
+        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        Destination destination = session.createQueue("queue/creditPaymentQueue");
+
+        MessageProducer producer = session.createProducer(destination);
+
+        ObjectMessage message = session.createObjectMessage(middlewareAdviceVO);
+
+        producer.send(message);
+        connection.close();
+
+    }
 //
 //
 //    public void sentDebitPaymentRequest(MiddlewareMessageVO middlewareMessageVO) throws Exception {
@@ -18941,7 +19000,7 @@ public class HostIntegrationService {
             response.setAccountNatureCode(messageVO.getAccountNatureCode());
             response.setCurrencyCode(messageVO.getCurrencyCode());
             response.setCnic(messageVO.getCnicNo());
-            response.setName(messageVO.getAccountTitle());
+            response.setName(messageVO.getName());
             response.setSegment(messageVO.getSegmentName());
             response.setEmail(messageVO.getEmailAddress());
             response.setChannel(messageVO.getChannelId());
@@ -19091,4 +19150,110 @@ public class HostIntegrationService {
 
         return response;
     }
+
+    private WebServiceVO validateRRN(WebServiceVO webServiceVO) {
+        String responseCode = FonePayResponseCodes.INVALID_REQUEST;
+        String description = "Your Request cannot be processed at the moment.Please try again later.";
+        try {
+            if (webServiceVO.getRetrievalReferenceNumber() == null || webServiceVO.getRetrievalReferenceNumber().equals("")) {
+                responseCode = FonePayResponseCodes.APIGEE_RRN_ALREADY_EXISTS.toString();
+                description = FonePayResponseCodes.APIGEE_RRN_ALREADY_EXISTS_DESCRIPTION;
+            } else {
+                if (transactionDAO.validateApiGeeRRN(webServiceVO)) {
+                    responseCode = FonePayResponseCodes.SUCCESS_RESPONSE_CODE;
+                    description = FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION;
+                } else {
+                    responseCode = FonePayResponseCodes.APIGEE_RRN_ALREADY_EXISTS.toString();
+                    description = FonePayResponseCodes.APIGEE_RRN_ALREADY_EXISTS_DESCRIPTION;
+                }
+            }
+        } catch (Exception ex) {
+            logger.error("Error While Validating APIGEE RRN :: " + ex.getMessage(), ex);
+            responseCode = FonePayResponseCodes.GENERAL_ERROR;
+        } finally {
+            webServiceVO.setResponseCode(responseCode);
+            webServiceVO.setResponseCodeDescription(description);
+        }
+        return webServiceVO;
+    }
+
+
+    private WebServiceVO validateCreditInquiryRRN(WebServiceVO webServiceVO) {
+        String responseCode = FonePayResponseCodes.INVALID_REQUEST;
+        String description = "Your Request cannot be processed at the moment.Please try again later.";
+        try {
+            if (webServiceVO.getReserved3() == null || webServiceVO.getReserved3().equals("")) {
+                responseCode = FonePayResponseCodes.CREDIT_INQUIRY_RRN_NOT_FOUND.toString();
+                description = FonePayResponseCodes.CREDIT_INQUIRY_RRN_NOT_FOUND_DESCRIPTION;
+            } else {
+
+                FonePayLogModel fonePayLogModel = new FonePayLogModel();
+
+                fonePayLogModel = transactionDAO.validateCreditInquiryRRN(webServiceVO);
+
+                if (fonePayLogModel != null) {
+
+                    String json_data = fonePayLogModel.getInput();
+                    String json_data2 = fonePayLogModel.getOutput();
+
+                    JSONObject jsonObject = new JSONObject(json_data);
+                    JSONObject jsonObject2 = new JSONObject(json_data2);
+
+                    String transactionAmount =
+                            jsonObject.getString("transactionAmount");
+                    String mobileNo =
+                            jsonObject.getString("mobileNo");
+                    String totalAmount =
+                            jsonObject2.getString("totalAmount");
+                    String commissionAmount =
+                            jsonObject2.getString("commissionAmount");
+                    if (transactionAmount.equals(webServiceVO.getTransactionAmount()) && mobileNo.equals(webServiceVO.getMobileNo())) {
+                        responseCode = FonePayResponseCodes.SUCCESS_RESPONSE_CODE;
+                        description = FonePayResponseCodes.SUCCESS_RESPONSE_DESCRIPTION;
+                        webServiceVO.setTotalAmount(totalAmount);
+                        webServiceVO.setCommissionAmount(commissionAmount);
+                    } else {
+                        responseCode = FonePayResponseCodes.CREDIT_INQUIRY_RRN_NOT_FOUND.toString();
+                        description = FonePayResponseCodes.CREDIT_INQUIRY_RRN_NOT_FOUND_DESCRIPTION;
+                    }
+                } else {
+                    responseCode = FonePayResponseCodes.CREDIT_INQUIRY_RRN_NOT_FOUND.toString();
+                    description = FonePayResponseCodes.CREDIT_INQUIRY_RRN_NOT_FOUND_DESCRIPTION;
+                }
+            }
+        } catch (Exception ex) {
+            logger.error("Error While Validating APIGEE RRN :: " + ex.getMessage(), ex);
+            responseCode = FonePayResponseCodes.GENERAL_ERROR;
+        } finally {
+            webServiceVO.setResponseCode(responseCode);
+            webServiceVO.setResponseCodeDescription(description);
+        }
+        return webServiceVO;
+    }
+
+    private boolean checkAlreadyExists(String stan, Date requestTime) {
+        boolean result = false;
+
+        if (StringUtils.isEmpty(stan) || requestTime == null) {
+        }
+
+        CrediRetryAdviceModel iBFTRetryAdviceModel = new CrediRetryAdviceModel();
+        iBFTRetryAdviceModel.setRetrievalReferenceNumber(stan);
+        iBFTRetryAdviceModel.setRequestTime(requestTime);
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(requestTime);
+        c.set(Calendar.MILLISECOND, 0);
+
+
+        List<CrediRetryAdviceModel> customList = transactionDAO.findByExample(iBFTRetryAdviceModel);
+
+
+        if (customList != null && customList.size() > 0) {
+            result = true;
+        }
+
+        return result;
+    }
+
 }

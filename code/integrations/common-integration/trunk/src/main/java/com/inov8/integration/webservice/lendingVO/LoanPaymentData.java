@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class LendingData implements Serializable {
+public class LoanPaymentData implements Serializable {
     private static final long serialVersionUID = 5824473488070382311L;
 
     private Security security;
@@ -14,7 +14,7 @@ public class LendingData implements Serializable {
     private String channel;
     private String terminal;
     private String reterivalReferenceNumber;
-    private Payload payLoad;
+    private LoanPaymentRequestPayload payLoad;
     private AdditionalInformation additionalInformation;
     private String checkSum;
 
@@ -58,11 +58,11 @@ public class LendingData implements Serializable {
         this.reterivalReferenceNumber = reterivalReferenceNumber;
     }
 
-    public Payload getPayLoad() {
+    public LoanPaymentRequestPayload getPayLoad() {
         return payLoad;
     }
 
-    public void setPayLoad(Payload payLoad) {
+    public void setPayLoad(LoanPaymentRequestPayload payLoad) {
         this.payLoad = payLoad;
     }
 

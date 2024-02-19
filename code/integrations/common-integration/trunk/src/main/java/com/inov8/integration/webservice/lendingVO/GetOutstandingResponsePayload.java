@@ -6,44 +6,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Payload implements Serializable {
+public class GetOutstandingResponsePayload implements Serializable {
     private static final long serialVersionUID = 5824473488070382311L;
 
-    private String mobileNumber;
-    private String transactionId;
-    private String amount;
     private String totalOutstanding;
     private String principalOutstanding;
     private String markupOutstanding;
     private String lpChargesOutstanding;
     private String epChargesOutstanding;
-    private String dateTime;
-    private String loanAmount;
-    private String fee;
-
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
 
     public String getTotalOutstanding() {
         return totalOutstanding;
@@ -83,29 +53,5 @@ public class Payload implements Serializable {
 
     public void setEpChargesOutstanding(String epChargesOutstanding) {
         this.epChargesOutstanding = epChargesOutstanding;
-    }
-
-    public String getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public String getLoanAmount() {
-        return loanAmount;
-    }
-
-    public void setLoanAmount(String loanAmount) {
-        this.loanAmount = loanAmount;
-    }
-
-    public String getFee() {
-        return fee;
-    }
-
-    public void setFee(String fee) {
-        this.fee = fee;
     }
 }

@@ -5,40 +5,21 @@ import com.inov8.integration.channel.lending.request.GetLoanOutstandingRequest;
 import com.inov8.integration.channel.lending.request.LoanRepaymentRequest;
 import com.inov8.integration.channel.lending.response.GetLoanOutstandingResponse;
 import com.inov8.integration.channel.lending.response.LoanRepaymentResponse;
-import com.inov8.integration.channel.optasia.response.LoanPaymentResponse;
-import com.inov8.integration.channel.wasa.request.*;
-import com.inov8.integration.channel.wasa.response.*;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import com.inov8.integration.util.JSONUtil;
-import com.inov8.integration.webservice.vo.WebServiceVO;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.net.ssl.SSLContext;
 import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
+
 import java.util.*;
 
 @Service
@@ -48,6 +29,7 @@ public class LendingService {
     private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
     private String loanRepayment = PropertyReader.getProperty("lending.loanrepayment");
     private String getOutstandingLoan = PropertyReader.getProperty("lending.getloanoutstanding");
+    private String bearerToken = PropertyReader.getProperty("lending.bearer.token");
     private I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
     public String getResponseFromAPI(Map<String, String> headerMap, Map<String, Object> postParam, String url) throws Exception {
@@ -155,15 +137,15 @@ public class LendingService {
                     "}";
             loanRepaymentResponse = (LoanRepaymentResponse) JSONUtil.jsonToObject(json, LoanRepaymentResponse.class);
             Objects.requireNonNull(loanRepaymentResponse).setResponseCode("200");
-            logger.info("Mock Response Code for Wasa Login: " + loanRepaymentResponse.getResponseCode());
+            logger.info("Mock Response Code for Loan Repayment Response: " + loanRepaymentResponse.getResponseCode());
         } else {
 
             Map<String, Object> postParam = new HashMap<String, Object>();
             Map<String, String> headers = new HashMap<String, String>();
             headers.put("content-type", "application/json");
-            postParam.put("mobileNumber", request.getData().getPayLoad().getMobileNumber());
-            postParam.put("transactionId", request.getData().getPayLoad().getTransactionId());
-            postParam.put("amount", request.getData().getPayLoad().getAmount());
+            headers.put("Authorization", "Bearer " + bearerToken);
+            postParam.put("data", request.getData());
+            logger.info("Request body of Loan Payment  " + JSONUtil.getJSON(request.getData()));
             try {
                 String responseBody = getResponseFromAPI(headers, postParam, loanRepayment);
                 if (responseBody != null && responseBody.length() > 0) {
@@ -177,7 +159,7 @@ public class LendingService {
 
             long endTime = (new Date()).getTime();
             long difference = endTime - start;
-            logger.debug("Wasa Login Request processed in: " + difference + " millisecond");
+            logger.debug("Loan Repayment Request processed in: " + difference + " millisecond");
         }
         return loanRepaymentResponse;
     }
@@ -210,13 +192,15 @@ public class LendingService {
                     "}";
             getLoanOutstandingResponse = (GetLoanOutstandingResponse) JSONUtil.jsonToObject(json, GetLoanOutstandingResponse.class);
             Objects.requireNonNull(getLoanOutstandingResponse).setResponseCode("200");
-            logger.info("Mock Response Code for Wasa Login: " + getLoanOutstandingResponse.getResponseCode());
+            logger.info("Mock Response Code for get Loan Outstanding Response: " + getLoanOutstandingResponse.getResponseCode());
         } else {
 
             Map<String, Object> postParam = new HashMap<String, Object>();
             Map<String, String> headers = new HashMap<String, String>();
             headers.put("content-type", "application/json");
-            postParam.put("mobileNumber", request.getData().getPayLoad().getMobileNumber());
+            headers.put("Authorization", "Bearer " + bearerToken);
+            postParam.put("data", request.getData());
+            logger.info("Request body of Get Outstanding Loan  " + JSONUtil.getJSON(request.getData()));
             try {
                 String responseBody = getResponseFromAPI(headers, postParam, getOutstandingLoan);
                 if (responseBody != null && responseBody.length() > 0) {
@@ -242,5 +226,4 @@ public class LendingService {
     public void setI8SBSwitchControllerRequestVO(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
         this.i8SBSwitchControllerRequestVO = i8SBSwitchControllerRequestVO;
     }
-
 }

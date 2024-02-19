@@ -8,8 +8,9 @@ import com.inov8.integration.channel.lending.request.Request;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
-import com.inov8.integration.webservice.lendingVO.LendingData;
-import com.inov8.integration.webservice.lendingVO.Payload;
+import com.inov8.integration.webservice.lendingVO.LoanPaymentData;
+import com.inov8.integration.webservice.lendingVO.LoanPaymentRequestPayload;
+
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -19,24 +20,24 @@ import com.inov8.integration.webservice.lendingVO.Payload;
 public class LoanRepaymentRequest extends Request {
 
     @JsonProperty("data")
-    private LendingData data;
+    private LoanPaymentData data;
 
-    public LendingData getData() {
+    public LoanPaymentData getData() {
         return data;
     }
 
-    public void setData(LendingData data) {
+    public void setData(LoanPaymentData data) {
         this.data = data;
     }
 
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        Payload payload = new Payload();
+        LoanPaymentRequestPayload payload = new LoanPaymentRequestPayload();
         payload.setMobileNumber(i8SBSwitchControllerRequestVO.getMobileNumber());
         payload.setTransactionId(i8SBSwitchControllerRequestVO.getTransactionId());
         payload.setAmount(i8SBSwitchControllerRequestVO.getAmount());
-        LendingData lendingData = new LendingData();
+        LoanPaymentData lendingData = new LoanPaymentData();
         lendingData.setPayLoad(payload);
         this.setData(lendingData);
     }

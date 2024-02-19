@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.inov8.integration.channel.lending.response.Response;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
-import com.inov8.integration.webservice.lendingVO.Payload;
+import com.inov8.integration.webservice.lendingVO.LoanPaymentResponsePayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +33,7 @@ public class LoanRepaymentResponse extends Response {
     @JsonProperty("reterivalReferenceNumber")
     private String reterivalReferenceNumber;
     @JsonProperty("payLoad")
-    private Payload payload;
+    private LoanPaymentResponsePayload payload;
     @JsonProperty("errors")
     private String errors;
     @JsonProperty("checkSum")
@@ -88,11 +87,11 @@ public class LoanRepaymentResponse extends Response {
         this.reterivalReferenceNumber = reterivalReferenceNumber;
     }
 
-    public Payload getPayload() {
+    public LoanPaymentResponsePayload getPayload() {
         return payload;
     }
 
-    public void setPayload(Payload payload) {
+    public void setPayload(LoanPaymentResponsePayload payload) {
         this.payload = payload;
     }
 
@@ -115,7 +114,7 @@ public class LoanRepaymentResponse extends Response {
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
-        if (this.getResponseCode().equals("200")) {
+        if (this.getResponseCode().equals("190101")) {
             i8SBSwitchControllerResponseVO.setResponseCode("00");
             i8SBSwitchControllerResponseVO.setDescription("Success");
             i8SBSwitchControllerResponseVO.setTransactionId(this.getPayload().getTransactionId());

@@ -1,5 +1,6 @@
 package com.inov8.integration.channel.fcy.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -18,15 +19,15 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "msgId",
+        "statusFlag",
         "channelId",
         "requestDate",
         "currencyId",
         "ResponseCode",
         "ResponseDescription",
-        "statusFlag",
         "currencyValue"
 })
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FcyConversionResponse extends Response {
 
     private static Logger logger = LoggerFactory.getLogger(EsbBillInquiryResponse.class.getSimpleName());
@@ -115,19 +116,21 @@ public class FcyConversionResponse extends Response {
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
-        if (this.getResponseCode().equals("00")) {
-            i8SBSwitchControllerResponseVO.setResponseCode("00");
-            i8SBSwitchControllerResponseVO.setDescription("Success");
-        } else {
+        if (this.getResponseCode() != null && !this.getResponseCode().equals("00")) {
+            i8SBSwitchControllerResponseVO.setMessageId(this.getMsgId());
+            i8SBSwitchControllerResponseVO.setCurrencyCode(this.getCurrencyId());
+            i8SBSwitchControllerResponseVO.setChannelId(this.getChannelId());
+            i8SBSwitchControllerResponseVO.setDateTime(this.getRequestDate());
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getDescription());
+        } else {
+            i8SBSwitchControllerResponseVO.setResponseCode("00");
+            i8SBSwitchControllerResponseVO.setDescription("Success");
+            i8SBSwitchControllerResponseVO.setMessageId(this.getMsgId());
+            i8SBSwitchControllerResponseVO.setStatusFlag(this.getStatusFlag());
+            i8SBSwitchControllerResponseVO.setCurrencyValue(this.getCurrencyValue());
         }
-        i8SBSwitchControllerResponseVO.setMessageId(this.getMsgId());
-        i8SBSwitchControllerResponseVO.setChannelId(this.getChannelId());
-        i8SBSwitchControllerResponseVO.setDateTime(this.getRequestDate());
-        i8SBSwitchControllerResponseVO.setCurrencyCode(this.getCurrencyId());
-        i8SBSwitchControllerResponseVO.setStatusFlag(this.getStatusFlag());
-        i8SBSwitchControllerResponseVO.setCurrencyValue(this.getCurrencyValue());
+
         return i8SBSwitchControllerResponseVO;
     }
 }

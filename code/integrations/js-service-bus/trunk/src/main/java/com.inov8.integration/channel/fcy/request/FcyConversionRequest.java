@@ -65,7 +65,7 @@ public class FcyConversionRequest extends Request {
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        this.setMsgId(i8SBSwitchControllerRequestVO.getMessageId());
+        this.setMsgId(PropertyReader.getProperty("fcy.channel.message.id") + StringUtils.rightPad(i8SBSwitchControllerRequestVO.getSTAN() + i8SBSwitchControllerRequestVO.getSTAN(), 21, "0"));
         this.setChannelId(PropertyReader.getProperty("fcy.channel.id"));
         this.setRequestDate(DateTools.dateToString(new Date(), DateFormatEnum.DATE_LOCAL_TRANSACTION.getValue()));
         this.setCurrencyId(i8SBSwitchControllerRequestVO.getCurrencyCode());

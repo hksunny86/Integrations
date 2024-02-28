@@ -49,17 +49,12 @@ public class FcyService {
         FcyConversionResponse fcyConversionResponse = new FcyConversionResponse();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock5")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock6")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String response = "{\n" +
-                    "    \"msgId\": \"RDCR20210306124930123888\",\n" +
-                    "    \"channelId\": \"0098\",\n" +
-                    "    \"requestDate\": \"20231115\",\n" +
-                    "    \"currencyId\": \"USD\",\n" +
-                    "    \"ResponseCode\": \"00\",\n" +
-                    "    \"ResponseDescription\": \"Success\",\n" +
+                    "    \"msgId\": \"USD153831153831000000000\",\n" +
                     "    \"statusFlag\": \"1\",\n" +
-                    "    \"currencyValue\": \"300.000\"\n" +
+                    "    \"currencyValue\": \"206.25\"\n" +
                     "}";
             fcyConversionResponse = (FcyConversionResponse) JSONUtil.jsonToObject(response, FcyConversionResponse.class);
             Objects.requireNonNull(fcyConversionResponse).setResponseCode("00");
@@ -69,7 +64,7 @@ public class FcyService {
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.fcyConversionUrl);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.add("Access_token ", fcyAccessToken);
+            headers.add("Access_token", fcyAccessToken);
             String requestJSON = JSONUtil.getJSON(fcyConversionRequest);
             HttpEntity<?> httpEntity = new HttpEntity(requestJSON, headers);
             logger.info("Prepared Request HttpEntity " + httpEntity);

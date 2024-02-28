@@ -8,6 +8,7 @@ import com.inov8.integration.enums.DateFormatEnum;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.middleware.util.DateTools;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Date;
 

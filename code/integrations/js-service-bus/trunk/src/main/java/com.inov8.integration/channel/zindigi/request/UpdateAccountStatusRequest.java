@@ -44,13 +44,14 @@ public class UpdateAccountStatusRequest extends Request {
 
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
+        String status = i8SBSwitchControllerRequestVO.getStatus();
 
         this.setMobile(i8SBSwitchControllerRequestVO.getMobileNumber());
-        if (i8SBSwitchControllerRequestVO.getStatus().equalsIgnoreCase("Approved")) {
+        if (status != null && status.startsWith("App")) {
             this.setStatus("A");
-        } else if (i8SBSwitchControllerRequestVO.getStatus().equalsIgnoreCase("Discrepant")) {
+        } else if (status != null && status.startsWith("Dis")) {
             this.setStatus("D");
-        } else if (i8SBSwitchControllerRequestVO.getStatus().equalsIgnoreCase("Rejected")) {
+        } else if (status != null && status.startsWith("Rej")) {
             this.setStatus("R");
         }
 

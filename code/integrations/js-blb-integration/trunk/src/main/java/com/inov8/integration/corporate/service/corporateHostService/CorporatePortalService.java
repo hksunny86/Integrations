@@ -22,7 +22,11 @@ import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
 import org.springframework.remoting.httpinvoker.SimpleHttpInvokerRequestExecutor;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.net.ssl.*;
+import java.security.InvalidKeyException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
@@ -399,7 +403,19 @@ public class CorporatePortalService {
         messageVO.setAccountStatus(request.getAccountStatus());
         messageVO.setPortalId(request.getPortalId());
         messageVO.setPortalPassword(request.getPortalPassword());
-        messageVO.setOtpPin(request.getOtp());
+        if (request.getReserved1().equals("03") && request.getChannelId().equalsIgnoreCase("USSD")) {
+            try {
+                if (request.getOtp() != null && !request.getOtp().equals("")) {
+                    String text = request.getOtp();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        } else {
+            messageVO.setOtpPin(request.getOtp());
+        }
         messageVO.setMessage(request.getComments());
         messageVO.setReserved1(request.getReserved1());
         messageVO.setReserved2(request.getReserved2());
@@ -1100,7 +1116,19 @@ public class CorporatePortalService {
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setPortalId(request.getPortalId());
         messageVO.setPortalPassword(request.getPortalPassword());
-        messageVO.setOtpPin(request.getOtp());
+        if (request.getReserved1().equals("03") && request.getChannelId().equalsIgnoreCase("USSD")) {
+            try {
+                if (request.getOtp() != null && !request.getOtp().equals("")) {
+                    String text = request.getOtp();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        } else {
+            messageVO.setOtpPin(request.getOtp());
+        }
         messageVO.setId(request.getId());
         messageVO.setDeviceName(request.getDeviceName());
         messageVO.setApprovalStatus(request.getApprovalStatus());
@@ -1655,5 +1683,4 @@ public class CorporatePortalService {
 //        }
         return response;
     }
-
 }

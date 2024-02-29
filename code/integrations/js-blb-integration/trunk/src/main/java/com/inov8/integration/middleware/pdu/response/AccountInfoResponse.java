@@ -16,6 +16,7 @@ import java.util.List;
         "ResponseCode",
         "ResponseDescription",
         "ResponseDateTime",
+        "AccountTitle",
         "AccountNumber",
         "RegistrationTypeCode",
         "AccountLevelCode",
@@ -29,6 +30,7 @@ import java.util.List;
         "Email",
         "Channel",
         "GlCodeCombination",
+        "DateOfBirth",
         "HashData",
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -44,6 +46,8 @@ public class AccountInfoResponse implements Serializable {
     private String responseDescription;
     @JsonProperty("ResponseDateTime")
     private String responseDateTime;
+    @JsonProperty("AccountTitle")
+    private String accountTitle;
     @JsonProperty("AccountNumber")
     private String accountNumber;
     @JsonProperty("RegistrationTypeCode")
@@ -70,6 +74,8 @@ public class AccountInfoResponse implements Serializable {
     private String channel;
     @JsonProperty("GlCodeCombination")
     private String glCodeCombination;
+    @JsonProperty("DateOfBirth")
+    private String dateOfBirth;
     @JsonProperty("HashData")
     private String hashData;
 
@@ -103,6 +109,14 @@ public class AccountInfoResponse implements Serializable {
 
     public void setResponseDateTime(String responseDateTime) {
         this.responseDateTime = responseDateTime;
+    }
+
+    public String getAccountTitle() {
+        return accountTitle;
+    }
+
+    public void setAccountTitle(String accountTitle) {
+        this.accountTitle = accountTitle;
     }
 
     public String getAccountNumber() {
@@ -207,6 +221,14 @@ public class AccountInfoResponse implements Serializable {
 
     public void setGlCodeCombination(String glCodeCombination) {
         this.glCodeCombination = glCodeCombination;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getHashData() {

@@ -76,7 +76,7 @@ public class HostIntegrationService {
     private static String loginPrivateKey = ConfigReader.getInstance().getProperty("login.authentication.privateKey", "");
     @Autowired
     TransactionDAO transactionDAO;
-//    private OptasiaMock optasiaMock = new OptasiaMock();
+    //    private OptasiaMock optasiaMock = new OptasiaMock();
     //    private String i8sb_target_environment = ConfigReader.getInstance().getProperty("i8sb.target.environment", "");
     private String optasiaProductId = ConfigReader.getInstance().getProperty("optasia.productId", "");
     private WebServiceSwitchController switchController = null;
@@ -7559,6 +7559,8 @@ public class HostIntegrationService {
         String transactionKey = request.getDateTime() + request.getRrn();
         messageVO.setRetrievalReferenceNumber(request.getRrn());
         logger.info("[HOST] Starting Processing Login Authentication Request RRN: " + messageVO.getRetrievalReferenceNumber());
+        logger.info("[HOST] Starting Processing Login Authentication Request PIN: " + request.getPin());
+
         transactionKey = request.getChannelId() + request.getRrn();
         LoginAuthenticationResponse response = new LoginAuthenticationResponse();
 
@@ -7605,7 +7607,7 @@ public class HostIntegrationService {
 
         // Call i8
         try {
-            logger.info("[HOST] Sent Login Authentication Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            logger.info("[HOST] Sent Login Authentication Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber() + " Mobile PIN: " + messageVO.getMobilePin());
             messageVO = switchController.accountAuthentication(messageVO);
         } catch (Exception e) {
 
@@ -18992,6 +18994,7 @@ public class HostIntegrationService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
+            response.setAccountTitle(messageVO.getAccountTitle());
             response.setAccountNumber(messageVO.getAccountNo1());
             response.setRegistrationTypeCode(messageVO.getRegistrationTypeCode());
             response.setAccountLevelCode(messageVO.getAccountLevelCode());
@@ -19005,6 +19008,7 @@ public class HostIntegrationService {
             response.setEmail(messageVO.getEmailAddress());
             response.setChannel(messageVO.getChannelId());
             response.setGlCodeCombination("");
+            response.setDateOfBirth(messageVO.getDateOfBirth());
 
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
@@ -19255,5 +19259,4 @@ public class HostIntegrationService {
 
         return result;
     }
-
 }

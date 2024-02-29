@@ -74,7 +74,7 @@ public class JSDebitCardController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (DebitCardHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
                         DebitCardHostRequestValidator.validateDebitCardFee(request);
@@ -103,13 +103,13 @@ public class JSDebitCardController {
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
                 }
-            } else {
-                logger.info("******* DEBUG LOGS FOR Debit Card Fees Request *********");
-                response = new DebitCardFeeResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-            }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Debit Card Fees Request *********");
+//                response = new DebitCardFeeResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new DebitCardFeeResponse();
@@ -263,7 +263,7 @@ public class JSDebitCardController {
                     .append(request.getReserved2());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (DebitCardHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
                         DebitCardHostRequestValidator.validateAppRebrandDebitCardIssuanceInquiry(request);
@@ -292,13 +292,13 @@ public class JSDebitCardController {
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
                 }
-            } else {
-                logger.info("******* DEBUG LOGS FOR Debit Card Issuance Inquiry Request *********");
-                response = new AppRebrandDebitCardIssuanceInquiryResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-            }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Debit Card Issuance Inquiry Request *********");
+//                response = new AppRebrandDebitCardIssuanceInquiryResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new AppRebrandDebitCardIssuanceInquiryResponse();
@@ -360,7 +360,7 @@ public class JSDebitCardController {
                     .append(request.getReserved2());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (DebitCardHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
                         DebitCardHostRequestValidator.validateAppRebrandDebitCardIssuance(request);
@@ -389,13 +389,13 @@ public class JSDebitCardController {
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
                 }
-            } else {
-                logger.info("******* DEBUG LOGS FOR Debit Card Issuance  Request *********");
-                response = new AppRebrandDebitCardIssuanceResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-            }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Debit Card Issuance  Request *********");
+//                response = new AppRebrandDebitCardIssuanceResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new AppRebrandDebitCardIssuanceResponse();

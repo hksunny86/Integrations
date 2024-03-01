@@ -395,6 +395,7 @@ public class I8SBConstants {
     public static String RequestType_WASA_LOGOUT = "Logout";
     public static String RequestType_LENDING_LOANREPAYMENT = "LoanRepayment";
     public static String RequestType_LENDING_GETLOANOUTSTANDING = "getLoanOutstanding";
+    public static String RequestType_LENDING_GETACTIVELOAN = "getActiveLoan";
 
 
 

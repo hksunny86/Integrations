@@ -1,8 +1,10 @@
 package com.inov8.integration.channel.lending.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.inov8.integration.channel.lending.request.GetActiveLoanRequest;
 import com.inov8.integration.channel.lending.request.GetLoanOutstandingRequest;
 import com.inov8.integration.channel.lending.request.LoanRepaymentRequest;
+import com.inov8.integration.channel.lending.response.GetActiveLoanResponse;
 import com.inov8.integration.channel.lending.response.GetLoanOutstandingResponse;
 import com.inov8.integration.channel.lending.response.LoanRepaymentResponse;
 import com.inov8.integration.config.PropertyReader;
@@ -29,6 +31,7 @@ public class LendingService {
     private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
     private String loanRepayment = PropertyReader.getProperty("lending.loanrepayment");
     private String getOutstandingLoan = PropertyReader.getProperty("lending.getloanoutstanding");
+    private String getActiveLoan = PropertyReader.getProperty("lending.getActiveLoan");
     private String bearerToken = PropertyReader.getProperty("lending.bearer.token");
     private I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
@@ -217,6 +220,58 @@ public class LendingService {
             logger.debug("Get Outstanding Loan Request processed in: " + difference + " millisecond");
         }
         return getLoanOutstandingResponse;
+    }
+
+    public GetActiveLoanResponse getActiveLoanResponse(GetActiveLoanRequest request) {
+
+        GetActiveLoanResponse getActiveLoanResponse = new GetActiveLoanResponse();
+        ObjectMapper objectMapper = new ObjectMapper();
+        I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
+
+        long start = System.currentTimeMillis();
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock5")) {
+            logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
+            String json = "{\n" +
+                    "    \"responseCode\": \"190101\",\n" +
+                    "    \"message\": \"SUCCESS\",\n" +
+                    "    \"channel\": null,\n" +
+                    "    \"terminal\": null,\n" +
+                    "    \"transactionDate\": null,\n" +
+                    "    \"reterivalReferenceNumber\": null,\n" +
+                    "    \"payLoad\": {\n" +
+                    "        \"statusCode\": \"2\",\n" +
+                    "        \"statusDescription\": \"No Loan available against this customer.\"\n" +
+                    "    },\n" +
+                    "    \"errors\": null,\n" +
+                    "    \"checkSum\": null\n" +
+                    "}";
+            getActiveLoanResponse = (GetActiveLoanResponse) JSONUtil.jsonToObject(json, GetActiveLoanResponse.class);
+            Objects.requireNonNull(getActiveLoanResponse).setResponseCode("200");
+            logger.info("Mock Response Code for get Active Loan Response: " + getActiveLoanResponse.getResponseCode());
+        } else {
+
+            Map<String, Object> postParam = new HashMap<String, Object>();
+            Map<String, String> headers = new HashMap<String, String>();
+            headers.put("content-type", "application/json");
+            headers.put("Authorization", "Bearer " + bearerToken);
+            postParam.put("data", request.getData());
+            logger.info("Request body of Get Active Loan  " + JSONUtil.getJSON(request.getData()));
+            try {
+                String responseBody = getResponseFromAPI(headers, postParam, getActiveLoan);
+                if (responseBody != null && responseBody.length() > 0) {
+                    getActiveLoanResponse = objectMapper.readValue(responseBody, GetActiveLoanResponse.class);
+                }
+            } catch (RestClientException e) {
+                handleRestClientException(e, i8SBSwitchControllerResponseVO);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            long endTime = (new Date()).getTime();
+            long difference = endTime - start;
+            logger.debug("Get Active Loan Request processed in: " + difference + " millisecond");
+        }
+        return getActiveLoanResponse;
     }
 
     public I8SBSwitchControllerRequestVO getI8SBSwitchControllerRequestVO() {

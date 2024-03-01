@@ -1,8 +1,10 @@
 package com.inov8.integration.channel.lending.bo;
 
+import com.inov8.integration.channel.lending.request.GetActiveLoanRequest;
 import com.inov8.integration.channel.lending.request.GetLoanOutstandingRequest;
 import com.inov8.integration.channel.lending.request.LoanRepaymentRequest;
 import com.inov8.integration.channel.lending.request.Request;
+import com.inov8.integration.channel.lending.response.GetActiveLoanResponse;
 import com.inov8.integration.channel.lending.response.GetLoanOutstandingResponse;
 import com.inov8.integration.channel.lending.response.LoanRepaymentResponse;
 import com.inov8.integration.channel.lending.response.Response;
@@ -54,8 +56,9 @@ public class LendingBo implements I8SBChannelInterface {
                 response = lendingService.loanRepaymentResponse((LoanRepaymentRequest) request);
             } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_LENDING_GETLOANOUTSTANDING)) {
                 response = lendingService.getLoanOutstandingResponse((GetLoanOutstandingRequest) request);
+            } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_LENDING_GETACTIVELOAN)) {
+                response = lendingService.getActiveLoanResponse((GetActiveLoanRequest) request);
             }
-
 
             if (Objects.requireNonNull(response).populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
@@ -110,6 +113,10 @@ public class LendingBo implements I8SBChannelInterface {
         } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_LENDING_GETLOANOUTSTANDING)) {
             request = new GetLoanOutstandingRequest();
             response = new GetLoanOutstandingResponse();
+
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_LENDING_GETACTIVELOAN)) {
+            request = new GetActiveLoanRequest();
+            response = new GetActiveLoanResponse();
 
         } else {
             logger.info("[FAILED] Request type not supported");

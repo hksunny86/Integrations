@@ -28,6 +28,7 @@ public class L2AccountFields implements Serializable {
     private String ultraToSignature;
     private String ultraToFreelancePKR;
     private String ultraToFreelanceUSD;
+    private String customerPicture;
 
     public String getUltraToSignature() {
         return ultraToSignature;
@@ -195,5 +196,13 @@ public class L2AccountFields implements Serializable {
 
     public void setDataList(List<String> dataList) {
         this.dataList = dataList;
+    }
+
+    public String getCustomerPicture() {
+        return customerPicture;
+    }
+
+    public void setCustomerPicture(String customerPicture) {
+        this.customerPicture = customerPicture;
     }
 }

@@ -116,13 +116,22 @@ public class GetActiveLoanResponse extends Response {
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
         if (this.getResponseCode().equals("190101")) {
-            i8SBSwitchControllerResponseVO.setResponseCode(this.getPayload().getStatusCode());
-            i8SBSwitchControllerResponseVO.setDescription(this.getPayload().getStatusDescription());
-            i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
+            if (this.getPayload().getStatusCode() != null) {
+                i8SBSwitchControllerResponseVO.setResponseCode("00");
+                i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
+                i8SBSwitchControllerResponseVO.setDescription(this.getPayload().getStatusDescription());
+                i8SBSwitchControllerResponseVO.setStatusCode(this.getPayload().getStatusCode());
+            } else {
+                i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
+                i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
+            }
         } else {
-            i8SBSwitchControllerResponseVO.setResponseCode(this.getPayload().getStatusCode());
-            i8SBSwitchControllerResponseVO.setDescription(this.getPayload().getStatusDescription());
-            i8SBSwitchControllerResponseVO.setMessage(this.getMessage());
+            if (this.getPayload().getStatusCode() != null) {
+                i8SBSwitchControllerResponseVO.setDescription(this.getPayload().getStatusDescription());
+                i8SBSwitchControllerResponseVO.setStatusCode(this.getPayload().getStatusCode());
+            }
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
+            i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
         }
 
         return i8SBSwitchControllerResponseVO;

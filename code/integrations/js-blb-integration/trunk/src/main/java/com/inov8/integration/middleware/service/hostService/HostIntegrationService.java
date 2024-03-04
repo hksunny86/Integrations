@@ -13,7 +13,7 @@ import com.inov8.integration.middleware.util.*;
 import com.inov8.integration.vo.MiddlewareMessageVO;
 import com.inov8.integration.webservice.controller.WebServiceSwitchController;
 import com.inov8.integration.webservice.vo.WebServiceVO;
-import com.inov8.microbank.server.service.integration.vo.MiddlewareAdviceVO;
+import com.inov8.microbank.server.service.integration.vo.CreditPaymentAdviceVO;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
@@ -7166,7 +7166,7 @@ public class HostIntegrationService {
                     messageVO.setResponseCodeDescription("Host Not In Reach");
                 }
             } else {
-                MiddlewareAdviceVO middlewareMessageVO = new MiddlewareAdviceVO();
+                CreditPaymentAdviceVO middlewareMessageVO = new CreditPaymentAdviceVO();
 
                 middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
                 middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
@@ -7175,6 +7175,18 @@ public class HostIntegrationService {
                 middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
                 middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
                 middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+                middlewareMessageVO.setReserved1(messageVO.getReserved1());
+                middlewareMessageVO.setReserved2(messageVO.getReserved2());
+                middlewareMessageVO.setReserved3(messageVO.getReserved3());
+                middlewareMessageVO.setReserved4(messageVO.getReserved4());
+                middlewareMessageVO.setReserved5(messageVO.getReserved5());
+                middlewareMessageVO.setReserved6(messageVO.getReserved6());
+                middlewareMessageVO.setReserved7(messageVO.getReserved7());
+                middlewareMessageVO.setReserved8(messageVO.getReserved8());
+                middlewareMessageVO.setReserved9(messageVO.getReserved9());
+                middlewareMessageVO.setReserved10(messageVO.getReserved10());
+                middlewareMessageVO.setCurrencyValue(messageVO.getCurrencyValue());
+                middlewareMessageVO.setWalletAmount(messageVO.getDepositAmount());
                 this.validateRRN(messageVO);
                 if (!messageVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
                     logger.info("[HOST] Credit  Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -14732,9 +14744,9 @@ public class HostIntegrationService {
         return response;
     }
 
-    public void sentWalletRequest(MiddlewareAdviceVO middlewareMessageVO) throws Exception {
+    public void sentWalletRequest(CreditPaymentAdviceVO middlewareMessageVO) throws Exception {
         logger.info("Core To Wallet Push To SAF against RRN: " + middlewareMessageVO.getRetrievalReferenceNumber());
-        MiddlewareAdviceVO middlewareAdviceVO = new MiddlewareAdviceVO();
+        CreditPaymentAdviceVO middlewareAdviceVO = new CreditPaymentAdviceVO();
         middlewareAdviceVO.setAccountNo1(middlewareMessageVO.getAccountNo1());
         middlewareAdviceVO.setAccountNo2(middlewareMessageVO.getAccountNo2());
         middlewareAdviceVO.setTransactionAmount(middlewareMessageVO.getTransactionAmount());
@@ -14744,6 +14756,18 @@ public class HostIntegrationService {
         middlewareAdviceVO.setAdviceType("creditPayment"); // Used in DLQ
         middlewareAdviceVO.setBankIMD(middlewareMessageVO.getBankIMD());
         middlewareAdviceVO.setProductId(middlewareMessageVO.getProductId());
+        middlewareMessageVO.setReserved1(middlewareMessageVO.getReserved1());
+        middlewareMessageVO.setReserved2(middlewareMessageVO.getReserved2());
+        middlewareMessageVO.setReserved3(middlewareMessageVO.getReserved3());
+        middlewareMessageVO.setReserved4(middlewareMessageVO.getReserved4());
+        middlewareMessageVO.setReserved5(middlewareMessageVO.getReserved5());
+        middlewareMessageVO.setReserved6(middlewareMessageVO.getReserved6());
+        middlewareMessageVO.setReserved7(middlewareMessageVO.getReserved7());
+        middlewareMessageVO.setReserved8(middlewareMessageVO.getReserved8());
+        middlewareMessageVO.setReserved9(middlewareMessageVO.getReserved9());
+        middlewareMessageVO.setReserved10(middlewareMessageVO.getReserved10());
+        middlewareMessageVO.setCurrencyValue(middlewareMessageVO.getCurrencyValue());
+        middlewareMessageVO.setWalletAmount(middlewareMessageVO.getWalletAmount());
         // Create a ConnectionFactory
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://" + I8_QUEUE_SERVER + ":" + I8_QUEUE_PORT);
 

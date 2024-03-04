@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inov8.integration.middleware.util.JSONUtil;
 import com.inov8.integration.middleware.util.PortalConstants;
 import com.inov8.integration.webservice.vo.WebServiceVO;
-import com.inov8.microbank.server.service.integration.vo.MiddlewareAdviceVO;
+import com.inov8.microbank.server.service.integration.vo.CreditPaymentAdviceVO;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -34,12 +34,10 @@ import java.util.List;
 @Repository
 public class TransactionDAO {
 
+    private static Logger logger = LoggerFactory.getLogger(TransactionDAO.class.getSimpleName());
     private JdbcTemplate jdbcTemplate;
-
     @Autowired
     private DefaultLobHandler defaultLobHandler;
-
-    private static Logger logger = LoggerFactory.getLogger(TransactionDAO.class.getSimpleName());
 
     @Autowired
     public TransactionDAO(JdbcTemplate jdbcTemplate) {
@@ -103,7 +101,7 @@ public class TransactionDAO {
 
 
     @Transactional
-    public int saveNewCreditRecord(final MiddlewareAdviceVO messageVO) {
+    public int saveNewCreditRecord(final CreditPaymentAdviceVO messageVO) {
         long startTime = new Date().getTime(); // start time
         int count = 0;
         CrediRetryAdviceModel tx = new CrediRetryAdviceModel();
@@ -120,12 +118,26 @@ public class TransactionDAO {
 
         tx.setCreatedOn(new Date());
         tx.setUpdatedOn(new Date());
+        tx.setReserved1(messageVO.getReserved1());
+        tx.setReserved2(messageVO.getReserved2());
+        tx.setReserved3(messageVO.getReserved3());
+        tx.setReserved4(messageVO.getReserved4());
+        tx.setReserved5(messageVO.getReserved5());
+        tx.setReserved6(messageVO.getReserved6());
+        tx.setReserved7(messageVO.getReserved7());
+        tx.setReserved8(messageVO.getReserved8());
+        tx.setReserved9(messageVO.getReserved9());
+        tx.setReserved10(messageVO.getReserved10());
+        tx.setCurrencyValue(messageVO.getCurrencyValue());
+        tx.setWalletAmount(messageVO.getWalletAmount());
+
+
 //        model.setBankImd(messageVO.getBankIMD());
         tx.setStatus(PortalConstants.IBFT_STATUS_IN_PROGRESS);
         try {
             StringBuilder sql = new StringBuilder();
             sql.append("INSERT INTO I8_MICROBANK_JS_PROD.CREDIT_RETRY_ADVICE ");
-            sql.append("(CREDIT_RETRY_ADVICE_ID, MOBILE_NO, RRN, ACCOUNT_NO, TRANSACTION_AMOUNT, REQUEST_TIME, STAN, STATUS,TRANSACTION_CODE,BANK_IMD,CREATED_BY,UPDATED_BY,UPDATED_ON,CREATED_ON,VERSION_NO,PRODUCT_ID,CHANNEL_NAME,CREDIT_INQUIRY_RRN,ORIGINAL_TRANSACTION_RRN) ");
+            sql.append("(CREDIT_RETRY_ADVICE_ID, MOBILE_NO, RRN, ACCOUNT_NO, TRANSACTION_AMOUNT, REQUEST_TIME, STAN, STATUS,TRANSACTION_CODE,BANK_IMD,CREATED_BY,UPDATED_BY,UPDATED_ON,CREATED_ON,VERSION_NO,PRODUCT_ID,CHANNEL_NAME,CREDIT_INQUIRY_RRN,ORIGINAL_TRANSACTION_RRN,RESERVED1,RESERVED2,RESERVED3,RESERVED4,RESERVED5,RESERVED6,RESERVED7,RESERVED8,RESERVED9,RESERVED10,CURRENCY_VALUE,WALLET_AMOUNT) ");
             sql.append("VALUES (I8_MICROBANK_JS_PROD.CREDIT_RETRY_ADVICE_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             count = getJdbcTemplate().update(sql.toString(), new PreparedStatementSetter() {
@@ -134,20 +146,32 @@ public class TransactionDAO {
                     ps.setString(2, tx.getRetrievalReferenceNumber());
                     ps.setString(3, tx.getAccountNo());
                     ps.setDouble(4, tx.getTransactionAmount());
-                    ps.setDate(5, new java.sql.Date(tx.getRequestTime().getTime()) );
+                    ps.setDate(5, new java.sql.Date(tx.getRequestTime().getTime()));
                     ps.setString(6, tx.getStan());
-                    ps.setString(7,tx.getStatus());
-                    ps.setString(8,tx.getTransactionCode());
-                    ps.setString(9,tx.getBankImd());
-                    ps.setLong(10,3L);
-                    ps.setLong(11,3L);
+                    ps.setString(7, tx.getStatus());
+                    ps.setString(8, tx.getTransactionCode());
+                    ps.setString(9, tx.getBankImd());
+                    ps.setLong(10, 3L);
+                    ps.setLong(11, 3L);
                     ps.setTimestamp(12, new Timestamp(new Date().getTime()));
                     ps.setTimestamp(13, new Timestamp(new Date().getTime()));
-                    ps.setInt(14,1);
-                    ps.setLong(15,tx.getProductId());
-                    ps.setString(16,tx.getChannelName());
-                    ps.setString(17,tx.getCreditInquiryRRN());
-                    ps.setString(18,tx.getOrignalTransactionRRN());
+                    ps.setInt(14, 1);
+                    ps.setLong(15, tx.getProductId());
+                    ps.setString(16, tx.getChannelName());
+                    ps.setString(17, tx.getCreditInquiryRRN());
+                    ps.setString(18, tx.getOrignalTransactionRRN());
+                    ps.setString(19, tx.getReserved1());
+                    ps.setString(20, tx.getReserved2());
+                    ps.setString(21, tx.getReserved3());
+                    ps.setString(22, tx.getReserved4());
+                    ps.setString(23, tx.getReserved5());
+                    ps.setString(24, tx.getReserved6());
+                    ps.setString(25, tx.getReserved7());
+                    ps.setString(26, tx.getReserved8());
+                    ps.setString(27, tx.getReserved9());
+                    ps.setString(28, tx.getReserved10());
+                    ps.setString(29, tx.getCurrencyValue());
+                    ps.setString(30, tx.getWalletAmount());
 
                 }
             });
@@ -194,7 +218,7 @@ public class TransactionDAO {
     }
 
 
-    public List<CrediRetryAdviceModel> findByExample(CrediRetryAdviceModel cardFeeRuleModel)  {
+    public List<CrediRetryAdviceModel> findByExample(CrediRetryAdviceModel cardFeeRuleModel) {
 
         StringBuilder sb = new StringBuilder();
 
@@ -210,43 +234,43 @@ public class TransactionDAO {
         c.set(Calendar.MILLISECOND, 0);
 
         logger.info("Loading Debit Card Fee Rule with Criteria: " + sb.toString());
-        List<CrediRetryAdviceModel> list = (List<CrediRetryAdviceModel>) jdbcTemplate.query(sb.toString(),new CrediRetryAdviceModel());
+        List<CrediRetryAdviceModel> list = (List<CrediRetryAdviceModel>) jdbcTemplate.query(sb.toString(), new CrediRetryAdviceModel());
 
 
         return list;
     }
 
 
-    public Boolean validateApiGeeRRN(WebServiceVO webServiceVO)  {
+    public Boolean validateApiGeeRRN(WebServiceVO webServiceVO) {
         StringBuilder sqlBuilder = new StringBuilder(400);
         sqlBuilder.append("SELECT COUNT(*) FROM I8_MICROBANK_JS_PROD.FONEPAY_INTEGERATION_LOG ");
         sqlBuilder.append(" WHERE RRN = '").append(webServiceVO.getRetrievalReferenceNumber()).append("'");
         sqlBuilder.append(" AND TRUNC(CREATED_ON) = TRUNC(SYSDATE)");
         logger.info("APIGEE RRN Validation: " + sqlBuilder.toString());
-        int result = jdbcTemplate.queryForObject(sqlBuilder.toString(),Integer.class);
-        if(result > 0)
+        int result = jdbcTemplate.queryForObject(sqlBuilder.toString(), Integer.class);
+        if (result > 0)
             return false;
 
         return true;
     }
 
-    public void AddToProcessing(String stan, String reqTime)  {
+    public void AddToProcessing(String stan, String reqTime) {
         StringBuilder query = new StringBuilder(140);
-        query.append( "INSERT INTO I8_MICROBANK_JS_PROD.CREDIT_STATUS (STAN,REQ_TIME) VALUES "
+        query.append("INSERT INTO I8_MICROBANK_JS_PROD.CREDIT_STATUS (STAN,REQ_TIME) VALUES "
                 + " (?, ?)");
 
         try {
-            jdbcTemplate.update(query.toString(), new Object[]{stan,reqTime});
+            jdbcTemplate.update(query.toString(), new Object[]{stan, reqTime});
             logger.info("Query to validate validate ibft Status IBFTStatusHibernateDAO.AddToProcessing() :: " + query.toString());
 
         } catch (DataAccessException e) {
-            logger.error("Insertion in CREDIT_STATUS Failed for stan: "+stan+"  at ReqTime : "+reqTime);
+            logger.error("Insertion in CREDIT_STATUS Failed for stan: " + stan + "  at ReqTime : " + reqTime);
             e.printStackTrace();
         }
     }
 
 
-    public boolean CheckIBFTStatus(String stan, String reqTime)  {
+    public boolean CheckIBFTStatus(String stan, String reqTime) {
         boolean processing = false;
         try {
             StringBuilder query = new StringBuilder(140);
@@ -254,11 +278,11 @@ public class TransactionDAO {
             query.append("STAN = '").append(stan).append("'");
             query.append(" AND REQ_TIME = '").append(reqTime).append("'");
             logger.info("Query to validate validate ibft Status IBFTStatusHibernateDAO.CheckIBFTStatus() :: " + query.toString());
-            int result = jdbcTemplate.queryForObject(query.toString(),Integer.class);
+            int result = jdbcTemplate.queryForObject(query.toString(), Integer.class);
             logger.info("Query Result :: " + result);
-            processing = result>0?true:false;
+            processing = result > 0 ? true : false;
         } catch (DataAccessException e) {
-            logger.error("Count Query failed in IBFT_Status Failed for stan: "+stan+"  REQ_TIME : "+reqTime);
+            logger.error("Count Query failed in IBFT_Status Failed for stan: " + stan + "  REQ_TIME : " + reqTime);
             e.printStackTrace();
 
         }
@@ -274,11 +298,11 @@ public class TransactionDAO {
         sqlBuilder.append(" WHERE RRN = '").append(webServiceVO.getReserved3()).append("'");
         sqlBuilder.append(" AND TRUNC(CREATED_ON) = TRUNC(SYSDATE)");
         logger.info("Credit Inquiry APIGEE RRN Validation: " + sqlBuilder.toString());
-        List<FonePayLogModel> list = jdbcTemplate.query(sqlBuilder.toString() , new RowMapper<FonePayLogModel>(){
+        List<FonePayLogModel> list = jdbcTemplate.query(sqlBuilder.toString(), new RowMapper<FonePayLogModel>() {
 
             @Override
             public FonePayLogModel mapRow(ResultSet resultSet, int i) throws SQLException {
-                FonePayLogModel fonePayLogModel=new FonePayLogModel();
+                FonePayLogModel fonePayLogModel = new FonePayLogModel();
                 fonePayLogModel.setRrn(resultSet.getString("RRN"));
                 fonePayLogModel.setInput(resultSet.getString("INPUT"));
                 fonePayLogModel.setOutput(resultSet.getString("OUTPUT"));
@@ -293,7 +317,6 @@ public class TransactionDAO {
         }
 
 
-
         return fonePayLogModel;
     }
 
@@ -304,31 +327,30 @@ public class TransactionDAO {
         FonePayLogModel fonePayLogModel = new FonePayLogModel();
 
         try {
-        Date date = new Date();
-        Timestamp ts_now = new Timestamp(date.getTime());
+            Date date = new Date();
+            Timestamp ts_now = new Timestamp(date.getTime());
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        JSONObject json = null;
-        String jsonInString = "";
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            JSONObject json = null;
+            String jsonInString = "";
 
             jsonInString = mapper.writeValueAsString(webServiceVO);
-
 
 
             String inputparam = JSONUtil.getJSON(webServiceVO);
             json = new JSONObject(inputparam);
 
 
-        if (webServiceVO.getMobilePin() != null && !webServiceVO.getMobilePin().equals("")) {
-            json.put("mobilePin", "****");
-            jsonInString = String.valueOf(json);
-        }
+            if (webServiceVO.getMobilePin() != null && !webServiceVO.getMobilePin().equals("")) {
+                json.put("mobilePin", "****");
+                jsonInString = String.valueOf(json);
+            }
 
-        if (webServiceVO.getOtpPin() != null && !webServiceVO.getOtpPin().equals("")) {
-            json.put("otpPin", "****");
-            jsonInString = String.valueOf(json);
-        }
+            if (webServiceVO.getOtpPin() != null && !webServiceVO.getOtpPin().equals("")) {
+                json.put("otpPin", "****");
+                jsonInString = String.valueOf(json);
+            }
 //        if (!reqType.equals(FonePayConstants.REQ_ACCOUNT_OPENING_L2)) {
 //            if (webServiceVO.getReserved2() != null && !webServiceVO.getReserved2().equals("")) {
 //                fonePayLogModel.setStan(webServiceVO.getReserved2());
@@ -348,37 +370,37 @@ public class TransactionDAO {
 //                reqType.equalsIgnoreCase(FonePayConstants.REQ_MERCHANT_ACCOUNT_UPGRADE)) {
 //            jsonInString = "null";
 //        }
-        fonePayLogModel.setCnic(webServiceVO.getCnicNo());
-        fonePayLogModel.setMobile_no(webServiceVO.getMobileNo());
-        fonePayLogModel.setRequestType(reqType);
-        fonePayLogModel.setResponse_code(webServiceVO.getResponseCode());
-        fonePayLogModel.setResponse_description(webServiceVO.getResponseCodeDescription());
-        fonePayLogModel.setRrn(webServiceVO.getRetrievalReferenceNumber());
-        fonePayLogModel.setTransactionId(webServiceVO.getTransactionId());
+            fonePayLogModel.setCnic(webServiceVO.getCnicNo());
+            fonePayLogModel.setMobile_no(webServiceVO.getMobileNo());
+            fonePayLogModel.setRequestType(reqType);
+            fonePayLogModel.setResponse_code(webServiceVO.getResponseCode());
+            fonePayLogModel.setResponse_description(webServiceVO.getResponseCodeDescription());
+            fonePayLogModel.setRrn(webServiceVO.getRetrievalReferenceNumber());
+            fonePayLogModel.setTransactionId(webServiceVO.getTransactionId());
 
-        fonePayLogModel.setCreated_on(ts_now);
-        fonePayLogModel.setUpdated_on(ts_now);
-        fonePayLogModel.setInput(jsonInString);
-        StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO I8_MICROBANK_JS_PROD.FONEPAY_INTEGERATION_LOG ");
-        sql.append("(FONPAY_INTEGERATION_LOG_ID, REQUEST_TYPE, RRN, MOBILE_NO, CNIC, RESPONSE_CODE, RESPONSE_DESCRIPTION, TRANSACTION_ID,CREATED_ON,UPDATED_ON,INPUT,OUTPUT,STAN)");
-        sql.append("VALUES (I8_MICROBANK_JS_PROD.FONEPAY_INTEGERATION_LOG_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?)");
-        count = getJdbcTemplate().update(sql.toString(), new PreparedStatementSetter() {
-            public void setValues(PreparedStatement ps) throws SQLException {
-                ps.setString(1, fonePayLogModel.getRequestType());
-                ps.setString(2, fonePayLogModel.getRrn());
-                ps.setString(3, fonePayLogModel.getMobile_no());
-                ps.setString(4, fonePayLogModel.getCnic());
-                ps.setString(5, fonePayLogModel.getResponse_code());
-                ps.setString(6,fonePayLogModel.getResponse_description());
-                ps.setString(7,fonePayLogModel.getTransactionId());
-                ps.setTimestamp(8, new Timestamp(new Date().getTime()));
-                ps.setTimestamp(9, new Timestamp(new Date().getTime()));
-                ps.setString(10,fonePayLogModel.getInput());
-                ps.setString(11,fonePayLogModel.getOutput());
-                ps.setString(12,fonePayLogModel.getStan());
-            }
-        });
+            fonePayLogModel.setCreated_on(ts_now);
+            fonePayLogModel.setUpdated_on(ts_now);
+            fonePayLogModel.setInput(jsonInString);
+            StringBuilder sql = new StringBuilder();
+            sql.append("INSERT INTO I8_MICROBANK_JS_PROD.FONEPAY_INTEGERATION_LOG ");
+            sql.append("(FONPAY_INTEGERATION_LOG_ID, REQUEST_TYPE, RRN, MOBILE_NO, CNIC, RESPONSE_CODE, RESPONSE_DESCRIPTION, TRANSACTION_ID,CREATED_ON,UPDATED_ON,INPUT,OUTPUT,STAN)");
+            sql.append("VALUES (I8_MICROBANK_JS_PROD.FONEPAY_INTEGERATION_LOG_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?)");
+            count = getJdbcTemplate().update(sql.toString(), new PreparedStatementSetter() {
+                public void setValues(PreparedStatement ps) throws SQLException {
+                    ps.setString(1, fonePayLogModel.getRequestType());
+                    ps.setString(2, fonePayLogModel.getRrn());
+                    ps.setString(3, fonePayLogModel.getMobile_no());
+                    ps.setString(4, fonePayLogModel.getCnic());
+                    ps.setString(5, fonePayLogModel.getResponse_code());
+                    ps.setString(6, fonePayLogModel.getResponse_description());
+                    ps.setString(7, fonePayLogModel.getTransactionId());
+                    ps.setTimestamp(8, new Timestamp(new Date().getTime()));
+                    ps.setTimestamp(9, new Timestamp(new Date().getTime()));
+                    ps.setString(10, fonePayLogModel.getInput());
+                    ps.setString(11, fonePayLogModel.getOutput());
+                    ps.setString(12, fonePayLogModel.getStan());
+                }
+            });
 
         } catch (Exception e) {
             logger.error("Exception", e);

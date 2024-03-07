@@ -540,6 +540,24 @@ public class WebServiceVO implements Serializable {
     private Date createdDate;
     private Date fDate;
     private Date tDate;
+    private String proofOfIncomePic;
+    private String country;
+
+    public String getProofOfIncomePic() {
+        return proofOfIncomePic;
+    }
+
+    public void setProofOfIncomePic(String proofOfIncomePic) {
+        this.proofOfIncomePic = proofOfIncomePic;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     public String getStoreMobileNo() {
         return storeMobileNo;

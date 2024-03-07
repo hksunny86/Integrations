@@ -2746,32 +2746,24 @@ public class JSController {
                     .append(request.getCnicFrontPic())
                     .append(request.getCnicBackPic())
                     .append(request.getCustomerPic())
-                    .append(request.getConsumerName())
-                    .append(request.getFatherHusbandName())
-                    .append(request.getPurposeOfAccount())
-                    .append(request.getSourceOfIncome())
-                    .append(request.getSourceOfIncomePic())
-                    .append(request.getExpectedMonthlyTurnover())
-                    .append(request.getBirthPlace())
-                    .append(request.getMotherMaiden())
-                    .append(request.getEmailAddress())
-                    .append(request.getMailingAddress())
-                    .append(request.getPermanentAddress())
+                    .append(request.getUtilityBillPicture())
                     .append(request.getSignaturePic())
-                    .append(request.getCurrencyCode())
-                    .append(request.getUsCitizenship())
-                    .append(request.getUsMobileNumber())
-                    .append(request.getSignatoryAuthority())
-                    .append(request.getUsLinks())
+                    .append(request.getProofOfIncomePic())
+                    .append(request.getCity())
+                    .append(request.getArea())
+                    .append(request.getStreetNumber())
+                    .append(request.getHouseNumber())
                     .append(request.getFederalTaxClassification())
                     .append(request.getDualCitizenAddress())
                     .append(request.getTaxIdNumber())
+                    .append(request.getPermanentAddress())
+                    .append(request.getMailingAddress())
                     .append(request.getForeignTaxIdNumber())
-                    .append(request.getUsAccountNumber())
-                    .append(request.getUtilityBillPicture())
-                    .append(request.getCity())
-                    .append(request.getArea())
-                    .append(request.getHouseNumber())
+                    .append(request.getReferenceNumber())
+                    .append(request.getCountry())
+                    .append(request.getCountryTaxResidence())
+                    .append(request.getResidenceAddress())
+                    .append(request.getCountryOfBirth())
                     .append(request.getReserved1())
                     .append(request.getReserved2())
                     .append(request.getReserved3())
@@ -3188,7 +3180,7 @@ public class JSController {
                     .append(request.getTerminalId());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
                         HostRequestValidator.validateAccountInfo(request);
@@ -3211,13 +3203,13 @@ public class JSController {
                     response.setResponseDescription("Request is not authenticated");
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
                 }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Account Info Request *********");
-//                response = new AccountInfoResponse();
-//                response.setResponseCode("111");
-//                response.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Account Info Request *********");
+                response = new AccountInfoResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
         } catch (Exception e) {
             logger.error("Exception while processing request" + e.getMessage());
             response = new AccountInfoResponse();

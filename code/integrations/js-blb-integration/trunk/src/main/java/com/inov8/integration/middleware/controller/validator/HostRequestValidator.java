@@ -4241,14 +4241,14 @@ public class HostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
             throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
         }
-        if (StringUtils.isEmpty(integrationVO.getConsumerName())) {
-            throw new ValidationException("[FAILED] Validation Failed Consumer Name: " + integrationVO.getConsumerName());
-        }
-
-
-        if (StringUtils.isEmpty(integrationVO.getBirthPlace())) {
-            throw new ValidationException("[FAILED] Validation Failed Birth Place: " + integrationVO.getBirthPlace());
-        }
+//        if (StringUtils.isEmpty(integrationVO.getConsumerName())) {
+//            throw new ValidationException("[FAILED] Validation Failed Consumer Name: " + integrationVO.getConsumerName());
+//        }
+//
+//
+//        if (StringUtils.isEmpty(integrationVO.getBirthPlace())) {
+//            throw new ValidationException("[FAILED] Validation Failed Birth Place: " + integrationVO.getBirthPlace());
+//        }
         if (StringUtils.isEmpty(integrationVO.getPermanentAddress())) {
             throw new ValidationException("[FAILED] Validation Failed Present Address: " + integrationVO.getPermanentAddress());
         }

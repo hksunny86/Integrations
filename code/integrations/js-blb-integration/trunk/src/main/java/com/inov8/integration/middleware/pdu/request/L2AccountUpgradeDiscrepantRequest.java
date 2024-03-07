@@ -20,32 +20,38 @@ import java.io.Serializable;
         "CnicFrontPic",
         "CnicBackPic",
         "CustomerPic",
-        "ConsumerName",
+        "UtilityBillPicture",
+        "SignaturePic",
+        "ProofOfIncomePic",
+        "City",
+        "Area",
+        "StreetNumber",
+        "HouseNumber",
+        "FederalTaxClassification",
+        "DualCitizenAddress",
+        "TaxIdNumber",
+        "PermanentAddress",
+        "MailingAddress",
+        "ForeignTaxIdNumber",
+        "ReferenceNumber",
+        "Country",
+        "CountryTaxResidence",
+        "ResidenceAddress",
+        "CountryOfBirth",
+        /*"ConsumerName",
         "FatherHusbandName",
         "PurposeOfAccount",
         "SourceOfIncome",
-        "SourceOfIncomePic",
         "ExpectedMonthlyTurnover",
         "BirthPlace",
         "MotherMaiden",
         "EmailAddress",
-        "MailingAddress",
-        "PermanentAddress",
-        "SignaturePic",
         "CurrencyCode",
         "UsCitizenship",
         "UsMobileNumber",
         "SignatoryAuthority",
         "USLinks",
-        "FederalTaxClassification",
-        "DualCitizenAddress",
-        "TaxIdNumber",
-        "ForeignTaxIdNumber",
-        "UsAccountNumber",
-        "UtilityBillPicture",
-        "City",
-        "Area",
-        "HouseNumber",
+        "UsAccountNumber",*/
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -79,7 +85,45 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
     private String cnicBackPic;
     @JsonProperty("CustomerPic")
     private String customerPic;
-    @JsonProperty("ConsumerName")
+    @JsonProperty("UtilityBillPicture")
+    private String utilityBillPicture;
+    @JsonProperty("SignaturePic")
+    private String signaturePic;
+    @JsonProperty("ProofOfIncomePic")
+    private String proofOfIncomePic;
+    @JsonProperty("City")
+    private String city;
+    @JsonProperty("Area")
+    private String area;
+    @JsonProperty("StreetNumber")
+    private String streetNumber;
+    @JsonProperty("HouseNumber")
+    private String houseNumber;
+    @JsonProperty("FederalTaxClassification")
+    private String federalTaxClassification;
+    @JsonProperty("DualCitizenAddress")
+    private String dualCitizenAddress;
+    @JsonProperty("TaxIdNumber")
+    private String taxIdNumber;
+    @JsonProperty("PermanentAddress")
+    private String permanentAddress;
+    @JsonProperty("MailingAddress")
+    private String mailingAddress;
+    @JsonProperty("ForeignTaxIdNumber")
+    private String foreignTaxIdNumber;
+    @JsonProperty("ReferenceNumber")
+    private String ReferenceNumber;
+    @JsonProperty("Country")
+    private String country;
+    @JsonProperty("CountryTaxResidence")
+    private String countryTaxResidence;
+    @JsonProperty("ResidenceAddress")
+    private String residenceAddress;
+    @JsonProperty("CountryOfBirth")
+    private String CountryOfBirth;
+
+
+    /*@JsonProperty("ConsumerName")
     private String consumerName;
     @JsonProperty("FatherHusbandName")
     private String fatherHusbandName;
@@ -87,8 +131,6 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
     private String purposeOfAccount;
     @JsonProperty("SourceOfIncome")
     private String sourceOfIncome;
-    @JsonProperty("SourceOfIncomePic")
-    private String sourceOfIncomePic;
     @JsonProperty("ExpectedMonthlyTurnover")
     private String expectedMonthlyTurnover;
     @JsonProperty("BirthPlace")
@@ -97,12 +139,6 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
     private String motherMaiden;
     @JsonProperty("EmailAddress")
     private String emailAddress;
-    @JsonProperty("MailingAddress")
-    private String mailingAddress;
-    @JsonProperty("PermanentAddress")
-    private String permanentAddress;
-    @JsonProperty("SignaturePic")
-    private String signaturePic;
     @JsonProperty("CurrencyCode")
     private String currencyCode;
     @JsonProperty("UsCitizenship")
@@ -113,24 +149,10 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
     private String signatoryAuthority;
     @JsonProperty("USLinks")
     private String usLinks;
-    @JsonProperty("FederalTaxClassification")
-    private String federalTaxClassification;
-    @JsonProperty("DualCitizenAddress")
-    private String dualCitizenAddress;
-    @JsonProperty("TaxIdNumber")
-    private String taxIdNumber;
-    @JsonProperty("ForeignTaxIdNumber")
-    private String foreignTaxIdNumber;
     @JsonProperty("UsAccountNumber")
-    private String usAccountNumber;
-    @JsonProperty("UtilityBillPicture")
-    private String utilityBillPicture;
-    @JsonProperty("City")
-    private String city;
-    @JsonProperty("Area")
-    private String area;
-    @JsonProperty("HouseNumber")
-    private String houseNumber;
+    private String usAccountNumber;*/
+
+
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -232,92 +254,12 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
         this.customerPic = customerPic;
     }
 
-    public String getConsumerName() {
-        return consumerName;
+    public String getUtilityBillPicture() {
+        return utilityBillPicture;
     }
 
-    public void setConsumerName(String consumerName) {
-        this.consumerName = consumerName;
-    }
-
-    public String getFatherHusbandName() {
-        return fatherHusbandName;
-    }
-
-    public void setFatherHusbandName(String fatherHusbandName) {
-        this.fatherHusbandName = fatherHusbandName;
-    }
-
-    public String getPurposeOfAccount() {
-        return purposeOfAccount;
-    }
-
-    public void setPurposeOfAccount(String purposeOfAccount) {
-        this.purposeOfAccount = purposeOfAccount;
-    }
-
-    public String getSourceOfIncome() {
-        return sourceOfIncome;
-    }
-
-    public void setSourceOfIncome(String sourceOfIncome) {
-        this.sourceOfIncome = sourceOfIncome;
-    }
-
-    public String getSourceOfIncomePic() {
-        return sourceOfIncomePic;
-    }
-
-    public void setSourceOfIncomePic(String sourceOfIncomePic) {
-        this.sourceOfIncomePic = sourceOfIncomePic;
-    }
-
-    public String getExpectedMonthlyTurnover() {
-        return expectedMonthlyTurnover;
-    }
-
-    public void setExpectedMonthlyTurnover(String expectedMonthlyTurnover) {
-        this.expectedMonthlyTurnover = expectedMonthlyTurnover;
-    }
-
-    public String getBirthPlace() {
-        return birthPlace;
-    }
-
-    public void setBirthPlace(String birthPlace) {
-        this.birthPlace = birthPlace;
-    }
-
-    public String getMotherMaiden() {
-        return motherMaiden;
-    }
-
-    public void setMotherMaiden(String motherMaiden) {
-        this.motherMaiden = motherMaiden;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public String getMailingAddress() {
-        return mailingAddress;
-    }
-
-    public void setMailingAddress(String mailingAddress) {
-        this.mailingAddress = mailingAddress;
-    }
-
-    public String getPermanentAddress() {
-        return permanentAddress;
-    }
-
-    public void setPermanentAddress(String permanentAddress) {
-        this.permanentAddress = permanentAddress;
+    public void setUtilityBillPicture(String utilityBillPicture) {
+        this.utilityBillPicture = utilityBillPicture;
     }
 
     public String getSignaturePic() {
@@ -328,44 +270,44 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
         this.signaturePic = signaturePic;
     }
 
-    public String getCurrencyCode() {
-        return currencyCode;
+    public String getProofOfIncomePic() {
+        return proofOfIncomePic;
     }
 
-    public void setCurrencyCode(String currencyCode) {
-        this.currencyCode = currencyCode;
+    public void setProofOfIncomePic(String proofOfIncomePic) {
+        this.proofOfIncomePic = proofOfIncomePic;
     }
 
-    public String getUsCitizenship() {
-        return usCitizenship;
+    public String getCity() {
+        return city;
     }
 
-    public void setUsCitizenship(String usCitizenship) {
-        this.usCitizenship = usCitizenship;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getUsMobileNumber() {
-        return usMobileNumber;
+    public String getArea() {
+        return area;
     }
 
-    public void setUsMobileNumber(String usMobileNumber) {
-        this.usMobileNumber = usMobileNumber;
+    public void setArea(String area) {
+        this.area = area;
     }
 
-    public String getSignatoryAuthority() {
-        return signatoryAuthority;
+    public String getStreetNumber() {
+        return streetNumber;
     }
 
-    public void setSignatoryAuthority(String signatoryAuthority) {
-        this.signatoryAuthority = signatoryAuthority;
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
     }
 
-    public String getUsLinks() {
-        return usLinks;
+    public String getHouseNumber() {
+        return houseNumber;
     }
 
-    public void setUsLinks(String usLinks) {
-        this.usLinks = usLinks;
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
     }
 
     public String getFederalTaxClassification() {
@@ -392,6 +334,22 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
         this.taxIdNumber = taxIdNumber;
     }
 
+    public String getPermanentAddress() {
+        return permanentAddress;
+    }
+
+    public void setPermanentAddress(String permanentAddress) {
+        this.permanentAddress = permanentAddress;
+    }
+
+    public String getMailingAddress() {
+        return mailingAddress;
+    }
+
+    public void setMailingAddress(String mailingAddress) {
+        this.mailingAddress = mailingAddress;
+    }
+
     public String getForeignTaxIdNumber() {
         return foreignTaxIdNumber;
     }
@@ -400,44 +358,44 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
         this.foreignTaxIdNumber = foreignTaxIdNumber;
     }
 
-    public String getUsAccountNumber() {
-        return usAccountNumber;
+    public String getReferenceNumber() {
+        return ReferenceNumber;
     }
 
-    public void setUsAccountNumber(String usAccountNumber) {
-        this.usAccountNumber = usAccountNumber;
+    public void setReferenceNumber(String referenceNumber) {
+        ReferenceNumber = referenceNumber;
     }
 
-    public String getUtilityBillPicture() {
-        return utilityBillPicture;
+    public String getCountry() {
+        return country;
     }
 
-    public void setUtilityBillPicture(String utilityBillPicture) {
-        this.utilityBillPicture = utilityBillPicture;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public String getCity() {
-        return city;
+    public String getCountryTaxResidence() {
+        return countryTaxResidence;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCountryTaxResidence(String countryTaxResidence) {
+        this.countryTaxResidence = countryTaxResidence;
     }
 
-    public String getArea() {
-        return area;
+    public String getResidenceAddress() {
+        return residenceAddress;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setResidenceAddress(String residenceAddress) {
+        this.residenceAddress = residenceAddress;
     }
 
-    public String getHouseNumber() {
-        return houseNumber;
+    public String getCountryOfBirth() {
+        return CountryOfBirth;
     }
 
-    public void setHouseNumber(String houseNumber) {
-        this.houseNumber = houseNumber;
+    public void setCountryOfBirth(String countryOfBirth) {
+        CountryOfBirth = countryOfBirth;
     }
 
     public String getReserved1() {

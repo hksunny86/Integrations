@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inov8.integration.channel.lending.request.GetActiveLoanRequest;
 import com.inov8.integration.channel.lending.request.GetLoanOutstandingRequest;
 import com.inov8.integration.channel.lending.request.LoanRepaymentRequest;
+import com.inov8.integration.channel.lending.request.SalaryDisburseRequest;
 import com.inov8.integration.channel.lending.response.GetActiveLoanResponse;
 import com.inov8.integration.channel.lending.response.GetLoanOutstandingResponse;
 import com.inov8.integration.channel.lending.response.LoanRepaymentResponse;
+import com.inov8.integration.channel.lending.response.SalaryDisburseResponse;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
@@ -32,6 +34,7 @@ public class LendingService {
     private String loanRepayment = PropertyReader.getProperty("lending.loanrepayment");
     private String getOutstandingLoan = PropertyReader.getProperty("lending.getloanoutstanding");
     private String getActiveLoan = PropertyReader.getProperty("lending.getActiveLoan");
+    private String salaryDisburse = PropertyReader.getProperty("lending.salaryDisburse");
     private String bearerToken = PropertyReader.getProperty("lending.bearer.token");
     private I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
@@ -272,6 +275,54 @@ public class LendingService {
             logger.debug("Get Active Loan Request processed in: " + difference + " millisecond");
         }
         return getActiveLoanResponse;
+    }
+
+    public SalaryDisburseResponse salaryDisburseResponse(SalaryDisburseRequest request) {
+
+        SalaryDisburseResponse salaryDisburseResponse = new SalaryDisburseResponse();
+        ObjectMapper objectMapper = new ObjectMapper();
+        I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
+
+        long start = System.currentTimeMillis();
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock5")) {
+            logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
+            String json = "{\n" +
+                    "\n" +
+                    "    \"status\": \"200\",\n" +
+                    "\n" +
+                    "    \"response\": null,\n" +
+                    "\n" +
+                    "    \"message\": \"Salary Paylaod-Message has sent successfully to consumer\"\n" +
+                    "\n" +
+                    "}";
+            salaryDisburseResponse = (SalaryDisburseResponse) JSONUtil.jsonToObject(json, SalaryDisburseResponse.class);
+            Objects.requireNonNull(salaryDisburseResponse).setStatus("200");
+            logger.info("Mock Response Code for Salary Disburse Response: " + salaryDisburseResponse.getStatus());
+        } else {
+
+            Map<String, Object> postParam = new HashMap<String, Object>();
+            Map<String, String> headers = new HashMap<String, String>();
+            headers.put("content-type", "application/json");
+            postParam.put("mobileNumber", request.getMobileNumber());
+            postParam.put("cnic", request.getCnic());
+            postParam.put("salary", request.getSalary());
+            logger.info("Request body of Salary Disburse  " + JSONUtil.getJSON(request));
+            try {
+                String responseBody = getResponseFromAPI(headers, postParam, salaryDisburse);
+                if (responseBody != null && responseBody.length() > 0) {
+                    salaryDisburseResponse = objectMapper.readValue(responseBody, SalaryDisburseResponse.class);
+                }
+            } catch (RestClientException e) {
+                handleRestClientException(e, i8SBSwitchControllerResponseVO);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            long endTime = (new Date()).getTime();
+            long difference = endTime - start;
+            logger.debug("Salary Disburse Request processed in: " + difference + " millisecond");
+        }
+        return salaryDisburseResponse;
     }
 
     public I8SBSwitchControllerRequestVO getI8SBSwitchControllerRequestVO() {

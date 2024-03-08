@@ -396,6 +396,7 @@ public class I8SBConstants {
     public static String RequestType_LENDING_LOANREPAYMENT = "LoanRepayment";
     public static String RequestType_LENDING_GETLOANOUTSTANDING = "getLoanOutstanding";
     public static String RequestType_LENDING_GETACTIVELOAN = "getActiveLoan";
+    public static String RequestType_LENDING_SALARY_DISBURSE = "salaryDisburse";
 
 
 

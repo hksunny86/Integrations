@@ -1,13 +1,7 @@
 package com.inov8.integration.channel.lending.bo;
 
-import com.inov8.integration.channel.lending.request.GetActiveLoanRequest;
-import com.inov8.integration.channel.lending.request.GetLoanOutstandingRequest;
-import com.inov8.integration.channel.lending.request.LoanRepaymentRequest;
-import com.inov8.integration.channel.lending.request.Request;
-import com.inov8.integration.channel.lending.response.GetActiveLoanResponse;
-import com.inov8.integration.channel.lending.response.GetLoanOutstandingResponse;
-import com.inov8.integration.channel.lending.response.LoanRepaymentResponse;
-import com.inov8.integration.channel.lending.response.Response;
+import com.inov8.integration.channel.lending.request.*;
+import com.inov8.integration.channel.lending.response.*;
 import com.inov8.integration.channel.lending.service.LendingService;
 import com.inov8.integration.controller.I8SBChannelInterface;
 import com.inov8.integration.enums.DateFormatEnum;
@@ -58,6 +52,8 @@ public class LendingBo implements I8SBChannelInterface {
                 response = lendingService.getLoanOutstandingResponse((GetLoanOutstandingRequest) request);
             } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_LENDING_GETACTIVELOAN)) {
                 response = lendingService.getActiveLoanResponse((GetActiveLoanRequest) request);
+            } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_LENDING_SALARY_DISBURSE)) {
+                response = lendingService.salaryDisburseResponse((SalaryDisburseRequest) request);
             }
 
             if (Objects.requireNonNull(response).populateI8SBSwitchControllerResponseVO() != null)
@@ -118,7 +114,12 @@ public class LendingBo implements I8SBChannelInterface {
             request = new GetActiveLoanRequest();
             response = new GetActiveLoanResponse();
 
-        } else {
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_LENDING_SALARY_DISBURSE)) {
+            request = new SalaryDisburseRequest();
+            response = new SalaryDisburseResponse();
+
+        }
+        else {
             logger.info("[FAILED] Request type not supported");
             throw new I8SBValidationException("Request type not supported");
         }

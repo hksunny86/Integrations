@@ -522,6 +522,15 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String reversalId;
     private String reversalStatus;
     private String payMode;
+    private String salary;
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
 
     public String getPayMode() {
         return payMode;

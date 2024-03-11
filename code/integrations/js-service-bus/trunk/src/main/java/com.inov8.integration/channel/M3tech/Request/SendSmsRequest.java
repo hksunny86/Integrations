@@ -33,10 +33,14 @@ public class SendSmsRequest extends Request {
 
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
+        String message = i8SBSwitchControllerRequestVO.getSmsText();
+        String regex = "(?i) Your available balance is: \\w+\\.? \\d+\\.?";
+        String replacedMessage = message.replaceAll(regex, " ");
+
         this.setUserId(PropertyReader.getProperty("m3Tech.username"));
         this.setPassword(PropertyReader.getProperty("m3Tech.password"));
         this.setMobileNo(i8SBSwitchControllerRequestVO.getRecieverMobileNo());
-        this.setSms(i8SBSwitchControllerRequestVO.getSmsText());
+        this.setSms(replacedMessage);
         this.setMsgId(i8SBSwitchControllerRequestVO.getSTAN());
         this.setMsgHeader(PropertyReader.getProperty("m3Tech.message.header"));
         this.setSmsType("");

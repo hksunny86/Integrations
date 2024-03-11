@@ -45,13 +45,17 @@ public class SendPushNotificationsRequest extends Request {
     }
 
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
+        String message = i8SBSwitchControllerRequestVO.getMessage();
+        String regex = "(?i) Your available balance is: \\w+\\.? \\d+\\.?";
+        String replacedMessage = message.replaceAll(regex, " ");
+
         SendPushNotification request = new SendPushNotification();
         sendPushNotificationsRequestList = new ArrayList();
 
 //        request.setToken(PropertyReader.getProperty("sendPushNotification.token"));
         request.setMobile(i8SBSwitchControllerRequestVO.getMobileNumber());
         request.setTitle(i8SBSwitchControllerRequestVO.getTitle());
-        request.setMessage(i8SBSwitchControllerRequestVO.getMessage());
+        request.setMessage(replacedMessage);
         if (StringUtil.isNullOrEmpty(i8SBSwitchControllerRequestVO.getMessageType())) {
             request.setType("ZINDIGI");
         } else {

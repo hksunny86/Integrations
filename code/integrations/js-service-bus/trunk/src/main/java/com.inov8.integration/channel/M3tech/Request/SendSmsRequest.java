@@ -1,14 +1,20 @@
 package com.inov8.integration.channel.M3tech.Request;
 
+import com.inov8.integration.channel.sendPushNotification.request.SendPushNotificationsRequest;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class SendSmsRequest extends Request {
+
+    private static Logger logger = LoggerFactory.getLogger(SendSmsRequest.class.getSimpleName());
 
     @XmlElement(name = "UserId")
     protected String userId;
@@ -33,14 +39,23 @@ public class SendSmsRequest extends Request {
 
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
-        String message = i8SBSwitchControllerRequestVO.getSmsText();
-        String regex = "(?i) Your available balance is: \\w+\\.? \\d+\\.?";
-        String replacedMessage = message.replaceAll(regex, " ");
+        try {
+            String message = i8SBSwitchControllerRequestVO.getMessage();
+            String regex = "(?i) Your available balance is: \\w+\\.? \\d+\\.?";
+            String replacedMessage = message.replaceAll(regex, " ");
+
+            if (StringUtils.isNotEmpty(replacedMessage)) {
+                this.setSms(replacedMessage);
+            } else {
+                this.setSms(i8SBSwitchControllerRequestVO.getSmsText());
+            }
+        } catch (Exception e) {
+            logger.error("[ Exception ]" + e.getLocalizedMessage(), e);
+        }
 
         this.setUserId(PropertyReader.getProperty("m3Tech.username"));
         this.setPassword(PropertyReader.getProperty("m3Tech.password"));
         this.setMobileNo(i8SBSwitchControllerRequestVO.getRecieverMobileNo());
-        this.setSms(replacedMessage);
         this.setMsgId(i8SBSwitchControllerRequestVO.getSTAN());
         this.setMsgHeader(PropertyReader.getProperty("m3Tech.message.header"));
         this.setSmsType("");

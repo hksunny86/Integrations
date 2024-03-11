@@ -10,11 +10,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.inov8.integration.channel.M3tech.service.M3TechService;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import io.grpc.netty.shaded.io.netty.util.internal.StringUtil;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonInclude(Include.NON_NULL)
 @JsonPropertyOrder({"SendPushNotifications"})
 public class SendPushNotificationsRequest extends Request {
+    private static Logger logger = LoggerFactory.getLogger(SendPushNotificationsRequest.class.getSimpleName());
+
     @JsonProperty("SendPushNotifications")
     private List<SendPushNotification> sendPushNotifications = null;
     private List<SendPushNotification> sendPushNotificationsRequestList;
@@ -45,17 +50,27 @@ public class SendPushNotificationsRequest extends Request {
     }
 
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
-        String message = i8SBSwitchControllerRequestVO.getMessage();
-        String regex = "(?i) Your available balance is: \\w+\\.? \\d+\\.?";
-        String replacedMessage = message.replaceAll(regex, " ");
-
         SendPushNotification request = new SendPushNotification();
+
+        try {
+            String message = i8SBSwitchControllerRequestVO.getMessage();
+            String regex = "(?i) Your available balance is: \\w+\\.? \\d+\\.?";
+            String replacedMessage = message.replaceAll(regex, " ");
+
+            if (StringUtils.isNotEmpty(replacedMessage)) {
+                request.setMessage(replacedMessage);
+            } else {
+                request.setMessage(i8SBSwitchControllerRequestVO.getMessage());
+            }
+        } catch (Exception e) {
+            logger.error("[ Exception ]" + e.getLocalizedMessage(), e);
+        }
+
         sendPushNotificationsRequestList = new ArrayList();
 
 //        request.setToken(PropertyReader.getProperty("sendPushNotification.token"));
         request.setMobile(i8SBSwitchControllerRequestVO.getMobileNumber());
         request.setTitle(i8SBSwitchControllerRequestVO.getTitle());
-        request.setMessage(replacedMessage);
         if (StringUtil.isNullOrEmpty(i8SBSwitchControllerRequestVO.getMessageType())) {
             request.setType("ZINDIGI");
         } else {

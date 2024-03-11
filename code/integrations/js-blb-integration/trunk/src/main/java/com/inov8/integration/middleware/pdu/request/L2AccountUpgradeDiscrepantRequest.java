@@ -38,20 +38,6 @@ import java.io.Serializable;
         "CountryTaxResidence",
         "ResidenceAddress",
         "CountryOfBirth",
-        /*"ConsumerName",
-        "FatherHusbandName",
-        "PurposeOfAccount",
-        "SourceOfIncome",
-        "ExpectedMonthlyTurnover",
-        "BirthPlace",
-        "MotherMaiden",
-        "EmailAddress",
-        "CurrencyCode",
-        "UsCitizenship",
-        "UsMobileNumber",
-        "SignatoryAuthority",
-        "USLinks",
-        "UsAccountNumber",*/
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -121,38 +107,6 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
     private String residenceAddress;
     @JsonProperty("CountryOfBirth")
     private String CountryOfBirth;
-
-
-    /*@JsonProperty("ConsumerName")
-    private String consumerName;
-    @JsonProperty("FatherHusbandName")
-    private String fatherHusbandName;
-    @JsonProperty("PurposeOfAccount")
-    private String purposeOfAccount;
-    @JsonProperty("SourceOfIncome")
-    private String sourceOfIncome;
-    @JsonProperty("ExpectedMonthlyTurnover")
-    private String expectedMonthlyTurnover;
-    @JsonProperty("BirthPlace")
-    private String birthPlace;
-    @JsonProperty("MotherMaiden")
-    private String motherMaiden;
-    @JsonProperty("EmailAddress")
-    private String emailAddress;
-    @JsonProperty("CurrencyCode")
-    private String currencyCode;
-    @JsonProperty("UsCitizenship")
-    private String usCitizenship;
-    @JsonProperty("UsMobileNumber")
-    private String usMobileNumber;
-    @JsonProperty("SignatoryAuthority")
-    private String signatoryAuthority;
-    @JsonProperty("USLinks")
-    private String usLinks;
-    @JsonProperty("UsAccountNumber")
-    private String usAccountNumber;*/
-
-
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")

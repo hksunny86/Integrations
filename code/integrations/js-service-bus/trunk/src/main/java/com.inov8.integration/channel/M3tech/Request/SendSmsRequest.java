@@ -43,12 +43,7 @@ public class SendSmsRequest extends Request {
             String message = i8SBSwitchControllerRequestVO.getMessage();
             String regex = "(?i) Your available balance is: \\w+\\.? \\d+\\.?";
             String replacedMessage = message.replaceAll(regex, " ");
-
-            if (StringUtils.isNotEmpty(replacedMessage)) {
-                this.setSms(replacedMessage);
-            } else {
-                this.setSms(i8SBSwitchControllerRequestVO.getSmsText());
-            }
+            this.setSms(replacedMessage);
         } catch (Exception e) {
             logger.error("[ Exception ]" + e.getLocalizedMessage(), e);
         }

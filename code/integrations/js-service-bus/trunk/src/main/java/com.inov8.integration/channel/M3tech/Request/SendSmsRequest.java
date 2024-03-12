@@ -1,10 +1,8 @@
 package com.inov8.integration.channel.M3tech.Request;
 
-import com.inov8.integration.channel.sendPushNotification.request.SendPushNotificationsRequest;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +38,7 @@ public class SendSmsRequest extends Request {
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
         try {
-            String message = i8SBSwitchControllerRequestVO.getMessage();
+            String message = i8SBSwitchControllerRequestVO.getSmsText();
             String regex = "(?i) Your available balance is: \\w+\\.? \\d+\\.?";
             String replacedMessage = message.replaceAll(regex, " ");
             this.setSms(replacedMessage);

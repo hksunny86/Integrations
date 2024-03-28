@@ -440,8 +440,8 @@ public class WebServiceVO implements Serializable {
     private String proofOfProfession;
     private String portalId;
     private String portalPassword;
-    private List <AccountStatement> accountStatementList;
-    private List <CustomerDeviceVerification> customerDeviceVerificationList;
+    private List<AccountStatement> accountStatementList;
+    private List<CustomerDeviceVerification> customerDeviceVerificationList;
     private String id;
     private String deviceName;
     private String approvalStatus;
@@ -542,6 +542,15 @@ public class WebServiceVO implements Serializable {
     private Date tDate;
     private String proofOfIncomePic;
     private String country;
+    private String coolingPeriodComments;
+
+    public String getCoolingPeriodComments() {
+        return coolingPeriodComments;
+    }
+
+    public void setCoolingPeriodComments(String coolingPeriodComments) {
+        this.coolingPeriodComments = coolingPeriodComments;
+    }
 
     public String getProofOfIncomePic() {
         return proofOfIncomePic;

@@ -170,4 +170,5 @@ public interface WebServiceSwitchController {
     WebServiceVO accountInfo(WebServiceVO webServiceVO);
     WebServiceVO glToGl(WebServiceVO webServiceVO);
     WebServiceVO checkLoan(WebServiceVO webServiceVO);
+    WebServiceVO deviceUpdate(WebServiceVO webServiceVO);
 }

@@ -2836,4 +2836,9 @@ public class JsIntegrationController implements WebServiceSwitchController {
     public WebServiceVO checkLoan(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO deviceUpdate(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

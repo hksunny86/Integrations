@@ -27,17 +27,6 @@ import java.io.Serializable;
         "Area",
         "StreetNumber",
         "HouseNumber",
-        "FederalTaxClassification",
-        "DualCitizenAddress",
-        "TaxIdNumber",
-        "PermanentAddress",
-        "MailingAddress",
-        "ForeignTaxIdNumber",
-        "ReferenceNumber",
-        "Country",
-        "CountryTaxResidence",
-        "ResidenceAddress",
-        "CountryOfBirth",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -85,28 +74,6 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
     private String streetNumber;
     @JsonProperty("HouseNumber")
     private String houseNumber;
-    @JsonProperty("FederalTaxClassification")
-    private String federalTaxClassification;
-    @JsonProperty("DualCitizenAddress")
-    private String dualCitizenAddress;
-    @JsonProperty("TaxIdNumber")
-    private String taxIdNumber;
-    @JsonProperty("PermanentAddress")
-    private String permanentAddress;
-    @JsonProperty("MailingAddress")
-    private String mailingAddress;
-    @JsonProperty("ForeignTaxIdNumber")
-    private String foreignTaxIdNumber;
-    @JsonProperty("ReferenceNumber")
-    private String ReferenceNumber;
-    @JsonProperty("Country")
-    private String country;
-    @JsonProperty("CountryTaxResidence")
-    private String countryTaxResidence;
-    @JsonProperty("ResidenceAddress")
-    private String residenceAddress;
-    @JsonProperty("CountryOfBirth")
-    private String CountryOfBirth;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -262,94 +229,6 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
 
     public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
-    }
-
-    public String getFederalTaxClassification() {
-        return federalTaxClassification;
-    }
-
-    public void setFederalTaxClassification(String federalTaxClassification) {
-        this.federalTaxClassification = federalTaxClassification;
-    }
-
-    public String getDualCitizenAddress() {
-        return dualCitizenAddress;
-    }
-
-    public void setDualCitizenAddress(String dualCitizenAddress) {
-        this.dualCitizenAddress = dualCitizenAddress;
-    }
-
-    public String getTaxIdNumber() {
-        return taxIdNumber;
-    }
-
-    public void setTaxIdNumber(String taxIdNumber) {
-        this.taxIdNumber = taxIdNumber;
-    }
-
-    public String getPermanentAddress() {
-        return permanentAddress;
-    }
-
-    public void setPermanentAddress(String permanentAddress) {
-        this.permanentAddress = permanentAddress;
-    }
-
-    public String getMailingAddress() {
-        return mailingAddress;
-    }
-
-    public void setMailingAddress(String mailingAddress) {
-        this.mailingAddress = mailingAddress;
-    }
-
-    public String getForeignTaxIdNumber() {
-        return foreignTaxIdNumber;
-    }
-
-    public void setForeignTaxIdNumber(String foreignTaxIdNumber) {
-        this.foreignTaxIdNumber = foreignTaxIdNumber;
-    }
-
-    public String getReferenceNumber() {
-        return ReferenceNumber;
-    }
-
-    public void setReferenceNumber(String referenceNumber) {
-        ReferenceNumber = referenceNumber;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCountryTaxResidence() {
-        return countryTaxResidence;
-    }
-
-    public void setCountryTaxResidence(String countryTaxResidence) {
-        this.countryTaxResidence = countryTaxResidence;
-    }
-
-    public String getResidenceAddress() {
-        return residenceAddress;
-    }
-
-    public void setResidenceAddress(String residenceAddress) {
-        this.residenceAddress = residenceAddress;
-    }
-
-    public String getCountryOfBirth() {
-        return CountryOfBirth;
-    }
-
-    public void setCountryOfBirth(String countryOfBirth) {
-        CountryOfBirth = countryOfBirth;
     }
 
     public String getReserved1() {

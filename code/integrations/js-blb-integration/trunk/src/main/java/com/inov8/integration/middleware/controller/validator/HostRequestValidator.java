@@ -4245,14 +4245,9 @@ public class HostRequestValidator {
 //            throw new ValidationException("[FAILED] Validation Failed Consumer Name: " + integrationVO.getConsumerName());
 //        }
 //
-//
 //        if (StringUtils.isEmpty(integrationVO.getBirthPlace())) {
 //            throw new ValidationException("[FAILED] Validation Failed Birth Place: " + integrationVO.getBirthPlace());
 //        }
-        if (StringUtils.isEmpty(integrationVO.getPermanentAddress())) {
-            throw new ValidationException("[FAILED] Validation Failed Present Address: " + integrationVO.getPermanentAddress());
-        }
-
 
 //        if (StringUtils.isEmpty(integrationVO.getCnicExpiry())) {
 //            throw new ValidationException("[FAILED] Validation Failed Cnic Expiry: " + integrationVO.getCnicExpiry());

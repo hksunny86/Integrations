@@ -18160,17 +18160,6 @@ public class HostIntegrationService {
         messageVO.setArea(request.getArea());
         messageVO.setStreetNumber(request.getStreetNumber());
         messageVO.setHouseNumber(request.getHouseNumber());
-        messageVO.setFederalTaxClassification(request.getFederalTaxClassification());
-        messageVO.setDualCitizenAddress(request.getDualCitizenAddress());
-        messageVO.setTaxIdNumber(request.getTaxIdNumber());
-        messageVO.setPermanentAddress(request.getPermanentAddress());
-        messageVO.setMailingAddress(request.getMailingAddress());
-        messageVO.setForeignTaxIdNumber(request.getForeignTaxIdNumber());
-        messageVO.setReferenceNumber(request.getReferenceNumber());
-        messageVO.setCountry(request.getCountry());
-        messageVO.setCountryTaxResidence(request.getCountryTaxResidence());
-        messageVO.setResidenceAddress(request.getResidenceAddress());
-        messageVO.setCountryOfBirth(request.getCountryOfBirth());
         messageVO.setReserved1(request.getReserved1());
         if (request.getReserved2().equals("")) {
             messageVO.setReserved2("0");

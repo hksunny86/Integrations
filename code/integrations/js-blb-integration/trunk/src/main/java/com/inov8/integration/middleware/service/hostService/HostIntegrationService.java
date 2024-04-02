@@ -7202,18 +7202,26 @@ public class HostIntegrationService {
                         fonePayLogModel = transactionDAO.saveFonePayIntegrationLogModel(messageVO, "Credit Payment");
                         messageVO = this.validateCreditInquiryRRN(messageVO);
                         if (!messageVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
-
+                            response.setResponseCode(messageVO.getResponseCode());
+                            response.setResponseDescription(messageVO.getResponseCodeDescription());
+                            return response;
                         } else {
 
                             boolean isAlreadyExists = this.checkAlreadyExists(messageVO.getRetrievalReferenceNumber(), dt);
                             boolean existsInIbftTable = transactionDAO.CheckIBFTStatus(messageVO.getRetrievalReferenceNumber(), String.valueOf(dt));
                             if (!isAlreadyExists && !existsInIbftTable) {
+                                logger.info("Request Goes to Save In Credit Payment SAF");
+
                                 transactionDAO.saveNewCreditRecord(middlewareMessageVO);
                                 transactionDAO.AddToProcessing(messageVO.getRetrievalReferenceNumber(), messageVO.getDateTime().toString());
 
                             }
                             if (!existsInIbftTable)
-                                this.sentWalletRequest(middlewareMessageVO);
+                                try {
+                                    this.sentWalletRequest(middlewareMessageVO);
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
                         }
 
 
@@ -14768,8 +14776,11 @@ public class HostIntegrationService {
         middlewareMessageVO.setReserved10(middlewareMessageVO.getReserved10());
         middlewareMessageVO.setCurrencyValue(middlewareMessageVO.getCurrencyValue());
         middlewareMessageVO.setWalletAmount(middlewareMessageVO.getWalletAmount());
+
+
         // Create a ConnectionFactory
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://" + I8_QUEUE_SERVER + ":" + I8_QUEUE_PORT);
+        logger.info("Core To Wallet Push To SAF URL: " + connectionFactory.getBrokerURL());
 
         // Create a Connection
         Connection connection = connectionFactory.createConnection();

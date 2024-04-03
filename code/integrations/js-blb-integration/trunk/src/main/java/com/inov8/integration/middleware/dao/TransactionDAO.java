@@ -104,6 +104,8 @@ public class TransactionDAO {
     public int saveNewCreditRecord(final CreditPaymentAdviceVO messageVO) {
         long startTime = new Date().getTime(); // start time
         int count = 0;
+        logger.info("Save In Credit Payment Adivce: ");
+
         CrediRetryAdviceModel tx = new CrediRetryAdviceModel();
         tx.setAccountNo(messageVO.getAccountNo1());
         tx.setMobileNo(messageVO.getAccountNo2());
@@ -138,7 +140,7 @@ public class TransactionDAO {
             StringBuilder sql = new StringBuilder();
             sql.append("INSERT INTO I8_MICROBANK_JS_PROD.CREDIT_RETRY_ADVICE ");
             sql.append("(CREDIT_RETRY_ADVICE_ID, MOBILE_NO, RRN, ACCOUNT_NO, TRANSACTION_AMOUNT, REQUEST_TIME, STAN, STATUS,TRANSACTION_CODE,BANK_IMD,CREATED_BY,UPDATED_BY,UPDATED_ON,CREATED_ON,VERSION_NO,PRODUCT_ID,CHANNEL_NAME,CREDIT_INQUIRY_RRN,ORIGINAL_TRANSACTION_RRN,RESERVED1,RESERVED2,RESERVED3,RESERVED4,RESERVED5,RESERVED6,RESERVED7,RESERVED8,RESERVED9,RESERVED10,CURRENCY_VALUE,WALLET_AMOUNT) ");
-            sql.append("VALUES (I8_MICROBANK_JS_PROD.CREDIT_RETRY_ADVICE_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            sql.append("VALUES (I8_MICROBANK_JS_PROD.CREDIT_RETRY_ADVICE_SEQ.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             count = getJdbcTemplate().update(sql.toString(), new PreparedStatementSetter() {
                 public void setValues(PreparedStatement ps) throws SQLException {
@@ -255,13 +257,14 @@ public class TransactionDAO {
     }
 
     public void AddToProcessing(String stan, String reqTime) {
+        logger.info("Query to validate validate ibft Status IBFTStatusHibernateDAO.AddToProcessing() :: ");
         StringBuilder query = new StringBuilder(140);
         query.append("INSERT INTO I8_MICROBANK_JS_PROD.CREDIT_STATUS (STAN,REQ_TIME) VALUES "
                 + " (?, ?)");
 
         try {
             jdbcTemplate.update(query.toString(), new Object[]{stan, reqTime});
-            logger.info("Query to validate validate ibft Status IBFTStatusHibernateDAO.AddToProcessing() :: " + query.toString());
+            logger.info("Query to validate validate ibft Status IBFTStatusHibernateDAO.AddToProcessing()2 :: " + query.toString());
 
         } catch (DataAccessException e) {
             logger.error("Insertion in CREDIT_STATUS Failed for stan: " + stan + "  at ReqTime : " + reqTime);

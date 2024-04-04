@@ -11,6 +11,8 @@ import com.inov8.integration.webservice.lendingVO.GetOutstandingResponsePayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder({
@@ -126,9 +128,9 @@ public class GetActiveLoanResponse extends Response {
                 i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
             }
         } else {
-            if (this.getPayload().getStatusCode() != null) {
+            if (this.getPayload() != null) {
                 i8SBSwitchControllerResponseVO.setDescription(this.getPayload().getStatusDescription());
-                i8SBSwitchControllerResponseVO.setStatusCode(this.getPayload().getStatusCode());
+                i8SBSwitchControllerResponseVO.setStatusCode(Objects.requireNonNull(this.getPayload().getStatusCode()));
             }
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getMessage());

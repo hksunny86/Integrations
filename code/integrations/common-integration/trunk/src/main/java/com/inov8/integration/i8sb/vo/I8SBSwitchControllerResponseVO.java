@@ -3,6 +3,7 @@ package com.inov8.integration.i8sb.vo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.i8sb.vo.CardDetailVO;
 import com.inov8.integration.vo.StatementVo;
+import com.inov8.integration.webservice.islamicSavingVO.Body;
 import com.inov8.integration.webservice.merchant.StaticQr;
 import com.inov8.integration.webservice.optasiaVO.*;
 import com.inov8.integration.webservice.raastVO.IDs;
@@ -509,6 +510,15 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String markupOutstanding;
     private String lpChargesOutstanding;
     private String epChargesOutstanding;
+    private Body body;
+
+    public Body getBody() {
+        return body;
+    }
+
+    public void setBody(Body body) {
+        this.body = body;
+    }
 
     public String getTotalOutstanding() {
         return totalOutstanding;

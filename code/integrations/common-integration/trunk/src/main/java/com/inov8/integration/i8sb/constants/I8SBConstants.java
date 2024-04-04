@@ -92,6 +92,7 @@ public class I8SBConstants {
     public static String I8SB_Channel_ID_MERCHANT = "MERCHANT";
     public static String I8SB_Channel_ID_WASA = "WASA";
     public static String I8SB_Channel_ID_LENDING = "LENDING";
+    public static String I8SB_Channel_ID_ISLAMIC_SAVING = "ISLAMICSAVING";
 
 
     public static String I8SB_Channel_ID_ETPaymentCollection = "ETPaymentCollection";
@@ -397,6 +398,7 @@ public class I8SBConstants {
     public static String RequestType_LENDING_GETLOANOUTSTANDING = "getLoanOutstanding";
     public static String RequestType_LENDING_GETACTIVELOAN = "getActiveLoan";
     public static String RequestType_LENDING_SALARY_DISBURSE = "salaryDisburse";
+    public static String RequestType_ISLAMIC_SAVING_WITHDRAWAL = "islamicSavingWithdrawal";
 
 
 

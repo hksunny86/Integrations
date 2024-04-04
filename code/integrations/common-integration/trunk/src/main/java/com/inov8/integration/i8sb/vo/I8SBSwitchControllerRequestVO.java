@@ -1,6 +1,7 @@
 package com.inov8.integration.i8sb.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.inov8.integration.webservice.islamicSavingVO.Body;
 import com.inov8.integration.webservice.optasiaVO.AdditionalInfo;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -523,6 +524,15 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String reversalStatus;
     private String payMode;
     private String salary;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getSalary() {
         return salary;

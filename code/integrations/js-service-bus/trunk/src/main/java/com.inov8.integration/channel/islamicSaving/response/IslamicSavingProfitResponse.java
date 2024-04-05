@@ -66,7 +66,7 @@ public class IslamicSavingProfitResponse extends Response {
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
-        if (this.getResponseCode() !=null && this.getResponseCode().equals("00")) {
+        if (this.getResponseCode() != null && this.getResponseCode().equals("00")) {
             i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
             i8SBSwitchControllerResponseVO.setDescription(this.getResponseMessage());
             i8SBSwitchControllerResponseVO.setTraceNo(this.getTraceId());

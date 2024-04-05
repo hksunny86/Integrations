@@ -109,7 +109,7 @@ public class IslamicSavingService {
         }
     }
 
-    public IslamicSavingProfitResponse islamicSavingWithdrawalResponse(IslamicSavingProfitRequest request) {
+    public IslamicSavingProfitResponse islamicSavingProfitResponse(IslamicSavingProfitRequest request) {
 
         IslamicSavingProfitResponse response = new IslamicSavingProfitResponse();
         ObjectMapper objectMapper = new ObjectMapper();

@@ -49,7 +49,7 @@ public class IslamicServiceBo implements I8SBChannelInterface {
             String requestType = i8SBSwitchControllerRequestVO.getRequestType();
             islamicSavingService.setI8SBSwitchControllerRequestVO(i8SBSwitchControllerRequestVO);
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ISLAMIC_SAVING_WITHDRAWAL)) {
-                response = islamicSavingService.islamicSavingWithdrawalResponse((IslamicSavingProfitRequest) request);
+                response = islamicSavingService.islamicSavingProfitResponse((IslamicSavingProfitRequest) request);
             }
             if (Objects.requireNonNull(response).populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();

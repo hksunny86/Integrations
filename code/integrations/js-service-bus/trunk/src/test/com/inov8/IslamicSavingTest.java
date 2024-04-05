@@ -32,7 +32,6 @@ public class IslamicSavingTest {
         requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_ISLAMIC_SAVING);
         requestVO.setRequestType(I8SBConstants.RequestType_ISLAMIC_SAVING_WITHDRAWAL);
 
-        requestVO.setId("10");
         requestVO.setMobileNumber("03355913139");
         requestVO.setAmount("100");
 

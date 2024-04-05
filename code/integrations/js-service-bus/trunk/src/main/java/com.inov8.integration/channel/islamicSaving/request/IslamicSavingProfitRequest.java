@@ -6,40 +6,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
-import com.inov8.integration.webservice.lendingVO.GetActiveLoanData;
-import com.inov8.integration.webservice.lendingVO.GetActiveLoanRequestPayload;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder({
-        "id",
-        "mobile",
+        "mobileNumber",
         "amount",
 })
-public class IslamicSavingWithdrawalRequest extends Request {
+public class IslamicSavingProfitRequest extends Request {
 
-    @JsonProperty("id")
-    private String id;
-    @JsonProperty("mobile")
-    private String mobile;
+    @JsonProperty("mobileNumber")
+    private String mobileNumber;
     @JsonProperty("amount")
     private String amount;
 
-    public String getId() {
-        return id;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String getAmount() {
@@ -53,8 +40,7 @@ public class IslamicSavingWithdrawalRequest extends Request {
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        this.setId(i8SBSwitchControllerRequestVO.getId());
-        this.setMobile(i8SBSwitchControllerRequestVO.getMobileNumber());
+        this.setMobileNumber(i8SBSwitchControllerRequestVO.getMobileNumber());
         this.setAmount(i8SBSwitchControllerRequestVO.getAmount());
     }
 

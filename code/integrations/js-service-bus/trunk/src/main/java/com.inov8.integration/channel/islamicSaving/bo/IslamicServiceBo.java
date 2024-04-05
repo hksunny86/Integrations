@@ -1,8 +1,8 @@
 package com.inov8.integration.channel.islamicSaving.bo;
 
-import com.inov8.integration.channel.islamicSaving.request.IslamicSavingWithdrawalRequest;
+import com.inov8.integration.channel.islamicSaving.request.IslamicSavingProfitRequest;
 import com.inov8.integration.channel.islamicSaving.request.Request;
-import com.inov8.integration.channel.islamicSaving.response.IslamicSavingWithdrawalResponse;
+import com.inov8.integration.channel.islamicSaving.response.IslamicSavingProfitResponse;
 import com.inov8.integration.channel.islamicSaving.response.Response;
 import com.inov8.integration.channel.islamicSaving.service.IslamicSavingService;
 import com.inov8.integration.controller.I8SBChannelInterface;
@@ -49,7 +49,7 @@ public class IslamicServiceBo implements I8SBChannelInterface {
             String requestType = i8SBSwitchControllerRequestVO.getRequestType();
             islamicSavingService.setI8SBSwitchControllerRequestVO(i8SBSwitchControllerRequestVO);
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ISLAMIC_SAVING_WITHDRAWAL)) {
-                response = islamicSavingService.islamicSavingWithdrawalResponse((IslamicSavingWithdrawalRequest) request);
+                response = islamicSavingService.islamicSavingWithdrawalResponse((IslamicSavingProfitRequest) request);
             }
             if (Objects.requireNonNull(response).populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
@@ -98,8 +98,8 @@ public class IslamicServiceBo implements I8SBChannelInterface {
         Response response = null;
         logger.info("Request type: " + requestType);
         if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_ISLAMIC_SAVING_WITHDRAWAL)) {
-            request = new IslamicSavingWithdrawalRequest();
-            response = new IslamicSavingWithdrawalResponse();
+            request = new IslamicSavingProfitRequest();
+            response = new IslamicSavingProfitResponse();
 
         } else {
             logger.info("[FAILED] Request type not supported");

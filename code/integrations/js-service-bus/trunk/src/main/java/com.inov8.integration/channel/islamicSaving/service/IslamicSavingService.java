@@ -1,8 +1,8 @@
 package com.inov8.integration.channel.islamicSaving.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.inov8.integration.channel.islamicSaving.request.IslamicSavingWithdrawalRequest;
-import com.inov8.integration.channel.islamicSaving.response.IslamicSavingWithdrawalResponse;
+import com.inov8.integration.channel.islamicSaving.request.IslamicSavingProfitRequest;
+import com.inov8.integration.channel.islamicSaving.response.IslamicSavingProfitResponse;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
@@ -27,7 +27,7 @@ public class IslamicSavingService {
 
     private static Logger logger = LoggerFactory.getLogger(IslamicSavingService.class.getSimpleName());
     private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
-    private String islamicSavingWithdrawalUrl = PropertyReader.getProperty("islamic.saving.withdrawal");
+    private String islamicSavingProfitUrl = PropertyReader.getProperty("islamic.saving.profit");
     private String accessToken = PropertyReader.getProperty("islamic.saving.accessToken");
     private I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
@@ -109,28 +109,33 @@ public class IslamicSavingService {
         }
     }
 
-    public IslamicSavingWithdrawalResponse islamicSavingWithdrawalResponse(IslamicSavingWithdrawalRequest request) {
+    public IslamicSavingProfitResponse islamicSavingWithdrawalResponse(IslamicSavingProfitRequest request) {
 
-        IslamicSavingWithdrawalResponse response = new IslamicSavingWithdrawalResponse();
+        IslamicSavingProfitResponse response = new IslamicSavingProfitResponse();
         ObjectMapper objectMapper = new ObjectMapper();
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock6")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock5")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String json = "{\n" +
                     "\n" +
-                    "  \"responseCode\": \"00\",\n" +
+                    "    \"responseCode\": \"00\",\n" +
                     "\n" +
-                    "  \"responseMessage\": \"Success\",\n" +
+                    "    \"responseMessage\": \"Success\",\n" +
                     "\n" +
-                    "  \"traceId\": \"\",\n" +
+                    "    \"traceId\": \"\",\n" +
                     "\n" +
-                    "  \"body\": {}\n" +
+                    "    \"body\": {\n" +
+                    "\n" +
+                    "        \"responseCode\": \"\",\n" +
+                    "\n" +
+                    "        \"responseDescription\": \"\"\n" +
+                    "\n" +
+                    "    }\n" +
                     "\n" +
                     "}";
-            response = (IslamicSavingWithdrawalResponse) JSONUtil.jsonToObject(json, IslamicSavingWithdrawalResponse.class);
-            Objects.requireNonNull(response).setResponseCode("200");
+            response = (IslamicSavingProfitResponse) JSONUtil.jsonToObject(json, IslamicSavingProfitResponse.class);
             logger.info("Mock Response Code for Islamic Saving Withdrawal Response: " + response.getResponseCode());
         } else {
 
@@ -138,14 +143,13 @@ public class IslamicSavingService {
             Map<String, String> headers = new HashMap<String, String>();
             headers.put("content-type", "application/json");
             headers.put("AccessToken", accessToken);
-            postParam.put("id", request.getId());
-            postParam.put("mobile", request.getMobile());
+            postParam.put("mobileNumber", request.getMobileNumber());
             postParam.put("amount", request.getAmount());
             logger.info("Request body of Islamic Saving Withdrawal " + JSONUtil.getJSON(request));
             try {
-                String responseBody = getResponseFromAPI(headers, postParam, islamicSavingWithdrawalUrl);
+                String responseBody = getResponseFromAPI(headers, postParam, islamicSavingProfitUrl);
                 if (responseBody != null && responseBody.length() > 0) {
-                    response = objectMapper.readValue(responseBody, IslamicSavingWithdrawalResponse.class);
+                    response = objectMapper.readValue(responseBody, IslamicSavingProfitResponse.class);
                 }
             } catch (RestClientException e) {
                 handleRestClientException(e, i8SBSwitchControllerResponseVO);

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBRunTimeException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import com.inov8.integration.webservice.islamicSavingVO.Body;
-import com.inov8.integration.webservice.lendingVO.GetActiveLoanResponsePayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +18,9 @@ import org.slf4j.LoggerFactory;
         "traceId",
         "body",
 })
-public class IslamicSavingWithdrawalResponse extends Response {
+public class IslamicSavingProfitResponse extends Response {
 
-    private static Logger logger = LoggerFactory.getLogger(IslamicSavingWithdrawalResponse.class.getSimpleName());
+    private static Logger logger = LoggerFactory.getLogger(IslamicSavingProfitResponse.class.getSimpleName());
 
     @JsonProperty("responseCode")
     private String responseCode;
@@ -31,14 +30,6 @@ public class IslamicSavingWithdrawalResponse extends Response {
     private String traceId;
     @JsonProperty("body")
     private Body body;
-
-    public static Logger getLogger() {
-        return logger;
-    }
-
-    public static void setLogger(Logger logger) {
-        IslamicSavingWithdrawalResponse.logger = logger;
-    }
 
     public String getResponseCode() {
         return responseCode;

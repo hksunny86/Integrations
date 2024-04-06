@@ -73,6 +73,9 @@ public class IslamicSavingProfitResponse extends Response {
             if (this.getBody() != null) {
                 i8SBSwitchControllerResponseVO.setBody(this.getBody());
             }
+        } else {
+            i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
+            i8SBSwitchControllerResponseVO.setDescription(this.getResponseMessage());
         }
         return i8SBSwitchControllerResponseVO;
     }

@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+
 
 @Service
 public class IslamicSavingService {
@@ -79,41 +79,7 @@ public class IslamicSavingService {
         }
     }
 
-    private void handleRestClientException(RestClientException e, I8SBSwitchControllerResponseVO responseVO) {
-        if (e instanceof HttpStatusCodeException) {
-            HttpStatusCodeException httpException = (HttpStatusCodeException) e;
-            String responseCode = httpException.getStatusCode().toString();
-            String responseBody = httpException.getResponseBodyAsString();
-
-            switch (responseCode) {
-                case "203":
-                case "400":
-                case "401":
-                case "422":
-                case "500":
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    try {
-                        responseVO = objectMapper.readValue(responseBody, I8SBSwitchControllerResponseVO.class);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                        logger.info("Negative Response from Client " + responseBody +
-                                "\nStatus Code received " + httpException.getStatusCode().toString());
-                    }
-                    break;
-                default:
-                    logger.info("Negative Response from Client " + responseBody +
-                            "\nStatus Code received " + httpException.getStatusCode().toString());
-                    break;
-            }
-        } else if (e instanceof ResourceAccessException) {
-            logger.info("ResourceAccessException " + e.getMessage() +
-                    "\nMessage received " + e.getMessage());
-        } else {
-            logger.error("Unexpected RestClientException: " + e.getMessage());
-        }
-    }
-
-    public IslamicSavingWithdrawalResponse islamicSavingWithdrawalResponse(IslamicSavingWithdrawalRequest request) {
+    public IslamicSavingWithdrawalResponse islamicSavingWithdrawalResponse(IslamicSavingWithdrawalRequest request) throws RestClientException, HttpStatusCodeException, Exception {
 
         IslamicSavingWithdrawalResponse response = new IslamicSavingWithdrawalResponse();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -156,10 +122,38 @@ public class IslamicSavingService {
                 if (responseBody != null && responseBody.length() > 0) {
                     response = objectMapper.readValue(responseBody, IslamicSavingWithdrawalResponse.class);
                 }
-            } catch (RestClientException e) {
-                handleRestClientException(e, i8SBSwitchControllerResponseVO);
             } catch (Exception e) {
-                e.printStackTrace();
+                if (e instanceof HttpStatusCodeException) {
+                    HttpStatusCodeException httpException = (HttpStatusCodeException) e;
+                    String responseCode = httpException.getStatusCode().toString();
+                    String responseBody = httpException.getResponseBodyAsString();
+                    switch (responseCode) {
+                        case "203":
+                        case "400":
+                        case "401":
+                        case "422":
+                        case "500":
+                            try {
+                                response = objectMapper.readValue(responseBody, IslamicSavingWithdrawalResponse.class);
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                                logger.info("Negative Response from Client " + responseBody +
+                                        "\nStatus Code received " + httpException.getStatusCode().toString());
+                            }
+                            break;
+                        default:
+                            logger.info("Negative Response from Client " + responseBody +
+                                    "\nStatus Code received " + httpException.getStatusCode().toString());
+                            break;
+                    }
+                } else if (e instanceof ResourceAccessException) {
+                    logger.info("ResourceAccessException " + e.getMessage() +
+                            "\nMessage received " + e.getMessage());
+                } else {
+                    logger.error("Unexpected Exception:  " + e.getMessage());
+                    response.setResponseCode("500");
+                    response.setResponseMessage(e.getLocalizedMessage());
+                }
             }
 
             long endTime = (new Date()).getTime();
@@ -169,7 +163,7 @@ public class IslamicSavingService {
         return response;
     }
 
-    public IslamicSavingProfitResponse islamicSavingProfitResponse(IslamicSavingProfitRequest request) {
+    public IslamicSavingProfitResponse islamicSavingProfitResponse(IslamicSavingProfitRequest request) throws RestClientException, HttpStatusCodeException, Exception {
 
         IslamicSavingProfitResponse response = new IslamicSavingProfitResponse();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -211,10 +205,38 @@ public class IslamicSavingService {
                 if (responseBody != null && responseBody.length() > 0) {
                     response = objectMapper.readValue(responseBody, IslamicSavingProfitResponse.class);
                 }
-            } catch (RestClientException e) {
-                handleRestClientException(e, i8SBSwitchControllerResponseVO);
             } catch (Exception e) {
-                e.printStackTrace();
+                if (e instanceof HttpStatusCodeException) {
+                    HttpStatusCodeException httpException = (HttpStatusCodeException) e;
+                    String responseCode = httpException.getStatusCode().toString();
+                    String responseBody = httpException.getResponseBodyAsString();
+                    switch (responseCode) {
+                        case "203":
+                        case "400":
+                        case "401":
+                        case "422":
+                        case "500":
+                            try {
+                                response = objectMapper.readValue(responseBody, IslamicSavingProfitResponse.class);
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                                logger.info("Negative Response from Client " + responseBody +
+                                        "\nStatus Code received " + httpException.getStatusCode().toString());
+                            }
+                            break;
+                        default:
+                            logger.info("Negative Response from Client " + responseBody +
+                                    "\nStatus Code received " + httpException.getStatusCode().toString());
+                            break;
+                    }
+                } else if (e instanceof ResourceAccessException) {
+                    logger.info("ResourceAccessException " + e.getMessage() +
+                            "\nMessage received " + e.getMessage());
+                } else {
+                    logger.error("Unexpected Exception:  " + e.getMessage());
+                    response.setResponseCode("500");
+                    response.setResponseMessage(e.getLocalizedMessage());
+                }
             }
 
             long endTime = (new Date()).getTime();

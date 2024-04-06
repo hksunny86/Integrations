@@ -32,6 +32,27 @@ public class IslamicSavingTest {
         requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_ISLAMIC_SAVING);
         requestVO.setRequestType(I8SBConstants.RequestType_ISLAMIC_SAVING_WITHDRAWAL);
 
+        requestVO.setId("10");
+        requestVO.setMobileNumber("03355913139");
+        requestVO.setAmount("100");
+
+
+        requestVO = (I8SBSwitchControllerRequestVO) switchController.invoke(requestVO);
+        responseVO = requestVO.getI8SBSwitchControllerResponseVO();
+        System.out.println(responseVO.getResponseCode());
+    }
+
+    @Test
+    public void islamicSavingProfit() {
+
+        I8SBSwitchControllerRequestVO requestVO = new I8SBSwitchControllerRequestVO();
+        I8SBSwitchControllerResponseVO responseVO = new I8SBSwitchControllerResponseVO();
+
+        requestVO.setI8sbClientID(I8SBConstants.I8SB_Client_ID_JSBL);
+        requestVO.setI8sbClientTerminalID(I8SBConstants.I8SB_Client_Terminal_ID_BLB);
+        requestVO.setI8sbChannelID(I8SBConstants.I8SB_Channel_ID_ISLAMIC_SAVING);
+        requestVO.setRequestType(I8SBConstants.RequestType_ISLAMIC_SAVING_PROFIT);
+
         requestVO.setMobileNumber("03355913139");
         requestVO.setAmount("100");
 

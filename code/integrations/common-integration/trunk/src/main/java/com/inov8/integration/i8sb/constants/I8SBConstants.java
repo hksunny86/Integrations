@@ -399,6 +399,7 @@ public class I8SBConstants {
     public static String RequestType_LENDING_GETACTIVELOAN = "getActiveLoan";
     public static String RequestType_LENDING_SALARY_DISBURSE = "salaryDisburse";
     public static String RequestType_ISLAMIC_SAVING_WITHDRAWAL = "islamicSavingWithdrawal";
+    public static String RequestType_ISLAMIC_SAVING_PROFIT = "islamicSavingProfit";
 
 
 

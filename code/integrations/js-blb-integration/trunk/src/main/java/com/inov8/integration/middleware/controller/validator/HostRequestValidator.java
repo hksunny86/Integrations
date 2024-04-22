@@ -3,6 +3,7 @@ package com.inov8.integration.middleware.controller.validator;
 import com.inov8.integration.corporate.pdu.request.AccountStateRequest;
 import com.inov8.integration.middleware.pdu.request.*;
 import com.inov8.integration.middleware.util.ConfigReader;
+import com.inov8.integration.smt.pdu.request.AccountInfoSMTRequest;
 import org.apache.commons.lang.StringUtils;
 
 public class HostRequestValidator {
@@ -4397,6 +4398,22 @@ public class HostRequestValidator {
     }
 
     public static void validateAccountInfo(AccountInfoRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed RRN: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+    }
+
+    public static void validateAccountInfoSMT(AccountInfoSMTRequest integrationVO) throws ValidationException {
 
         if (StringUtils.isEmpty(integrationVO.getRrn())) {
             throw new ValidationException("[FAILED] Validation Failed RRN: " + integrationVO.getRrn());

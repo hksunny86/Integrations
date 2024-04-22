@@ -543,6 +543,15 @@ public class WebServiceVO implements Serializable {
     private String proofOfIncomePic;
     private String country;
     private String coolingPeriodComments;
+    private String provinceState;
+
+    public String getProvinceState() {
+        return provinceState;
+    }
+
+    public void setProvinceState(String provinceState) {
+        this.provinceState = provinceState;
+    }
 
     public String getCoolingPeriodComments() {
         return coolingPeriodComments;

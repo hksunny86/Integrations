@@ -30,6 +30,7 @@ public class DigiWalletStatementVo implements Serializable {
     private Double totalAmount;
     private Double balanceAfterTransaction;
     private String isReversal;
+    private Long productId;
 
     public String getMobileNumber() {
         return mobileNumber;
@@ -45,6 +46,14 @@ public class DigiWalletStatementVo implements Serializable {
 
     public void setProduct(String product) {
         this.product = product;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public String getTransactionTime() {

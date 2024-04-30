@@ -30,4 +30,9 @@ public class JsPetroIntegrationController implements PetroSwitchController {
     public WebServiceVO petroWalletToWalletPayment(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO petroBalanceInquiry(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

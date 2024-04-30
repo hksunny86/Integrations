@@ -4,17 +4,10 @@ import com.inov8.integration.middleware.dao.TransactionDAO;
 import com.inov8.integration.middleware.dao.TransactionLogModel;
 import com.inov8.integration.middleware.enums.ResponseCodeEnum;
 import com.inov8.integration.middleware.enums.TransactionStatus;
-import com.inov8.integration.middleware.pdu.response.WalletToWalletPaymentInquiryResponse;
-import com.inov8.integration.middleware.pdu.response.WalletToWalletPaymentResponse;
+import com.inov8.integration.middleware.pdu.response.BalanceInquiryResponse;
 import com.inov8.integration.middleware.util.*;
-import com.inov8.integration.petroPocket.pdu.request.PetroInquiryRequest;
-import com.inov8.integration.petroPocket.pdu.request.PetroPaymentRequest;
-import com.inov8.integration.petroPocket.pdu.request.PetroWalletToWalletInquiryRequest;
-import com.inov8.integration.petroPocket.pdu.request.PetroWalletToWalletPaymentRequest;
-import com.inov8.integration.petroPocket.pdu.response.PetroInquiryResponse;
-import com.inov8.integration.petroPocket.pdu.response.PetroPaymentResponse;
-import com.inov8.integration.petroPocket.pdu.response.PetroWalletToWalletInquiryResponse;
-import com.inov8.integration.petroPocket.pdu.response.PetroWalletToWalletPaymentResponse;
+import com.inov8.integration.petroPocket.pdu.request.*;
+import com.inov8.integration.petroPocket.pdu.response.*;
 import com.inov8.integration.webservice.controller.PetroSwitchController;
 import com.inov8.integration.webservice.vo.WebServiceVO;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -203,7 +196,7 @@ public class PetroPocketService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -357,7 +350,7 @@ public class PetroPocketService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -497,7 +490,7 @@ public class PetroPocketService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -572,6 +565,7 @@ public class PetroPocketService {
 
         return response;
     }
+
     public PetroWalletToWalletPaymentResponse petroWalletToWalletPaymentResponse(PetroWalletToWalletPaymentRequest walletToWalletPaymentRequest) {
         long startTime = new Date().getTime(); // start time
         WebServiceVO webServiceVO = new WebServiceVO();
@@ -662,7 +656,7 @@ public class PetroPocketService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -730,4 +724,146 @@ public class PetroPocketService {
 
         return response;
     }
+
+    public PetroBalanceInquiryResponse petroBalanceInquiry(PetroBalanceInquiryRequest request) {
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Starting Processing Petro Balance Inquiry Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        PetroBalanceInquiryResponse response = new PetroBalanceInquiryResponse();
+
+
+        messageVO.setUserName(request.getUserName());
+        messageVO.setCustomerPassword(request.getPassword());
+//        messageVO.setMobilePin(request.getMpin());
+        messageVO.setMobileNo(request.getMobileNumber());
+        messageVO.setDateTime(request.getDateTime());
+        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+        messageVO.setChannelId(request.getChannelId());
+        messageVO.setTerminalId(request.getTerminalId());
+//        messageVO.setOtpPin(request.getOtpPin());
+        try {
+            if (request.getOtpPin() != null && !request.getOtpPin().equals("")) {
+                String text = request.getOtpPin();
+                String otp = text.replaceAll("\\r|\\n", "");
+                messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+            } else if (request.getMpin() != null && !request.getMpin().equals("")) {
+                String text = request.getMpin();
+                String mpin = text.replaceAll("\\r|\\n", "");
+                messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+            }
+
+        } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        messageVO.setReserved1(request.getReserved1());
+        messageVO.setReserved2(request.getReserved2());
+        messageVO.setReserved3(request.getReserved3());
+        messageVO.setReserved4(request.getReserved4());
+        messageVO.setReserved5(request.getReserved5());
+
+
+        /*This is temporary solution to enable talotalk on behalf of Attique Butt.
+        Should be reverted once otp optional implemented
+        on APIGEE End*/
+        //messageVO.setReserved1("1");
+
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("PetroBalanceInquiry");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+//        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Petro Balance Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.petroBalanceInquiry(messageVO);
+        } catch (Exception e) {
+            if (e instanceof RemoteAccessException) {
+                if (!(e instanceof RemoteConnectFailureException)) {
+
+                    StringWriter sw = new StringWriter();
+                    PrintWriter pw = new PrintWriter(sw);
+                    e.printStackTrace(pw);
+                    String stackTrace = sw.toString();
+                    int statusCode = stackTrace.indexOf("status code");
+                    if (statusCode == -1) {
+                        messageVO.setResponseCode("58");
+                        messageVO.setResponseCodeDescription("Transaction Time Out");
+                    }
+                }
+            }
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Petro Balance Inquiry Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setBalance(messageVO.getBalance());
+            response.setRegistrationTypeCode(messageVO.getRegistrationTypeCode());
+            response.setAccountLevelCode(messageVO.getAccountLevelCode());
+            response.setAccountStatusCode(messageVO.getAccountStatusCode());
+            response.setAccountTypeCode(messageVO.getAccountTypeCode());
+            response.setAccountNatureCode(messageVO.getAccountNatureCode());
+            response.setCurrencyCode(messageVO.getCurrencyCode());
+
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Petro Balance Inquiry Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            logModel.setResponseCode(messageVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Petro Balance Inquiry Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription() + response.getBalance());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****Petro BALANCE INQUIRY REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+//        updateTransactionInDB(logModel);
+        return response;
+    }
+
 }

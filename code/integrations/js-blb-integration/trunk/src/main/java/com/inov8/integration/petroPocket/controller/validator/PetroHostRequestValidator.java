@@ -1,8 +1,8 @@
 package com.inov8.integration.petroPocket.controller.validator;
 
-import com.inov8.integration.corporate.pdu.request.*;
 import com.inov8.integration.middleware.controller.validator.ValidationException;
 import com.inov8.integration.middleware.util.ConfigReader;
+import com.inov8.integration.petroPocket.pdu.request.PetroBalanceInquiryRequest;
 import com.inov8.integration.petroPocket.pdu.request.PetroInquiryRequest;
 import com.inov8.integration.petroPocket.pdu.request.PetroPaymentRequest;
 import com.inov8.integration.petroPocket.pdu.request.PetroWalletToWalletInquiryRequest;
@@ -62,6 +62,7 @@ public class PetroHostRequestValidator {
 
 
     }
+
     public static void validatePetroWalletToWalletInquiryPayment(PetroWalletToWalletInquiryRequest walletToWalletPaymentInquiryRequest) throws ValidationException {
         if (StringUtils.isEmpty(walletToWalletPaymentInquiryRequest.getMobileNumber())) {
             throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + walletToWalletPaymentInquiryRequest.getMobileNumber());
@@ -91,6 +92,30 @@ public class PetroHostRequestValidator {
 
 
     }
+
+    public static void validatePetroBalanceInquiry(PetroBalanceInquiryRequest integrationVO) {
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
+        }
+
+
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getReserved1())) {
+            throw new ValidationException("[FAILED] Validation Failed Reserved1 : " + integrationVO.getReserved1());
+        }
+
+    }
+
     public static boolean authenticate(String userName, String password, String channelID) {
         if (ConfigReader.getInstance().getProperty("channel.ids", "").contains(channelID))
             return ConfigReader.getInstance().getProperty("channel.usernames", "").contains(userName) && ConfigReader.getInstance().getProperty("channel.passwords", "").contains(password);

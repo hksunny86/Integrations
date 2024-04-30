@@ -116,6 +116,7 @@ public class IslamicSavingService {
             postParam.put("id", request.getId());
             postParam.put("mobileNumber", request.getMobileNumber());
             postParam.put("amount", request.getAmount());
+            postParam.put("transactionId", request.getTransactionId());
             logger.info("Request body of Islamic Saving Withdrawal " + JSONUtil.getJSON(request));
             try {
                 String responseBody = getResponseFromAPI(headers, postParam, islamicSavingWithdrawalUrl);

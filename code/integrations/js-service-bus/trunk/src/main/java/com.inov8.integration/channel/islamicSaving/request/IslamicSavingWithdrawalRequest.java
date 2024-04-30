@@ -14,6 +14,7 @@ import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
         "id",
         "mobileNumber",
         "amount",
+        "transactionId"
 })
 public class IslamicSavingWithdrawalRequest extends Request {
 
@@ -23,6 +24,9 @@ public class IslamicSavingWithdrawalRequest extends Request {
     private String mobileNumber;
     @JsonProperty("amount")
     private String amount;
+    @JsonProperty("transactionId")
+    private String transactionId;
+
 
     public String getId() {
         return id;
@@ -48,12 +52,21 @@ public class IslamicSavingWithdrawalRequest extends Request {
         this.amount = amount;
     }
 
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
         this.setId(i8SBSwitchControllerRequestVO.getId());
         this.setMobileNumber(i8SBSwitchControllerRequestVO.getMobileNumber());
         this.setAmount(i8SBSwitchControllerRequestVO.getAmount());
+        this.setTransactionId(i8SBSwitchControllerRequestVO.getTransactionId());
     }
 
     @Override

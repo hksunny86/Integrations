@@ -11,14 +11,8 @@ import com.inov8.integration.middleware.util.ConfigReader;
 import com.inov8.integration.middleware.util.JSONUtil;
 import com.inov8.integration.middleware.util.XMLUtil;
 import com.inov8.integration.petroPocket.controller.validator.PetroHostRequestValidator;
-import com.inov8.integration.petroPocket.pdu.request.PetroBalanceInquiryRequest;
-import com.inov8.integration.petroPocket.pdu.request.PetroInquiryRequest;
-import com.inov8.integration.petroPocket.pdu.request.PetroPaymentRequest;
-import com.inov8.integration.petroPocket.pdu.request.PetroWalletToWalletInquiryRequest;
-import com.inov8.integration.petroPocket.pdu.response.PetroBalanceInquiryResponse;
-import com.inov8.integration.petroPocket.pdu.response.PetroInquiryResponse;
-import com.inov8.integration.petroPocket.pdu.response.PetroPaymentResponse;
-import com.inov8.integration.petroPocket.pdu.response.PetroWalletToWalletInquiryResponse;
+import com.inov8.integration.petroPocket.pdu.request.*;
+import com.inov8.integration.petroPocket.pdu.response.*;
 import com.inov8.integration.petroPocket.service.PetroPocketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -165,7 +159,7 @@ public class JSPetroPocketController {
                     .append(request.getReserved2());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (PetroHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
                     PetroHostRequestValidator.validatePetroPayment(request);
@@ -194,13 +188,13 @@ public class JSPetroPocketController {
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
             }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Petro Payment *********");
-//                response = new PetroPaymentResponse();
-//                response.setResponseCode("111");
-//                response.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Petro Payment *********");
+                response = new PetroPaymentResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
         } catch (Exception e) {
 
             response = new PetroPaymentResponse();
@@ -291,8 +285,8 @@ public class JSPetroPocketController {
 
     @RequestMapping(value = "api/petro/petroWalletToWalletPayment", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    PetroPaymentResponse petroWalletToWalletPaymentResponse(@Valid @RequestBody PetroPaymentRequest request) throws Exception {
-        PetroPaymentResponse response = new PetroPaymentResponse();
+    PetroWalletToWalletPaymentResponse petroWalletToWalletPaymentResponse(@Valid @RequestBody PetroWalletToWalletPaymentRequest request) throws Exception {
+        PetroWalletToWalletPaymentResponse response = new PetroWalletToWalletPaymentResponse();
 
         String className = this.getClass().getSimpleName();
         String methodName = new Object() {
@@ -312,23 +306,27 @@ public class JSPetroPocketController {
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
+                    .append(request.getMpin())
                     .append(request.getMobileNumber())
                     .append(request.getDateTime())
                     .append(request.getRrn())
                     .append(request.getChannelId())
                     .append(request.getTerminalId())
-                    .append(request.getPin())
-                    .append(request.getPinType())
+                    .append(request.getOtp())
+                    .append(request.getReceiverMobileNumber())
                     .append(request.getAmount())
                     .append(request.getReserved1())
-                    .append(request.getReserved2());
+                    .append(request.getReserved2())
+                    .append(request.getReserved3())
+                    .append(request.getReserved4())
+                    .append(request.getReserved5());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (PetroHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
-                    PetroHostRequestValidator.validatePetroPayment(request);
-                    response = petroPocketService.petroPaymentResponse(request);
+//                    PetroHostRequestValidator.validatePetroPayment(request);
+                    response = petroPocketService.petroWalletToWalletPaymentResponse(request);
 
                 } catch (ValidationException ve) {
                     response.setResponseCode("420");
@@ -345,24 +343,24 @@ public class JSPetroPocketController {
                 logger.info("ResponseCode: " + response.getResponseCode());
             } else {
                 logger.info("******* DEBUG LOGS FOR Petro Payment AUTHENTICATION *********");
-                response = new PetroPaymentResponse();
+                response = new PetroWalletToWalletPaymentResponse();
                 response.setResponseCode("420");
                 response.setResponseDescription("Request is not authenticated");
                 response.setRrn(request.getRrn());
-                response.setResponseDateTime(request.getDateTime());
+                response.setTransactionDateTime(request.getDateTime());
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
             }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Petro Payment *********");
-//                response = new PetroPaymentResponse();
-//                response.setResponseCode("111");
-//                response.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Petro Payment *********");
+                response = new PetroWalletToWalletPaymentResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
         } catch (Exception e) {
 
-            response = new PetroPaymentResponse();
+            response = new PetroWalletToWalletPaymentResponse();
             response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
             response.setResponseDescription(e.getLocalizedMessage());
             logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);

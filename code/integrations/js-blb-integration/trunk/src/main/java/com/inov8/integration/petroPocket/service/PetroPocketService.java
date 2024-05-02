@@ -458,7 +458,7 @@ public class PetroPocketService {
 //        logModel.setTransactionCode("CashOut");
         logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
         //preparing request XML
-        String requestXml = XMLUtil.convertToXML(request);
+        String requestXml = JSONUtil.getJSON(request);
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 
@@ -556,7 +556,7 @@ public class PetroPocketService {
         logger.debug("[HOST] ****Wallet to wallet payment inquiry REQUEST PROCESSED IN ****: " + difference + " milliseconds");
 
         //preparing request XML
-        String responseXml = XMLUtil.convertToXML(response);
+        String responseXml = JSONUtil.getJSON(response);
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);
@@ -624,7 +624,7 @@ public class PetroPocketService {
 //        logModel.setTransactionCode("CashOut");
         logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
         //preparing request XML
-        String requestXml = XMLUtil.convertToXML(walletToWalletPaymentRequest);
+        String requestXml = JSONUtil.getJSON(walletToWalletPaymentRequest);
         //Setting in logModel
         logModel.setPduRequestHEX(requestXml);
 

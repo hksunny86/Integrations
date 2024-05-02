@@ -2,7 +2,6 @@ package com.inov8.integration.petroPocket.pdu.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
 // @Created On 4/29/2024 : Monday

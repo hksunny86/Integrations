@@ -3,9 +3,7 @@ package com.inov8.integration.petroPocket.controller.validator;
 import com.inov8.integration.middleware.controller.validator.ValidationException;
 import com.inov8.integration.middleware.util.ConfigReader;
 import com.inov8.integration.petroPocket.pdu.request.PetroBalanceInquiryRequest;
-import com.inov8.integration.petroPocket.pdu.request.PetroInquiryRequest;
-import com.inov8.integration.petroPocket.pdu.request.PetroPaymentRequest;
-import com.inov8.integration.petroPocket.pdu.request.PetroWalletToWalletInquiryRequest;
+import com.inov8.integration.petroPocket.pdu.request.*;
 import org.apache.commons.lang.StringUtils;
 
 public class PetroHostRequestValidator {
@@ -29,9 +27,6 @@ public class PetroHostRequestValidator {
         }
         if (StringUtils.isEmpty(integrationVO.getAmount())) {
             throw new ValidationException("[FAILED] Validation Amount : " + integrationVO.getAmount());
-        }
-        if (StringUtils.isEmpty(integrationVO.getPinType())) {
-            throw new ValidationException("[FAILED] Validation Failed Pin  Type: " + integrationVO.getPinType());
         }
 
     }
@@ -88,6 +83,59 @@ public class PetroHostRequestValidator {
         }
         if (StringUtils.isEmpty(walletToWalletPaymentInquiryRequest.getReserved1())) {
             throw new ValidationException("[FAILED] Validation Failed Reserved1 for wallet to wallet: " + walletToWalletPaymentInquiryRequest.getReserved1());
+        }
+
+
+    }
+
+    public static void validateWalletToPetroInquiry(WalletToPetroInquiryRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number : " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getAmount())) {
+            throw new ValidationException("[FAILED] Validation Amount : " + integrationVO.getAmount());
+        }
+        if (StringUtils.isEmpty(integrationVO.getPinType())) {
+            throw new ValidationException("[FAILED] Validation Failed Pin  Type: " + integrationVO.getPinType());
+        }
+
+    }
+
+    public static void validateWalletToPetroPayment(WalletToPetroPaymentRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number : " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getPinType())) {
+            throw new ValidationException("[FAILED] Validation Failed Pin  Type: " + integrationVO.getPinType());
+        }
+        if (StringUtils.isEmpty(integrationVO.getAmount())) {
+            throw new ValidationException("[FAILED] Validation Amount : " + integrationVO.getAmount());
         }
 
 

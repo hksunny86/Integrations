@@ -15,7 +15,7 @@ public class PetroInquiryRequest implements Serializable {
     private String channelId;
     private String terminalId;
     private String amount;
-    String pinType;
+    private String pinType;
     private String reserved1;
     private String reserved2;
     private String hashData;

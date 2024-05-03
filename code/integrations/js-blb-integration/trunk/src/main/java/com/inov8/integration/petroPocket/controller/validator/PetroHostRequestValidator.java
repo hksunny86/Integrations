@@ -30,9 +30,6 @@ public class PetroHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getAmount())) {
             throw new ValidationException("[FAILED] Validation Amount : " + integrationVO.getAmount());
         }
-        if (StringUtils.isEmpty(integrationVO.getPinType())) {
-            throw new ValidationException("[FAILED] Validation Failed Pin  Type: " + integrationVO.getPinType());
-        }
 
     }
 

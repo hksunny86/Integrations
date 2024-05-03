@@ -715,7 +715,7 @@ public class PetroPocketService {
         logger.debug("[HOST] ****Wallet to wallet payment REQUEST PROCESSED IN ****: " + difference + " milliseconds");
 
         //preparing request XML
-        String responseXml = XMLUtil.convertToXML(response);
+        String responseXml = JSONUtil.getJSON(response);
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);

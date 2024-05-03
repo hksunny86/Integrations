@@ -8,6 +8,8 @@ public interface PetroSwitchController {
     WebServiceVO petroPayment(WebServiceVO webServiceVO);
     WebServiceVO petroWalletToWalletInquiry(WebServiceVO webServiceVO);
     WebServiceVO petroWalletToWalletPayment(WebServiceVO webServiceVO);
+    WebServiceVO walletToPetroInquiry(WebServiceVO webServiceVO);
+    WebServiceVO walletToPetroPayment(WebServiceVO webServiceVO);
     WebServiceVO petroBalanceInquiry(WebServiceVO webServiceVO);
 
 }

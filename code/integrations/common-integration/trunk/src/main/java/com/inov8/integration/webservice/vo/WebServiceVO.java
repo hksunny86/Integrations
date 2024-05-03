@@ -544,6 +544,15 @@ public class WebServiceVO implements Serializable {
     private String country;
     private String coolingPeriodComments;
     private String provinceState;
+    private String correspondenceAddress;
+
+    public String getCorrespondenceAddress() {
+        return correspondenceAddress;
+    }
+
+    public void setCorrespondenceAddress(String correspondenceAddress) {
+        this.correspondenceAddress = correspondenceAddress;
+    }
 
     public String getProvinceState() {
         return provinceState;

@@ -13,6 +13,16 @@ import com.inov8.integration.middleware.util.XMLUtil;
 import com.inov8.integration.petroPocket.controller.validator.PetroHostRequestValidator;
 import com.inov8.integration.petroPocket.pdu.request.*;
 import com.inov8.integration.petroPocket.pdu.response.*;
+import com.inov8.integration.petroPocket.pdu.request.PetroBalanceInquiryRequest;
+import com.inov8.integration.petroPocket.pdu.request.PetroInquiryRequest;
+import com.inov8.integration.petroPocket.pdu.request.PetroPaymentRequest;
+import com.inov8.integration.petroPocket.pdu.request.PetroWalletToWalletInquiryRequest;
+import com.inov8.integration.petroPocket.pdu.response.PetroBalanceInquiryResponse;
+import com.inov8.integration.petroPocket.pdu.response.PetroInquiryResponse;
+import com.inov8.integration.petroPocket.pdu.response.PetroPaymentResponse;
+import com.inov8.integration.petroPocket.pdu.response.PetroWalletToWalletInquiryResponse;
+import com.inov8.integration.petroPocket.pdu.request.*;
+import com.inov8.integration.petroPocket.pdu.response.*;
 import com.inov8.integration.petroPocket.service.PetroPocketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -374,6 +384,197 @@ public class JSPetroPocketController {
         String responseXML = JSONUtil.getJSON(response);
         logger.info("Petro Payment Request Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
 
+
+        return response;
+    }
+
+    @RequestMapping(value = "api/petro/walletToPetroInquiry", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    WalletToPetroInquiryResponse walletToPetroInquiryResponse(@Valid @RequestBody WalletToPetroInquiryRequest request) throws Exception {
+        WalletToPetroInquiryResponse response = new WalletToPetroInquiryResponse();
+
+        String className = this.getClass().getSimpleName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+        long start = System.currentTimeMillis();
+
+        try {
+
+            logger.info("Wallet To Petro Inquiry Request Received at Controller at time: " + start);
+            String requestXML = JSONUtil.getJSON(request);
+            //        requestXML = XMLUtil.maskPassword(requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Wallet To Petro Inquiry Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
+            StringBuilder stringText = new StringBuilder()
+                    .append(request.getUserName())
+                    .append(request.getPassword())
+                    .append(request.getMobileNumber())
+                    .append(request.getDateTime())
+                    .append(request.getRrn())
+                    .append(request.getChannelId())
+                    .append(request.getTerminalId())
+                    .append(request.getAmount())
+                    .append(request.getReserved1())
+                    .append(request.getReserved2())
+                    .append(request.getReserved3())
+                    .append(request.getReserved4())
+                    .append(request.getReserved5())
+                    .append(request.getReserved6())
+                    .append(request.getReserved7())
+                    .append(request.getReserved8())
+                    .append(request.getReserved9())
+                    .append(request.getReserved10());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (PetroHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    PetroHostRequestValidator.validateWalletToPetroInquiry(request);
+                    response = petroPocketService.walletToPetroInquiryResponse(request);
+
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+
+                logger.info("******* DEBUG LOGS FOR Wallet To Petro Inquiry Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Wallet To Petro Inquiry Request AUTHENTICATION *********");
+                response = new WalletToPetroInquiryResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
+            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Petro Inquiry Request *********");
+                response = new WalletToPetroInquiryResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
+        } catch (Exception e) {
+
+            response = new WalletToPetroInquiryResponse();
+            response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            response.setResponseDescription(e.getLocalizedMessage());
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
+            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
+            logger.info("Critical Error ::" + e.getLocalizedMessage());
+        }
+        long end = System.currentTimeMillis() - start;
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Wallet To Petro Inquiry Request Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
+
+
+        return response;
+    }
+
+    @RequestMapping(value = "api/petro/walletToPetroPayment", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    WalletToPetroPaymentResponse walletToPetroPaymentResponse(@Valid @RequestBody WalletToPetroPaymentRequest request) throws Exception {
+        WalletToPetroPaymentResponse response = new WalletToPetroPaymentResponse();
+
+        String className = this.getClass().getSimpleName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+        long start = System.currentTimeMillis();
+
+        try {
+
+            logger.info("Wallet To Petro Payment Request Received at Controller at time: " + start);
+            String requestXML = JSONUtil.getJSON(request);
+            //        requestXML = XMLUtil.maskPassword(requestXML);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+            logger.info("Start Processing Wallet To Petro Payment Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
+            StringBuilder stringText = new StringBuilder()
+                    .append(request.getUserName())
+                    .append(request.getPassword())
+                    .append(request.getMobileNumber())
+                    .append(request.getDateTime())
+                    .append(request.getRrn())
+                    .append(request.getChannelId())
+                    .append(request.getTerminalId())
+                    .append(request.getPin())
+                    .append(request.getPinType())
+                    .append(request.getAmount())
+                    .append(request.getReserved1())
+                    .append(request.getReserved2())
+                    .append(request.getReserved3())
+                    .append(request.getReserved4())
+                    .append(request.getReserved5())
+                    .append(request.getReserved6())
+                    .append(request.getReserved7())
+                    .append(request.getReserved8())
+                    .append(request.getReserved9())
+                    .append(request.getReserved10());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (PetroHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    PetroHostRequestValidator.validateWalletToPetroPayment(request);
+                    response = petroPocketService.walletToPetroPaymentResponse(request);
+
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+
+                logger.info("******* DEBUG LOGS FOR Petro Payment *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Petro Payment AUTHENTICATION *********");
+                response = new WalletToPetroPaymentResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                response.setRrn(request.getRrn());
+                response.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
+            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Petro Payment *********");
+                response = new WalletToPetroPaymentResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
+        } catch (Exception e) {
+
+            response = new WalletToPetroPaymentResponse();
+            response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            response.setResponseDescription(e.getLocalizedMessage());
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
+            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
+            logger.info("Critical Error ::" + e.getLocalizedMessage());
+        }
+        long end = System.currentTimeMillis() - start;
+        String responseXML = JSONUtil.getJSON(response);
+        logger.info("Wallet To Petro Payment Request Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
 
         return response;
     }

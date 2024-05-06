@@ -3,6 +3,7 @@ package com.inov8.integration.webservice.vo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.vo.CardType;
 import com.inov8.integration.vo.CatalogList;
+import com.inov8.integration.vo.MotherName;
 import com.inov8.integration.vo.SegmentList;
 import com.inov8.integration.webservice.corporateVO.AccountStatement;
 import com.inov8.integration.webservice.corporateVO.CustomerDeviceVerification;
@@ -118,6 +119,15 @@ public class WebServiceVO implements Serializable {
     private String cardTypeId;
     private List<CardType> cardTypes;
 
+    private List<MotherName> motherNames;
+
+    public List<MotherName> getMotherNames() {
+        return motherNames;
+    }
+
+    public void setMotherNames(List<MotherName> motherNames) {
+        this.motherNames = motherNames;
+    }
 
     public List<CardType> getCardTypes() {
         return cardTypes;

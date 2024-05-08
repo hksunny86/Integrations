@@ -767,9 +767,9 @@ public class JSL2AccountController {
     }
 
 
-    @RequestMapping(value = "api/l2Account/motherName", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/l2Account/motherName", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    MotheNameResponse getProduct(@RequestParam String mobileNumber) {
+    MotheNameResponse getProduct(@Valid @RequestBody MotherNameRequest mobileNumber) {
 
         MotheNameResponse productResponse = new MotheNameResponse();
         long start = System.currentTimeMillis();

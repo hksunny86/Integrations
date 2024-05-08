@@ -1014,11 +1014,11 @@ public class L2AccountService {
     }
 
 
-    public MotheNameResponse getMotherNameList (String mobileNumber) {
+    public MotheNameResponse getMotherNameList (MotherNameRequest motherNameRequest) {
         long startTime = new Date().getTime(); // start time
         MotheNameResponse motheNameResponse = new MotheNameResponse();
         WebServiceVO messageVO = new WebServiceVO();
-        messageVO.setMobileNo(mobileNumber);
+        messageVO.setMobileNo(motherNameRequest.getMobileNo());
 
 
         try {

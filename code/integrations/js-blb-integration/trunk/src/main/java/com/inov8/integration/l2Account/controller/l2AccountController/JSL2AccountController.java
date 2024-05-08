@@ -765,4 +765,31 @@ public class JSL2AccountController {
 
         return response;
     }
+
+
+    @RequestMapping(value = "api/l2Account/motherName", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    MotheNameResponse getProduct(@RequestParam String mobileNumber) {
+
+        MotheNameResponse productResponse = new MotheNameResponse();
+        long start = System.currentTimeMillis();
+
+        try {
+            logger.info("Get Mother Name  List Request Receive at Controller at time: " + start);
+            productResponse = l2AccountService.getMotherNameList(mobileNumber);
+            long end = System.currentTimeMillis() - start;
+            logger.info("Get Mother Name List Request Receive Processed in : {} ms {}", end, productResponse);
+
+        } catch (Exception e) {
+
+            productResponse.setResponseCode("420");
+            productResponse.setResponseDescription(e.getMessage());
+            logger.error("ERROR: General Processing ", e);
+        }
+
+
+        return productResponse;
+
+
+    }
 }

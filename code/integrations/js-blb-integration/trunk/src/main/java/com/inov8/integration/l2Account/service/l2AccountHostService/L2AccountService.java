@@ -6,12 +6,9 @@ import com.inov8.integration.middleware.dao.TransactionDAO;
 import com.inov8.integration.middleware.dao.TransactionLogModel;
 import com.inov8.integration.middleware.enums.ResponseCodeEnum;
 import com.inov8.integration.middleware.enums.TransactionStatus;
-import com.inov8.integration.middleware.pdu.request.BalanceInquiryRequest;
-import com.inov8.integration.middleware.pdu.response.BalanceInquiryResponse;
 import com.inov8.integration.middleware.util.ConfigReader;
 import com.inov8.integration.middleware.util.JSONUtil;
 import com.inov8.integration.middleware.util.RSAEncryption;
-import com.inov8.integration.middleware.util.XMLUtil;
 import com.inov8.integration.webservice.controller.L2AccountSwitchController;
 import com.inov8.integration.webservice.vo.WebServiceVO;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -1014,6 +1011,47 @@ public class L2AccountService {
         logModel.setProcessedTime(difference);
 //        updateTransactionInDB(logModel);
         return response;
+    }
+
+
+    public MotheNameResponse getMotherNameList (String mobileNumber) {
+        long startTime = new Date().getTime(); // start time
+        MotheNameResponse motheNameResponse = new MotheNameResponse();
+        WebServiceVO messageVO = new WebServiceVO();
+        messageVO.setMobileNo(mobileNumber);
+
+
+        try {
+
+            messageVO = l2AccountSwitchController.motherNames(messageVO);
+            logger.info("[HOST] Mother  List Request  Send to Micro Bank : ");
+        } catch (Exception e) {
+            logger.error("[HOST] Internal Error While Sending Request : ", e);
+        }
+
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Mother Name List Request Successful from Micro Bank : " );
+            motheNameResponse.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            motheNameResponse.setResponseDescription(messageVO.getResponseCodeDescription());
+            motheNameResponse.setResponseDateTime(String.valueOf(startTime));
+            motheNameResponse.setMotherNameList(messageVO.getMotherNames());
+
+        }else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST] Mother Name List Request Unsuccessful from Micro Bank : " );
+            motheNameResponse.setResponseCode(messageVO.getResponseCode());
+            motheNameResponse.setResponseDescription(messageVO.getResponseCodeDescription());
+        } else {
+            logger.info("[HOST]Mother Name List Request Unsuccessful from Micro Bank : ");
+
+            motheNameResponse.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            motheNameResponse.setResponseDescription("Host Not In Reach");
+            motheNameResponse.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+        }
+
+
+        return motheNameResponse;
     }
 
 }

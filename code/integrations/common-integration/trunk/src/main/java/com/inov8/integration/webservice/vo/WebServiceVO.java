@@ -560,6 +560,7 @@ public class WebServiceVO implements Serializable {
     private Boolean settleAtStoreLevel;
     private Boolean settleAtTerminalLevel;
 
+
     public String getTerminalPoiCnicIssuance() {
         return terminalPoiCnicIssuance;
     }

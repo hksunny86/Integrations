@@ -498,6 +498,7 @@ public class WebServiceVO implements Serializable {
     private String sellerCode;
     private String terminalName;
     private String terminalPoiCnic;
+    private String terminalPoiCnicIssuance;
     private String terminalPoiMobileNumber;
     private String terminalAddress;
     private String terminalCity;
@@ -545,6 +546,41 @@ public class WebServiceVO implements Serializable {
     private String coolingPeriodComments;
     private String provinceState;
     private String correspondenceAddress;
+    private Boolean settleAtMerchantLevel;
+    private Boolean settleAtStoreLevel;
+    private Boolean settleAtTerminalLevel;
+
+    public String getTerminalPoiCnicIssuance() {
+        return terminalPoiCnicIssuance;
+    }
+
+    public void setTerminalPoiCnicIssuance(String terminalPoiCnicIssuance) {
+        this.terminalPoiCnicIssuance = terminalPoiCnicIssuance;
+    }
+
+    public Boolean getSettleAtMerchantLevel() {
+        return settleAtMerchantLevel;
+    }
+
+    public void setSettleAtMerchantLevel(Boolean settleAtMerchantLevel) {
+        this.settleAtMerchantLevel = settleAtMerchantLevel;
+    }
+
+    public Boolean getSettleAtStoreLevel() {
+        return settleAtStoreLevel;
+    }
+
+    public void setSettleAtStoreLevel(Boolean settleAtStoreLevel) {
+        this.settleAtStoreLevel = settleAtStoreLevel;
+    }
+
+    public Boolean getSettleAtTerminalLevel() {
+        return settleAtTerminalLevel;
+    }
+
+    public void setSettleAtTerminalLevel(Boolean settleAtTerminalLevel) {
+        this.settleAtTerminalLevel = settleAtTerminalLevel;
+    }
 
     public String getCorrespondenceAddress() {
         return correspondenceAddress;

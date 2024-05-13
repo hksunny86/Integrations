@@ -401,6 +401,7 @@ public class I8SBConstants {
     public static String RequestType_ISLAMIC_SAVING_WITHDRAWAL = "islamicSavingWithdrawal";
     public static String RequestType_ISLAMIC_SAVING_PROFIT = "islamicSavingProfit";
 
+    public static String RequestType_QR_RAST_GENERATION= "QRrastRegistration";
 
 
 }

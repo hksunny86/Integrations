@@ -525,6 +525,24 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String payMode;
     private String salary;
     private String id;
+    private String province;
+    private String typeOfBusiness;
+
+    public String getTypeOfBusiness() {
+        return typeOfBusiness;
+    }
+
+    public void setTypeOfBusiness(String typeOfBusiness) {
+        this.typeOfBusiness = typeOfBusiness;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
 
     public String getId() {
         return id;

@@ -18,9 +18,11 @@ public class StaticQrResponse extends Response {
 
     private static Logger logger = LoggerFactory.getLogger(StaticQrResponse.class.getSimpleName());
 
-    private List<StaticQr> staticQrResponses;
     private String responseCode;
-    private String description;
+    private String responseMessage;
+    private String traceId;
+    private StaticQr body;
+
 
     public String getResponseCode() {
         return responseCode;
@@ -30,20 +32,28 @@ public class StaticQrResponse extends Response {
         this.responseCode = responseCode;
     }
 
-    public String getDescription() {
-        return description;
+    public String getResponseMessage() {
+        return responseMessage;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setResponseMessage(String responseMessage) {
+        this.responseMessage = responseMessage;
     }
 
-    public List<StaticQr> getStaticQrResponses() {
-        return staticQrResponses;
+    public String getTraceId() {
+        return traceId;
     }
 
-    public void setStaticQrResponses(List<StaticQr> staticQrResponses) {
-        this.staticQrResponses = staticQrResponses;
+    public void setTraceId(String traceId) {
+        this.traceId = traceId;
+    }
+
+    public StaticQr getBody() {
+        return body;
+    }
+
+    public void setBody(StaticQr body) {
+        this.body = body;
     }
 
     @Override

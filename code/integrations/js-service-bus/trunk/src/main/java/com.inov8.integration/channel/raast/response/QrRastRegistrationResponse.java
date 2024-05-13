@@ -66,7 +66,7 @@ public class QrRastRegistrationResponse extends Response {
             i8SBSwitchControllerResponseVO.setTraceNo(this.getTraceId());
             if (this.getBody() != null) {
                 i8SBSwitchControllerResponseVO.setMerchantId(this.getBody().getTill());
-                i8SBSwitchControllerResponseVO.setQrCode(this.getBody().getQrText());
+                i8SBSwitchControllerResponseVO.setQr(this.getBody().getQrText());
             }
 
         } else {
@@ -75,7 +75,7 @@ public class QrRastRegistrationResponse extends Response {
             i8SBSwitchControllerResponseVO.setTraceNo(this.getTraceId());
             if (this.getBody() != null) {
                 i8SBSwitchControllerResponseVO.setMerchantId(this.getBody().getTill());
-                i8SBSwitchControllerResponseVO.setQrCode(this.getBody().getQrText());
+                i8SBSwitchControllerResponseVO.setQr(this.getBody().getQrText());
             }
         }
         return i8SBSwitchControllerResponseVO;

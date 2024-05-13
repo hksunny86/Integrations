@@ -40,7 +40,7 @@ public class RaastService {
     private String deleteCustomerUrl = PropertyReader.getProperty("raast.DeleteCustomer");
 
     private String QRRastCustomerUrl = PropertyReader.getProperty("raast.QR.Registration");
-    private String QrAccessToken=PropertyReader.getProperty("raast.QR.AccessToken");
+    private String QrAccessToken = PropertyReader.getProperty("raast.QR.AccessToken");
 
     private String accessToken = PropertyReader.getProperty("raast.Access_token");
     I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
@@ -608,29 +608,25 @@ public class RaastService {
     }
 
 
-
     public QrRastRegistrationResponse qrRastRegistrationResponse(QRRastMerchantRegistration staticQrRequest) {
 
         QrRastRegistrationResponse staticQrResponse = new QrRastRegistrationResponse();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock6")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String response = "{\n" +
-                    "    \"staticQrResponses\": [\n" +
-                    "        {\n" +
-                    "            \"QR\": \"000201010211287600321d06bcb1a9b1487aa6c4962d6dbd622e0108JSBLPKKA0224PK27JSBL99999033479111775204581453035865802PK5912SudaisPharma6005Badin62520312SudaisPharma07099462411760819FastFoodRestaurants80230019FastFoodRestaurants63043E42\",\n" +
-                    "            \"UUID\": \"300072123020603008123982753109060930\",\n" +
-                    "            \"UETR\": \"7658c2b4-5aec-4945-96d7-2fa4c0fa8a56\",\n" +
-                    "            \"Amount\": \"0\",\n" +
-                    "            \"Expiry\": \"\",\n" +
-                    "            \"CreatedDate\": \"07/08/2023 22:06:39\"\n" +
-                    "        }\n" +
-                    "    ]\n" +
+                    "    \"responseCode\": \"00\",\n" +
+                    "    \"responseMessage\": \"Success\",\n" +
+                    "    \"traceId\": \"\",\n" +
+                    "    \"body\": {\n" +
+                    "        \"till\": \"946100073\",\n" +
+                    "        \"qrText\": \"00020101021128640020277704202405131332050108JSBLPKKA0224PK59JSBL9999909008592369520053035865802PK590060032186232030007099461000730811Corporation80150011Corporation6304B79E\"\n" +
+                    "    }\n" +
                     "}";
             staticQrResponse = (QrRastRegistrationResponse) JSONUtil.jsonToObject(response, QrRastRegistrationResponse.class);
-            Objects.requireNonNull(staticQrResponse).setResponseCode("200");
-            logger.info("Response Code for Static QR Request: " + staticQrResponse.getResponseCode());
+//            Objects.requireNonNull(staticQrResponse).setResponseCode("200");
+            logger.info("Response Code for Qr Raast Registration Request: " + staticQrResponse.getResponseCode());
         } else {
 
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.QRRastCustomerUrl);
@@ -654,8 +650,8 @@ public class RaastService {
                 logger.info("Static QR Request Sent to Client " + httpEntity.getBody().toString(), httpEntity.getHeaders());
                 ResponseEntity<String> res1 = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
                 logger.info("Response Entity: " + res1);
-                logger.info("Response Code of Static QR Request received from client " + res1.getStatusCode().toString());
-                logger.info("Response of Static QR Request received from client " + res1.getBody());
+                logger.info("Response Code of Qr Raast Registration received from client " + res1.getStatusCode().toString());
+                logger.info("Response of Qr Raast Registration received from client " + res1.getBody());
                 String responseCode = res1.getStatusCode().toString();
                 if (responseCode.equalsIgnoreCase("200")) {
                     staticQrResponse = (QrRastRegistrationResponse) JSONUtil.jsonToObject(res1.getBody(), QrRastRegistrationResponse.class);
@@ -670,14 +666,14 @@ public class RaastService {
                         case "500":
                             result = ((HttpStatusCodeException) e).getResponseBodyAsString();
                             Objects.requireNonNull(staticQrResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                            Objects.requireNonNull(staticQrResponse).setResponseDescription((((HttpStatusCodeException) e).getResponseBodyAsString()));
+                            Objects.requireNonNull(staticQrResponse).setResponseMessage((((HttpStatusCodeException) e).getResponseBodyAsString()));
                             staticQrResponse = (QrRastRegistrationResponse) JSONUtil.jsonToObject(result, QrRastRegistrationResponse.class);
                             break;
                         default:
                             result = ((HttpStatusCodeException) e).getResponseBodyAsString();
                             logger.info("Negative Response from Client " + result + "\n" + "Status Code received" + ((HttpStatusCodeException) e).getStatusCode().toString());
                             Objects.requireNonNull(staticQrResponse).setResponseCode(((HttpStatusCodeException) e).getStatusCode().toString());
-                            Objects.requireNonNull(staticQrResponse).setResponseDescription((((HttpStatusCodeException) e).getResponseBodyAsString()));
+                            Objects.requireNonNull(staticQrResponse).setResponseMessage((((HttpStatusCodeException) e).getResponseBodyAsString()));
                             staticQrResponse = (QrRastRegistrationResponse) JSONUtil.jsonToObject(result, QrRastRegistrationResponse.class);
                             break;
                     }
@@ -686,7 +682,7 @@ public class RaastService {
                     String result = e.getMessage();
                     logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
                     Objects.requireNonNull(staticQrResponse).setResponseCode("500");
-                    Objects.requireNonNull(staticQrResponse).setResponseDescription(result);
+                    Objects.requireNonNull(staticQrResponse).setResponseMessage(result);
                 }
             } catch (Exception e) {
                 logger.error("Exception Occurred: " + e.getMessage());

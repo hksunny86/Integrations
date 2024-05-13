@@ -41,7 +41,7 @@ public class QRRastMerchantRegistration extends Request {
     private String cnicExpiry;
     @JsonProperty("estimatedMonthlySales")
 
-    private  String estimatedMonthlySales;
+    private String estimatedMonthlySales;
     @JsonProperty("iban")
 
     private String iban;
@@ -164,19 +164,19 @@ public class QRRastMerchantRegistration extends Request {
 
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
-this.setMcc(i8SBSwitchControllerRequestVO.getMerchantCategoryCode());
-this.setUuid(i8SBSwitchControllerRequestVO.getRRN());
-this.setBusinessName(i8SBSwitchControllerRequestVO.getBusinessTitle());
-this.setBusinessAddress(i8SBSwitchControllerRequestVO.getAddress());
-this.setCity(i8SBSwitchControllerRequestVO.getCity());
-this.setCniNumber(i8SBSwitchControllerRequestVO.getCNIC());
-this.setCnicExpiry(i8SBSwitchControllerRequestVO.getCnicExpiry());
-this.setEstimatedMonthlySales(i8SBSwitchControllerRequestVO.getExpectedMonthlyTurnOver());
-this.setIban(i8SBSwitchControllerRequestVO.getIban());
-this.setMobileNo(i8SBSwitchControllerRequestVO.getMobileNumber());
-this.setName(i8SBSwitchControllerRequestVO.getName());
-this.setProvince(i8SBSwitchControllerRequestVO.getProvince());
-this.setTypeOfBusiness(i8SBSwitchControllerRequestVO.getTypeOfBusiness());
+        this.setMcc(i8SBSwitchControllerRequestVO.getMerchantCategoryCode());
+        this.setUuid(i8SBSwitchControllerRequestVO.getRRN());
+        this.setBusinessName(i8SBSwitchControllerRequestVO.getBusinessTitle());
+        this.setBusinessAddress(i8SBSwitchControllerRequestVO.getAddress());
+        this.setCity(i8SBSwitchControllerRequestVO.getCity());
+        this.setCniNumber(i8SBSwitchControllerRequestVO.getCNIC());
+        this.setCnicExpiry(i8SBSwitchControllerRequestVO.getCnicExpiry());
+        this.setEstimatedMonthlySales(i8SBSwitchControllerRequestVO.getExpectedMonthlyTurnOver());
+        this.setIban(i8SBSwitchControllerRequestVO.getIban());
+        this.setMobileNo(i8SBSwitchControllerRequestVO.getMobileNumber());
+        this.setName(i8SBSwitchControllerRequestVO.getName());
+        this.setProvince(i8SBSwitchControllerRequestVO.getProvince());
+        this.setTypeOfBusiness(i8SBSwitchControllerRequestVO.getTypeOfBusiness());
     }
 
     @Override

@@ -22,9 +22,9 @@ import java.util.Objects;
 @Component
 public class RaastBo implements I8SBChannelInterface {
 
+    private static Logger logger = LoggerFactory.getLogger(RaastBo.class.getSimpleName());
     @Autowired
     RaastService raastService;
-    private static Logger logger = LoggerFactory.getLogger(RaastBo.class.getSimpleName());
 
     @Override
     public I8SBSwitchControllerResponseVO execute(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) throws Exception {
@@ -62,6 +62,8 @@ public class RaastBo implements I8SBChannelInterface {
                 response = raastService.deleteAliasResponse((DeleteAliasRequest) request);
             } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_RAAST_DeleteCustomer)) {
                 response = raastService.deleteCustomerResponse((DeleteCustomerRequest) request);
+            } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_QR_RAST_GENERATION)) {
+                response = raastService.qrRastRegistrationResponse((QRRastMerchantRegistration) request);
             }
             if (Objects.requireNonNull(response).populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
@@ -134,6 +136,9 @@ public class RaastBo implements I8SBChannelInterface {
         } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_RAAST_DeleteCustomer)) {
             request = new DeleteCustomerRequest();
             response = new DeleteCustomerResponse();
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_QR_RAST_GENERATION)) {
+            request = new QRRastMerchantRegistration();
+            response = new QrRastRegistrationResponse();
         } else {
             logger.info("[FAILED] Request type not supported");
             throw new I8SBValidationException("Request type not supported");

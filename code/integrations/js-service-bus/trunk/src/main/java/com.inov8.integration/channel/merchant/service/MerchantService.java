@@ -49,22 +49,11 @@ public class MerchantService {
         StaticQrResponse staticQrResponse = new StaticQrResponse();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock1")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock6")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
-            String response = "{\n" +
-                    "    \"staticQrResponses\": [\n" +
-                    "        {\n" +
-                    "            \"QR\": \"000201010211287600321d06bcb1a9b1487aa6c4962d6dbd622e0108JSBLPKKA0224PK27JSBL99999033479111775204581453035865802PK5912SudaisPharma6005Badin62520312SudaisPharma07099462411760819FastFoodRestaurants80230019FastFoodRestaurants63043E42\",\n" +
-                    "            \"UUID\": \"300072123020603008123982753109060930\",\n" +
-                    "            \"UETR\": \"7658c2b4-5aec-4945-96d7-2fa4c0fa8a56\",\n" +
-                    "            \"Amount\": \"0\",\n" +
-                    "            \"Expiry\": \"\",\n" +
-                    "            \"CreatedDate\": \"07/08/2023 22:06:39\"\n" +
-                    "        }\n" +
-                    "    ]\n" +
+            String response = "{  \"responseCode\": \"00\",  \"responseMessage\": \"Success\",  \"traceId\": \"\",  \"body\": {    \"QR\": \"000201010211287600321c4d57c8c1b549af8b3137f1fd6af3b50108JSBLPKKA0224string5206string53035865802PK5906string6006string621307099461000616304\"  }\n" +
                     "}";
             staticQrResponse = (StaticQrResponse) JSONUtil.jsonToObject(response, StaticQrResponse.class);
-            Objects.requireNonNull(staticQrResponse).setResponseCode("200");
             logger.info("Response Code for Static QR Request: " + staticQrResponse.getResponseCode());
         } else {
 
@@ -94,7 +83,6 @@ public class MerchantService {
                 String responseCode = res1.getStatusCode().toString();
                 if (responseCode.equalsIgnoreCase("200")) {
                     staticQrResponse = (StaticQrResponse) JSONUtil.jsonToObject(res1.getBody(), StaticQrResponse.class);
-                    Objects.requireNonNull(staticQrResponse).setResponseCode(responseCode);
                 }
             } catch (RestClientException e) {
                 if (e instanceof HttpStatusCodeException) {
@@ -122,7 +110,7 @@ public class MerchantService {
                     String result = e.getMessage();
                     logger.info("ResourceAccessException " + result + "\n" + "Message received" + e.getMessage());
                     Objects.requireNonNull(staticQrResponse).setResponseCode("500");
-                    Objects.requireNonNull(staticQrResponse).setDescription(result);
+                    Objects.requireNonNull(staticQrResponse).setResponseMessage(result);
                 }
             } catch (Exception e) {
                 logger.error("Exception Occurred: " + e.getMessage());

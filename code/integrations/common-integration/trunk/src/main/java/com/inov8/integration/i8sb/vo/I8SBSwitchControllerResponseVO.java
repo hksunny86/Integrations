@@ -511,6 +511,15 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String lpChargesOutstanding;
     private String epChargesOutstanding;
     private Body body;
+    private String qrCode;
+
+    public String getQrCode() {
+        return qrCode;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
+    }
 
     public Body getBody() {
         return body;

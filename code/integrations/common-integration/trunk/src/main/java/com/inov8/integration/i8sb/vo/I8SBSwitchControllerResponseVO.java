@@ -512,6 +512,69 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String epChargesOutstanding;
     private Body body;
     private String qrCode;
+    private String batchId;
+    private String primaryAccountNumber_002;
+    private String track1Data_045;
+    private String personalIdentificationNumberData_052;
+    private String replacementAmounts_095;
+    private String TransactionDescription_104;
+    private String reservedPrivate_120;
+
+    public String getPrimaryAccountNumber_002() {
+        return primaryAccountNumber_002;
+    }
+
+    public void setPrimaryAccountNumber_002(String primaryAccountNumber_002) {
+        this.primaryAccountNumber_002 = primaryAccountNumber_002;
+    }
+
+    public String getTrack1Data_045() {
+        return track1Data_045;
+    }
+
+    public void setTrack1Data_045(String track1Data_045) {
+        this.track1Data_045 = track1Data_045;
+    }
+
+    public String getPersonalIdentificationNumberData_052() {
+        return personalIdentificationNumberData_052;
+    }
+
+    public void setPersonalIdentificationNumberData_052(String personalIdentificationNumberData_052) {
+        this.personalIdentificationNumberData_052 = personalIdentificationNumberData_052;
+    }
+
+    public String getReplacementAmounts_095() {
+        return replacementAmounts_095;
+    }
+
+    public void setReplacementAmounts_095(String replacementAmounts_095) {
+        this.replacementAmounts_095 = replacementAmounts_095;
+    }
+
+    public String getTransactionDescription_104() {
+        return TransactionDescription_104;
+    }
+
+    public void setTransactionDescription_104(String transactionDescription_104) {
+        TransactionDescription_104 = transactionDescription_104;
+    }
+
+    public String getReservedPrivate_120() {
+        return reservedPrivate_120;
+    }
+
+    public void setReservedPrivate_120(String reservedPrivate_120) {
+        this.reservedPrivate_120 = reservedPrivate_120;
+    }
+
+    public String getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(String batchId) {
+        this.batchId = batchId;
+    }
 
     public String getQrCode() {
         return qrCode;

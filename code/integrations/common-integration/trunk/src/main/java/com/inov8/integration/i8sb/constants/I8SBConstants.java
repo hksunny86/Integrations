@@ -93,6 +93,7 @@ public class I8SBConstants {
     public static String I8SB_Channel_ID_WASA = "WASA";
     public static String I8SB_Channel_ID_LENDING = "LENDING";
     public static String I8SB_Channel_ID_ISLAMIC_SAVING = "ISLAMICSAVING";
+    public static String I8SB_Channel_ID_SBP = "SBP";
 
 
     public static String I8SB_Channel_ID_ETPaymentCollection = "ETPaymentCollection";
@@ -149,6 +150,7 @@ public class I8SBConstants {
     public static String RequestType_FundsTransfer = "FundsTransfer";
     public static String RequestType_FundsTransferReversal = "FundsTransferReversal";
     public static String RequestType_InterBankFundTransfer = "InterBankFundTransfer";
+    public static String RequestType_CreditPayment = "CreditPayment";
     public static String RequestType_TitleFetch = "TitleFetch";
     public static String RequestType_IBFTTitleFetch = "IBFTTitleFetch";
     public static String RequestType_DonationTransfer = "DonationTransfer";
@@ -400,8 +402,8 @@ public class I8SBConstants {
     public static String RequestType_LENDING_SALARY_DISBURSE = "salaryDisburse";
     public static String RequestType_ISLAMIC_SAVING_WITHDRAWAL = "islamicSavingWithdrawal";
     public static String RequestType_ISLAMIC_SAVING_PROFIT = "islamicSavingProfit";
-
     public static String RequestType_QR_RAST_GENERATION= "QRrastRegistration";
+    public static String RequestType_SBP_RETURN_PAYMENT= "sbpReturnPayment";
 
 
 }

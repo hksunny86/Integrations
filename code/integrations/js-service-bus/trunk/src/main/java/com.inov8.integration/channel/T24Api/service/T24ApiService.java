@@ -1,8 +1,10 @@
 package com.inov8.integration.channel.T24Api.service;
 
 import com.inov8.integration.channel.JSBookMe.service.JSBookMeService;
+import com.inov8.integration.channel.T24Api.request.CreditPaymentRequest;
 import com.inov8.integration.channel.T24Api.request.IbftRequest;
 import com.inov8.integration.channel.T24Api.request.IbftTitleFetchRequest;
+import com.inov8.integration.channel.T24Api.response.CreditPaymentResponse;
 import com.inov8.integration.channel.T24Api.response.IbftResponse;
 import com.inov8.integration.channel.T24Api.response.IbftTitleFetchResponse;
 import com.inov8.integration.channel.zindigi.mock.ZindigiCustomerSyncMock;
@@ -40,10 +42,14 @@ public class T24ApiService {
     I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
     private RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${t24.titlefetch.url}")
+    @Value("${t24.ibfttitlefetch.url}")
     private String t24IbftTitleFetchUrl;
     @Value("${t24.ibft.url}")
     private String t24IbftUrl;
+    @Value("${t24.CreditPayment.url}")
+    private String t24CreditPaymentUrl;
+    @Value("${t24.CreditPayment.access_token}")
+    private String t24CreditPaymentAccessToken;
     @Value("${t24.IBFTTITLEFETCH.access_token}")
     private String ibftTitleFetchAccessToken;
     @Value("${t24.IBFT.access_token}")
@@ -61,7 +67,7 @@ public class T24ApiService {
 
         I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
 
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock5")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String requesJson = JSONUtil.getJSON(request);
             logger.info("Request Send To RDV : " + requesJson);
@@ -72,7 +78,7 @@ public class T24ApiService {
             ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(response, IbftTitleFetchResponse.class);
             logger.info("Response Code for Ibft Title Fetch Request : " + ibftTitleFetchResponse.getISOMessage().getResponseCode_039());
         } else {
-            logger.info(" Ibft title Fetch"+  t24IbftTitleFetchUrl);
+            logger.info(" Ibft title Fetch" + t24IbftTitleFetchUrl);
             UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(t24IbftTitleFetchUrl);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -89,7 +95,7 @@ public class T24ApiService {
 
             ResponseEntity<String> res = restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
             ibftTitleFetchResponse = (IbftTitleFetchResponse) JSONUtil.jsonToObject(res.getBody(), IbftTitleFetchResponse.class);
-            logger.info(" Ibft title Fetch Response Received from  T24 : "+res.getBody());
+            logger.info(" Ibft title Fetch Response Received from  T24 : " + res.getBody());
         }
         return ibftTitleFetchResponse;
     }
@@ -101,7 +107,7 @@ public class T24ApiService {
 
         I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
 
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock5")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String requesJson = JSONUtil.getJSON(request);
             logger.info("Request Send To RDV : " + requesJson);
@@ -127,10 +133,48 @@ public class T24ApiService {
 
             ResponseEntity<String> res = restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
             ibftResponse = (IbftResponse) JSONUtil.jsonToObject(res.getBody(), IbftResponse.class);
-            logger.info(" Ibft Response Received from  T24 : "+res.getBody());
+            logger.info(" Ibft Response Received from  T24 : " + res.getBody());
 
         }
         return ibftResponse;
+    }
+
+    public CreditPaymentResponse creditPaymentResponse(CreditPaymentRequest request) throws Exception {
+
+        CreditPaymentResponse creditPaymentResponse = new CreditPaymentResponse();
+
+        I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
+
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock6")) {
+            logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
+            String requesJson = JSONUtil.getJSON(request);
+            logger.info("Request Send To RDV : " + requesJson);
+            T24ApiMockService mock = new T24ApiMockService();
+            String response = mock.creditPayment();
+
+            creditPaymentResponse = (CreditPaymentResponse) JSONUtil.jsonToObject(response, CreditPaymentResponse.class);
+            logger.info("Response Code for Credit Payment Request : " + creditPaymentResponse.getISOMessage().getResponseCode_039());
+        } else {
+            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(t24CreditPaymentUrl);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("access_token", t24CreditPaymentAccessToken);
+            String requesJson = JSONUtil.getJSON(request);
+            logger.info("Sending Credit Payment Request : " + requesJson);
+            HttpEntity<?> httpEntity = new HttpEntity<>(requesJson, headers);
+
+            for (HttpMessageConverter converter : restTemplate.getMessageConverters()) {
+                if (converter instanceof StringHttpMessageConverter) {
+                    ((StringHttpMessageConverter) converter).setWriteAcceptCharset(false);
+                }
+            }
+
+            ResponseEntity<String> res = restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
+            creditPaymentResponse = (CreditPaymentResponse) JSONUtil.jsonToObject(res.getBody(), CreditPaymentResponse.class);
+            logger.info(" Credit Payment Response Received from  T24 : " + res.getBody());
+
+        }
+        return creditPaymentResponse;
     }
 
     public RestTemplate getRestTemplate() {

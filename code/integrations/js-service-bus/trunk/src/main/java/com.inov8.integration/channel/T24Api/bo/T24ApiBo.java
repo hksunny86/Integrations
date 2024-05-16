@@ -1,9 +1,7 @@
 package com.inov8.integration.channel.T24Api.bo;
 
-import com.inov8.integration.channel.T24Api.request.IbftRequest;
-import com.inov8.integration.channel.T24Api.request.IbftReversalRequest;
-import com.inov8.integration.channel.T24Api.request.IbftTitleFetchRequest;
-import com.inov8.integration.channel.T24Api.request.Request;
+import com.inov8.integration.channel.T24Api.request.*;
+import com.inov8.integration.channel.T24Api.response.CreditPaymentResponse;
 import com.inov8.integration.channel.T24Api.response.IbftResponse;
 import com.inov8.integration.channel.T24Api.response.IbftTitleFetchResponse;
 import com.inov8.integration.channel.T24Api.response.Response;
@@ -27,7 +25,7 @@ import org.springframework.stereotype.Component;
 import static com.inov8.integration.enums.DateFormatEnum.*;
 
 @Component
-public class T24ApiBo  implements I8SBChannelInterface {
+public class T24ApiBo implements I8SBChannelInterface {
     private static Logger logger = LoggerFactory.getLogger(T24ApiBo.class.getSimpleName());
 
 
@@ -65,13 +63,16 @@ public class T24ApiBo  implements I8SBChannelInterface {
                 response = t24ApiService.ibftResponse((IbftRequest) request);
 
             }
+            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_CreditPayment)) {
+                response = t24ApiService.creditPaymentResponse((CreditPaymentRequest) request);
+
+            }
 
             if (response.populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
             String responseJSON = JSONUtil.getJSON(i8SBSwitchControllerResponseVO);
             i8SBSwitchControllerResponseVO.setResponseXML(responseJSON);
-        }
-        else {
+        } else {
             logger.info("[FAILED] Request validation failed for RRN: " + i8SBSwitchControllerRequestVO.getRRN());
         }
         return i8SBSwitchControllerResponseVO;
@@ -91,10 +92,10 @@ public class T24ApiBo  implements I8SBChannelInterface {
         if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getTransmissionDateAndTime())) {
             i8SBSwitchControllerRequestVO.setTransmissionDateAndTime(DateUtil.formatCurrentDate(TRANSACTION_DATE.getValue()));
         }
-        if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getTimeLocalTransaction())){
+        if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getTimeLocalTransaction())) {
             i8SBSwitchControllerRequestVO.setTimeLocalTransaction(DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue()));
         }
-        if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getDateLocalTransaction())){
+        if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getDateLocalTransaction())) {
             i8SBSwitchControllerRequestVO.setDateLocalTransaction(DateUtil.formatCurrentDate(T24_DATE_LOCAL_TRANSACTION.getValue()));
         }
         if (StringUtils.isEmpty(i8SBSwitchControllerRequestVO.getRRN())) {
@@ -116,15 +117,15 @@ public class T24ApiBo  implements I8SBChannelInterface {
         if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_IBFTTitleFetch)) {
             request = new IbftTitleFetchRequest();
             response = new IbftTitleFetchResponse();
-        }
-        else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_InterBankFundTransfer)) {
-            request=new IbftRequest();
-            response=new IbftResponse();
-        }
-        else if(requestType.equalsIgnoreCase(I8SBConstants.RequestType_FundsTransferReversal)){
-            request=new IbftReversalRequest();
-        }
-        else {
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_InterBankFundTransfer)) {
+            request = new IbftRequest();
+            response = new IbftResponse();
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_FundsTransferReversal)) {
+            request = new IbftReversalRequest();
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_CreditPayment)) {
+            request = new CreditPaymentRequest();
+            response = new CreditPaymentResponse();
+        } else {
             logger.info("[FAILED] Request type not supported");
             throw new I8SBValidationException("Request type not supported");
         }

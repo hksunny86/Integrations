@@ -527,6 +527,24 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String id;
     private String province;
     private String typeOfBusiness;
+    private String originalDataElements_090;
+    private String reservedPrivate_120;
+
+    public String getOriginalDataElements_090() {
+        return originalDataElements_090;
+    }
+
+    public void setOriginalDataElements_090(String originalDataElements_090) {
+        this.originalDataElements_090 = originalDataElements_090;
+    }
+
+    public String getReservedPrivate_120() {
+        return reservedPrivate_120;
+    }
+
+    public void setReservedPrivate_120(String reservedPrivate_120) {
+        this.reservedPrivate_120 = reservedPrivate_120;
+    }
 
     public String getTypeOfBusiness() {
         return typeOfBusiness;

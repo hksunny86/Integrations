@@ -2609,6 +2609,16 @@ public class JsIntegrationController implements WebServiceSwitchController {
     }
 
     @Override
+    public WebServiceVO updateCustomerInfo(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO updateCustomerLimit(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
     public WebServiceVO clsStatusUpdate(WebServiceVO webServiceVO) {
         return null;
     }

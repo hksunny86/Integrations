@@ -3383,6 +3383,26 @@ public class HostRequestValidator {
 
     }
 
+    public static void validateUpdateCustomerInfo(UpdateCustomerInfoRequest integrationVO) {
+
+        if (StringUtils.isEmpty(integrationVO.getEmailAddress())) {
+            throw new ValidationException("[FAILED] Validation Failed Email Address: " + integrationVO.getEmailAddress());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
+        }
+
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+
+    }
+
     public static void validateClsStatusUpdate(CLSStatusUpdateRequest integrationVO) {
 
 

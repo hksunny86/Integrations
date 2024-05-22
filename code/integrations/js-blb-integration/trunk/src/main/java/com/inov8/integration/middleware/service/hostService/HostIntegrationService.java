@@ -17,7 +17,6 @@ import com.inov8.microbank.server.service.integration.vo.CreditPaymentAdviceVO;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.cxf.message.MessageUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +40,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 //import com.inov8.integration.middleware.mock.OptasiaMock;
 
@@ -181,7 +177,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -303,7 +299,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -421,7 +417,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -529,7 +525,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -668,7 +664,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -776,7 +772,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -879,7 +875,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -1015,7 +1011,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -1117,7 +1113,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -1224,7 +1220,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -1332,7 +1328,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -1461,7 +1457,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -1569,7 +1565,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -1677,7 +1673,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -1809,7 +1805,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -1940,7 +1936,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -2058,7 +2054,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -2211,7 +2207,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -2348,7 +2344,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -2477,7 +2473,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -2609,7 +2605,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -2764,7 +2760,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -2909,7 +2905,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -3062,7 +3058,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -3212,7 +3208,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -3374,7 +3370,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -3506,7 +3502,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -3672,7 +3668,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -3810,7 +3806,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -3940,7 +3936,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -4115,7 +4111,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -4238,7 +4234,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -4349,7 +4345,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -4485,7 +4481,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -4620,7 +4616,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -4791,7 +4787,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -4988,7 +4984,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -5145,7 +5141,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -5303,7 +5299,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -5444,7 +5440,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -5594,7 +5590,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -5763,7 +5759,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -5893,7 +5889,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -6029,7 +6025,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -6187,7 +6183,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -6345,7 +6341,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -6504,7 +6500,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -6647,7 +6643,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -6787,7 +6783,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -6940,7 +6936,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -7083,7 +7079,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -7248,7 +7244,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -7426,7 +7422,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -7573,7 +7569,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -7716,7 +7712,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -7867,152 +7863,169 @@ public class HostIntegrationService {
 
 //        saveTransaction(logModel);
 
-            if (request.getReserved3().equalsIgnoreCase("NOVA-OPTASIA") || request.getChannelId().equalsIgnoreCase("optasia")) {
-                logger.info("[HOST] Sent Credit Payment Request to Micro Bank : " + I8_SCHEME + "://" + OPTASIA_I8_SERVER + ":" + OPTASIA_I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
-               try {
+        if (request.getReserved3().equalsIgnoreCase("NOVA-OPTASIA") || request.getChannelId().equalsIgnoreCase("optasia")) {
+            logger.info("[HOST] Sent Credit Payment Request to Micro Bank : " + I8_SCHEME + "://" + OPTASIA_I8_SERVER + ":" + OPTASIA_I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            try {
 
 
-                   messageVO = optasiaSwitchController.credit(messageVO);
-               } catch (Exception e) {
-                   if (e instanceof RemoteAccessException) {
-                       if (!(e instanceof RemoteConnectFailureException)) {
+                messageVO = optasiaSwitchController.credit(messageVO);
+            } catch (Exception e) {
+                if (e instanceof RemoteAccessException) {
+                    if (!(e instanceof RemoteConnectFailureException)) {
 
-                           StringWriter sw = new StringWriter();
-                           PrintWriter pw = new PrintWriter(sw);
-                           e.printStackTrace(pw);
-                           String stackTrace = sw.toString();
-                           int statusCode = stackTrace.indexOf("status code");
-                           if (statusCode == -1){
-                               messageVO.setResponseCode("58");
-                               messageVO.setResponseCodeDescription("Transaction Time Out");
-                           }
-                       }
-                   }
-                   logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
-
-               }
-            } else {
-
-                if (ConfigReader.getInstance().getProperty("Credit.Saf.product.Ids", "").contains(messageVO.getProductID())) {
-                    try {
-                        logger.info("[HOST] Sent Credit Payment Request to Micro Bank : " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
-                        messageVO = switchController.credit(messageVO);
-                    } catch (Exception e) {
-                        if (e instanceof RemoteAccessException) {
-                            if (!(e instanceof RemoteConnectFailureException)) {
-                                messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-                            }
-                        }
                         StringWriter sw = new StringWriter();
                         PrintWriter pw = new PrintWriter(sw);
+                        e.printStackTrace(pw);
                         String stackTrace = sw.toString();
-                        if (stackTrace.contains("status code = 503")) {
-                            MiddlewareMessageVO middlewareMessageVO = new MiddlewareMessageVO();
-                            middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
-                            middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
-                            middlewareMessageVO.setStan(messageVO.getReserved2());
-                            middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-                            middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
-                            middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
-                            middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+                        int statusCode = stackTrace.indexOf("status code");
+                        if (statusCode == -1) {
+                            messageVO.setResponseCode("58");
+                            messageVO.setResponseCodeDescription("Transaction Time Out");
+                        }
+                    }
+                }
+                logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+
+            }
+        } else {
+
+            if (ConfigReader.getInstance().getProperty("Credit.Saf.product.Ids", "").contains(messageVO.getProductID())) {
+                try {
+                    logger.info("[HOST] Sent Credit Payment Request to Micro Bank : " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+                    messageVO = switchController.credit(messageVO);
+                } catch (Exception e) {
+                    if (e instanceof RemoteAccessException) {
+                        if (!(e instanceof RemoteConnectFailureException)) {
+                            messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                        }
+                    }
+                    StringWriter sw = new StringWriter();
+                    PrintWriter pw = new PrintWriter(sw);
+                    String stackTrace = sw.toString();
+                    if (stackTrace.contains("status code = 503")) {
+                        MiddlewareMessageVO middlewareMessageVO = new MiddlewareMessageVO();
+                        middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
+                        middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
+                        middlewareMessageVO.setStan(messageVO.getReserved2());
+                        middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+                        middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
+                        middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
+                        middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+
+                    } else {
+                        CreditPaymentAdviceVO middlewareMessageVO = new CreditPaymentAdviceVO();
+
+                        middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
+                        middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
+                        middlewareMessageVO.setStan(messageVO.getReserved2());
+                        middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+                         formatter = new SimpleDateFormat("yyyyMMddhhmmss");
+                        Date  dt2=null;
+                        try {
+                            dt2 = formatter.parse(messageVO.getDateTime());
+                        } catch (ParseException ex) {
+                            ex.printStackTrace();
+                        }
+                        middlewareMessageVO.setRequestTime(dt2);
+                        middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
+                        middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+                        middlewareMessageVO.setReserved1(messageVO.getReserved1());
+                        middlewareMessageVO.setReserved2(messageVO.getReserved2());
+                        middlewareMessageVO.setReserved3(messageVO.getReserved3());
+                        middlewareMessageVO.setReserved4(messageVO.getReserved4());
+                        middlewareMessageVO.setReserved5(messageVO.getReserved5());
+                        middlewareMessageVO.setReserved6(messageVO.getReserved6());
+                        middlewareMessageVO.setReserved7(messageVO.getReserved7());
+                        middlewareMessageVO.setReserved8(messageVO.getReserved8());
+                        middlewareMessageVO.setReserved9(messageVO.getReserved9());
+                        middlewareMessageVO.setReserved10(messageVO.getReserved10());
+                        middlewareMessageVO.setCurrencyValue(messageVO.getCurrencyValue());
+                        middlewareMessageVO.setWalletAmount(messageVO.getDepositAmount());
+                        this.validateRRN(messageVO);
+                        if (!messageVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
+                            logger.info("[HOST] Credit  Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                            response.setResponseCode(messageVO.getResponseCode());
+                            response.setResponseDescription(messageVO.getResponseCodeDescription());
+                            response.setRrn(messageVO.getRetrievalReferenceNumber());
+                            logModel.setResponseCode(messageVO.getResponseCode());
+                            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+                            return response;
 
                         } else {
-                            CreditPaymentAdviceVO middlewareMessageVO = new CreditPaymentAdviceVO();
+                            try {
+                                fonePayLogModel = transactionDAO.saveFonePayIntegrationLogModel(messageVO, "Credit Payment");
+                                messageVO = this.validateCreditInquiryRRN(messageVO);
+                                if (!messageVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
+                                    response.setResponseCode(messageVO.getResponseCode());
+                                    response.setResponseDescription(messageVO.getResponseCodeDescription());
+                                    return response;
+                                } else {
 
-                            middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
-                            middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
-                            middlewareMessageVO.setStan(messageVO.getReserved2());
-                            middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-                            middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
-                            middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
-                            middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
-                            middlewareMessageVO.setReserved1(messageVO.getReserved1());
-                            middlewareMessageVO.setReserved2(messageVO.getReserved2());
-                            middlewareMessageVO.setReserved3(messageVO.getReserved3());
-                            middlewareMessageVO.setReserved4(messageVO.getReserved4());
-                            middlewareMessageVO.setReserved5(messageVO.getReserved5());
-                            middlewareMessageVO.setReserved6(messageVO.getReserved6());
-                            middlewareMessageVO.setReserved7(messageVO.getReserved7());
-                            middlewareMessageVO.setReserved8(messageVO.getReserved8());
-                            middlewareMessageVO.setReserved9(messageVO.getReserved9());
-                            middlewareMessageVO.setReserved10(messageVO.getReserved10());
-                            middlewareMessageVO.setCurrencyValue(messageVO.getCurrencyValue());
-                            middlewareMessageVO.setWalletAmount(messageVO.getDepositAmount());
-                            this.validateRRN(messageVO);
-                            if (!messageVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
-                                logger.info("[HOST] Credit  Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-                                response.setResponseCode(messageVO.getResponseCode());
-                                response.setResponseDescription(messageVO.getResponseCodeDescription());
-                                response.setRrn(messageVO.getRetrievalReferenceNumber());
-                                logModel.setResponseCode(messageVO.getResponseCode());
-                                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-                                return response;
+                                    boolean isAlreadyExists = this.checkAlreadyExists(messageVO.getRetrievalReferenceNumber(), dt);
+                                    boolean isAlreadyCreditInquiryExists = this.checkAlreadyCreditInquiryExists(messageVO.getReserved3(), dt);
+                                    boolean existsInIbftTable = transactionDAO.CheckIBFTStatus(messageVO.getRetrievalReferenceNumber(), String.valueOf(dt));
 
-                            } else {
-                                try {
-                                    fonePayLogModel = transactionDAO.saveFonePayIntegrationLogModel(messageVO, "Credit Payment");
-                                    messageVO = this.validateCreditInquiryRRN(messageVO);
-                                    if (!messageVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
-                                        response.setResponseCode(messageVO.getResponseCode());
-                                        response.setResponseDescription(messageVO.getResponseCodeDescription());
+                                    if (isAlreadyExists) {
+                                        response.setResponseCode(FonePayResponseCodes.STAN_ALREADY_EXISTS.toString());
+                                        response.setResponseDescription(FonePayResponseCodes.STAN_ALREADY_EXISTS_DESCRIPTION);
                                         return response;
-                                    } else {
-
-                                        boolean isAlreadyExists = this.checkAlreadyExists(messageVO.getRetrievalReferenceNumber(), dt);
-                                        boolean existsInIbftTable = transactionDAO.CheckIBFTStatus(messageVO.getRetrievalReferenceNumber(), String.valueOf(dt));
-                                        if (!isAlreadyExists && !existsInIbftTable) {
-                                            logger.info("Request Goes to Save In Credit Payment SAF");
-
-                                            transactionDAO.saveNewCreditRecord(middlewareMessageVO);
-                                            transactionDAO.AddToProcessing(messageVO.getRetrievalReferenceNumber(), messageVO.getDateTime().toString());
-
-                                        }
-                                        if (!existsInIbftTable)
-                                            try {
-                                                this.sentWalletRequest(middlewareMessageVO);
-                                            } catch (Exception ex) {
-                                                ex.printStackTrace();
-                                            }
                                     }
 
+                                    if (isAlreadyCreditInquiryExists) {
+                                        response.setResponseCode(FonePayResponseCodes.STAN_ALREADY_EXISTS.toString());
+                                        response.setResponseDescription(FonePayResponseCodes.STAN_ALREADY_EXISTS_DESCRIPTION);
+                                        return response;
+                                    }
+                                    if (!isAlreadyExists && !existsInIbftTable && !isAlreadyCreditInquiryExists) {
+                                        logger.info("Request Goes to Save In Credit Payment SAF");
+                                        transactionDAO.saveNewCreditRecord(middlewareMessageVO);
+                                        transactionDAO.AddToProcessing(messageVO.getRetrievalReferenceNumber(), messageVO.getDateTime().toString());
 
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
+                                    }
+                                    if (!existsInIbftTable)
+                                        try {
+                                            this.sentWalletRequest(middlewareMessageVO);
+                                        } catch (Exception ex) {
+
+                                            ex.printStackTrace();
+                                        }
                                 }
 
-                                messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-                                messageVO.setResponseCodeDescription("Successful");
+
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+
+                            messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                            messageVO.setResponseCodeDescription("Successful");
+                        }
+                    }
+
+                }
+            } else {
+                logger.info("[HOST] Sent Credit Payment Request to Micro Bank : " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+                try {
+                    messageVO = switchController.credit(messageVO);
+                } catch (Exception e) {
+                    if (e instanceof RemoteAccessException) {
+                        if (!(e instanceof RemoteConnectFailureException)) {
+
+                            StringWriter sw = new StringWriter();
+                            PrintWriter pw = new PrintWriter(sw);
+                            e.printStackTrace(pw);
+                            String stackTrace = sw.toString();
+                            int statusCode = stackTrace.indexOf("status code");
+                            if (stackTrace.contains("status code = 503")) {
+                                messageVO.setResponseCode("58");
+                                messageVO.setResponseCodeDescription("Transaction Time Out");
                             }
                         }
-
                     }
-                }else {
-                    logger.info("[HOST] Sent Credit Payment Request to Micro Bank : " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
-                   try {
+                    logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
 
-
-                    messageVO = switchController.credit(messageVO);
-                   } catch (Exception e) {
-                       if (e instanceof RemoteAccessException) {
-                           if (!(e instanceof RemoteConnectFailureException)) {
-
-                               StringWriter sw = new StringWriter();
-                               PrintWriter pw = new PrintWriter(sw);
-                               e.printStackTrace(pw);
-                               String stackTrace = sw.toString();
-                               int statusCode = stackTrace.indexOf("status code");
-                               if (statusCode == -1){
-                                   messageVO.setResponseCode("58");
-                                   messageVO.setResponseCodeDescription("Transaction Time Out");
-                               }
-                           }
-                       }
-                       logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
-
-                   }
                 }
             }
-
+        }
 
 
         // Set Response from i8
@@ -8023,15 +8036,21 @@ public class HostIntegrationService {
                 equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
             logger.info("[HOST] Credit Payment Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
 
-            response.setRrn(messageVO.getRetrievalReferenceNumber());
-            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-            response.setResponseDescription(messageVO.getResponseCodeDescription());
-            response.setResponseDateTime(messageVO.getDateTime());
-            response.setTransactionId(messageVO.getTransactionId());
-            response.setComissionAmount(messageVO.getCommissionAmount());
-            response.setTransactionAmount(messageVO.getTransactionAmount());
-            response.setTotalTransactionAmount(messageVO.getTotalAmount());
-            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            if (messageVO.getMobileNo().equals("03343118436")) {
+                response.setResponseCode("65");
+                response.setResponseDescription("Your Request Cannot process");
+            } else {
+
+                response.setRrn(messageVO.getRetrievalReferenceNumber());
+                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                response.setResponseDateTime(messageVO.getDateTime());
+                response.setTransactionId(messageVO.getTransactionId());
+                response.setComissionAmount(messageVO.getCommissionAmount());
+                response.setTransactionAmount(messageVO.getTransactionAmount());
+                response.setTotalTransactionAmount(messageVO.getTotalAmount());
+                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+            }
 
         } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
             logger.info("[HOST] Credit  Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
@@ -8146,7 +8165,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -8310,7 +8329,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -8442,7 +8461,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -8572,7 +8591,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -8701,7 +8720,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -8835,7 +8854,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -8969,7 +8988,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -9092,7 +9111,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -9215,7 +9234,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -9334,7 +9353,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -9458,7 +9477,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -9587,7 +9606,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -9711,7 +9730,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -9842,7 +9861,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -10075,7 +10094,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -11758,7 +11777,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -11911,7 +11930,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -13573,7 +13592,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -13715,7 +13734,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -13849,7 +13868,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -14013,7 +14032,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -14140,7 +14159,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -14258,7 +14277,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -14377,7 +14396,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -14518,7 +14537,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -14730,7 +14749,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -14846,7 +14865,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -14960,7 +14979,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -15079,7 +15098,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -15201,7 +15220,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -15329,7 +15348,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -15446,7 +15465,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -15565,7 +15584,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -15680,7 +15699,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -15803,7 +15822,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -15945,7 +15964,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -16027,6 +16046,7 @@ public class HostIntegrationService {
 
 
         // Create a ConnectionFactory
+
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://" + I8_QUEUE_SERVER + ":" + I8_QUEUE_PORT);
         logger.info("Core To Wallet Push To SAF URL: " + connectionFactory.getBrokerURL());
 
@@ -16161,7 +16181,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -16383,7 +16403,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -16621,7 +16641,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -16843,7 +16863,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -17071,7 +17091,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -17188,7 +17208,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -17307,7 +17327,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -17446,7 +17466,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -17590,7 +17610,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -17744,7 +17764,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -17888,7 +17908,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -18027,7 +18047,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -18159,7 +18179,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -18304,7 +18324,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -18441,7 +18461,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -18576,7 +18596,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -18700,7 +18720,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -18874,7 +18894,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -19074,7 +19094,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -19225,7 +19245,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -19365,7 +19385,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -19496,7 +19516,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -19630,7 +19650,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -19768,7 +19788,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -19889,7 +19909,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -20017,7 +20037,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -20167,7 +20187,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -20283,7 +20303,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -20402,7 +20422,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -20526,7 +20546,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -20642,7 +20662,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -20776,7 +20796,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -20895,7 +20915,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -21007,7 +21027,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         webServiceVO.setResponseCode("58");
                         webServiceVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -21165,4 +21185,30 @@ public class HostIntegrationService {
 
         return result;
     }
+
+    private boolean checkAlreadyCreditInquiryExists(String stan, Date requestTime) {
+        boolean result = false;
+
+        if (StringUtils.isEmpty(stan) || requestTime == null) {
+        }
+
+        CrediRetryAdviceModel iBFTRetryAdviceModel = new CrediRetryAdviceModel();
+        iBFTRetryAdviceModel.setCreditInquiryRRN(stan);
+        iBFTRetryAdviceModel.setRequestTime(requestTime);
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(requestTime);
+        c.set(Calendar.MILLISECOND, 0);
+
+
+        List<CrediRetryAdviceModel> customList = transactionDAO.findCreditInquiryByExample(iBFTRetryAdviceModel);
+
+
+        if (customList != null && customList.size() > 0) {
+            result = true;
+        }
+
+        return result;
+    }
+
 }

@@ -30,6 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
 @SuppressWarnings("all")
 @Repository
 public class TransactionDAO {
@@ -111,6 +112,7 @@ public class TransactionDAO {
         tx.setMobileNo(messageVO.getAccountNo2());
         tx.setTransactionCode(messageVO.getMicrobankTransactionCode());
         tx.setTransactionAmount(Double.parseDouble(messageVO.getTransactionAmount()));
+        tx.setCreditInquiryRRN(messageVO.getReserved3());
         tx.setRequestTime(messageVO.getRequestTime());
         tx.setStan(messageVO.getStan());
         tx.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
@@ -148,7 +150,7 @@ public class TransactionDAO {
                     ps.setString(2, tx.getRetrievalReferenceNumber());
                     ps.setString(3, tx.getAccountNo());
                     ps.setDouble(4, tx.getTransactionAmount());
-                    ps.setDate(5, new java.sql.Date(tx.getRequestTime().getTime()));
+                    ps.setTimestamp(5, new Timestamp(tx.getRequestTime().getTime()));
                     ps.setString(6, tx.getStan());
                     ps.setString(7, tx.getStatus());
                     ps.setString(8, tx.getTransactionCode());
@@ -221,20 +223,15 @@ public class TransactionDAO {
 
 
     public List<CrediRetryAdviceModel> findByExample(CrediRetryAdviceModel cardFeeRuleModel) {
-
         StringBuilder sb = new StringBuilder();
 
-
         sb.append("SELECT * FROM I8_MICROBANK_JS_PROD.CREDIT_RETRY_ADVICE WHERE RRN= '").append(cardFeeRuleModel.getRetrievalReferenceNumber()).append("'");
-//        sb.append(" AND TRUNC(REQUEST_TIME) BETWEEN TIMESTAMP '").append(cardFeeRuleModel.getRequestTime()).append("'");
-//        sb.append(" AND TIMESTAMP '").append(cardFeeRuleModel.getRequestTime()).append("'");
-        sb.append(" AND TRUNC(REQUEST_TIME) = TRUNC(SYSDATE)");
 
+        sb.append(" AND to_char(REQUEST_TIME,'yyyy-mm-dd')= '").append(new java.sql.Date(cardFeeRuleModel.getRequestTime().getTime())).append("'");
         sb.append(" order by CREDIT_RETRY_ADVICE_ID desc");
         Calendar c = Calendar.getInstance();
         c.setTime(cardFeeRuleModel.getRequestTime());
         c.set(Calendar.MILLISECOND, 0);
-
         logger.info("Loading Debit Card Fee Rule with Criteria: " + sb.toString());
         List<CrediRetryAdviceModel> list = (List<CrediRetryAdviceModel>) jdbcTemplate.query(sb.toString(), new CrediRetryAdviceModel());
 
@@ -242,6 +239,25 @@ public class TransactionDAO {
         return list;
     }
 
+
+    public List<CrediRetryAdviceModel> findCreditInquiryByExample(CrediRetryAdviceModel cardFeeRuleModel) {
+
+        StringBuilder sb = new StringBuilder();
+
+
+            sb.append("SELECT * FROM I8_MICROBANK_JS_PROD.CREDIT_RETRY_ADVICE WHERE CREDIT_INQUIRY_RRN= '").append(cardFeeRuleModel.getCreditInquiryRRN()).append("'");
+            sb.append(" AND to_char(REQUEST_TIME,'yyyy-mm-dd')= '").append(new java.sql.Date(cardFeeRuleModel.getRequestTime().getTime())).append("'");
+            sb.append(" order by CREDIT_RETRY_ADVICE_ID desc");
+            Calendar c = Calendar.getInstance();
+            c.setTime(cardFeeRuleModel.getRequestTime());
+            c.set(Calendar.MILLISECOND, 0);
+
+
+        logger.info("Loading Debit Card Fee Rule with Criteria: " + sb.toString());
+        List<CrediRetryAdviceModel> list = (List<CrediRetryAdviceModel>) jdbcTemplate.query(sb.toString(), new CrediRetryAdviceModel());
+
+        return list;
+    }
 
     public Boolean validateApiGeeRRN(WebServiceVO webServiceVO) {
         StringBuilder sqlBuilder = new StringBuilder(400);
@@ -322,7 +338,6 @@ public class TransactionDAO {
 
         return fonePayLogModel;
     }
-
 
     public FonePayLogModel saveFonePayIntegrationLogModel(WebServiceVO webServiceVO, String reqType)
             throws Exception {
@@ -419,6 +434,17 @@ public class TransactionDAO {
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    private final class CountToBooleanExtractor implements ResultSetExtractor<Boolean> {
+        @Override
+        public Boolean extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+            int count = 0;
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+            return count > 0;
+        }
     }
 
 }

@@ -560,6 +560,11 @@ public class WebServiceVO implements Serializable {
     private Boolean settleAtStoreLevel;
     private Boolean settleAtTerminalLevel;
 
+    private String transactionStatus;
+    private String creditAmount;
+    private String debitAmount;
+    private String toBank;
+
 
     public String getTerminalPoiCnicIssuance() {
         return terminalPoiCnicIssuance;
@@ -4591,5 +4596,37 @@ public class WebServiceVO implements Serializable {
 
     public void setAccountStatus(String accountStatus) {
         this.accountStatus = accountStatus;
+    }
+
+    public String getTransactionStatus() {
+        return transactionStatus;
+    }
+
+    public void setTransactionStatus(String transactionStatus) {
+        this.transactionStatus = transactionStatus;
+    }
+
+    public String getCreditAmount() {
+        return creditAmount;
+    }
+
+    public void setCreditAmount(String creditAmount) {
+        this.creditAmount = creditAmount;
+    }
+
+    public String getToBank() {
+        return toBank;
+    }
+
+    public void setToBank(String toBank) {
+        this.toBank = toBank;
+    }
+
+    public String getDebitAmount() {
+        return debitAmount;
+    }
+
+    public void setDebitAmount(String debitAmount) {
+        this.debitAmount = debitAmount;
     }
 }

@@ -675,29 +675,27 @@ public class L2AccountService {
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setTransactionAmount(request.getAmount());
-//        if (request.getPinType().equals("02")) {
-        messageVO.setOtpPin(request.getPin());
-//            try {
-//                if (request.getPin() != null && !request.getPin().equals("")) {
-//                    String text = request.getPin();
-//                    String otp = text.replaceAll("\\r|\\n", "");
-//                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
-//                }
-//            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-//                e.printStackTrace();
-//            }
-//        } else {
-        messageVO.setMobilePin(request.getPin());
-//            try {
-//                if (request.getPin() != null && !request.getPin().equals("")) {
-//                    String text = request.getPin();
-//                    String mpin = text.replaceAll("\\r|\\n", "");
-//                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
-//                }
-//            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        if (request.getPinType().equals("02")) {
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String otp = text.replaceAll("\\r|\\n", "");
+                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                if (request.getPin() != null && !request.getPin().equals("")) {
+                    String text = request.getPin();
+                    String mpin = text.replaceAll("\\r|\\n", "");
+                    messageVO.setMobilePin(RSAEncryption.decrypt(mpin, loginPrivateKey));
+                }
+            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+        }
         messageVO.setPinType(request.getPinType());
         messageVO.setReserved1(request.getPinType());
         messageVO.setReserved2(request.getReserved2());
@@ -909,149 +907,6 @@ public class L2AccountService {
         return response;
     }
 
-    public L2AccountStatusResponse l2AccountStatusResponse(L2AccountStatusRequest request) {
-        long startTime = new Date().getTime(); // start time
-        WebServiceVO messageVO = new WebServiceVO();
-        String transactionKey = request.getDateTime() + request.getRrn();
-        messageVO.setRetrievalReferenceNumber(request.getRrn());
-        logger.info("[HOST] Starting Processing Freelance Balance Inquiry Request RRN: " + messageVO.getRetrievalReferenceNumber());
 
-        transactionKey = request.getChannelId() + request.getRrn();
-
-        L2AccountStatusResponse response = new L2AccountStatusResponse();
-
-
-        messageVO.setUserName(request.getUserName());
-        messageVO.setCustomerPassword(request.getPassword());
-        messageVO.setMobileNo(request.getMobileNo());
-        messageVO.setDateTime(request.getDateTime());
-        messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-        messageVO.setChannelId(request.getChannelId());
-        messageVO.setTerminalId(request.getTerminalId());
-        messageVO.setReserved1(request.getReserved1());
-        messageVO.setReserved2(request.getReserved2());
-        messageVO.setReserved3(request.getReserved3());
-        messageVO.setReserved4(request.getReserved4());
-        messageVO.setReserved5(request.getReserved5());
-
-
-        /*This is temporary solution to enable talotalk on behalf of Attique Butt.
-        Should be reverted once otp optional implemented
-        on APIGEE End*/
-        //messageVO.setReserved1("1");
-
-        TransactionLogModel logModel = new TransactionLogModel();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
-        Date txDateTime = new Date();
-        try {
-            txDateTime = dateFormat.parse(request.getDateTime());
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        }
-
-        logModel.setRetrievalRefNo(messageVO.getRetrievalReferenceNumber());
-        logModel.setTransactionDateTime(txDateTime);
-        logModel.setChannelId(request.getChannelId());
-        logModel.setTransactionCode("l2AccountStatus");
-        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
-        //preparing request XML
-        String requestXml = JSONUtil.getJSON(request);
-        //Setting in logModel
-        logModel.setPduRequestHEX(requestXml);
-
-//        saveTransaction(logModel);
-
-        // Call i8
-        try {
-            logger.info("[HOST] Sent L2 Account Status Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
-            messageVO = l2AccountSwitchController.l2AccountStatus(messageVO);
-        } catch (Exception e) {
-
-            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
-
-        }
-
-        // Set Response from i8
-        if (messageVO != null
-                && StringUtils.isNotEmpty(messageVO.getResponseCode())
-                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
-            logger.info("[HOST] L2 Account Status Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-            response.setRrn(messageVO.getRetrievalReferenceNumber());
-            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-            response.setResponseDescription(messageVO.getResponseCodeDescription());
-            response.setResponseDateTime(messageVO.getDateTime());
-            response.setAccountStatus(messageVO.getAccountStatus());
-            logModel.setResponseCode(messageVO.getResponseCode());
-            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-
-        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
-            logger.info("[HOST] L2 Account Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-            response.setResponseCode(messageVO.getResponseCode());
-            response.setResponseDescription(messageVO.getResponseCodeDescription());
-            logModel.setResponseCode(messageVO.getResponseCode());
-            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-        } else {
-            logger.info("[HOST] L2 Account Status Request Unsuccessful from Micro Bank RRN: " + Objects.requireNonNull(messageVO).getRetrievalReferenceNumber());
-
-            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-            response.setResponseDescription("Host Not In Reach");
-            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
-        }
-        String sha256hex = DigestUtils.sha256Hex(response.getResponseCode() + response.getResponseDescription() + response.getAccountStatus());
-        response.setHashData(sha256hex);
-
-        long endTime = new Date().getTime(); // end time
-        long difference = endTime - startTime; // check different
-        logger.debug("[HOST] **** L2 Account Status Request PROCESSED IN ****: " + difference + " milliseconds");
-
-        //preparing request XML
-        String responseXml = JSONUtil.getJSON(response);
-        //Setting in logModel
-        logModel.setPduResponseHEX(responseXml);
-        logModel.setProcessedTime(difference);
-//        updateTransactionInDB(logModel);
-        return response;
-    }
-
-
-    public MotheNameResponse getMotherNameList (MotherNameRequest motherNameRequest) {
-        long startTime = new Date().getTime(); // start time
-        MotheNameResponse motheNameResponse = new MotheNameResponse();
-        WebServiceVO messageVO = new WebServiceVO();
-        messageVO.setMobileNo(motherNameRequest.getMobileNo());
-
-
-        try {
-
-            messageVO = l2AccountSwitchController.motherNames(messageVO);
-            logger.info("[HOST] Mother  List Request  Send to Micro Bank : ");
-        } catch (Exception e) {
-            logger.error("[HOST] Internal Error While Sending Request : ", e);
-        }
-
-        if (messageVO != null
-                && StringUtils.isNotEmpty(messageVO.getResponseCode())
-                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
-            logger.info("[HOST] Mother Name List Request Successful from Micro Bank : " );
-            motheNameResponse.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-            motheNameResponse.setResponseDescription(messageVO.getResponseCodeDescription());
-            motheNameResponse.setResponseDateTime(String.valueOf(startTime));
-            motheNameResponse.setMotherNameList(messageVO.getMotherNames());
-
-        }else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
-            logger.info("[HOST] Mother Name List Request Unsuccessful from Micro Bank : " );
-            motheNameResponse.setResponseCode(messageVO.getResponseCode());
-            motheNameResponse.setResponseDescription(messageVO.getResponseCodeDescription());
-        } else {
-            logger.info("[HOST]Mother Name List Request Unsuccessful from Micro Bank : ");
-
-            motheNameResponse.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-            motheNameResponse.setResponseDescription("Host Not In Reach");
-            motheNameResponse.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
-        }
-
-
-        return motheNameResponse;
-    }
 
 }

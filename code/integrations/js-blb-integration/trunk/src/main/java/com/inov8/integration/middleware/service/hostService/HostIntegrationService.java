@@ -40,7 +40,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 //import com.inov8.integration.middleware.mock.OptasiaMock;
 
@@ -7919,8 +7922,8 @@ public class HostIntegrationService {
                         middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
                         middlewareMessageVO.setStan(messageVO.getReserved2());
                         middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-                         formatter = new SimpleDateFormat("yyyyMMddhhmmss");
-                        Date  dt2=null;
+                        formatter = new SimpleDateFormat("yyyyMMddhhmmss");
+                        Date dt2 = null;
                         try {
                             dt2 = formatter.parse(messageVO.getDateTime());
                         } catch (ParseException ex) {
@@ -15070,7 +15073,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -15144,7 +15147,7 @@ public class HostIntegrationService {
                     e.printStackTrace(pw);
                     String stackTrace = sw.toString();
                     int statusCode = stackTrace.indexOf("status code");
-                    if (statusCode == -1){
+                    if (statusCode == -1) {
                         messageVO.setResponseCode("58");
                         messageVO.setResponseCodeDescription("Transaction Time Out");
                     }
@@ -16171,6 +16174,8 @@ public class HostIntegrationService {
 
     public void sentWalletRequest(CreditPaymentAdviceVO middlewareMessageVO) throws Exception {
         logger.info("Core To Wallet Push To SAF against RRN: " + middlewareMessageVO.getRetrievalReferenceNumber());
+
+
         CreditPaymentAdviceVO middlewareAdviceVO = new CreditPaymentAdviceVO();
         middlewareAdviceVO.setAccountNo1(middlewareMessageVO.getAccountNo1());
         middlewareAdviceVO.setAccountNo2(middlewareMessageVO.getAccountNo2());
@@ -16196,26 +16201,32 @@ public class HostIntegrationService {
 
 
         // Create a ConnectionFactory
+        try {
 
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://" + I8_QUEUE_SERVER + ":" + I8_QUEUE_PORT);
-        logger.info("Core To Wallet Push To SAF URL: " + connectionFactory.getBrokerURL());
 
-        // Create a Connection
-        Connection connection = connectionFactory.createConnection();
-        connection.start();
-        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        Destination destination = session.createQueue("queue/creditPaymentQueue");
+            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://" + I8_QUEUE_SERVER + ":" + I8_QUEUE_PORT);
+            logger.info("Core To Wallet Push To SAF URL: " + connectionFactory.getBrokerURL());
 
-        MessageProducer producer = session.createProducer(destination);
+            // Create a Connection
+            Connection connection = connectionFactory.createConnection();
+            connection.start();
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            Destination destination = session.createQueue("queue/creditPaymentQueue");
 
-        ObjectMessage message = session.createObjectMessage(middlewareAdviceVO);
+            MessageProducer producer = session.createProducer(destination);
 
-        producer.send(message);
-        connection.close();
+            ObjectMessage message = session.createObjectMessage(middlewareAdviceVO);
+
+            producer.send(message);
+            connection.close();
+        } catch (Exception e) {
+            throw new Exception("Error occured on Validate In Push Credit Queue" + e.getMessage());
+
+        }
 
     }
 //
-//
+//a
 //    public void sentDebitPaymentRequest(MiddlewareMessageVO middlewareMessageVO) throws Exception {
 //        logger.info("Debit Payment Reversal Push To SAF against RRN: " + middlewareMessageVO.getRetrievalReferenceNumber());
 //        MiddlewareAdviceVO middlewareAdviceVO = new MiddlewareAdviceVO();
@@ -21311,53 +21322,58 @@ public class HostIntegrationService {
         return webServiceVO;
     }
 
-    private boolean checkAlreadyExists(String stan, Date requestTime) {
+    private boolean checkAlreadyExists(String stan, Date requestTime) throws Exception {
         boolean result = false;
+        try {
+            if (StringUtils.isEmpty(stan) || requestTime == null) {
+            }
 
-        if (StringUtils.isEmpty(stan) || requestTime == null) {
+            CrediRetryAdviceModel iBFTRetryAdviceModel = new CrediRetryAdviceModel();
+            iBFTRetryAdviceModel.setRetrievalReferenceNumber(stan);
+            iBFTRetryAdviceModel.setRequestTime(requestTime);
+
+            Calendar c = Calendar.getInstance();
+            c.setTime(requestTime);
+            c.set(Calendar.MILLISECOND, 0);
+
+
+            List<CrediRetryAdviceModel> customList = transactionDAO.findByExample(iBFTRetryAdviceModel);
+
+
+            if (customList != null && customList.size() > 0) {
+                result = true;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error occured on Validate Credit RRN" + e.getMessage());
+
         }
-
-        CrediRetryAdviceModel iBFTRetryAdviceModel = new CrediRetryAdviceModel();
-        iBFTRetryAdviceModel.setRetrievalReferenceNumber(stan);
-        iBFTRetryAdviceModel.setRequestTime(requestTime);
-
-        Calendar c = Calendar.getInstance();
-        c.setTime(requestTime);
-        c.set(Calendar.MILLISECOND, 0);
-
-
-        List<CrediRetryAdviceModel> customList = transactionDAO.findByExample(iBFTRetryAdviceModel);
-
-
-        if (customList != null && customList.size() > 0) {
-            result = true;
-        }
-
         return result;
     }
 
-    private boolean checkAlreadyCreditInquiryExists(String stan, Date requestTime) {
+    private boolean checkAlreadyCreditInquiryExists(String stan, Date requestTime) throws Exception {
         boolean result = false;
+        try {
+            if (StringUtils.isEmpty(stan) || requestTime == null) {
+            }
 
-        if (StringUtils.isEmpty(stan) || requestTime == null) {
+            CrediRetryAdviceModel iBFTRetryAdviceModel = new CrediRetryAdviceModel();
+            iBFTRetryAdviceModel.setCreditInquiryRRN(stan);
+            iBFTRetryAdviceModel.setRequestTime(requestTime);
+
+            Calendar c = Calendar.getInstance();
+            c.setTime(requestTime);
+            c.set(Calendar.MILLISECOND, 0);
+
+
+            List<CrediRetryAdviceModel> customList = transactionDAO.findCreditInquiryByExample(iBFTRetryAdviceModel);
+
+
+            if (customList != null && customList.size() > 0) {
+                result = true;
+            }
+        } catch (Exception e) {
+            throw new Exception("Error occured on Validate Credit Inquiry" + e.getMessage());
         }
-
-        CrediRetryAdviceModel iBFTRetryAdviceModel = new CrediRetryAdviceModel();
-        iBFTRetryAdviceModel.setCreditInquiryRRN(stan);
-        iBFTRetryAdviceModel.setRequestTime(requestTime);
-
-        Calendar c = Calendar.getInstance();
-        c.setTime(requestTime);
-        c.set(Calendar.MILLISECOND, 0);
-
-
-        List<CrediRetryAdviceModel> customList = transactionDAO.findCreditInquiryByExample(iBFTRetryAdviceModel);
-
-
-        if (customList != null && customList.size() > 0) {
-            result = true;
-        }
-
         return result;
     }
 

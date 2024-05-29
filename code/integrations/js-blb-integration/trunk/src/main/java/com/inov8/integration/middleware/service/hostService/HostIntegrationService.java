@@ -7893,15 +7893,15 @@ public class HostIntegrationService {
         } else {
 
             if (ConfigReader.getInstance().getProperty("Credit.Saf.product.Ids", "").contains(messageVO.getProductID())) {
-                try {
-                    logger.info("[HOST] Sent Credit Payment Request to Micro Bank : " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
-                    messageVO = switchController.credit(messageVO);
-                } catch (Exception e) {
-                    if (e instanceof RemoteAccessException) {
-                        if (!(e instanceof RemoteConnectFailureException)) {
-                            messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-                        }
-                    }
+//                try {
+//                    logger.info("[HOST] Sent Credit Payment Request to Micro Bank : " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+//                    messageVO = switchController.credit(messageVO);
+//                } catch (Exception e) {
+//                    if (e instanceof RemoteAccessException) {
+//                        if (!(e instanceof RemoteConnectFailureException)) {
+//                            messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+//                        }
+//                    }
                     StringWriter sw = new StringWriter();
                     PrintWriter pw = new PrintWriter(sw);
                     String stackTrace = sw.toString();
@@ -7979,17 +7979,21 @@ public class HostIntegrationService {
                                         response.setResponseDescription(FonePayResponseCodes.STAN_ALREADY_EXISTS_DESCRIPTION);
                                         return response;
                                     }
-                                    if (!isAlreadyExists && !existsInIbftTable && !isAlreadyCreditInquiryExists) {
-                                        logger.info("Request Goes to Save In Credit Payment SAF");
-                                        transactionDAO.saveNewCreditRecord(middlewareMessageVO);
-                                        transactionDAO.AddToProcessing(messageVO.getRetrievalReferenceNumber(), messageVO.getDateTime().toString());
-
-                                    }
-                                    if (!existsInIbftTable)
+//                                    if (!isAlreadyExists && !existsInIbftTable && !isAlreadyCreditInquiryExists) {
+//                                        logger.info("Request Goes to Save In Credit Payment SAF");
+//                                        transactionDAO.saveNewCreditRecord(middlewareMessageVO);
+//                                        transactionDAO.AddToProcessing(messageVO.getRetrievalReferenceNumber(), messageVO.getDateTime().toString());
+//
+//                                    }
+                                    if (!isAlreadyExists && !existsInIbftTable && !isAlreadyCreditInquiryExists)
                                         try {
                                             this.sentWalletRequest(middlewareMessageVO);
+                                            logger.info("Request Goes to Save In Credit Payment SAF");
+                                            transactionDAO.saveNewCreditRecord(middlewareMessageVO);
+                                            transactionDAO.AddToProcessing(messageVO.getRetrievalReferenceNumber(), messageVO.getDateTime().toString());
                                         } catch (Exception ex) {
-
+                                            middlewareMessageVO.setReserved10("Failed");
+                                            transactionDAO.saveNewCreditRecord(middlewareMessageVO);
                                             ex.printStackTrace();
                                         }
                                 }
@@ -8004,7 +8008,7 @@ public class HostIntegrationService {
                         }
                     }
 
-                }
+//                }
             } else {
                 logger.info("[HOST] Sent Credit Payment Request to Micro Bank : " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
                 try {

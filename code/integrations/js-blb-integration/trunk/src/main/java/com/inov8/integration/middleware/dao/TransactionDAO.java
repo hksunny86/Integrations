@@ -137,7 +137,11 @@ public class TransactionDAO {
 
 
 //        model.setBankImd(messageVO.getBankIMD());
-        tx.setStatus(PortalConstants.IBFT_STATUS_IN_PROGRESS);
+        if (messageVO.getReserved10() != null && messageVO.getReserved10().equals(PortalConstants.IBFT_STATUS_FAILED)) {
+            tx.setStatus(PortalConstants.IBFT_STATUS_FAILED);
+        } else {
+            tx.setStatus(PortalConstants.IBFT_STATUS_IN_PROGRESS);
+        }
         try {
             StringBuilder sql = new StringBuilder();
             sql.append("INSERT INTO I8_MICROBANK_JS_PROD.CREDIT_RETRY_ADVICE ");
@@ -245,12 +249,12 @@ public class TransactionDAO {
         StringBuilder sb = new StringBuilder();
 
 
-            sb.append("SELECT * FROM I8_MICROBANK_JS_PROD.CREDIT_RETRY_ADVICE WHERE CREDIT_INQUIRY_RRN= '").append(cardFeeRuleModel.getCreditInquiryRRN()).append("'");
-            sb.append(" AND to_char(REQUEST_TIME,'yyyy-mm-dd')= '").append(new java.sql.Date(cardFeeRuleModel.getRequestTime().getTime())).append("'");
-            sb.append(" order by CREDIT_RETRY_ADVICE_ID desc");
-            Calendar c = Calendar.getInstance();
-            c.setTime(cardFeeRuleModel.getRequestTime());
-            c.set(Calendar.MILLISECOND, 0);
+        sb.append("SELECT * FROM I8_MICROBANK_JS_PROD.CREDIT_RETRY_ADVICE WHERE CREDIT_INQUIRY_RRN= '").append(cardFeeRuleModel.getCreditInquiryRRN()).append("'");
+        sb.append(" AND to_char(REQUEST_TIME,'yyyy-mm-dd')= '").append(new java.sql.Date(cardFeeRuleModel.getRequestTime().getTime())).append("'");
+        sb.append(" order by CREDIT_RETRY_ADVICE_ID desc");
+        Calendar c = Calendar.getInstance();
+        c.setTime(cardFeeRuleModel.getRequestTime());
+        c.set(Calendar.MILLISECOND, 0);
 
 
         logger.info("Loading Debit Card Fee Rule with Criteria: " + sb.toString());

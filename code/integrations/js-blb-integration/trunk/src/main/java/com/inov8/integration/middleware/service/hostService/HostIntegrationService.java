@@ -1179,7 +1179,7 @@ public class HostIntegrationService {
         messageVO.setUserName(request.getUserName());
         messageVO.setCustomerPassword(request.getPassword());
         try {
-            messageVO.setMobilePin(RSAEncryption.decrypt(request.getOtpPin(), loginPrivateKey));
+            messageVO.setOtpPin(RSAEncryption.decrypt(request.getOtpPin(), loginPrivateKey));
         } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

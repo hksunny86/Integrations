@@ -15121,7 +15121,7 @@ public class HostIntegrationService {
         long startTime = new Date().getTime(); // start time
         WebServiceVO messageVO = new WebServiceVO();
         messageVO.setRetrievalReferenceNumber(request.getRrn());
-        logger.info("[HOST]  Customer Name Update Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+        logger.info("[HOST]  Update Limit Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
 
 
         UpdateLimitResponse response = new UpdateLimitResponse();

@@ -4,7 +4,9 @@ import com.inov8.integration.channel.T24Api.service.T24ApiMockService;
 import com.inov8.integration.channel.offlineBiller.response.BillInquiryResponse;
 import com.inov8.integration.channel.offlineBiller.resquest.BillInquiryRequest;
 import com.inov8.integration.channel.offlineBiller.service.OffLineBillerService;
+import com.inov8.integration.channel.refferalCustomer.request.NovaCustomerSMSAlertRequest;
 import com.inov8.integration.channel.refferalCustomer.request.RefferalCustomerRequest;
+import com.inov8.integration.channel.refferalCustomer.response.NovaCustomerSMSAlertResponse;
 import com.inov8.integration.channel.refferalCustomer.response.RefferalCustomerResponse;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
@@ -24,6 +26,8 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Iterator;
+
 @Service
 public class RefferalCustomerService {
 
@@ -33,8 +37,13 @@ public class RefferalCustomerService {
 
     @Value("${refferal.customer.url}")
     private String refferalCustomer;
+    @Value("${nova.customer.alert.url}")
+    private String novaAlertSMS;
+    @Value("${nova.customer.alert.access.token}")
+    private String accessToken;
 
     private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
+
     public void setI8SBSwitchControllerRequestVO(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
         this.i8SBSwitchControllerRequestVO = i8SBSwitchControllerRequestVO;
     }
@@ -89,6 +98,66 @@ public class RefferalCustomerService {
                 }
             }
         }
+        return refferalCustomerResponse;
+    }
+
+    public NovaCustomerSMSAlertResponse refferalCustomerResponse(NovaCustomerSMSAlertRequest request) throws Exception {
+        NovaCustomerSMSAlertResponse refferalCustomerResponse = new NovaCustomerSMSAlertResponse();
+        I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO = new I8SBSwitchControllerRequestVO();
+        String requesJson;
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock")) {
+            logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
+            requesJson = JSONUtil.getJSON(request);
+            logger.info("Request Send To Nova Customer Notification ALert: " + requesJson);
+            T24ApiMockService mock = new T24ApiMockService();
+            requesJson = mock.transactionValidation();
+            refferalCustomerResponse = (NovaCustomerSMSAlertResponse) JSONUtil.jsonToObject(requesJson, NovaCustomerSMSAlertResponse.class);
+        } else {
+            logger.info("Nova Customer Notification ALert " + this.novaAlertSMS);
+            UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(this.novaAlertSMS);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.add("Access_Token", this.accessToken);
+            requesJson = JSONUtil.getJSON(request);
+            logger.info("Sending Nova Customer Notification ALert Request : " + requesJson);
+            HttpEntity<?> httpEntity = new HttpEntity(requesJson, headers);
+            Iterator var8 = this.restTemplate.getMessageConverters().iterator();
+
+            while (var8.hasNext()) {
+                HttpMessageConverter converter = (HttpMessageConverter) var8.next();
+                if (converter instanceof StringHttpMessageConverter) {
+                    ((StringHttpMessageConverter) converter).setWriteAcceptCharset(false);
+                }
+            }
+
+            try {
+                ResponseEntity<String> res = this.restTemplate.postForEntity(uri.build().toUri(), httpEntity, String.class);
+                logger.info("Nova Customer Notification ALert Response Received from Server : " + res.getStatusCode());
+                if (res.getStatusCodeValue() == 200) {
+                    refferalCustomerResponse.setResponseCode("00");
+                    refferalCustomerResponse.setResponseDesc("SuccessFull");
+                }
+            } catch (RestClientException var11) {
+                if (var11 instanceof HttpStatusCodeException) {
+                    String response = ((HttpStatusCodeException) var11).getStatusCode().toString();
+                    String resp;
+                    if (response.equals("204")) {
+                        resp = ((HttpStatusCodeException) var11).getResponseBodyAsString();
+                        refferalCustomerResponse.setResponseCode("204");
+                        refferalCustomerResponse.setResponseDesc("No Content");
+                    } else if (response.equals("405")) {
+                        resp = ((HttpStatusCodeException) var11).getResponseBodyAsString();
+                        refferalCustomerResponse.setResponseCode("405");
+                        refferalCustomerResponse.setResponseDesc("Method Not Allowed");
+                    } else {
+                        resp = ((HttpStatusCodeException) var11).getResponseBodyAsString();
+                        refferalCustomerResponse.setResponseCode(((HttpStatusCodeException) var11).getStatusCode().toString());
+                        refferalCustomerResponse.setResponseDesc("Method Not Allowed");
+                    }
+                }
+            }
+        }
+
         return refferalCustomerResponse;
     }
 }

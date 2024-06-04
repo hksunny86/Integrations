@@ -1,7 +1,6 @@
 package com.inov8.integration.channel.refferalCustomer.bo;
 
 
-
 import com.inov8.integration.channel.offlineBiller.response.BillInquiryResponse;
 import com.inov8.integration.channel.offlineBiller.response.BillPaymentResponse;
 
@@ -9,8 +8,10 @@ import com.inov8.integration.channel.offlineBiller.resquest.BillInquiryRequest;
 import com.inov8.integration.channel.offlineBiller.resquest.BillPaymentRequest;
 
 import com.inov8.integration.channel.offlineBiller.service.OffLineBillerService;
+import com.inov8.integration.channel.refferalCustomer.request.NovaCustomerSMSAlertRequest;
 import com.inov8.integration.channel.refferalCustomer.request.RefferalCustomerRequest;
 import com.inov8.integration.channel.refferalCustomer.request.Request;
+import com.inov8.integration.channel.refferalCustomer.response.NovaCustomerSMSAlertResponse;
 import com.inov8.integration.channel.refferalCustomer.response.RefferalCustomerResponse;
 import com.inov8.integration.channel.refferalCustomer.response.Response;
 import com.inov8.integration.channel.refferalCustomer.service.RefferalCustomerService;
@@ -60,6 +61,11 @@ public class RefferalCustomerBo implements I8SBChannelInterface {
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_REFFERAL_CUSTOMER)) {
                 response = refferalCustomerService.refferalCustomerResponse((RefferalCustomerRequest) request);
             }
+
+            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_Notification)) {
+                response = this.refferalCustomerService.refferalCustomerResponse((NovaCustomerSMSAlertRequest) request);
+            }
+
             if (response.populateI8SBSwitchControllerResponseVO() != null)
                 i8SBSwitchControllerResponseVO = response.populateI8SBSwitchControllerResponseVO();
             String responseXML = JSONUtil.getJSON(response);
@@ -104,6 +110,9 @@ public class RefferalCustomerBo implements I8SBChannelInterface {
         if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_REFFERAL_CUSTOMER)) {
             request = new RefferalCustomerRequest();
             response = new RefferalCustomerResponse();
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_Notification)) {
+            request = new NovaCustomerSMSAlertRequest();
+            response = new NovaCustomerSMSAlertResponse();
         } else {
             logger.info("[FAILED] Request type not supported");
             throw new I8SBValidationException("Request type not supported");

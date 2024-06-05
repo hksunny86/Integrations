@@ -1826,6 +1826,7 @@ public class HostIntegrationService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setBalance(messageVO.getBalance());
+            response.setBalanceInProcess(messageVO.getBalanceInProcess());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -7902,111 +7903,111 @@ public class HostIntegrationService {
 //                            messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
 //                        }
 //                    }
-                    StringWriter sw = new StringWriter();
-                    PrintWriter pw = new PrintWriter(sw);
-                    String stackTrace = sw.toString();
-                    if (stackTrace.contains("status code = 503")) {
-                        MiddlewareMessageVO middlewareMessageVO = new MiddlewareMessageVO();
-                        middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
-                        middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
-                        middlewareMessageVO.setStan(messageVO.getReserved2());
-                        middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-                        middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
-                        middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
-                        middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+                StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw);
+                String stackTrace = sw.toString();
+                if (stackTrace.contains("status code = 503")) {
+                    MiddlewareMessageVO middlewareMessageVO = new MiddlewareMessageVO();
+                    middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
+                    middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
+                    middlewareMessageVO.setStan(messageVO.getReserved2());
+                    middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+                    middlewareMessageVO.setRequestTime(getRequestTime(messageVO.getDateTime()));
+                    middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
+                    middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+
+                } else {
+                    CreditPaymentAdviceVO middlewareMessageVO = new CreditPaymentAdviceVO();
+
+                    middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
+                    middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
+                    middlewareMessageVO.setStan(messageVO.getReserved2());
+                    middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
+                    formatter = new SimpleDateFormat("yyyyMMddhhmmss");
+                    Date dt2 = null;
+                    try {
+                        dt2 = formatter.parse(messageVO.getDateTime());
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                    middlewareMessageVO.setRequestTime(dt2);
+                    middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
+                    middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
+                    middlewareMessageVO.setReserved1(messageVO.getReserved1());
+                    middlewareMessageVO.setReserved2(messageVO.getReserved2());
+                    middlewareMessageVO.setReserved3(messageVO.getReserved3());
+                    middlewareMessageVO.setReserved4(messageVO.getReserved4());
+                    middlewareMessageVO.setReserved5(messageVO.getReserved5());
+                    middlewareMessageVO.setReserved6(messageVO.getReserved6());
+                    middlewareMessageVO.setReserved7(messageVO.getReserved7());
+                    middlewareMessageVO.setReserved8(messageVO.getReserved8());
+                    middlewareMessageVO.setReserved9(messageVO.getReserved9());
+                    middlewareMessageVO.setReserved10(messageVO.getReserved10());
+                    middlewareMessageVO.setCurrencyValue(messageVO.getCurrencyValue());
+                    middlewareMessageVO.setWalletAmount(messageVO.getDepositAmount());
+                    this.validateRRN(messageVO);
+                    if (!messageVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
+                        logger.info("[HOST] Credit  Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+                        response.setResponseCode(messageVO.getResponseCode());
+                        response.setResponseDescription(messageVO.getResponseCodeDescription());
+                        response.setRrn(messageVO.getRetrievalReferenceNumber());
+                        logModel.setResponseCode(messageVO.getResponseCode());
+                        logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+                        return response;
 
                     } else {
-                        CreditPaymentAdviceVO middlewareMessageVO = new CreditPaymentAdviceVO();
-
-                        middlewareMessageVO.setAccountNo1(messageVO.getMobileNo());
-                        middlewareMessageVO.setAccountNo2(messageVO.getMobileNo());
-                        middlewareMessageVO.setStan(messageVO.getReserved2());
-                        middlewareMessageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
-                        formatter = new SimpleDateFormat("yyyyMMddhhmmss");
-                        Date dt2 = null;
                         try {
-                            dt2 = formatter.parse(messageVO.getDateTime());
-                        } catch (ParseException ex) {
-                            ex.printStackTrace();
-                        }
-                        middlewareMessageVO.setRequestTime(dt2);
-                        middlewareMessageVO.setTransactionAmount(messageVO.getTransactionAmount());
-                        middlewareMessageVO.setProductId(Long.parseLong(messageVO.getProductID()));
-                        middlewareMessageVO.setReserved1(messageVO.getReserved1());
-                        middlewareMessageVO.setReserved2(messageVO.getReserved2());
-                        middlewareMessageVO.setReserved3(messageVO.getReserved3());
-                        middlewareMessageVO.setReserved4(messageVO.getReserved4());
-                        middlewareMessageVO.setReserved5(messageVO.getReserved5());
-                        middlewareMessageVO.setReserved6(messageVO.getReserved6());
-                        middlewareMessageVO.setReserved7(messageVO.getReserved7());
-                        middlewareMessageVO.setReserved8(messageVO.getReserved8());
-                        middlewareMessageVO.setReserved9(messageVO.getReserved9());
-                        middlewareMessageVO.setReserved10(messageVO.getReserved10());
-                        middlewareMessageVO.setCurrencyValue(messageVO.getCurrencyValue());
-                        middlewareMessageVO.setWalletAmount(messageVO.getDepositAmount());
-                        this.validateRRN(messageVO);
-                        if (!messageVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
-                            logger.info("[HOST] Credit  Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
-                            response.setResponseCode(messageVO.getResponseCode());
-                            response.setResponseDescription(messageVO.getResponseCodeDescription());
-                            response.setRrn(messageVO.getRetrievalReferenceNumber());
-                            logModel.setResponseCode(messageVO.getResponseCode());
-                            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-                            return response;
+                            fonePayLogModel = transactionDAO.saveFonePayIntegrationLogModel(messageVO, "Credit Payment");
+                            messageVO = this.validateCreditInquiryRRN(messageVO);
+                            if (!messageVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
+                                response.setResponseCode(messageVO.getResponseCode());
+                                response.setResponseDescription(messageVO.getResponseCodeDescription());
+                                return response;
+                            } else {
 
-                        } else {
-                            try {
-                                fonePayLogModel = transactionDAO.saveFonePayIntegrationLogModel(messageVO, "Credit Payment");
-                                messageVO = this.validateCreditInquiryRRN(messageVO);
-                                if (!messageVO.getResponseCode().equals(FonePayResponseCodes.SUCCESS_RESPONSE_CODE)) {
-                                    response.setResponseCode(messageVO.getResponseCode());
-                                    response.setResponseDescription(messageVO.getResponseCodeDescription());
+                                boolean isAlreadyExists = this.checkAlreadyExists(messageVO.getRetrievalReferenceNumber(), dt);
+                                boolean isAlreadyCreditInquiryExists = this.checkAlreadyCreditInquiryExists(messageVO.getReserved3(), dt);
+                                boolean existsInIbftTable = transactionDAO.CheckIBFTStatus(messageVO.getRetrievalReferenceNumber(), String.valueOf(dt));
+
+                                if (isAlreadyExists) {
+                                    response.setResponseCode(FonePayResponseCodes.STAN_ALREADY_EXISTS.toString());
+                                    response.setResponseDescription(FonePayResponseCodes.STAN_ALREADY_EXISTS_DESCRIPTION);
                                     return response;
-                                } else {
+                                }
 
-                                    boolean isAlreadyExists = this.checkAlreadyExists(messageVO.getRetrievalReferenceNumber(), dt);
-                                    boolean isAlreadyCreditInquiryExists = this.checkAlreadyCreditInquiryExists(messageVO.getReserved3(), dt);
-                                    boolean existsInIbftTable = transactionDAO.CheckIBFTStatus(messageVO.getRetrievalReferenceNumber(), String.valueOf(dt));
-
-                                    if (isAlreadyExists) {
-                                        response.setResponseCode(FonePayResponseCodes.STAN_ALREADY_EXISTS.toString());
-                                        response.setResponseDescription(FonePayResponseCodes.STAN_ALREADY_EXISTS_DESCRIPTION);
-                                        return response;
-                                    }
-
-                                    if (isAlreadyCreditInquiryExists) {
-                                        response.setResponseCode(FonePayResponseCodes.STAN_ALREADY_EXISTS.toString());
-                                        response.setResponseDescription(FonePayResponseCodes.STAN_ALREADY_EXISTS_DESCRIPTION);
-                                        return response;
-                                    }
+                                if (isAlreadyCreditInquiryExists) {
+                                    response.setResponseCode(FonePayResponseCodes.STAN_ALREADY_EXISTS.toString());
+                                    response.setResponseDescription(FonePayResponseCodes.STAN_ALREADY_EXISTS_DESCRIPTION);
+                                    return response;
+                                }
 //                                    if (!isAlreadyExists && !existsInIbftTable && !isAlreadyCreditInquiryExists) {
 //                                        logger.info("Request Goes to Save In Credit Payment SAF");
 //                                        transactionDAO.saveNewCreditRecord(middlewareMessageVO);
 //                                        transactionDAO.AddToProcessing(messageVO.getRetrievalReferenceNumber(), messageVO.getDateTime().toString());
 //
 //                                    }
-                                    if (!isAlreadyExists && !existsInIbftTable && !isAlreadyCreditInquiryExists)
-                                        try {
-                                            this.sentWalletRequest(middlewareMessageVO);
-                                            logger.info("Request Goes to Save In Credit Payment SAF");
-                                            transactionDAO.saveNewCreditRecord(middlewareMessageVO);
-                                            transactionDAO.AddToProcessing(messageVO.getRetrievalReferenceNumber(), messageVO.getDateTime().toString());
-                                        } catch (Exception ex) {
-                                            middlewareMessageVO.setReserved10("Failed");
-                                            transactionDAO.saveNewCreditRecord(middlewareMessageVO);
-                                            ex.printStackTrace();
-                                        }
-                                }
-
-
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
+                                if (!isAlreadyExists && !existsInIbftTable && !isAlreadyCreditInquiryExists)
+                                    try {
+                                        this.sentWalletRequest(middlewareMessageVO);
+                                        logger.info("Request Goes to Save In Credit Payment SAF");
+                                        transactionDAO.saveNewCreditRecord(middlewareMessageVO);
+                                        transactionDAO.AddToProcessing(messageVO.getRetrievalReferenceNumber(), messageVO.getDateTime().toString());
+                                    } catch (Exception ex) {
+                                        middlewareMessageVO.setReserved10("Failed");
+                                        transactionDAO.saveNewCreditRecord(middlewareMessageVO);
+                                        ex.printStackTrace();
+                                    }
                             }
 
-                            messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-                            messageVO.setResponseCodeDescription("Successful");
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
+
+                        messageVO.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+                        messageVO.setResponseCodeDescription("Successful");
                     }
+                }
 
 //                }
             } else {
@@ -15121,7 +15122,7 @@ public class HostIntegrationService {
         long startTime = new Date().getTime(); // start time
         WebServiceVO messageVO = new WebServiceVO();
         messageVO.setRetrievalReferenceNumber(request.getRrn());
-        logger.info("[HOST]  Update Limit Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+        logger.info("[HOST]  Customer Name Update Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
 
 
         UpdateLimitResponse response = new UpdateLimitResponse();

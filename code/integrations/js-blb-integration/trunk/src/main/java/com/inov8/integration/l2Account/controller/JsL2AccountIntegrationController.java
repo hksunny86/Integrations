@@ -51,5 +51,15 @@ public class JsL2AccountIntegrationController implements L2AccountSwitchControll
         return null;
     }
 
+    @Override
+    public WebServiceVO l2AccountStatus(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
+    public WebServiceVO motherNames(WebServiceVO webServiceVO) {
+        return null;
+    }
+
 
 }

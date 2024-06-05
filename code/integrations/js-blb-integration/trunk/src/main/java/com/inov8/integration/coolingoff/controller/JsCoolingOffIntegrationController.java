@@ -9,4 +9,9 @@ public class JsCoolingOffIntegrationController implements CoolingOffHostSwitchCo
     public WebServiceVO releaseIBFTAmount(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO toggleNotification(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

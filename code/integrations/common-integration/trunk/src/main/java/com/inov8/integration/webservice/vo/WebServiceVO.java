@@ -564,6 +564,9 @@ public class WebServiceVO implements Serializable {
     private String creditAmount;
     private String debitAmount;
     private String toBank;
+    private String isEnable;
+    private String type;
+    private String balanceInProcess;
 
 
     public String getTerminalPoiCnicIssuance() {
@@ -4628,5 +4631,28 @@ public class WebServiceVO implements Serializable {
 
     public void setDebitAmount(String debitAmount) {
         this.debitAmount = debitAmount;
+    }
+    public String getIsEnable() {
+        return isEnable;
+    }
+
+    public void setIsEnable(String isEnable) {
+        this.isEnable = isEnable;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getBalanceInProcess() {
+        return balanceInProcess;
+    }
+
+    public void setBalanceInProcess(String balanceInProcess) {
+        this.balanceInProcess = balanceInProcess;
     }
 }

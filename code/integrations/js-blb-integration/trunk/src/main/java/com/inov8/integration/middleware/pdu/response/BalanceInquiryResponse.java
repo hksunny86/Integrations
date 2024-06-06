@@ -18,6 +18,9 @@ public class BalanceInquiryResponse implements Serializable {
     private String rrn;
     @XmlElement(name = "Balance")
     private String balance;
+
+    @XmlElement(name = "BalanceInProcess")
+    private String balanceInProcess;
     @XmlElement(name = "HashData")
     private String hashData;
 
@@ -59,5 +62,13 @@ public class BalanceInquiryResponse implements Serializable {
 
     public void setBalance(String balance) {
         this.balance = balance;
+    }
+
+    public String getBalanceInProcess() {
+        return balanceInProcess;
+    }
+
+    public void setBalanceInProcess(String balanceInProcess) {
+        this.balanceInProcess = balanceInProcess;
     }
 }

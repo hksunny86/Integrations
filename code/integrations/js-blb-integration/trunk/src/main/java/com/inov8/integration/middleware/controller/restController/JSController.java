@@ -22,7 +22,7 @@ import java.util.Objects;
 
 //@Api(value = "Restful APIs", description = "SwaggerUI is located under /documentation. This mapping redirects the necessary resources for the ui.", hidden = true)
 @RestController
-//@RequestMapping(value = "/documentation")
+@RequestMapping(value = "/documentation")
 
 public class JSController {
 
@@ -108,20 +108,20 @@ public class JSController {
         return customerNameUpdateResponse;
     }
 
-    @RequestMapping(value = "api/updateCustomerInfo", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
+    @RequestMapping(value = "api/updatecustomerinfo", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
     public @ResponseBody
     UpdateCustomerInfoResponse updateCustomerInfoResponse(@RequestBody UpdateCustomerInfoRequest request) {
         UpdateCustomerInfoResponse updateCustomerInfo = new UpdateCustomerInfoResponse();
         long start = System.currentTimeMillis();
 
-        logger.info("Customer email Update Request Recieve at Controller at time: " + start);
+        logger.info("Customer customer info Update Request Recieve at Controller at time: " + start);
         String requestXML = XMLUtil.convertRequest(request);
         requestXML = XMLUtil.maskPassword(requestXML);
         String datetime = "";
         SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
         datetime = DateFor.format(new Date());
 
-        logger.info("Start Processing Customer Name Update Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+        logger.info("Start Processing customer info Update Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
                 + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
 
         StringBuilder stringText = new StringBuilder()
@@ -156,7 +156,7 @@ public class JSController {
                 logger.info("******* DEBUG LOGS FOR  Customer Name Update TRANSACTION *********");
                 logger.info("ResponseCode: " + updateCustomerInfo.getResponseCode());
             } else {
-                logger.info("******* DEBUG LOGS FOR  Customer Name Update TRANSACTION AUTHENTICATION *********");
+                logger.info("******* DEBUG LOGS FOR  customer info Update TRANSACTION AUTHENTICATION *********");
                 updateCustomerInfo = new UpdateCustomerInfoResponse();
                 updateCustomerInfo.setResponseCode("420");
                 updateCustomerInfo.setResponseDescription("Request is not authenticated");
@@ -177,7 +177,7 @@ public class JSController {
         return updateCustomerInfo;
     }
 
-    @RequestMapping(value = "api/updateLimit", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
+    @RequestMapping(value = "api/updateLimits", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
     public @ResponseBody
     UpdateLimitResponse updateLimitResponse(@RequestBody UpdateLimitRequest request) {
         UpdateLimitResponse updateLimit = new UpdateLimitResponse();

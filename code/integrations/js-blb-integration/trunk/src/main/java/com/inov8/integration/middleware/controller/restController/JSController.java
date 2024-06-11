@@ -244,6 +244,74 @@ public class JSController {
         return updateLimit;
     }
 
+    @RequestMapping(value = "api/getEmailUpdateStatus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    UpdateEmailStatusResponse getEmailUpdateStatus(@Valid @RequestBody UpdateEmailStatusRequest request) throws Exception {
+        UpdateEmailStatusResponse response = new UpdateEmailStatusResponse();
+
+        String className = this.getClass().getSimpleName();
+        String methodName = new Object() {
+        }.getClass().getEnclosingMethod().getName();
+        long start = System.currentTimeMillis();
+
+        try {
+
+            logger.info("Update email status Request Received at Controller at time: " + start);
+            String requestXML = JSONUtil.getJSON(request);
+            String datetime = "";
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+            datetime = DateFor.format(new Date());
+//            logger.info("Start Processing Update email status Request Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+//                    + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
+            StringBuilder stringText = new StringBuilder()
+                    .append(request.getMobileNumber())
+                    .append(request.getRrn());
+
+            String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+
+            try {
+                HostRequestValidator.validateUpdateEmailStatus(request);
+                response = integrationService.getUpdateEmailStatus(request);
+
+            } catch (ValidationException ve) {
+                response.setResponseCode("420");
+                response.setResponseDescription(ve.getMessage());
+
+                logger.error("ERROR: Request Validation", ve);
+            } catch (Exception e) {
+                response.setResponseCode("220");
+                response.setResponseDescription(e.getMessage());
+                logger.error("ERROR: General Processing ", e);
+            }
+
+            logger.info("******* DEBUG LOGS FOR Get Update Email Status Request *********");
+            logger.info("ResponseCode: " + response.getResponseCode());
+
+            } else {
+            logger.info("******* DEBUG LOGS FOR Email Update Status Request *********");
+                response = new UpdateEmailStatusResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
+
+        } catch (Exception e) {
+            response = new UpdateEmailStatusResponse();
+            response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            response.setResponseDescription(e.getLocalizedMessage());
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e);
+            logger.error("\n CLASS == " + className + " \n METHOD == " + methodName + "  ERROR ----- " + e.getLocalizedMessage());
+            logger.info("\n EXITING THIS METHOD == " + methodName + " OF CLASS = " + className + " \n\n\n");
+            logger.info("Critical Error ::" + e.getLocalizedMessage());
+        }
+        long end = System.currentTimeMillis() - start;
+//        String responseXML = JSONUtil.getJSON(response);
+//        logger.info("Get Email Update Status Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
+
+        return response;
+    }
+
     @RequestMapping(value = "api/CLSStatusUpdate", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
     public @ResponseBody
     CLSStatusUpdateResponse clsStatusUpdateResponse(@RequestBody CLSStatusUpdateRequest request) {

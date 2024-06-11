@@ -4505,4 +4505,11 @@ public class HostRequestValidator {
             return ConfigReader.getInstance().getProperty("channel.usernames", "").contains(userName) && ConfigReader.getInstance().getProperty("channel.passwords", "").contains(password);
         return Boolean.FALSE;
     }
+
+    public static void validateUpdateEmailStatus(UpdateEmailStatusRequest integrationVO) {
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
+        }
+    }
 }

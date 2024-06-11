@@ -40,6 +40,8 @@ public class LoginAuthenticationResponse {
     private String BlinlBvs;
     @XmlElement(name = "FreelanceAccountBalance")
     private String freelanceAccountBalance;
+    @XmlElement(name = "RemaingCoolOffTime")
+    private String remaingCoolOffTime;
     @XmlElement(name = "HashData")
     private String hashData;
 
@@ -178,6 +180,14 @@ public class LoginAuthenticationResponse {
 
     public void setFreelanceAccountBalance(String freelanceAccountBalance) {
         this.freelanceAccountBalance = freelanceAccountBalance;
+    }
+
+    public String getRemaingCoolOffTime() {
+        return remaingCoolOffTime;
+    }
+
+    public void setRemaingCoolOffTime(String remaingCoolOffTime) {
+        this.remaingCoolOffTime = remaingCoolOffTime;
     }
 
     public String getHashData() {

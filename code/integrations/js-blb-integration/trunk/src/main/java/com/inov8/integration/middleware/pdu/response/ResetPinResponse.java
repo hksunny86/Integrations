@@ -22,6 +22,8 @@ public class ResetPinResponse implements Serializable {
     private String reserved2;
     @XmlElement(name = "HashData")
     private String hashData;
+    @XmlElement(name = "RemaingCoolOffTime")
+    private String remaingCoolOffTime;
 
     public String getRrn() {
         return rrn;
@@ -77,5 +79,13 @@ public class ResetPinResponse implements Serializable {
 
     public void setHashData(String hashData) {
         this.hashData = hashData;
+    }
+
+    public String getRemaingCoolOffTime() {
+        return remaingCoolOffTime;
+    }
+
+    public void setRemaingCoolOffTime(String remaingCoolOffTime) {
+        this.remaingCoolOffTime = remaingCoolOffTime;
     }
 }

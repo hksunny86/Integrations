@@ -2,6 +2,7 @@ package com.inov8.integration.webservice.digiStatmentVO;
 
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class DigiWalletStatementVo implements Serializable {
     private static final long serialVersionUID = 5824473488070382311L;
@@ -31,7 +32,7 @@ public class DigiWalletStatementVo implements Serializable {
     private Double balanceAfterTransaction;
     private String isReversal;
     private Long productId;
-    private String additionInfo;
+    private Map<String, Object> additionInfo;
 
 
 
@@ -286,11 +287,11 @@ public class DigiWalletStatementVo implements Serializable {
     }
 
 
-    public String getAdditionInfo() {
+    public Map<String, Object> getAdditionInfo() {
         return additionInfo;
     }
 
-    public void setAdditionInfo(String additionInfo) {
+    public void setAdditionInfo(Map<String, Object> additionInfo) {
         this.additionInfo = additionInfo;
     }
 }

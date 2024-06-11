@@ -31,6 +31,11 @@ public class DigiWalletStatementVo implements Serializable {
     private Double balanceAfterTransaction;
     private String isReversal;
     private Long productId;
+    private String additionInfo;
+
+
+
+
 
     public String getMobileNumber() {
         return mobileNumber;
@@ -278,5 +283,14 @@ public class DigiWalletStatementVo implements Serializable {
 
     public void setIsReversal(String isReversal) {
         this.isReversal = isReversal;
+    }
+
+
+    public String getAdditionInfo() {
+        return additionInfo;
+    }
+
+    public void setAdditionInfo(String additionInfo) {
+        this.additionInfo = additionInfo;
     }
 }

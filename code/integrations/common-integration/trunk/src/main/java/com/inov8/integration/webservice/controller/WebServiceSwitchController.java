@@ -173,4 +173,5 @@ public interface WebServiceSwitchController {
     WebServiceVO deviceUpdate(WebServiceVO webServiceVO);
     WebServiceVO updateCustomerInfo(WebServiceVO webServiceVO);
     WebServiceVO updateCustomerLimit(WebServiceVO webServiceVO);
+    WebServiceVO getUpdateEmailStatus(WebServiceVO webServiceVO);
 }

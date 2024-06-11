@@ -567,7 +567,10 @@ public class WebServiceVO implements Serializable {
     private String isEnable;
     private String type;
     private String balanceInProcess;
+    private String remaingCoolOffTime;
+    private String timeToUpdate;
 
+    private String updatedEmail;
 
     public String getTerminalPoiCnicIssuance() {
         return terminalPoiCnicIssuance;
@@ -4654,5 +4657,29 @@ public class WebServiceVO implements Serializable {
 
     public void setBalanceInProcess(String balanceInProcess) {
         this.balanceInProcess = balanceInProcess;
+    }
+
+    public String getRemaingCoolOffTime() {
+        return remaingCoolOffTime;
+    }
+
+    public void setRemaingCoolOffTime(String remaingCoolOffTime) {
+        this.remaingCoolOffTime = remaingCoolOffTime;
+    }
+
+    public String getTimeToUpdate() {
+        return timeToUpdate;
+    }
+
+    public void setTimeToUpdate(String timeToUpdate) {
+        this.timeToUpdate = timeToUpdate;
+    }
+
+    public String getUpdatedEmail() {
+        return updatedEmail;
+    }
+
+    public void setUpdatedEmail(String updatedEmail) {
+        this.updatedEmail = updatedEmail;
     }
 }

@@ -8508,6 +8508,7 @@ public class HostIntegrationService {
             logger.info("[HOST] Login Authentication Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             response.setResponseCode(messageVO.getResponseCode());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setRemaingCoolOffTime(messageVO.getRemaingCoolOffTime());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
         } else {
@@ -9022,6 +9023,7 @@ public class HostIntegrationService {
             logger.info("[HOST] Reset PIN Change Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             response.setResponseCode(messageVO.getResponseCode());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setRemaingCoolOffTime(messageVO.getRemaingCoolOffTime());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
         } else {
@@ -15114,6 +15116,76 @@ public class HostIntegrationService {
         long endTime = new Date().getTime(); // end time
         long difference = endTime - startTime; // check different
         logger.debug("[HOST] **** Update Customer Info Request PROCESSED IN ****: " + difference + " milliseconds");
+
+        return response;
+    }
+
+    public UpdateEmailStatusResponse getUpdateEmailStatus(UpdateEmailStatusRequest request) {
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO messageVO = new WebServiceVO();
+        messageVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST]  Email Update Status Starting Processing Request RRN: " + messageVO.getRetrievalReferenceNumber());
+
+        UpdateEmailStatusResponse response = new UpdateEmailStatusResponse();
+
+        messageVO.setMobileNo(request.getMobileNumber());
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Update Email status Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + messageVO.getRetrievalReferenceNumber());
+            messageVO = switchController.getUpdateEmailStatus(messageVO);
+        } catch (Exception e) {
+            if (e instanceof RemoteAccessException) {
+                if (!(e instanceof RemoteConnectFailureException)) {
+
+                    StringWriter sw = new StringWriter();
+                    PrintWriter pw = new PrintWriter(sw);
+                    e.printStackTrace(pw);
+                    String stackTrace = sw.toString();
+                    int statusCode = stackTrace.indexOf("status code");
+                    if (statusCode == -1) {
+                        messageVO.setResponseCode("58");
+                        messageVO.setResponseCodeDescription("Transaction Time Out");
+                    }
+                }
+            }
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + messageVO.getRetrievalReferenceNumber(), e);
+        }
+
+        // Set Response from i8
+        if (messageVO != null
+                && StringUtils.isNotEmpty(messageVO.getResponseCode())
+                && messageVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Update Email Status Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setEmail(messageVO.getEmailAddress());
+            response.setUpdatedEmail(messageVO.getUpdatedEmail());
+            response.setTimeToUpdate(messageVO.getTimeToUpdate());
+            response.setResponseDateTime(messageVO.getDateTime());
+        } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
+            logger.info("[HOST]  Get Update Email Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(messageVO.getResponseCode());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setEmail(messageVO.getEmailAddress());
+            response.setUpdatedEmail(messageVO.getUpdatedEmail());
+            response.setTimeToUpdate(messageVO.getTimeToUpdate());
+        } else {
+            logger.info("[HOST] Get Update Email Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+        }
+        StringBuffer stringText = new StringBuffer(response.getResponseCode() + response.getResponseDescription());
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] **** Get Update Email Status Request PROCESSED IN ****: " + difference + " milliseconds");
 
         return response;
     }

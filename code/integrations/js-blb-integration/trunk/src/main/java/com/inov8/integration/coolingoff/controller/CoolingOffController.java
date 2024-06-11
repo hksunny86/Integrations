@@ -32,7 +32,7 @@ public class CoolingOffController {
     @Autowired
     CoolingOffService coolingOffService;
 
-    @RequestMapping(value = "api/coolingOff/releaseIbft", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "api/coolingOff/releaseAmount", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ReleaseIbftResponse releaseIbftReponse(@Valid @RequestBody ReleaseIbftRequest request) throws Exception {
         ReleaseIbftResponse response = new ReleaseIbftResponse();

@@ -15243,6 +15243,13 @@ public class HostIntegrationService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
+            response.setCnic(messageVO.getCnicNo());
+            response.setDailyRemainingDebitLimit(messageVO.getDailyDebitLimit());
+            response.setDailyRemainingCreditLimit(messageVO.getDailyCreditLimit());
+            response.setMonthlyRemainingDebitLimit(messageVO.getMonthlyDebitLimit());
+            response.setMonthlyRemainingCreditLimit(messageVO.getMonthlyCreditLimit());
+            response.setYearlyRemainingDebitLimit(messageVO.getMonthlyDebitLimit());
+            response.setYearlyRemainingCreditLimit(messageVO.getYearlyCreditLimit());
         } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
             logger.info("[HOST]  Update Limit Info Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             response.setResponseCode(messageVO.getResponseCode());

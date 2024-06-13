@@ -12,6 +12,7 @@ import com.inov8.integration.middleware.pdu.response.*;
 import com.inov8.integration.middleware.util.*;
 import com.inov8.integration.vo.MiddlewareMessageVO;
 import com.inov8.integration.webservice.controller.WebServiceSwitchController;
+import com.inov8.integration.webservice.vo.TransactionChargesVO;
 import com.inov8.integration.webservice.vo.WebServiceVO;
 import com.inov8.microbank.server.service.integration.vo.CreditPaymentAdviceVO;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -7199,7 +7200,12 @@ public class HostIntegrationService {
         messageVO.setReserved8(request.getReserved8());
         messageVO.setReserved9(request.getReserved9());
         messageVO.setReserved10(request.getReserved10());
-
+        if (request.getReserved10() != null) {
+            String chargesJson = request.getReserved10();
+            TransactionChargesVO transactionChargesVO = new TransactionChargesVO();
+            transactionChargesVO = (TransactionChargesVO) JSONUtil.jsonToObject(chargesJson, TransactionChargesVO.class);
+            messageVO.setTransactionChargesVO(transactionChargesVO);
+        }
 
         /*This is temporary solution to enable talotalk on behalf of Attique Butt.
         Should be reverted once otp optional implemented
@@ -7737,7 +7743,7 @@ public class HostIntegrationService {
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
             response.setComissionAmount(messageVO.getCommissionAmount());
-//            response.setInclusiveExclusiveComissionAmount(messageVO.getReserved3());
+            response.setInclusiveExclusiveComissionAmount(messageVO.getReserved3());
             response.setTotalAmount(messageVO.getTotalAmount());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -7833,7 +7839,12 @@ public class HostIntegrationService {
         messageVO.setReserved8(request.getReserved8());
         messageVO.setReserved9(request.getReserved9());
         messageVO.setReserved10(request.getReserved10());
-
+        if (request.getReserved10() != null) {
+            String chargesJson = request.getReserved10();
+            TransactionChargesVO transactionChargesVO = new TransactionChargesVO();
+            transactionChargesVO = (TransactionChargesVO) JSONUtil.jsonToObject(chargesJson, TransactionChargesVO.class);
+            messageVO.setTransactionChargesVO(transactionChargesVO);
+        }
 
         /*This is temporary solution to enable talotalk on behalf of Attique Butt.
         Should be reverted once otp optional implemented

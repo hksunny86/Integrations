@@ -134,7 +134,9 @@ public class JSController {
                 .append(request.getReserved2())
                 .append(request.getReserved3())
                 .append(request.getReserved4())
-                .append(request.getReserved5());
+                .append(request.getReserved5())
+                .append(request.getChannelId())
+                .append(request.getRrn());
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
         if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
@@ -194,6 +196,8 @@ public class JSController {
                 + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
 
         StringBuilder stringText = new StringBuilder()
+                .append(request.getUserName())
+                .append(request.getPassword())
                 .append(request.getMobileNumber())
                 .append(request.getAccountLevel())
                 .append(request.getDailySendingLimit())
@@ -201,7 +205,9 @@ public class JSController {
                 .append(request.getMonthlySendingLimit())
                 .append(request.getMonthlyReceivingLimit())
                 .append(request.getYearlySendingLimit())
-                .append(request.getYearlyReceivingLimit());
+                .append(request.getYearlyReceivingLimit())
+                .append(request.getChannelId())
+                .append(request.getRrn());;
 
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
         if (request.getHashData().equalsIgnoreCase(sha256hex)) {

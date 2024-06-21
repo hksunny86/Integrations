@@ -571,6 +571,15 @@ public class WebServiceVO implements Serializable {
     private String timeToUpdate;
 
     private String updatedEmail;
+    private TransactionChargesVO transactionChargesVO;
+
+    public TransactionChargesVO getTransactionChargesVO() {
+        return transactionChargesVO;
+    }
+
+    public void setTransactionChargesVO(TransactionChargesVO transactionChargesVO) {
+        this.transactionChargesVO = transactionChargesVO;
+    }
 
     public String getTerminalPoiCnicIssuance() {
         return terminalPoiCnicIssuance;

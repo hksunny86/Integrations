@@ -41,6 +41,9 @@ public class ZindigiLoginAuthenticationResponse {
     @XmlElement(name = "HashData")
     private String hashData;
 
+    @XmlElement(name = "RemainingCoolOffTime")
+    private String remainingCoolOffTime;
+
 
     public String getBvs() {
         return bvs;
@@ -176,5 +179,13 @@ public class ZindigiLoginAuthenticationResponse {
 
     public void setHashData(String hashData) {
         this.hashData = hashData;
+    }
+
+    public String getRemainingCoolOffTime() {
+        return remainingCoolOffTime;
+    }
+
+    public void setRemainingCoolOffTime(String remainingCoolOffTime) {
+        this.remainingCoolOffTime = remainingCoolOffTime;
     }
 }

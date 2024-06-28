@@ -7743,7 +7743,7 @@ public class HostIntegrationService {
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
             response.setComissionAmount(messageVO.getCommissionAmount());
-            response.setInclusiveExclusiveComissionAmount(messageVO.getReserved3());
+//            response.setInclusiveExclusiveComissionAmount(messageVO.getReserved3());
             response.setTotalAmount(messageVO.getTotalAmount());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -8649,6 +8649,7 @@ public class HostIntegrationService {
             logger.info("[HOST] Login Authentication Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             response.setResponseCode(messageVO.getResponseCode());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setRemainingCoolOffTime(messageVO.getRemaingCoolOffTime());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
         } else {
@@ -8893,6 +8894,7 @@ public class HostIntegrationService {
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
             response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setRemainingCoolOffTime(messageVO.getRemaingCoolOffTime());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -8900,6 +8902,7 @@ public class HostIntegrationService {
             logger.info("[HOST] Login PIN Change Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             response.setResponseCode(messageVO.getResponseCode());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setRemainingCoolOffTime(messageVO.getRemaingCoolOffTime());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
         } else {
@@ -9027,6 +9030,7 @@ public class HostIntegrationService {
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
             response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setRemainingCoolOffTime(messageVO.getRemaingCoolOffTime());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 
@@ -9034,7 +9038,7 @@ public class HostIntegrationService {
             logger.info("[HOST] Reset PIN Change Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             response.setResponseCode(messageVO.getResponseCode());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
-            response.setRemaingCoolOffTime(messageVO.getRemaingCoolOffTime());
+            response.setRemainingCoolOffTime(messageVO.getRemaingCoolOffTime());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
         } else {
@@ -15181,9 +15185,6 @@ public class HostIntegrationService {
             logger.info("[HOST]  Get Update Email Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             response.setResponseCode(messageVO.getResponseCode());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
-            response.setEmail(messageVO.getEmailAddress());
-            response.setUpdatedEmail(messageVO.getUpdatedEmail());
-            response.setTimeToUpdate(messageVO.getTimeToUpdate());
         } else {
             logger.info("[HOST] Get Update Email Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
 

@@ -7200,7 +7200,7 @@ public class HostIntegrationService {
         messageVO.setReserved8(request.getReserved8());
         messageVO.setReserved9(request.getReserved9());
         messageVO.setReserved10(request.getReserved10());
-        if (request.getReserved10() != null) {
+        if (StringUtils.isNotEmpty(request.getReserved10()) && request.getReserved10() != null) {
             String chargesJson = request.getReserved10();
             TransactionChargesVO transactionChargesVO = new TransactionChargesVO();
             transactionChargesVO = (TransactionChargesVO) JSONUtil.jsonToObject(chargesJson, TransactionChargesVO.class);
@@ -7839,7 +7839,7 @@ public class HostIntegrationService {
         messageVO.setReserved8(request.getReserved8());
         messageVO.setReserved9(request.getReserved9());
         messageVO.setReserved10(request.getReserved10());
-        if (request.getReserved10() != null) {
+        if (StringUtils.isNotEmpty(request.getReserved10()) && request.getReserved10() != null) {
             String chargesJson = request.getReserved10();
             TransactionChargesVO transactionChargesVO = new TransactionChargesVO();
             transactionChargesVO = (TransactionChargesVO) JSONUtil.jsonToObject(chargesJson, TransactionChargesVO.class);

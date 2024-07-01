@@ -15185,6 +15185,8 @@ public class HostIntegrationService {
             logger.info("[HOST]  Get Update Email Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             response.setResponseCode(messageVO.getResponseCode());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setEmail(messageVO.getEmailAddress());
+            response.setUpdatedEmail(messageVO.getUpdatedEmail());
         } else {
             logger.info("[HOST] Get Update Email Status Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
 

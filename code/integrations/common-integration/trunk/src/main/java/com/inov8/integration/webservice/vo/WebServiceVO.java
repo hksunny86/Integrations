@@ -1,10 +1,7 @@
 package com.inov8.integration.webservice.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inov8.integration.vo.CardType;
-import com.inov8.integration.vo.CatalogList;
-import com.inov8.integration.vo.MotherName;
-import com.inov8.integration.vo.SegmentList;
+import com.inov8.integration.vo.*;
 import com.inov8.integration.webservice.corporateVO.AccountStatement;
 import com.inov8.integration.webservice.corporateVO.CustomerDeviceVerification;
 import com.inov8.integration.webservice.debitCardVO.CardTypeFee;
@@ -120,6 +117,7 @@ public class WebServiceVO implements Serializable {
     private List<CardType> cardTypes;
 
     private List<MotherName> motherNames;
+    private List<IbftTransactionResponse> ibftTransactionResponse;
 
     public List<MotherName> getMotherNames() {
         return motherNames;
@@ -4690,5 +4688,13 @@ public class WebServiceVO implements Serializable {
 
     public void setUpdatedEmail(String updatedEmail) {
         this.updatedEmail = updatedEmail;
+    }
+
+    public List<IbftTransactionResponse> getIbftTransactionResponse() {
+        return ibftTransactionResponse;
+    }
+
+    public void setIbftTransactionResponse(List<IbftTransactionResponse> ibftTransactionResponse) {
+        this.ibftTransactionResponse = ibftTransactionResponse;
     }
 }

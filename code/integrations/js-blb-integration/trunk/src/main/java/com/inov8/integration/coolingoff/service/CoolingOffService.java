@@ -195,21 +195,23 @@ public class CoolingOffService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
-            response.setTransactionStatus(messageVO.getTransactionStatus());
+//            response.setTransactionStatus(messageVO.getTransactionStatus());
             response.setAccountTitle(messageVO.getAccountTitle());
-            response.setBalance(messageVO.getBalance());
-            response.setCreditAmount(messageVO.getCreditAmount());
-            response.setDebitAmount(messageVO.getDebitAmount());
-            response.setFromAccount(messageVO.getFromAccount());
+//            response.setBalance(messageVO.getBalance());
+//            response.setCreditAmount(messageVO.getCreditAmount());
+//            response.setDebitAmount(messageVO.getDebitAmount());
+//            response.setFromAccount(messageVO.getFromAccount());
             response.setMobileNo(messageVO.getMobileNo());
-            response.setProductName(messageVO.getProductName());
-            response.setToAccount(messageVO.getToAccount());
-            response.setToBank(messageVO.getToBank());
-            response.setTotalAmount(messageVO.getTotalAmount());
-            response.setCharges(messageVO.getCharges());
-            response.setTransactionId(messageVO.getTransactionId());
-            response.setTransactionAmount(messageVO.getTransactionAmount());
-            response.setTransactionType(messageVO.getTransactionType());
+//            response.setProductName(messageVO.getProductName());
+//            response.setToAccount(messageVO.getToAccount());
+//            response.setToBank(messageVO.getToBank());
+//            response.setTotalAmount(messageVO.getTotalAmount());
+//            response.setCharges(messageVO.getCharges());
+//            response.setTransactionId(messageVO.getTransactionId());
+//            response.setTransactionAmount(messageVO.getTransactionAmount());
+//            response.setTransactionType(messageVO.getTransactionType());
+
+            response.setIbftTransactionResponse(messageVO.getIbftTransactionResponse());
 
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());

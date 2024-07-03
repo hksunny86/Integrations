@@ -74,7 +74,7 @@ public class CoolingOffController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                 try {
                     CoolingOffRequestValidator.validateReleaseIbftAmount(request);
@@ -103,13 +103,13 @@ public class CoolingOffController {
                 logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
             }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR Cooling Off Release IBFT Request *********");
-//                response = new ReleaseIbftResponse();
-//                response.setResponseCode("111");
-//                response.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
+            } else {
+                logger.info("******* DEBUG LOGS FOR Cooling Off Release IBFT Request *********");
+                response = new ReleaseIbftResponse();
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+            }
         } catch (Exception e) {
 
             response = new ReleaseIbftResponse();

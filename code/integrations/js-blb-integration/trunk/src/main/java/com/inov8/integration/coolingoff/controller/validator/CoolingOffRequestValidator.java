@@ -18,8 +18,8 @@ public class CoolingOffRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
         }
-        if (StringUtils.isEmpty(integrationVO.getTransactionId())) {
-            throw new ValidationException("[FAILED] Validation Failed Portal Id: " + integrationVO.getTransactionId());
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
         }
 //        if (StringUtils.isEmpty(integrationVO.getReferenceNo())) {
 //            throw new ValidationException("[FAILED] Validation Failed Portal Password: " + integrationVO.getReferenceNo());

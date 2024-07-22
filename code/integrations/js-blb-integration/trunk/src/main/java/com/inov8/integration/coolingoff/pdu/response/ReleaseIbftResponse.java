@@ -1,8 +1,12 @@
 package com.inov8.integration.coolingoff.pdu.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.inov8.integration.vo.IbftTransactionResponse;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import java.io.Serializable;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ReleaseIbftResponse implements Serializable {
@@ -14,18 +18,18 @@ public class ReleaseIbftResponse implements Serializable {
     private String responseDateTime;
     private String transactionStatus;
     private String accountTitle;
-    private String balance;
-    private String creditAmount;
-    private String debitAmount;
+//    private String balance;
+//    private String creditAmount;
+//    private String debitAmount;
     private String fromAccount;
     private String mobileNo;
-    private String productName;
+//    private String productName;
     private String toAccount;
     private String toBank;
     private String totalAmount;
     private String charges;
-    private String transactionId;
-    private String transactionAmount;
+//    private String transactionId;
+//    private String transactionAmount;
     private String transactionType;
     private String reserved1;
     private String reserved2;
@@ -38,6 +42,10 @@ public class ReleaseIbftResponse implements Serializable {
     private String reserved9;
     private String reserved10;
     private String hashData;
+
+    @XmlElement(name = "IbftTransactionResponse")
+    @XmlElementWrapper(name = "IbftTransactionResponse")
+    private List<IbftTransactionResponse> ibftTransactionResponse;
 
     public String getRrn() {
         return rrn;
@@ -175,29 +183,29 @@ public class ReleaseIbftResponse implements Serializable {
         this.accountTitle = accountTitle;
     }
 
-    public String getBalance() {
-        return balance;
-    }
-
-    public void setBalance(String balance) {
-        this.balance = balance;
-    }
-
-    public String getCreditAmount() {
-        return creditAmount;
-    }
-
-    public void setCreditAmount(String creditAmount) {
-        this.creditAmount = creditAmount;
-    }
-
-    public String getDebitAmount() {
-        return debitAmount;
-    }
-
-    public void setDebitAmount(String debitAmount) {
-        this.debitAmount = debitAmount;
-    }
+//    public String getBalance() {
+//        return balance;
+//    }
+//
+//    public void setBalance(String balance) {
+//        this.balance = balance;
+//    }
+//
+//    public String getCreditAmount() {
+//        return creditAmount;
+//    }
+//
+//    public void setCreditAmount(String creditAmount) {
+//        this.creditAmount = creditAmount;
+//    }
+//
+//    public String getDebitAmount() {
+//        return debitAmount;
+//    }
+//
+//    public void setDebitAmount(String debitAmount) {
+//        this.debitAmount = debitAmount;
+//    }
 
     public String getFromAccount() {
         return fromAccount;
@@ -215,13 +223,13 @@ public class ReleaseIbftResponse implements Serializable {
         this.mobileNo = mobileNo;
     }
 
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
+//    public String getProductName() {
+//        return productName;
+//    }
+//
+//    public void setProductName(String productName) {
+//        this.productName = productName;
+//    }
 
     public String getToAccount() {
         return toAccount;
@@ -255,21 +263,21 @@ public class ReleaseIbftResponse implements Serializable {
         this.charges = charges;
     }
 
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public String getTransactionAmount() {
-        return transactionAmount;
-    }
-
-    public void setTransactionAmount(String transactionAmount) {
-        this.transactionAmount = transactionAmount;
-    }
+//    public String getTransactionId() {
+//        return transactionId;
+//    }
+//
+//    public void setTransactionId(String transactionId) {
+//        this.transactionId = transactionId;
+//    }
+//
+//    public String getTransactionAmount() {
+//        return transactionAmount;
+//    }
+//
+//    public void setTransactionAmount(String transactionAmount) {
+//        this.transactionAmount = transactionAmount;
+//    }
 
     public String getTransactionType() {
         return transactionType;
@@ -277,5 +285,13 @@ public class ReleaseIbftResponse implements Serializable {
 
     public void setTransactionType(String transactionType) {
         this.transactionType = transactionType;
+    }
+
+    public List<IbftTransactionResponse> getIbftTransactionResponse() {
+        return ibftTransactionResponse;
+    }
+
+    public void setIbftTransactionResponse(List<IbftTransactionResponse> ibftTransactionResponse) {
+        this.ibftTransactionResponse = ibftTransactionResponse;
     }
 }

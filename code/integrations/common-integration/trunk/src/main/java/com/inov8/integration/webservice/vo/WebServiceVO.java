@@ -570,6 +570,7 @@ public class WebServiceVO implements Serializable {
 
     private String updatedEmail;
     private TransactionChargesVO transactionChargesVO;
+    private Boolean trustedFlag;
 
     public TransactionChargesVO getTransactionChargesVO() {
         return transactionChargesVO;
@@ -4696,5 +4697,13 @@ public class WebServiceVO implements Serializable {
 
     public void setIbftTransactionResponse(List<IbftTransactionResponse> ibftTransactionResponse) {
         this.ibftTransactionResponse = ibftTransactionResponse;
+    }
+
+    public Boolean getTrustedFlag() {
+        return trustedFlag;
+    }
+
+    public void setTrustedFlag(Boolean trustedFlag) {
+        this.trustedFlag = trustedFlag;
     }
 }

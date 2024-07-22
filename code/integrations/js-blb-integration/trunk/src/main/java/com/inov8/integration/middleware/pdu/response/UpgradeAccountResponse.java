@@ -21,6 +21,9 @@ public class UpgradeAccountResponse implements Serializable {
     @XmlElement(name = "HashData")
     private String hashData;
 
+    @XmlElement(name = "TrustedFlag")
+    private Boolean trustedFlag;
+
     public String getResponseCode() {
         return responseCode;
     }
@@ -59,5 +62,13 @@ public class UpgradeAccountResponse implements Serializable {
 
     public void setTransactionCode(String transactionCode) {
         this.transactionCode = transactionCode;
+    }
+
+    public Boolean getTrustedFlag() {
+        return trustedFlag;
+    }
+
+    public void setTrustedFlag(Boolean trustedFlag) {
+        this.trustedFlag = trustedFlag;
     }
 }

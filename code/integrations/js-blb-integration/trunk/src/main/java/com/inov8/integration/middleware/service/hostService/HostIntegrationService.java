@@ -4131,6 +4131,7 @@ public class HostIntegrationService {
             response.setResponseDescription(webServiceVO.getResponseCodeDescription());
             response.setRrn(webServiceVO.getRetrievalReferenceNumber());
             response.setTransactionCode(webServiceVO.getMicrobankTransactionCode());
+            response.setTrustedFlag(webServiceVO.getTrustedFlag());
 //            if (StringUtils.isNotEmpty(webServiceVO.getResponseContentXML()))
 //                XMLUtil.populateFromResponse(response, webServiceVO.getResponseContentXML(), CashInResponseEnum.values());
 //

@@ -58,6 +58,30 @@ public class PetroHostRequestValidator {
 
     }
 
+    public static void validatePetroWalletToWalletPayment(PetroWalletToWalletPaymentRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number : " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getAmount())) {
+            throw new ValidationException("[FAILED] Validation Amount : " + integrationVO.getAmount());
+        }
+
+
+    }
+
     public static void validatePetroWalletToWalletInquiryPayment(PetroWalletToWalletInquiryRequest walletToWalletPaymentInquiryRequest) throws ValidationException {
         if (StringUtils.isEmpty(walletToWalletPaymentInquiryRequest.getMobileNumber())) {
             throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + walletToWalletPaymentInquiryRequest.getMobileNumber());

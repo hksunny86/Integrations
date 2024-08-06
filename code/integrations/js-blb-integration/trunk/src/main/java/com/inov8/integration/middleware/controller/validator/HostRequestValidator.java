@@ -3289,11 +3289,30 @@ public class HostRequestValidator {
 
     public static void validateL2AccountUpgrade(L2AccountUpgradeRequest integrationVO) {
 
-
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getRrn())) {
+            String rrn = integrationVO.getRrn();
+            if (rrn.length() > 20) {
+                throw new ValidationException("[FAILED] RRN should not be more than 20 characters: " + integrationVO.getRrn());
+            }
+            // Check if all characters are alphanumeric
+            for (char c : rrn.toCharArray()) {
+                if (!Character.isLetterOrDigit(c)) {
+                    throw new ValidationException("[FAILED] RRN should not include special characters: " + integrationVO.getRrn());
+                }
+            }
+        }
         if (StringUtils.isEmpty(integrationVO.getCnic())) {
             throw new ValidationException("[FAILED] Validation Failed CNIC: " + integrationVO.getCnic());
         }
-
+        if (!StringUtils.isEmpty(integrationVO.getCnic())) {
+            String cnic = integrationVO.getCnic();
+            if (cnic.length() > 15) {
+                throw new ValidationException("[FAILED] Cnic should not be more than 15 characters: " + integrationVO.getRrn());
+            }
+        }
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
         }
@@ -4250,9 +4269,29 @@ public class HostRequestValidator {
 
     public static void validateL2AccountUpgradeDiscrepant(L2AccountUpgradeDiscrepantRequest integrationVO) {
 
-
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getRrn())) {
+            String rrn = integrationVO.getRrn();
+            if (rrn.length() > 20) {
+                throw new ValidationException("[FAILED] RRN should not be more than 20 characters: " + integrationVO.getRrn());
+            }
+            // Check if all characters are alphanumeric
+            for (char c : rrn.toCharArray()) {
+                if (!Character.isLetterOrDigit(c)) {
+                    throw new ValidationException("[FAILED] RRN should not include special characters: " + integrationVO.getRrn());
+                }
+            }
+        }
         if (StringUtils.isEmpty(integrationVO.getCnic())) {
             throw new ValidationException("[FAILED] Validation Failed CNIC: " + integrationVO.getCnic());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getCnic())) {
+            String cnic = integrationVO.getCnic();
+            if (cnic.length() > 15) {
+                throw new ValidationException("[FAILED] Cnic should not be more than 15 characters: " + integrationVO.getRrn());
+            }
         }
 
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
@@ -4295,11 +4334,31 @@ public class HostRequestValidator {
 
     public static void validateGetL2AccountUpgradeDiscrepant(GetL2AccountUpgradeDiscrepantRequest integrationVO) {
 
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed Rrn: " + integrationVO.getRrn());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getRrn())) {
+            String rrn = integrationVO.getRrn();
+            if (rrn.length() > 20) {
+                throw new ValidationException("[FAILED] RRN should not be more than 20 characters: " + integrationVO.getRrn());
+            }
+            // Check if all characters are alphanumeric
+            for (char c : rrn.toCharArray()) {
+                if (!Character.isLetterOrDigit(c)) {
+                    throw new ValidationException("[FAILED] RRN should not include special characters: " + integrationVO.getRrn());
+                }
+            }
+        }
 
         if (StringUtils.isEmpty(integrationVO.getCnic())) {
             throw new ValidationException("[FAILED] Validation Failed CNIC: " + integrationVO.getCnic());
         }
-
+        if (!StringUtils.isEmpty(integrationVO.getCnic())) {
+            String cnic = integrationVO.getCnic();
+            if (cnic.length() > 15) {
+                throw new ValidationException("[FAILED] Cnic should not be more than 15 characters: " + integrationVO.getRrn());
+            }
+        }
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
         }

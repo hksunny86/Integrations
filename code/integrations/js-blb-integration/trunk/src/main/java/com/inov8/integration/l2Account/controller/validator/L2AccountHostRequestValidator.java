@@ -29,7 +29,7 @@ public class L2AccountHostRequestValidator {
         }
         if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
             String dateTime = integrationVO.getDateTime();
-            if (dateTime.length() > 14) {
+            if (dateTime.length() < 14) {
                 throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
             }
         }
@@ -63,7 +63,7 @@ public class L2AccountHostRequestValidator {
         }
         if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
             String dateTime = integrationVO.getDateTime();
-            if (dateTime.length() > 14) {
+            if (dateTime.length() < 14) {
                 throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
             }
         }
@@ -100,7 +100,7 @@ public class L2AccountHostRequestValidator {
         }
         if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
             String dateTime = integrationVO.getDateTime();
-            if (dateTime.length() > 14) {
+            if (dateTime.length() < 14) {
                 throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
             }
         }
@@ -137,7 +137,7 @@ public class L2AccountHostRequestValidator {
         }
         if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
             String dateTime = integrationVO.getDateTime();
-            if (dateTime.length() > 14) {
+            if (dateTime.length() < 14) {
                 throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
             }
         }
@@ -172,7 +172,7 @@ public class L2AccountHostRequestValidator {
         }
         if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
             String dateTime = integrationVO.getDateTime();
-            if (dateTime.length() > 14) {
+            if (dateTime.length() < 14) {
                 throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
             }
         }
@@ -219,7 +219,7 @@ public class L2AccountHostRequestValidator {
         }
         if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
             String dateTime = integrationVO.getDateTime();
-            if (dateTime.length() > 14) {
+            if (dateTime.length() < 14) {
                 throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
             }
         }
@@ -266,7 +266,7 @@ public class L2AccountHostRequestValidator {
         }
         if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
             String dateTime = integrationVO.getDateTime();
-            if (dateTime.length() > 14) {
+            if (dateTime.length() < 14) {
                 throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
             }
         }

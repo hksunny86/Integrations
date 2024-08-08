@@ -3316,6 +3316,12 @@ public class HostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
         }
+        if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
+            String dateTime = integrationVO.getDateTime();
+            if (dateTime.length() > 14) {
+                throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
+            }
+        }
 
         if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
             throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
@@ -4297,7 +4303,12 @@ public class HostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
         }
-
+        if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
+            String dateTime = integrationVO.getDateTime();
+            if (dateTime.length() > 14) {
+                throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
+            }
+        }
         if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
             throw new ValidationException("[FAILED] Validation Failed Mobile Number: " + integrationVO.getMobileNumber());
         }
@@ -4361,6 +4372,12 @@ public class HostRequestValidator {
         }
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
+            String dateTime = integrationVO.getDateTime();
+            if (dateTime.length() > 14) {
+                throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
+            }
         }
 
         if (StringUtils.isEmpty(integrationVO.getMobileNo())) {

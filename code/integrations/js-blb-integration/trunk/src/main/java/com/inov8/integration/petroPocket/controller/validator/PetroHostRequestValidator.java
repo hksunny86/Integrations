@@ -16,8 +16,26 @@ public class PetroHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
         }
+        if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
+            String dateTime = integrationVO.getDateTime();
+            if (dateTime.length() > 14) {
+                throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
+            }
+        }
         if (StringUtils.isEmpty(integrationVO.getRrn())) {
             throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getRrn())) {
+            String rrn = integrationVO.getRrn();
+            if (rrn.length() > 20) {
+                throw new ValidationException("[FAILED] RRN should not be more than 20 characters: " + integrationVO.getRrn());
+            }
+            // Check if all characters are alphanumeric
+            for (char c : rrn.toCharArray()) {
+                if (!Character.isLetterOrDigit(c)) {
+                    throw new ValidationException("[FAILED] RRN should not include special characters: " + integrationVO.getRrn());
+                }
+            }
         }
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
@@ -27,6 +45,12 @@ public class PetroHostRequestValidator {
         }
         if (StringUtils.isEmpty(integrationVO.getAmount())) {
             throw new ValidationException("[FAILED] Validation Amount : " + integrationVO.getAmount());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getAmount())) {
+            String amount = integrationVO.getAmount();
+            if (amount.length() > 15) {
+                throw new ValidationException("[FAILED] Amount should not be more than 15 characters: " + integrationVO.getRrn());
+            }
         }
 
     }
@@ -39,8 +63,26 @@ public class PetroHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
         }
+        if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
+            String dateTime = integrationVO.getDateTime();
+            if (dateTime.length() > 14) {
+                throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
+            }
+        }
         if (StringUtils.isEmpty(integrationVO.getRrn())) {
             throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getRrn())) {
+            String rrn = integrationVO.getRrn();
+            if (rrn.length() > 20) {
+                throw new ValidationException("[FAILED] RRN should not be more than 20 characters: " + integrationVO.getRrn());
+            }
+            // Check if all characters are alphanumeric
+            for (char c : rrn.toCharArray()) {
+                if (!Character.isLetterOrDigit(c)) {
+                    throw new ValidationException("[FAILED] RRN should not include special characters: " + integrationVO.getRrn());
+                }
+            }
         }
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
@@ -54,7 +96,12 @@ public class PetroHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getAmount())) {
             throw new ValidationException("[FAILED] Validation Amount : " + integrationVO.getAmount());
         }
-
+        if (!StringUtils.isEmpty(integrationVO.getAmount())) {
+            String amount = integrationVO.getAmount();
+            if (amount.length() > 15) {
+                throw new ValidationException("[FAILED] Amount should not be more than 15 characters: " + integrationVO.getRrn());
+            }
+        }
 
     }
 
@@ -66,8 +113,26 @@ public class PetroHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
         }
+        if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
+            String dateTime = integrationVO.getDateTime();
+            if (dateTime.length() > 14) {
+                throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
+            }
+        }
         if (StringUtils.isEmpty(integrationVO.getRrn())) {
             throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getRrn())) {
+            String rrn = integrationVO.getRrn();
+            if (rrn.length() > 20) {
+                throw new ValidationException("[FAILED] RRN should not be more than 20 characters: " + integrationVO.getRrn());
+            }
+            // Check if all characters are alphanumeric
+            for (char c : rrn.toCharArray()) {
+                if (!Character.isLetterOrDigit(c)) {
+                    throw new ValidationException("[FAILED] RRN should not include special characters: " + integrationVO.getRrn());
+                }
+            }
         }
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
@@ -77,6 +142,12 @@ public class PetroHostRequestValidator {
         }
         if (StringUtils.isEmpty(integrationVO.getAmount())) {
             throw new ValidationException("[FAILED] Validation Amount : " + integrationVO.getAmount());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getAmount())) {
+            String amount = integrationVO.getAmount();
+            if (amount.length() > 15) {
+                throw new ValidationException("[FAILED] Amount should not be more than 15 characters: " + integrationVO.getRrn());
+            }
         }
 
 
@@ -89,8 +160,26 @@ public class PetroHostRequestValidator {
         if (StringUtils.isEmpty(walletToWalletPaymentInquiryRequest.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time for wallet to wallet: " + walletToWalletPaymentInquiryRequest.getDateTime());
         }
+        if (!StringUtils.isEmpty(walletToWalletPaymentInquiryRequest.getDateTime())) {
+            String dateTime = walletToWalletPaymentInquiryRequest.getDateTime();
+            if (dateTime.length() > 14) {
+                throw new ValidationException("[FAILED] Incorrect Date Time: " + walletToWalletPaymentInquiryRequest.getDateTime());
+            }
+        }
         if (StringUtils.isEmpty(walletToWalletPaymentInquiryRequest.getRrn())) {
             throw new ValidationException("[FAILED] Validation Failed Retrieval Reffrence Number for wallet to wallet: " + walletToWalletPaymentInquiryRequest.getRrn());
+        }
+        if (!StringUtils.isEmpty(walletToWalletPaymentInquiryRequest.getRrn())) {
+            String rrn = walletToWalletPaymentInquiryRequest.getRrn();
+            if (rrn.length() > 20) {
+                throw new ValidationException("[FAILED] RRN should not be more than 20 characters: " + walletToWalletPaymentInquiryRequest.getRrn());
+            }
+            // Check if all characters are alphanumeric
+            for (char c : rrn.toCharArray()) {
+                if (!Character.isLetterOrDigit(c)) {
+                    throw new ValidationException("[FAILED] RRN should not include special characters: " + walletToWalletPaymentInquiryRequest.getRrn());
+                }
+            }
         }
         if (StringUtils.isEmpty(walletToWalletPaymentInquiryRequest.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id for wallet to wallet: " + walletToWalletPaymentInquiryRequest.getChannelId());
@@ -104,6 +193,12 @@ public class PetroHostRequestValidator {
 
         if (StringUtils.isEmpty(walletToWalletPaymentInquiryRequest.getAmount())) {
             throw new ValidationException("[FAILED] Validation Failed amount for wallet to wallet: " + walletToWalletPaymentInquiryRequest.getAmount());
+        }
+        if (!StringUtils.isEmpty(walletToWalletPaymentInquiryRequest.getAmount())) {
+            String amount = walletToWalletPaymentInquiryRequest.getAmount();
+            if (amount.length() > 15) {
+                throw new ValidationException("[FAILED] Amount should not be more than 15 characters: " + walletToWalletPaymentInquiryRequest.getRrn());
+            }
         }
         if (StringUtils.isEmpty(walletToWalletPaymentInquiryRequest.getReserved1())) {
             throw new ValidationException("[FAILED] Validation Failed Reserved1 for wallet to wallet: " + walletToWalletPaymentInquiryRequest.getReserved1());
@@ -120,8 +215,26 @@ public class PetroHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
         }
+        if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
+            String dateTime = integrationVO.getDateTime();
+            if (dateTime.length() > 14) {
+                throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
+            }
+        }
         if (StringUtils.isEmpty(integrationVO.getRrn())) {
             throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getRrn())) {
+            String rrn = integrationVO.getRrn();
+            if (rrn.length() > 20) {
+                throw new ValidationException("[FAILED] RRN should not be more than 20 characters: " + integrationVO.getRrn());
+            }
+            // Check if all characters are alphanumeric
+            for (char c : rrn.toCharArray()) {
+                if (!Character.isLetterOrDigit(c)) {
+                    throw new ValidationException("[FAILED] RRN should not include special characters: " + integrationVO.getRrn());
+                }
+            }
         }
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
@@ -131,6 +244,12 @@ public class PetroHostRequestValidator {
         }
         if (StringUtils.isEmpty(integrationVO.getAmount())) {
             throw new ValidationException("[FAILED] Validation Amount : " + integrationVO.getAmount());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getAmount())) {
+            String amount = integrationVO.getAmount();
+            if (amount.length() > 15) {
+                throw new ValidationException("[FAILED] Amount should not be more than 15 characters: " + integrationVO.getRrn());
+            }
         }
         if (StringUtils.isEmpty(integrationVO.getPinType())) {
             throw new ValidationException("[FAILED] Validation Failed Pin  Type: " + integrationVO.getPinType());
@@ -146,8 +265,26 @@ public class PetroHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
         }
+        if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
+            String dateTime = integrationVO.getDateTime();
+            if (dateTime.length() > 14) {
+                throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
+            }
+        }
         if (StringUtils.isEmpty(integrationVO.getRrn())) {
             throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getRrn())) {
+            String rrn = integrationVO.getRrn();
+            if (rrn.length() > 20) {
+                throw new ValidationException("[FAILED] RRN should not be more than 20 characters: " + integrationVO.getRrn());
+            }
+            // Check if all characters are alphanumeric
+            for (char c : rrn.toCharArray()) {
+                if (!Character.isLetterOrDigit(c)) {
+                    throw new ValidationException("[FAILED] RRN should not include special characters: " + integrationVO.getRrn());
+                }
+            }
         }
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
@@ -161,7 +298,12 @@ public class PetroHostRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getAmount())) {
             throw new ValidationException("[FAILED] Validation Amount : " + integrationVO.getAmount());
         }
-
+        if (!StringUtils.isEmpty(integrationVO.getAmount())) {
+            String amount = integrationVO.getAmount();
+            if (amount.length() > 15) {
+                throw new ValidationException("[FAILED] Amount should not be more than 15 characters: " + integrationVO.getRrn());
+            }
+        }
 
     }
 
@@ -174,6 +316,12 @@ public class PetroHostRequestValidator {
 
         if (StringUtils.isEmpty(integrationVO.getDateTime())) {
             throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (!StringUtils.isEmpty(integrationVO.getDateTime())) {
+            String dateTime = integrationVO.getDateTime();
+            if (dateTime.length() > 14) {
+                throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
+            }
         }
 
         if (StringUtils.isEmpty(integrationVO.getTerminalId())) {

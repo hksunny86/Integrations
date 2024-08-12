@@ -34,7 +34,29 @@
                 <beans:value>classpath:channel/vrg-echallan.properties</beans:value>
                 <beans:value>classpath:channel/ETPaymentCollection.properties</beans:value>
                 <beans:value>classpath:channel/M3Tech.properties</beans:value>
-                <beans:value>classpath:channel/AMA.properties</beans:value>
+                <beans:value>classpath:channel/zindigi.properties</beans:value>
+                <beans:value>classpath:channel/merchantcamping.properties</beans:value>
+                <beans:value>classpath:channel/offlinebiller.properties</beans:value>
+                <beans:value>classpath:channel/refferalCustomer.properties</beans:value>
+                <beans:value>classpath:channel/CustomerDeviceVerification.properties</beans:value>
+                <beans:value>classpath:channel/sendPushNotification.properties</beans:value>
+                <beans:value>classpath:channel/optasia.properties</beans:value>
+                <beans:value>classpath:channel/tasdeeq.properties</beans:value>
+                <beans:value>classpath:channel/brandverse.properties</beans:value>
+                <beans:value>classpath:channel/raast.properties</beans:value>
+                <beans:value>classpath:channel/debitCard.properties</beans:value>
+                <beans:value>classpath:channel/esb.properties</beans:value>
+                <beans:value>classpath:channel/onelink.properties</beans:value>
+                <beans:value>classpath:channel/saf.properties</beans:value>
+                <beans:value>classpath:channel/fcy.properties</beans:value>
+                <beans:value>classpath:channel/merchant.properties</beans:value>
+                <beans:value>classpath:channel/wasa.properties</beans:value>
+                <beans:value>classpath:channel/lending.properties</beans:value>
+                <beans:value>classpath:channel/islamicSaving.properties</beans:value>
+                <beans:value>classpath:channel/sbp.properties</beans:value>
+                <beans:value>classpath:channel/crp.properties</beans:value>
+
+                <!--                <value>classpath:channel/AMA.properties</value>-->
             </beans:list>
         </beans:property>
         <beans:property name="ignoreUnresolvablePlaceholders" value="true"/>

@@ -3,6 +3,7 @@ package com.inov8.integration.i8sb.vo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.i8sb.vo.CardDetailVO;
 import com.inov8.integration.vo.StatementVo;
+import com.inov8.integration.webservice.crpVO.Payload;
 import com.inov8.integration.webservice.islamicSavingVO.Body;
 import com.inov8.integration.webservice.merchant.StaticQr;
 import com.inov8.integration.webservice.optasiaVO.*;
@@ -519,6 +520,15 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String replacementAmounts_095;
     private String TransactionDescription_104;
     private String reservedPrivate_120;
+    private Payload payload;
+
+    public Payload getPayload() {
+        return payload;
+    }
+
+    public void setPayload(Payload payload) {
+        this.payload = payload;
+    }
 
     public String getPrimaryAccountNumber_002() {
         return primaryAccountNumber_002;

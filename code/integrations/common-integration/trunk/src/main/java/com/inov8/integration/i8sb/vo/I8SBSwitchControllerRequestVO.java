@@ -1,6 +1,7 @@
 package com.inov8.integration.i8sb.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.inov8.integration.webservice.crpVO.Payload;
 import com.inov8.integration.webservice.islamicSavingVO.Body;
 import com.inov8.integration.webservice.optasiaVO.AdditionalInfo;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -529,6 +530,15 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String typeOfBusiness;
     private String originalDataElements_090;
     private String reservedPrivate_120;
+    private Payload payload;
+
+    public Payload getPayload() {
+        return payload;
+    }
+
+    public void setPayload(Payload payload) {
+        this.payload = payload;
+    }
 
     public String getOriginalDataElements_090() {
         return originalDataElements_090;

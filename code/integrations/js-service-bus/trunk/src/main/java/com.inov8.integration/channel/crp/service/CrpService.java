@@ -76,7 +76,7 @@ public class CrpService {
         }
     }
 
-    private void handleRestClientException(RestClientException e, I8SBSwitchControllerResponseVO responseVO) {
+    private void handleRestClientException(Exception e, ScoreAnRatingResponse responseVO) {
         if (e instanceof HttpStatusCodeException) {
             HttpStatusCodeException httpException = (HttpStatusCodeException) e;
             String responseCode = httpException.getStatusCode().toString();
@@ -90,7 +90,7 @@ public class CrpService {
                 case "500":
                     ObjectMapper objectMapper = new ObjectMapper();
                     try {
-                        responseVO = objectMapper.readValue(responseBody, I8SBSwitchControllerResponseVO.class);
+                        responseVO = objectMapper.readValue(responseBody, ScoreAnRatingResponse.class);
                     } catch (IOException ex) {
                         ex.printStackTrace();
                         logger.info("Negative Response from Client " + responseBody +
@@ -144,16 +144,16 @@ public class CrpService {
             Map<String, String> headers = new HashMap<String, String>();
             headers.put("content-type", "application/json");
             headers.put("Authorization", "Bearer " + bearerToken);
-            postParam.put("data", request.getData());
-            logger.info("Request body of CRP Get Score And Rating  " + JSONUtil.getJSON(request));
+            postParam.put("data", JSONUtil.getJSON(request.getData()));
             try {
                 String responseBody = getResponseFromAPI(headers, postParam, crpScoreAndRating);
                 if (responseBody != null && responseBody.length() > 0) {
                     response = objectMapper.readValue(responseBody, ScoreAnRatingResponse.class);
                 }
             } catch (RestClientException e) {
-                handleRestClientException(e, i8SBSwitchControllerResponseVO);
+                handleRestClientException(e, response);
             } catch (Exception e) {
+                handleRestClientException(e, response);
                 e.printStackTrace();
             }
 

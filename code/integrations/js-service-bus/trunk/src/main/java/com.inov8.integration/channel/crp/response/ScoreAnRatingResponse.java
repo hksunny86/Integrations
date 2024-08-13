@@ -13,10 +13,6 @@ import org.slf4j.LoggerFactory;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonPropertyOrder({
-        "responseCode",
-        "description",
-})
 public class ScoreAnRatingResponse extends Response {
 
     private static Logger logger = LoggerFactory.getLogger(ScoreAnRatingResponse.class.getSimpleName());
@@ -115,7 +111,7 @@ public class ScoreAnRatingResponse extends Response {
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
-        if (this.getResponseCode().equals("170000")) {
+        if (this.getResponseCode() != null && this.getResponseCode().equals("170000")) {
             if (this.getPayload() != null) {
                 i8SBSwitchControllerResponseVO.setResponseCode("00");
                 i8SBSwitchControllerResponseVO.setMessage(this.getMessage());

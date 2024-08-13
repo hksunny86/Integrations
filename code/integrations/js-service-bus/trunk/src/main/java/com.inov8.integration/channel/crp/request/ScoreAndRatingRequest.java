@@ -6,9 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
-import com.inov8.integration.webservice.crpVO.Account;
-import com.inov8.integration.webservice.crpVO.CrpDataRequestPayload;
-import com.inov8.integration.webservice.crpVO.Payload;
+import com.inov8.integration.webservice.crpVO.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -33,9 +34,28 @@ public class ScoreAndRatingRequest extends Request {
 
         CrpDataRequestPayload data = new CrpDataRequestPayload();
         Account account = new Account();
+        Security security = new Security();
+        security.setUserName("");
+        security.setPassword("");
+        security.setSecurityToken("");
+        data.setSecurity(security);
         account.setMsidn(i8SBSwitchControllerRequestVO.getMobileNumber());
+        account.setIban("");
+        account.setBban("");
+        account.setPan("");
+        account.setCurrency("");
         data.setAccount(account);
+        data.setChannel(i8SBSwitchControllerRequestVO.getChannelID());
+        data.setTerminal(i8SBSwitchControllerRequestVO.getTerminalID());
+        data.setReterivalReferenceNumber(i8SBSwitchControllerRequestVO.getRRN());
         data.setPayLoad(i8SBSwitchControllerRequestVO.getPayload());
+        AdditionalInformation additionalInformation = new AdditionalInformation();
+        additionalInformation.setInfoKey("");
+        additionalInformation.setInfoValue("");
+        List<AdditionalInformation> list = new ArrayList<>();
+        list.add(additionalInformation);
+        data.setAdditionalInformation(list);
+        data.setCheckSum("");
         this.setData(data);
     }
 

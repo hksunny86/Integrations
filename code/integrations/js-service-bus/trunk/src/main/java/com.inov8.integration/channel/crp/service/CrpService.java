@@ -29,7 +29,7 @@ public class CrpService {
     private static Logger logger = LoggerFactory.getLogger(CrpService.class.getSimpleName());
     private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
     private String crpScoreAndRating = PropertyReader.getProperty("crp.score.and.rating");
-//    private String bearerToken = PropertyReader.getProperty("crp.bearer.token");
+    private String bearerToken = PropertyReader.getProperty("crp.bearer.token");
     private I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
     public String getResponseFromAPI(Map<String, String> headerMap, Map<String, Object> postParam, String url) throws Exception {
@@ -143,7 +143,7 @@ public class CrpService {
             Map<String, Object> postParam = new HashMap<String, Object>();
             Map<String, String> headers = new HashMap<String, String>();
             headers.put("content-type", "application/json");
-//            headers.put("Authorization", "Bearer " + bearerToken);
+            headers.put("Authorization", "Bearer " + bearerToken);
             postParam.put("data", request.getData());
             logger.info("Request body of CRP Get Score And Rating  " + JSONUtil.getJSON(request));
             try {

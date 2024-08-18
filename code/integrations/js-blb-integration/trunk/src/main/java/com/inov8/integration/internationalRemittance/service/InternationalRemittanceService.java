@@ -151,6 +151,8 @@ public class InternationalRemittanceService {
         webServiceVO.setMobilePin(request.getPin());
         webServiceVO.setProductID(request.getProductId());
         webServiceVO.setPinType(request.getPinType());
+        webServiceVO.setStan(request.getStan());
+        webServiceVO.setSourceBankImd(request.getBankIMD());
         webServiceVO.setTransactionAmount(request.getTransactionAmount());
         webServiceVO.setReserved1(request.getReserved1());
         webServiceVO.setReserved2(request.getReserved2());

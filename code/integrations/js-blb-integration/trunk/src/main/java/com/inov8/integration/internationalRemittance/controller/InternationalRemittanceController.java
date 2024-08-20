@@ -1,6 +1,6 @@
 package com.inov8.integration.internationalRemittance.controller;
 
-import com.inov8.integration.coolingoff.service.CoolingOffService;
+
 import com.inov8.integration.corporate.controller.validator.CorporateHostRequestValidator;
 import com.inov8.integration.internationalRemittance.controller.validator.InternationalRemittanceRequestValidator;
 import com.inov8.integration.internationalRemittance.pdu.request.CoreToWalletCreditRequest;
@@ -10,6 +10,8 @@ import com.inov8.integration.internationalRemittance.pdu.response.TitleFetchResp
 import com.inov8.integration.internationalRemittance.service.InternationalRemittanceService;
 import com.inov8.integration.middleware.controller.validator.HostRequestValidator;
 import com.inov8.integration.middleware.controller.validator.ValidationException;
+import com.inov8.integration.middleware.pdu.request.AdviceReversalRequest;
+import com.inov8.integration.middleware.pdu.response.AdviceReversalResponse;
 import com.inov8.integration.middleware.util.ConfigReader;
 import com.inov8.integration.middleware.util.JSONUtil;
 import org.slf4j.Logger;
@@ -220,6 +222,71 @@ public class InternationalRemittanceController {
         String responseXML = JSONUtil.getJSON(response);
         logger.info("Title fetch V2 Processed in : {} ms {}", end, Objects.requireNonNull(responseXML).replaceAll(System.getProperty("line.separator"), ""));
 
+
+        return response;
+    }
+
+    @RequestMapping(value = "api/v2/adviceReversal", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    AdviceReversalResponse adviceReversal(@Valid @RequestBody AdviceReversalRequest request) throws Exception {
+        long start = System.currentTimeMillis();
+        AdviceReversalResponse response = null;
+        String requestXML = JSONUtil.getJSON(request);
+//        requestXML = XMLUtil.maskPassword(requestXML);
+        String datetime = "";
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+        datetime = DateFor.format(new Date());
+        logger.info("Start Processing Advise Reversal Transaction Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
+                + ip + " | GUID: " + guid + " {}", requestXML.replaceAll(System.getProperty("line.separator"), " "));
+
+        StringBuffer stringText = new StringBuffer(
+                request.getUserName() +
+                        request.getPassword() +
+                        request.getTransactionCode() +
+                        request.getDateTime() +
+                        request.getRrn() +
+                        request.getChannelId());
+
+        String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
+        if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+
+                try {
+                    InternationalRemittanceRequestValidator.validateAdviseReversalRequest(request);
+                    response = remittanceService.adviseReversal(request);
+
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
+
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
+
+                logger.info("******* DEBUG LOGS FOR ADVICE REVERSAL TRANSACTION *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
+                logger.info("RRN Number: " + response.getRrn());
+            } else {
+                logger.info("******* DEBUG LOGS FOR  ADVICE Reversal TRANSACTION AUTHENTICATION *********");
+                response = new AdviceReversalResponse();
+                response.setResponseCode("420");
+                response.setResponseDescription("Request is not authenticated");
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+            }
+        } else {
+            logger.info("******* DEBUG LOGS FOR ADVICE REVERSAL TRANSACTION *********");
+            response = new AdviceReversalResponse();
+            response.setResponseCode("111");
+            response.setResponseDescription("Request is not recognized");
+            logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+        }
+
+
+        long end = System.currentTimeMillis() - start;
+        logger.info("Payment Reversal Transaction Request  Processed in : {} ms {}", end, response);
 
         return response;
     }

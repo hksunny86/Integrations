@@ -482,7 +482,7 @@ public class InternationalRemittanceService {
         logger.debug("[HOST] **** ADVISE REVERSAL REQUEST PROCESSED IN ****: " + difference + " milliseconds");
 
         //preparing request XML
-        String responseXml = XMLUtil.convertToXML(response);
+        String responseXml = JSONUtil.getJSON(response);
         //Setting in logModel
         logModel.setPduResponseHEX(responseXml);
         logModel.setProcessedTime(difference);

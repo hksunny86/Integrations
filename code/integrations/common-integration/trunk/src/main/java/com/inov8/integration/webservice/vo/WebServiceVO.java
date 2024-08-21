@@ -119,6 +119,8 @@ public class WebServiceVO implements Serializable {
     private List<MotherName> motherNames;
     private List<IbftTransactionResponse> ibftTransactionResponse;
 
+    private List<TitleFetchAccountResponse> titleFetchAccountResponse;
+
     public List<MotherName> getMotherNames() {
         return motherNames;
     }
@@ -571,6 +573,9 @@ public class WebServiceVO implements Serializable {
     private String updatedEmail;
     private TransactionChargesVO transactionChargesVO;
     private Boolean trustedFlag;
+    private String customerName;
+    private String stan;
+    private String adviceType;
 
     public TransactionChargesVO getTransactionChargesVO() {
         return transactionChargesVO;
@@ -4705,5 +4710,36 @@ public class WebServiceVO implements Serializable {
 
     public void setTrustedFlag(Boolean trustedFlag) {
         this.trustedFlag = trustedFlag;
+    }
+
+    public List<TitleFetchAccountResponse> getTitleFetchAccountResponse() {
+        return titleFetchAccountResponse;
+    }
+
+    public void setTitleFetchAccountResponse(List<TitleFetchAccountResponse> titleFetchAccountResponse) {
+        this.titleFetchAccountResponse = titleFetchAccountResponse;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getStan() {
+        return stan;
+    }
+    public void setStan(String stan) {
+        this.stan = stan;
+    }
+
+    public String getAdviceType() {
+        return adviceType;
+    }
+
+    public void setAdviceType(String adviceType) {
+        this.adviceType = adviceType;
     }
 }

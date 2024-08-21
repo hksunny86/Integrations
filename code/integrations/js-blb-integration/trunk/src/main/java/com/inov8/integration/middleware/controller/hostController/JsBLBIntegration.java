@@ -223,4 +223,6 @@ public interface JsBLBIntegration {
 
     public ChequeBookResponse chequeBook(@WebParam(name = "chequeBookRequest") ChequeBookRequest request);
 
+    public BalanceInquiryResponseV2 balanceInquiryV2(@WebParam(name = "balanceInquiryRequest") BalanceInquiryRequest request);
+
 }

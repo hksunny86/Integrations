@@ -6,7 +6,6 @@ public class TitleFetchAccountResponse implements Serializable {
 
     private static final long serialVersionUID = -7443862375180198891L;
 
-    private String accountTypeName;
     private String accountTitle;
     private String accountType;
     private String availableDebitLimitDaily;
@@ -15,14 +14,6 @@ public class TitleFetchAccountResponse implements Serializable {
     private String availableCreditLimitDaily;
     private String availableCreditLimitMonthly;
     private String availableCreditLimitEarly;
-
-    public String getAccountTypeName() {
-        return accountTypeName;
-    }
-
-    public void setAccountTypeName(String accountTypeName) {
-        this.accountTypeName = accountTypeName;
-    }
 
     public String getAccountTitle() {
         return accountTitle;

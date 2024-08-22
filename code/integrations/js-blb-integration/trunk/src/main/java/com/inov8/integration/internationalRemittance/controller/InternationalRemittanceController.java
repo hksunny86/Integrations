@@ -87,7 +87,7 @@ public class InternationalRemittanceController {
                 if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
                         InternationalRemittanceRequestValidator.validateCoreToWalletCredit(request);
-                        response = remittanceService.CoreToWalletCredit(request);
+                        response = remittanceService.coreToWalletCredit(request);
                     } catch (ValidationException ve) {
                         response.setResponseCode("420");
                         response.setResponseDescription(ve.getMessage());
@@ -138,7 +138,7 @@ public class InternationalRemittanceController {
 
     @RequestMapping(value = "api/v2/titleFetch", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    TitleFetchResponseV2 TitleFetchResponseV2(@Valid @RequestBody TitleFetchRequestV2 request) throws Exception {
+    TitleFetchResponseV2 titleFetchResponseV2(@Valid @RequestBody TitleFetchRequestV2 request) throws Exception {
         TitleFetchResponseV2 response = new TitleFetchResponseV2();
 
         String className = this.getClass().getSimpleName();
@@ -177,7 +177,7 @@ public class InternationalRemittanceController {
                 if (CorporateHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
                         InternationalRemittanceRequestValidator.validateTitleFetchV2(request);
-                        response = remittanceService.TitleFetchResponseV2(request);
+                        response = remittanceService.titleFetchResponseV2(request);
                     } catch (ValidationException ve) {
                         response.setResponseCode("420");
                         response.setResponseDescription(ve.getMessage());

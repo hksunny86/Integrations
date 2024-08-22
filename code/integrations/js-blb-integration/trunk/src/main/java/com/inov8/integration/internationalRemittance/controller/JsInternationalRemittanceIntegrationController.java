@@ -8,12 +8,12 @@ public class JsInternationalRemittanceIntegrationController implements Internati
 
 
     @Override
-    public WebServiceVO TitleFetchV2(WebServiceVO webServiceVO) {
+    public WebServiceVO titleFetchV2(WebServiceVO webServiceVO) {
         return null;
     }
 
     @Override
-    public WebServiceVO CoreToWalletCredit(WebServiceVO webServiceVO) {
+    public WebServiceVO coreToWalletCredit(WebServiceVO webServiceVO) {
         return null;
     }
 }

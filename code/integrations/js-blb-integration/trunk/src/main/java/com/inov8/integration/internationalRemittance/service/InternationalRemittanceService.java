@@ -140,7 +140,7 @@ public class InternationalRemittanceService {
         }
     }
 
-    public CoreToWalletCreditResponse CoreToWalletCredit(CoreToWalletCreditRequest request) {
+    public CoreToWalletCreditResponse coreToWalletCredit(CoreToWalletCreditRequest request) {
         long startTime = new Date().getTime(); // start time
         WebServiceVO webServiceVO = new WebServiceVO();
         String transactionKey = request.getDateTime() + request.getRrn();
@@ -197,7 +197,7 @@ public class InternationalRemittanceService {
         // Call i8
         try {
             logger.info("[HOST] Sent Core to Wallet Credit V2 Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
-            webServiceVO = remittanceController.CoreToWalletCredit(webServiceVO);
+            webServiceVO = remittanceController.coreToWalletCredit(webServiceVO);
 
         } catch (Exception e) {
             if (e instanceof RemoteAccessException) {
@@ -268,7 +268,7 @@ public class InternationalRemittanceService {
         return response;
     }
 
-    public TitleFetchResponseV2 TitleFetchResponseV2(TitleFetchRequestV2 request) {
+    public TitleFetchResponseV2 titleFetchResponseV2(TitleFetchRequestV2 request) {
         long startTime = new Date().getTime(); // start time
         WebServiceVO webServiceVO = new WebServiceVO();
         String transactionKey = request.getDateTime() + request.getRrn();
@@ -316,7 +316,7 @@ public class InternationalRemittanceService {
         // Call i8
         try {
             logger.info("[HOST] Sent Title Fetch Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
-            webServiceVO = remittanceController.TitleFetchV2(webServiceVO);
+            webServiceVO = remittanceController.titleFetchV2(webServiceVO);
 
         } catch (Exception e) {
             if (e instanceof RemoteAccessException) {

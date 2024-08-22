@@ -22,7 +22,7 @@ import java.util.Objects;
 
 //@Api(value = "Restful APIs", description = "SwaggerUI is located under /documentation. This mapping redirects the necessary resources for the ui.", hidden = true)
 @RestController
-@RequestMapping(value = "/documentation")
+//@RequestMapping(value = "/documentation")
 
 public class JSController {
 
@@ -123,20 +123,20 @@ public class JSController {
 
         logger.info("Start Processing customer info Update Request with DateTime:" + datetime + " | URI: " + uri + " | IP: "
                 + ip + " | GUID: " + guid + " {}", Objects.requireNonNull(requestXML).replaceAll(System.getProperty("line.separator"), " "));
-
         StringBuilder stringText = new StringBuilder()
                 .append(request.getUserName())
                 .append(request.getPassword())
                 .append(request.getMobileNumber())
                 .append(request.getDateTime())
+                .append(request.getRrn())
+                .append(request.getChannelId())
                 .append(request.getEmailAddress())
                 .append(request.getReserved1())
                 .append(request.getReserved2())
                 .append(request.getReserved3())
                 .append(request.getReserved4())
-                .append(request.getReserved5())
-                .append(request.getChannelId())
-                .append(request.getRrn());
+                .append(request.getReserved5());
+
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
         if (request.getHashData().equalsIgnoreCase(sha256hex)) {
             if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
@@ -207,7 +207,8 @@ public class JSController {
                 .append(request.getYearlySendingLimit())
                 .append(request.getYearlyReceivingLimit())
                 .append(request.getChannelId())
-                .append(request.getRrn());;
+                .append(request.getRrn());
+        ;
 
         String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
         if (request.getHashData().equalsIgnoreCase(sha256hex)) {
@@ -276,26 +277,26 @@ public class JSController {
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {
 
-            try {
-                HostRequestValidator.validateUpdateEmailStatus(request);
-                response = integrationService.getUpdateEmailStatus(request);
+                try {
+                    HostRequestValidator.validateUpdateEmailStatus(request);
+                    response = integrationService.getUpdateEmailStatus(request);
 
-            } catch (ValidationException ve) {
-                response.setResponseCode("420");
-                response.setResponseDescription(ve.getMessage());
+                } catch (ValidationException ve) {
+                    response.setResponseCode("420");
+                    response.setResponseDescription(ve.getMessage());
 
-                logger.error("ERROR: Request Validation", ve);
-            } catch (Exception e) {
-                response.setResponseCode("220");
-                response.setResponseDescription(e.getMessage());
-                logger.error("ERROR: General Processing ", e);
-            }
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    response.setResponseCode("220");
+                    response.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
+                }
 
-            logger.info("******* DEBUG LOGS FOR Get Update Email Status Request *********");
-            logger.info("ResponseCode: " + response.getResponseCode());
+                logger.info("******* DEBUG LOGS FOR Get Update Email Status Request *********");
+                logger.info("ResponseCode: " + response.getResponseCode());
 
             } else {
-            logger.info("******* DEBUG LOGS FOR Email Update Status Request *********");
+                logger.info("******* DEBUG LOGS FOR Email Update Status Request *********");
                 response = new UpdateEmailStatusResponse();
                 response.setResponseCode("111");
                 response.setResponseDescription("Request is not recognized");

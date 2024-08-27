@@ -3,6 +3,7 @@ package com.inov8.integration.middleware.controller.hostController;
 import com.inov8.integration.middleware.pdu.request.*;
 import com.inov8.integration.middleware.pdu.response.*;
 import com.inov8.integration.middleware.pdu.response.L2AccountOpeningResponse;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -114,7 +115,7 @@ public interface JsBLBIntegration {
 
     public CreditResponse credit(@WebParam(name = "CreditRequest") CreditRequest creditRequest);
 
-    public HRACashWithdrawalInquiryResponse hraCashWithdrawalInquiry (@WebParam(name = "HRACashWithdrawalInquiryRequest")HRACashWithdrawalInquiryRequest hraCashWithdrawalInquiryRequest);
+    public HRACashWithdrawalInquiryResponse hraCashWithdrawalInquiry(@WebParam(name = "HRACashWithdrawalInquiryRequest") HRACashWithdrawalInquiryRequest hraCashWithdrawalInquiryRequest);
 
     public HRACashWithdrawalResponse hraCashWithdrawal(@WebParam(name = "HRACashWithdrawalRequest") HRACashWithdrawalRequest hraCashWithdrawalRequest);
 
@@ -123,21 +124,21 @@ public interface JsBLBIntegration {
     public ZindigiLoginAuthenticationResponse zindigiLoginAuthentication(@WebParam(name = "ZindigiLoginAuthenticationRequest") ZindigiLoginAuthenticationRequest zindigiLoginAuthenticationRequest);
 
 
-    public LoginPinResponse loginPin(@WebParam (name = "LoginPinRequest") LoginPinRequest loginPinRequest);
+    public LoginPinResponse loginPin(@WebParam(name = "LoginPinRequest") LoginPinRequest loginPinRequest);
 
-    public LoginPinChangeResponse loginPinChange(@WebParam (name = "LoginPinChangeRequest") LoginPinChangeRequest loginPinChangeRequest);
+    public LoginPinChangeResponse loginPinChange(@WebParam(name = "LoginPinChangeRequest") LoginPinChangeRequest loginPinChangeRequest);
 
-    public ResetPinResponse resetPin(@WebParam (name = "ResetPinRequest") ResetPinRequest resetPinRequest);
+    public ResetPinResponse resetPin(@WebParam(name = "ResetPinRequest") ResetPinRequest resetPinRequest);
 
-    public AdvanceLoanSalaryResponse advanceLoanSalary (@WebParam(name = "AdvanceLoanSalary") AdvanceLoanSalaryRequest request);
+    public AdvanceLoanSalaryResponse advanceLoanSalary(@WebParam(name = "AdvanceLoanSalary") AdvanceLoanSalaryRequest request);
 
     public SmsGenerationResponse smsGeneration(@WebParam(name = "SmsGenerationRequest") SmsGenerationRequest request);
 
-    public AgentAccountLoginResponse agentAccountLogin(@WebParam (name = "AgentAccountLoginRequest")AgentAccountLoginRequest agentAccountLoginRequest);
+    public AgentAccountLoginResponse agentAccountLogin(@WebParam(name = "AgentAccountLoginRequest") AgentAccountLoginRequest agentAccountLoginRequest);
 
-    public AgentLoginPinGenerationResponse agentLoginPinGeneration(@WebParam (name = "AgentLoginPinGenerationRequest") AgentLoginPinGenerationRequest agentLoginPinGenerationRequest);
+    public AgentLoginPinGenerationResponse agentLoginPinGeneration(@WebParam(name = "AgentLoginPinGenerationRequest") AgentLoginPinGenerationRequest agentLoginPinGenerationRequest);
 
-    public AgentLoginPinResetResponse agentLoginPinReset(@WebParam (name = "AgentLoginPinReset")AgentLoginPinResetRequest agentLoginPinResetRequest);
+    public AgentLoginPinResetResponse agentLoginPinReset(@WebParam(name = "AgentLoginPinReset") AgentLoginPinResetRequest agentLoginPinResetRequest);
 
     public AgentMpinGenerationResponse agentMpinGeneration(@WebParam(name = "AgentMpinGenerationRequest") AgentMpinGenerationRequest agentMpinGenerationRequest);
 
@@ -171,9 +172,9 @@ public interface JsBLBIntegration {
 //
 //    public AgentWalletToCnicPaymentResponse agentWalletToCnicPayment(@WebParam(name = "AgentWalletToCnicPaymentRequest") AgentWalletToCnicPaymentRequest request);
 
-    public AgentIbftInquiryResponse agentIbftInquiry(@WebParam (name = "AgentIbftInquiryRequest") AgentIbftInquiryRequest request);
+    public AgentIbftInquiryResponse agentIbftInquiry(@WebParam(name = "AgentIbftInquiryRequest") AgentIbftInquiryRequest request);
 
-    public AgentIbftPaymentResponse agentIbftPayment(@WebParam (name = "AgentIbftPaymentRequest") AgentIbftPaymentRequest request);
+    public AgentIbftPaymentResponse agentIbftPayment(@WebParam(name = "AgentIbftPaymentRequest") AgentIbftPaymentRequest request);
 
 //    public AgentRetailPaymentInquiryResponse agentRetailPaymentInquiry(@WebParam (name = "AgentRetailPaymentInquiryRequest") AgentRetailPaymentInquiryRequest request);
 //
@@ -203,26 +204,26 @@ public interface JsBLBIntegration {
 
     public AgentCashDepositPaymentResponse agentCashDepositPayment(@WebParam(name = "AgentCashDepositPaymentRequest") AgentCashDepositPaymentRequest request);
 
-    public AgentCashWithdrawalInquiryResponse agentCashWithdrawalInquiry(@WebParam (name = "AgentCashWithdrawalInquiryRequest") AgentCashWithdrawalInquiryRequest request);
+    public AgentCashWithdrawalInquiryResponse agentCashWithdrawalInquiry(@WebParam(name = "AgentCashWithdrawalInquiryRequest") AgentCashWithdrawalInquiryRequest request);
 
-    public AgentCashWithdrawalPaymentResponse agentCashWithdrawalPayment(@WebParam (name = "AgentCashWithdrawalPaymentRequest") AgentCashWithdrawalPaymentRequest request);
+    public AgentCashWithdrawalPaymentResponse agentCashWithdrawalPayment(@WebParam(name = "AgentCashWithdrawalPaymentRequest") AgentCashWithdrawalPaymentRequest request);
 
-    public MpinVerificationResponse mpinVerification(@WebParam (name = "MpinVerificationRequest") MpinVerificationRequest request);
+    public MpinVerificationResponse mpinVerification(@WebParam(name = "MpinVerificationRequest") MpinVerificationRequest request);
 
-    public SegmentListResponse segmentList (@WebParam (name = "SegmentListRequest") SegmentListRequest request);
+    public SegmentListResponse segmentList(@WebParam(name = "SegmentListRequest") SegmentListRequest request);
 
-    public AgentCatalogResponse catalogList (@WebParam (name = "AgentCatalogRequest") AgentCatalogsRequest request);
+    public AgentCatalogResponse catalogList(@WebParam(name = "AgentCatalogRequest") AgentCatalogsRequest request);
 
-    public L2AccountOpeningResponse l2AccountOpening(@WebParam (name = "L2AccountOpeningRequest") L2AccountOpeningRequest request);
+    public L2AccountOpeningResponse l2AccountOpening(@WebParam(name = "L2AccountOpeningRequest") L2AccountOpeningRequest request);
 
 //    public L2AccountUpgradeResponse l2AccountUpgrade(@WebParam (name = "L2AccountUpgradeRequest") L2AccountUpgradeRequest request);
 
-    public AccountDetailResponse accountDetail(@WebParam (name = "AccountDetail") AccountDetails request);
+    public AccountDetailResponse accountDetail(@WebParam(name = "AccountDetail") AccountDetails request);
 
 //    public CustomerNameUpdateResponse customerNameUpdate(@WebParam (name = "CustomerNameUpdateRequest") CustomerNameUpdateRequest request);
 
     public ChequeBookResponse chequeBook(@WebParam(name = "chequeBookRequest") ChequeBookRequest request);
 
-    public BalanceInquiryResponseV2 balanceInquiryV2(@WebParam(name = "balanceInquiryRequest") BalanceInquiryRequest request);
+    public BalanceInquiryResponseV2 balanceInquiryV2(@WebParam(name = "balanceInquiryRequestV2") BalanceInquiryRequestV2 request);
 
 }

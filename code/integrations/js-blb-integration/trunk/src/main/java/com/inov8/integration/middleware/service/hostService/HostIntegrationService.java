@@ -1861,7 +1861,7 @@ public class HostIntegrationService {
         return response;
     }
 
-    public BalanceInquiryResponseV2 balanceInquiryV2(BalanceInquiryRequest request) {
+    public BalanceInquiryResponseV2 balanceInquiryV2(BalanceInquiryRequestV2 request) {
         long startTime = new Date().getTime(); // start time
         WebServiceVO messageVO = new WebServiceVO();
         String transactionKey = request.getDateTime() + request.getRrn();
@@ -7940,16 +7940,16 @@ public class HostIntegrationService {
         messageVO.setTerminalId(request.getTerminalId());
         messageVO.setProductID(request.getProductId());
         if (request.getPinType().equals("02")) {
-//            messageVO.setOtpPin(request.getPin());
-            try {
-                if (request.getPin() != null && !request.getPin().equals("")) {
-                    String text = request.getPin();
-                    String otp = text.replaceAll("\\r|\\n", "");
-                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
-                }
-            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
+            messageVO.setOtpPin(request.getPin());
+//            try {
+//                if (request.getPin() != null && !request.getPin().equals("")) {
+//                    String text = request.getPin();
+//                    String otp = text.replaceAll("\\r|\\n", "");
+//                    messageVO.setOtpPin(RSAEncryption.decrypt(otp, loginPrivateKey));
+//                }
+//            } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
+//                e.printStackTrace();
+//            }
         } else {
 //            messageVO.setMobilePin(request.getPin());
             try {
@@ -8189,21 +8189,21 @@ public class HostIntegrationService {
                 equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
             logger.info("[HOST] Credit Payment Request Successful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
 
-            if (messageVO.getMobileNo().equals("03343118436")) {
-                response.setResponseCode("65");
-                response.setResponseDescription("Your Request Cannot process");
-            } else {
+//            if (messageVO.getMobileNo().equals("03343118436")) {
+//                response.setResponseCode("65");
+//                response.setResponseDescription("Your Request Cannot process");
+//            } else {
 
-                response.setRrn(messageVO.getRetrievalReferenceNumber());
-                response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
-                response.setResponseDescription(messageVO.getResponseCodeDescription());
-                response.setResponseDateTime(messageVO.getDateTime());
-                response.setTransactionId(messageVO.getTransactionId());
-                response.setComissionAmount(messageVO.getCommissionAmount());
-                response.setTransactionAmount(messageVO.getTransactionAmount());
-                response.setTotalTransactionAmount(messageVO.getTotalAmount());
-                logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
-            }
+            response.setRrn(messageVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setResponseDateTime(messageVO.getDateTime());
+            response.setTransactionId(messageVO.getTransactionId());
+            response.setComissionAmount(messageVO.getCommissionAmount());
+            response.setTransactionAmount(messageVO.getTransactionAmount());
+            response.setTotalTransactionAmount(messageVO.getTotalAmount());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+//            }
 
         } else if (messageVO != null && StringUtils.isNotEmpty(messageVO.getResponseCode())) {
             logger.info("[HOST] Credit  Payment Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());

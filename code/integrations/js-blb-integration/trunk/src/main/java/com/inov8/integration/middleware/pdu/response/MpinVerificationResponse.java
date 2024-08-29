@@ -16,6 +16,8 @@ public class MpinVerificationResponse implements Serializable {
     private String responseDescription;
     @XmlElement(name = "ResponseDateTime")
     private String responseDateTime;
+    @XmlElement(name = "RemainingCoolOffTime")
+    private String remainingCoolOffTime;
     @XmlElement(name = "HashData")
     private String hashData;
 
@@ -49,6 +51,14 @@ public class MpinVerificationResponse implements Serializable {
 
     public void setResponseDateTime(String responseDateTime) {
         this.responseDateTime = responseDateTime;
+    }
+
+    public String getRemainingCoolOffTime() {
+        return remainingCoolOffTime;
+    }
+
+    public void setRemainingCoolOffTime(String remainingCoolOffTime) {
+        this.remainingCoolOffTime = remainingCoolOffTime;
     }
 
     public String getHashData() {

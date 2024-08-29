@@ -14337,6 +14337,7 @@ public class HostIntegrationService {
             response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
             response.setResponseDateTime(messageVO.getDateTime());
+            response.setRemainingCoolOffTime(messageVO.getRemaingCoolOffTime());
 
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
@@ -14345,6 +14346,7 @@ public class HostIntegrationService {
             logger.info("[HOST] MPIN Verification Request Unsuccessful from Micro Bank RRN: " + messageVO.getRetrievalReferenceNumber());
             response.setResponseCode(messageVO.getResponseCode());
             response.setResponseDescription(messageVO.getResponseCodeDescription());
+            response.setRemainingCoolOffTime(messageVO.getRemaingCoolOffTime());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
         } else {

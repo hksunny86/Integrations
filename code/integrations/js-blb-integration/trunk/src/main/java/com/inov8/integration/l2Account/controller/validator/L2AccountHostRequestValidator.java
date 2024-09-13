@@ -33,6 +33,9 @@ public class L2AccountHostRequestValidator {
                 throw new ValidationException("[FAILED] Incorrect Date Time: " + integrationVO.getDateTime());
             }
         }
+        if (StringUtils.isEmpty(integrationVO.getMobileNo())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile No: " + integrationVO.getMobileNo());
+        }
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
         }

@@ -10,6 +10,7 @@ import java.io.Serializable;
 @JsonPropertyOrder({
         "UserName",
         "Password",
+        "MobileNo",
         "DateTime",
         "Rrn",
         "ChannelId",
@@ -33,6 +34,8 @@ public class L2AccountRequest implements Serializable {
     private String userName;
     @JsonProperty("Password")
     private String password;
+    @JsonProperty("MobileNo")
+    private String mobileNo;
     @JsonProperty("DateTime")
     private String dateTime;
     @JsonProperty("Rrn")
@@ -78,6 +81,14 @@ public class L2AccountRequest implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMobileNo() {
+        return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
     }
 
     public String getDateTime() {

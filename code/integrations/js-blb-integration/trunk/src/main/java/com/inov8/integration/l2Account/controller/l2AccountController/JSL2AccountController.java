@@ -54,6 +54,7 @@ public class JSL2AccountController {
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
+                    .append(request.getMobileNo())
                     .append(request.getDateTime())
                     .append(request.getRrn())
                     .append(request.getChannelId())
@@ -164,7 +165,7 @@ public class JSL2AccountController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
                         L2AccountHostRequestValidator.validateL2AccountFields(request);
@@ -193,13 +194,13 @@ public class JSL2AccountController {
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
                 }
-            } else {
-                logger.info("******* DEBUG LOGS FOR Level 2 Account Fields Request *********");
-                response = new L2AccountFieldsResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-            }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Level 2 Account Fields Request *********");
+//                response = new L2AccountFieldsResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new L2AccountFieldsResponse();
@@ -439,7 +440,7 @@ public class JSL2AccountController {
                     .append(request.getReserved5());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
                         L2AccountHostRequestValidator.validateFreelanceToWalletInquiry(request);
@@ -468,13 +469,13 @@ public class JSL2AccountController {
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
                 }
-            } else {
-                logger.info("******* DEBUG LOGS FOR Freelance To Wallet Inquiry Request *********");
-                response = new FreelanceToWalletInquiryResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-            }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Freelance To Wallet Inquiry Request *********");
+//                response = new FreelanceToWalletInquiryResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new FreelanceToWalletInquiryResponse();
@@ -531,7 +532,7 @@ public class JSL2AccountController {
                     .append(request.getReserved5());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
                         L2AccountHostRequestValidator.validateFreelanceToWallet(request);
@@ -560,13 +561,13 @@ public class JSL2AccountController {
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
                 }
-            } else {
-                logger.info("******* DEBUG LOGS FOR Freelance To Wallet Request *********");
-                response = new FreelanceToWalletResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-            }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Freelance To Wallet Request *********");
+//                response = new FreelanceToWalletResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new FreelanceToWalletResponse();
@@ -622,7 +623,7 @@ public class JSL2AccountController {
                     .append(request.getReserved5());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
                 if (L2AccountHostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
                     try {
                         L2AccountHostRequestValidator.validateFreelanceBalanceInquiry(request);
@@ -651,13 +652,13 @@ public class JSL2AccountController {
                     logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
 
                 }
-            } else {
-                logger.info("******* DEBUG LOGS FOR Freelance To Wallet Request *********");
-                response = new FreelanceBalanceInquiryResponse();
-                response.setResponseCode("111");
-                response.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-            }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Freelance To Wallet Request *********");
+//                response = new FreelanceBalanceInquiryResponse();
+//                response.setResponseCode("111");
+//                response.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             response = new FreelanceBalanceInquiryResponse();

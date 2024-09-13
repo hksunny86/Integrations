@@ -29,6 +29,8 @@ public class L2AccountFields implements Serializable {
     private String ultraToFreelancePKR;
     private String ultraToFreelanceUSD;
     private String customerPicture;
+    private String ultraSelfPayroll;
+    private String ultraToUltraSelfPayroll;
 
     public String getUltraToSignature() {
         return ultraToSignature;
@@ -204,5 +206,21 @@ public class L2AccountFields implements Serializable {
 
     public void setCustomerPicture(String customerPicture) {
         this.customerPicture = customerPicture;
+    }
+
+    public String getUltraSelfPayroll() {
+        return ultraSelfPayroll;
+    }
+
+    public void setUltraSelfPayroll(String ultraSelfPayroll) {
+        this.ultraSelfPayroll = ultraSelfPayroll;
+    }
+
+    public String getUltraToUltraSelfPayroll() {
+        return ultraToUltraSelfPayroll;
+    }
+
+    public void setUltraToUltraSelfPayroll(String ultraToUltraSelfPayroll) {
+        this.ultraToUltraSelfPayroll = ultraToUltraSelfPayroll;
     }
 }

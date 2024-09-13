@@ -27,6 +27,7 @@ import java.io.Serializable;
         "Area",
         "StreetNumber",
         "HouseNumber",
+        "SalarySilp",
         "Reserved1",
         "Reserved2",
         "Reserved3",
@@ -74,6 +75,8 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
     private String streetNumber;
     @JsonProperty("HouseNumber")
     private String houseNumber;
+    @JsonProperty("SalarySilp")
+    private String salarySilp;
     @JsonProperty("Reserved1")
     private String reserved1;
     @JsonProperty("Reserved2")
@@ -229,6 +232,14 @@ public class L2AccountUpgradeDiscrepantRequest implements Serializable {
 
     public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
+    }
+
+    public String getSalarySilp() {
+        return salarySilp;
+    }
+
+    public void setSalarySilp(String salarySilp) {
+        this.salarySilp = salarySilp;
     }
 
     public String getReserved1() {

@@ -8168,7 +8168,7 @@ public class HostIntegrationService {
                             e.printStackTrace(pw);
                             String stackTrace = sw.toString();
                             int statusCode = stackTrace.indexOf("status code");
-                            if (stackTrace.contains("status code = 503")) {
+                            if (statusCode == -1) {
                                 messageVO.setResponseCode("58");
                                 messageVO.setResponseCodeDescription("Transaction Time Out");
                             }
@@ -14272,6 +14272,7 @@ public class HostIntegrationService {
         messageVO.setRetrievalReferenceNumber(messageVO.getRetrievalReferenceNumber());
         messageVO.setChannelId(request.getChannelId());
         messageVO.setTerminalId(request.getTerminalId());
+//        messageVO.setMobilePin(request.getMpin());
         try {
             messageVO.setMobilePin(RSAEncryption.decrypt(request.getMpin(), loginPrivateKey));
         } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException e) {
@@ -14862,6 +14863,7 @@ public class HostIntegrationService {
         messageVO.setTaxResidence(request.getTaxResidence());
         messageVO.setReferenceNumber(request.getReferenceNumber());
         messageVO.setUsBornCity(request.getUsBornCity());
+        messageVO.setSalarySilp(request.getSalarySilp());
         messageVO.setReserved8(request.getReserved8());
         messageVO.setReserved9(request.getReserved9());
         messageVO.setReserved10(request.getReserved10());
@@ -20134,6 +20136,7 @@ public class HostIntegrationService {
         messageVO.setArea(request.getArea());
         messageVO.setStreetNumber(request.getStreetNumber());
         messageVO.setHouseNumber(request.getHouseNumber());
+        messageVO.setSalarySilp(request.getSalarySilp());
         messageVO.setReserved1(request.getReserved1());
         if (request.getReserved2().equals("")) {
             messageVO.setReserved2("0");

@@ -2680,42 +2680,42 @@ public class JSController {
                     .append(request.getReserved10());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        HostRequestValidator.validateMerchantAccountUpgrade(request);
-                        merchantAccountUpgradeResponse = integrationService.merchantAccountUpgradeResponse(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    HostRequestValidator.validateMerchantAccountUpgrade(request);
+                    merchantAccountUpgradeResponse = integrationService.merchantAccountUpgradeResponse(request);
 
-                    } catch (ValidationException ve) {
-                        merchantAccountUpgradeResponse.setResponseCode("420");
-                        merchantAccountUpgradeResponse.setResponseDescription(ve.getMessage());
-
-                        logger.error("ERROR: Request Validation", ve);
-                    } catch (Exception e) {
-                        merchantAccountUpgradeResponse.setResponseCode("220");
-                        merchantAccountUpgradeResponse.setResponseDescription(e.getMessage());
-                        logger.error("ERROR: General Processing ", e);
-                    }
-
-                    logger.info("******* DEBUG LOGS FOR Merchant Account Upgrade Request *********");
-                    logger.info("ResponseCode: " + merchantAccountUpgradeResponse.getResponseCode());
-                } else {
-                    logger.info("******* DEBUG LOGS FOR Merchant Account Upgrade Request AUTHENTICATION *********");
-                    merchantAccountUpgradeResponse = new MerchantAccountUpgradeResponse();
+                } catch (ValidationException ve) {
                     merchantAccountUpgradeResponse.setResponseCode("420");
-                    merchantAccountUpgradeResponse.setResponseDescription("Request is not authenticated");
-                    merchantAccountUpgradeResponse.setRrn(request.getRrn());
-                    merchantAccountUpgradeResponse.setResponseDateTime(request.getDateTime());
-                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                    merchantAccountUpgradeResponse.setResponseDescription(ve.getMessage());
 
+                    logger.error("ERROR: Request Validation", ve);
+                } catch (Exception e) {
+                    merchantAccountUpgradeResponse.setResponseCode("220");
+                    merchantAccountUpgradeResponse.setResponseDescription(e.getMessage());
+                    logger.error("ERROR: General Processing ", e);
                 }
-            } else {
+
                 logger.info("******* DEBUG LOGS FOR Merchant Account Upgrade Request *********");
+                logger.info("ResponseCode: " + merchantAccountUpgradeResponse.getResponseCode());
+            } else {
+                logger.info("******* DEBUG LOGS FOR Merchant Account Upgrade Request AUTHENTICATION *********");
                 merchantAccountUpgradeResponse = new MerchantAccountUpgradeResponse();
-                merchantAccountUpgradeResponse.setResponseCode("111");
-                merchantAccountUpgradeResponse.setResponseDescription("Request is not recognized");
-                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+                merchantAccountUpgradeResponse.setResponseCode("420");
+                merchantAccountUpgradeResponse.setResponseDescription("Request is not authenticated");
+                merchantAccountUpgradeResponse.setRrn(request.getRrn());
+                merchantAccountUpgradeResponse.setResponseDateTime(request.getDateTime());
+                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+
             }
+//            } else {
+//                logger.info("******* DEBUG LOGS FOR Merchant Account Upgrade Request *********");
+//                merchantAccountUpgradeResponse = new MerchantAccountUpgradeResponse();
+//                merchantAccountUpgradeResponse.setResponseCode("111");
+//                merchantAccountUpgradeResponse.setResponseDescription("Request is not recognized");
+//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
+//            }
         } catch (Exception e) {
 
             merchantAccountUpgradeResponse = new MerchantAccountUpgradeResponse();
@@ -2963,6 +2963,7 @@ public class JSController {
                     .append(request.getArea())
                     .append(request.getStreetNumber())
                     .append(request.getHouseNumber())
+                    .append(request.getSalarySilp())
                     .append(request.getReserved1())
                     .append(request.getReserved2())
                     .append(request.getReserved3())
@@ -3204,6 +3205,7 @@ public class JSController {
                     .append(request.getTaxResidence())
                     .append(request.getReferenceNumber())
                     .append(request.getUsBornCity())
+                    .append(request.getSalarySilp())
                     .append(request.getReserved8())
                     .append(request.getReserved9())
                     .append(request.getReserved10())
@@ -3213,39 +3215,39 @@ public class JSController {
                     .append(request.getReserved14())
                     .append(request.getReserved15());
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                try {
-                    HostRequestValidator.validateL2AccountUpgrade(request);
-                    response = integrationService.l2AccountUpgrade(request);
+            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                    try {
+                        HostRequestValidator.validateL2AccountUpgrade(request);
+                        response = integrationService.l2AccountUpgrade(request);
 
-                } catch (ValidationException ve) {
+                    } catch (ValidationException ve) {
+                        response.setResponseCode("420");
+                        response.setResponseDescription(ve.getMessage());
+
+                        logger.error("ERROR: Request Validation", ve);
+                    } catch (Exception e) {
+                        response.setResponseCode("220");
+                        response.setResponseDescription(e.getMessage());
+                        logger.error("ERROR: General Processing ", e);
+                    }
+
+                    logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
+                    logger.info("ResponseCode: " + response.getResponseCode());
+                } else {
+                    logger.info("******* DEBUG LOGS FOR  L2 Account Upgrade TRANSACTION AUTHENTICATION *********");
+                    response = new L2AccountUpgradeResponse();
                     response.setResponseCode("420");
-                    response.setResponseDescription(ve.getMessage());
-
-                    logger.error("ERROR: Request Validation", ve);
-                } catch (Exception e) {
-                    response.setResponseCode("220");
-                    response.setResponseDescription(e.getMessage());
-                    logger.error("ERROR: General Processing ", e);
+                    response.setResponseDescription("Request is not authenticated");
+                    logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
                 }
-
-                logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
-                logger.info("ResponseCode: " + response.getResponseCode());
             } else {
-                logger.info("******* DEBUG LOGS FOR  L2 Account Upgrade TRANSACTION AUTHENTICATION *********");
+                logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
                 response = new L2AccountUpgradeResponse();
-                response.setResponseCode("420");
-                response.setResponseDescription("Request is not authenticated");
-                logger.info("******* REQUEST IS NOT AUTHENTICATED *********");
+                response.setResponseCode("111");
+                response.setResponseDescription("Request is not recognized");
+                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
             }
-//            } else {
-//                logger.info("******* DEBUG LOGS FOR L2 Account Upgrade TRANSACTION *********");
-//                response = new L2AccountUpgradeResponse();
-//                response.setResponseCode("111");
-//                response.setResponseDescription("Request is not recognized");
-//                logger.info("******* REQUEST IS NOT RECOGNIZED *********");
-//            }
         } catch (Exception e) {
             response = new L2AccountUpgradeResponse();
             response.setResponseCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());

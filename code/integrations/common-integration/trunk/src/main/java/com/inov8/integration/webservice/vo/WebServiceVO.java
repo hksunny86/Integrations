@@ -576,6 +576,15 @@ public class WebServiceVO implements Serializable {
     private String customerName;
     private String stan;
     private String adviceType;
+    private String salarySilp;
+
+    public String getSalarySilp() {
+        return salarySilp;
+    }
+
+    public void setSalarySilp(String salarySilp) {
+        this.salarySilp = salarySilp;
+    }
 
     public TransactionChargesVO getTransactionChargesVO() {
         return transactionChargesVO;

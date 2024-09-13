@@ -77,6 +77,7 @@ import java.io.Serializable;
         "TaxResidence",
         "ReferenceNumber",
         "USBornCity",
+        "SalarySilp",
         "Reserved8",
         "Reserved9",
         "Reserved10",
@@ -229,6 +230,8 @@ public class L2AccountUpgradeRequest implements Serializable {
     private String referenceNumber;
     @JsonProperty("USBornCity")
     private String usBornCity;
+    @JsonProperty("SalarySilp")
+    private String salarySilp;
     @JsonProperty("Reserved8")
     private String reserved8;
     @JsonProperty("Reserved9")
@@ -798,6 +801,14 @@ public class L2AccountUpgradeRequest implements Serializable {
 
     public void setUsBornCity(String usBornCity) {
         this.usBornCity = usBornCity;
+    }
+
+    public String getSalarySilp() {
+        return salarySilp;
+    }
+
+    public void setSalarySilp(String salarySilp) {
+        this.salarySilp = salarySilp;
     }
 
     public String getReserved8() {

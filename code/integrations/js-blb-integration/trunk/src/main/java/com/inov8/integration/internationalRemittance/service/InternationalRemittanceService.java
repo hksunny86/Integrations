@@ -354,6 +354,7 @@ public class InternationalRemittanceService {
             response.setAccountStatus(webServiceVO.getAccountStatus());
             response.setBalance(webServiceVO.getBalance());
             response.setAccounts(webServiceVO.getTitleFetchAccountResponse());
+            response.setResponseDateTime(new SimpleDateFormat("ddMMyyyyhhmms").format(new Date()));
 
             logModel.setResponseCode(webServiceVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());

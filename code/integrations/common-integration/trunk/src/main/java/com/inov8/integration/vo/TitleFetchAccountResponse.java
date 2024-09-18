@@ -10,10 +10,10 @@ public class TitleFetchAccountResponse implements Serializable {
     private String accountType;
     private String availableDebitLimitDaily;
     private String availableDebitLimitMonthly;
-    private String availableDebitLimitEarly;
+    private String availableDebitLimitYearly;
     private String availableCreditLimitDaily;
     private String availableCreditLimitMonthly;
-    private String availableCreditLimitEarly;
+    private String availableCreditLimitYearly;
 
     public String getAccountTitle() {
         return accountTitle;
@@ -47,12 +47,12 @@ public class TitleFetchAccountResponse implements Serializable {
         this.availableDebitLimitMonthly = availableDebitLimitMonthly;
     }
 
-    public String getAvailableDebitLimitEarly() {
-        return availableDebitLimitEarly;
+    public String getAvailableDebitLimitYearly() {
+        return availableDebitLimitYearly;
     }
 
-    public void setAvailableDebitLimitEarly(String availableDebitLimitEarly) {
-        this.availableDebitLimitEarly = availableDebitLimitEarly;
+    public void setAvailableDebitLimitYearly(String availableDebitLimitYearly) {
+        this.availableDebitLimitYearly = availableDebitLimitYearly;
     }
 
     public String getAvailableCreditLimitDaily() {
@@ -71,11 +71,11 @@ public class TitleFetchAccountResponse implements Serializable {
         this.availableCreditLimitMonthly = availableCreditLimitMonthly;
     }
 
-    public String getAvailableCreditLimitEarly() {
-        return availableCreditLimitEarly;
+    public String getAvailableCreditLimitYaarly() {
+        return availableCreditLimitYearly;
     }
 
-    public void setAvailableCreditLimitEarly(String availableCreditLimitEarly) {
-        this.availableCreditLimitEarly = availableCreditLimitEarly;
+    public void setAvailableCreditLimitYearly(String availableCreditLimitYearly) {
+        this.availableCreditLimitYearly = availableCreditLimitYearly;
     }
 }

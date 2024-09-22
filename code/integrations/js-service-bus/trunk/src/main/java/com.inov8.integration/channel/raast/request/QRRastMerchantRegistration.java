@@ -35,8 +35,8 @@ public class QRRastMerchantRegistration extends Request {
     private String businessName;
     @JsonProperty("city")
     private String city;
-    @JsonProperty("cniNumber")
-    private String cniNumber;
+    @JsonProperty("cnicNumber")
+    private String cnicNumber;
     @JsonProperty("cnicExpiry")
     private String cnicExpiry;
     @JsonProperty("estimatedMonthlySales")
@@ -98,12 +98,12 @@ public class QRRastMerchantRegistration extends Request {
         this.city = city;
     }
 
-    public String getCniNumber() {
-        return cniNumber;
+    public String getCnicNumber() {
+        return cnicNumber;
     }
 
-    public void setCniNumber(String cniNumber) {
-        this.cniNumber = cniNumber;
+    public void setCnicNumber(String cnicNumber) {
+        this.cnicNumber = cnicNumber;
     }
 
     public String getCnicExpiry() {
@@ -169,7 +169,7 @@ public class QRRastMerchantRegistration extends Request {
         this.setBusinessName(i8SBSwitchControllerRequestVO.getBusinessTitle());
         this.setBusinessAddress(i8SBSwitchControllerRequestVO.getAddress());
         this.setCity(i8SBSwitchControllerRequestVO.getCity());
-        this.setCniNumber(i8SBSwitchControllerRequestVO.getCNIC());
+        this.setCnicNumber(i8SBSwitchControllerRequestVO.getCNIC());
         this.setCnicExpiry(i8SBSwitchControllerRequestVO.getCnicExpiry());
         this.setEstimatedMonthlySales(i8SBSwitchControllerRequestVO.getExpectedMonthlyTurnOver());
         this.setIban(i8SBSwitchControllerRequestVO.getIban());

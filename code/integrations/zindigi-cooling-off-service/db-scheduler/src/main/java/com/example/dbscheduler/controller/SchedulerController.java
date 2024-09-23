@@ -6,9 +6,7 @@ import com.example.dbscheduler.service.AppUserService;
 import com.example.dbscheduler.service.BlinkCustomerLimitService;
 import com.example.dbscheduler.service.SystemConfigService;
 import com.example.dbscheduler.utils.SystemConfigConstants;
-import com.example.dbscheduler.vo.EmailUpdateTaskVo;
-import com.example.dbscheduler.vo.ReleaseIbftTaskVo;
-import com.example.dbscheduler.vo.ResetPintTaskVo;
+import com.example.dbscheduler.vo.*;
 import com.github.kagkarlsson.scheduler.Scheduler;
 import com.github.kagkarlsson.scheduler.task.helper.OneTimeTask;
 import com.github.kagkarlsson.scheduler.task.helper.Tasks;
@@ -48,6 +46,8 @@ public class SchedulerController {
     @Value("${blb.releaseibf.url}")
     private String releaseIbftUrl;
 
+    @Value("${blb.releaseInProcessBalance.url}")
+    private String releaseInProcessBalanceUrl;
     @PostMapping("/updateemail")
     public ResponseEntity<?> startEmailTask(@RequestBody EmailUpdateTaskVo emailUpdateTaskVo) {
         try {
@@ -191,6 +191,192 @@ public class SchedulerController {
         } catch (Exception e) {
             logger.error(e.getMessage());
             return new ResponseEntity<>("Task Scheduled Failed", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/releaseraast")
+    public ResponseEntity<?> startReleaseRAASTTask(@RequestBody ReleaseRaastTaskVo releaseRaastTaskVo) {
+        try {
+            long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RELEASE_RAAST_COOLING);
+            // Save the admin
+            OneTimeTask<ReleaseRaastTaskVo> myAdhocTask = Tasks.oneTime("release-raast-task", ReleaseRaastTaskVo.class)
+                    .execute((inst, ctx) -> {
+                        System.out.println("One Time Release RAAST Task Executed with Data \n" + inst.getTaskName());
+                        ReleaseRaastTaskVo requestObject = inst.getData();
+                        StringBuilder stringText = new StringBuilder()
+                                .append(requestObject.getUserName())
+                                .append(requestObject.getPassword())
+                                .append(requestObject.getMobileNumber())
+                                .append(requestObject.getDateTime())
+                                .append(requestObject.getRrn())
+                                .append(requestObject.getChannelId())
+                                .append(requestObject.getTerminalId())
+                                .append(requestObject.getProductId())
+                                .append(requestObject.getReceiverMobileNo())
+                                .append(requestObject.getTransactionAmount())
+                                .append(requestObject.getReserved1())
+                                .append(requestObject.getReserved2())
+                                .append(requestObject.getReserved3())
+                                .append(requestObject.getReserved4())
+                                .append(requestObject.getReserved5())
+                                .append(requestObject.getReserved6())
+                                .append(requestObject.getReserved7())
+                                .append(requestObject.getReserved8())
+                                .append(requestObject.getReserved9())
+                                .append(requestObject.getReserved10());
+                        String sha256hex =DigestUtils.sha256Hex(stringText.toString());
+                        requestObject.setHashData(sha256hex);
+                        RestTemplate restClient = new RestTemplate();
+                        ResponseEntity<Map> response = restClient.postForEntity(releaseInProcessBalanceUrl, requestObject, Map.class);
+                        if (response.getStatusCode().equals(HttpStatus.OK)) {
+                            Map<String, Object> responseBody = response.getBody();
+                            if (!RELEASE_IBFT_SUCCESS_RESP_CODE.equals(responseBody.get("responseCode"))) {
+                                ctx.getSchedulerClient().reschedule(inst, Instant.now().plusSeconds(coolingPeriod));
+                            }
+                            logger.info("RAAST release Successfuly "+response.getBody());
+                        } else {
+                            logger.info("RAAST release FAILED "+response.getBody());
+                            ctx.getSchedulerClient().reschedule(inst, Instant.now().plusSeconds(coolingPeriod));
+                        }
+                    });
+
+            final Scheduler scheduler = Scheduler
+                    .create(dataSource, myAdhocTask)
+                    .registerShutdownHook()
+                    .build();
+
+            scheduler.start();
+            scheduler.schedule(myAdhocTask.instance(releaseRaastTaskVo.getMobileNumber(), releaseRaastTaskVo), Instant.now().plusSeconds(coolingPeriod));
+
+            return new ResponseEntity<>("Release RAAST Task Scheduled Successfully", HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>("Release RAAST Task Scheduled Failed", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/releasecoretowallet")
+    public ResponseEntity<?> startReleaseCoreToWalletTask(@RequestBody ReleaseCoreToWalletTaskVo releaseCoreToWalletTaskVo) {
+        try {
+            long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RELEASE_CORE_TO_WALLET_COOLING);
+            // Save the admin
+            OneTimeTask<ReleaseCoreToWalletTaskVo> myAdhocTask = Tasks.oneTime("release-coretowallet-task", ReleaseCoreToWalletTaskVo.class)
+                    .execute((inst, ctx) -> {
+                        System.out.println("One Time Release Core To Wallet Task Executed with Data \n" + inst.getTaskName());
+                        ReleaseCoreToWalletTaskVo requestObject = inst.getData();
+                        StringBuilder stringText = new StringBuilder()
+                                .append(requestObject.getUserName())
+                                .append(requestObject.getPassword())
+                                .append(requestObject.getMobileNumber())
+                                .append(requestObject.getDateTime())
+                                .append(requestObject.getRrn())
+                                .append(requestObject.getChannelId())
+                                .append(requestObject.getTerminalId())
+                                .append(requestObject.getProductId())
+                                .append(requestObject.getReceiverMobileNo())
+                                .append(requestObject.getTransactionAmount())
+                                .append(requestObject.getReserved1())
+                                .append(requestObject.getReserved2())
+                                .append(requestObject.getReserved3())
+                                .append(requestObject.getReserved4())
+                                .append(requestObject.getReserved5())
+                                .append(requestObject.getReserved6())
+                                .append(requestObject.getReserved7())
+                                .append(requestObject.getReserved8())
+                                .append(requestObject.getReserved9())
+                                .append(requestObject.getReserved10());
+                        String sha256hex =DigestUtils.sha256Hex(stringText.toString());
+                        requestObject.setHashData(sha256hex);
+                        RestTemplate restClient = new RestTemplate();
+                        ResponseEntity<Map> response = restClient.postForEntity(releaseInProcessBalanceUrl, requestObject, Map.class);
+                        if (response.getStatusCode().equals(HttpStatus.OK)) {
+                            Map<String, Object> responseBody = response.getBody();
+                            if (!RELEASE_IBFT_SUCCESS_RESP_CODE.equals(responseBody.get("responseCode"))) {
+                                ctx.getSchedulerClient().reschedule(inst, Instant.now().plusSeconds(coolingPeriod));
+                            }
+                            logger.info("Core To Wallet release Successfuly "+response.getBody());
+                        } else {
+                            logger.info("Core To Wallet release FAILED "+response.getBody());
+                            ctx.getSchedulerClient().reschedule(inst, Instant.now().plusSeconds(coolingPeriod));
+                        }
+                    });
+
+            final Scheduler scheduler = Scheduler
+                    .create(dataSource, myAdhocTask)
+                    .registerShutdownHook()
+                    .build();
+
+            scheduler.start();
+            scheduler.schedule(myAdhocTask.instance(releaseCoreToWalletTaskVo.getMobileNumber(), releaseCoreToWalletTaskVo), Instant.now().plusSeconds(coolingPeriod));
+
+            return new ResponseEntity<>("Release Core To Wallet Task Scheduled Successfully", HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>("Release Core To Wallet Task Scheduled Failed", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/releaseztoz")
+    public ResponseEntity<?> startReleaseZtoZTask(@RequestBody ReleaseZtoZTaskVo releaseZtoZTaskVo) {
+        try {
+            long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RELEASE_Z_TO_Z_COOLING);
+            // Save the admin
+            OneTimeTask<ReleaseZtoZTaskVo> myAdhocTask = Tasks.oneTime("release-ztoz-task", ReleaseZtoZTaskVo.class)
+                    .execute((inst, ctx) -> {
+                        System.out.println("One Time Release Z to Z Task Executed with Data \n" + inst.getTaskName());
+                        ReleaseZtoZTaskVo requestObject = inst.getData();
+                        StringBuilder stringText = new StringBuilder()
+                                .append(requestObject.getUserName())
+                                .append(requestObject.getPassword())
+                                .append(requestObject.getMobileNumber())
+                                .append(requestObject.getDateTime())
+                                .append(requestObject.getRrn())
+                                .append(requestObject.getChannelId())
+                                .append(requestObject.getTerminalId())
+                                .append(requestObject.getProductId())
+                                .append(requestObject.getReceiverMobileNo())
+                                .append(requestObject.getTransactionAmount())
+                                .append(requestObject.getReserved1())
+                                .append(requestObject.getReserved2())
+                                .append(requestObject.getReserved3())
+                                .append(requestObject.getReserved4())
+                                .append(requestObject.getReserved5())
+                                .append(requestObject.getReserved6())
+                                .append(requestObject.getReserved7())
+                                .append(requestObject.getReserved8())
+                                .append(requestObject.getReserved9())
+                                .append(requestObject.getReserved10());
+                        String sha256hex =DigestUtils.sha256Hex(stringText.toString());
+                        requestObject.setHashData(sha256hex);
+                        RestTemplate restClient = new RestTemplate();
+                        ResponseEntity<Map> response = restClient.postForEntity(releaseInProcessBalanceUrl, requestObject, Map.class);
+                        if (response.getStatusCode().equals(HttpStatus.OK)) {
+                            Map<String, Object> responseBody = response.getBody();
+                            if (!RELEASE_IBFT_SUCCESS_RESP_CODE.equals(responseBody.get("responseCode"))) {
+                                ctx.getSchedulerClient().reschedule(inst, Instant.now().plusSeconds(coolingPeriod));
+                            }
+                            logger.info("Z to Z release Successfuly "+response.getBody());
+                        } else {
+                            logger.info("Z to Z release FAILED "+response.getBody());
+                            ctx.getSchedulerClient().reschedule(inst, Instant.now().plusSeconds(coolingPeriod));
+                        }
+                    });
+
+            final Scheduler scheduler = Scheduler
+                    .create(dataSource, myAdhocTask)
+                    .registerShutdownHook()
+                    .build();
+
+            scheduler.start();
+            scheduler.schedule(myAdhocTask.instance(releaseZtoZTaskVo.getReceiverMobileNo(), releaseZtoZTaskVo), Instant.now().plusSeconds(coolingPeriod));
+
+            return new ResponseEntity<>("Release Z to Z Task Scheduled Successfully", HttpStatus.OK);
+
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>("Release Z to Z Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -40,6 +40,12 @@ public class InternationalRemittanceRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getTransactionAmount())) {
             throw new ValidationException("[FAILED] Validation Failed Transaction Amount: " + integrationVO.getTransactionAmount());
         }
+        if (StringUtils.isEmpty(integrationVO.getAccountType())) {
+            throw new ValidationException("[FAILED] Validation Failed Account Type: " + integrationVO.getAccountType());
+        }
+        if (StringUtils.isEmpty(integrationVO.getProcessingCode())) {
+            throw new ValidationException("[FAILED] Validation Failed Processing Code: " + integrationVO.getProcessingCode());
+        }
     }
 
     public static void validateTitleFetchV2(TitleFetchRequestV2 integrationVO) {

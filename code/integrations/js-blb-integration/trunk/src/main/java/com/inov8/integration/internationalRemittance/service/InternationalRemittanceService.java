@@ -152,13 +152,14 @@ public class InternationalRemittanceService {
 
         webServiceVO.setUserName(request.getUserName());
         webServiceVO.setCustomerPassword(request.getPassword());
+        webServiceVO.setAccountType(request.getAccountType());
         webServiceVO.setAccountNo1(request.getAccountNo());
         webServiceVO.setDateTime(request.getDateTime());
         webServiceVO.setRetrievalReferenceNumber(webServiceVO.getRetrievalReferenceNumber());
         webServiceVO.setChannelId(request.getChannelId());
         webServiceVO.setTerminalId(request.getTerminalId());
         webServiceVO.setMobilePin(request.getPin());
-        webServiceVO.setProductID(request.getProductId());
+        webServiceVO.setProcessingCode(request.getProcessingCode());
         webServiceVO.setPinType(request.getPinType());
         webServiceVO.setStan(request.getStan());
         webServiceVO.setSourceBankImd(request.getBankIMD());

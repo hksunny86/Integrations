@@ -11,17 +11,18 @@ public class CoreToWalletCreditRequest implements Serializable {
 
     private String userName;
     private String password;
+    private String accountType;
     private String accountNo;
     private String dateTime;
     private String rrn;
     private String channelId;
     private String terminalId;
     private String pin;
-    private String productId;
     private String pinType;
     private String transactionAmount;
     private String stan;
     private String bankIMD;
+    private String processingCode;
     private String reserved1;
     private String reserved2;
     private String reserved3;
@@ -48,6 +49,14 @@ public class CoreToWalletCreditRequest implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 
     public String getAccountNo() {
@@ -98,14 +107,6 @@ public class CoreToWalletCreditRequest implements Serializable {
         this.pin = pin;
     }
 
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
     public String getPinType() {
         return pinType;
     }
@@ -136,6 +137,14 @@ public class CoreToWalletCreditRequest implements Serializable {
 
     public void setBankIMD(String bankIMD) {
         this.bankIMD = bankIMD;
+    }
+
+    public String getProcessingCode() {
+        return processingCode;
+    }
+
+    public void setProcessingCode(String processingCode) {
+        this.processingCode = processingCode;
     }
 
     public String getReserved1() {

@@ -60,7 +60,7 @@ public class InternationalRemittanceController {
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
-                    .append(request.getAccountType())
+//                    .append(request.getAccountType())
                     .append(request.getAccountNo())
                     .append(request.getDateTime())
                     .append(request.getRrn())

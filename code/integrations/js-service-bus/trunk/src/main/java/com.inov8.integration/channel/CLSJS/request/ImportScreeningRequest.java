@@ -1,45 +1,72 @@
 package com.inov8.integration.channel.CLSJS.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.util.DateUtil;
-import org.apache.commons.lang.StringUtils;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import static com.inov8.integration.enums.DateFormatEnum.TIME_LOCAL_TRANSACTION;
 import static com.inov8.integration.enums.DateFormatEnum.TRANSACTION_DATE;
 
-@XmlRootElement
+//@XmlRootElement
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+        "cnic",
+        "name",
+        "fatherName",
+        "dateOfBirth",
+        "nationality",
+        "city",
+        "customerId",
+        "userId",
+        "isCustomerIndividual"
+})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ImportScreeningRequest extends Request {
 
-    @XmlElement(name = "RequestID")
-    private String requestID;
-    @XmlElement(name = "CNIC")
+//    @XmlElement(name = "CNIC")
+//    private String cnic;
+//    @XmlElement(name = "CustomerName")
+//    private String customerName;
+//    @XmlElement(name = "FatherName")
+//    private String fatherName;
+//    @XmlElement(name = "DateOfBirth")
+//    private String dateOfBirth;
+//    @XmlElement(name = "Nationality")
+//    private String nationality;
+//    @XmlElement(name = "City")
+//    private String city;
+//    @XmlElement(name = "CustomerNumber")
+//    private String customerNumber;
+//    @XmlElement(name = "UserId")
+//    private String userId;
+//    private String isCustomerIndividual;
+//    @XmlElement(name = "RequestID")
+//    private String requestID;
+
+    @JsonProperty("cnic")
     private String cnic;
-    @XmlElement(name = "CustomerName")
-    private String customerName;
-    @XmlElement(name = "FatherName")
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("fatherName")
     private String fatherName;
-    @XmlElement(name = "DateOfBirth")
+    @JsonProperty("dateOfBirth")
     private String dateOfBirth;
-    @XmlElement(name = "Nationality")
+    @JsonProperty("nationality")
     private String nationality;
-    @XmlElement(name = "City")
+    @JsonProperty("city")
     private String city;
-    @XmlElement(name = "CustomerNumber")
-    private String customerNumber;
-    @XmlElement(name = "UserId")
+    @JsonProperty("customerId")
+    private String customerId;
+    @JsonProperty("userId")
     private String userId;
-
-    public String getRequestID() {
-        return requestID;
-    }
-
-    public void setRequestID(String requestID) {
-        this.requestID = requestID;
-    }
+    @JsonProperty("isCustomerIndividual")
+    private String isCustomerIndividual;
+    @JsonProperty("processingCode")
+    private String requestID;
 
     public String getCnic() {
         return cnic;
@@ -49,12 +76,20 @@ public class ImportScreeningRequest extends Request {
         this.cnic = cnic;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getName() {
+        return name;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
     }
 
     public String getDateOfBirth() {
@@ -81,12 +116,12 @@ public class ImportScreeningRequest extends Request {
         this.city = city;
     }
 
-    public String getCustomerNumber() {
-        return customerNumber;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomerNumber(String customerNumber) {
-        this.customerNumber = customerNumber;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getUserId() {
@@ -97,20 +132,27 @@ public class ImportScreeningRequest extends Request {
         this.userId = userId;
     }
 
-    public String getFatherName() {
-        return fatherName;
+    public String getIsCustomerIndividual() {
+        return isCustomerIndividual;
     }
 
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
+    public void setIsCustomerIndividual(String isCustomerIndividual) {
+        this.isCustomerIndividual = isCustomerIndividual;
+    }
+
+    public String getRequestID() {
+        return requestID;
+    }
+
+    public void setRequestID(String requestID) {
+        this.requestID = requestID;
     }
 
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        this.setRequestID((DateUtil.formatCurrentDate(TRANSACTION_DATE.getValue())) + (DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue())));
         this.setCnic(i8SBSwitchControllerRequestVO.getCNIC());
-        this.setCustomerName(i8SBSwitchControllerRequestVO.getName());
+        this.setName(i8SBSwitchControllerRequestVO.getName());
         this.setFatherName(i8SBSwitchControllerRequestVO.getFatherName());
         this.setDateOfBirth(i8SBSwitchControllerRequestVO.getDateOfBirth());
         if (i8SBSwitchControllerRequestVO.getNationality().equalsIgnoreCase("Pakistan")) {
@@ -125,9 +167,10 @@ public class ImportScreeningRequest extends Request {
                 this.setCity(i8SBSwitchControllerRequestVO.getCity());
             }
         }
-        this.setCustomerNumber(i8SBSwitchControllerRequestVO.getMobileNumber());
+        this.setCustomerId(i8SBSwitchControllerRequestVO.getMobileNumber());
         this.setUserId("");
-
+        this.setRequestID((DateUtil.formatCurrentDate(TRANSACTION_DATE.getValue())) + (DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue())));
+        this.setIsCustomerIndividual("");
     }
 
 

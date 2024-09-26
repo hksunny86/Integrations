@@ -19,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.net.ssl.SSLContext;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -44,6 +47,9 @@ public class BrandverseService {
     private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
     private String accessTokenUrl = PropertyReader.getProperty("brandverse.accessToken");
     private String notifyUrl = PropertyReader.getProperty("brandverse.notify");
+    private String proxyIp = PropertyReader.getProperty("brandverse.proxy.ip");
+    private String proxyPort = PropertyReader.getProperty("brandverse.proxy.port");
+    private Boolean proxyFlag = Boolean.valueOf(PropertyReader.getProperty("brandverse.proxy.flag"));
     I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
     public AccessTokenResponse accessTokenResponse(AccessTokenRequest accessTokenRequest) {
@@ -219,7 +225,9 @@ public class BrandverseService {
 
     public RestTemplate getRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
-
+        if (proxyFlag) {
+            restTemplate = new RestTemplate(getClientHttpRequestFactoryWithProxy());
+        }
         TrustStrategy acceptingTrustStrategy = new TrustStrategy() {
             @Override
             public boolean isTrusted(java.security.cert.X509Certificate[] x509Certificates, String s) {
@@ -232,11 +240,7 @@ public class BrandverseService {
         try {
             sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy)
                     .build();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
+        } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException e) {
             e.printStackTrace();
         }
         SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
@@ -246,5 +250,22 @@ public class BrandverseService {
 
         restTemplate.setRequestFactory(requestFactory);
         return restTemplate;
+    }
+
+    private SimpleClientHttpRequestFactory getClientHttpRequestFactoryWithProxy() {
+        // Create a new instance of SimpleClientHttpRequestFactory
+        SimpleClientHttpRequestFactory clientHttpRequestFactory = new SimpleClientHttpRequestFactory();
+
+        // Set the connection timeout to 60,000 milliseconds (60 seconds)
+        clientHttpRequestFactory.setConnectTimeout(60000);
+
+        // Set the read timeout to 60,000 milliseconds (60 seconds)
+        clientHttpRequestFactory.setReadTimeout(60000);
+
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyIp, Integer.parseInt(proxyPort)));
+        clientHttpRequestFactory.setProxy(proxy);
+
+        // Return the configured SimpleClientHttpRequestFactory instance
+        return clientHttpRequestFactory;
     }
 }

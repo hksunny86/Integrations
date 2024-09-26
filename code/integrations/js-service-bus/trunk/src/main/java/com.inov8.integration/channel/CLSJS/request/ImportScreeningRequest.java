@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.util.DateUtil;
+import org.apache.commons.lang.StringUtils;
 
 import static com.inov8.integration.enums.DateFormatEnum.TIME_LOCAL_TRANSACTION;
 import static com.inov8.integration.enums.DateFormatEnum.TRANSACTION_DATE;
@@ -187,19 +188,19 @@ public class ImportScreeningRequest extends Request {
     @Override
     public boolean validateRequest() throws I8SBValidationException {
 
-        if (StringUtils.isEmpty(this.getRequestID())) {
-            throw new I8SBValidationException("[Failed] Reques ID " + this.getRequestID());
-        }
-
-        if (StringUtils.isEmpty(this.getCnic())) {
-            throw new I8SBValidationException("[Failed] CNIC " + this.getCnic());
-        }
-        if (StringUtils.isEmpty(this.getFatherName())) {
-            throw new I8SBValidationException("[Failed] Father Name " + this.getFatherName());
-        }
-        if (StringUtils.isEmpty(this.getCustomerName())) {
-            throw new I8SBValidationException("[Failed] Customer Name " + this.getCustomerName());
-        }
+//        if (StringUtils.isEmpty(this.getRequestID())) {
+//            throw new I8SBValidationException("[Failed] Reques ID " + this.getRequestID());
+//        }
+//
+//        if (StringUtils.isEmpty(this.getCnic())) {
+//            throw new I8SBValidationException("[Failed] CNIC " + this.getCnic());
+//        }
+//        if (StringUtils.isEmpty(this.getFatherName())) {
+//            throw new I8SBValidationException("[Failed] Father Name " + this.getFatherName());
+//        }
+//        if (StringUtils.isEmpty(this.getCustomerName())) {
+//            throw new I8SBValidationException("[Failed] Customer Name " + this.getCustomerName());
+//        }
 
         return true;
     }

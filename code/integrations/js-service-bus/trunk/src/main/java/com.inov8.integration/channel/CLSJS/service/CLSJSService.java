@@ -1,25 +1,16 @@
 package com.inov8.integration.channel.CLSJS.service;
-import com.inov8.integration.channel.CLSJS.client.ScreenMSPortType;
-import com.inov8.integration.channel.CLSJS.mock.CLSJSMock;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inov8.integration.channel.CLSJS.request.ImportScreeningRequest;
 import com.inov8.integration.channel.CLSJS.response.ScreeningResponse;
 import com.inov8.integration.channel.CLSJS.client.ImportScreeningResponse;
 import com.inov8.integration.channel.lending.response.SalaryDisburseResponse;
-import com.inov8.integration.channel.sbp.response.ReturnPaymentResponse;
 import com.inov8.integration.config.PropertyReader;
-import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
 import com.inov8.integration.util.JSONUtil;
-import com.inov8.integration.util.XMLUtil;
-import org.apache.cxf.configuration.jsse.TLSClientParameters;
-import org.apache.cxf.frontend.ClientProxy;
-import org.apache.cxf.transport.http.HTTPConduit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -149,9 +140,13 @@ public class CLSJSService {
 //        importScreeningRequest.setCustomerNumber(request.getCustomerNumber());
 //        importScreeningRequest.setUserId(request.getUserId());
 
-        if (i8sb_target_environment.equals("mock")) {
-
-            importScreeningResponse = clsjsMock.importScreeningResponse(importScreeningRequest);
+        if (i8sb_target_environment.equals("mock89")) {
+//            importScreeningResponse = clsjsMock.importScreeningResponse(importScreeningRequest);
+            logger.info("Preparing Mock request for Request Type : CLSJSImportScreening");
+            String json = "{\n    \"message\": \"Success\",\n    \"code\": \"00\",\n    \"reqId\": \"000010\",\n    \"data\": {\n        \"caseId\": \"6272308\",\n        \"caseStatus\": \"GWL-Open|PEP/EDD-Open|Private-Open\",\n        \"totalGWL\": \"6\",\n        \"totalPEPEDD\": \"9\",\n        \"totalPrivate\": \"21\",\n        \"importStatus\": \"NoChange\"\n    }\n}";
+            importScreeningResponse = (ScreeningResponse) JSONUtil.jsonToObject(json, ScreeningResponse.class);
+            Objects.requireNonNull(importScreeningResponse).setCode("00");
+            logger.info("Mock Response Code for CLS Service: " + importScreeningResponse.getCode());
         } else {
 //            HTTPConduit httpConduit=(HTTPConduit) ClientProxy.getClient(SAMPLE_PORT).getConduit();
 //            TLSClientParameters tlsCP = new TLSClientParameters();

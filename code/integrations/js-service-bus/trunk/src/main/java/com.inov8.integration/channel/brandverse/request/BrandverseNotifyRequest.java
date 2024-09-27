@@ -72,7 +72,7 @@ public class BrandverseNotifyRequest extends Request {
         this.setMerchantXid(i8SBSwitchControllerRequestVO.getMerchantId());
         this.setTransactionId(i8SBSwitchControllerRequestVO.getTransactionId());
         this.setAmount(i8SBSwitchControllerRequestVO.getAmount());
-        this.setTimestamp(i8SBSwitchControllerRequestVO.getTransactionDateTime());
+        this.setTimestamp(i8SBSwitchControllerRequestVO.getTransmissionDateAndTime());
     }
 
     @Override

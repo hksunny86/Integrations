@@ -154,7 +154,12 @@ public class ImportScreeningRequest extends Request {
 
         this.setCnic(i8SBSwitchControllerRequestVO.getCNIC());
         this.setName(i8SBSwitchControllerRequestVO.getName());
-        this.setFatherName(i8SBSwitchControllerRequestVO.getFatherName());
+//        this.setFatherName(i8SBSwitchControllerRequestVO.getFatherName());
+        if (i8SBSwitchControllerRequestVO.getFatherName() != null) {
+            this.setFatherName(i8SBSwitchControllerRequestVO.getFatherName());
+        } else {
+            this.setFatherName("");
+        }
         this.setDateOfBirth(i8SBSwitchControllerRequestVO.getDateOfBirth());
         if (i8SBSwitchControllerRequestVO.getNationality().equalsIgnoreCase("Pakistan")) {
             this.setNationality("Pakistani");

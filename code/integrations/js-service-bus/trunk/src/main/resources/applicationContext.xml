@@ -14,14 +14,14 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <annotation-driven />
+    <annotation-driven/>
     <beans:import resource="classpath:META-INF/cxf/cxf.xml"/>
 
     <beans:bean id="applicationProperties"
                 class="com.inov8.integration.config.PropertyReader">
         <beans:property name="locations">
             <beans:list>
-                <beans:value>classpath:application.properties</beans:value>                
+                <beans:value>classpath:application.properties</beans:value>
                 <beans:value>classpath:channel/AppInSnap.properties</beans:value>
                 <beans:value>classpath:channel/microbank.properties</beans:value>
                 <beans:value>classpath:channel/APIGEE.properties</beans:value>
@@ -127,6 +127,6 @@
         <beans:property name="service" ref="i8SBSwitchControllerImpl"/>
         <beans:property name="serviceInterface"
                         value="com.inov8.integration.i8sb.controller.I8SBSwitchController"/>
-    </beans:bean>    
+    </beans:bean>
 
 </beans:beans>

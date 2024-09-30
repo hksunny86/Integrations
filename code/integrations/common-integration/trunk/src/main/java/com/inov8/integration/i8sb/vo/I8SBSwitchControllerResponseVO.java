@@ -521,6 +521,15 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String TransactionDescription_104;
     private String reservedPrivate_120;
     private Payload payload;
+    private String pdfDataUriBase64;
+
+    public String getPdfDataUriBase64() {
+        return pdfDataUriBase64;
+    }
+
+    public void setPdfDataUriBase64(String pdfDataUriBase64) {
+        this.pdfDataUriBase64 = pdfDataUriBase64;
+    }
 
     public Payload getPayload() {
         return payload;

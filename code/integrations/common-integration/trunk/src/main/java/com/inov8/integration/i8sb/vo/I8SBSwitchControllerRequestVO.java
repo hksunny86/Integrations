@@ -531,6 +531,33 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String originalDataElements_090;
     private String reservedPrivate_120;
     private Payload payload;
+    private String pdfStartDate;
+    private String pdfEndDate;
+    private String generatedBy;
+
+    public String getPdfStartDate() {
+        return pdfStartDate;
+    }
+
+    public void setPdfStartDate(String pdfStartDate) {
+        this.pdfStartDate = pdfStartDate;
+    }
+
+    public String getPdfEndDate() {
+        return pdfEndDate;
+    }
+
+    public void setPdfEndDate(String pdfEndDate) {
+        this.pdfEndDate = pdfEndDate;
+    }
+
+    public String getGeneratedBy() {
+        return generatedBy;
+    }
+
+    public void setGeneratedBy(String generatedBy) {
+        this.generatedBy = generatedBy;
+    }
 
     public Payload getPayload() {
         return payload;

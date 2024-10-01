@@ -11,7 +11,7 @@ public class CoreToWalletCreditRequest implements Serializable {
 
     private String userName;
     private String password;
-//    private String accountType;
+    private String accountType;
     private String accountNo;
     private String dateTime;
     private String rrn;
@@ -51,13 +51,13 @@ public class CoreToWalletCreditRequest implements Serializable {
         this.password = password;
     }
 
-//    public String getAccountType() {
-//        return accountType;
-//    }
-//
-//    public void setAccountType(String accountType) {
-//        this.accountType = accountType;
-//    }
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
 
     public String getAccountNo() {
         return accountNo;

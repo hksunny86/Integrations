@@ -138,6 +138,7 @@ public class I8SBConstants {
     public static String RequestType_UPDATE_CUSTOMER_DEVICE_DETAIL = "UpdateCustomerDeviceDetail";
 
 
+
     public static String RequestType_CLSJS_ImportScreening = "CLSJSImportScreening";
     public static String RequestType_DebitCardDetails = "DebitCardDetails";
     public static String RequestType_DebitCard = "DebitCard";

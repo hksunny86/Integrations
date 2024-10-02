@@ -34,9 +34,9 @@ public class InternationalRemittanceRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getStan())) {
             throw new ValidationException("[FAILED] Validation Failed Stan: " + integrationVO.getStan());
         }
-        if (StringUtils.isEmpty(integrationVO.getBankIMD())) {
-            throw new ValidationException("[FAILED] Validation Failed Bank IMD: " + integrationVO.getBankIMD());
-        }
+//        if (StringUtils.isEmpty(integrationVO.getBankIMD())) {
+//            throw new ValidationException("[FAILED] Validation Failed Bank IMD: " + integrationVO.getBankIMD());
+//        }
         if (StringUtils.isEmpty(integrationVO.getTransactionAmount())) {
             throw new ValidationException("[FAILED] Validation Failed Transaction Amount: " + integrationVO.getTransactionAmount());
         }

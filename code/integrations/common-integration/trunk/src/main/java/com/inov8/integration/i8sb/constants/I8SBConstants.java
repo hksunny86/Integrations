@@ -133,6 +133,7 @@ public class I8SBConstants {
     public static String RequestType_CoreAccountMiniStatement = "CoreAccountMiniStatement";
     public static String RequestType_DebitCardList = "DebitCardList";
     public static String RequestType_REFFERAL_CUSTOMER = "RefferalCustomer";
+    public static String RequestType_DYNAMIC_REFFERAL_CUSTOMER = "DynamicRefferalCustomer";
     public static String RequestType_GET_CUSTOMER_DEVICE_DETAIL = "GetCustomerDeviceDetail";
     public static String RequestType_UPDATE_CUSTOMER_DEVICE_DETAIL = "UpdateCustomerDeviceDetail";
 

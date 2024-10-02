@@ -12,7 +12,7 @@ public interface L2AccountSwitchController {
     WebServiceVO freelanceToWallet(WebServiceVO webServiceVO);
     WebServiceVO freelancerFCYFunds(WebServiceVO webServiceVO);
     WebServiceVO freelancerBalanceInquiry(WebServiceVO webServiceVO);
-    WebServiceVO l2AccountStatus(WebServiceVO webServiceVO);
-    WebServiceVO motherNames(WebServiceVO webServiceVO);
+//    WebServiceVO l2AccountStatus(WebServiceVO webServiceVO);
+//    WebServiceVO motherNames(WebServiceVO webServiceVO);
 
 }

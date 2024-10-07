@@ -71,9 +71,9 @@ public class InternationalRemittanceRequestValidator {
         if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
             throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
         }
-        if (StringUtils.isEmpty(integrationVO.getSegmentCode())) {
+        /*if (StringUtils.isEmpty(integrationVO.getSegmentCode())) {
             throw new ValidationException("[FAILED] Validation Failed Segment Code: " + integrationVO.getSegmentCode());
-        }
+        }*/
     }
 
     public static void validateAdviseReversalRequest(AdviceReversalRequest integrationVO) {

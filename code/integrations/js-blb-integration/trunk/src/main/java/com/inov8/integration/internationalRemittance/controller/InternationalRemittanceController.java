@@ -60,7 +60,6 @@ public class InternationalRemittanceController {
             StringBuilder stringText = new StringBuilder()
                     .append(request.getUserName())
                     .append(request.getPassword())
-//                    .append(request.getAccountType())
                     .append(request.getAccountNo())
                     .append(request.getDateTime())
                     .append(request.getRrn())
@@ -81,7 +80,8 @@ public class InternationalRemittanceController {
                     .append(request.getReserved7())
                     .append(request.getReserved8())
                     .append(request.getReserved9())
-                    .append(request.getReserved10());
+                    .append(request.getReserved10())
+                    .append(request.getAccountType());
 
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
             if (request.getHashData().equalsIgnoreCase(sha256hex)) {

@@ -71,6 +71,7 @@ public class SchedulerController {
             return new ResponseEntity<>("Email Update Task Scheduled Successfully", HttpStatus.OK);
 
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error(e.getMessage());
             return new ResponseEntity<>("Email Update Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
@@ -100,6 +101,7 @@ public class SchedulerController {
             return new ResponseEntity<>("Email Update Task Scheduled Successfully", HttpStatus.OK);
 
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error(e.getMessage());
             return new ResponseEntity<>("Email Update Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
@@ -161,6 +163,7 @@ public class SchedulerController {
             return new ResponseEntity<>("Release IBFT Task Scheduled Successfully", HttpStatus.OK);
 
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error(e.getMessage());
             return new ResponseEntity<>("Release IBFT Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
@@ -189,6 +192,7 @@ public class SchedulerController {
             return new ResponseEntity<>("Task Scheduled Successfully", HttpStatus.OK);
 
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error(e.getMessage());
             return new ResponseEntity<>("Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
@@ -251,6 +255,7 @@ public class SchedulerController {
             return new ResponseEntity<>("Release RAAST Task Scheduled Successfully", HttpStatus.OK);
 
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error(e.getMessage());
             return new ResponseEntity<>("Release RAAST Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
@@ -375,22 +380,33 @@ public class SchedulerController {
             return new ResponseEntity<>("Release Z to Z Task Scheduled Successfully", HttpStatus.OK);
 
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error(e.getMessage());
             return new ResponseEntity<>("Release Z to Z Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
     }
 
-    private Long getCoolingPeriod(String key) throws Exception {
-        long coolingPeriod = 0L;
+    private long getCoolingPeriod(String key) throws Exception {
         Optional<SystemConfig> systemConfigOptional = configService.findById(key);
-        coolingPeriod = systemConfigOptional.map(systemConfig -> Long.parseLong(systemConfig.getValue())).orElse(0L);
+
+        // Use primitive long directly and handle invalid values
+        long coolingPeriod = systemConfigOptional
+                .map(systemConfig -> {
+                    try {
+                        return Long.parseLong(systemConfig.getValue());  // Parse the value directly to long
+                    } catch (NumberFormatException e) {
+                        return 0L;  // Return 0 if the value is not a valid number
+                    }
+                }).orElse(0L);  // Default to 0L if no value found
+
         // If coolingPeriod is 0, set it to 15 seconds
-        if (coolingPeriod == 0) {
+        if (coolingPeriod == 0L) {
             coolingPeriod = 15L;
-//            throw new Exception("Cooling Period not found or invalid value :: "+coolingPeriod);
         }
+
         return coolingPeriod;
     }
+
 
     @GetMapping("/test/{name}")
     @ResponseBody

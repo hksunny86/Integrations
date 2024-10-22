@@ -17,6 +17,9 @@ import com.inov8.integration.util.DateUtil;
 import com.inov8.integration.util.JSONUtil;
 import com.inov8.integration.util.XMLUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.frontend.ClientProxy;
+import org.apache.cxf.transport.http.HTTPConduit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +33,11 @@ import static com.inov8.integration.enums.DateFormatEnum.TRANSACTION_DATE;
 public class EChallanBO implements I8SBChannelInterface {
     private static Logger logger = LoggerFactory.getLogger(EChallanBO.class.getSimpleName());
 
-//    @SuppressWarnings("SpringJavaAutowiringInspection")
-//    @Autowired(required = false)
-//    @Qualifier("eChallanIntegration")
-//    ProcessEchallanSoap eChallanIntegration;
-//    @Qualifier("eChallanIntegration1")
-//    ProcessEchallanSoap1 processEchallanSoap;
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired(required = false)
+    @Qualifier("eChallanIntegration")
+    ProcessEchallanSoap eChallanIntegration;
+
 
 
     public I8SBSwitchControllerResponseVO execute(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) throws Exception {
@@ -60,29 +62,30 @@ public class EChallanBO implements I8SBChannelInterface {
             String requestType = i8SBSwitchControllerRequestVO.getRequestType();
 
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_EChallanInquiry)) {
-//                response.setReturnedString(eChallanIntegration.billInquiry(
-//                        request.getUserID(),
-//                        request.getPassword(),
-//                        request.getConsumerNo(),
-//                        request.getBankMnemonic(),
-//                        request.getReserved()
-//                ));
-                response.setReturnedString("00itpayuser                     U20211006+0000000001020+00000000010202109                                        ");
+                this.setupProxyForClient(eChallanIntegration);
+                response.setReturnedString(eChallanIntegration.billInquiry(
+                        request.getUserID(),
+                        request.getPassword(),
+                        request.getConsumerNo(),
+                        request.getBankMnemonic(),
+                        request.getReserved()
+                ));
+//                response.setReturnedString("00itpayuser                     U20211006+0000000001020+00000000010202109                                        ");
 
             } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_EChallanPayment)) {
-
-//                response.setReturnedString(eChallanIntegration.billPayment(
-//                        request.getUserID(),
-//                        request.getPassword(),
-//                        request.getConsumerNo(),
-//                        ((BillPaymentRequest) request).getTranAuthId(),
-//                        ((BillPaymentRequest) request).getTransactionAmount(),
-//                        ((BillPaymentRequest) request).getDate(),
-//                        ((BillPaymentRequest) request).getTime(),
-//                        request.getBankMnemonic(),
-//                        request.getReserved()
-//                ));
-                response.setReturnedString("00");
+                this.setupProxyForClient(eChallanIntegration);
+                response.setReturnedString(eChallanIntegration.billPayment(
+                        request.getUserID(),
+                        request.getPassword(),
+                        request.getConsumerNo(),
+                        ((BillPaymentRequest) request).getTranAuthId(),
+                        ((BillPaymentRequest) request).getTransactionAmount(),
+                        ((BillPaymentRequest) request).getDate(),
+                        ((BillPaymentRequest) request).getTime(),
+                        request.getBankMnemonic(),
+                        request.getReserved()
+                ));
+//                response.setReturnedString("00");
             }
 
             response.parseResponse(i8SBSwitchControllerResponseVO);
@@ -141,5 +144,18 @@ public class EChallanBO implements I8SBChannelInterface {
         objects[0] = request;
         objects[1] = response;
         return objects;
+    }
+
+    private void setupProxyForClient(Object serviceProxy) {
+        Client client = ClientProxy.getClient(serviceProxy);
+        HTTPConduit http = (HTTPConduit) client.getConduit();
+
+        // Set the proxy server and port
+        http.getClient().setProxyServer("172.16.72.50");
+        http.getClient().setProxyServerPort(3128);
+
+        // Optional: Set proxy authentication if required
+        http.getProxyAuthorization().setUserName("proxyuser");
+        http.getProxyAuthorization().setPassword("proxypassword");
     }
 }

@@ -26,7 +26,7 @@ public class BillPaymentResponse extends Response {
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
 
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
-        i8SBSwitchControllerResponseVO.setResponseCode("00");
+        i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
         return i8SBSwitchControllerResponseVO;
     }
 

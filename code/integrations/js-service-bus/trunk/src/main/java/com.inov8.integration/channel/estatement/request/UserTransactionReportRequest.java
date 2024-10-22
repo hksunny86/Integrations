@@ -61,10 +61,10 @@ public class UserTransactionReportRequest extends Request {
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        this.setAccountNumber(i8SBSwitchControllerRequestVO.getAccountNumber());
-        this.setPdfStartDate(i8SBSwitchControllerRequestVO.getPdfStartDate());
-        this.setPdfEndDate(i8SBSwitchControllerRequestVO.getPdfEndDate());
-        this.setGeneratedBy(i8SBSwitchControllerRequestVO.getGeneratedBy());
+        this.setAccountNumber(i8SBSwitchControllerRequestVO.getMobileNumber());
+        this.setPdfStartDate(i8SBSwitchControllerRequestVO.getStartDate());
+        this.setPdfEndDate(i8SBSwitchControllerRequestVO.getEndDate());
+        this.setGeneratedBy("pdf");
     }
 
     @Override

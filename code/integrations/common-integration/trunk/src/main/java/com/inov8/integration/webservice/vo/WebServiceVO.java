@@ -119,6 +119,7 @@ public class WebServiceVO implements Serializable {
     private List<MotherName> motherNames;
     private List<IbftTransactionResponse> ibftTransactionResponse;
     private List<ReleaseBalanceTransactionResponse> releaseBalanceTransactionResponse;
+    private List<CoolingOffReleaseBalanceTransactionResponse> coolingOffReleaseBalanceTransactionResponses;
 
     private List<TitleFetchAccountResponse> titleFetchAccountResponse;
 
@@ -578,6 +579,15 @@ public class WebServiceVO implements Serializable {
     private String stan;
     private String adviceType;
     private String salarySilp;
+
+
+    public List<CoolingOffReleaseBalanceTransactionResponse> getCoolingOffReleaseBalanceTransactionResponses() {
+        return coolingOffReleaseBalanceTransactionResponses;
+    }
+
+    public void setCoolingOffReleaseBalanceTransactionResponses(List<CoolingOffReleaseBalanceTransactionResponse> coolingOffReleaseBalanceTransactionResponses) {
+        this.coolingOffReleaseBalanceTransactionResponses = coolingOffReleaseBalanceTransactionResponses;
+    }
 
     public String getSalarySilp() {
         return salarySilp;

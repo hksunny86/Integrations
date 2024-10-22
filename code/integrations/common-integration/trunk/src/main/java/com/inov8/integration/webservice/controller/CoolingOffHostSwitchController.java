@@ -6,5 +6,7 @@ public interface CoolingOffHostSwitchController {
     WebServiceVO releaseIBFTAmount(WebServiceVO webServiceVO);
     WebServiceVO toggleNotification(WebServiceVO webServiceVO);
     WebServiceVO releaseInProcessBalance(WebServiceVO webServiceVO);
+    WebServiceVO releaseCoolingOffAmount(WebServiceVO webServiceVO);
+
 
 }

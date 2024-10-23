@@ -579,7 +579,24 @@ public class WebServiceVO implements Serializable {
     private String stan;
     private String adviceType;
     private String salarySilp;
+    private List<DynamicQRPaymentInquiry> dynamicQRPaymentInquiryList;
+    private String billNumber;
 
+    public String getBillNumber() {
+        return billNumber;
+    }
+
+    public void setBillNumber(String billNumber) {
+        this.billNumber = billNumber;
+    }
+
+    public List<DynamicQRPaymentInquiry> getDynamicQRPaymentInquiryList() {
+        return dynamicQRPaymentInquiryList;
+    }
+
+    public void setDynamicQRPaymentInquiryList(List<DynamicQRPaymentInquiry> dynamicQRPaymentInquiryList) {
+        this.dynamicQRPaymentInquiryList = dynamicQRPaymentInquiryList;
+    }
 
     public List<CoolingOffReleaseBalanceTransactionResponse> getCoolingOffReleaseBalanceTransactionResponses() {
         return coolingOffReleaseBalanceTransactionResponses;

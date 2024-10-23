@@ -2856,4 +2856,9 @@ public class JsIntegrationController implements WebServiceSwitchController {
     public WebServiceVO deviceUpdate(WebServiceVO webServiceVO) {
         return null;
     }
+
+    @Override
+    public WebServiceVO dynamicQRPaymentInquiry(WebServiceVO webServiceVO) {
+        return null;
+    }
 }

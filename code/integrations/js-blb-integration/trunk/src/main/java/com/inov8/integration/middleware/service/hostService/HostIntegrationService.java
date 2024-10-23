@@ -21480,6 +21480,121 @@ public class HostIntegrationService {
         return response;
     }
 
+    public DynamicQRPaymentInquiryResponse dynamicQRPaymentInquiryResponse(DynamicQRPaymentInquiryRequest request) {
+        long startTime = new Date().getTime(); // start time
+        WebServiceVO webServiceVO = new WebServiceVO();
+        String transactionKey = request.getDateTime() + request.getRrn();
+        webServiceVO.setRetrievalReferenceNumber(request.getRrn());
+        logger.info("[HOST] Starting Processing Dynamic QR Payment Inquiry Request RRN: " + webServiceVO.getRetrievalReferenceNumber());
+        transactionKey = request.getChannelId() + request.getRrn();
+
+        DynamicQRPaymentInquiryResponse response = new DynamicQRPaymentInquiryResponse();
+
+        webServiceVO.setUserName(request.getUserName());
+        webServiceVO.setCustomerPassword(request.getPassword());
+        webServiceVO.setMobileNo(request.getMobileNumber());
+        webServiceVO.setDateTime(request.getDateTime());
+        webServiceVO.setRetrievalReferenceNumber(webServiceVO.getRetrievalReferenceNumber());
+        webServiceVO.setChannelId(request.getChannelId());
+        webServiceVO.setTerminalId(request.getTerminalId());
+        webServiceVO.setBillNumber(request.getBillNumber());
+        webServiceVO.setReserved1(request.getReserved1());
+        webServiceVO.setReserved2(request.getReserved2());
+        webServiceVO.setReserved3(request.getReserved3());
+        webServiceVO.setReserved4(request.getReserved4());
+        webServiceVO.setReserved5(request.getReserved5());
+        TransactionLogModel logModel = new TransactionLogModel();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddhhmmss");
+        Date txDateTime = new Date();
+        try {
+            txDateTime = dateFormat.parse(request.getDateTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        logModel.setRetrievalRefNo(webServiceVO.getRetrievalReferenceNumber());
+        logModel.setTransactionDateTime(txDateTime);
+        logModel.setChannelId(request.getChannelId());
+        logModel.setTransactionCode("DynamicQRPaymentInquiry");
+        logModel.setStatus(TransactionStatus.PROCESSING.getValue().longValue());
+        //preparing request XML
+        String requestXml = JSONUtil.getJSON(request);
+        //Setting in logModel
+        logModel.setPduRequestHEX(requestXml);
+
+//        saveTransaction(logModel);
+
+        // Call i8
+        try {
+            logger.info("[HOST] Sent Dynamic QR Payment Inquiry Request to Micro Bank RRN: " + I8_SCHEME + "://" + I8_SERVER + ":" + I8_PORT + I8_PATH + " against RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            webServiceVO = switchController.dynamicQRPaymentInquiry(webServiceVO);
+
+        } catch (Exception e) {
+
+            if (e instanceof RemoteAccessException) {
+                if (!(e instanceof RemoteConnectFailureException)) {
+
+                    StringWriter sw = new StringWriter();
+                    PrintWriter pw = new PrintWriter(sw);
+                    e.printStackTrace(pw);
+                    String stackTrace = sw.toString();
+                    int statusCode = stackTrace.indexOf("status code");
+                    if (statusCode == -1) {
+                        webServiceVO.setResponseCode("58");
+                        webServiceVO.setResponseCodeDescription("Transaction Time Out");
+                    }
+                }
+            }
+            logger.error("[HOST] Internal Error While Sending Request RRN: " + webServiceVO.getRetrievalReferenceNumber(), e);
+        }
+
+        if (webServiceVO != null && StringUtils.isNotEmpty(webServiceVO.getResponseCode()) && webServiceVO.getResponseCode().equals(ResponseCodeEnum.PROCESSED_OK.getValue())) {
+            logger.info("[HOST] Dynamic QR Payment Inquiry Request Successful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            response.setRrn(webServiceVO.getRetrievalReferenceNumber());
+            response.setResponseCode(ResponseCodeEnum.PROCESSED_OK.getValue());
+            response.setResponseDescription(webServiceVO.getResponseCodeDescription());
+            response.setResponseDateTime(webServiceVO.getDateTime());
+            response.setTransactionStatus(webServiceVO.getDynamicQRPaymentInquiryList());
+
+            logger.info("[HOST] Dynamic QR Payment Inquiry Request Successful from Micro Bank:: " + JSONUtil.getJSON(response));
+
+        } else if (webServiceVO != null && StringUtils.isNotEmpty(webServiceVO.getResponseCode())) {
+            logger.info("[HOST] Dynamic QR Payment Inquiry Request Unsuccessful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+            response.setResponseCode(webServiceVO.getResponseCode());
+            response.setResponseDescription(webServiceVO.getResponseCodeDescription());
+            logModel.setResponseCode(webServiceVO.getResponseCode());
+            logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
+        } else {
+            logger.info("[HOST] Dynamic QR Payment Inquiry Request Unsuccessful from Micro Bank RRN: " + webServiceVO.getRetrievalReferenceNumber());
+
+            response.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+            response.setResponseDescription("Host Not In Reach");
+            logModel.setResponseCode(ResponseCodeEnum.HOST_NOT_PROCESSING.getValue());
+
+            logModel.setStatus(TransactionStatus.REJECTED.getValue().longValue());
+        }
+        StringBuilder stringText = new StringBuilder()
+                .append(response.getRrn())
+                .append(response.getResponseCode())
+                .append(response.getResponseDescription())
+                .append(response.getResponseDateTime());
+        String sha256hex = DigestUtils.sha256Hex(stringText.toString());
+        response.setHashData(sha256hex);
+
+        long endTime = new Date().getTime(); // end time
+        long difference = endTime - startTime; // check different
+        logger.debug("[HOST] ****Dynamic QR Payment Inquiry REQUEST PROCESSED IN ****: " + difference + " milliseconds");
+
+        //preparing request XML
+        String responseXml = JSONUtil.getJSON(response);
+        //Setting in logModel
+        logModel.setPduResponseHEX(responseXml);
+        logModel.setProcessedTime(difference);
+//        updateTransactionInDB(logModel);
+
+        return response;
+    }
+
     private WebServiceVO validateRRN(WebServiceVO webServiceVO) {
         String responseCode = FonePayResponseCodes.INVALID_REQUEST;
         String description = "Your Request cannot be processed at the moment.Please try again later.";

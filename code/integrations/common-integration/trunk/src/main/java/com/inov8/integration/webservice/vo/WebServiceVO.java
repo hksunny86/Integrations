@@ -6,6 +6,7 @@ import com.inov8.integration.webservice.corporateVO.AccountStatement;
 import com.inov8.integration.webservice.corporateVO.CustomerDeviceVerification;
 import com.inov8.integration.webservice.debitCardVO.CardTypeFee;
 import com.inov8.integration.webservice.digiStatmentVO.DigiWalletStatementVo;
+import com.inov8.integration.webservice.dynamicQRPaymentVO.DynamicQRPaymentInquiry;
 import com.inov8.integration.webservice.l2Account.L2Account;
 import com.inov8.integration.webservice.l2Account.L2AccountFields;
 import com.inov8.integration.webservice.optasiaVO.*;
@@ -4685,6 +4686,7 @@ public class WebServiceVO implements Serializable {
     public void setDebitAmount(String debitAmount) {
         this.debitAmount = debitAmount;
     }
+
     public String getIsEnable() {
         return isEnable;
     }
@@ -4768,6 +4770,7 @@ public class WebServiceVO implements Serializable {
     public String getStan() {
         return stan;
     }
+
     public void setStan(String stan) {
         this.stan = stan;
     }

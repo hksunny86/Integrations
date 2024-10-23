@@ -3215,11 +3215,11 @@ public class JSController {
                     .append(request.getReserved14())
                     .append(request.getReserved15());
             String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(stringText.toString());
-            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
-                if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
-                    try {
-                        HostRequestValidator.validateL2AccountUpgrade(request);
-                        response = integrationService.l2AccountUpgrade(request);
+//            if (request.getHashData().equalsIgnoreCase(sha256hex)) {
+            if (HostRequestValidator.authenticate(request.getUserName(), request.getPassword(), request.getChannelId())) {
+                try {
+                    HostRequestValidator.validateL2AccountUpgrade(request);
+                    response = integrationService.l2AccountUpgrade(request);
 
                 } catch (ValidationException ve) {
                     response.setResponseCode("420");

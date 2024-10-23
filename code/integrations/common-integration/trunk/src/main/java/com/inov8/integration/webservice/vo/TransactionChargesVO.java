@@ -17,6 +17,7 @@ public class TransactionChargesVO implements Serializable {
     private String eStampCharges;
     private String eStampChargesGl;
     private String lienMark;
+    private String lienAmount;
 
     public String getProcessingFee() {
         return processingFee;
@@ -104,5 +105,13 @@ public class TransactionChargesVO implements Serializable {
 
     public void setLienMark(String lienMark) {
         this.lienMark = lienMark;
+    }
+
+    public String getLienAmount() {
+        return lienAmount;
+    }
+
+    public void setLienAmount(String lienAmount) {
+        this.lienAmount = lienAmount;
     }
 }

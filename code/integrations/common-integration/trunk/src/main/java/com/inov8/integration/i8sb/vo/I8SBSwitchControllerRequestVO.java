@@ -534,6 +534,15 @@ public class I8SBSwitchControllerRequestVO implements Serializable {
     private String pdfStartDate;
     private String pdfEndDate;
     private String generatedBy;
+    private String billNumber;
+
+    public String getBillNumber() {
+        return billNumber;
+    }
+
+    public void setBillNumber(String billNumber) {
+        this.billNumber = billNumber;
+    }
 
     public String getPdfStartDate() {
         return pdfStartDate;

@@ -96,6 +96,7 @@ public class I8SBConstants {
     public static String I8SB_Channel_ID_SBP = "SBP";
     public static String I8SB_Channel_ID_CRP = "CRP";
     public static String I8SB_Channel_ID_ESTATEMENT = "ESTATEMENT";
+    public static String I8SB_Channel_ID_WARMBYTE = "WARMBYTE";
 
 
     public static String I8SB_Channel_ID_ETPaymentCollection = "ETPaymentCollection";
@@ -412,6 +413,7 @@ public class I8SBConstants {
     public static String RequestType_FCY_CONVERSION = "FcyCpnversion";
     public static String RequestType_GET_SCORE_AND_RATING = "ScoreAndRating";
     public static String RequestType_GET_USER_TRANSACTION_REPORT = "GetUserTransactionReport";
+    public static String RequestType_WARMBYTE_DEDUCTION_INTIMATION = "WarmbyteDeductionIntimation";
 
 
 }

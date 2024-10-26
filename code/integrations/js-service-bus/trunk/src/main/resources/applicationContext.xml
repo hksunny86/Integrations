@@ -56,6 +56,7 @@
                 <beans:value>classpath:channel/sbp.properties</beans:value>
                 <beans:value>classpath:channel/crp.properties</beans:value>
                 <beans:value>classpath:channel/estatement.properties</beans:value>
+                <beans:value>classpath:channel/warmbyte.properties</beans:value>
 
                 <!--                <value>classpath:channel/AMA.properties</value>-->
             </beans:list>

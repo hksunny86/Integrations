@@ -13,7 +13,8 @@ import org.apache.commons.lang.StringUtils;
         "merchantXid",
         "transactionId",
         "amount",
-        "timestamp"
+        "timestamp",
+        "billNumber"
 })
 public class BrandverseNotifyRequest extends Request {
 
@@ -25,6 +26,8 @@ public class BrandverseNotifyRequest extends Request {
     private String amount;
     @JsonProperty("timestamp")
     private String timestamp;
+    @JsonProperty("billNumber")
+    private String billNumber;
 
     @JsonProperty("merchantXid")
     public String getMerchantXid() {
@@ -66,6 +69,15 @@ public class BrandverseNotifyRequest extends Request {
         this.timestamp = timestamp;
     }
 
+    public String getBillNumber() {
+        return billNumber;
+    }
+
+    @JsonProperty("billNumber")
+    public void setBillNumber(String billNumber) {
+        this.billNumber = billNumber;
+    }
+
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
@@ -73,6 +85,7 @@ public class BrandverseNotifyRequest extends Request {
         this.setTransactionId(i8SBSwitchControllerRequestVO.getTransactionId());
         this.setAmount(i8SBSwitchControllerRequestVO.getAmount());
         this.setTimestamp(i8SBSwitchControllerRequestVO.getTransmissionDateAndTime());
+        this.setBillNumber(i8SBSwitchControllerRequestVO.getBillNumber());
     }
 
     @Override

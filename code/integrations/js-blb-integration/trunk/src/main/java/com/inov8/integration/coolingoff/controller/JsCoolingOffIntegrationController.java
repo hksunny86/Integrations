@@ -16,6 +16,11 @@ public class JsCoolingOffIntegrationController implements CoolingOffHostSwitchCo
     }
 
     @Override
+    public WebServiceVO releaseCoolingOffAmount(WebServiceVO webServiceVO) {
+        return null;
+    }
+
+    @Override
     public WebServiceVO releaseInProcessBalance(WebServiceVO webServiceVO) {
         return null;
     }

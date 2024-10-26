@@ -1425,6 +1425,34 @@ public class HostRequestValidator {
         }
     }
 
+    public static void debitJsonRequest(DebitJsonRequest integrationVO) {
+
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile Number : " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed RRN : " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getTerminalId())) {
+            throw new ValidationException("[FAILED] Validation Failed Terminal ID: " + integrationVO.getTerminalId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getProductId())) {
+            throw new ValidationException("[FAILED] Validation Product ID: " + integrationVO.getProductId());
+        }
+//        if (StringUtils.isEmpty(integrationVO.getPinType())) {
+//            throw new ValidationException("[FAILED] Validation Failed Pin  Type: " + integrationVO.getPinType());
+//        }
+        if (StringUtils.isEmpty(integrationVO.getTransactionAmount())) {
+            throw new ValidationException("[FAILED] Validation Transaction Amount : " + integrationVO.getTransactionAmount());
+        }
+    }
+
     public static void fundDebit(FundDebitRequest integrationVO) {
 
         if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
@@ -4573,6 +4601,25 @@ public class HostRequestValidator {
         }
         if (StringUtils.isEmpty(integrationVO.getChannelId())) {
             throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+    }
+
+    public static void validateDynamicQRPaymentInquiry(DynamicQRPaymentInquiryRequest integrationVO) throws ValidationException {
+
+        if (StringUtils.isEmpty(integrationVO.getRrn())) {
+            throw new ValidationException("[FAILED] Validation Failed RRN: " + integrationVO.getRrn());
+        }
+        if (StringUtils.isEmpty(integrationVO.getMobileNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Mobile No: " + integrationVO.getMobileNumber());
+        }
+        if (StringUtils.isEmpty(integrationVO.getDateTime())) {
+            throw new ValidationException("[FAILED] Validation Failed Date Time: " + integrationVO.getDateTime());
+        }
+        if (StringUtils.isEmpty(integrationVO.getChannelId())) {
+            throw new ValidationException("[FAILED] Validation Failed Channel Id: " + integrationVO.getChannelId());
+        }
+        if (StringUtils.isEmpty(integrationVO.getBillNumber())) {
+            throw new ValidationException("[FAILED] Validation Failed Bill Number: " + integrationVO.getBillNumber());
         }
     }
 

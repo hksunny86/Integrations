@@ -174,4 +174,5 @@ public interface WebServiceSwitchController {
     WebServiceVO updateCustomerInfo(WebServiceVO webServiceVO);
     WebServiceVO updateCustomerLimit(WebServiceVO webServiceVO);
     WebServiceVO getUpdateEmailStatus(WebServiceVO webServiceVO);
+    WebServiceVO dynamicQRPaymentInquiry(WebServiceVO webServiceVO);
 }

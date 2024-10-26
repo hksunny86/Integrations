@@ -6,6 +6,7 @@ import com.inov8.integration.webservice.corporateVO.AccountStatement;
 import com.inov8.integration.webservice.corporateVO.CustomerDeviceVerification;
 import com.inov8.integration.webservice.debitCardVO.CardTypeFee;
 import com.inov8.integration.webservice.digiStatmentVO.DigiWalletStatementVo;
+import com.inov8.integration.webservice.dynamicQRPaymentVO.DynamicQRPaymentInquiry;
 import com.inov8.integration.webservice.l2Account.L2Account;
 import com.inov8.integration.webservice.l2Account.L2AccountFields;
 import com.inov8.integration.webservice.optasiaVO.*;
@@ -119,6 +120,7 @@ public class WebServiceVO implements Serializable {
     private List<MotherName> motherNames;
     private List<IbftTransactionResponse> ibftTransactionResponse;
     private List<ReleaseBalanceTransactionResponse> releaseBalanceTransactionResponse;
+    private List<CoolingOffReleaseBalanceTransactionResponse> coolingOffReleaseBalanceTransactionResponses;
 
     private List<TitleFetchAccountResponse> titleFetchAccountResponse;
 
@@ -578,6 +580,32 @@ public class WebServiceVO implements Serializable {
     private String stan;
     private String adviceType;
     private String salarySilp;
+    private List<DynamicQRPaymentInquiry> dynamicQRPaymentInquiryList;
+    private String billNumber;
+
+    public String getBillNumber() {
+        return billNumber;
+    }
+
+    public void setBillNumber(String billNumber) {
+        this.billNumber = billNumber;
+    }
+
+    public List<DynamicQRPaymentInquiry> getDynamicQRPaymentInquiryList() {
+        return dynamicQRPaymentInquiryList;
+    }
+
+    public void setDynamicQRPaymentInquiryList(List<DynamicQRPaymentInquiry> dynamicQRPaymentInquiryList) {
+        this.dynamicQRPaymentInquiryList = dynamicQRPaymentInquiryList;
+    }
+
+    public List<CoolingOffReleaseBalanceTransactionResponse> getCoolingOffReleaseBalanceTransactionResponses() {
+        return coolingOffReleaseBalanceTransactionResponses;
+    }
+
+    public void setCoolingOffReleaseBalanceTransactionResponses(List<CoolingOffReleaseBalanceTransactionResponse> coolingOffReleaseBalanceTransactionResponses) {
+        this.coolingOffReleaseBalanceTransactionResponses = coolingOffReleaseBalanceTransactionResponses;
+    }
 
     public String getSalarySilp() {
         return salarySilp;
@@ -4658,6 +4686,7 @@ public class WebServiceVO implements Serializable {
     public void setDebitAmount(String debitAmount) {
         this.debitAmount = debitAmount;
     }
+
     public String getIsEnable() {
         return isEnable;
     }
@@ -4741,6 +4770,7 @@ public class WebServiceVO implements Serializable {
     public String getStan() {
         return stan;
     }
+
     public void setStan(String stan) {
         this.stan = stan;
     }

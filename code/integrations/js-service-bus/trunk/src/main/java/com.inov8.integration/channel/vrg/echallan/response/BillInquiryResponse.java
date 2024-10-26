@@ -152,25 +152,25 @@ public class BillInquiryResponse extends Response {
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
         i8SBSwitchControllerResponseVO.setResponseCode(this.responseCode);
-//        i8SBSwitchControllerResponseVO.setConsumerTitle(this.consumerDetail);
-//        i8SBSwitchControllerResponseVO.setBillStatus(this.billStatus);
-//        i8SBSwitchControllerResponseVO.setDueDate(this.dueDate);
-//        i8SBSwitchControllerResponseVO.setBillAmount(amountWithinDueDate);
-//        i8SBSwitchControllerResponseVO.setBillAmountAfterDueDate(amountAfterDueDate);
-//        i8SBSwitchControllerResponseVO.setBillingMonth(this.billingMonth);
-//        i8SBSwitchControllerResponseVO.setDatePaid(this.datePaid);
-//        i8SBSwitchControllerResponseVO.setAmount(this.amountPaid);
-//        i8SBSwitchControllerResponseVO.setTransactionId(this.tranAuthID);
+        i8SBSwitchControllerResponseVO.setConsumerTitle(this.consumerDetail);
+        i8SBSwitchControllerResponseVO.setBillStatus(this.billStatus);
+        i8SBSwitchControllerResponseVO.setDueDate(this.dueDate);
+        i8SBSwitchControllerResponseVO.setBillAmount(amountWithinDueDate);
+        i8SBSwitchControllerResponseVO.setBillAmountAfterDueDate(amountAfterDueDate);
+        i8SBSwitchControllerResponseVO.setBillingMonth(this.billingMonth);
+        i8SBSwitchControllerResponseVO.setDatePaid(this.datePaid);
+        i8SBSwitchControllerResponseVO.setAmount(this.amountPaid);
+        i8SBSwitchControllerResponseVO.setTransactionId(this.tranAuthID);
 
-        i8SBSwitchControllerResponseVO.setConsumerTitle("asif");
-        i8SBSwitchControllerResponseVO.setBillStatus("u");
-        i8SBSwitchControllerResponseVO.setDueDate("20180111");
-        i8SBSwitchControllerResponseVO.setBillAmount("300.211");
-        i8SBSwitchControllerResponseVO.setBillAmountAfterDueDate("300.41");
-        i8SBSwitchControllerResponseVO.setBillingMonth("01");
-        i8SBSwitchControllerResponseVO.setDatePaid("20210111");
-        i8SBSwitchControllerResponseVO.setAmount("3517.211");
-        i8SBSwitchControllerResponseVO.setTransactionId("000000001000025");
+//        i8SBSwitchControllerResponseVO.setConsumerTitle("asif");
+//        i8SBSwitchControllerResponseVO.setBillStatus("u");
+//        i8SBSwitchControllerResponseVO.setDueDate("20180111");
+//        i8SBSwitchControllerResponseVO.setBillAmount("300.211");
+//        i8SBSwitchControllerResponseVO.setBillAmountAfterDueDate("300.41");
+//        i8SBSwitchControllerResponseVO.setBillingMonth("01");
+//        i8SBSwitchControllerResponseVO.setDatePaid("20210111");
+//        i8SBSwitchControllerResponseVO.setAmount("3517.211");
+//        i8SBSwitchControllerResponseVO.setTransactionId("000000001000025");
         return i8SBSwitchControllerResponseVO;
     }
 

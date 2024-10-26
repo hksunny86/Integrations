@@ -275,6 +275,7 @@ public class BrandverseService {
             postParam.put("transactionId", brandverseNotifyRequest.getTransactionId());
             postParam.put("amount", brandverseNotifyRequest.getAmount());
             postParam.put("timestamp", brandverseNotifyRequest.getTimestamp());
+            postParam.put("billNumber", brandverseNotifyRequest.getBillNumber());
             logger.info("Access Token " + token);
             logger.info("Request body of Brandverse Notify Request " + JSONUtil.getJSON(brandverseNotifyRequest));
             try {

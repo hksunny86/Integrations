@@ -1,11 +1,9 @@
 package com.example.dbscheduler.service;
 
-import com.example.dbscheduler.config.BasicExamplesConfiguration;
 import com.example.dbscheduler.entity.CoolingTask;
 import com.example.dbscheduler.repository.CoolingTaskRepo;
 import com.example.dbscheduler.utils.ExampleContext;
 import com.github.kagkarlsson.scheduler.task.TaskWithDataDescriptor;
-import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

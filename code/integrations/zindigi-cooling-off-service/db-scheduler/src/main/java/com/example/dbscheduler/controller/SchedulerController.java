@@ -2,27 +2,25 @@ package com.example.dbscheduler.controller;
 
 import com.example.dbscheduler.entity.DTO.UpdatedLimitsObjectDTO;
 import com.example.dbscheduler.entity.SystemConfig;
-import com.example.dbscheduler.service.AppUserService;
-import com.example.dbscheduler.service.BlinkCustomerLimitService;
+
 import com.example.dbscheduler.service.SystemConfigService;
 import com.example.dbscheduler.utils.SystemConfigConstants;
 import com.example.dbscheduler.vo.*;
 import com.github.kagkarlsson.scheduler.Scheduler;
 import com.github.kagkarlsson.scheduler.task.helper.OneTimeTask;
-import com.github.kagkarlsson.scheduler.task.helper.Tasks;
-import org.apache.commons.codec.digest.DigestUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import javax.sql.DataSource;
+
+
 import java.time.Instant;
-import java.util.Map;
+
 import java.util.Optional;
 
 @RestController
@@ -30,25 +28,42 @@ import java.util.Optional;
 public class SchedulerController {
     Logger logger = LoggerFactory.getLogger(SchedulerController.class);
 
+
     @Autowired
-    private DataSource dataSource;
+    private Scheduler scheduler;
 
     @Autowired
     private SystemConfigService configService;
 
     @Autowired
-    private AppUserService appUserService;
+    private OneTimeTask<EmailUpdateTaskVo> emailUpdateTask;
 
     @Autowired
-    private BlinkCustomerLimitService blinkCustomerLimitService;
-    private static final String RELEASE_IBFT_SUCCESS_RESP_CODE = "00";
+    private OneTimeTask<ResetPintTaskVo> resetPinTask;
 
-    @Value("${blb.releaseibf.url}")
-    private String releaseIbftUrl;
+    @Autowired
+    private OneTimeTask<ReleaseIbftTaskVo> releaseIbftTask;
 
-    @Value("${blb.releaseInProcessBalance.url}")
-    private String releaseInProcessBalanceUrl;
-    @PostMapping("/updateemail")
+    @Autowired
+    private OneTimeTask<ReleaseRaastTaskVo> releasRaastTask;
+
+    @Autowired
+    private OneTimeTask<ReleaseCoreToWalletTaskVo> releaseCoreToWalletTask;
+
+    @Autowired
+    private OneTimeTask<ReleaseZtoZTaskVo> releaseZtoZTask;
+
+    @Autowired
+    private OneTimeTask<UpdatedLimitsObjectDTO> updateLimitsTask;
+//    private static final String RELEASE_IBFT_SUCCESS_RESP_CODE = "00";
+
+//    @Value("${blb.releaseibf.url}")
+//    private String releaseIbftUrl;
+//
+//    @Value("${blb.releaseInProcessBalance.url}")
+//    private String releaseInProcessBalanceUrl;
+
+    /*@PostMapping("/updateemail")
     public ResponseEntity<?> startEmailTask(@RequestBody EmailUpdateTaskVo emailUpdateTaskVo) {
         try {
             long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_EMAIL_UPDATE_COOLING);
@@ -75,9 +90,24 @@ public class SchedulerController {
             logger.error(e.getMessage());
             return new ResponseEntity<>("Email Update Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
+    }*/
+
+
+    @PostMapping("/updateemail")
+    public ResponseEntity<?> startEmailTask(@RequestBody EmailUpdateTaskVo emailUpdateTaskVo) {
+        try {
+            long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_EMAIL_UPDATE_COOLING);
+            scheduler.schedule(emailUpdateTask.instance(emailUpdateTaskVo.getAppUserId().toString(), emailUpdateTaskVo),
+                    Instant.now().plusSeconds(coolingPeriod));
+            return new ResponseEntity<>("Email Update Task Scheduled Successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new ResponseEntity<>("Email Update Task Scheduling Failed", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @PostMapping("/resetpin")
+
+   /* @PostMapping("/resetpin")
     public ResponseEntity<?> startResetTask(@RequestBody ResetPintTaskVo resetPintTaskVo) {
         try {
             long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RESET_PIN_COOLING);
@@ -105,10 +135,27 @@ public class SchedulerController {
             logger.error(e.getMessage());
             return new ResponseEntity<>("Email Update Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
+    }*/
+
+
+    @PostMapping("/resetpin")
+    public ResponseEntity<?> startResetTask(@RequestBody ResetPintTaskVo resetPintTaskVo) {
+        try {
+            long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RESET_PIN_COOLING);
+            scheduler.schedule(resetPinTask.instance(resetPintTaskVo.getAppUserId().toString(), resetPintTaskVo),
+                    Instant.now().plusSeconds(coolingPeriod));
+            return new ResponseEntity<>("Reset Pin Task Scheduled Successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new ResponseEntity<>("Reset Pin Task Scheduling Failed", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @PostMapping("/releaseibft")
-    public ResponseEntity<?> startReleaseIBFTTask(@RequestBody ReleaseIbftTaskVo releaseIbftTaskVo) {
+
+
+
+  /*  @PostMapping("/releaseibft")
+    public ResponseEntity<?> startReleaseIBFTTasks(@RequestBody ReleaseIbftTaskVo releaseIbftTaskVo) {
         try {
             long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RELEASE_IBFT_COOLING);
             // Save the admin
@@ -167,9 +214,23 @@ public class SchedulerController {
             logger.error(e.getMessage());
             return new ResponseEntity<>("Release IBFT Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
+    }*/
+
+
+    @PostMapping("/releaseibft")
+    public ResponseEntity<?> startReleaseIBFTTask(@RequestBody ReleaseIbftTaskVo releaseIbftTaskVo) {
+        try {
+            long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RELEASE_IBFT_COOLING);
+            scheduler.schedule(releaseIbftTask.instance(releaseIbftTaskVo.getTransactionId(), releaseIbftTaskVo),
+                    Instant.now().plusSeconds(coolingPeriod));
+            return new ResponseEntity<>("Release IBFT Task Scheduled Successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new ResponseEntity<>("Release IBFT Task Scheduling Failed", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @PostMapping("/updateblinkcustomerlimit")
+    /*@PostMapping("/updateblinkcustomerlimit")
     public ResponseEntity<?> updateMaximumLimit(@RequestBody UpdatedLimitsObjectDTO updatedLimitsObjectDTO) {
         try {
             long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_TRANS_LIMIT_COOLING);
@@ -196,9 +257,23 @@ public class SchedulerController {
             logger.error(e.getMessage());
             return new ResponseEntity<>("Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
+    }*/
+
+
+    @PostMapping("/updateblinkcustomerlimit")
+    public ResponseEntity<?> updateMaximumLimit(@RequestBody UpdatedLimitsObjectDTO updatedLimitsObjectDTO) {
+        try {
+            long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_TRANS_LIMIT_COOLING);
+            scheduler.schedule(updateLimitsTask.instance(updatedLimitsObjectDTO.getUpdatedLimitsObject().get(0).getLimitId().toString(), updatedLimitsObjectDTO),
+                    Instant.now().plusSeconds(coolingPeriod));
+            return new ResponseEntity<>("Update Limit Task Scheduled Successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new ResponseEntity<>("Update Limit Task Scheduling Failed", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @PostMapping("/releaseraast")
+    /*@PostMapping("/releaseraast")
     public ResponseEntity<?> startReleaseRAASTTask(@RequestBody ReleaseRaastTaskVo releaseRaastTaskVo) {
         try {
             long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RELEASE_RAAST_COOLING);
@@ -259,9 +334,25 @@ public class SchedulerController {
             logger.error(e.getMessage());
             return new ResponseEntity<>("Release RAAST Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
+    }*/
+
+
+    @PostMapping("/releaseraast")
+    public ResponseEntity<?> startReleaseRAASTTask(@RequestBody ReleaseRaastTaskVo releaseRaastTaskVo) {
+        try {
+            long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RELEASE_RAAST_COOLING);
+            scheduler.schedule(releasRaastTask.instance(releaseRaastTaskVo.getRrn(), releaseRaastTaskVo),
+                    Instant.now().plusSeconds(coolingPeriod));
+            return new ResponseEntity<>("Release RAAST Task Scheduled Successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new ResponseEntity<>("Release RAAST Task Scheduling Failed", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @PostMapping("/releasecoretowallet")
+
+
+   /* @PostMapping("/releasecoretowallet")
     public ResponseEntity<?> startReleaseCoreToWalletTask(@RequestBody ReleaseCoreToWalletTaskVo releaseCoreToWalletTaskVo) {
         try {
             long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RELEASE_CORE_TO_WALLET_COOLING);
@@ -321,9 +412,26 @@ public class SchedulerController {
             logger.error(e.getMessage());
             return new ResponseEntity<>("Release Core To Wallet Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
+    }*/
+
+
+    @PostMapping("/releasecoretowallet")
+    public ResponseEntity<?> startReleaseCoreToWalletTask(@RequestBody ReleaseCoreToWalletTaskVo releaseCoreToWalletTaskVo) {
+        try {
+            long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RELEASE_CORE_TO_WALLET_COOLING);
+            scheduler.schedule(releaseCoreToWalletTask.instance(releaseCoreToWalletTaskVo.getRrn(), releaseCoreToWalletTaskVo),
+                    Instant.now().plusSeconds(coolingPeriod));
+            return new ResponseEntity<>("Release core-to-wallet Task Scheduled Successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new ResponseEntity<>("Release core-to-wallet Task Scheduling Failed", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @PostMapping("/releaseztoz")
+
+
+
+    /*@PostMapping("/releaseztoz")
     public ResponseEntity<?> startReleaseZtoZTask(@RequestBody ReleaseZtoZTaskVo releaseZtoZTaskVo) {
         try {
             long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RELEASE_Z_TO_Z_COOLING);
@@ -384,9 +492,25 @@ public class SchedulerController {
             logger.error(e.getMessage());
             return new ResponseEntity<>("Release Z to Z Task Scheduled Failed", HttpStatus.BAD_REQUEST);
         }
+    }*/
+
+
+    @PostMapping("/releaseztoz")
+    public ResponseEntity<?> startReleaseZtoZTask(@RequestBody ReleaseZtoZTaskVo releaseZtoZTaskVo) {
+        try {
+            long coolingPeriod = getCoolingPeriod(SystemConfigConstants.TASK_RELEASE_Z_TO_Z_COOLING);
+            scheduler.schedule(releaseZtoZTask.instance(releaseZtoZTaskVo.getRrn(), releaseZtoZTaskVo),
+                    Instant.now().plusSeconds(coolingPeriod));
+            return new ResponseEntity<>("Release Z to Z Task Scheduled Successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new ResponseEntity<>("Release Z to Z  Task Scheduling Failed", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    private long getCoolingPeriod(String key) throws Exception {
+
+
+    private long getCoolingPeriod(String key) {
         Optional<SystemConfig> systemConfigOptional = configService.findById(key);
 
         // Use primitive long directly and handle invalid values

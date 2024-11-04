@@ -414,6 +414,7 @@ public class I8SBConstants {
     public static String RequestType_GET_SCORE_AND_RATING = "ScoreAndRating";
     public static String RequestType_GET_USER_TRANSACTION_REPORT = "GetUserTransactionReport";
     public static String RequestType_WARMBYTE_DEDUCTION_INTIMATION = "WarmbyteDeductionIntimation";
+    public static String RequestType_WARMBYTE_REFERRER_STATUS = "WarmbyteReferrerStatus";
 
 
 }

@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inov8.integration.channel.estatement.request.UserTransactionReportRequest;
 import com.inov8.integration.channel.estatement.response.UserTransactionReportResponse;
 import com.inov8.integration.channel.warmbyte.request.DeductionIntimationRequest;
+import com.inov8.integration.channel.warmbyte.request.ReferrerStatusRequest;
 import com.inov8.integration.channel.warmbyte.response.DeductionIntimationResponse;
+import com.inov8.integration.channel.warmbyte.response.ReferrerStatusResponse;
 import com.inov8.integration.config.PropertyReader;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerResponseVO;
@@ -30,6 +32,8 @@ public class WarmbyteService {
     private static Logger logger = LoggerFactory.getLogger(WarmbyteService.class.getSimpleName());
     private String i8sb_target_environment = PropertyReader.getProperty("i8sb.target.environment");
     private String deductionIntimationUrl = PropertyReader.getProperty("warmbyte.deduction.url");
+    private String referrerStatusUrl = PropertyReader.getProperty("warmbyte.referrer.status.url");
+    private String referrerStatusToken = PropertyReader.getProperty("warmbyte.referrer.status.token");
     private I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO;
 
     public String getResponseFromAPI(Map<String, String> headerMap, Map<String, Object> postParam, String url) throws Exception {
@@ -146,6 +150,47 @@ public class WarmbyteService {
             long endTime = (new Date()).getTime();
             long difference = endTime - start;
             logger.debug("Deduction Intimation Request processed in: " + difference + " millisecond");
+        }
+        return response;
+    }
+
+    public ReferrerStatusResponse referrerStatusResponse(ReferrerStatusRequest request) {
+
+        ReferrerStatusResponse response = new ReferrerStatusResponse();
+        ObjectMapper objectMapper = new ObjectMapper();
+        I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
+
+        long start = System.currentTimeMillis();
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock78")) {
+            logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
+            String json = "{\n" +
+                    "    \"code\": \"00\",\n" +
+                    "    \"message\": \"Success\"\n" +
+                    "}";
+            response = (ReferrerStatusResponse) JSONUtil.jsonToObject(json, ReferrerStatusResponse.class);
+            logger.info("Mock Response Code for Referrer Status Response: " + Objects.requireNonNull(response).getCode());
+        } else {
+
+            Map<String, Object> postParam = new HashMap<String, Object>();
+            Map<String, String> headers = new HashMap<String, String>();
+            headers.put("content-type", "application/json");
+            headers.put("Authorization", "Bearer " + referrerStatusToken);
+            postParam.put("mobileNo", request.getMsisdn());
+            logger.info("Request body of Deduction Intimation  " + JSONUtil.getJSON(request));
+            try {
+                String responseBody = getResponseFromAPI(headers, postParam, referrerStatusUrl);
+                if (responseBody != null && responseBody.length() > 0) {
+                    response = objectMapper.readValue(responseBody, ReferrerStatusResponse.class);
+                }
+            } catch (RestClientException e) {
+                handleRestClientException(e, i8SBSwitchControllerResponseVO);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            long endTime = (new Date()).getTime();
+            long difference = endTime - start;
+            logger.debug("Referrer Status Request processed in: " + difference + " millisecond");
         }
         return response;
     }

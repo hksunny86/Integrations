@@ -2,8 +2,10 @@ package com.inov8.integration.channel.warmbyte.bo;
 
 import com.inov8.integration.channel.estatement.service.EstatementService;
 import com.inov8.integration.channel.warmbyte.request.DeductionIntimationRequest;
+import com.inov8.integration.channel.warmbyte.request.ReferrerStatusRequest;
 import com.inov8.integration.channel.warmbyte.request.Request;
 import com.inov8.integration.channel.warmbyte.response.DeductionIntimationResponse;
+import com.inov8.integration.channel.warmbyte.response.ReferrerStatusResponse;
 import com.inov8.integration.channel.warmbyte.response.Response;
 import com.inov8.integration.channel.warmbyte.service.WarmbyteService;
 import com.inov8.integration.controller.I8SBChannelInterface;
@@ -51,6 +53,9 @@ public class WarmByteBo implements I8SBChannelInterface {
             warmbyteService.setI8SBSwitchControllerRequestVO(i8SBSwitchControllerRequestVO);
             if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WARMBYTE_DEDUCTION_INTIMATION)) {
                 response = warmbyteService.deductionIntimationResponse((DeductionIntimationRequest) request);
+            }
+            if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WARMBYTE_REFERRER_STATUS)) {
+                response = warmbyteService.referrerStatusResponse((ReferrerStatusRequest) request);
             }
 
             if (Objects.requireNonNull(response).populateI8SBSwitchControllerResponseVO() != null)
@@ -102,6 +107,9 @@ public class WarmByteBo implements I8SBChannelInterface {
         if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WARMBYTE_DEDUCTION_INTIMATION)) {
             request = new DeductionIntimationRequest();
             response = new DeductionIntimationResponse();
+        } else if (requestType.equalsIgnoreCase(I8SBConstants.RequestType_WARMBYTE_REFERRER_STATUS)) {
+            request = new ReferrerStatusRequest();
+            response = new ReferrerStatusResponse();
         } else {
             logger.info("[FAILED] Request type not supported");
             throw new I8SBValidationException("Request type not supported");

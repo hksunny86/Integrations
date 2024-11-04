@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.inov8.integration.exception.I8SBValidationException;
 import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 import com.inov8.integration.util.DateUtil;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 
 import static com.inov8.integration.enums.DateFormatEnum.TIME_LOCAL_TRANSACTION;
@@ -15,15 +16,19 @@ import static com.inov8.integration.enums.DateFormatEnum.TRANSACTION_DATE;
 //@XmlRootElement
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "cnic",
-        "name",
-        "fatherName",
-        "dateOfBirth",
-        "nationality",
-        "city",
-        "customerId",
-        "userId",
-        "isCustomerIndividual"
+        "ProcessingCode",
+        "TransmissionDatetime",
+        "SystemsTraceAuditNumber",
+        "TimeLocalTransaction",
+        "DateLocalTransaction",
+        "MerchantType",
+        "Cnic",
+        "CustomerName",
+        "DateOfBirth",
+        "Nationality",
+        "City",
+        "CustomerNumber",
+        "UserId"
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ImportScreeningRequest extends Request {
@@ -48,26 +53,82 @@ public class ImportScreeningRequest extends Request {
 //    @XmlElement(name = "RequestID")
 //    private String requestID;
 
-    @JsonProperty("cnic")
+    @JsonProperty("ProcessingCode")
+    private String processingCode;
+    @JsonProperty("TransmissionDatetime")
+    private String transmissionDatetime;
+    @JsonProperty("SystemsTraceAuditNumber")
+    private String systemsTraceAuditNumber;
+    @JsonProperty("TimeLocalTransaction")
+    private String timeLocalTransaction;
+    @JsonProperty("DateLocalTransaction")
+    private String dateLocalTransaction;
+    @JsonProperty("MerchantType")
+    private String merchantType;
+    @JsonProperty("Cnic")
     private String cnic;
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("fatherName")
-    private String fatherName;
-    @JsonProperty("dateOfBirth")
+    @JsonProperty("CustomerName")
+    private String customerName;
+//    @JsonProperty("fatherName")
+//    private String fatherName;
+    @JsonProperty("DateOfBirth")
     private String dateOfBirth;
-    @JsonProperty("nationality")
+    @JsonProperty("Nationality")
     private String nationality;
-    @JsonProperty("city")
+    @JsonProperty("City")
     private String city;
-    @JsonProperty("customerId")
-    private String customerId;
-    @JsonProperty("userId")
+    @JsonProperty("CustomerNumber")
+    private String customerNumber;
+    @JsonProperty("UserId")
     private String userId;
-    @JsonProperty("isCustomerIndividual")
-    private String isCustomerIndividual;
-    @JsonProperty("processingCode")
-    private String requestID;
+
+    public String getProcessingCode() {
+        return processingCode;
+    }
+
+    public void setProcessingCode(String processingCode) {
+        this.processingCode = processingCode;
+    }
+
+    public String getTransmissionDatetime() {
+        return transmissionDatetime;
+    }
+
+    public void setTransmissionDatetime(String transmissionDatetime) {
+        this.transmissionDatetime = transmissionDatetime;
+    }
+
+    public String getSystemsTraceAuditNumber() {
+        return systemsTraceAuditNumber;
+    }
+
+    public void setSystemsTraceAuditNumber(String systemsTraceAuditNumber) {
+        this.systemsTraceAuditNumber = systemsTraceAuditNumber;
+    }
+
+    public String getTimeLocalTransaction() {
+        return timeLocalTransaction;
+    }
+
+    public void setTimeLocalTransaction(String timeLocalTransaction) {
+        this.timeLocalTransaction = timeLocalTransaction;
+    }
+
+    public String getDateLocalTransaction() {
+        return dateLocalTransaction;
+    }
+
+    public void setDateLocalTransaction(String dateLocalTransaction) {
+        this.dateLocalTransaction = dateLocalTransaction;
+    }
+
+    public String getMerchantType() {
+        return merchantType;
+    }
+
+    public void setMerchantType(String merchantType) {
+        this.merchantType = merchantType;
+    }
 
     public String getCnic() {
         return cnic;
@@ -77,21 +138,21 @@ public class ImportScreeningRequest extends Request {
         this.cnic = cnic;
     }
 
-    public String getName() {
-        return name;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public String getFatherName() {
-        return fatherName;
-    }
-
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
-    }
+//    public String getFatherName() {
+//        return fatherName;
+//    }
+//
+//    public void setFatherName(String fatherName) {
+//        this.fatherName = fatherName;
+//    }
 
     public String getDateOfBirth() {
         return dateOfBirth;
@@ -117,12 +178,12 @@ public class ImportScreeningRequest extends Request {
         this.city = city;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public String getCustomerNumber() {
+        return customerNumber;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setCustomerNumber(String customerNumber) {
+        this.customerNumber = customerNumber;
     }
 
     public String getUserId() {
@@ -133,33 +194,23 @@ public class ImportScreeningRequest extends Request {
         this.userId = userId;
     }
 
-    public String getIsCustomerIndividual() {
-        return isCustomerIndividual;
-    }
-
-    public void setIsCustomerIndividual(String isCustomerIndividual) {
-        this.isCustomerIndividual = isCustomerIndividual;
-    }
-
-    public String getRequestID() {
-        return requestID;
-    }
-
-    public void setRequestID(String requestID) {
-        this.requestID = requestID;
-    }
-
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
+        this.setProcessingCode("ComplianceLink");
+        this.setTransmissionDatetime((DateUtil.formatCurrentDate(TRANSACTION_DATE.getValue())) + (DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue())));
+        this.setSystemsTraceAuditNumber(DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue()));
+        this.setTimeLocalTransaction(DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue()));
+        this.setDateLocalTransaction(DateUtil.formatCurrentDate(TRANSACTION_DATE.getValue()));
+        this.setMerchantType("0098");
         this.setCnic(i8SBSwitchControllerRequestVO.getCNIC());
-        this.setName(i8SBSwitchControllerRequestVO.getName());
+        this.setCustomerName(i8SBSwitchControllerRequestVO.getName());
 //        this.setFatherName(i8SBSwitchControllerRequestVO.getFatherName());
-        if (i8SBSwitchControllerRequestVO.getFatherName() != null) {
-            this.setFatherName(i8SBSwitchControllerRequestVO.getFatherName());
-        } else {
-            this.setFatherName("");
-        }
+//        if (i8SBSwitchControllerRequestVO.getFatherName() != null) {
+//            this.setFatherName(i8SBSwitchControllerRequestVO.getFatherName());
+//        } else {
+//            this.setFatherName("");
+//        }
         this.setDateOfBirth(i8SBSwitchControllerRequestVO.getDateOfBirth());
         if (i8SBSwitchControllerRequestVO.getNationality().equalsIgnoreCase("Pakistan")) {
             this.setNationality("Pakistani");
@@ -173,10 +224,8 @@ public class ImportScreeningRequest extends Request {
                 this.setCity(i8SBSwitchControllerRequestVO.getCity());
             }
         }
-        this.setCustomerId(i8SBSwitchControllerRequestVO.getMobileNumber());
+        this.setCustomerNumber(i8SBSwitchControllerRequestVO.getMobileNumber());
         this.setUserId("");
-        this.setRequestID((DateUtil.formatCurrentDate(TRANSACTION_DATE.getValue())) + (DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue())));
-        this.setIsCustomerIndividual("");
     }
 
 

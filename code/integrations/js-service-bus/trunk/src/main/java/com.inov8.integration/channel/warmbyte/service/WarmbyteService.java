@@ -176,6 +176,7 @@ public class WarmbyteService {
             headers.put("content-type", "application/json");
             headers.put("Authorization", "Bearer " + referrerStatusToken);
             postParam.put("mobileNo", request.getMsisdn());
+            postParam.put("cnic", request.getCnic());
             logger.info("Request body of Deduction Intimation  " + JSONUtil.getJSON(request));
             try {
                 String responseBody = getResponseFromAPI(headers, postParam, referrerStatusUrl);

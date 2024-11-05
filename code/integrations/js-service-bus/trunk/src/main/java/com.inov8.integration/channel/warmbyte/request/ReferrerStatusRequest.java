@@ -9,13 +9,16 @@ import com.inov8.integration.i8sb.vo.I8SBSwitchControllerRequestVO;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "msisdn"
+        "msisdn",
+        "cnic"
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ReferrerStatusRequest extends Request {
 
     @JsonProperty("msisdn")
     private String msisdn;
+    @JsonProperty("cnic")
+    private String cnic;
 
     public String getMsisdn() {
         return msisdn;
@@ -25,10 +28,19 @@ public class ReferrerStatusRequest extends Request {
         this.msisdn = msisdn;
     }
 
+    public String getCnic() {
+        return cnic;
+    }
+
+    public void setCnic(String cnic) {
+        this.cnic = cnic;
+    }
+
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
         this.setMsisdn(i8SBSwitchControllerRequestVO.getMobileNumber());
+        this.setCnic(i8SBSwitchControllerRequestVO.getCNIC());
     }
 
     @Override

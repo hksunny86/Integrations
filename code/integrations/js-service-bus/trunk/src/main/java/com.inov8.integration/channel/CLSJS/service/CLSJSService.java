@@ -145,8 +145,8 @@ public class CLSJSService {
             logger.info("Preparing Mock request for Request Type : CLSJSImportScreening");
             String json = "{\n    \"message\": \"Success\",\n    \"code\": \"00\",\n    \"reqId\": \"000010\",\n    \"data\": {\n        \"caseId\": \"6272308\",\n        \"caseStatus\": \"GWL-Open|PEP/EDD-Open|Private-Open\",\n        \"totalGWL\": \"6\",\n        \"totalPEPEDD\": \"9\",\n        \"totalPrivate\": \"21\",\n        \"importStatus\": \"NoChange\"\n    }\n}";
             importScreeningResponse = (ScreeningResponse) JSONUtil.jsonToObject(json, ScreeningResponse.class);
-            Objects.requireNonNull(importScreeningResponse).setCode("00");
-            logger.info("Mock Response Code for CLS Service: " + importScreeningResponse.getCode());
+            Objects.requireNonNull(importScreeningResponse).setResponseCode("00");
+            logger.info("Mock Response Code for CLS Service: " + importScreeningResponse.getResponseCode());
         } else {
 //            HTTPConduit httpConduit=(HTTPConduit) ClientProxy.getClient(SAMPLE_PORT).getConduit();
 //            TLSClientParameters tlsCP = new TLSClientParameters();

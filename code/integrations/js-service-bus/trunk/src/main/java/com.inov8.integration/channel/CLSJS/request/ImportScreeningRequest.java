@@ -10,8 +10,7 @@ import com.inov8.integration.util.DateUtil;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 
-import static com.inov8.integration.enums.DateFormatEnum.TIME_LOCAL_TRANSACTION;
-import static com.inov8.integration.enums.DateFormatEnum.TRANSACTION_DATE;
+import static com.inov8.integration.enums.DateFormatEnum.*;
 
 //@XmlRootElement
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -69,7 +68,7 @@ public class ImportScreeningRequest extends Request {
     private String cnic;
     @JsonProperty("CustomerName")
     private String customerName;
-//    @JsonProperty("fatherName")
+    //    @JsonProperty("fatherName")
 //    private String fatherName;
     @JsonProperty("DateOfBirth")
     private String dateOfBirth;
@@ -198,7 +197,7 @@ public class ImportScreeningRequest extends Request {
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
         this.setProcessingCode("ComplianceLink");
-        this.setTransmissionDatetime((DateUtil.formatCurrentDate(TRANSACTION_DATE.getValue())) + (DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue())));
+        this.setTransmissionDatetime((DateUtil.formatCurrentDate(TRANSACTION_DATE_TIME.getValue())));
         this.setSystemsTraceAuditNumber(DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue()));
         this.setTimeLocalTransaction(DateUtil.formatCurrentDate(TIME_LOCAL_TRANSACTION.getValue()));
         this.setDateLocalTransaction(DateUtil.formatCurrentDate(TRANSACTION_DATE.getValue()));
@@ -225,7 +224,7 @@ public class ImportScreeningRequest extends Request {
             }
         }
         this.setCustomerNumber(i8SBSwitchControllerRequestVO.getMobileNumber());
-        this.setUserId("");
+        this.setUserId(i8SBSwitchControllerRequestVO.getMobileNumber());
     }
 
 

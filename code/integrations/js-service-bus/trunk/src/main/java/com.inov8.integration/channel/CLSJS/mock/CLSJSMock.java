@@ -22,7 +22,7 @@ public class CLSJSMock {
                 request.getCNIC().equalsIgnoreCase("3503668754644")||
                 request.getCNIC().equalsIgnoreCase("3503668754645")) {
 
-            response.setReqId("20200630121312666666");
+//            response.setReqId("20200630121312666666");
             data.setCaseId("1189");
             data.setCaseStatus("No Matches");
             data.setImportStatus("Add");
@@ -38,7 +38,7 @@ public class CLSJSMock {
                 request.getCNIC().equalsIgnoreCase("3503668754640") ||
                 request.getCNIC().equalsIgnoreCase("3503998765633")) {
 
-            response.setReqId("20200630121312666666");
+//            response.setReqId("20200630121312666666");
             data.setCaseId("1189");
             data.setCaseStatus("Passed By Rule");
             data.setImportStatus("Add");
@@ -50,7 +50,7 @@ public class CLSJSMock {
             data.setTotalPrivate("0");
         } else if (request.getCNIC().equalsIgnoreCase("3503018518107")) {
 
-            response.setReqId("20200630121312666666");
+//            response.setReqId("20200630121312666666");
             data.setCaseId("1189");
             data.setCaseStatus("GWL-Open");
             data.setImportStatus("Add");
@@ -65,7 +65,7 @@ public class CLSJSMock {
                 request.getCNIC().equalsIgnoreCase("3503668754634") ||
                 request.getCNIC().equalsIgnoreCase("3503668754639") ) {
 
-            response.setReqId("20200630121312666666");
+//            response.setReqId("20200630121312666666");
             data.setCaseId("1189");
             data.setCaseStatus("Private-Open");
             data.setImportStatus("Add");
@@ -81,7 +81,7 @@ public class CLSJSMock {
                 request.getCNIC().equalsIgnoreCase("3503668754635") ||
                 request.getCNIC().equalsIgnoreCase("3503668754643")) {
 
-            response.setReqId("20200630121312666666");
+//            response.setReqId("20200630121312666666");
             data.setCaseId("1189");
             data.setCaseStatus("PEP/EDD-Open");
             data.setImportStatus("Add");
@@ -98,7 +98,7 @@ public class CLSJSMock {
                 request.getCNIC().equalsIgnoreCase("3503998765651") ||
                 request.getCNIC().equalsIgnoreCase("3503998765632")) {
 
-            response.setReqId("20200630121312666666");
+//            response.setReqId("20200630121312666666");
             data.setCaseId("1189");
             data.setCaseStatus("False Match");
             data.setImportStatus("Add");
@@ -112,7 +112,7 @@ public class CLSJSMock {
                 request.getCNIC().equalsIgnoreCase("3503998765637") ||
                 request.getCNIC().equalsIgnoreCase("3320213794739")) {
 
-            response.setReqId("20200630121312666666");
+//            response.setReqId("20200630121312666666");
             data.setCaseId("1189");
             data.setCaseStatus("True Match-Compliance");
             data.setImportStatus("Add");
@@ -128,7 +128,7 @@ public class CLSJSMock {
                 request.getCNIC().equalsIgnoreCase("3503998765649")  ||
                 request.getCNIC().equalsIgnoreCase("3503998765647")) {
 
-            response.setReqId("20200630121312666666");
+//            response.setReqId("20200630121312666666");
             data.setCaseId("1189");
             data.setCaseStatus("Revert to Branch");
             data.setImportStatus("Add");
@@ -142,7 +142,7 @@ public class CLSJSMock {
                 request.getCNIC().equalsIgnoreCase("3503998765641") ||
                 request.getCNIC().equalsIgnoreCase("3503668754641") ) {
 
-            response.setReqId("20200630121312666666");
+//            response.setReqId("20200630121312666666");
             data.setCaseId("1189");
             data.setCaseStatus("PEP/EDD-Open|Private-Open");
             data.setImportStatus("Add");
@@ -169,7 +169,7 @@ public class CLSJSMock {
             response.setTotalPrivate("0");
         } else {
 
-            response.setReqId("20200630121312666666");
+//            response.setReqId("20200630121312666666");
             data.setCaseId("1189");
             data.setCaseStatus("No Matches");
             data.setImportStatus("Add");

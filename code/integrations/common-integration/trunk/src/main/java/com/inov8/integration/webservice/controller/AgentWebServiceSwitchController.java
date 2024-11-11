@@ -13,4 +13,6 @@ public interface AgentWebServiceSwitchController {
     WebServiceVO agentMpinGeneration(WebServiceVO webServiceVO);
 
     WebServiceVO agentMpinReset(WebServiceVO webServiceVO);
+
+    WebServiceVO agentProductCatalogs(WebServiceVO webServiceVO);
 }

@@ -2,6 +2,7 @@ package com.inov8.integration.webservice.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.inov8.integration.vo.*;
+import com.inov8.integration.webservice.agentVO.AgentProductCatalog;
 import com.inov8.integration.webservice.corporateVO.AccountStatement;
 import com.inov8.integration.webservice.corporateVO.CustomerDeviceVerification;
 import com.inov8.integration.webservice.debitCardVO.CardTypeFee;
@@ -582,6 +583,15 @@ public class WebServiceVO implements Serializable {
     private String salarySilp;
     private List<DynamicQRPaymentInquiry> dynamicQRPaymentInquiryList;
     private String billNumber;
+    private List<AgentProductCatalog> agentProductCatalogs;
+
+    public List<AgentProductCatalog> getAgentProductCatalogs() {
+        return agentProductCatalogs;
+    }
+
+    public void setAgentProductCatalogs(List<AgentProductCatalog> agentProductCatalogs) {
+        this.agentProductCatalogs = agentProductCatalogs;
+    }
 
     public String getBillNumber() {
         return billNumber;

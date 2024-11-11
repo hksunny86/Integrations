@@ -5,6 +5,7 @@ import com.inov8.integration.i8sb.vo.CardDetailVO;
 import com.inov8.integration.vo.StatementVo;
 import com.inov8.integration.webservice.crpVO.Payload;
 import com.inov8.integration.webservice.islamicSavingVO.Body;
+import com.inov8.integration.webservice.jazzVO.SmsPayload;
 import com.inov8.integration.webservice.merchant.StaticQr;
 import com.inov8.integration.webservice.optasiaVO.*;
 import com.inov8.integration.webservice.raastVO.IDs;
@@ -522,6 +523,15 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private String reservedPrivate_120;
     private Payload payload;
     private String pdfDataUriBase64;
+    private SmsPayload smsPayload;
+
+    public SmsPayload getSmsPayload() {
+        return smsPayload;
+    }
+
+    public void setSmsPayload(SmsPayload smsPayload) {
+        this.smsPayload = smsPayload;
+    }
 
     public String getPdfDataUriBase64() {
         return pdfDataUriBase64;

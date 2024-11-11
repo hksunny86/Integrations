@@ -124,11 +124,11 @@ public class WarmbyteService {
         if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock7")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String json = "{\n" +
-                    "    \"code\": \"00\",\n" +
-                    "    \"message\": \"Success\"\n" +
+                    "    \"responseCode\": \"00\",\n" +
+                    "    \"responseMessage\": \"Success\"\n" +
                     "}";
             response = (DeductionIntimationResponse) JSONUtil.jsonToObject(json, DeductionIntimationResponse.class);
-            logger.info("Mock Response Code for Deduction Intimation Response: " + Objects.requireNonNull(response).getCode());
+            logger.info("Mock Response Code for Deduction Intimation Response: " + Objects.requireNonNull(response).getResponseCode());
         } else {
 
             Map<String, Object> postParam = new HashMap<String, Object>();
@@ -163,12 +163,9 @@ public class WarmbyteService {
         long start = System.currentTimeMillis();
         if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock78")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
-            String json = "{\n" +
-                    "    \"code\": \"00\",\n" +
-                    "    \"message\": \"Success\"\n" +
-                    "}";
+            String json = "{\"responseCode\":\"0020\",\"responseMessage\":\"Processing\"}";
             response = (ReferrerStatusResponse) JSONUtil.jsonToObject(json, ReferrerStatusResponse.class);
-            logger.info("Mock Response Code for Referrer Status Response: " + Objects.requireNonNull(response).getCode());
+            logger.info("Mock Response Code for Referrer Status Response: " + Objects.requireNonNull(response).getResponseCode());
         } else {
 
             Map<String, Object> postParam = new HashMap<String, Object>();
@@ -177,7 +174,7 @@ public class WarmbyteService {
             headers.put("Authorization", "Bearer " + referrerStatusToken);
             postParam.put("mobileNo", request.getMsisdn());
             postParam.put("cnic", request.getCnic());
-            logger.info("Request body of Deduction Intimation  " + JSONUtil.getJSON(request));
+            logger.info("Request body of Referrer Status  " + JSONUtil.getJSON(request));
             try {
                 String responseBody = getResponseFromAPI(headers, postParam, referrerStatusUrl);
                 if (responseBody != null && responseBody.length() > 0) {

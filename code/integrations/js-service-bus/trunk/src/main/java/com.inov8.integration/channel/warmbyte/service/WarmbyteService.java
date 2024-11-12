@@ -46,27 +46,64 @@ public class WarmbyteService {
             // Create request entity
             HttpEntity<?> requestEntity = new HttpEntity<>(postParam, headers);
 
+            logger.info("Sending request to " + url);
+            logger.info("Request Entity: " + requestEntity);
 
             // Create RestTemplate
             RestTemplate restTemplate = new RestTemplate();
 
             // Send POST request and get response
-            ResponseEntity<String> response;
-            if (url.equalsIgnoreCase(deductionIntimationUrl)) {
-                // Build URL with query parameters
-                UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
-                // Add query parameters from postParam map
-                postParam.forEach(uriBuilder::queryParam);
-                String finalUrl = uriBuilder.toUriString();
-                logger.info("Sending request to " + finalUrl);
-                logger.info("Request Entity: " + requestEntity);
-                response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
+
+            // Log response details
+            logger.info("Response: " + response);
+
+            // Check if the status code is 200 (OK)
+            if (response.getStatusCode() == HttpStatus.OK) {
+                String entityResponse = response.getBody();
+                logger.info("Successful response: " + entityResponse);
+                return !entityResponse.isEmpty() ? entityResponse : null;
             } else {
-                logger.info("Sending request to " + url);
-                logger.info("Request Entity: " + requestEntity);
-                response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+                logger.info("Unsuccessful response. HTTP Status Code: " + response.getStatusCode().value());
+                return response.getBody();
             }
+        } catch (HttpStatusCodeException e) {
+            logger.info("HTTP Status Code Exception: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+            throw new Exception(e.getMessage());
+        } catch (RestClientException e) {
+            logger.info("RestClientException: " + e.getMessage());
+            throw new Exception(e.getMessage());
+        } catch (Exception e) {
+            logger.info("Exception occurred: " + e.getMessage());
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public String getResponseFromGETAPI(Map<String, String> headerMap, Map<String, Object> postParam, String url) throws Exception {
+        try {
+            // Build URL with query parameters
+            UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
+
+            // Add query parameters from postParam map
+            postParam.forEach(uriBuilder::queryParam);
+            String finalUrl = uriBuilder.toUriString();
+            // Create headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAll(headerMap);
+
+            // Create request entity
+            HttpEntity<?> requestEntity = new HttpEntity<>(postParam, headers);
+
+            logger.info("GET Method Sending request to " + finalUrl);
+            logger.info("GET Request Entity: " + requestEntity);
+
+            // Create RestTemplate
+            RestTemplate restTemplate = new RestTemplate();
+
+
+            // Send POST request and get response
+            ResponseEntity<String> response = restTemplate.exchange(finalUrl, HttpMethod.GET, requestEntity, String.class);
 
 
             // Log response details
@@ -150,7 +187,7 @@ public class WarmbyteService {
             postParam.put("mobileNo", request.getMobileNo());
             logger.info("Request body of Deduction Intimation  " + JSONUtil.getJSON(request));
             try {
-                String responseBody = getResponseFromAPI(headers, postParam, deductionIntimationUrl);
+                String responseBody = getResponseFromGETAPI(headers, postParam, deductionIntimationUrl);
                 if (responseBody != null && responseBody.length() > 0) {
                     response = objectMapper.readValue(responseBody, DeductionIntimationResponse.class);
                 }

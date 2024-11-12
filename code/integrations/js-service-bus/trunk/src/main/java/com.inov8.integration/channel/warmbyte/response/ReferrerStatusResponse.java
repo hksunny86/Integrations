@@ -44,7 +44,7 @@ public class ReferrerStatusResponse extends Response {
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
         if (this.getResponseCode() != null) {
-            if (this.getResponseCode().equalsIgnoreCase("00")) {
+            if (this.getResponseCode().equalsIgnoreCase("0020")) {
                 i8SBSwitchControllerResponseVO.setResponseCode("00");
             } else {
                 i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());

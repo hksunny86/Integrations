@@ -51,7 +51,7 @@ public class SendSmsRequest extends Request {
     @Override
     public void populateRequest(I8SBSwitchControllerRequestVO i8SBSwitchControllerRequestVO) {
 
-        this.setFromMobileNumber(i8SBSwitchControllerRequestVO.getRecieverMobileNo());
+        this.setToMobileNumber(i8SBSwitchControllerRequestVO.getRecieverMobileNo());
         this.setText(i8SBSwitchControllerRequestVO.getSmsText());
         this.setFromMobileNumber(PropertyReader.getProperty("jazz.from.mobile.number"));
     }

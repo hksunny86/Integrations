@@ -19,6 +19,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.Date;
@@ -45,8 +46,6 @@ public class WarmbyteService {
             // Create request entity
             HttpEntity<?> requestEntity = new HttpEntity<>(postParam, headers);
 
-            logger.info("Sending request to " + url);
-            logger.info("Request Entity: " + requestEntity);
 
             // Create RestTemplate
             RestTemplate restTemplate = new RestTemplate();
@@ -54,8 +53,18 @@ public class WarmbyteService {
             // Send POST request and get response
             ResponseEntity<String> response;
             if (url.equalsIgnoreCase(deductionIntimationUrl)) {
+                // Build URL with query parameters
+                UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
+
+                // Add query parameters from postParam map
+                postParam.forEach(uriBuilder::queryParam);
+                String finalUrl = uriBuilder.toUriString();
+                logger.info("Sending request to " + finalUrl);
+                logger.info("Request Entity: " + requestEntity);
                 response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
             } else {
+                logger.info("Sending request to " + url);
+                logger.info("Request Entity: " + requestEntity);
                 response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
             }
 
@@ -125,7 +134,7 @@ public class WarmbyteService {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
 
         long start = System.currentTimeMillis();
-        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock7")) {
+        if (this.i8sb_target_environment != null && this.i8sb_target_environment.equalsIgnoreCase("mock78")) {
             logger.info("Preparing request for Request Type : " + i8SBSwitchControllerRequestVO.getRequestType());
             String json = "{\n" +
                     "    \"responseCode\": \"00\",\n" +

@@ -11,45 +11,45 @@ import org.slf4j.LoggerFactory;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "responseCode",
-        "responseMessage"
+        "code",
+        "message"
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeductionIntimationResponse extends Response {
 
     private static Logger logger = LoggerFactory.getLogger(DeductionIntimationResponse.class.getSimpleName());
 
-    @JsonProperty("responseCode")
-    private String responseCode;
-    @JsonProperty("responseMessage")
-    private String responseMessage;
+    @JsonProperty("code")
+    private String code;
+    @JsonProperty("message")
+    private String message;
 
-    public String getResponseCode() {
-        return responseCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getResponseMessage() {
-        return responseMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setResponseMessage(String responseMessage) {
-        this.responseMessage = responseMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
     public I8SBSwitchControllerResponseVO populateI8SBSwitchControllerResponseVO() throws I8SBRunTimeException {
         I8SBSwitchControllerResponseVO i8SBSwitchControllerResponseVO = new I8SBSwitchControllerResponseVO();
-        if (this.getResponseCode() != null) {
-            if (this.getResponseCode().equalsIgnoreCase("00")) {
+        if (this.getCode() != null) {
+            if (this.getCode().equalsIgnoreCase("00")) {
                 i8SBSwitchControllerResponseVO.setResponseCode("00");
             } else {
-                i8SBSwitchControllerResponseVO.setResponseCode(this.getResponseCode());
+                i8SBSwitchControllerResponseVO.setResponseCode(this.getCode());
             }
-            i8SBSwitchControllerResponseVO.setDescription(this.getResponseMessage());
+            i8SBSwitchControllerResponseVO.setDescription(this.getMessage());
         }
 
         return i8SBSwitchControllerResponseVO;

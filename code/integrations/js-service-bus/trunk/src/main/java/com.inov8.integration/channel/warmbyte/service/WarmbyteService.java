@@ -51,10 +51,14 @@ public class WarmbyteService {
             // Create RestTemplate
             RestTemplate restTemplate = new RestTemplate();
 
-            ResponseEntity<String> response;
-
             // Send POST request and get response
-            response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+            ResponseEntity<String> response;
+            if (url.equalsIgnoreCase(deductionIntimationUrl)) {
+                response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
+            } else {
+                response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+            }
+
 
             // Log response details
             logger.info("Response: " + response);
@@ -128,7 +132,7 @@ public class WarmbyteService {
                     "    \"responseMessage\": \"Success\"\n" +
                     "}";
             response = (DeductionIntimationResponse) JSONUtil.jsonToObject(json, DeductionIntimationResponse.class);
-            logger.info("Mock Response Code for Deduction Intimation Response: " + Objects.requireNonNull(response).getResponseCode());
+            logger.info("Mock Response Code for Deduction Intimation Response: " + Objects.requireNonNull(response).getCode());
         } else {
 
             Map<String, Object> postParam = new HashMap<String, Object>();

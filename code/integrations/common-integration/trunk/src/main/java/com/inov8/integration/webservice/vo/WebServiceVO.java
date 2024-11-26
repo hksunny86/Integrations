@@ -584,6 +584,24 @@ public class WebServiceVO implements Serializable {
     private List<DynamicQRPaymentInquiry> dynamicQRPaymentInquiryList;
     private String billNumber;
     private List<AgentProductCatalog> agentProductCatalogs;
+    private String lienMark;
+    private String lienAmount;
+
+    public String getLienMark() {
+        return lienMark;
+    }
+
+    public void setLienMark(String lienMark) {
+        this.lienMark = lienMark;
+    }
+
+    public String getLienAmount() {
+        return lienAmount;
+    }
+
+    public void setLienAmount(String lienAmount) {
+        this.lienAmount = lienAmount;
+    }
 
     public List<AgentProductCatalog> getAgentProductCatalogs() {
         return agentProductCatalogs;

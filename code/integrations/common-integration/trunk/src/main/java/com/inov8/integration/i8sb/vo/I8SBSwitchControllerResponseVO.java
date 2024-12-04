@@ -524,6 +524,105 @@ public class I8SBSwitchControllerResponseVO implements Serializable {
     private Payload payload;
     private String pdfDataUriBase64;
     private SmsPayload smsPayload;
+    private String outPartID;
+    private String outCard;
+    private String outResponseCode;
+    private String messageNumber;
+    private String messageText;
+    private String outEmbCard;
+    private String outToken;
+    private String outBIN;
+    private String outExpDt;
+    private String outIssDt;
+    private String outEmbName;
+
+    public String getOutPartID() {
+        return outPartID;
+    }
+
+    public void setOutPartID(String outPartID) {
+        this.outPartID = outPartID;
+    }
+
+    public String getOutCard() {
+        return outCard;
+    }
+
+    public void setOutCard(String outCard) {
+        this.outCard = outCard;
+    }
+
+    public String getOutResponseCode() {
+        return outResponseCode;
+    }
+
+    public void setOutResponseCode(String outResponseCode) {
+        this.outResponseCode = outResponseCode;
+    }
+
+    public String getMessageNumber() {
+        return messageNumber;
+    }
+
+    public void setMessageNumber(String messageNumber) {
+        this.messageNumber = messageNumber;
+    }
+
+    public String getMessageText() {
+        return messageText;
+    }
+
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
+    }
+
+    public String getOutEmbCard() {
+        return outEmbCard;
+    }
+
+    public void setOutEmbCard(String outEmbCard) {
+        this.outEmbCard = outEmbCard;
+    }
+
+    public String getOutToken() {
+        return outToken;
+    }
+
+    public void setOutToken(String outToken) {
+        this.outToken = outToken;
+    }
+
+    public String getOutBIN() {
+        return outBIN;
+    }
+
+    public void setOutBIN(String outBIN) {
+        this.outBIN = outBIN;
+    }
+
+    public String getOutExpDt() {
+        return outExpDt;
+    }
+
+    public void setOutExpDt(String outExpDt) {
+        this.outExpDt = outExpDt;
+    }
+
+    public String getOutIssDt() {
+        return outIssDt;
+    }
+
+    public void setOutIssDt(String outIssDt) {
+        this.outIssDt = outIssDt;
+    }
+
+    public String getOutEmbName() {
+        return outEmbName;
+    }
+
+    public void setOutEmbName(String outEmbName) {
+        this.outEmbName = outEmbName;
+    }
 
     public SmsPayload getSmsPayload() {
         return smsPayload;

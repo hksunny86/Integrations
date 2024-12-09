@@ -364,7 +364,7 @@ public class CardIssuanceRequest extends Request {
         inAccount.setInAccTyp(PropertyReader.getProperty("euronet.inAccTyp"));
         inAccount.setInAccNum(inAccount.getInAccNum());
         inAccount.setInAccDesc(inAccount.getInAccDesc());
-        inAccount.setInAccBrch(inAccount.getInAccBrch());
+        inAccount.setInAccBrch(PropertyReader.getProperty("euronet.inAccBrch"));
         inAccount.setInAccCurCd(PropertyReader.getProperty("euronet.inAccCurCd"));
         inAccount.setInAccRouting(PropertyReader.getProperty("euronet.inAccRouting"));
         inAccount.setInAccSts(inAccount.getInAccSts());

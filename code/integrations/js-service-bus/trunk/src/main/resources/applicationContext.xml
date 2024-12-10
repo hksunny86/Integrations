@@ -59,6 +59,7 @@
                 <beans:value>classpath:channel/warmbyte.properties</beans:value>
                 <beans:value>classpath:channel/jazz.properties</beans:value>
                 <beans:value>classpath:channel/euronet.properties</beans:value>
+                <beans:value>classpath:channel/esbt24.properties</beans:value>
 
                 <!--                <value>classpath:channel/AMA.properties</value>-->
             </beans:list>

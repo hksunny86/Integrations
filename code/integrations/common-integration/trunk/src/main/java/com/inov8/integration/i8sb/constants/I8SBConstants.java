@@ -99,6 +99,7 @@ public class I8SBConstants {
     public static String I8SB_Channel_ID_WARMBYTE = "WARMBYTE";
     public static String I8SB_Channel_ID_JAZZ = "JAZZ";
     public static String I8SB_Channel_ID_EURONET = "EURONET";
+    public static String I8SB_Channel_ID_ESBT24 = "ESBT24";
 
 
     public static String I8SB_Channel_ID_ETPaymentCollection = "ETPaymentCollection";
@@ -421,6 +422,7 @@ public class I8SBConstants {
     public static String RequestType_WARMBYTE_REFERRER_STATUS = "WarmbyteReferrerStatus";
     public static String RequestType_JAZZ_SEND_SMS = "JazzSendSms";
     public static String RequestType_EURONET_CRAD_ISSUANCE = "EuronetCradIssuance";
+    public static String RequestType_ESBT24_TRANSACTION = "Esbt24Transaction";
 
 
 }

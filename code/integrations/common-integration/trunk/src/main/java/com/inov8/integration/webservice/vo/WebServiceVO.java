@@ -586,6 +586,15 @@ public class WebServiceVO implements Serializable {
     private List<AgentProductCatalog> agentProductCatalogs;
     private String lienMark;
     private String lienAmount;
+    private Boolean isUserBvsExempted;
+
+    public Boolean getUserBvsExempted() {
+        return isUserBvsExempted;
+    }
+
+    public void setUserBvsExempted(Boolean userBvsExempted) {
+        isUserBvsExempted = userBvsExempted;
+    }
 
     public String getLienMark() {
         return lienMark;

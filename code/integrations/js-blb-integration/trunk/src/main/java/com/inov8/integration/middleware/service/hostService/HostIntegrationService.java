@@ -8645,6 +8645,7 @@ public class HostIntegrationService {
             response.setMonthlyDebitLimit(messageVO.getMonthlyDebitLimit());
             response.setYearlyCreditLimit(messageVO.getYearlyCreditLimit());
             response.setYearlyDebitLimit(messageVO.getYearlyDebitLimit());
+            response.setUserBvsExempted(messageVO.getUserBvsExempted());
 //            response.setFreelanceAccountBalance(messageVO.getFreelanceAccountBalance());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
@@ -8776,6 +8777,7 @@ public class HostIntegrationService {
             response.setMonthlyDebitLimit(messageVO.getMonthlyDebitLimit());
             response.setYearlyCreditLimit(messageVO.getYearlyCreditLimit());
             response.setYearlyDebitLimit(messageVO.getYearlyDebitLimit());
+            response.setUserBvsExempted(messageVO.getUserBvsExempted());
             logModel.setResponseCode(messageVO.getResponseCode());
             logModel.setStatus(TransactionStatus.COMPLETED.getValue().longValue());
 

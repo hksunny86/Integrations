@@ -42,6 +42,8 @@ public class LoginAuthenticationResponse {
     private String freelanceAccountBalance;
     @XmlElement(name = "RemaingCoolOffTime")
     private String remaingCoolOffTime;
+    @XmlElement(name = "IS_USER_BVS_EXEMPTED")
+    private Boolean isUserBvsExempted;
     @XmlElement(name = "HashData")
     private String hashData;
 
@@ -188,6 +190,14 @@ public class LoginAuthenticationResponse {
 
     public void setRemaingCoolOffTime(String remaingCoolOffTime) {
         this.remaingCoolOffTime = remaingCoolOffTime;
+    }
+
+    public Boolean getUserBvsExempted() {
+        return isUserBvsExempted;
+    }
+
+    public void setUserBvsExempted(Boolean userBvsExempted) {
+        isUserBvsExempted = userBvsExempted;
     }
 
     public String getHashData() {

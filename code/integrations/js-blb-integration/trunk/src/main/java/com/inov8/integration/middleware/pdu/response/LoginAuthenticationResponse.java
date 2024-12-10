@@ -42,7 +42,7 @@ public class LoginAuthenticationResponse {
     private String freelanceAccountBalance;
     @XmlElement(name = "RemaingCoolOffTime")
     private String remaingCoolOffTime;
-    @XmlElement(name = "IS_USER_BVS_EXEMPTED")
+    @XmlElement(name = "IsUserBvsExempted")
     private Boolean isUserBvsExempted;
     @XmlElement(name = "HashData")
     private String hashData;

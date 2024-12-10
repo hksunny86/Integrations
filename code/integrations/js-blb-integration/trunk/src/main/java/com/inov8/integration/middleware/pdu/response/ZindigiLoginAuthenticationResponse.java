@@ -43,7 +43,7 @@ public class ZindigiLoginAuthenticationResponse {
 
     @XmlElement(name = "RemainingCoolOffTime")
     private String remainingCoolOffTime;
-    @XmlElement(name = "IS_USER_BVS_EXEMPTED")
+    @XmlElement(name = "IsUserBvsExempted")
     private Boolean isUserBvsExempted;
 
     public String getBvs() {
